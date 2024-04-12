@@ -9,21 +9,22 @@ const Stack = createStackNavigator();
 /**
  * The onboarding related stack of screens of the application.
  */
-const navigator = () => (
+const CheckEmailNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.CHECK_EMAIL_NOT_VERIFIED}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ROUTES.CHECK_EMAIL_NOT_VERIFIED}
       component={ValidateEmailScreen}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ROUTES.CHECK_EMAIL_ALREADY_TAKEN}
       component={EmailAlreadyTakenScreen}
     />
   </Stack.Navigator>
 );
 
-export default navigator;
+export default CheckEmailNavigator;

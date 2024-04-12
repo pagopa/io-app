@@ -2,76 +2,64 @@
  * A screen where the user can choose to login with SPID or get more informations.
  * It includes a carousel with highlights on the app functionalities
  */
+import {
+  ButtonLink,
+  ButtonSolid,
+  ContentWrapper,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { View, Alert, StyleSheet } from "react-native";
+import { Alert, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useStore } from "react-redux";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
-import sessionExpiredImg from "../../../img/landing/session_expired.png";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import CieNotSupported from "../../components/cie/CieNotSupported";
-import ContextualInfo from "../../components/ContextualInfo";
-import { Link } from "../../components/core/typography/Link";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { DevScreenButton } from "../../components/DevScreenButton";
-import { HorizontalScroll } from "../../components/HorizontalScroll";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { privacyUrl } from "../../config";
+import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
+import {
+  fastLoginOptInFFEnabled,
+  isFastLoginEnabledSelector
+} from "../../features/fastLogin/store/selectors";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
-import {
-  hasApiLevelSupportSelector,
-  hasNFCFeatureSelector,
-  isCieSupportedSelector
-} from "../../store/reducers/cie";
-import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
-import variables from "../../theme/variables";
-import { ComponentProps } from "../../types/react";
-import { isDevEnv } from "../../utils/environment";
-import RootedDeviceModal from "../modal/RootedDeviceModal";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { openWebUrl } from "../../utils/url";
-import { cieSpidMoreInfoUrl } from "../../config";
-import {
-  fastLoginOptInFFEnabled,
-  isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { useIOSelector } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { LightModalContext } from "../../components/ui/LightModal";
-import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
+import { isCieSupportedSelector } from "../../store/reducers/cie";
+import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
+import { ComponentProps } from "../../types/react";
+import { setAccessibilityFocus } from "../../utils/accessibility";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../utils/url";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
   trackSpidLoginSelected
 } from "./analytics";
+import { Carousel } from "./carousel/Carousel";
 
-const getCards = (
-  isCIEAvailable: boolean
-): ReadonlyArray<ComponentProps<typeof LandingCardComponent>> => [
+const carouselCards: ReadonlyArray<
+  ComponentProps<typeof LandingCardComponent>
+> = [
   {
-    id: 5,
-    image: require("../../../img/landing/05.png"),
+    id: 0,
+    pictogramName: "hello",
     title: I18n.t("authentication.landing.card5-title"),
     content: I18n.t("authentication.landing.card5-content"),
     accessibilityLabel: `${I18n.t(
@@ -85,7 +73,7 @@ const getCards = (
   },
   {
     id: 1,
-    image: require("../../../img/landing/01.png"),
+    pictogramName: "star",
     title: I18n.t("authentication.landing.card1-title"),
     content: I18n.t("authentication.landing.card1-content"),
     accessibilityLabel: `${I18n.t(
@@ -94,7 +82,7 @@ const getCards = (
   },
   {
     id: 2,
-    image: require("../../../img/landing/02.png"),
+    pictogramName: "cardFavourite",
     title: I18n.t("authentication.landing.card2-title"),
     content: I18n.t("authentication.landing.card2-content"),
     accessibilityLabel: `${I18n.t(
@@ -103,27 +91,12 @@ const getCards = (
   },
   {
     id: 3,
-    image: require("../../../img/landing/03.png"),
+    pictogramName: "doc",
     title: I18n.t("authentication.landing.card3-title"),
     content: I18n.t("authentication.landing.card3-content"),
     accessibilityLabel: `${I18n.t(
       "authentication.landing.card3-title"
     )}. ${I18n.t("authentication.landing.card3-content")}`
-  },
-  {
-    id: 4,
-    image: isCIEAvailable
-      ? require("../../../img/cie/CIE-onboarding-illustration.png")
-      : require("../../../img/landing/04.png"),
-    title: isCIEAvailable
-      ? I18n.t("authentication.landing.loginSpidCie")
-      : I18n.t("authentication.landing.card4-title"),
-    content: isCIEAvailable
-      ? I18n.t("authentication.landing.loginSpidCieContent")
-      : I18n.t("authentication.landing.card4-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.card4-title"
-    )}. ${I18n.t("authentication.landing.card4-content")}`
   }
 ];
 
@@ -132,30 +105,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.landing.contextualHelpContent"
 };
 
-const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
-  uatCie: {
-    backgroundColor: IOColors.red
-  },
-  noCie: {
-    // don't use opacity since the button still have the active color when it is pressed
-    // TODO: Remove this half-disabled state.
-    // See also discussion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
-    backgroundColor: IOColors.noCieButton
-  },
-  fullOpacity: {
-    backgroundColor: variables.brandPrimary
-  },
-  link: {
-    textAlign: "center",
-    paddingBottom: 5,
-    paddingTop: 4.5,
-    lineHeight: 30
-  }
-});
-
 export const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
@@ -163,7 +112,13 @@ export const IdpCIE: SpidIdp = {
   profileUrl: ""
 };
 
+const SPACE_BETWEEN_BUTTONS = 8;
+const SPACE_AROUND_BUTTON_LINK = 16;
+
 export const LandingScreen = () => {
+  const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
+  const insets = useSafeAreaInsets();
+
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = React.useState<
     O.Option<boolean>
   >(O.none);
@@ -175,9 +130,14 @@ export const LandingScreen = () => {
   const store = useStore();
 
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
+  // Since the page is rendered more than once
+  // and if the session is expired
+  // we dispatch the resetAuthenticationState action,
+  // we need to keep track of the session expiration.
+  const isSessionExpiredRef = React.useRef(false);
 
   const isContinueWithRootOrJailbreak = useIOSelector(
     continueWithRootOrJailbreakSelector
@@ -187,10 +147,6 @@ export const LandingScreen = () => {
   const isFastLoginOptInFFEnabled = useIOSelector(fastLoginOptInFFEnabled);
 
   const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
-  const hasApiLevelSupport = useIOSelector(hasApiLevelSupportSelector);
-  const hasCieApiLevelSupport = pot.getOrElse(hasApiLevelSupport, false);
-  const hasNFCFeature = useIOSelector(hasNFCFeatureSelector);
-  const hasCieNFCFeature = pot.getOrElse(hasNFCFeature, false);
 
   const isCieSupported = React.useCallback(
     () =>
@@ -200,17 +156,29 @@ export const LandingScreen = () => {
   );
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
+
   useOnFirstRender(async () => {
-    const isRootedOrJailbroken = await JailMonkey.isJailBroken();
-    setIsRootedOrJailbroken(O.some(isRootedOrJailbroken));
+    const isRootedOrJailbrokenFromJailMonkey = await JailMonkey.isJailBroken();
+    setIsRootedOrJailbroken(O.some(isRootedOrJailbrokenFromJailMonkey));
     if (isSessionExpired) {
+      // eslint-disable-next-line functional/immutable-data
+      isSessionExpiredRef.current = isSessionExpired;
       dispatch(resetAuthenticationState());
     }
   });
 
-  const { hideModal, showAnimatedModal } = React.useContext(LightModalContext);
+  // We reset the session expiration flag
+  // when the component is unmounted
+  React.useEffect(
+    () => () => {
+      // eslint-disable-next-line functional/immutable-data
+      isSessionExpiredRef.current = false;
+    },
+    []
+  );
 
-  const displayTabletAlert = () => {
+  const displayTabletAlert = React.useCallback(() => {
     if (!hasTabletCompatibilityAlertAlreadyShown) {
       setHasTabletCompatibilityAlertAlreadyShown(true);
       Alert.alert(
@@ -225,15 +193,7 @@ export const LandingScreen = () => {
         { cancelable: true }
       );
     }
-  };
-
-  const navigateToMarkdown = React.useCallback(
-    () =>
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.MARKDOWN
-      }),
-    [navigation]
-  );
+  }, [hasTabletCompatibilityAlertAlreadyShown]);
 
   const navigateToIdpSelection = React.useCallback(() => {
     trackSpidLoginSelected();
@@ -250,21 +210,6 @@ export const LandingScreen = () => {
   }, [isFastLoginOptInFFEnabled, navigation]);
 
   const navigateToCiePinScreen = React.useCallback(() => {
-    const openUnsupportedCIEModal = () => {
-      showAnimatedModal(
-        <ContextualInfo
-          onClose={hideModal}
-          title={I18n.t("authentication.landing.cie_unsupported.title")}
-          body={() => (
-            <CieNotSupported
-              hasCieApiLevelSupport={hasCieApiLevelSupport}
-              hasCieNFCFeature={hasCieNFCFeature}
-            />
-          )}
-        />
-      );
-    };
-
     if (isCieSupported()) {
       void trackCieLoginSelected(store.getState());
       dispatch(idpSelected(IdpCIE));
@@ -279,24 +224,16 @@ export const LandingScreen = () => {
         });
       }
     } else {
-      openUnsupportedCIEModal();
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.CIE_NOT_SUPPORTED
+      });
     }
-  }, [
-    dispatch,
-    hasCieApiLevelSupport,
-    hasCieNFCFeature,
-    hideModal,
-    isCieSupported,
-    isFastLoginOptInFFEnabled,
-    navigation,
-    showAnimatedModal,
-    store
-  ]);
+  }, [dispatch, isCieSupported, isFastLoginOptInFFEnabled, navigation, store]);
 
-  const navigateToSpidCieInformationRequest = () => {
+  const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
-    openWebUrl(cieSpidMoreInfoUrl);
-  };
+    openWebUrl(privacyUrl);
+  }, []);
 
   const navigateToCieUatSelectionScreen = React.useCallback(() => {
     if (isCieSupported()) {
@@ -306,167 +243,139 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const renderCardComponents = () => {
-    const cardProps = getCards(isCieSupported());
-    return cardProps.map(p => (
-      <LandingCardComponent key={`card-${p.id}`} {...p} />
-    ));
-  };
+  const LandingScreen = () => {
+    useHeaderSecondLevel({
+      title: "",
+      supportRequest: true,
+      canGoBack: false,
+      contextualHelpMarkdown
+    });
 
-  const handleContinueWithRootOrJailbreak = (continueWith: boolean) => {
-    dispatch(continueWithRootOrJailbreak(continueWith));
-  };
+    const sessionExpiredCardContent = I18n.t(
+      "authentication.landing.session_expired.body",
+      {
+        days: isFastLoginEnabled ? "365" : "30"
+      }
+    );
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
-  const renderLandingScreen = () => {
-    const firstButtonStyle = isCieUatEnabled
-      ? styles.uatCie
-      : styles.fullOpacity;
-    const secondButtonStyle = isCieSupported()
-      ? styles.fullOpacity
-      : styles.noCie;
     return (
-      <BaseScreenComponent
-        appLogo
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={
-          isCieSupported() ? ["landing_SPID", "landing_CIE"] : ["landing_SPID"]
-        }
-      >
-        {isDevEnv && <DevScreenButton onPress={navigateToMarkdown} />}
-
-        {isSessionExpired ? (
-          <InfoScreenComponent
+      <View style={IOStyles.flex}>
+        {isSessionExpiredRef.current ? (
+          <LandingCardComponent
+            id={0}
+            ref={accessibilityFirstFocuseViewRef}
+            pictogramName={"time"}
             title={I18n.t("authentication.landing.session_expired.title")}
-            body={I18n.t("authentication.landing.session_expired.body", {
-              days: isFastLoginEnabled ? "365" : "30"
-            })}
-            image={renderInfoRasterImage(sessionExpiredImg)}
+            content={sessionExpiredCardContent}
+            accessibilityLabel={`${I18n.t(
+              "authentication.landing.session_expired.title"
+            )} ${sessionExpiredCardContent}`}
           />
         ) : (
-          <Content contentContainerStyle={styles.flex} noPadded={true}>
-            <HorizontalScroll cards={renderCardComponents()} />
-          </Content>
+          <Carousel
+            ref={accessibilityFirstFocuseViewRef}
+            carouselCards={carouselCards}
+            dotEasterEggCallback={navigateToCieUatSelectionScreen}
+          />
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
-        <View style={IOStyles.footer}>
-          <ButtonDefaultOpacity
-            block={true}
-            primary={true}
-            iconLeft={true}
-            onPress={
-              isCieSupported() ? navigateToCiePinScreen : navigateToIdpSelection
-            }
-            onLongPress={() =>
-              isCieSupported() ? navigateToCieUatSelectionScreen() : ""
-            }
-            accessibilityRole="button"
-            accessible={true}
-            style={firstButtonStyle}
-            accessibilityLabel={
-              isCieSupported()
-                ? I18n.t("authentication.landing.loginCie")
-                : I18n.t("authentication.landing.loginSpid")
-            }
+        <ContentWrapper>
+          <ButtonSolid
             testID={
               isCieSupported()
                 ? "landing-button-login-cie"
                 : "landing-button-login-spid"
             }
-          >
-            <Icon
-              name={isCieSupported() ? "cie" : "navProfile"}
-              color="white"
-            />
-            <HSpacer size={8} />
-            <NBButtonText>
-              {isCieSupported()
-                ? I18n.t("authentication.landing.loginCie")
-                : I18n.t("authentication.landing.loginSpid")}
-            </NBButtonText>
-          </ButtonDefaultOpacity>
-          <VSpacer size={16} />
-          <ButtonDefaultOpacity
             accessibilityLabel={
               isCieSupported()
-                ? I18n.t("authentication.landing.loginSpid")
-                : I18n.t("authentication.landing.loginCie")
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")
             }
-            accessibilityRole="button"
-            accessible={true}
-            style={secondButtonStyle}
-            block={true}
-            primary={true}
-            iconLeft={true}
+            fullWidth={true}
+            color={isCieUatEnabled ? "danger" : "primary"}
+            label={
+              isCieSupported()
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")
+            }
+            icon={isCieSupported() ? "cie" : "spid"}
             onPress={
-              isCieSupported() ? navigateToIdpSelection : navigateToCiePinScreen
+              isCieSupported() ? navigateToCiePinScreen : navigateToIdpSelection
             }
+          />
+          <VSpacer size={SPACE_BETWEEN_BUTTONS} />
+          <ButtonSolid
             testID={
               isCieSupported()
                 ? "landing-button-login-spid"
                 : "landing-button-login-cie"
             }
-          >
-            <Icon
-              name={isCieSupported() ? "navProfile" : "cie"}
-              color="white"
-            />
-            <HSpacer size={8} />
-            <NBButtonText>
-              {isCieSupported()
+            fullWidth={true}
+            accessibilityLabel={
+              isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
-                : I18n.t("authentication.landing.loginCie")}
-            </NBButtonText>
-          </ButtonDefaultOpacity>
-          <VSpacer size={16} />
-          <Link
-            style={styles.link}
-            onPress={navigateToSpidCieInformationRequest}
-          >
-            {isCieSupported()
-              ? I18n.t("authentication.landing.nospid-nocie")
-              : I18n.t("authentication.landing.nospid")}
-          </Link>
-        </View>
-      </BaseScreenComponent>
+                : I18n.t("authentication.landing.loginCie")
+            }
+            color="primary"
+            // if CIE is not supported, since the new DS has not a
+            // "semi-enabled" state, we leave the button enabled
+            // but we navigate to the CIE unsupported info screen.
+            label={
+              isCieSupported()
+                ? I18n.t("authentication.landing.loginSpid")
+                : I18n.t("authentication.landing.loginCie")
+            }
+            icon={isCieSupported() ? "spid" : "cie"}
+            onPress={
+              isCieSupported() ? navigateToIdpSelection : navigateToCiePinScreen
+            }
+          />
+          <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+          <View style={IOStyles.selfCenter}>
+            <ButtonLink
+              accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
+              color="primary"
+              label={I18n.t("authentication.landing.privacyLink")}
+              onPress={navigateToPrivacyUrl}
+            />
+            <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+          </View>
+          {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
+        </ContentWrapper>
+      </View>
     );
   };
 
   // Screen displayed during the async loading of the JailMonkey.isJailBroken()
-  const renderLoadingScreen = () => (
+  const LoadingScreen = () => (
     <View style={{ flex: 1 }}>
       <LoadingSpinnerOverlay isLoading={true} />
     </View>
   );
 
-  const chooseScreenToRender = (isRootedOrJailbroken: boolean) => {
+  React.useEffect(() => {
     // if the device is compromised and the user didn't allow to continue
     // show a blocking modal
-    if (isRootedOrJailbroken && !isContinueWithRootOrJailbreak) {
+    if (
+      O.isSome(isRootedOrJailbroken) &&
+      isRootedOrJailbroken.value &&
+      !isContinueWithRootOrJailbreak
+    ) {
       void mixpanelTrack("SHOW_ROOTED_OR_JAILBROKEN_MODAL");
-      return (
-        <RootedDeviceModal
-          onContinue={() => handleContinueWithRootOrJailbreak(true)}
-          onCancel={() => handleContinueWithRootOrJailbreak(false)}
-        />
-      );
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_ROOTED_DEVICE
+      });
     }
-    // In case of Tablet, display an alert to inform the user
+  }, [isContinueWithRootOrJailbreak, isRootedOrJailbroken, navigation]);
+
+  // If the async loading of the isRootedOrJailbroken is not ready, display a loading
+  if (O.isNone(isRootedOrJailbroken)) {
+    return <LoadingScreen />;
+  } else {
     if (DeviceInfo.isTablet()) {
       displayTabletAlert();
     }
-    // standard rendering of the landing screen
-    return renderLandingScreen();
-  };
-
-  // If the async loading of the isRootedOrJailbroken is not ready, display a loading
-  return pipe(
-    isRootedOrJailbroken,
-    O.fold(
-      () => renderLoadingScreen(),
-      // when the value isRootedOrJailbroken is ready, display the right screen based on a set of rule
-      rootedOrJailbroken => chooseScreenToRender(rootedOrJailbroken)
-    )
-  );
+    return <LandingScreen />;
+  }
 };

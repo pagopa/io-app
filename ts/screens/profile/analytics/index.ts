@@ -9,7 +9,20 @@ import { FlowType, buildEventProperties } from "../../../utils/analytics";
 export async function trackProfileLoadSuccess(state: GlobalState) {
   await updateMixpanelSuperProperties(state);
   await updateMixpanelProfileProperties(state);
-  await mixpanelTrack(profileLoadSuccess.toString());
+  mixpanelTrack(profileLoadSuccess.toString());
+}
+
+export function trackIdpAuthenticationSuccessScreen(idpId: string | undefined) {
+  void mixpanelTrack("IDENTIFICATION_CONFIRM_SCREEN", {
+    idp: idpId,
+    ...buildEventProperties("UX", "screen_view")
+  });
+}
+export function trackIngressScreen() {
+  void mixpanelTrack(
+    "INITIALIZATION_LOADING",
+    buildEventProperties("UX", "screen_view")
+  );
 }
 
 export function trackTosScreen(flow: FlowType) {
@@ -74,7 +87,7 @@ export async function trackTosAccepted(
     property: "TOS_ACCEPTED_VERSION",
     value: acceptedTosVersion
   });
-  await mixpanelTrack(
+  mixpanelTrack(
     "TOS_ACCEPTED",
     buildEventProperties(
       "UX",
@@ -139,7 +152,7 @@ export async function trackServiceConfiguration(
     property: "SERVICE_CONFIGURATION",
     value: mode
   });
-  await mixpanelTrack(
+  mixpanelTrack(
     "SERVICE_PREFERENCE_CONFIGURATION",
     buildEventProperties(
       "UX",
@@ -194,7 +207,7 @@ export async function trackNotificationPreferenceConfiguration(
     property: "NOTIFICATION_CONFIGURATION",
     value: configuration
   });
-  await mixpanelTrack(
+  mixpanelTrack(
     "NOTIFICATION_PREFERENCE_CONFIGURATION",
     buildEventProperties(
       "UX",

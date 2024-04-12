@@ -76,7 +76,7 @@ import {
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { servicesByIdSelector } from "../../features/services/store/reducers/servicesById";
 import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
@@ -95,7 +95,7 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
@@ -234,7 +234,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   public componentDidUpdate(prevProps: Props, prevState: State) {
     // if some errors occur while updating profile, we will show a message in a toast
     // profile could be updated by enabling/disabling on or more channel of a service
-    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
+    if (
+      pot.isError(this.props.profile) &&
+      !pot.isError(prevProps.profile) &&
+      this.props.profile.error.type !== "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR"
+    ) {
       showToast(
         I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
         "danger"

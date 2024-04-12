@@ -1,9 +1,12 @@
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import {
+  BlockButtonProps,
+  Body,
+  ContentWrapper,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { navigateToRemoveAccountDetailScreen } from "../../store/actions/navigation";
@@ -16,28 +19,30 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  * Here user can ask to delete his account
  */
 const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
-  const continueButtonProps = {
-    block: true,
-    primary: true,
-    onPress: () => {
-      props.loadBonus();
-      props.navigateToRemoveAccountDetail();
-    },
-    title: I18n.t("profile.main.privacy.removeAccount.info.cta")
+  const continueButtonProps: BlockButtonProps = {
+    type: "Solid",
+    buttonProps: {
+      color: "primary",
+      label: I18n.t("profile.main.privacy.removeAccount.info.cta"),
+      accessibilityLabel: I18n.t("profile.main.privacy.removeAccount.info.cta"),
+      onPress: () => {
+        props.loadBonus();
+        props.navigateToRemoveAccountDetail();
+      }
+    }
   };
 
-  const footerComponent = (
-    <SafeAreaView>
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={continueButtonProps}
-      />
-    </SafeAreaView>
-  );
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.main.privacy.removeAccount.title")}
-      fixedBottomSlot={footerComponent}
+      title={{
+        label: I18n.t("profile.main.privacy.removeAccount.title")
+      }}
+      fixedBottomSlot={
+        <FooterWithButtons
+          type={"SingleButton"}
+          primary={continueButtonProps}
+        />
+      }
     >
       <ContentWrapper>
         <Body weight="Regular">

@@ -13,10 +13,10 @@ import {
   IOColors,
   VSpacer,
   IOSpacingScale,
-  ListItemAction
+  ListItemAction,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { useIOToast } from "../../../components/Toast";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
@@ -115,7 +115,10 @@ const BasePaymentMethodScreen = (props: Props) => {
       dark={true}
       headerBackgroundColor={blueHeaderColor}
     >
-      <FocusAwareStatusBar barStyle="light-content" />
+      <FocusAwareStatusBar
+        backgroundColor={blueHeaderColor}
+        barStyle="light-content"
+      />
       <ScrollView>
         <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
           <View style={styles.cardContainer}>{card}</View>

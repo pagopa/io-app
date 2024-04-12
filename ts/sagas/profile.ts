@@ -171,9 +171,7 @@ function* createOrUpdateProfileSaga(
       createOrUpdateProfile({
         body: newProfile
       }),
-      undefined,
-      undefined,
-      true
+      { skipThrowingError: true }
     )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 
     if (E.isLeft(response)) {
@@ -237,7 +235,7 @@ function* createOrUpdateProfileSaga(
 const profileChangePredicates: ReadonlyArray<
   [
     (value: InitializedProfile, newValue: InitializedProfile) => boolean,
-    (value: InitializedProfile) => Promise<void> | undefined
+    (value: InitializedProfile) => void | undefined
   ]
 > = [
   [

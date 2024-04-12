@@ -4,19 +4,25 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useStore } from "react-redux";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { serviceByIdPotSelector } from "../../services/store/reducers/servicesById";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { LegacyMessageDetails } from "../components/LegacyMessageDetails";
 import { PnParamsList } from "../navigation/params";
-import { pnMessageFromIdSelector } from "../store/reducers";
-import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
+import {
+  pnMessageFromIdSelector,
+  pnUserSelectedPaymentRptIdSelector
+} from "../store/reducers";
+import {
+  cancelPreviousAttachmentDownload,
+  cancelQueuedPaymentUpdates,
+  updatePaymentForMessage
+} from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
   containsF24FromPNMessagePot,
@@ -27,13 +33,8 @@ import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPaymentStatusTracking,
-  cancelQueuedPaymentUpdates,
-  clearSelectedPayment,
-  startPaymentStatusTracking,
-  updatePaymentForMessage
+  startPaymentStatusTracking
 } from "../store/actions";
-import { GlobalState } from "../../../store/reducers/types";
-import { selectedPaymentIdSelector } from "../store/reducers/payments";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import genericErrorIcon from "../../../../img/wallet/errors/generic-error-icon.png";
@@ -47,7 +48,7 @@ export const LegacyMessageDetailsScreen = (
   const navigation = useNavigation();
 
   const service = pot.toUndefined(
-    useIOSelector(state => serviceByIdSelector(state, serviceId))
+    useIOSelector(state => serviceByIdPotSelector(state, serviceId))
   );
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
@@ -80,21 +81,23 @@ export const LegacyMessageDetailsScreen = (
     }
   });
 
-  const store = useStore();
+  const store = useIOStore();
   useFocusEffect(
     React.useCallback(() => {
-      const globalState = store.getState() as GlobalState;
-      const selectedPaymentId = selectedPaymentIdSelector(globalState);
-      if (selectedPaymentId) {
-        dispatch(clearSelectedPayment());
+      const globalState = store.getState();
+      const paymentToCheckRptId = pnUserSelectedPaymentRptIdSelector(
+        globalState,
+        messagePot
+      );
+      if (paymentToCheckRptId) {
         dispatch(
           updatePaymentForMessage.request({
             messageId,
-            paymentId: selectedPaymentId
+            paymentId: paymentToCheckRptId
           })
         );
       }
-    }, [dispatch, messageId, store])
+    }, [dispatch, messageId, messagePot, store])
   );
 
   return (

@@ -6,13 +6,17 @@ import {
 } from "../../../__mocks__/message";
 
 import { loadMessageDetails } from "../../actions";
-import reducer, {
-  detailedMessageHasThirdPartyDataSelector,
-  messageDetailsByIdSelector
-} from "../detailsById";
-import { UIMessageDetails, UIMessageId } from "../../../types";
+import { PaymentData, UIMessageDetails, UIMessageId } from "../../../types";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  detailedMessageHasThirdPartyDataSelector,
+  detailsByIdReducer,
+  messageDetailsByIdSelector,
+  messageDetailsExpiringInfoSelector,
+  messagePaymentDataSelector
+} from "../detailsById";
 
 const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
 
@@ -20,13 +24,15 @@ describe("detailsById reducer", () => {
   describe(`when a ${getType(loadMessageDetails.request)} is sent`, () => {
     const actionRequest = loadMessageDetails.request({ id });
     it(`should add an entry for ${id} with 'noneLoading'`, () => {
-      expect(reducer(undefined, actionRequest)[id]).toEqual(pot.noneLoading);
+      expect(detailsByIdReducer(undefined, actionRequest)[id]).toEqual(
+        pot.noneLoading
+      );
     });
 
     describe(`and an entry for ${id} already exists`, () => {
       const initialState = { [id]: pot.some(successLoadMessageDetails) };
       it(`should update the entry to loading state preserving the data`, () => {
-        const entry = reducer(initialState, actionRequest)[id];
+        const entry = detailsByIdReducer(initialState, actionRequest)[id];
         expect(pot.isLoading(entry)).toBe(true);
         expect(pot.isSome(entry)).toBe(true);
         expect(pot.toUndefined(entry)).toBeDefined();
@@ -37,7 +43,7 @@ describe("detailsById reducer", () => {
   describe(`when a ${getType(loadMessageDetails.success)} is sent`, () => {
     const actionRequest = loadMessageDetails.success(successLoadMessageDetails);
     it(`should add an entry for ${id}`, () => {
-      const entry = reducer(undefined, actionRequest)[id];
+      const entry = detailsByIdReducer(undefined, actionRequest)[id];
       expect(pot.isSome(entry)).toBe(true);
       expect(pot.toUndefined(entry)).toEqual(successLoadMessageDetails);
     });
@@ -50,7 +56,7 @@ describe("detailsById reducer", () => {
       error
     });
     it(`should add an entry for ${id} with 'noneError'`, () => {
-      expect(reducer(undefined, actionRequest)[id]).toEqual(
+      expect(detailsByIdReducer(undefined, actionRequest)[id]).toEqual(
         pot.noneError(error.message)
       );
     });
@@ -58,7 +64,7 @@ describe("detailsById reducer", () => {
     describe(`and an entry for ${id} already exists`, () => {
       const initialState = { [id]: pot.some(successLoadMessageDetails) };
       it(`should update the entry to error state preserving the data`, () => {
-        const entry = reducer(initialState, actionRequest)[id];
+        const entry = detailsByIdReducer(initialState, actionRequest)[id];
         expect(pot.isError(entry)).toBe(true);
         expect(pot.isSome(entry)).toBe(true);
         expect(pot.toUndefined(entry)).toBeDefined();
@@ -119,5 +125,167 @@ describe("detailedMessageHasThirdPartyDataSelector", () => {
       messageId
     );
     expect(hasThirdPartyData).toBe(true);
+  });
+});
+
+describe("messageDetailsExpiringInfoSelector", () => {
+  it("should return `does_not_expire` when `paymentData` is not defined", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/05/2023").getTime()
+    );
+    expect(expiringInfo).toBe("does_not_expire");
+  });
+
+  it("should return `does_not_expire` when `paymentData` is defined and `dueDate` is not", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      paymentData: {
+        amount: 99,
+        noticeNumber: "123",
+        payee: {
+          fiscalCode: "123"
+        }
+      }
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/05/2023").getTime()
+    );
+    expect(expiringInfo).toBe("does_not_expire");
+  });
+
+  it("should return `expired` when there is a `paymentData` is defined and `dueDate` has passed", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      dueDate: new Date("01/01/2023"),
+      paymentData: {
+        amount: 99,
+        noticeNumber: "123",
+        payee: {
+          fiscalCode: "123"
+        }
+      }
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/05/2023").getTime()
+    );
+    expect(expiringInfo).toBe("expired");
+  });
+
+  it("should return `expiring` when there is a `paymentData` is defined and `dueDate` has not passed", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      dueDate: new Date("01/05/2023"),
+      paymentData: {
+        amount: 99,
+        noticeNumber: "123",
+        payee: {
+          fiscalCode: "123"
+        }
+      }
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/01/2023").getTime()
+    );
+    expect(expiringInfo).toBe("expiring");
+  });
+});
+
+describe("messagePaymentData selector", () => {
+  it("should return undefined when the state is empty", () => {
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const messageId = "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId;
+    const paymentData = messagePaymentDataSelector(appState, messageId);
+    expect(paymentData).toBeUndefined();
+  });
+  it("should return undefined when there is no message match", () => {
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRA095RSRSY7Z2DJQ0H8N3TR": pot.some({
+              paymentData: {}
+            } as UIMessageDetails)
+          }
+        }
+      }
+    } as GlobalState;
+    const paymentData = messagePaymentDataSelector(
+      finalState,
+      "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId
+    );
+    expect(paymentData).toBeUndefined();
+  });
+  it("should return undefined when the message has no payment data", () => {
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HR9ZVVKPQDGQ97TT83AN1W8C": pot.some({} as UIMessageDetails)
+          }
+        }
+      }
+    } as GlobalState;
+    const paymentData = messagePaymentDataSelector(
+      finalState,
+      "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId
+    );
+    expect(paymentData).toBeUndefined();
+  });
+  it("should match returned payment data", () => {
+    const paymentData = {} as PaymentData;
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HR9ZVVKPQDGQ97TT83AN1W8C": pot.some({
+              paymentData
+            } as UIMessageDetails)
+          }
+        }
+      }
+    } as GlobalState;
+    const returnedPaymentData = messagePaymentDataSelector(
+      finalState,
+      "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId
+    );
+    expect(returnedPaymentData).toBe(paymentData);
   });
 });

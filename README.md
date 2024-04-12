@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/app-logo.svg" width="100"/></br>
+  <img src="img/app-logo.svg" width="100" style="display: block" /></br>
   <h3 align="center">IO - The public services app</h3>
 </p>
 

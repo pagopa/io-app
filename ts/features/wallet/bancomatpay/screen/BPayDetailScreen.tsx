@@ -4,16 +4,16 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import {
-  PaymentCardBig,
-  PaymentCardBigProps
-} from "../../../../components/ui/cards/payment/PaymentCardBig";
 import { useIOSelector } from "../../../../store/hooks";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod, isBPay } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
+import {
+  PaymentCardBig,
+  PaymentCardBigProps
+} from "../../../payments/common/components/PaymentCardBig";
 
 export type BPayDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates

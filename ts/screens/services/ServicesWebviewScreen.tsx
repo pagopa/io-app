@@ -17,7 +17,7 @@ import {
   tokenFromNameSelector,
   TokenName
 } from "../../store/reducers/authentication";
-import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { serviceMetadataByIdSelector } from "../../features/services/store/reducers/servicesById";
 
 export type ServiceWebviewScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -37,8 +37,8 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
     useRoute<
       Route<"SERVICES_NAVIGATOR", ServiceWebviewScreenNavigationParams>
     >();
-  const maybeService = useIOSelector(
-    serviceMetadataByIdSelector(route.params.serviceId)
+  const maybeService = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, route.params.serviceId)
   );
   const token = useIOSelector(
     tokenFromNameSelector(maybeService?.token_name as TokenName)

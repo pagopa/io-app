@@ -31,7 +31,7 @@ import { cgnCategories } from "../store/actions/categories";
 const trackCgnAction =
   (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(cgnActivationStart):
       case getType(cgnRequestActivation):
@@ -86,7 +86,6 @@ const trackCgnAction =
           reason: action.payload
         });
     }
-    return Promise.resolve();
   };
 
 export default trackCgnAction;

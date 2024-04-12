@@ -1,0 +1,15 @@
+diff --git a/node_modules/@types/react-native/index.d.ts b/node_modules/@types/react-native/index.d.ts
+index 12831dd..aedaba3 100644
+--- a/node_modules/@types/react-native/index.d.ts
++++ b/node_modules/@types/react-native/index.d.ts
+@@ -8548,6 +8548,10 @@ export interface UIManagerStatic {
+      * commandArgs - Args of the native method that we can pass from JS to native.
+      */
+     dispatchViewManagerCommand: (reactTag: number | null, commandID: number | string, commandArgs?: any[]) => void;
++
++    //Added missing accesibility definition
++    sendAccessibilityEvent(reactTag?: number, eventType: number): void;
++    AccessibilityEventTypes: { typeViewFocused : number; }
+ }
+ 
+ export interface SwitchPropsIOS extends ViewProps {

@@ -2,10 +2,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { call, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
+import { updatePaymentForMessage } from "../../../messages/store/actions";
 import {
   cancelPaymentStatusTracking,
-  startPaymentStatusTracking,
-  updatePaymentForMessage
+  startPaymentStatusTracking
 } from "../actions";
 import {
   maxVisiblePaymentCountGenerator,

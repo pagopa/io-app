@@ -190,6 +190,7 @@ global:
     messages: Messaggi
     wallet: Portafoglio
     scan: Inquadra
+    payments: Pagamenti
     documents: Documenti
     profile: Profilo
     services: Servizi
@@ -213,6 +214,11 @@ tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
+  body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.
+  learnMoreButton:
+    title: Cosa significa?
+  learnMoreBottomsheet:
+    title: Sicurezza del dispositivo
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:
@@ -229,6 +235,7 @@ locales:
   en: Inglese
   de: Tedesco
 clipboard:
+  copyIntoClipboard: copia negli appunti
   copyFeedback: Copiato negli appunti
   copyText: copia
   copyFeedbackButton: copiato
@@ -249,7 +256,7 @@ permissionRationale:
     title: "Consenti l’accesso alla fotocamera"
     message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
-  title: Inizializzazione
+  title: Stiamo preparando la tua esperienza su IO
   authentication: Utente autenticato
   sessionInfo: Attributi SPID caricati
   profileInfo: Profilo utente caricato
@@ -437,6 +444,7 @@ profile:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
     designSystemEnvironment: Design System sperimentale
+    newWalletSection: Nuova sezione portafoglio
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
@@ -447,8 +455,9 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
-    walletPlayground:
-      titleSection: "New Wallet"
+    itWallet:
+      itWalletTest: IT Wallet
+      itWalletTestDescription: Abilita ambiente di test per IT Wallet
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -560,13 +569,15 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo {{days}} giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
+      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
     cie_unsupported:
-      title: Accesso con CIE non disponibile
-      body: !include cie/cieNotSupported.md
-      android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: un sistema operativo Android 6.0 o superiore
-      nfc_incompatible: un chip NFC compatibile
+      title: Non puoi entrare con CIE
+      body: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).
+      button: Ho capito
+      nfc_problem: Per leggere la CIE è necessario un dispositivo con chip NFC.
+      os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
+      nfc_alert: Il tuo dispositivo non ha l'NFC.
+      os_alert: Il sistema operativo del dispositivo non è aggiornato.
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -579,6 +590,7 @@ authentication:
     loginSpidCie: Accedi con SPID o CIE
     infoSpidCie: Introduzione a SPID e CIE
     loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
+    privacyLink: Informativa privacy
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
@@ -587,10 +599,8 @@ authentication:
     card2-content: Puoi pagare un tributo o una multa con il tuo conto corrente e le tue carte
     card3-title: Paga velocemente un avviso cartaceo
     card3-content: Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo
-    card4-title: Puoi accedere solo con SPID
-    card4-content: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)
-    card5-title: Benvenuto nella prima versione pubblica di IO!
-    card5-content: In alto a destra trovi l'icona '?' per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card5-title: Ti diamo il benvenuto su IO!
+    card5-content: Vediamo insieme cosa puoi fare
     card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardHeaderTitle: Entra con CIE
@@ -654,6 +664,7 @@ authentication:
         cardLocked: Carta CIE bloccata
         wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
         wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
+        genericError: Si è verificato un errore imprevisto. Riprova.
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostTitleiOS: Hai rimosso la carta troppo presto
@@ -708,6 +719,8 @@ authentication:
     dualRecoverDescription: Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.
     recoverUsername: Recupera il nome utente
     recoverPassword: Recupera la password
+  idp_login_success:
+    contentTitle: Ciao {{name}}!
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
@@ -752,10 +765,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: Non hai confermato il tuo indirizzo email
-      subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
-      editButton: Modifica email
-      validateButton: Conferma email
+      title: È questa la tua email?
+      subtitle: Per continuare a usare l’app, devi confermare che la tua email è
+      editButton: No, modifica
+      validateButton: Sì, conferma
       header:
         title: Configura IO
       help:
@@ -763,7 +776,7 @@ email:
     emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
-      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      subtitleEnd: è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.
       editButton: Modifica email
       header:
         title: Configura IO
@@ -790,17 +803,20 @@ email:
   newinsert:
     header: Configura IO
     title: Qual è la tua email?
-    subtitle: Utilizziamo l’email per alcune comunicazioni, come le ricevute di pagamento o i messaggi scambiati con l’assistenza.
+    subtitle: Servirà a inviarti comunicazioni come ricevute di pagamento o messaggi di assistenza.
     label: Indirizzo email personale
     alert:
-      title: L’email {{email}} associata alla tua identità SPID è già in uso su IO, inseriscine una diversa.
-      description: "email già in uso"
-      modaltitle: "Questa email è già in uso"
-      modaldescription: "Può succedere se condividi lo stesso indirizzo con un familiare"
-      modalbutton: "Usa un’altra email"
+      title: "{{email}} è già in uso, inseriscine un’altra."
+      description1: Email già in uso
+      description2: Inserisci un indirizzo diverso da quello attuale
+      description3: Stai già usando questa email
+      invalidemail: Inserisci un indirizzo email valido
+      modaltitle: Questa email è già in uso
+      modaldescription: Può succedere se condividi lo stesso indirizzo con un familiare
+      modalbutton: Usa un’altra email
   edit:
     title: Modifica la tua email
-    subtitle: L'email che avevi inserito in precedenza è
+    subtitle: Ora stai usando
     validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
@@ -820,12 +836,13 @@ email:
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
   newvalidate:
-    title: Conferma la tua email
-    subtitle: Segui le istruzioni che abbiamo inviato a
-    link: Non è corretta?
+    title: Ti abbiamo inviato un’email
+    subtitle: Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a
+    link: Non è corretto?
+    countdowntext: Richiedi una nuova email tra
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
-    toast: Fatto! Controlla tua casella di posta.
+    toast: Fatto! Controlla la tua casella di posta.
   newvalidemail:
     title: Email confermata!
     subtitle: Riceverai le comunicazioni di IO all’indirizzo
@@ -925,6 +942,18 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  homeScreen:
+    title: Pagamenti
+    methodsSection:
+      header: Metodi di pagamento
+      headerCTA: Aggiungi
+    historySection:
+      header: Storico operazioni
+      headerCTA: Vedi tutte
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
     message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
@@ -1202,10 +1231,11 @@ wallet:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
-    success:
-      title: "La carta è stata aggiunta!"
-      continueButton: "Vedi dettagli"
-    failure:
+    outcome:
+      SUCCESS:
+        title: "Il metodo è stato aggiunto"
+        subtitle: ""
+        primaryAction: "Vedi dettagli"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
@@ -1230,6 +1260,10 @@ wallet:
       ALREADY_ONBOARDED:
         title: Hai già aggiunto questo metodo
         subtitle: ""
+        primaryAction: Chiudi
+      BPAY_NOT_FOUND:
+        title: Non abbiamo trovato alcun BANCOMAT Pay attivo
+        subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
@@ -1740,12 +1774,19 @@ wallet:
         subtitle: Per maggiori informazioni, contatta la tua banca.
       CANCELED_BY_USER:
         title: L’operazione è stata annullata
-        subtitle: Non è stato addebitato alcun importo.
+        subtitle: Se vuoi pagare l’avviso, attendi qualche minuto prima di riprovare.
       EXCESSIVE_AMOUNT:
         title: Autorizzazione negata
         subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
+      WAITING_CONFIRMATION_EMAIL:
+        title: Attendi la conferma via email
+        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
+        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
+      METHOD_NOT_ENABLED:
+        title: Abilita il metodo per effettuare pagamenti in app
+        subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1879,6 +1920,7 @@ messages:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
 messageDetails:
+  accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
@@ -1920,12 +1962,30 @@ messageDetails:
   bottomSheet:
     title: "Cos'è un messaggio dinamico?"
     body: "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
+  footer:
+    contacts: "Contatta il mittente"
+    showMoreData: "Mostra altri dati"
+  showMoreDataBottomSheet:
+    title: "Dati identificativi"
+    messageId: "ID messaggio"
+    messageIdAccessibility: "ID messaggio, copia"
+  contactsBottomSheet:
+    title: "Assistenza"
+    body: "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato."
+    actions:
+      call: Fai una chiamata
+      email: Scrivi un'email
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
+  singleBtnAccessibility: "Salva o condividi documento"
   open: "Apri"
   save: "Salva"
+  saveAccessibility: "Salva documento"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  share: "Condividi"
+  shareAccessibility: "Condividi documento"
+  pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:
       title: "L’anteprima non è disponibile"
@@ -1975,6 +2035,7 @@ services:
         value: "Configurazione rapida"
         label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
+        successAlert: "Hai abilitato la configurazione rapida"
         body:
           text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
@@ -1982,6 +2043,7 @@ services:
         value: "Configurazione manuale"
         label: "ti possono contattare solo i servizi che hai attivato."
         title: "Configura manualmente"
+        successAlert: "Hai abilitato la configurazione manuale"
         body:
           text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
         bottomSheet:
@@ -2023,6 +2085,17 @@ services:
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
+  details:
+    failure:
+      title: "C'è un problema temporaneo, riprova"
+      subtitle: "Stiamo recuperando i dettagli del servizio"
+      back: "Indietro"
+      retry: "Riprova"
+    preferences:
+      title: "Questo servizio può"
+      inbox: "Contattarti in app"
+      pushNotifications: "Inviarti notifiche push"
+      messageReadStatus: "Ricevere conferme di lettura"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
@@ -2041,16 +2114,21 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  title: Ciao!
+  instructions:
+    unlockCode: codice di sblocco
+    unlockCodepPrefix: inserisci il
+    fingerprint: impronta
+    fingerprintPrefix: usa l'
+    faceId: volto
+    faceIdPrefix: usa il
+    congiunction: o
+  title: Ciao {{name}}!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
   logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
-  subtitleCode: Inserisci il codice di sblocco
-  subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
-  subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
@@ -2059,9 +2137,9 @@ identification:
       title: Identificazione richiesta
       sensorDescription: Accedi velocemente
   fail:
-    remainingAttempts: Ti rimangono {{attempts}} tentativi.
-    remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
-    tooManyAttempts: Troppi tentativi di inserimento errati.
+    remainingAttempts: Hai a disposizione ancora {{attempts}} tentativi
+    remainingAttemptSingle: Hai a disposizone ancora {{attempts}} tentativo
+    tooManyAttempts: Hai inserito troppe volte il codice sbagliato!
     waitMessage: "Riprova tra:"
   unlockCode:
     accessibility:
@@ -2544,7 +2622,7 @@ bonus:
         title: "Stiamo processando la tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
-        title: "La tua Carta Giovani Nazionale è attiva!"
+        title: "La tua Carta Giovani Nazionale è già attiva!"
         body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
@@ -2620,12 +2698,24 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    attachmentDownloadFeedback: "Download in corso"
+    attachments: "Allegati"
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
     updateBottomSheet:
       title: "Aggiorna l'app IO"
       subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
+    badge:
+      dueDate: Scaduto il {{date}} alle ore {{time}}
+    alert:
+      addReminder: Aggiungi promemoria
+      removeReminder: Rimuovi promemoria
+      content: Scade il {{date}} alle ore {{time}}
+    payments:
+      title: "Avvisi pagoPA"
+      noticeCode: "Codice avviso"
+      pay: "Paga"
   euCovidCertificate:
     save:
       album: "IO"
@@ -2778,6 +2868,10 @@ features:
       content: "Vuoi annullare la firma di **{{dossierTitle}}**?"
       cancel: "Annulla la firma"
       confirm: "Continua a firmare"
+      alert:
+        title: "Vuoi interrompere l'operazione?"
+        confirm: "Sì, interrompi"
+        cancel: "No, torna indietro"
     checkService:
       title: "Attiva i messaggi"
       content: "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati."
@@ -2836,6 +2930,28 @@ features:
     signatureFieldInfo:
       title: "Cosa sono le clausole vessatorie?"
       subTitle: "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
+  wallet:
+    home:
+      emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
+      cta: Aggiungi al Portafoglio
+      toast:
+        newMethod: Elemento aggiunto!
+      paymentsBanner:
+        title: Vuoi pagare un avviso?
+        action: Vai alla sezione Pagamenti
+        close: Chiudi
+    cards:
+      categories:
+        bonus: Iniziative welfare
+        cgn: Carta Giovani Nazionale
+        itw: IT Wallet
+        payment: Metodi di pagamento
+    onboarding: 
+      title: Cosa vuoi aggiungere al portafoglio?
+      options: 
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3399,12 +3515,12 @@ fastLogin:
     sessionExpired:
       noPin:
         title: È passato troppo tempo!
-        subtitle: Per ragioni di sicurezza devi autenticarti di nuovo con SPID o CIE. Potrai poi continuare la configurazione di IO da dove l’avevi interrotta.
+        subtitle: Per motivi di sicurezza, devi identificarti di nuovo con SPID o CIE. Potrai poi riprendere la configurazione di IO da dove l’avevi interrotta.
         submitButtonTitle: Continua
       continueNavigation:
         title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
+        subtitle: "Accedi per continuare a usare l’app."
+        submitButtonTitle: "Accedi"
         cancelButtonTitle: "Annulla"
       transientError:
         title: "Non siamo riusciti ad autenticarti"

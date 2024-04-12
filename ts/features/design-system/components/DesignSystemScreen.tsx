@@ -23,6 +23,7 @@ export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {
     <>
       <StatusBar
         barStyle={colorScheme === "dark" ? "light-content" : "default"}
+        backgroundColor={theme["appBackground-primary"]}
       />
       <ScrollView
         contentContainerStyle={{

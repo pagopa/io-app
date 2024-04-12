@@ -1,16 +1,26 @@
+import {
+  Body,
+  ButtonSolidProps,
+  FooterWithButtons,
+  H2,
+  H6,
+  HSpacer,
+  IOStyles,
+  IconButton,
+  LabelLink,
+  ListItemNav,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { List } from "native-base";
-import * as React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Icon } from "@pagopa/io-app-design-system";
-import { H4 } from "../../../../components/core/typography/H4";
-import { Link } from "../../../../components/core/typography/Link";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import * as React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   profileEmailSelector,
@@ -18,41 +28,17 @@ import {
   profileNameSelector,
   profileSelector
 } from "../../../../store/reducers/profile";
-import customVariables from "../../../../theme/variables";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { capitalize } from "../../../../utils/strings";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../components/buttons/ButtonConfigurations";
-import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import ROUTES from "../../../../navigation/routes";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
-import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
-import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
-  padded: {
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding,
-    paddingBottom: customVariables.contentPadding
-  },
-  verticalPadding: {
-    paddingTop: customVariables.spacerHeight,
-    paddingBottom: customVariables.spacerHeight
-  },
-  paddingTextLarge: {
-    paddingLeft: 14
-  },
-  paddingText: {
-    paddingLeft: 4
-  },
   alertTextContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center"
   }
 });
@@ -64,7 +50,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const route = useRoute();
   const familyName = pot.getOrElse(
     pot.map(profile, p => capitalize(p.family_name)),
@@ -76,106 +62,146 @@ const FciDataSharingScreen = (): React.ReactElement => {
   );
   const email = useIOSelector(profileEmailSelector);
 
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
+  const cancelButtonProps: ButtonSolidProps = {
+    onPress: () => present(),
+    label: I18n.t("features.fci.shareDataScreen.cancel"),
+    accessibilityLabel: I18n.t("features.fci.shareDataScreen.cancel")
+  };
+
+  const confirmButtonProps: ButtonSolidProps = {
+    onPress: () => {
+      trackFciUserDataConfirmed(fciEnvironment);
+      navigation.navigate(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.QTSP_TOS
+      });
+    },
+    label: I18n.t("features.fci.shareDataScreen.confirm"),
+    accessibilityLabel: I18n.t("features.fci.shareDataScreen.confirm")
+  };
+
   const AlertTextComponent = () => (
     <View
-      style={[styles.verticalPadding, styles.alertTextContainer]}
       testID="FciDataSharingScreenAlertTextTestID"
+      style={styles.alertTextContainer}
     >
-      <Icon name="notice" size={iconSize} color="bluegrey" />
-      <H4 weight="Regular" style={styles.paddingTextLarge} color={"bluegrey"}>
-        {I18n.t("features.fci.shareDataScreen.alertText")}
-        <View style={styles.paddingText} />
-        <Link
-          onPress={() => {
-            trackFciUserExit(route.name, fciEnvironment, "modifica_email");
-            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.INSERT_EMAIL_SCREEN
-            });
-          }}
-        >
-          {I18n.t("features.fci.shareDataScreen.alertLink")}
-        </Link>
-      </H4>
+      <IconButton
+        icon="notice"
+        iconSize={iconSize}
+        color="neutral"
+        disabled
+        accessibilityLabel={I18n.t("features.fci.shareDataScreen.alertText")}
+        onPress={() => undefined}
+      />
+      <HSpacer size={8} />
+      <View style={{ flex: 1 }}>
+        <H6 weight="Regular" color={"bluegrey"}>
+          {I18n.t("features.fci.shareDataScreen.alertText")}
+          <HSpacer size={8} />
+          <LabelLink
+            onPress={() => {
+              trackFciUserExit(route.name, fciEnvironment, "modifica_email");
+              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.INSERT_EMAIL_SCREEN,
+                params: {
+                  isOnboarding: false,
+                  isFciEditEmailFlow: true
+                }
+              });
+            }}
+          >
+            {I18n.t("features.fci.shareDataScreen.alertLink")}
+          </LabelLink>
+        </H6>
+      </View>
     </View>
   );
 
   return (
-    <BaseScreenComponent
-      headerTitle={I18n.t("features.fci.title")}
-      contextualHelp={emptyContextualHelp}
-      goBack
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScreenContent
-          title={I18n.t("features.fci.shareDataScreen.title")}
-          subtitle={I18n.t("features.fci.shareDataScreen.content")}
-        >
-          <View style={styles.padded}>
-            <List testID="FciDataSharingScreenListTestID">
-              {name && (
-                <ListItemComponent
-                  testID="FciDataSharingScreenNameTestID"
-                  title={I18n.t("features.fci.shareDataScreen.name")}
-                  subTitle={name}
-                  hideIcon
-                />
-              )}
-              {familyName && (
-                <ListItemComponent
-                  testID="FciDataSharingScreenFamilyNameTestID"
-                  title={I18n.t("features.fci.shareDataScreen.familyName")}
-                  subTitle={familyName}
-                  hideIcon
-                />
-              )}
-              {birthDate && (
-                <ListItemComponent
-                  testID="FciDataSharingScreenBirthDateTestID"
-                  title={I18n.t("features.fci.shareDataScreen.birthDate")}
-                  subTitle={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
-                  hideIcon
-                />
-              )}
-              {fiscalCode && (
-                <ListItemComponent
-                  testID="FciDataSharingScreenFiscalCodeTestID"
-                  title={I18n.t("profile.fiscalCode.fiscalCode")}
-                  subTitle={fiscalCode}
-                  hideIcon
-                />
-              )}
-              {O.isSome(email) && (
-                <ListItemComponent
-                  testID="FciDataSharingScreenEmailTestID"
-                  title={I18n.t("profile.data.list.email")}
-                  subTitle={email.value}
-                  hideIcon
-                />
-              )}
-            </List>
-            <AlertTextComponent />
-          </View>
-        </ScreenContent>
-        <View testID="FciDataSharingScreenFooterTestID">
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={cancelButtonProps(
-              () => present(),
-              I18n.t("features.fci.shareDataScreen.cancel")
-            )}
-            rightButton={confirmButtonProps(() => {
-              trackFciUserDataConfirmed(fciEnvironment);
-              navigation.navigate("FCI_QTSP_TOS");
-            }, `${I18n.t("features.fci.shareDataScreen.confirm")}`)}
+    <>
+      <ScrollView
+        style={IOStyles.horizontalContentPadding}
+        testID={"FciDataSharingScreenListTestID"}
+      >
+        <H2>{I18n.t("features.fci.shareDataScreen.title")}</H2>
+        <VSpacer size={16} />
+        <Body>{I18n.t("features.fci.shareDataScreen.content")}</Body>
+        {name && (
+          <ListItemNav
+            testID="FciDataSharingScreenNameTestID"
+            value={I18n.t("features.fci.shareDataScreen.name")}
+            description={name}
+            accessibilityLabel={I18n.t("features.fci.shareDataScreen.name")}
+            onPress={() => undefined}
+            hideChevron
           />
-        </View>
-      </SafeAreaView>
+        )}
+        {familyName && (
+          <ListItemNav
+            testID="FciDataSharingScreenFamilyNameTestID"
+            value={I18n.t("features.fci.shareDataScreen.familyName")}
+            description={familyName}
+            onPress={() => undefined}
+            hideChevron
+            accessibilityLabel={I18n.t(
+              "features.fci.shareDataScreen.familyName"
+            )}
+          />
+        )}
+        {birthDate && (
+          <ListItemNav
+            testID="FciDataSharingScreenBirthDateTestID"
+            value={I18n.t("features.fci.shareDataScreen.birthDate")}
+            description={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
+            hideChevron
+            accessibilityLabel={I18n.t(
+              "features.fci.shareDataScreen.birthDate"
+            )}
+            onPress={() => undefined}
+          />
+        )}
+        {fiscalCode && (
+          <ListItemNav
+            testID="FciDataSharingScreenFiscalCodeTestID"
+            value={I18n.t("profile.fiscalCode.fiscalCode")}
+            description={fiscalCode}
+            hideChevron
+            accessibilityLabel={I18n.t("profile.fiscalCode.fiscalCode")}
+            onPress={() => undefined}
+          />
+        )}
+        {O.isSome(email) && (
+          <>
+            <ListItemNav
+              testID="FciDataSharingScreenEmailTestID"
+              value={I18n.t("profile.data.list.email")}
+              description={email.value}
+              hideChevron
+              accessibilityLabel={I18n.t("profile.data.list.email")}
+              onPress={() => undefined}
+            />
+            <AlertTextComponent />
+          </>
+        )}
+      </ScrollView>
+      <View testID="FciDataSharingScreenFooterTestID">
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          secondary={{ type: "Solid", buttonProps: confirmButtonProps }}
+          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+        />
+      </View>
 
       {fciAbortSignature}
-    </BaseScreenComponent>
+    </>
   );
 };
 

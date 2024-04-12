@@ -1,104 +1,68 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { Container, List, ListItem, Spinner } from "native-base";
 import * as React from "react";
-import { StatusBar, StyleSheet, View, SafeAreaView } from "react-native";
-import { connect } from "react-redux";
-import { HSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../components/core/typography/Body";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../components/SectionStatus";
-import I18n from "../../i18n";
-import { ReduxProps } from "../../store/actions/types";
+import { View, StyleSheet, AccessibilityInfo, Platform } from "react-native";
 import {
-  sessionInfoSelector,
-  sessionTokenSelector
-} from "../../store/reducers/authentication";
-import { profileSelector } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
-import { IngressCheckBox } from "./CheckBox";
-
-type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
+  ContentWrapper,
+  H3,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
+import I18n from "../../i18n";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackIngressScreen } from "../profile/analytics";
+import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: variables.contentPaddingLarge,
-    backgroundColor: variables.brandPrimary
+    ...IOStyles.bgWhite,
+    ...IOStyles.centerJustified,
+    ...IOStyles.flex
+  },
+  contentTitle: {
+    textAlign: "center"
+  },
+  content: {
+    alignItems: "center"
   }
 });
 
-class IngressScreen extends React.PureComponent<Props> {
-  public render() {
-    const items = [
-      {
-        enabled: this.props.hasSessionToken,
-        label: I18n.t("startup.authentication")
-      },
-      {
-        enabled: this.props.hasSessionInfo,
-        label: I18n.t("startup.sessionInfo")
-      },
-      { enabled: this.props.hasProfile, label: I18n.t("startup.profileInfo") },
-      {
-        enabled: this.props.isProfileEnabled,
-        label: I18n.t("startup.profileEnabled")
-      }
-    ];
-    return (
-      <SafeAreaView
-        style={[IOStyles.flex, { backgroundColor: variables.brandPrimary }]}
-      >
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={styles.container.backgroundColor}
-        />
-        <Container style={styles.container}>
-          <View style={IOStyles.alignCenter}>
-            <Body color="white">{I18n.t("startup.title")}</Body>
+const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
+
+export const IngressScreen = () => {
+  const contentTitle = I18n.t("startup.title");
+  useOnFirstRender(() => {
+    trackIngressScreen();
+    // Since the screen is shown for a very short time,
+    // we prefer to announce the content to the screen reader,
+    // instead of focusing the first element.
+    if (Platform.OS === "android") {
+      // We use it only on Android, because on iOS the screen reader
+      // stops reading the content when the ingress screen is unmounted
+      // and the focus is moved to another element.
+      AccessibilityInfo.announceForAccessibility(contentTitle);
+    }
+  });
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ContentWrapper>
+        <View style={styles.content}>
+          <View
+            accessible={false}
+            accessibilityElementsHidden={true}
+            importantForAccessibility={"no-hide-descendants"}
+          >
+            <LoadingIndicator />
           </View>
-          <Spinner color="white" />
-
-          <List withContentLateralPadding={true}>
-            {items.map((item, index) => (
-              <ListItem key={`item-${index}`}>
-                <IngressCheckBox checked={item.enabled} />
-                <HSpacer size={8} />
-                <Body
-                  color="white"
-                  weight={item.enabled ? "SemiBold" : "Regular"}
-                >
-                  {item.label}
-                </Body>
-              </ListItem>
-            ))}
-          </List>
-          <View style={{ marginTop: 48 }}>
-            <SectionStatusComponent sectionKey={"ingress"} />
-          </View>
-        </Container>
-      </SafeAreaView>
-    );
-  }
-}
-
-function mapStateToProps(state: GlobalState) {
-  const maybeSessionToken = sessionTokenSelector(state);
-  const maybeSessionInfo = sessionInfoSelector(state);
-  const potProfile = profileSelector(state);
-  return {
-    hasSessionToken: maybeSessionToken !== undefined,
-    hasSessionInfo: O.isSome(maybeSessionInfo),
-    hasProfile: potProfile !== null,
-    isProfileEnabled:
-      pot.isSome(potProfile) &&
-      potProfile.value.has_profile &&
-      potProfile.value.is_inbox_enabled
-  };
-}
-
-export default connect(mapStateToProps)(IngressScreen);
+          <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
+          <H3 style={styles.contentTitle} accessibilityLabel={contentTitle}>
+            {contentTitle}
+          </H3>
+        </View>
+      </ContentWrapper>
+    </SafeAreaView>
+  );
+};

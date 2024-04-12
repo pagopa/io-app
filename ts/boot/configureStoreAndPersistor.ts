@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as O from "fp-ts/lib/Option";
 import _, { merge } from "lodash";
 import {
   applyMiddleware,
@@ -38,8 +38,8 @@ import {
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
 import {
-  InstallationState,
-  INSTALLATION_INITIAL_STATE
+  INSTALLATION_INITIAL_STATE,
+  InstallationState
 } from "../store/reducers/installation";
 import { NotificationsState } from "../store/reducers/notifications";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
@@ -53,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 23;
+const CURRENT_REDUX_STORE_VERSION = 26;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -356,7 +356,47 @@ const migrations: MigrationManifest = {
         ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
       }
     };
-  }
+  },
+  // Version 24
+  // Adds payments history archive persistence
+  "24": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        payments: {
+          history: {
+            archive: []
+          }
+        }
+      }
+    }),
+  // Version 25
+  // Adds new wallet section FF
+  "25": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isNewWalletSectionEnabled: false
+      }
+    }),
+  // Version 26
+  // Adds shouldShowPaymentsRedirectBanner persistence in feature wallet reducer
+  "26": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        wallet: {
+          preferences: {
+            shouldShowPaymentsRedirectBanner: true
+          }
+        }
+      }
+    }),
+  // Version 27
+  // Adds it wallet section FF
+  "27": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isItWalletTestEnabled: false
+      }
+    })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -413,7 +453,10 @@ const sagaMiddleware = createSagaMiddleware(
   RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
 );
 
-function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
+function configureStoreAndPersistor(): {
+  store: Store<GlobalState, Action>;
+  persistor: Persistor;
+} {
   /**
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.

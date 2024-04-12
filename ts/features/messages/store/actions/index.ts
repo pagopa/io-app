@@ -7,18 +7,18 @@ import {
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
-  UIAttachment,
   UIMessage,
   UIMessageDetails,
   UIMessageId,
-  WithSkipMixpanelTrackingOnFailure,
   WithUIMessageId
 } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { Download, DownloadError } from "../reducers/downloads";
 import { MessagesStatus } from "../reducers/messagesStatus";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
@@ -219,6 +219,29 @@ export const resetMigrationStatus = createAction(
   "MESSAGES_MIGRATE_TO_PAGINATED_DONE"
 );
 
+export type DownloadAttachmentRequest = {
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
+  skipMixpanelTrackingOnFailure: boolean;
+};
+
+export type DownloadAttachmentSuccess = {
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
+  path: string;
+};
+
+export type DownloadAttachmentError = {
+  attachment: ThirdPartyAttachment;
+  error: Error;
+  messageId: UIMessageId;
+};
+
+export type DownloadAttachmentCancel = {
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
+};
+
 /**
  * The user requests an attachment download.
  */
@@ -228,14 +251,18 @@ export const downloadAttachment = createAsyncAction(
   "DOWNLOAD_ATTACHMENT_FAILURE",
   "DOWNLOAD_ATTACHMENT_CANCEL"
 )<
-  WithSkipMixpanelTrackingOnFailure<UIAttachment>,
-  Download,
-  DownloadError<Error>,
-  UIAttachment
+  DownloadAttachmentRequest,
+  DownloadAttachmentSuccess,
+  DownloadAttachmentError,
+  DownloadAttachmentCancel
 >();
 
 export const cancelPreviousAttachmentDownload = createAction(
   "CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD"
+);
+
+export const clearRequestedAttachmentDownload = createAction(
+  "CLEAR_REQUESTED_ATTACHMNET_DOWNLOAD"
 );
 
 /**
@@ -243,7 +270,48 @@ export const cancelPreviousAttachmentDownload = createAction(
  */
 export const removeCachedAttachment = createStandardAction(
   "REMOVE_CACHED_ATTACHMENT"
-)<Download>();
+)<DownloadAttachmentSuccess>();
+
+export type UpdatePaymentForMessageRequest = {
+  messageId: UIMessageId;
+  paymentId: string;
+};
+
+export type UpdatePaymentForMessageSuccess = {
+  messageId: UIMessageId;
+  paymentId: string;
+  paymentData: PaymentRequestsGetResponse;
+};
+
+export type UpdatePaymentForMessageFailure = {
+  messageId: UIMessageId;
+  paymentId: string;
+  details: Detail_v2Enum;
+};
+
+export type UpdatePaymentForMessageCancel =
+  ReadonlyArray<UpdatePaymentForMessageRequest>;
+
+export const updatePaymentForMessage = createAsyncAction(
+  "UPDATE_PAYMENT_FOR_MESSAGE_REQUEST",
+  "UPDATE_PAYMENT_FOR_MESSAGE_SUCCESS",
+  "UPDATE_PAYMENT_FOR_MESSAGE_FAILURE",
+  "UPDATE_PAYMENT_FOR_MESSAGE_CANCEL"
+)<
+  UpdatePaymentForMessageRequest,
+  UpdatePaymentForMessageSuccess,
+  UpdatePaymentForMessageFailure,
+  UpdatePaymentForMessageCancel
+>();
+
+export const cancelQueuedPaymentUpdates = createAction(
+  "CANCEL_QUEUED_PAYMENT_UPDATES"
+);
+
+export const addUserSelectedPaymentRptId = createAction(
+  "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID",
+  resolve => (paymentId: string) => resolve({ paymentId })
+);
 
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
@@ -258,10 +326,14 @@ export type MessagesActions = ActionType<
   | typeof loadThirdPartyMessage
   | typeof downloadAttachment
   | typeof cancelPreviousAttachmentDownload
+  | typeof clearRequestedAttachmentDownload
   | typeof removeCachedAttachment
   | typeof getMessagePrecondition
   | typeof clearMessagePrecondition
   | typeof getMessageDataAction
   | typeof cancelGetMessageDataAction
   | typeof resetGetMessageDataAction
+  | typeof updatePaymentForMessage
+  | typeof cancelQueuedPaymentUpdates
+  | typeof addUserSelectedPaymentRptId
 >;

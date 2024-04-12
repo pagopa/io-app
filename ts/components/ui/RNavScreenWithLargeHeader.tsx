@@ -22,14 +22,20 @@ import {
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 
+export type LargeHeaderTitleProps = {
+  label: string;
+  accessibilityLabel?: string;
+  testID?: string;
+};
+
 type Props = {
   children: React.ReactNode;
   fixedBottomSlot?: React.ReactNode;
-  title: string;
-  titleTestID?: string;
+  title: LargeHeaderTitleProps;
   description?: string;
   goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
+  canGoback?: boolean;
 } & SupportRequestParams;
 
 /**
@@ -44,13 +50,14 @@ type Props = {
  * @param contextualHelpMarkdown
  * @param faqCategories
  * @param headerProps
+ * @param canGoback allows to show/not show the back button and consequently does not pass to the HeaderSecondLevel the props that would display the back button
  */
 export const RNavScreenWithLargeHeader = ({
   children,
   fixedBottomSlot,
   title,
-  titleTestID,
   goBack,
+  canGoback = true,
   description,
   contextualHelp,
   contextualHelpMarkdown,
@@ -72,10 +79,8 @@ export const RNavScreenWithLargeHeader = ({
     translationY.value = event.contentOffset.y;
   });
 
-  const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps({
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: goBack ?? navigation.goBack,
-    title,
+  const headerPropsWithoutGoBack = {
+    title: title.label,
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
@@ -84,7 +89,17 @@ export const RNavScreenWithLargeHeader = ({
     contextualHelpMarkdown,
     faqCategories,
     ...headerActionsProp
-  });
+  };
+
+  const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps(
+    canGoback
+      ? {
+          ...headerPropsWithoutGoBack,
+          backAccessibilityLabel: I18n.t("global.buttons.back"),
+          goBack: goBack ?? navigation.goBack
+        }
+      : headerPropsWithoutGoBack
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -109,7 +124,13 @@ export const RNavScreenWithLargeHeader = ({
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
-          <H2 testID={titleTestID}>{title}</H2>
+          <H2
+            testID={title.testID}
+            accessibilityLabel={title.accessibilityLabel ?? title.label}
+            accessibilityRole="header"
+          >
+            {title.label}
+          </H2>
         </View>
 
         {description && (

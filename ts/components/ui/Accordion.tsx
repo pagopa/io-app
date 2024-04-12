@@ -1,22 +1,22 @@
-import { pipe } from "fp-ts/lib/function";
+import { Icon } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { Body } from "../core/typography/Body";
-import { IOStyles } from "../core/variables/IOStyles";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import Markdown from "./Markdown";
+import { Body } from "../core/typography/Body";
+import { IOStyles } from "../core/variables/IOStyles";
+import LegacyMarkdown from "./Markdown/LegacyMarkdown";
 
 type Props = {
   title: string;
   content: string;
-  onLinkClicked?: ComponentProps<typeof Markdown>["onLinkClicked"];
-  shouldHandleLink?: ComponentProps<typeof Markdown>["shouldHandleLink"];
+  onLinkClicked?: ComponentProps<typeof LegacyMarkdown>["onLinkClicked"];
+  shouldHandleLink?: ComponentProps<typeof LegacyMarkdown>["shouldHandleLink"];
 };
 
 const styles = StyleSheet.create({
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
  *
  * @param props
  * @constructor
- * @deprecated Please use {@link RawAccordion} or {@link IOAccordion}
+ * @deprecated Please use {@link RawAccordion}
  */
 const Accordion: React.FunctionComponent<Props> = (props: Props) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -69,7 +69,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
 
   const renderContent = (content: string) => (
     <View style={styles.pad}>
-      <Markdown
+      <LegacyMarkdown
         shouldHandleLink={props.shouldHandleLink}
         onLinkClicked={(url: string) => {
           pipe(
@@ -80,7 +80,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
         }}
       >
         {content}
-      </Markdown>
+      </LegacyMarkdown>
     </View>
   );
 

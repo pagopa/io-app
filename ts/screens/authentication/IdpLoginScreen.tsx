@@ -16,7 +16,7 @@ import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthe
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
-import Markdown from "../../components/ui/Markdown";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import I18n from "../../i18n";
@@ -249,9 +249,9 @@ const IdpLoginScreen = (props: Props) => {
       return {
         title: I18n.t("authentication.idp_login.contextualHelpTitle"),
         body: () => (
-          <Markdown>
+          <LegacyMarkdown>
             {I18n.t("authentication.idp_login.contextualHelpContent")}
-          </Markdown>
+          </LegacyMarkdown>
         )
       };
     }

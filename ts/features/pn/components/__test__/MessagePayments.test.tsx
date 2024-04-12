@@ -1,230 +1,483 @@
 import React from "react";
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import PN_ROUTES from "../../navigation/routes";
+import { MessagePayments } from "../MessagePayments";
 import { UIMessageId } from "../../../messages/types";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { updatePaymentForMessage } from "../../store/actions";
+import { GlobalState } from "../../../../store/reducers/types";
+import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { MessagePayments } from "../MessagePayments";
 
-describe("MessagePayments component", () => {
-  it("Should match the snapshot for a single loading payment", () => {
-    const messageId = "m1" as UIMessageId;
-    const payments = [
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n1"
-      }
-    ] as Array<NotificationPaymentInfo>;
+const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA" as UIMessageId;
+const globalMaxVisiblePaymentCount = 5;
+const globalDueDate = new Date(2099, 4, 2, 1, 1, 1);
+const generatePayablePayment = (
+  codiceContestoPagamento: string,
+  amount: number
+) =>
+  ({
+    codiceContestoPagamento,
+    importoSingoloVersamento: amount,
+    dueDate: globalDueDate,
+    causaleVersamento: "hendrerit orci id dolor consectetur"
+  } as PaymentRequestsGetResponse);
+const notificationPaymentInfosFromPaymentIds = (paymentIds: Array<string>) =>
+  paymentIds.map(
+    payment =>
+      ({
+        creditorTaxId: payment.substring(0, 11),
+        noticeCode: payment.substring(11)
+      } as NotificationPaymentInfo)
+  );
+
+describe("MessagePayments", () => {
+  it("should match snapshot when cancelled, without payments, without cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
     const component = renderComponent(
-      messageId,
-      false,
-      payments,
-      undefined,
-      undefined
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match the snapshot for five loading payments", () => {
-    const messageId = "m1" as UIMessageId;
-    const payments = [
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n1"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n2"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n3"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n4"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n5"
-      }
-    ] as Array<NotificationPaymentInfo>;
-    const component = renderComponent(
-      messageId,
-      false,
-      payments,
-      undefined,
-      undefined
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match the snapshot for more than five loading payments", () => {
-    const messageId = "m1" as UIMessageId;
-    const payments = [
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n1"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n2"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n3"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n4"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n5"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n6"
-      }
-    ] as Array<NotificationPaymentInfo>;
-    const component = renderComponent(
-      messageId,
-      false,
-      payments,
-      undefined,
-      undefined
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match the snapshot for five payable payments", () => {
-    const messageId = "m1" as UIMessageId;
-    const payments = [
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n1"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n2"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n3"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n4"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n5"
-      }
-    ] as Array<NotificationPaymentInfo>;
-    const component = renderComponent(
-      messageId,
-      false,
-      payments,
-      "payable",
-      undefined
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match the snapshot for five processed payments", () => {
-    const messageId = "m1" as UIMessageId;
-    const payments = [
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n1"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n2"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n3"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n4"
-      },
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n5"
-      }
-    ] as Array<NotificationPaymentInfo>;
-    const component = renderComponent(
-      messageId,
-      false,
-      payments,
-      "processed",
-      undefined
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match the snapshot for a cancelled message with no completed payments", () => {
-    const messageId = "m1" as UIMessageId;
-    const component = renderComponent(
-      messageId,
+      globalMessageId,
       true,
-      undefined,
-      undefined,
-      undefined
+      [],
+      [],
+      initialState
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("Should match the snapshot for a cancelled message with three completed payments", () => {
-    const messageId = "m1" as UIMessageId;
-    const component = renderComponent(messageId, true, undefined, undefined, [
-      "n1",
-      "n2",
-      "n3"
-    ]);
+  it("should match snapshot when cancelled with payments without completed payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650",
+      "01234567890012345678912345660",
+      "01234567890012345678912345670"
+    ];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [globalMessageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              ),
+              [paymentIds[1]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+              ),
+              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[3]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+              ),
+              [paymentIds[4]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+              ),
+              [paymentIds[5]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+              ),
+              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      true,
+      payments,
+      [],
+      paymentsState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when cancelled, without payments, with cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650",
+      "01234567890012345678912345660",
+      "01234567890012345678912345670"
+    ];
+    const component = renderComponent(
+      globalMessageId,
+      true,
+      [],
+      paymentIds,
+      initialState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when cancelled, with payments, with cancelled-completed-payments", () => {
+    const messageId = "01HTFFDYS8VQ779EA4M5WB9YWA" as UIMessageId;
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650",
+      "01234567890012345678912345660",
+      "01234567890012345678912345670"
+    ];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [messageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              ),
+              [paymentIds[1]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+              ),
+              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[3]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+              ),
+              [paymentIds[4]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+              ),
+              [paymentIds[5]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+              ),
+              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      true,
+      payments,
+      paymentIds,
+      paymentsState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, without payments, without cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      [],
+      [],
+      initialState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, without payments, with cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650",
+      "01234567890012345678912345660",
+      "01234567890012345678912345670"
+    ];
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      [],
+      paymentIds,
+      initialState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, with one payable payment, with cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = ["01234567890012345678912345610"];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [globalMessageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              )
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      payments,
+      paymentIds,
+      paymentsState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, with one payable payment, without cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = ["01234567890012345678912345610"];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [globalMessageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              )
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      payments,
+      [],
+      paymentsState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, with five (max-visible-payments) payable payments, with cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650"
+    ];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [globalMessageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              ),
+              [paymentIds[1]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+              ),
+              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[3]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+              ),
+              [paymentIds[4]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+              )
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      payments,
+      paymentIds,
+      paymentsState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, with five (max-visible-payments) payable payments, without cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650"
+    ];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [globalMessageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              ),
+              [paymentIds[1]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+              ),
+              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[3]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+              ),
+              [paymentIds[4]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+              )
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      payments,
+      [],
+      paymentsState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, with more-than-five (max-visible-payments) payable payments, with cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650",
+      "01234567890012345678912345660",
+      "01234567890012345678912345670"
+    ];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [globalMessageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              ),
+              [paymentIds[1]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+              ),
+              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[3]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+              ),
+              [paymentIds[4]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+              ),
+              [paymentIds[5]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+              ),
+              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      payments,
+      paymentIds,
+      paymentsState
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not cancelled, with more-than-five (max-visible-payments) payable payments, without cancelled-completed-payments", () => {
+    const initialState = dsEnabledGlobalState();
+    const paymentIds = [
+      "01234567890012345678912345610",
+      "01234567890012345678912345620",
+      "01234567890012345678912345630",
+      "01234567890012345678912345640",
+      "01234567890012345678912345650",
+      "01234567890012345678912345660",
+      "01234567890012345678912345670"
+    ];
+    const paymentsState: GlobalState = {
+      ...initialState,
+      entities: {
+        ...initialState.entities,
+        messages: {
+          ...initialState.entities.messages,
+          payments: {
+            ...initialState.entities.messages.payments,
+            [globalMessageId]: {
+              [paymentIds[0]]: remoteReady(
+                generatePayablePayment(paymentIds[0], 199)
+              ),
+              [paymentIds[1]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+              ),
+              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[3]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+              ),
+              [paymentIds[4]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+              ),
+              [paymentIds[5]]: remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+              ),
+              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+            }
+          }
+        }
+      }
+    };
+    const payments = notificationPaymentInfosFromPaymentIds(paymentIds);
+    const component = renderComponent(
+      globalMessageId,
+      false,
+      payments,
+      [],
+      paymentsState
+    );
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
 
+const dsEnabledGlobalState = (): GlobalState => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  return appReducer(
+    initialState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+};
+
 const renderComponent = (
   messageId: UIMessageId,
   isCancelled: boolean,
-  payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
-  paymentsStatus: "payable" | "processed" | undefined,
-  completedPaymentNoticeCodes: ReadonlyArray<string> | undefined
+  payments: Array<NotificationPaymentInfo>,
+  completedPayments: Array<string>,
+  initialState: GlobalState,
+  maxVisiblePaymentCount: number = globalMaxVisiblePaymentCount
 ) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const modifiedState =
-    payments?.reduce(
-      (previousState, payment) =>
-        paymentsStatus === "payable"
-          ? appReducer(
-              previousState,
-              updatePaymentForMessage.success({
-                messageId,
-                paymentId: ``,
-                paymentData: {
-                  codiceContestoPagamento: `${payment.noticeCode}`,
-                  importoSingoloVersamento: 99,
-                  causaleVersamento: "Causale",
-                  dueDate: new Date(2023, 10, 23, 10, 30)
-                } as PaymentRequestsGetResponse
-              })
-            )
-          : paymentsStatus === "processed"
-          ? appReducer(
-              previousState,
-              updatePaymentForMessage.failure({
-                messageId,
-                paymentId: ``,
-                details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-              })
-            )
-          : previousState,
-      globalState
-    ) ?? globalState;
-  const store = createStore(appReducer, modifiedState as any);
-
+  const store = createStore(appReducer, initialState as any);
   const mockPresentPaymentsBottomSheetRef = {
     current: () => undefined
   };
@@ -232,15 +485,15 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessagePayments
-        messageId={messageId}
+        completedPaymentNoticeCodes={completedPayments}
         isCancelled={isCancelled}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+        messageId={messageId}
         payments={payments}
-        completedPaymentNoticeCodes={completedPaymentNoticeCodes}
-        maxVisiblePaymentCount={5}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
       />
     ),
-    "DUMMY",
+    PN_ROUTES.MESSAGE_DETAILS,
     {},
     store
   );

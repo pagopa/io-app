@@ -2,7 +2,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import * as React from "react";
+import React from "react";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
@@ -44,24 +44,24 @@ import {
   IDPayUnsubscriptionRoutes
 } from "../features/idpay/unsubscription/navigation/navigator";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
+import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { WalletNavigator as NewWalletNavigator } from "../features/newWallet/navigation";
+import { WalletRoutes as NewWalletRoutes } from "../features/newWallet/navigation/routes";
+import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
+import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
+import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
+import { PaymentsCheckoutRoutes } from "../features/payments/checkout/navigation/routes";
+import { PaymentsMethodDetailsNavigator } from "../features/payments/details/navigation/navigator";
+import { PaymentsMethodDetailsRoutes } from "../features/payments/details/navigation/routes";
+import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/navigation/navigator";
+import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
+import { PaymentsTransactionNavigator } from "../features/payments/transaction/navigation/navigator";
+import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
+import ServicesNavigator from "../features/services/navigation/navigator";
+import { SERVICES_ROUTES } from "../features/services/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
-import { WalletBarcodeNavigator } from "../features/walletV3/barcode/navigation/navigator";
-import { WalletBarcodeRoutes } from "../features/walletV3/barcode/navigation/routes";
-import {
-  WalletDetailsNavigator,
-  WalletDetailsRoutes
-} from "../features/walletV3/details/navigation/navigator";
-import {
-  WalletOnboardingNavigator,
-  WalletOnboardingRoutes
-} from "../features/walletV3/onboarding/navigation/navigator";
-import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
-import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
-import {
-  WalletTransactionNavigator,
-  WalletTransactionRoutes
-} from "../features/walletV3/transaction/navigation/navigator";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
@@ -73,15 +73,13 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
+import { isNewWalletSectionEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
-import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
-import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
 
@@ -97,14 +95,23 @@ const AuthenticatedStackNavigator = () => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
 
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN}
-      headerMode={"screen"}
-      screenOptions={{ gestureEnabled: false }}
+      screenOptions={{
+        gestureEnabled: false,
+        headerMode: "screen"
+      }}
     >
-      <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
+      <Stack.Screen
+        name={ROUTES.MAIN}
+        options={{ headerShown: false }}
+        component={MainTabNavigator}
+      />
 
       <Stack.Screen
         name={ROUTES.ONBOARDING}
@@ -129,13 +136,21 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
+      {isNewWalletSectionEnabled ? (
+        <Stack.Screen
+          name={NewWalletRoutes.WALLET_NAVIGATOR}
+          options={hideHeaderOptions}
+          component={NewWalletNavigator}
+        />
+      ) : (
+        <Stack.Screen
+          name={ROUTES.WALLET_NAVIGATOR}
+          options={hideHeaderOptions}
+          component={WalletNavigator}
+        />
+      )}
       <Stack.Screen
-        name={ROUTES.WALLET_NAVIGATOR}
-        options={hideHeaderOptions}
-        component={WalletNavigator}
-      />
-      <Stack.Screen
-        name={ROUTES.SERVICES_NAVIGATOR}
+        name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
         options={hideHeaderOptions}
         component={ServicesNavigator}
       />
@@ -287,36 +302,36 @@ const AuthenticatedStackNavigator = () => {
       )}
 
       <Stack.Screen
-        name={WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN}
-        component={WalletOnboardingNavigator}
+        name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR}
+        component={PaymentsOnboardingNavigator}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
-        component={WalletPaymentNavigator}
+        name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR}
+        component={PaymentsCheckoutNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
       />
       <Stack.Screen
-        name={WalletDetailsRoutes.WALLET_DETAILS_MAIN}
-        component={WalletDetailsNavigator}
+        name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR}
+        component={PaymentsMethodDetailsNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
       />
       <Stack.Screen
-        name={WalletTransactionRoutes.WALLET_TRANSACTION_MAIN}
-        component={WalletTransactionNavigator}
+        name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR}
+        component={PaymentsTransactionNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
       />
       <Stack.Screen
-        name={WalletBarcodeRoutes.WALLET_BARCODE_MAIN}
+        name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR}
         component={WalletBarcodeNavigator}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,

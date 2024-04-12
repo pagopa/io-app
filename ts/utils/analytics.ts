@@ -179,6 +179,26 @@ export function trackLollipopIdpLoginFailure(reason: string) {
   });
 }
 
+export function trackLollipopIsKeyStrongboxBackedSuccess(
+  isStrongboxBacked: boolean
+) {
+  void mixpanelTrack(
+    "LOLLIPOP_IS_KEY_STRONGBOX_BACKED_SUCCESS",
+    buildEventProperties("TECH", undefined, {
+      isStrongboxBacked
+    })
+  );
+}
+
+export function trackLollipopIsKeyStrongboxBackedFailure(reason: string) {
+  void mixpanelTrack(
+    "LOLLIPOP_IS_KEY_STRONGBOX_BACKED_FAILURE",
+    buildEventProperties("KO", undefined, {
+      reason
+    })
+  );
+}
+
 // End of lollipop events
 
 // SPID Login
@@ -190,9 +210,9 @@ export function trackSpidLoginError(
   if (isLoginUtilsError(e)) {
     void mixpanelTrack(eventName, {
       idp: idpName,
-      code: e.userInfo.StatusCode,
-      description: e.userInfo.Error,
-      domain: e.userInfo.URL
+      code: e.userInfo?.statusCode,
+      description: e.userInfo?.error,
+      domain: e.userInfo?.url
     });
   } else {
     const error = e as Error;

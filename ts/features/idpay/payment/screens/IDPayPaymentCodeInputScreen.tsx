@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  IOColors,
   IOStyles,
   IOVisualCostants,
   TextInput,
@@ -46,7 +47,11 @@ const IDPayPaymentCodeInputScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      <StatusBar barStyle={"dark-content"} translucent={false} />
+      <StatusBar
+        barStyle={"dark-content"}
+        translucent={false}
+        backgroundColor={IOColors.white}
+      />
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.wrapper}>
           <H1>{I18n.t("idpay.payment.manualInput.title")}</H1>

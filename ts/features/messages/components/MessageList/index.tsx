@@ -12,7 +12,7 @@ import {
   Vibration
 } from "react-native";
 import { connect } from "react-redux";
-
+import { useFocusEffect } from "@react-navigation/native";
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
@@ -39,7 +39,6 @@ import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { showToast } from "../../../../utils/showToast";
 import {
   EmptyComponent,
@@ -156,6 +155,7 @@ const MessageList = ({
     O.Option<number>
   >(O.none);
 
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [isRefreshFromUser, setIsRefreshFromUser] = useState(false);
 
   const isLoadingPreviousOrAll = isLoadingPrevious || isReloadingAll;
@@ -166,26 +166,6 @@ const MessageList = ({
   }, [isLoadingPreviousOrAll]);
 
   useTabItemPressWhenScreenActive(() => scrollTo(0, true), true);
-
-  useOnFirstRender(
-    () => {
-      reloadAll();
-    },
-    () => shouldUseLoad && !didLoad
-  );
-
-  useActionOnFocus(() => {
-    // check if there are new messages when the component becomes focused
-    if (previousCursor) {
-      loadPreviousPage(previousCursor);
-    }
-  }, minimumRefreshInterval);
-
-  useEffect(() => {
-    if (error) {
-      showToast(I18n.t("global.genericError"), "warning");
-    }
-  }, [error]);
 
   const hasMessages = messages.length > 0;
   const scrollTo = (index: number, animated: boolean = false) => {
@@ -256,6 +236,39 @@ const MessageList = ({
   const isLoadingOrRefreshingMessageList =
     isLoadingMore || isLoadingPreviousOrAll;
 
+  useOnFirstRender(
+    () => {
+      reloadAll();
+    },
+    () => shouldUseLoad && !didLoad
+  );
+
+  // check if there are new messages when the component becomes focused
+  useFocusEffect(
+    useCallback(() => {
+      const now = new Date();
+      const shouldRefreshDelay =
+        now.getTime() - lastUpdate.getTime() > minimumRefreshInterval;
+      if (shouldRefreshDelay && previousCursor) {
+        if (!isLoadingOrRefreshingMessageList) {
+          loadPreviousPage(previousCursor);
+        }
+        setLastUpdate(now);
+      }
+    }, [
+      isLoadingOrRefreshingMessageList,
+      lastUpdate,
+      loadPreviousPage,
+      previousCursor
+    ])
+  );
+
+  useEffect(() => {
+    if (error) {
+      showToast(I18n.t("global.genericError"), "warning");
+    }
+  }, [error]);
+
   const refreshControl = shouldUseLoad ? (
     <RefreshControl
       refreshing={shouldShowTopRefreshControl}
@@ -292,7 +305,7 @@ const MessageList = ({
         ListEmptyComponent={renderEmptyList({
           error,
           EmptyComponent: didLoad ? ListEmptyComponent : null
-        })}
+        })()}
         data={messages}
         initialNumToRender={pageSize}
         keyExtractor={(message: UIMessage): string => message.id}
@@ -314,7 +327,7 @@ const MessageList = ({
         onEndReached={onEndReached}
         onEndReachedThreshold={0.25}
         testID={testID}
-        ListFooterComponent={shouldShowFooterLoader && <Loader />}
+        ListFooterComponent={shouldShowFooterLoader ? <Loader /> : null}
       />
     </>
   );

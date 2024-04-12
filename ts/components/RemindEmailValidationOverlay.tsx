@@ -58,7 +58,7 @@ import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
-import Markdown from "./ui/Markdown";
+import LegacyMarkdown from "./ui/Markdown/LegacyMarkdown";
 
 type OwnProp = {
   isOnboarding?: boolean;
@@ -330,11 +330,13 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               onPress: () => {
                 if (this.props.isOnboarding) {
                   NavigationService.navigate(ROUTES.ONBOARDING, {
-                    screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+                    screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
+                    params: { isOnboarding: true }
                   });
                 } else {
                   NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                    screen: ROUTES.INSERT_EMAIL_SCREEN
+                    screen: ROUTES.INSERT_EMAIL_SCREEN,
+                    params: { isOnboarding: false }
                   });
                 }
               },
@@ -391,14 +393,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             <Body weight="SemiBold">{title}</Body>
           </View>
           {!this.state.emailHasBeenValidate ? (
-            <Markdown
+            <LegacyMarkdown
               onLoadEnd={this.handleOnContentLoadEnd}
               cssStyle={MARKDOWN_BODY_STYLE}
             >
               {!this.props.isOnboarding
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}
-            </Markdown>
+            </LegacyMarkdown>
           ) : (
             <View
               style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}
