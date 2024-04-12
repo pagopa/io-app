@@ -18,8 +18,7 @@ const WalletCardsContainer = () => {
 
   if (cards.length === 1) {
     // Single card does not need grouping
-    const card = cards[0];
-    return renderWalletCardFn(card);
+    return renderWalletCardFn(cards[0]);
   }
 
   return (
