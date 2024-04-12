@@ -1,24 +1,32 @@
-import * as React from "react";
-import { useCallback, useState, useRef, useMemo, memo } from "react";
 import {
-  H2,
-  VSpacer,
-  Pictogram,
-  IconButton,
-  ContentWrapper,
   ButtonLink,
+  ContentWrapper,
+  H2,
+  IOPictograms,
   IOStyles,
+  IconButton,
+  Pictogram,
   ToastNotification,
-  IOPictograms
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import _ from "lodash";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { Alert, ColorSchemeName, Modal, View, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ScrollView } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import _ from "lodash";
+import * as React from "react";
+import { memo, useCallback, useMemo, useRef, useState } from "react";
+import {
+  Alert,
+  ColorSchemeName,
+  Modal,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 import I18n from "../../i18n";
 import {
   identificationCancel,
@@ -28,24 +36,24 @@ import {
   identificationSuccess
 } from "../../store/actions/identification";
 import { useIOSelector } from "../../store/hooks";
+import { appCurrentStateSelector } from "../../store/reducers/appState";
 import {
   IdentificationCancelData,
   identificationFailSelector,
   maxAttempts,
   progressSelector
 } from "../../store/reducers/identification";
-import { useBiometricType } from "../../utils/hooks/useBiometricType";
 import { profileNameSelector } from "../../store/reducers/profile";
-import { biometricAuthenticationRequest } from "../../utils/biometrics";
-import { appCurrentStateSelector } from "../../store/reducers/appState";
-import { usePrevious } from "../../utils/hooks/usePrevious";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { biometricAuthenticationRequest } from "../../utils/biometrics";
+import { useAppBackgroundAccentColorName } from "../../utils/hooks/theme";
+import { useBiometricType } from "../../utils/hooks/useBiometricType";
+import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
   FAIL_ATTEMPTS_TO_SHOW_ALERT,
   IdentificationInstructionsComponent,
   getBiometryIconName
 } from "../../utils/identification";
-import { useAppBackgroundAccentColorName } from "../../utils/hooks/theme";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 import { IdentificationNumberPad } from "./components/IdentificationNumberPad";
 
@@ -330,6 +338,7 @@ const IdentificationModal = () => {
       transparent
       onRequestClose={onRequestCloseHandler}
     >
+      {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
       <SafeAreaView style={[styles.safeArea, { backgroundColor: blueColor }]}>
         {isValidatingTask && (
           <View accessible style={styles.closeButton}>
