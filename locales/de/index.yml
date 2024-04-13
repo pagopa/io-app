@@ -1940,6 +1940,7 @@ services:
         value: "Schnelleinrichtung"
         label: "Alle Dienste, die du nicht deaktiviert hast, können dich kontaktieren."
         title: "Schnelleinrichtung benutzen"
+        successAlert: "Du hast die Schnelleinrichtung aktiviert"
         body:
           text1: "Nur Dienste, die dir etwas Wichtiges mitzuteilen haben, werden dich kontaktieren."
           text2: "Du kannst die Mitteilungen von Diensten, die dich nicht interessieren, jederzeit deaktivieren."
@@ -1947,6 +1948,7 @@ services:
         value: "Manuelle Konfiguration"
         label: "Nur die Dienste, die du aktiviert hast, können dich kontaktieren."
         title: "Manuell konfigurieren"
+        successAlert: "Du hast die manuelle Konfiguration aktiviert"
         body:
           text1: "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
         bottomSheet:
