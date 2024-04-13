@@ -2259,6 +2259,7 @@ features:
     payments:
       title: "pagoPA Zahlungsaufforderungen"
       noticeCode: "Zahlungskodex"
+      pay: "Zahlen"
   euCovidCertificate:
     save:
       album: "IO"
