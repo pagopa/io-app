@@ -1157,7 +1157,7 @@ wallet:
       SUCCESS:
         title: "Die Karte wurde hinzugefügt!"
         subtitle: ""
-        primaryAction: "Weiter"
+        primaryAction: "Details anzeigen"
       GENERIC_ERROR:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
         subtitle: "Versuche es erneut oder kontaktiere den Support"
