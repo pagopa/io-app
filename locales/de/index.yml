@@ -2358,6 +2358,10 @@ features:
         expand: "Vorherigen Status anzeigen"
         info: "Über die Web-Version des Dienstes kannst du die Details zu jedem Status, die Annahmebestätigung und den Zustellnachweis, die gegenüber Dritten geltend gemacht werden können, einsehen"
         cta: "Zugang zur Webversion"
+  wallet:
+    home:
+      emptyMessage: "Verwahre hier deine Zahlungsmittel, die Nationale Jugendkarte, Boni und Rabatte."
+      cta: "Dem Konto hinzufügen"
 support:
   ticketList:
     noTicket:
