@@ -2256,6 +2256,9 @@ features:
       addReminder: "Erinnerung hinzufügen"
       removeReminder: "Erinnerung entfernen"
       content: "Läuft am {{date}} um {{time}} ab"
+    payments:
+      title: "pagoPA Zahlungsaufforderungen"
+      noticeCode: "Zahlungskodex"
   euCovidCertificate:
     save:
       album: "IO"
