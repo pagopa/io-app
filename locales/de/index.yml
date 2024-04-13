@@ -876,6 +876,18 @@ datetimes:
   todayAt: "heute um"
   notValid: "Ungültiges Datum"
 payment:
+  homeScreen:
+    title: "Zahlungen"
+    methodsSection:
+      header: "Zahlungsmethoden"
+      headerCTA: "Hinzufügen"
+    historySection:
+     header: "Transaktionsverlauf"
+     headerCTA: "Alle anzeigen"
+     transactionStatusBadges:
+      failure: "FEHLGESCHLAGEN"
+      success: ""
+    CTA: "Aufforderung bezahlen"
   alertNoPaymentMethods:
     title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
     message: "Die Zahlungsmethode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
@@ -1405,7 +1417,7 @@ wallet:
       name: "Rabatte, Boni und andere Initiativen"
       description: "Initiativen von öffentlichen Verwaltungen zur Unterstützung von Ausgaben oder Dienstleistungen im Zusammenhang mit Zahlungen"
     digital:
-      name: "Apps und digitale Zahlungsmittel"
+      name: "Apps und digitale Zahlungsmethoden"
       description: "Deine bevorzugten digitalen Tools auf IO"
     pagobancomat:
       name: "PagoBANCOMAT-Karte"
@@ -2365,7 +2377,7 @@ features:
         cta: "Zugang zur Webversion"
   wallet:
     home:
-      emptyMessage: "Verwahre hier deine Zahlungsmittel, die Nationale Jugendkarte, Boni und Rabatte."
+      emptyMessage: "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte."
       cta: "Dem Konto hinzufügen"
       paymentsBanner:
         title: "Möchtest du eine Aufforderung bezahlen?"
