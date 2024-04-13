@@ -2362,6 +2362,10 @@ features:
     home:
       emptyMessage: "Verwahre hier deine Zahlungsmittel, die Nationale Jugendkarte, Boni und Rabatte."
       cta: "Dem Konto hinzufügen"
+      paymentsBanner:
+        title: "Möchtest du eine Aufforderung bezahlen?"
+        action: "Geh zum Bereich Zahlungen"
+        close: "Schließen"
 support:
   ticketList:
     noTicket:
