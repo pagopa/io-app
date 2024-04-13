@@ -1173,7 +1173,7 @@ wallet:
         primaryAction: "Schließen"
       CANCELED_BY_USER:
         title: "Der Vorgang wurde abgebrochen"
-        subtitle: ""
+        subtitle: "Wenn du die Zahlungsaufforderung bezahlen wolltest, warte ein paar Minuten, bevor du es erneut versuchst."
         primaryAction: "Schließen"
       INVALID_SESSION:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
