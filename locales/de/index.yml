@@ -189,6 +189,7 @@ global:
     messages: "Mitteilungen"
     wallet: "Konto"
     scan: "Scannen"
+    payments: "Zahlungen"
     documents: "Dokumente"
     profile: "Profil"
     services: "Dienste"
