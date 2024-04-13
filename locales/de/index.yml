@@ -666,6 +666,8 @@ authentication:
     dualRecoverDescription: "Wenn du deine Anmeldedaten vergessen hast, klicke bitte auf die unten stehenden Schaltflächen."
     recoverUsername: "Benutzername wiederherstellen"
     recoverPassword: "Passwort wiederherstellen"
+  idp_login_success:
+    contentTitle: "Hallo {{name}}!"
   errors:
     notoken: "Die Sitzung ist nicht verfügbar oder ist ungültig"
     logout: "Fehler beim Abmelden"
