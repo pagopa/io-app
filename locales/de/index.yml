@@ -2394,6 +2394,12 @@ features:
         title: "Möchtest du eine Aufforderung bezahlen?"
         action: "Geh zum Bereich Zahlungen"
         close: "Schließen"
+    cards:
+      categories:
+        bonus: "Initiativen für das Gemeinwohl"
+        cgn: "Nationale Jugendkarte"
+        itw: "IT Wallet"
+        payment: "Zahlungsmethoden"
 support:
   ticketList:
     noTicket:
