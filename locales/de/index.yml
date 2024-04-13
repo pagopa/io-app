@@ -1867,7 +1867,11 @@ messageDetails:
     body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
   footer:
     contact: "Absender kontaktieren"
-    showMore: "Mehr anzeigen"
+     showMoreData: "Mehr anzeigen"
+  showMoreDataBottomSheet:
+    title: "Identifikationsdaten"
+    messageId: "MitteilungsID"
+    messageIdAccessibility: "MitteilungsID kopieren"
 messagePDFPreview:
   title: "PDF-Vorschau"
   singleBtn: "Speichern oder teilen"
