@@ -2020,6 +2020,14 @@ serviceDetail:
   disabled: "deaktiviert"
   notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
+  instructions:
+      unlockCode: "Entsperrcode"
+      unlockCodepPrefix: "Benutze deinen"
+      fingerprint: "Fingerabdruck"
+      fingerprintPrefix: "benutze deinen"
+      faceId: "Gesicht"
+      faceIdPrefix: "benutze dein"
+      congiunction: "oder"
   title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
   titleValidation: "Bestätige den Vorgang"
@@ -2034,7 +2042,10 @@ identification:
       reason: "Identifikation durch TouchID fehlgeschlagen"
       title: "Identifikation erforderlich"
       sensorDescription: "Berührungssensor"
-  fail:        
+  fail:
+    remainingAttempts: "Du hast noch {{attempts}} Versuche übrig"
+    remainingAttemptSingle: "Du hast noch einen Versuch übrig"
+    tooManyAttempts: "Du hast zu oft den falschen Code eingegeben!"
     waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
