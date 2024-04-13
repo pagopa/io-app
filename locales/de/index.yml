@@ -2220,7 +2220,7 @@ bonus:
         title: "Wir bearbeiten deine Anfrage."
         body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
       alreadyActive:
-        title: "Deine Nationale Jugendkarte ist aktiv!"
+        title: "Deine Nationale Jugendkarte ist bereits aktiv!"
         body: "Du kannst die Details im Abschnitt Konto einsehen."
       pending:
         title: "Deine Nationale Jugendkarte wird gerade aktiviert."
