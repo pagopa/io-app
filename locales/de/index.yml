@@ -248,6 +248,7 @@ permissionRationale:
     title: "Zugriff auf die Kamera gewähren"
     message: "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
 startup:
+  title: "Wir bereiten dein Erlebnis in IO vor"
   authentication: "Benutzer authentifiziert"
   sessionInfo: "SPID-Attribute geladen"
   profileInfo: "Benutzerprofil geladen"
