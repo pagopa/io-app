@@ -2433,6 +2433,7 @@ features:
         close: "Schließen"
     cards:
       categories:
+        all: "Alle"
         bonus: "Initiativen für das Gemeinwohl"
         cgn: "Nationale Jugendkarte"
         itw: "IT Wallet"
