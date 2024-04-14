@@ -630,6 +630,7 @@ authentication:
         cardLocked: "Identitätskarte gesperrt"
         wrongPin1AttemptLeft: "Falsche PIN, du hast noch einen Versuch"
         wrongPin2AttemptLeft: "Falsche PIN, du hast noch zwei Versuche"
+        genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
       error:
         readerCardLostTitle: "Karte neu lesen"
         readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
