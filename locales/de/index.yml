@@ -2028,6 +2028,11 @@ services:
       subtitle: "Wir rufen die Details des Dienstes ab"
       back: "Zurück"
       retry: "Erneut versuchen"
+    preferences:
+      title: "Dieser Dienst kann"
+      inbox: "In der App kontaktieren"
+      pushNotifications: "Push-Benachrichtigungen senden"
+      messageReadStatus: "Lesebestätigungen erhalten"
 serviceDetail:
   fiscalCode: "Steuernummer Körperschaft"
   fiscalCodeAccessibility: "Steuernummer Körperschaft"
