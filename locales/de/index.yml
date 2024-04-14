@@ -2038,6 +2038,21 @@ services:
       inbox: "In der App kontaktieren"
       pushNotifications: "Push-Benachrichtigungen senden"
       messageReadStatus: "Lesebestätigungen erhalten"
+    metadata:
+      title: "Kontakte und Informationen"
+      website: "Website besuchen"
+      downloadApp: "App herunterladen"
+      support: "Hilfe anfordern"
+      phone: "Körperschaft anrufen"
+      email: "E-Mail senden"
+      pec: "PEC-Mail senden"
+      fiscalCode: "Steuernummer Körperschaft"
+      address: "Adresse"
+      serviceId: "Dienst ID"
+    tosAndPrivacy: 
+      title: "Nutzungsbedingungen und Datenschutzbestimmungen"
+      tosLink: "Nutzungsbedingungen"
+      privacyLink: "Datenschutzerklärung"
 serviceDetail:
   fiscalCode: "Steuernummer Körperschaft"
   fiscalCodeAccessibility: "Steuernummer Körperschaft"
