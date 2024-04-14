@@ -234,6 +234,7 @@ locales:
   en: "Englisch"
   de: "Deutsch"
 clipboard:
+  copyIntoClipboard: "in die Zwischenablage kopieren"
   copyFeedback: "In die Zwischenablage kopiert"
   copyText: "kopieren"
   copyFeedbackButton: "kopiert"
