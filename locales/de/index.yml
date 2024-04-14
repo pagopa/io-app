@@ -213,6 +213,11 @@ tablet:
   message: "Die Benutzeroberfläche von IO ist für Smartphones optimiert, aber alle mit deinem Gerät kompatiblen Funktionen sind weiterhin verfügbar."
 rooted:
   title: "Es sieht so aus, als ob die Sicherheit deines Geräts kompromittiert ist!"
+  body: "Wenn du auf “Weiter” klickst, erklärst du dich damit einverstanden, auf eigene Gefahr fortzufahren, andernfalls schließe die App."
+  learnMoreButton: 
+    title: "Was bedeutet das?"
+  learnMoreBottomsheet:
+    title: "Sicherheit deines Geräts"
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:
