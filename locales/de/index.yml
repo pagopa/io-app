@@ -2425,6 +2425,12 @@ features:
         cgn: "Nationale Jugendkarte"
         itw: "IT Wallet"
         payment: "Zahlungsmethoden"
+    onboarding: 
+      title: "Was möchtest du deinem Konto hinzufügen?"
+      options: 
+        cgn: "Nationale Jugendkarte"
+        welfare: "Initiativen für das Gemeinwohl"
+        payments: "Zahlungsmethoden"
 support:
   ticketList:
     noTicket:
