@@ -17,6 +17,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -56,7 +57,6 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ServiceDetailsScreenNavigationParams } from "../../../services/screens/ServiceDetailsScreen";
 
 export type Props = ReturnType<typeof mapStateToProps> &

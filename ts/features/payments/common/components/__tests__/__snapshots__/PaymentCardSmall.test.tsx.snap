@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PaymentCardSmall component matches snapshot for loading 1`] = `
+exports[`PaymentCardSmall should match the snapshot 1`] = `
 <View
   style={
     Object {
@@ -171,7 +171,7 @@ exports[`PaymentCardSmall component matches snapshot for loading 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`PaymentCardSmall component matches snapshot for loading 1`] = `
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -320,559 +334,182 @@ exports[`PaymentCardSmall component matches snapshot for loading 1`] = `
                       }
                     >
                       <View
-                        style={
-                          Array [
-                            Object {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "borderCurve": "continuous",
-                              "borderRadius": 8,
-                              "flex": 1,
-                              "flexBasis": 160,
-                              "flexGrow": 0,
-                              "justifyContent": "center",
-                              "padding": 16,
-                              "width": 160,
-                            },
-                            Object {
-                              "backgroundColor": "#E8EBF1",
-                            },
-                          ]
-                        }
-                        testID="undefined-skeleton"
-                      >
-                        <View
-                          collapsable={false}
-                          style={
-                            Object {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            color="#D2D6E3"
-                            height={24}
-                            radius={8}
-                            style={
-                              Object {
-                                "backgroundColor": "#D2D6E3",
-                                "borderRadius": 8,
-                                "height": 24,
-                                "width": 24,
-                              }
-                            }
-                            width={24}
-                          />
-                        </View>
-                        <View
-                          style={
-                            Object {
-                              "height": 8,
-                            }
-                          }
-                        />
-                        <View
-                          collapsable={false}
-                          style={
-                            Object {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            color="#D2D6E3"
-                            height={16}
-                            radius={8}
-                            style={
-                              Object {
-                                "backgroundColor": "#D2D6E3",
-                                "borderRadius": 8,
-                                "height": 16,
-                                "width": 125,
-                              }
-                            }
-                            width={125}
-                          />
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-    </View>
-  </RNCSafeAreaProvider>
-</View>
-`;
-
-exports[`PaymentCardSmall component matches snapshot for paypal 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <RNCSafeAreaProvider
-    onInsetsChange={[Function]}
-    style={
-      Array [
-        Object {
-          "flex": 1,
-        },
-        undefined,
-      ]
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          Object {
-            "zIndex": 1,
-          }
-        }
-      >
-        <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
-          pointerEvents="box-none"
-          style={null}
-        >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              Object {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                Object {
-                  "height": 0,
-                }
-              }
-            />
-            <View
-              pointerEvents="box-none"
-              style={
-                Object {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  Object {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
-                    "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  Object {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
-                  }
-                }
-              >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
-                  collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
-                  style={
-                    Object {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
-                  }
-                >
-                  WALLET_HOME
-                </Text>
-              </View>
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  Object {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
-                  }
-                }
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
-      >
-        <View
-          activityState={2}
-          collapsable={false}
-          forwardedRef={[Function]}
-          pointerEvents="box-none"
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
-            pointerEvents="box-none"
-            style={
-              Array [
-                Object {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
-                Object {
-                  "bottom": 0,
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-              ]
-            }
-            transitionSpec={
-              Object {
-                "close": Object {
-                  "animation": "spring",
-                  "config": Object {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": Object {
-                  "animation": "spring",
-                  "config": Object {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                Object {
-                  "flex": 1,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                forwardedRef={[Function]}
-                handlerTag={2}
-                handlerType="PanGestureHandler"
-                needsOffscreenAlphaCompositing={false}
-                onGestureHandlerEvent={[Function]}
-                onGestureHandlerStateChange={[Function]}
-                style={
-                  Object {
-                    "flex": 1,
-                    "transform": Array [
-                      Object {
-                        "translateX": 0,
-                      },
-                      Object {
-                        "translateX": 0,
-                      },
-                    ],
-                  }
-                }
-              >
-                <View
-                  pointerEvents="box-none"
-                  style={
-                    Array [
-                      Object {
-                        "flex": 1,
-                        "overflow": "hidden",
-                      },
-                      Array [
-                        Object {
-                          "backgroundColor": "#FFFFFF",
-                        },
-                        undefined,
-                      ],
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "flex": 1,
-                        "flexDirection": "column-reverse",
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "flex": 1,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignContent": "center",
-                            "alignItems": "flex-start",
-                            "backgroundColor": "#E8EBF1",
-                            "borderCurve": "continuous",
-                            "borderRadius": 8,
-                            "flex": 1,
-                            "flexBasis": 160,
-                            "flexGrow": 0,
-                            "justifyContent": "center",
-                            "padding": 16,
-                            "width": 160,
-                          }
-                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        onTouchEnd={[Function]}
+                        testID="PaymentCardSmallTestID-pressable"
                       >
                         <View
                           style={
                             Object {
-                              "alignItems": "center",
-                              "flex": 1,
-                              "flexDirection": "row",
-                              "justifyContent": "space-between",
-                              "width": "100%",
+                              "transform": Array [
+                                Object {
+                                  "scale": undefined,
+                                },
+                              ],
                             }
                           }
                         >
-                          <RNSVGSvgView
-                            align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
-                            focusable={false}
-                            height={24}
-                            meetOrSlice={0}
-                            minX={0}
-                            minY={0}
+                          <View
                             style={
                               Array [
                                 Object {
-                                  "backgroundColor": "transparent",
-                                  "borderWidth": 0,
+                                  "aspectRatio": 1.6,
+                                  "backgroundColor": "#E8EBF1",
+                                  "borderRadius": 8,
+                                  "flex": 1,
+                                  "flexBasis": 127,
+                                  "flexGrow": 0,
+                                  "height": 80,
+                                  "padding": 16,
+                                  "width": 127,
                                 },
-                                Object {
-                                  "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
-                                },
+                                undefined,
                               ]
                             }
-                            vbHeight={24}
-                            vbWidth={24}
-                            width={24}
+                            testID="PaymentCardSmallTestID"
                           >
-                            <RNSVGGroup
-                              fill={
-                                Object {
-                                  "payload": 4278190080,
-                                  "type": 0,
-                                }
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  Object {
+                                    "alignItems": "center",
+                                  },
+                                ]
                               }
                             >
-                              <RNSVGPath
-                                d="M19.2206 8.31688c.2592-1.63369 0-2.74569-.8944-3.7513-.9846-1.10858-2.7618-1.5845-5.0354-1.5845H6.68879c-.22503.00029-.44257.07995-.61351.22464-.17095.1447-.28408.34495-.31906.56475L3.0071 21.0043a.55436.55436 0 0 0 .01458.2396.55941.55941 0 0 0 .11462.2117.56714.56714 0 0 0 .19365.1448.57183.57183 0 0 0 .23716.0514h4.07508l-.28116 1.7641a.4841.4841 0 0 0 .01218.2085.48744.48744 0 0 0 .09894.1845.49417.49417 0 0 0 .16771.127.49976.49976 0 0 0 .20597.0463h3.43527c.1952-.0013.3837-.071.532-.1966.1483-.1257.2467-.2992.2779-.4898l.0347-.1728.6468-4.0567.0416-.2288c.0316-.1915.1309-.3657.2804-.4914.1494-.1257.3391-.1949.5353-.1951h.5138c3.3276 0 5.9332-1.3362 6.6946-5.203.3182-1.6154.1539-2.96311-.6873-3.91152-.2664-.29417-.5852-.53733-.9407-.71731"
-                                fill={
-                                  Object {
-                                    "payload": 4278218976,
-                                    "type": 0,
-                                  }
-                                }
-                                propList={
+                              <RNSVGSvgView
+                                align="xMidYMid"
+                                bbHeight={24}
+                                bbWidth={24}
+                                focusable={false}
+                                height={24}
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
                                   Array [
-                                    "fill",
+                                    Object {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    Object {
+                                      "flex": 0,
+                                      "height": 24,
+                                      "width": 24,
+                                    },
                                   ]
                                 }
-                              />
-                              <RNSVGPath
-                                d="M19.2206 8.31688c.2592-1.63369 0-2.74569-.8944-3.7513-.9846-1.10858-2.7618-1.5845-5.0354-1.5845H6.68879c-.22503.00029-.44257.07995-.61351.22464-.17095.1447-.28408.34495-.31906.56475L3.0071 21.0043a.55436.55436 0 0 0 .01458.2396.55941.55941 0 0 0 .11462.2117.56714.56714 0 0 0 .19365.1448.57183.57183 0 0 0 .23716.0514h4.07508l1.02397-6.4181-.03124.2014c.03393-.2189.14585-.4187.31557-.5632.16972-.1445.38608-.2243.61006-.225h1.93685c3.8044 0 6.7826-1.5285 7.6527-5.94905.0254-.13042.0474-.25741.0671-.38211"
-                                fill={
-                                  Object {
-                                    "payload": 4278197348,
-                                    "type": 0,
+                                vbHeight={24}
+                                vbWidth={24}
+                                width={24}
+                              >
+                                <RNSVGGroup
+                                  fill={
+                                    Object {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
                                   }
+                                >
+                                  <RNSVGPath
+                                    d="M8.75415 6.58813h6.48917v11.662H8.75415z"
+                                    fill={
+                                      Object {
+                                        "payload": 4285952960,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      Array [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M9.16616 12.4181c-.0018-2.2753 1.04274-4.42514 2.83254-5.82997-3.04065-2.38965-7.4072-2.04157-10.03091.79961-2.62372 2.84116-2.62372 7.22156 0 10.06276 2.62371 2.8412 6.99026 3.1892 10.03091.7996-1.7904-1.4053-2.83497-3.556-2.83254-5.832Z"
+                                    fill={
+                                      Object {
+                                        "payload": 4293591067,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      Array [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M23.2411 17.4813v-.4132h.1534v-.0841h-.3908v.0841h.1535v.4132h.0839Zm.7588 0v-.4981h-.1198l-.1378.3426-.1378-.3426h-.1199v.4981h.0846v-.3758l.1292.324h.0877l.1293-.3248v.3766h.0845ZM23.9986 12.4181c-.0001 2.8395-1.6214 5.4296-4.1754 6.6705-2.554 1.2408-5.5922.9144-7.8244-.8405 1.7891-1.406 2.8336-3.5555 2.8336-5.831 0-2.2754-1.0445-4.42495-2.8336-5.83097 2.2322-1.75494 5.2704-2.0813 7.8244-.84048 2.554 1.24082 4.1753 3.83098 4.1754 6.67045v.002Z"
+                                    fill={
+                                      Object {
+                                        "payload": 4278231519,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      Array [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "height": 8,
                                 }
-                                propList={
-                                  Array [
-                                    "fill",
-                                  ]
+                              }
+                            />
+                            <Text
+                              allowFontScaling={false}
+                              color="grey-700"
+                              defaultColor="black"
+                              defaultWeight="Regular"
+                              ellipsizeMode="tail"
+                              font="TitilliumWeb"
+                              fontStyle={
+                                Object {
+                                  "fontSize": 12,
                                 }
-                              />
-                              <RNSVGPath
-                                d="M9.76535 8.33862a.81197.81197 0 0 1 .15504-.36155c.08061-.10626.18631-.19146.30781-.24823a.82557.82557 0 0 1 .3563-.08008h5.1743a10.85686 10.85686 0 0 1 1.7066.12356c.1493.02288.2951.05034.4362.08123.1412.03089.2777.06635.4108.1041l.1955.06064c.2463.07968.4855.17956.715.29859.2592-1.63369.0001-2.74569-.8943-3.7513-.9847-1.10858-2.7619-1.5845-5.0355-1.5845H6.68879c-.22503.00029-.44257.07995-.61351.22464-.17095.1447-.28408.34495-.31906.56475L3.0071 21.0043a.55436.55436 0 0 0 .01458.2396.55941.55941 0 0 0 .11462.2117.56714.56714 0 0 0 .19365.1448.57183.57183 0 0 0 .23716.0514h4.07508l1.02397-6.4181 1.09919-6.89508Z"
-                                fill={
+                              }
+                              numberOfLines={1}
+                              style={
+                                Array [
                                   Object {
-                                    "payload": 4278202503,
-                                    "type": 0,
-                                  }
-                                }
-                                propList={
-                                  Array [
-                                    "fill",
-                                  ]
-                                }
-                              />
-                            </RNSVGGroup>
-                          </RNSVGSvgView>
+                                    "fontSize": 12,
+                                  },
+                                  Object {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Web",
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                  },
+                                ]
+                              }
+                              weight="Regular"
+                            >
+                              •••• 9900
+                            </Text>
+                          </View>
                         </View>
-                        <View
-                          style={
-                            Object {
-                              "height": 8,
-                            }
-                          }
-                        />
-                        <Text
-                          allowFontScaling={false}
-                          color="grey-700"
-                          defaultColor="black"
-                          defaultWeight="SemiBold"
-                          ellipsizeMode="tail"
-                          font="TitilliumWeb"
-                          fontStyle={
-                            Object {
-                              "fontSize": 18,
-                              "lineHeight": 25,
-                            }
-                          }
-                          numberOfLines={1}
-                          style={
-                            Array [
-                              Object {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              },
-                              Object {
-                                "color": "#555C70",
-                                "fontFamily": "Titillium Web",
-                                "fontStyle": "normal",
-                                "fontWeight": "400",
-                              },
-                            ]
-                          }
-                          weight="Regular"
-                        >
-                          PayPal
-                        </Text>
                       </View>
                     </View>
                   </View>
@@ -880,8 +517,8 @@ exports[`PaymentCardSmall component matches snapshot for paypal 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

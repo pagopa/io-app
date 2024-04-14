@@ -10,6 +10,8 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
+import { mapWalletIdToCardKey } from "../../common/utils/wallet";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -31,8 +33,14 @@ export function* handleDeleteWalletDetails(
     )) as unknown as SagaCallReturnType<typeof deleteWalletById>;
     if (E.isRight(deleteWalletResult)) {
       if (deleteWalletResult.right.status === 204) {
+        yield* put(
+          walletRemoveCards([mapWalletIdToCardKey(action.payload.walletId)])
+        );
+
         // handled success
-        const successAction = paymentsDeleteMethodAction.success();
+        const successAction = paymentsDeleteMethodAction.success(
+          action.payload.walletId
+        );
         yield* put(successAction);
         if (action.payload.onSuccess) {
           action.payload.onSuccess();

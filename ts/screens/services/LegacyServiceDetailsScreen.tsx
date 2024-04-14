@@ -19,7 +19,7 @@ import BaseScreenComponent, {
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
 import ServiceMetadataComponent from "../../components/services/ServiceMetadata";
-import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
+import LegacySpecialServicesCTA from "../../components/services/SpecialServices/LegacySpecialServicesCTA";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { FooterTopShadow } from "../../components/FooterTopShadow";
@@ -29,7 +29,7 @@ import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { contentSelector } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { serviceByIdPotSelector } from "../../features/services/store/reducers/servicesById";
 import {
   isEmailEnabledSelector,
   isInboxEnabledSelector,
@@ -68,7 +68,7 @@ const LegacyServiceDetailsScreen = (props: Props) => {
       .params;
 
   const service = useIOSelector(state =>
-    pipe(serviceByIdSelector(state, serviceId), pot.toUndefined)
+    pipe(serviceByIdPotSelector(state, serviceId), pot.toUndefined)
   );
 
   // const serviceId = props.route.params.serviceId;
@@ -188,7 +188,7 @@ const LegacyServiceDetailsScreen = (props: Props) => {
             {!!specialServiceInfoOpt && (
               <>
                 <VSpacer size={8} />
-                <SpecialServicesCTA
+                <LegacySpecialServicesCTA
                   serviceId={serviceId}
                   customSpecialFlowOpt={
                     specialServiceInfoOpt.customSpecialFlowOpt

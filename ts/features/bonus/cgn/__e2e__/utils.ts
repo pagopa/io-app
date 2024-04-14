@@ -30,7 +30,9 @@ export const activateCGNBonusSuccess = async () => {
   // make sure to scroll to bottom, otherwise in small devices the element will not be visible nor tappable
   await scrollView.scrollTo("bottom");
 
-  const unsubscribeCgnCta = element(by.id("cgnDeactivateBonusTestId"));
+  const unsubscribeCgnCta = element(
+    by.id("service-cgn-deactivate-bonus-button")
+  );
   await waitFor(unsubscribeCgnCta)
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);

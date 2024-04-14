@@ -7,6 +7,8 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { mapWalletsToCards } from "../../common/utils/wallet";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -28,6 +30,13 @@ export function* handleGetWalletDetails(
     )) as unknown as SagaCallReturnType<typeof getWalletById>;
     if (E.isRight(getWalletDetailsResult)) {
       if (getWalletDetailsResult.right.status === 200) {
+        // Upsert the card in the wallet
+        yield* put(
+          walletAddCards(
+            mapWalletsToCards([getWalletDetailsResult.right.value])
+          )
+        );
+
         // handled success
         yield* put(
           paymentsGetMethodDetailsAction.success(
