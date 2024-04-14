@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
 import { useIOSelector } from "../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../../services/store/reducers/servicesById";
+import { serviceMetadataByIdSelector } from "../../services/details/store/reducers/servicesById";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 const styles = StyleSheet.create({
