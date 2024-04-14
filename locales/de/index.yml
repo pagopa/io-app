@@ -541,6 +541,14 @@ authentication:
     session_expired:
       title: "Deine Sitzung ist abgelaufen"
       body: "Aus Sicherheitsgründen bitten wir dich, dich alle {{days}} Tage oder wenn du die App verlässt, mit SPID oder CIE anzumelden."
+    cie_unsupported:
+      title: "Du kannst dich nicht mit CIE anmelden"
+      body: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht."
+      button: "Verstanden"
+      nfc_problem: "Zum Lesen der CIE ist ein Gerät mit NFC-Chip erforderlich."
+      os_problem: "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich."
+      nfc_alert: "Dein Gerät verfügt nicht über NFC."
+      os_alert: "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
     contentTitleCie: "Du hast keinen SPID oder CIE?"
     spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
     request_cie: "CIE anfordern"
