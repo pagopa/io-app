@@ -900,18 +900,6 @@ datetimes:
   todayAt: "heute um"
   notValid: "Ungültiges Datum"
 payment:
-  homeScreen:
-    title: "Zahlungen"
-    methodsSection:
-      header: "Zahlungsmethoden"
-      headerCTA: "Hinzufügen"
-    historySection:
-     header: "Transaktionsverlauf"
-     headerCTA: "Alle anzeigen"
-     transactionStatusBadges:
-      failure: "FEHLGESCHLAGEN"
-      success: ""
-    CTA: "Aufforderung bezahlen"
   alertNoPaymentMethods:
     title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
     message: "Die Zahlungsmethode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
@@ -2459,6 +2447,24 @@ features:
         cgn: "Nationale Jugendkarte"
         welfare: "Initiativen für das Gemeinwohl"
         payments: "Zahlungsmethoden"
+  payments:
+    title: "Zahlungen"
+    cta: "Aufforderung bezahlen"
+    methods:
+      title: "Zahlungsmethoden"
+      button: "Hinzufügen"
+      banner:
+        content: "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst."
+        action: "Zahlungsmethode hinzufügen"
+    transactions:
+      title: "Transaktionsverlauf"
+      button: "Alle anzeigen"
+      empty:
+        title: "Hier siehst du deine pagoPA-Quittungen"
+        content: "Bezahle eine Zahlungsaufforderung in der App oder an jedem pagoPA-fähigen Kanal."
+      status:
+        failure: "FEHLGESCHLAGEN"
+        success: ""
 support:
   ticketList:
     noTicket:
