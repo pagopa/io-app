@@ -773,7 +773,7 @@ email:
       modalbutton: "Andere E-Mail-Adresse verwenden"
   edit:
     title: "E-Mail-Adresse bearbeiten"
-    subtitle: "Jetzt benutzt du "
+    subtitle: "Jetzt benutzt du"
     validated: "Die zuvor angegebene und bestätigte E-Mail-Adresse lautet"
     label: "Neue persönliche E-Mail-Adresse"
     cta: "E-Mail bearbeiten"
