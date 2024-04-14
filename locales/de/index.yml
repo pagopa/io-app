@@ -1197,7 +1197,7 @@ wallet:
         primaryAction: "Schließen"
       CANCELED_BY_USER:
         title: "Der Vorgang wurde abgebrochen"
-        subtitle: "Wenn du die Zahlungsaufforderung bezahlen wolltest, warte ein paar Minuten, bevor du es erneut versuchst."
+        subtitle: "Wenn du die Zahlungsaufforderung bezahlen willst, warte ein paar Minuten, bevor du es erneut versuchst."
         primaryAction: "Schließen"
       INVALID_SESSION:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
@@ -2461,7 +2461,7 @@ features:
       button: "Alle anzeigen"
       empty:
         title: "Hier siehst du deine pagoPA-Quittungen"
-        content: "Bezahle eine Zahlungsaufforderung in der App oder an jedem pagoPA-fähigen Kanal."
+        content: "Bezahle eine Zahlungsaufforderung in der App oder mittels jedem pagoPA-fähigen Kanal."
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
