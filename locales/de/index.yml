@@ -728,6 +728,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
+      title: "Ist das deine E-Mail?"
+      subtitle: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen:"
+      editButton: "Nein, ändern"
+      validateButton: "Ja, bestätigen"
       header:
         title: "IO konfigurieren"
       help:
