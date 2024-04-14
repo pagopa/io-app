@@ -2415,6 +2415,8 @@ features:
     home:
       emptyMessage: "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte."
       cta: "Dem Konto hinzufügen"
+      toast:
+        newMethod: "Element hinzugefügt!"
       paymentsBanner:
         title: "Möchtest du eine Aufforderung bezahlen?"
         action: "Geh zum Bereich Zahlungen"
