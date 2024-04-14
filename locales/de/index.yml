@@ -1526,7 +1526,7 @@ wallet:
     EXPIRED: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden"
     GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
     GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
-    DUPLICATED: "Dieser Hinweis wurde bereits bezahlt!"
+    DUPLICATED: "Diese Aufforderung wurde bereits bezahlt!"
     NOT_FOUND: "Wir können die Zahlungsmitteilung nicht finden"
     NOT_FOUND_SUBTITLE: "Möglicherweise wurde die Zahlungsmitteilung bereits bezahlt. Wende dich bitte an die Körperschaft, die sie ausgestellt hat."
     INVALID_AMOUNT: "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuche es erneut."
