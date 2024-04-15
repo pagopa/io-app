@@ -1716,7 +1716,6 @@ wallet:
         title: "Die Zahlungsmethode wird nicht unterstützt"
       WAITING_CONFIRMATION_EMAIL:
         title: "Warte auf eine Bestätigung per E-Mail"
-        subtitle: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, wirst du in Kürze eine E-Mail erhalten. Sollte diese nicht ankommen, kontaktiere bitte den Support."
         subtitle: "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an {{email}}."
         defaultSubtitle: "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an die verbundene E-Mail-Adresse."
       METHOD_NOT_ENABLED:
