@@ -171,7 +171,7 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -528,8 +514,8 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -706,7 +692,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -714,25 +700,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2785,8 +2757,8 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2963,7 +2935,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -2971,25 +2943,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -5042,8 +5000,8 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -5220,7 +5178,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -5228,25 +5186,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -5387,8 +5331,8 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -5565,7 +5509,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -5573,25 +5517,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -7083,8 +7013,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -7261,7 +7191,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -7269,25 +7199,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -8779,8 +8695,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -8957,7 +8873,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -8965,25 +8881,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -10583,8 +10485,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -10761,7 +10663,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -10769,25 +10671,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -12387,8 +12275,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -12565,7 +12453,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -12573,25 +12461,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -13103,8 +12977,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -13281,7 +13155,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -13289,25 +13163,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -13819,8 +13679,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -13997,7 +13857,7 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -14005,25 +13865,11 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -14164,8 +14010,8 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -14342,7 +14188,7 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -14350,25 +14196,11 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -14509,8 +14341,8 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

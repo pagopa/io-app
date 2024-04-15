@@ -171,7 +171,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -657,8 +643,8 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -835,7 +821,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -843,25 +829,11 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1173,8 +1145,8 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
