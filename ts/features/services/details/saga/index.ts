@@ -10,10 +10,6 @@ import { handleGetServicePreference } from "./handleGetServicePreference";
 import { handleUpsertServicePreference } from "./handleUpsertServicePreference";
 import { handleServiceDetails } from "./handleServiceDetails";
 
-/**
- * Handle payment method onboarding requests
- * @param walletClient wallet client
- */
 export function* watchServicesDetailsSaga(
   backendClient: BackendClient
 ): SagaIterator {
