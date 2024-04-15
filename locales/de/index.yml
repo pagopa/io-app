@@ -189,6 +189,7 @@ global:
     messages: "Mitteilungen"
     wallet: "Konto"
     scan: "Scannen"
+    payments: "Zahlungen"
     documents: "Dokumente"
     profile: "Profil"
     services: "Dienste"
@@ -212,6 +213,11 @@ tablet:
   message: "Die Benutzeroberfläche von IO ist für Smartphones optimiert, aber alle mit deinem Gerät kompatiblen Funktionen sind weiterhin verfügbar."
 rooted:
   title: "Es sieht so aus, als ob die Sicherheit deines Geräts kompromittiert ist!"
+  body: "Wenn du auf “Weiter” klickst, erklärst du dich damit einverstanden, auf eigene Gefahr fortzufahren, andernfalls schließe die App."
+  learnMoreButton: 
+    title: "Was bedeutet das?"
+  learnMoreBottomsheet:
+    title: "Sicherheit deines Geräts"
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:
@@ -228,6 +234,7 @@ locales:
   en: "Englisch"
   de: "Deutsch"
 clipboard:
+  copyIntoClipboard: "in die Zwischenablage kopieren"
   copyFeedback: "In die Zwischenablage kopiert"
   copyText: "kopieren"
   copyFeedbackButton: "kopiert"
@@ -248,6 +255,7 @@ permissionRationale:
     title: "Zugriff auf die Kamera gewähren"
     message: "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
 startup:
+  title: "Wir bereiten dein Erlebnis in IO vor"
   authentication: "Benutzer authentifiziert"
   sessionInfo: "SPID-Attribute geladen"
   profileInfo: "Benutzerprofil geladen"
@@ -260,8 +268,6 @@ startup:
   contextualHelp:
     title: "Initialisierungsprobleme?"
 login:
-  expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
-  expiration_info_FL: "Aus Sicherheitsgründen wirst du einmal im Jahr aufgefordert, dich mittels SPID oder CIE zu authentifizieren."
   biometric_info: "Um dich anzumelden, gib einfach den Entsperrcode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
 inbox:
   enableButton: "Posteingang aktivieren"
@@ -534,6 +540,14 @@ authentication:
     session_expired:
       title: "Deine Sitzung ist abgelaufen"
       body: "Aus Sicherheitsgründen bitten wir dich, dich alle {{days}} Tage oder wenn du die App verlässt, mit SPID oder CIE anzumelden."
+    cie_unsupported:
+      title: "Du kannst dich nicht mit CIE anmelden"
+      body: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht."
+      button: "Verstanden"
+      nfc_problem: "Zum Lesen der CIE ist ein Gerät mit NFC-Chip erforderlich."
+      os_problem: "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich."
+      nfc_alert: "Dein Gerät verfügt nicht über NFC."
+      os_alert: "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
     contentTitleCie: "Du hast keinen SPID oder CIE?"
     spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
     request_cie: "CIE anfordern"
@@ -614,6 +628,7 @@ authentication:
         cardLocked: "Identitätskarte gesperrt"
         wrongPin1AttemptLeft: "Falsche PIN, du hast noch einen Versuch"
         wrongPin2AttemptLeft: "Falsche PIN, du hast noch zwei Versuche"
+        genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
       error:
         readerCardLostTitle: "Karte neu lesen"
         readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
@@ -665,6 +680,8 @@ authentication:
     dualRecoverDescription: "Wenn du deine Anmeldedaten vergessen hast, klicke bitte auf die unten stehenden Schaltflächen."
     recoverUsername: "Benutzername wiederherstellen"
     recoverPassword: "Passwort wiederherstellen"
+  idp_login_success:
+    contentTitle: "Hallo {{name}}!"
   errors:
     notoken: "Die Sitzung ist nicht verfügbar oder ist ungültig"
     logout: "Fehler beim Abmelden"
@@ -709,6 +726,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
+      title: "Ist das deine E-Mail?"
+      subtitle: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen:"
+      editButton: "Nein, ändern"
+      validateButton: "Ja, bestätigen"
       header:
         title: "IO konfigurieren"
       help:
@@ -716,6 +737,7 @@ email:
     emailAlreadyTaken:
       title: "Deine E-Mail-Adresse ändern"
       subtitleStart: "Deine E-Mail-Adresse"
+      subtitleEnd: "wird bereits auf IO verwendet, du musst eine andere eingeben, um die App weiter nutzen zu können."
       editButton: "E-Mail-Adresse ändern"
       header:
         title: "IO konfigurieren"
@@ -741,17 +763,20 @@ email:
   newinsert:
     header: "IO konfigurieren"
     title: "Wie lautet Ihre E-Mail?"
-    subtitle: "Wir verwenden E-Mail für bestimmte Mitteilungen, wie z. B. Zahlungsbelege oder Nachrichten, die mit dem Kundendienst ausgetauscht werden."
+    subtitle: "Sie wird verwendet, um dir Mitteilungen wie Zahlungsbestätigungen oder Support-Nachrichten zu senden."
     label: "Persönliche E-Mail Adresse"
     alert:
-      title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
-      description1: "E-Mail bereits in Gebrauch"
-      modaltitle: "Diese E-Mail ist bereits in Gebrauch"
-      modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
-      modalbutton: "Andere E-Mail verwenden"
+      title: "{{email}} wird bereits verwendet, bitte gib eine andere ein."
+      description1: "E-Mail-Adresse bereits verwendet"
+      description2: "Gib eine andere E-Mail-Adresse als die aktuelle ein"
+      description3: "Du verwendest diese E-Mail-Adresse bereits"
+      invalidemail: "Gib eine gültige E-Mail-Adresse ein"
+      modaltitle: "Diese E-Mail-Adresse ist bereits verwendet"
+      modaldescription: "Dies kann der Fall sein, wenn du dieselbe Adresse wie ein Familienmitglied hast"
+      modalbutton: "Andere E-Mail-Adresse verwenden"
   edit:
     title: "E-Mail-Adresse bearbeiten"
-    subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
+    subtitle: "Jetzt benutzt du"
     validated: "Die zuvor angegebene und bestätigte E-Mail-Adresse lautet"
     label: "Neue persönliche E-Mail-Adresse"
     cta: "E-Mail bearbeiten"
@@ -771,8 +796,8 @@ email:
     validated: "E-Mail bestätigt!"
     validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
   newvalidate:
-    title: "Bestätige deine E-Mail-Adresse"
-    subtitle: "Folge den Anweisungen, die an folgende Adresse gesendet wurden:"
+    title: "Wir haben dir eine E-Mail gesendet"
+    subtitle: "Um deine E-Mail-Adresse zu bestätigen, folge den Anweisungen der E-Mail an"
     link: "Ist sie nicht korrekt?"
     countdowntext: "Eine neue E-Mail anfordern in "
     buttonlabelsent: "E-Mail gesendet"
@@ -1154,7 +1179,7 @@ wallet:
       SUCCESS:
         title: "Die Karte wurde hinzugefügt!"
         subtitle: ""
-        primaryAction: "Weiter"
+        primaryAction: "Details anzeigen"
       GENERIC_ERROR:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
         subtitle: "Versuche es erneut oder kontaktiere den Support"
@@ -1402,7 +1427,7 @@ wallet:
       name: "Rabatte, Boni und andere Initiativen"
       description: "Initiativen von öffentlichen Verwaltungen zur Unterstützung von Ausgaben oder Dienstleistungen im Zusammenhang mit Zahlungen"
     digital:
-      name: "Apps und digitale Zahlungsmittel"
+      name: "Apps und digitale Zahlungsmethoden"
       description: "Deine bevorzugten digitalen Tools auf IO"
     pagobancomat:
       name: "PagoBANCOMAT-Karte"
@@ -1499,7 +1524,7 @@ wallet:
     EXPIRED: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden"
     GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
     GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
-    DUPLICATED: "Dieser Hinweis wurde bereits bezahlt!"
+    DUPLICATED: "Diese Aufforderung wurde bereits bezahlt!"
     NOT_FOUND: "Wir können die Zahlungsmitteilung nicht finden"
     NOT_FOUND_SUBTITLE: "Möglicherweise wurde die Zahlungsmitteilung bereits bezahlt. Wende dich bitte an die Körperschaft, die sie ausgestellt hat."
     INVALID_AMOUNT: "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuche es erneut."
@@ -1681,7 +1706,7 @@ wallet:
         subtitle: "Weitere Informationen erhältst du bei deiner Bank."
       CANCELED_BY_USER:
         title: "Der Vorgang wurde abgebrochen"
-        subtitle: "Es wurde kein Betrag abgebucht."
+        subtitle: "Wenn du die Zahlungsaufforderung bezahlen willst, warte ein paar Minuten, bevor du es erneut versuchst."
       EXCESSIVE_AMOUNT:
         title: "Autorisierung verweigert"
         subtitle: "Es wurde kein Betrag abgebucht.\nDu hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten."
@@ -1689,7 +1714,8 @@ wallet:
         title: "Die Zahlungsmethode wird nicht unterstützt"
       WAITING_CONFIRMATION_EMAIL:
         title: "Warte auf eine Bestätigung per E-Mail"
-        subtitle: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, wirst du in Kürze eine E-Mail erhalten. Sollte diese nicht ankommen, kontaktiere bitte den Support."
+        subtitle: "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an {{email}}."
+        defaultSubtitle: "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an die verbundene E-Mail-Adresse."
       METHOD_NOT_ENABLED:
         title: "Zahlungsmethode in der App aktivieren"
         subtitle: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion “Zahlungen in der App”."
@@ -1865,6 +1891,19 @@ messageDetails:
   bottomSheet:
     title: "Was ist eine dynamische Mitteilung?"
     body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
+  footer:
+    contacts: "Absender kontaktieren"
+    showMoreData: "Mehr anzeigen"
+  showMoreDataBottomSheet:
+    title: "Identifikationsdaten"
+    messageId: "MitteilungsID"
+    messageIdAccessibility: "MitteilungsID kopieren"
+  contactsBottomSheet:
+    title: "Hilfe"
+    body: "Wenn du dir über den Inhalt der Nachricht im Unklaren bist, wende dich an die Körperschaft, von der du die Nachricht erhalten hast."
+    actions:
+      call: "Anrufen"
+      email: "E-Mail schreiben"
 messagePDFPreview:
   title: "PDF-Vorschau"
   singleBtn: "Speichern oder teilen"
@@ -1924,6 +1963,7 @@ services:
         value: "Schnelleinrichtung"
         label: "Alle Dienste, die du nicht deaktiviert hast, können dich kontaktieren."
         title: "Schnelleinrichtung benutzen"
+        successAlert: "Du hast die Schnelleinrichtung aktiviert"
         body:
           text1: "Nur Dienste, die dir etwas Wichtiges mitzuteilen haben, werden dich kontaktieren."
           text2: "Du kannst die Mitteilungen von Diensten, die dich nicht interessieren, jederzeit deaktivieren."
@@ -1931,6 +1971,7 @@ services:
         value: "Manuelle Konfiguration"
         label: "Nur die Dienste, die du aktiviert hast, können dich kontaktieren."
         title: "Manuell konfigurieren"
+        successAlert: "Du hast die manuelle Konfiguration aktiviert"
         body:
           text1: "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
         bottomSheet:
@@ -1971,6 +2012,32 @@ services:
   disableAllMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du alle Dienste deaktivierst, können diese dich nicht mehr über IO kontaktieren (bis du sie wieder aktivierst). Du kannst die Dienste weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
   close: "Schließen"
   emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
+  details:
+    failure:
+      title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
+      subtitle: "Wir rufen die Details des Dienstes ab"
+      back: "Zurück"
+      retry: "Erneut versuchen"
+    preferences:
+      title: "Dieser Dienst kann"
+      inbox: "In der App kontaktieren"
+      pushNotifications: "Push-Benachrichtigungen senden"
+      messageReadStatus: "Lesebestätigungen erhalten"
+    metadata:
+      title: "Kontakte und Informationen"
+      website: "Website besuchen"
+      downloadApp: "App herunterladen"
+      support: "Hilfe anfordern"
+      phone: "Körperschaft anrufen"
+      email: "E-Mail senden"
+      pec: "PEC-Mail senden"
+      fiscalCode: "Steuernummer Körperschaft"
+      address: "Adresse"
+      serviceId: "Dienst ID"
+    tosAndPrivacy: 
+      title: "Nutzungsbedingungen und Datenschutzbestimmungen"
+      tosLink: "Nutzungsbedingungen"
+      privacyLink: "Datenschutzerklärung"
 serviceDetail:
   fiscalCode: "Steuernummer Körperschaft"
   fiscalCodeAccessibility: "Steuernummer Körperschaft"
@@ -1988,6 +2055,14 @@ serviceDetail:
   disabled: "deaktiviert"
   notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
+  instructions:
+      unlockCode: "Entsperrcode"
+      unlockCodepPrefix: "Benutze deinen"
+      fingerprint: "Fingerabdruck"
+      fingerprintPrefix: "benutze deinen"
+      faceId: "Gesicht"
+      faceIdPrefix: "benutze dein"
+      congiunction: "oder"
   title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
   titleValidation: "Bestätige den Vorgang"
@@ -2002,7 +2077,10 @@ identification:
       reason: "Identifikation durch TouchID fehlgeschlagen"
       title: "Identifikation erforderlich"
       sensorDescription: "Berührungssensor"
-  fail:        
+  fail:
+    remainingAttempts: "Du hast noch {{attempts}} Versuche übrig"
+    remainingAttemptSingle: "Du hast noch einen Versuch übrig"
+    tooManyAttempts: "Du hast zu oft den falschen Code eingegeben!"
     waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
@@ -2200,7 +2278,7 @@ bonus:
         title: "Wir bearbeiten deine Anfrage."
         body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
       alreadyActive:
-        title: "Deine Nationale Jugendkarte ist aktiv!"
+        title: "Deine Nationale Jugendkarte ist bereits aktiv!"
         body: "Du kannst die Details im Abschnitt Konto einsehen."
       pending:
         title: "Deine Nationale Jugendkarte wird gerade aktiviert."
@@ -2240,6 +2318,10 @@ features:
       addReminder: "Erinnerung hinzufügen"
       removeReminder: "Erinnerung entfernen"
       content: "Läuft am {{date}} um {{time}} ab"
+    payments:
+      title: "pagoPA Zahlungsaufforderungen"
+      noticeCode: "Zahlungskodex"
+      pay: "Zahlen"
   euCovidCertificate:
     save:
       album: "IO"
@@ -2339,6 +2421,47 @@ features:
         expand: "Vorherigen Status anzeigen"
         info: "Über die Web-Version des Dienstes kannst du die Details zu jedem Status, die Annahmebestätigung und den Zustellnachweis, die gegenüber Dritten geltend gemacht werden können, einsehen"
         cta: "Zugang zur Webversion"
+  wallet:
+    home:
+      emptyMessage: "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte."
+      cta: "Dem Konto hinzufügen"
+      toast:
+        newMethod: "Element hinzugefügt!"
+      paymentsBanner:
+        title: "Möchtest du eine Aufforderung bezahlen?"
+        action: "Geh zum Bereich Zahlungen"
+        close: "Schließen"
+    cards:
+      categories:
+        all: "Alle"
+        bonus: "Initiativen für das Gemeinwohl"
+        cgn: "Nationale Jugendkarte"
+        itw: "IT Wallet"
+        payment: "Zahlungsmethoden"
+    onboarding: 
+      title: "Was möchtest du deinem Konto hinzufügen?"
+      options: 
+        cgn: "Nationale Jugendkarte"
+        welfare: "Initiativen für das Gemeinwohl"
+        payments: "Zahlungsmethoden"
+  payments:
+    title: "Zahlungen"
+    cta: "Aufforderung bezahlen"
+    methods:
+      title: "Zahlungsmethoden"
+      button: "Hinzufügen"
+      banner:
+        content: "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst."
+        action: "Zahlungsmethode hinzufügen"
+    transactions:
+      title: "Transaktionsverlauf"
+      button: "Alle anzeigen"
+      empty:
+        title: "Hier siehst du deine pagoPA-Quittungen"
+        content: "Bezahle eine Zahlungsaufforderung in der App oder mittels jedem pagoPA-fähigen Kanal."
+      status:
+        failure: "FEHLGESCHLAGEN"
+        success: ""
 support:
   ticketList:
     noTicket:
@@ -2436,10 +2559,13 @@ fastLogin:
   userInteraction:
     sessionExpired:
       noPin:
-        title: "Es ist zu lange her!"        
+        title: "Es ist zu lange her!"
+        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE identifizieren. Anschließend kannst du die IO-Konfiguration dort fortfahren, wo du aufgehört hast."
         submitButtonTitle: "Fortfahren"
       continueNavigation:
-        title: "Deine Sitzung ist abgelaufen"        
+        title: "Deine Sitzung ist abgelaufen"
+        subtitle: "Melde dich an, um die App weiter zu nutzen."
+        submitButtonTitle: "Anmelden"
         cancelButtonTitle: "Abbrechen"
       transientError:
         title: "Wir konnten dich nicht authentifizieren"
