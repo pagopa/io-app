@@ -9,14 +9,14 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import * as React from "react";
-import { Alert, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useStore } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Alert, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -30,7 +30,6 @@ import {
   fastLoginOptInFFEnabled,
   isFastLoginEnabledSelector
 } from "../../features/fastLogin/store/selectors";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
@@ -44,9 +43,10 @@ import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { ComponentProps } from "../../types/react";
-import { setAccessibilityFocus } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
