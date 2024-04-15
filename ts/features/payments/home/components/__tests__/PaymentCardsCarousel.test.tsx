@@ -17,14 +17,13 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
   cards: [
     {
       hpan: "9900",
-      isError: false,
       brand: "maestro",
       onPress,
       testID: "card-1"
     },
     {
       holderEmail: "test@test.it",
-      isError: true,
+      expireDate: new Date(2023, 10),
       onPress,
       testID: "card-2"
     },
