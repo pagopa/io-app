@@ -19,6 +19,7 @@ import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { WalletRoutes } from "../navigation/routes";
@@ -82,6 +83,7 @@ const WalletHomeScreen = ({ route }: Props) => {
       }}
       excludeSafeAreaMargins={true}
     >
+      <WalletCategoryFilterTabs />
       <WalletPaymentsRedirectBanner />
       <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
         <WalletCardsContainer />
