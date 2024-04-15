@@ -99,11 +99,19 @@ const WalletPaymentPickMethodScreen = () => {
           selectedWalletOption
         ),
         O.map(([paymentAmountInCents, transaction, selectedWallet]) => {
+          // We can safely get this data from the first payment object
+          // This logic should be revisited once the cart feature will be implemented
+          const primaryPayment = transaction.payments[0];
+
+          const paymentToken = primaryPayment?.paymentToken;
+          const primaryTransfer = primaryPayment?.transferList?.[0];
+          const isAllCCP = primaryPayment?.isAllCCP;
+          const primaryCreditorInstitution = primaryTransfer?.paFiscalCode;
+
           const transferList = transaction.payments.reduce(
             (a, p) => [...a, ...(p.transferList ?? [])],
             [] as ReadonlyArray<Transfer>
           );
-          const paymentToken = transaction.payments[0]?.paymentToken;
 
           dispatch(
             paymentsCalculatePaymentFeesAction.request({
@@ -111,6 +119,8 @@ const WalletPaymentPickMethodScreen = () => {
               paymentMethodId: selectedWallet.paymentMethodId,
               walletId: selectedWallet.walletId,
               paymentAmount: paymentAmountInCents,
+              isAllCCP,
+              primaryCreditorInstitution,
               transferList
             })
           );

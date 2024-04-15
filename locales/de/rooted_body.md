@@ -1,7 +1,7 @@
-Sul tuo dispositivo sono attivi i **permessi di root**. Questo succede quando il sistema operativo viene modificato o installato in modo anomalo. Questo potrebbe compromettere l’integrità del sistema e l'app IO potrebbe non funzionare correttamente.
+Du hast **Root-Rechte** auf deinem Gerät aktiviert. Dies ist der Fall, wenn das Betriebssystem auf ungewöhnliche Weise verändert oder installiert wurde. Dies könnte die Integrität des Systems gefährden und die IO-App könnte nicht richtig funktionieren.
 
-**Cosa fare?**
+**Was kann ich tun**
 
-Ti invitiamo a usare l'app IO su un dispositivo diverso, con un sistema operativo integro e aggiornato.
+Wir empfehlen dir, die IO-App auf einem anderen Gerät mit einem intakten und aktuellen Betriebssystem zu verwenden.
 
-Se continui, accetti di proseguire a tuo rischio nell'interazione con i servizi offerti. La mancanza di integrità può portare al furto di dati o ad altre attività fraudolente. Accetti anche che lo sviluppatore dell’app non sia in alcun modo responsabile di eventuali danni, perdite o conseguenze causate dall'app IO in questo contesto di esecuzione.
+Wenn du damit fortfährst, erklärst du dich damit einverstanden, die Interaktion mit den Diensten auf dein eigenes Risiko fortzusetzen. Ein Mangel an Integrität kann zu Datendiebstahl oder anderen betrügerischen Aktivitäten führen. Du erklärst dich auch damit einverstanden, dass der App-Entwickler in keiner Weise für Schäden, Verluste oder Folgen verantwortlich ist, die durch die IO-App in diesem Ausführungskontext verursacht werden.

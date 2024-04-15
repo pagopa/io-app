@@ -1,16 +1,16 @@
-import {
-  Divider,
-  IOStyles,
-  IOVisualCostants,
-  ListItemNav,
-  VSpacer,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { SectionList, StatusBar, View, useColorScheme } from "react-native";
+import * as React from "react";
+import {
+  useIOTheme,
+  Divider,
+  VSpacer,
+  ListItemNav,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 
 type SingleSectionProps = {
