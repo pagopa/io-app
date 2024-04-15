@@ -53,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 26;
+const CURRENT_REDUX_STORE_VERSION = 28;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -385,6 +385,25 @@ const migrations: MigrationManifest = {
         wallet: {
           preferences: {
             shouldShowPaymentsRedirectBanner: true
+          }
+        }
+      }
+    }),
+  // Version 27
+  // Adds it wallet section FF
+  "27": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isItWalletTestEnabled: false
+      }
+    }),
+  // Adds shouldShowAddMethodsBanner persistence in payments/home feature reducer
+  "28": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        payments: {
+          home: {
+            shouldShowAddMethodsBanner: true
           }
         }
       }

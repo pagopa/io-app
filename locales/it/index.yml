@@ -215,7 +215,7 @@ tablet:
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.
-  learnMoreButton: 
+  learnMoreButton:
     title: Cosa significa?
   learnMoreBottomsheet:
     title: Sicurezza del dispositivo
@@ -455,6 +455,9 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    itWallet:
+      itWalletTest: IT Wallet
+      itWalletTestDescription: Abilita ambiente di test per IT Wallet
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -762,10 +765,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: Non hai confermato il tuo indirizzo email
-      subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
-      editButton: Modifica email
-      validateButton: Conferma email
+      title: È questa la tua email?
+      subtitle: Per continuare a usare l’app, devi confermare che la tua email è
+      editButton: No, modifica
+      validateButton: Sì, conferma
       header:
         title: Configura IO
       help:
@@ -773,7 +776,7 @@ email:
     emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
-      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      subtitleEnd: è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.
       editButton: Modifica email
       header:
         title: Configura IO
@@ -939,18 +942,6 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
-  homeScreen:
-    title: Pagamenti
-    methodsSection:
-      header: Metodi di pagamento
-      headerCTA: Aggiungi
-    historySection:
-      header: Storico operazioni
-      headerCTA: Vedi tutte
-      transactionStatusBadges:
-        failure: "FALLITA"
-        success: ""
-    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
     message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
@@ -2088,6 +2079,26 @@ services:
       subtitle: "Stiamo recuperando i dettagli del servizio"
       back: "Indietro"
       retry: "Riprova"
+    preferences:
+      title: "Questo servizio può"
+      inbox: "Contattarti in app"
+      pushNotifications: "Inviarti notifiche push"
+      messageReadStatus: "Ricevere conferme di lettura"
+    metadata:
+      title: "Contatti ed informazioni"
+      website: "Visita il sito"
+      downloadApp: "Scarica l'app"
+      support: "Richiedi assistenza"
+      phone: "Contatta l'ente"
+      email: "Invia un'email"
+      pec: "Invia una PEC"
+      fiscalCode: "Codice fiscale ente"
+      address: "Indirizzo"
+      serviceId: "ID servizio"
+    tosAndPrivacy: 
+      title: "Termini e Privacy"
+      tosLink: "Termini e condizioni d'uso"
+      privacyLink: "Informativa sulla privacy"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
@@ -2930,16 +2941,43 @@ features:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
       cta: Aggiungi al Portafoglio
+      toast:
+        newMethod: Elemento aggiunto!
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
     cards:
       categories:
+        all: Tutti
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Metodi di pagamento
+    onboarding:
+      title: Cosa vuoi aggiungere al portafoglio?
+      options:
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
+  payments:
+    title: Pagamenti
+    cta: Paga un avviso
+    methods:
+      title: Metodi di pagamento
+      button: Aggiungi
+      banner:
+        content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        action: Aggiungi un metodo
+    transactions:
+      title: Storico operazioni
+      button: Vedi tutte
+      empty:
+        title: Qui vedrai le tue ricevute pagoPA
+        content: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+      status:
+        failure: FALLITA
+        success: ""
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

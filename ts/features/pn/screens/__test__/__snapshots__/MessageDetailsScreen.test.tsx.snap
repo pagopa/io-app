@@ -635,7 +635,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
-                                          "resizeMode": "contain",
                                         },
                                         Object {
                                           "borderRadius": 2,
@@ -654,6 +653,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       style={
                                         Object {
                                           "height": "100%",
+                                          "resizeMode": "contain",
                                           "width": "100%",
                                         }
                                       }
@@ -2186,7 +2186,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
                         style={
                           Object {
                             "flexGrow": 1,
@@ -2481,7 +2481,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             </Text>
                           </View>
                         </RCTScrollView>
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}

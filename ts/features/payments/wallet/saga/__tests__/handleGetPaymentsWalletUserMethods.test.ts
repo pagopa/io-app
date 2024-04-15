@@ -6,11 +6,11 @@ import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { getPaymentsWalletUserMethods } from "../../store/actions";
 import { handleGetPaymentsWalletUserMethods } from "../handleGetPaymentsWalletUserMethods";
-import { BrandEnum } from "../../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { WalletCard } from "../../../../newWallet/types";
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { getDateFromExpiryDate } from "../../../../../utils/dates";
 
 describe("handleGetPaymentsWalletUserMethods", () => {
   it(`should put ${getType(getPaymentsWalletUserMethods.success)} and ${getType(
@@ -18,7 +18,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
   )} when response is success`, () => {
     const T_WALLETID = "1234";
     const T_HPAN = "0001";
-    const T_EXPIRE_DATE = new Date(2027, 10, 1);
+    const T_EXPIRE_DATE = new Date(2027, 10, 1).toDateString();
     const mockGetWalletsByIdUser = jest.fn();
     const getWalletsByIdUserResponse: Wallets = {
       wallets: [
@@ -34,7 +34,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
             type: "CREDITCARD",
             lastFourDigits: T_HPAN,
             expiryDate: T_EXPIRE_DATE,
-            brand: BrandEnum.VISA
+            brand: "VISA"
           }
         }
       ]
@@ -46,8 +46,8 @@ describe("handleGetPaymentsWalletUserMethods", () => {
         category: "payment",
         walletId: T_WALLETID,
         hpan: T_HPAN,
-        brand: BrandEnum.VISA,
-        expireDate: T_EXPIRE_DATE,
+        brand: "VISA",
+        expireDate: getDateFromExpiryDate(T_EXPIRE_DATE),
         abiCode: undefined,
         holderEmail: undefined,
         holderPhone: undefined
