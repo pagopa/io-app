@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
-import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -26,7 +25,6 @@ const PaymentsOnboardingSelectMethodScreen = () => {
   const availablePaymentMethods = pipe(
     pot.getOrElse(paymentMethodsPot, null),
     O.fromNullable,
-    O.map(el => el.filter(el => el.status === PaymentMethodStatusEnum.ENABLED)),
     O.getOrElseW(() => [])
   );
 
