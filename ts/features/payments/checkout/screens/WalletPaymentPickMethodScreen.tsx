@@ -22,7 +22,6 @@ import {
   paymentsGetPaymentUserMethodsAction,
   paymentsResetPaymentPspList
 } from "../store/actions/networking";
-import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import {
   walletPaymentAmountSelector,
   walletPaymentDetailsSelector
@@ -35,7 +34,6 @@ import {
 } from "../store/selectors/paymentMethods";
 import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
-import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentPickMethodScreen = () => {
@@ -57,6 +55,14 @@ const WalletPaymentPickMethodScreen = () => {
   );
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
     React.useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(paymentsGetPaymentMethodsAction.request());
+      dispatch(paymentsGetPaymentUserMethodsAction.request());
+      dispatch(paymentsResetPaymentPspList());
+    }, [dispatch])
+  );
 
   // When a new transaction is created it comes with ACTIVATION_REQUESTED status, we can continue the payment flow
   // only when the transaction status becomes ACTIVATED.
@@ -99,24 +105,6 @@ const WalletPaymentPickMethodScreen = () => {
     ])
   );
 
-  React.useEffect(() => {
-    pipe(
-      pspListPot,
-      pot.toOption,
-      O.map(pspList => {
-        if (pspList.length > 1) {
-          dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));
-        } else if (pspList.length >= 1) {
-          dispatch(
-            walletPaymentSetCurrentStep(
-              WalletPaymentStepEnum.CONFIRM_TRANSACTION
-            )
-          );
-        }
-      })
-    );
-  }, [pspListPot, dispatch]);
-
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
 
@@ -130,14 +118,6 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(paymentMethodsPot) ||
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(paymentsGetPaymentMethodsAction.request());
-      dispatch(paymentsGetPaymentUserMethodsAction.request());
-      dispatch(paymentsResetPaymentPspList());
-    }, [dispatch])
-  );
 
   React.useEffect(() => {
     if (isError) {
