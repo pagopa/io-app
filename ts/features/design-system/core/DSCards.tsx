@@ -168,12 +168,7 @@ export const DSCards = () => (
             onPress={onPress}
           />
           <HSpacer size={16} />
-          <PaymentCardSmall
-            brand="pagoBancomat"
-            bankName="Intesa San Paolo"
-            onPress={onPress}
-            expireDate={new Date(2021, 10)}
-          />
+          <PaymentCardSmall />
         </View>
       </DSComponentViewerBox>
       <DSComponentViewerBox name="PayPal">

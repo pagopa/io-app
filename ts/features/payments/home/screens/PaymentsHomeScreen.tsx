@@ -9,7 +9,7 @@ import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyS
 import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
 import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
 import {
-  isPaymentsMethodsEmptySelector,
+  isPaymentsSectionEmptySelector,
   isPaymentsSectionLoadingSelector,
   isPaymentsTransactionsEmptySelector
 } from "../store/selectors";
@@ -64,13 +64,9 @@ const PaymentsHomeScreen = () => {
 
 const PaymentsHomeScreenContent = () => {
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
 
-  const isPaymentsEmpty = useIOSelector(isPaymentsMethodsEmptySelector);
-  const isTransactionsEmpty = useIOSelector(
-    isPaymentsTransactionsEmptySelector
-  );
-
-  if (isPaymentsEmpty && isTransactionsEmpty) {
+  if (isEmpty) {
     return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
   }
 
