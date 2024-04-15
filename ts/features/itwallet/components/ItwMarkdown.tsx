@@ -80,10 +80,10 @@ const styles = StyleSheet.create({
  * headers create a new rgex group (eg. |^##\s(.+)).
  * @param markdownText - contains the text to be parsed.
  */
-const ItwTextInfo: React.FC<MarkdownParserProps> = ({ content }) => (
+const ItwMarkdown: React.FC<MarkdownParserProps> = ({ content }) => (
   <Markdown style={styles} rules={rules}>
     {content}
   </Markdown>
 );
 
-export default ItwTextInfo;
+export default ItwMarkdown;

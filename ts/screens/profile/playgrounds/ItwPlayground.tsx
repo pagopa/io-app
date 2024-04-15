@@ -8,7 +8,7 @@ import {
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import ItwTextInfo from "../../../features/itwallet/components/ItwMarkdown";
+import ItwMarkdown from "../../../features/itwallet/components/ItwMarkdown";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -80,7 +80,7 @@ const ItwPlayground = () => {
         <VSpacer />
         <H3>{"IT Wallet markdown preview"}</H3>
         {/* Markdown ITW Playground */}
-        <ItwTextInfo content={sampleMarkdown} />
+        <ItwMarkdown content={sampleMarkdown} />
         {/* TODO: Add more items here */}
       </ContentWrapper>
     </ScrollView>
