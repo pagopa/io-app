@@ -5,7 +5,6 @@ import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { Transfer } from "../../../../../definitions/pagopa/ecommerce/Transfer";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -19,8 +18,7 @@ import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsGetPaymentMethodsAction,
-  paymentsGetPaymentUserMethodsAction,
-  paymentsResetPaymentPspList
+  paymentsGetPaymentUserMethodsAction
 } from "../store/actions/networking";
 import {
   walletPaymentAmountSelector,
@@ -33,7 +31,10 @@ import {
   walletPaymentUserWalletsSelector
 } from "../store/selectors/paymentMethods";
 import { walletPaymentPspListSelector } from "../store/selectors/psps";
-import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
+import {
+  walletPaymentIsTransactionActivatedSelector,
+  walletPaymentTransactionSelector
+} from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentPickMethodScreen = () => {
@@ -45,6 +46,9 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
+  const isTransactionAlreadyActivated = useIOSelector(
+    walletPaymentIsTransactionActivatedSelector
+  );
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
 
   const selectedWalletIdOption = useIOSelector(
@@ -60,50 +64,55 @@ const WalletPaymentPickMethodScreen = () => {
     React.useCallback(() => {
       dispatch(paymentsGetPaymentMethodsAction.request());
       dispatch(paymentsGetPaymentUserMethodsAction.request());
-      dispatch(paymentsResetPaymentPspList());
     }, [dispatch])
   );
 
+  const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
+    pipe(
+      sequenceT(O.Monad)(
+        pot.toOption(paymentAmountPot),
+        pot.toOption(transactionPot),
+        selectedPaymentMethodIdOption
+      ),
+      O.map(([paymentAmount, transaction, paymentMethodId]) => {
+        // We can safely get this data from the first payment object
+        // This logic should be revisited once the cart feature will be implemented
+        const primaryPayment = transaction.payments[0];
+
+        const transferList = primaryPayment.transferList ?? [];
+        const paymentToken = primaryPayment?.paymentToken;
+        const primaryTransfer = primaryPayment?.transferList?.[0];
+        const isAllCCP = primaryPayment?.isAllCCP;
+        const primaryCreditorInstitution = primaryTransfer?.paFiscalCode;
+
+        // In case of guest payment walletId could be undefined
+        const walletId = O.toUndefined(selectedWalletIdOption);
+
+        dispatch(
+          paymentsCalculatePaymentFeesAction.request({
+            paymentToken,
+            paymentMethodId,
+            walletId,
+            paymentAmount,
+            transferList,
+            isAllCCP,
+            primaryCreditorInstitution
+          })
+        );
+      })
+    );
+    setWaitingTransactionActivation(false);
+  }, [
+    dispatch,
+    paymentAmountPot,
+    transactionPot,
+    selectedPaymentMethodIdOption,
+    selectedWalletIdOption
+  ]);
+
   // When a new transaction is created it comes with ACTIVATION_REQUESTED status, we can continue the payment flow
   // only when the transaction status becomes ACTIVATED.
-  useOnTransactionActivationEffect(
-    React.useCallback(() => {
-      pipe(
-        sequenceT(O.Monad)(
-          pot.toOption(paymentAmountPot),
-          pot.toOption(transactionPot),
-          selectedPaymentMethodIdOption
-        ),
-        O.map(([paymentAmount, transaction, paymentMethodId]) => {
-          const transferList = transaction.payments.reduce(
-            (a, p) => [...a, ...(p.transferList ?? [])],
-            [] as ReadonlyArray<Transfer>
-          );
-          const paymentToken = transaction.payments[0]?.paymentToken;
-
-          // In case of guest payment walletId could be undefined
-          const walletId = O.toUndefined(selectedWalletIdOption);
-
-          dispatch(
-            paymentsCalculatePaymentFeesAction.request({
-              paymentToken,
-              paymentMethodId,
-              walletId,
-              paymentAmount,
-              transferList
-            })
-          );
-        })
-      );
-      setWaitingTransactionActivation(false);
-    }, [
-      dispatch,
-      paymentAmountPot,
-      transactionPot,
-      selectedPaymentMethodIdOption,
-      selectedWalletIdOption
-    ])
-  );
+  useOnTransactionActivationEffect(calculateFeesForSelectedPaymentMethod);
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
@@ -133,19 +142,25 @@ const WalletPaymentPickMethodScreen = () => {
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
   const handleContinue = () => {
-    pipe(
-      pot.toOption(paymentDetailsPot),
-      O.map(paymentDetails => {
-        dispatch(
-          paymentsCreateTransactionAction.request({
-            paymentNotices: [
-              { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-            ]
-          })
-        );
-        setWaitingTransactionActivation(true);
-      })
-    );
+    if (isTransactionAlreadyActivated) {
+      // If transacion is already activated (for example, when the user returns to this screen to edit the selected
+      // method) we can go directly to the next step.
+      calculateFeesForSelectedPaymentMethod();
+    } else {
+      pipe(
+        pot.toOption(paymentDetailsPot),
+        O.map(paymentDetails => {
+          dispatch(
+            paymentsCreateTransactionAction.request({
+              paymentNotices: [
+                { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
+              ]
+            })
+          );
+          setWaitingTransactionActivation(true);
+        })
+      );
+    }
   };
 
   return (
