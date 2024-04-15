@@ -30,7 +30,7 @@ const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
   };
 
   return (
-    <Pressable accessibilityRole="button" onPress={handleOnPress}>
+    <PaymentCardPressableBase onPress={handleOnPress}>
       <PaymentCard {...cardProps} />
     </PaymentCardPressableBase>
   );
