@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { Markdown } from "../../../components/ui/Markdown/Markdown";
+import { LoadingSkeleton } from "../../../components/ui/Markdown/LoadingSkeleton";
 
 const styles = StyleSheet.create({
   card: {
@@ -31,4 +32,10 @@ const CardWithMarkdownContent = memo(
   )
 );
 
-export { CardWithMarkdownContent };
+const CardWithMarkdownContentSkeleton = () => (
+  <View style={styles.card}>
+    <LoadingSkeleton />
+  </View>
+);
+
+export { CardWithMarkdownContent, CardWithMarkdownContentSkeleton };

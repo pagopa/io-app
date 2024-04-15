@@ -43,10 +43,18 @@ const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 // https://pagopa.atlassian.net/browse/IA-474
 const DEFAULT_PAGE_SIZE = 12;
 
+// Default mixpanel EU url
+const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
+
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
+export const mixpanelUrl = pipe(
+  Config.MIXPANEL_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => DEFAULT_MIXPANEL_URL)
+);
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";

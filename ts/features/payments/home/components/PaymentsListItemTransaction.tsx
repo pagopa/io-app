@@ -10,7 +10,7 @@ type Props = {
   transaction: Transaction;
 };
 
-const PaymentsHomeListItemTransaction = ({ transaction }: Props) => {
+const PaymentsListItemTransaction = ({ transaction }: Props) => {
   const recipient = transaction.merchant;
 
   const amountText = formatNumberCurrencyCents(transaction.amount.amount);
@@ -34,11 +34,11 @@ const PaymentsHomeListItemTransaction = ({ transaction }: Props) => {
       transactionAmount={amountText}
       accessibilityLabel={accessibilityLabel}
       badgeText={I18n.t(
-        `payment.homeScreen.historySection.transactionStatusBadges.${transactionStatus}`
+        `features.payments.transactions.status.${transactionStatus}`
       )}
       transactionStatus={transactionStatus}
     />
   );
 };
 
-export { PaymentsHomeListItemTransaction };
+export { PaymentsListItemTransaction };
