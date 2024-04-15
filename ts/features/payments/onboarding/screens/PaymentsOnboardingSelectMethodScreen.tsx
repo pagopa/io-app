@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -21,12 +19,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
 
   const paymentMethodsPot = useIOSelector(selectPaymentOnboardingMethods);
   const isLoadingPaymentMethods = pot.isLoading(paymentMethodsPot);
-
-  const availablePaymentMethods = pipe(
-    pot.getOrElse(paymentMethodsPot, null),
-    O.fromNullable,
-    O.getOrElseW(() => [])
-  );
+  const availablePaymentMethods = pot.toUndefined(paymentMethodsPot);
 
   const { startOnboarding, isLoading, isPendingOnboarding } =
     useWalletOnboardingWebView({
@@ -80,7 +73,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
       <WalletOnboardingPaymentMethodsList
         isLoadingMethods={isLoadingPaymentMethods}
         onSelectPaymentMethod={handleSelectedPaymentMethod}
-        paymentMethods={availablePaymentMethods}
+        paymentMethods={availablePaymentMethods || []}
         isLoadingWebView={isLoading || isPendingOnboarding}
       />
     </RNavScreenWithLargeHeader>
