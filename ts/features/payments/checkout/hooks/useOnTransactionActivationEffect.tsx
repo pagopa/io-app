@@ -23,11 +23,21 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
   const dispatch = useIODispatch();
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
 
+  // This flag is used to avoid triggering the effect everytime this hook is mounted
+  // It is set to false as soon the transaction is activated and avoids any other activation
+  const requiresActivation = React.useRef(true);
+
+  // Polling
   const delayRef = React.useRef(INITIAL_DELAY);
   const countRef = React.useRef(0);
 
   /* eslint-disable functional/immutable-data */
   React.useEffect(() => {
+    if (!requiresActivation.current) {
+      // Skips the activation if the transactions is already activated for this payment istance
+      return undefined;
+    }
+
     if (transactionPot.kind === "PotSome") {
       const { transactionId, status } = transactionPot.value;
 
@@ -35,6 +45,7 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
         // Execute the effect function when the transaction is activated
         delayRef.current = INITIAL_DELAY;
         countRef.current = 0;
+        requiresActivation.current = false;
         return effect(transactionPot.value);
       } else if (countRef.current > MAX_TRIES) {
         // The transaction is not yet ACTIVATED, and we exceeded the max retries

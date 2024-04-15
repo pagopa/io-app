@@ -25,13 +25,11 @@ import {
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
-  paymentsResetPaymentPspList,
   paymentsStartPaymentAuthorizationAction
 } from "../actions/networking";
 import {
   OnPaymentSuccessAction,
   initPaymentStateAction,
-  resetPaymentPspAction,
   selectPaymentMethodAction,
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
@@ -162,7 +160,10 @@ const reducer = (
       return {
         ...state,
         selectedWallet: O.fromNullable(action.payload.userWallet),
-        selectedPaymentMethod: O.fromNullable(action.payload.paymentMethod)
+        selectedPaymentMethod: O.fromNullable(action.payload.paymentMethod),
+        // If payment method changes, reset PSP list
+        selectedPsp: O.none,
+        pspList: pot.none
       };
 
     // PSP list
@@ -211,18 +212,6 @@ const reducer = (
       return {
         ...state,
         selectedPsp: O.some(action.payload)
-      };
-
-    case getType(resetPaymentPspAction):
-      return {
-        ...state,
-        selectedPsp: O.none
-      };
-
-    case getType(paymentsResetPaymentPspList):
-      return {
-        ...state,
-        pspList: pot.none
       };
 
     // Transaction
