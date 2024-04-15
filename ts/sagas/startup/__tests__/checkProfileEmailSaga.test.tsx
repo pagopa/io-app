@@ -20,7 +20,7 @@ describe("checkAcknowledgedEmailSaga", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
-    jest.useFakeTimers();
+    jest.useRealTimers();
   });
 
   describe("when user is on his first onboarding and he has an email and it is validated", () => {
@@ -30,8 +30,8 @@ describe("checkAcknowledgedEmailSaga", () => {
         mode: ServicesPreferencesModeEnum.LEGACY
       }
     };
-    it("should show email read screen", () => {
-      void expectSaga(
+    it("should show email read screen", async () => {
+      await expectSaga(
         checkAcknowledgedEmailSaga,
         profileEmailValidatedFirstOnboarding
       )
@@ -48,8 +48,8 @@ describe("checkAcknowledgedEmailSaga", () => {
       ...mockedProfile,
       is_email_validated: false
     };
-    it("should prompt the screen to remember to validate", () => {
-      void expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
+    it("should prompt the screen to remember to validate", async () => {
+      await expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
@@ -67,14 +67,14 @@ describe("checkAcknowledgedEmailSaga", () => {
       is_email_validated: false,
       email: undefined
     };
-    it("should prompt the screen to insert it", () => {
+    it("should prompt the screen to insert it", async () => {
       const globalState = appReducer(
         undefined,
         applicationChangeState("active")
       );
       const store = createStore(appReducer, globalState as any);
       renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
-      void expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
+      await expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
           screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
           params: {
