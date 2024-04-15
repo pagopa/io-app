@@ -1,3 +1,8 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useRoute } from "@react-navigation/native";
+import * as React from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import {
   Body,
   ButtonSolidProps,
@@ -11,16 +16,7 @@ import {
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   profileEmailSelector,
@@ -28,13 +24,17 @@ import {
   profileNameSelector,
   profileSelector
 } from "../../../../store/reducers/profile";
-import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { capitalize } from "../../../../utils/strings";
-import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import { FCI_ROUTES } from "../../navigation/routes";
+import ROUTES from "../../../../navigation/routes";
+import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
+import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { FCI_ROUTES } from "../../navigation/routes";
 
 const styles = StyleSheet.create({
   alertTextContainer: {
