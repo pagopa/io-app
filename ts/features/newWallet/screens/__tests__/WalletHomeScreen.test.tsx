@@ -43,10 +43,8 @@ const T_CARDS: WalletCardsState = {
 };
 
 describe("WalletHomeScreen", () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-    jest.runAllTimers();
-  });
+  jest.useFakeTimers();
+  jest.runAllTimers();
 
   it("should correctly render empty screen with redirect banner", () => {
     const {

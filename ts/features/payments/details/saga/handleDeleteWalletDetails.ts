@@ -38,7 +38,9 @@ export function* handleDeleteWalletDetails(
         );
 
         // handled success
-        const successAction = paymentsDeleteMethodAction.success();
+        const successAction = paymentsDeleteMethodAction.success(
+          action.payload.walletId
+        );
         yield* put(successAction);
         if (action.payload.onSuccess) {
           action.payload.onSuccess();

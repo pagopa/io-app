@@ -1,3 +1,4 @@
+import { createSelector } from "reselect";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -53,14 +54,16 @@ export const servicePreferenceSelector = (
   state: GlobalState
 ): ServicePreferenceState => state.entities.services.servicePreference;
 
-export const servicePreferenceResponseSuccessSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    servicePreferenceSelector,
-    pot.toOption,
-    O.filter(isServicePreferenceResponseSuccess),
-    O.toUndefined
-  );
+export const servicePreferenceResponseSuccessSelector = createSelector(
+  servicePreferenceSelector,
+  servicePreferencePot =>
+    pipe(
+      servicePreferencePot,
+      pot.toOption,
+      O.filter(isServicePreferenceResponseSuccess),
+      O.toUndefined
+    )
+);
 
 export const isLoadingServicePreferenceSelector = (state: GlobalState) =>
   pipe(

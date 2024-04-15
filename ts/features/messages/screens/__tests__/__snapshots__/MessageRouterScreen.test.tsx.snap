@@ -171,7 +171,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -677,8 +663,8 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -855,7 +841,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -863,25 +849,11 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1361,8 +1333,8 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1539,7 +1511,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -1547,25 +1519,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2340,8 +2298,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2518,7 +2476,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -2526,25 +2484,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3024,8 +2968,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3202,7 +3146,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -3210,25 +3154,11 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3708,8 +3638,8 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

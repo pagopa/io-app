@@ -1,18 +1,18 @@
+import * as React from "react";
 import { PathConfigMap } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
-import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../utils/navigation";
-import FciRouterScreen from "../screens/FciRouterScreen";
-import FciDataSharingScreen from "../screens/valid/FciDataSharingScreen";
-import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScreen";
 import FciDocumentsScreen from "../screens/valid/FciDocumentsScreen";
-import FciQtspClausesScreen from "../screens/valid/FciQtspClausesScreen";
+import FciRouterScreen from "../screens/FciRouterScreen";
 import FciSignatureFieldsScreen from "../screens/valid/FciSignatureFieldsScreen";
-import FciSignatureRequestsScreen from "../screens/valid/FciSignatureRequestsScreen";
+import FciDataSharingScreen from "../screens/valid/FciDataSharingScreen";
+import FciQtspClausesScreen from "../screens/valid/FciQtspClausesScreen";
 import FciThankyouScreen from "../screens/valid/FciThankyouScreen";
-import { FciParamsList } from "./params";
+import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScreen";
+import FciSignatureRequestsScreen from "../screens/valid/FciSignatureRequestsScreen";
+import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { FCI_ROUTES } from "./routes";
+import { FciParamsList } from "./params";
 
 const Stack = createStackNavigator<FciParamsList>();
 
