@@ -96,11 +96,9 @@ const styles = StyleSheet.create({
 /* eslint-enable react-native/no-unused-styles */
 
 /**
- * This component renders a markdown text.
- * It parses the text and renders bold text, links and headers.
- * NOTE: only header level 2 and 6 is supported to extend to other
- * headers create a new rgex group (eg. |^##\s(.+)).
- * @param markdownText - contains the text to be parsed.
+ * This component renders react components starting from a markdown text.
+ * Main components are mapped into rules object.
+ * @param content - contains the text to be converted in react elements.
  */
 const ItwMarkdown: React.FC<MarkdownParserProps> = ({ content }) => (
   <Markdown style={styles} rules={rules}>
