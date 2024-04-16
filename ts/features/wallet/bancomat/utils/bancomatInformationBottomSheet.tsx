@@ -1,10 +1,8 @@
 import * as React from "react";
 import { View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../components/core/typography/Label";
 import { H4 } from "../../../../components/core/typography/H4";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
@@ -22,18 +20,14 @@ export default (onAdd?: () => void) => {
         {I18n.t("wallet.bancomat.details.debit.body")}
       </H4>
       <VSpacer size={16} />
-      <ButtonDefaultOpacity
-        primary={true}
-        block={true}
-        bordered={true}
+      <ButtonOutline
+        fullWidth
         onPress={() => {
           onAdd?.();
           dismiss();
         }}
-        onPressWithGestureHandler={true}
-      >
-        <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
-      </ButtonDefaultOpacity>
+        label={I18n.t("wallet.bancomat.details.debit.addCta")}
+      />
     </View>,
     I18n.t("wallet.bancomat.details.debit.title"),
     385

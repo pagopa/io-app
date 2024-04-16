@@ -1,10 +1,8 @@
 import { View, Image, StyleSheet } from "react-native";
 import * as React from "react";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { Body as BodyText } from "../../../components/core/typography/Body";
 import brokenLinkImage from "../../../../img/broken-link.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
@@ -15,16 +13,6 @@ const styles = StyleSheet.create({
   },
   errorTitle: {
     marginTop: 10
-  },
-  errorButtonsContainer: {
-    position: "absolute",
-    bottom: 0,
-    flex: 1,
-    flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
   }
 });
 
@@ -42,25 +30,23 @@ const WebviewErrorComponent = ({ onWebviewClose, handleReload }: Props) => (
       {I18n.t("authentication.errors.network.title")}
     </Label>
 
-    <View style={styles.errorButtonsContainer}>
-      <ButtonDefaultOpacity
-        onPress={onWebviewClose}
-        style={styles.cancelButtonStyle}
-        block={true}
-        light={true}
-        bordered={true}
-      >
-        <BodyText>{I18n.t("global.buttons.cancel")}</BodyText>
-      </ButtonDefaultOpacity>
-      <ButtonDefaultOpacity
-        onPress={handleReload}
-        style={{ flex: 2 }}
-        block={true}
-        primary={true}
-      >
-        <Label color={"white"}>{I18n.t("global.buttons.retry")}</Label>
-      </ButtonDefaultOpacity>
-    </View>
+    <FooterWithButtons
+      type="TwoButtonsInlineThird"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          onPress: onWebviewClose,
+          label: I18n.t("global.buttons.cancel")
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          onPress: handleReload,
+          label: I18n.t("global.buttons.retry")
+        }
+      }}
+    />
   </View>
 );
 

@@ -3,9 +3,11 @@ import { useEffect, useRef } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Alert } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import { IOToast } from "@pagopa/io-app-design-system";
-import { Label } from "../../../../components/core/typography/Label";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { servicePreferenceSelector } from "../../../services/store/reducers/servicePreference";
@@ -82,30 +84,25 @@ const LegacyCgnServiceCTA = (props: Props) => {
       return <ActivityIndicator />;
     }
     return (
-      <ButtonDefaultOpacity
-        block
-        bordered
-        danger
+      <ButtonOutline
+        fullWidth
+        color="danger"
+        label={I18n.t("bonus.cgn.cta.deactivateBonus")}
+        testID="service-cgn-deactivate-bonus-button"
         onPress={requestUnsubscription}
-      >
-        <Label testID="service-cgn-deactivate-bonus-button" color={"red"}>
-          {I18n.t("bonus.cgn.cta.deactivateBonus")}
-        </Label>
-      </ButtonDefaultOpacity>
+      />
     );
   }
   return (
-    <ButtonDefaultOpacity
-      block
-      primary
+    <ButtonSolid
+      fullWidth
+      label={I18n.t("bonus.cgn.cta.activeBonus")}
       onPress={() => {
         dispatch(loadAvailableBonuses.request());
         dispatch(cgnActivationStart());
       }}
       testID="service-activate-bonus-button"
-    >
-      <Label color={"white"}>{I18n.t("bonus.cgn.cta.activeBonus")}</Label>
-    </ButtonDefaultOpacity>
+    />
   );
 };
 export default LegacyCgnServiceCTA;

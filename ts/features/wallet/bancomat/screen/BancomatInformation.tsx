@@ -2,10 +2,8 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { ButtonOutline, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
-import { Label } from "../../../../components/core/typography/Label";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -21,10 +19,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  button: {
-    width: "100%",
-    borderColor: IOColors.blue
-  },
   titleContainer: {
     flex: 1,
     flexDirection: "row",
@@ -53,17 +47,14 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
       <VSpacer size={16} />
       <InternationalCircuitIconsBar />
       <VSpacer size={16} />
-      <ButtonDefaultOpacity
-        style={styles.button}
-        bordered={true}
+      <ButtonOutline
+        fullWidth
         onPress={() => {
           props.onAddPaymentMethod?.();
         }}
-        onPressWithGestureHandler={true}
         testID={"addPaymentMethodButton"}
-      >
-        <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
-      </ButtonDefaultOpacity>
+        label={I18n.t("wallet.bancomat.details.debit.addCta")}
+      />
       {bottomSheet}
     </View>
   );

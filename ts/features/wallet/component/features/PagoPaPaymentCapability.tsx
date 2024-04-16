@@ -1,11 +1,9 @@
 import * as React from "react";
-import { StyleSheet, View, Switch } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { View, Switch } from "react-native";
+import { ButtonLink } from "@pagopa/io-app-design-system";
 import { PreferencesListItem } from "../../../../components/PreferencesListItem";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { Link } from "../../../../components/core/typography/Link";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
@@ -15,14 +13,6 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
 import PaymentStatusSwitch from "./PaymentStatusSwitch";
-
-const styles = StyleSheet.create({
-  bottomSheetCTA: {
-    backgroundColor: IOColors.white,
-    paddingRight: 0,
-    paddingLeft: 0
-  }
-});
 
 type Props = { paymentMethod: PaymentMethod };
 
@@ -71,15 +61,12 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
           <LegacyMarkdown>
             {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetBody")}
           </LegacyMarkdown>
-          <ButtonDefaultOpacity
+          <ButtonLink
             onPress={onOpenLearnMoreAboutInAppPayments}
-            style={styles.bottomSheetCTA}
-            onPressWithGestureHandler={true}
-          >
-            <Link>
-              {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetCTA")}
-            </Link>
-          </ButtonDefaultOpacity>
+            label={I18n.t(
+              "wallet.methods.card.pagoPaCapability.bottomSheetCTA"
+            )}
+          />
         </View>
       ),
       title: I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetTitle")

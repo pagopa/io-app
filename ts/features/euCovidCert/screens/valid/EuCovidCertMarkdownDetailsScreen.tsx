@@ -1,4 +1,5 @@
 import {
+  ButtonSolid,
   FooterWithButtons,
   IOColors,
   IOToast,
@@ -7,8 +8,6 @@ import {
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -31,9 +30,6 @@ const styles = StyleSheet.create({
   viewShot: {
     flex: 1,
     backgroundColor: IOColors.white
-  },
-  save: {
-    width: "100%"
   }
 });
 
@@ -117,19 +113,16 @@ export const EuCovidCertMarkdownDetailsScreen = (
             {canShowButton && (
               <>
                 <VSpacer size={16} />
-                <ButtonDefaultOpacity
-                  style={styles.save}
+                <ButtonSolid
+                  fullWidth
                   onPress={() => {
                     void mixpanelTrack("EUCOVIDCERT_SAVE_MARKDOWN_DETAILS");
                     setIsCapturingScreenShoot(true);
                   }}
-                >
-                  <Label color={"white"}>
-                    {I18n.t(
-                      "features.euCovidCertificate.valid.markdownDetails.save"
-                    )}
-                  </Label>
-                </ButtonDefaultOpacity>
+                  label={I18n.t(
+                    "features.euCovidCertificate.valid.markdownDetails.save"
+                  )}
+                />
                 <VSpacer size={16} />
               </>
             )}

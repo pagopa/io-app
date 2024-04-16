@@ -1,6 +1,6 @@
 import {
+  ButtonLink,
   FooterWithButtons,
-  IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -23,7 +23,6 @@ import {
 import { connect, useSelector } from "react-redux";
 import { IdpData } from "../../../../definitions/content/IdpData";
 import AdviceComponent from "../../../components/AdviceComponent";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import CiePinpad from "../../../components/CiePinpad";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import { Link } from "../../../components/core/typography/Link";
@@ -69,11 +68,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: variables.contentPadding
-  },
-  bsLinkButton: {
-    paddingRight: 0,
-    paddingLeft: 0,
-    backgroundColor: IOColors.white
   }
 });
 
@@ -117,13 +111,10 @@ const CiePinScreen: React.FC<Props> = props => {
       <LegacyMarkdown avoidTextSelection>
         {I18n.t("bottomSheets.ciePin.content")}
       </LegacyMarkdown>
-      <ButtonDefaultOpacity
+      <ButtonLink
         onPress={onOpenForgotPinPage}
-        style={styles.bsLinkButton}
-        onPressWithGestureHandler={true}
-      >
-        <Link>{I18n.t("authentication.cie.pin.bottomSheetCTA")}</Link>
-      </ButtonDefaultOpacity>
+        label={I18n.t("authentication.cie.pin.bottomSheetCTA")}
+      />
     </View>,
     I18n.t("bottomSheets.ciePin.title"),
     320

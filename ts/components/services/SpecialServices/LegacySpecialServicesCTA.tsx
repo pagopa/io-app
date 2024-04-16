@@ -2,6 +2,7 @@ import * as React from "react";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
+import { ButtonSolid } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { cdcEnabled } from "../../../config";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
@@ -16,8 +17,6 @@ import {
   isPnSupportedSelector
 } from "../../../store/reducers/backendStatus";
 import { openAppStoreUrl } from "../../../utils/url";
-import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
-import { Label } from "../../core/typography/Label";
 
 type SpecialServiceConfig = {
   isEnabled: boolean;
@@ -35,9 +34,11 @@ const UpdateAppCTA = () => {
   const openAppStore = React.useCallback(() => openAppStoreUrl(), []);
 
   return (
-    <ButtonDefaultOpacity block primary onPress={openAppStore}>
-      <Label color={"white"}>{I18n.t("btnUpdateApp")}</Label>
-    </ButtonDefaultOpacity>
+    <ButtonSolid
+      fullWidth
+      label={I18n.t("btnUpdateApp")}
+      onPress={openAppStore}
+    />
   );
 };
 

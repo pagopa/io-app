@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActivityIndicator } from "react-native";
-import { IOColors, IOToast } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  IOToast,
+  ListItemAction
+} from "@pagopa/io-app-design-system";
+import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { servicePreferenceSelector } from "../../services/store/reducers/servicePreference";
@@ -14,7 +16,6 @@ import { isServicePreferenceResponseSuccess } from "../../services/types/Service
 import { AppDispatch } from "../../../App";
 import { pnActivationUpsert } from "../store/actions";
 import { pnActivationSelector } from "../store/reducers/activation";
-import { Link } from "../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../services/store/actions";
 import {
@@ -29,62 +30,29 @@ type Props = {
   activate?: boolean;
 };
 
-const LoadingIndicator = () => (
-  <ActivityIndicator
-    animating={true}
-    size={"small"}
-    color={IOColors.bluegreyDark}
-    accessible={true}
-    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
-    importantForAccessibility={"no-hide-descendants"}
-  />
-);
-
-const LoadingButton = (props: { isServiceActive: boolean }) => (
-  <ButtonDefaultOpacity
-    block
-    primary
-    style={{
-      backgroundColor: props.isServiceActive
-        ? IOColors.white
-        : IOColors.greyLight,
-      width: "100%"
-    }}
-  >
-    <LoadingIndicator />
-  </ButtonDefaultOpacity>
-);
+const LoadingButton = () => <LoadingIndicator />;
 
 const ActivateButton = (props: { dispatch: AppDispatch }) => (
-  <ButtonDefaultOpacity
-    block
-    primary
+  <ButtonSolid
+    fullWidth
     onPress={() => {
       trackPNServiceStartActivation();
       props.dispatch(pnActivationUpsert.request({ value: true }));
     }}
-  >
-    <Label color={"white"}>{I18n.t("features.pn.service.activate")}</Label>
-  </ButtonDefaultOpacity>
+    label={I18n.t("features.pn.service.activate")}
+  />
 );
 
 const DeactivateButton = (props: { dispatch: AppDispatch }) => (
-  <ButtonDefaultOpacity
-    block
-    primary
+  <ListItemAction
+    variant="danger"
+    label={I18n.t("features.pn.service.deactivate")}
+    accessibilityLabel={I18n.t("features.pn.service.deactivate")}
     onPress={() => {
       trackPNServiceStartDeactivation();
       props.dispatch(pnActivationUpsert.request({ value: false }));
     }}
-    style={{
-      backgroundColor: IOColors.white
-    }}
-  >
-    <Link weight={"SemiBold"} color={"red"}>
-      {I18n.t("features.pn.service.deactivate")}
-    </Link>
-  </ButtonDefaultOpacity>
+  />
 );
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -149,7 +117,7 @@ const LegacyPnServiceCTA = ({ serviceId, activate }: Props) => {
   }
 
   return isLoading ? (
-    <LoadingButton isServiceActive={isServiceActive ?? false} />
+    <LoadingButton />
   ) : isServiceActive ? (
     <DeactivateButton dispatch={dispatch} />
   ) : (
