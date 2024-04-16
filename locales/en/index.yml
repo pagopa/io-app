@@ -215,7 +215,7 @@ tablet:
 rooted:
   title: Looks like the security of your device has been compromised!
   body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
-  learnMoreButton: 
+  learnMoreButton:
     title: What does it mean?
   learnMoreBottomsheet:
     title: Device security
@@ -270,7 +270,7 @@ startup:
     title: Startup problems?
 login:
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
-  expiration_info_FL: For security reasons, you’ll need to sign in again with CIE or SPID yearly.
+  expiration_info_FL: For security reasons, you’ll need to sign in using SPID or CIE once a year.
   biometric_info: To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face.
 inbox:
   enableButton: Enable Inbox
@@ -455,6 +455,9 @@ profile:
         title: Warning
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
+    itWallet:
+      itWalletTest: IT Wallet
+      itWalletTestDescription: Enable the IT Wallet test environment
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -762,10 +765,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: Email address not validated
-      subtitle: To continue using the app, you must validate your email address
-      editButton: Edit email address
-      validateButton: Validate email address
+      title: Is this your email?
+      subtitle: To continue using the app, you must confirm that your email is
+      editButton: No, change email
+      validateButton: Yes, confirm
       header:
         title: Configure IO
       help:
@@ -939,18 +942,6 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
-  homeScreen:
-    title: Payments
-    methodsSection:
-      header: Payment methods
-      headerCTA: Add
-    historySection:
-      header: Transaction history
-      headerCTA: View all
-      transactionStatusBadges:
-        failure: "FALLITA"
-        success: ""
-    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
@@ -2088,6 +2079,26 @@ services:
       subtitle: "We are retrieving service details"
       back: "Back"
       retry: "Retry"
+    preferences:
+      title: "This service can"
+      inbox: "Contact you in app"
+      pushNotifications: "Send you push notifications"
+      messageReadStatus: "Receive read receipts"
+    metadata:
+      title: "Contacts and info"
+      website: "Browse Website"
+      downloadApp: "Download app"
+      support: "Get support"
+      phone: "Contact the institution"
+      email: "Send email"
+      pec: "Send PEC"
+      fiscalCode: "Organization's fiscal code"
+      address: "Address"
+      serviceId: "Service ID"
+    tosAndPrivacy: 
+      title: "Terms of use and Privacy"
+      tosLink: "Terms and conditions"
+      privacyLink: "Privacy information"
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
@@ -2926,16 +2937,43 @@ features:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
       cta: Aggiungi al Portafoglio
+      toast:
+        newMethod: Elemento aggiunto!
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
     cards:
       categories:
+        all: All
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Payment methods
+    onboarding:
+      title: Cosa vuoi aggiungere al portafoglio?
+      options:
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
+  payments:
+    title: Payments
+    cta: Paga un avviso
+    methods:
+      title: Metodi di pagamento
+      button: Aggiungi
+      banner:
+        content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        action: Aggiungi un metodo
+    transactions:
+      title: Storico operazioni
+      button: Vedi tutte
+      empty:
+        title: Qui vedrai le tue ricevute pagoPA
+        content: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+      status:
+        failure: FALLITA
+        success: ""
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

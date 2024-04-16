@@ -3,20 +3,24 @@
  * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
+import {
+  logoutSuccess,
+  sessionExpired
+} from "../../../../store/actions/authentication";
 import {
   loadServiceDetail,
   removeServiceTuples
-} from "../../../actions/services";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
+} from "../../../../store/actions/services";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { SpecialServiceMetadata } from "../../../../../definitions/backend/SpecialServiceMetadata";
 
 export type ServicesByIdState = Readonly<{
   [key: string]: pot.Pot<ServicePublic, Error> | undefined;
@@ -24,7 +28,7 @@ export type ServicesByIdState = Readonly<{
 
 const INITIAL_STATE: ServicesByIdState = {};
 
-const reducer = (
+const serviceByIdReducer = (
   state: ServicesByIdState = INITIAL_STATE,
   action: Action
 ): ServicesByIdState => {
@@ -47,9 +51,6 @@ const reducer = (
         ...state,
         [action.payload.service_id]: pot.some(action.payload)
       };
-    case getType(logoutSuccess):
-    case getType(sessionExpired):
-      return INITIAL_STATE;
 
     case getType(loadServiceDetail.failure):
       // when a request to load a previously loaded service detail fails its state is updated
@@ -74,30 +75,67 @@ const reducer = (
       return newState;
     }
 
+    case getType(logoutSuccess):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
+
     default:
       return state;
   }
 };
 
+export default serviceByIdReducer;
+
 // Selectors
 export const servicesByIdSelector = (state: GlobalState): ServicesByIdState =>
   state.entities.services.byId;
 
-export const serviceByIdSelector = (
+export const serviceByIdPotSelector = (
   state: GlobalState,
   id: ServiceId
 ): pot.Pot<ServicePublic, Error> =>
   state.entities.services.byId[id] ?? pot.none;
 
-export const serviceMetadataByIdSelector = (
+export const serviceByIdSelector = (
   state: GlobalState,
   id: ServiceId
-): ServiceMetadata | undefined =>
-  pipe(
-    serviceByIdSelector(state, id),
-    pot.toOption,
-    O.chainNullableK(service => service.service_metadata),
-    O.toUndefined
-  );
+): ServicePublic | undefined =>
+  pipe(serviceByIdPotSelector(state, id), pot.toUndefined);
 
-export default reducer;
+export const isLoadingServiceByIdSelector = (
+  state: GlobalState,
+  id: ServiceId
+) => pipe(serviceByIdPotSelector(state, id), pot.isLoading);
+
+export const isErrorServiceByIdSelector = (state: GlobalState, id: ServiceId) =>
+  pipe(serviceByIdPotSelector(state, id), pot.isError);
+
+export const serviceMetadataByIdSelector = createSelector(
+  serviceByIdPotSelector,
+  serviceByIdPot =>
+    pipe(
+      serviceByIdPot,
+      pot.toOption,
+      O.chainNullableK(service => service.service_metadata),
+      O.toUndefined
+    )
+);
+
+export const serviceMetadataInfoSelector = createSelector(
+  serviceMetadataByIdSelector,
+  serviceMetadata =>
+    pipe(
+      serviceMetadata,
+      O.fromNullable,
+      O.chain(serviceMetadata => {
+        if (SpecialServiceMetadata.is(serviceMetadata)) {
+          return O.some({
+            isSpecialService: true,
+            customSpecialFlow: serviceMetadata.custom_special_flow
+          });
+        }
+        return O.none;
+      }),
+      O.toUndefined
+    )
+);

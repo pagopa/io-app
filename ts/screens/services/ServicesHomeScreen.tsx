@@ -76,7 +76,7 @@ import {
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { servicesByIdSelector } from "../../features/services/store/reducers/servicesById";
 import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { profileSelector, ProfileState } from "../../store/reducers/profile";

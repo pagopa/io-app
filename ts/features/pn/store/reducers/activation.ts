@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import { pipe } from "fp-ts/lib/function";
+import { loadServicePreference } from "../../../services/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationUpsert } from "../actions";
@@ -21,7 +21,7 @@ export const pnActivationReducer = (
 ): PnActivationState => {
   switch (action.type) {
     case getType(pnActivationUpsert.request):
-      return pot.toUpdating(state, action.payload);
+      return pot.toUpdating(state, action.payload.value);
     case getType(pnActivationUpsert.success):
       return pot.some(action.payload);
     case getType(pnActivationUpsert.failure):
@@ -32,7 +32,13 @@ export const pnActivationReducer = (
   return state;
 };
 
-export const pnActivationSelector = createSelector(
-  [(state: GlobalState) => state.features.pn.activation],
-  (_): PnActivationState => _
-);
+export const pnActivationSelector = (state: GlobalState): PnActivationState =>
+  state.features.pn.activation;
+
+export const isLoadingPnActivationSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    pnActivationSelector,
+    pnActivationPot =>
+      pot.isLoading(pnActivationPot) || pot.isUpdating(pnActivationPot)
+  );

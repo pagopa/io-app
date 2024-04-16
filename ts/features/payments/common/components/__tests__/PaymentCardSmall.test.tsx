@@ -7,56 +7,86 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentCardSmall, PaymentCardSmallProps } from "../PaymentCardSmall";
 
-describe("PaymentCardSmall component", () => {
+describe("PaymentCardSmall", () => {
   const testID = "PaymentCardSmallTestID";
   jest.useFakeTimers();
-  it(`matches snapshot for loading`, () => {
-    const component = renderCardSmall({ isLoading: true });
-    expect(component).toMatchSnapshot();
-  });
-  it(`matches snapshot for paypal`, () => {
-    const component = renderCardSmall({ cardType: "PAYPAL" });
+
+  it(`should match the snapshot`, () => {
+    const component = renderCard({
+      hpan: "9900",
+      brand: "maestro",
+      onPress: () => undefined,
+      testID
+    });
     expect(component).toMatchSnapshot();
   });
 
-  it(`should render the Pressable component when passed an OnPress`, () => {
-    const handler = () => null;
-    const component = renderCardSmall({
-      cardType: "PAYPAL",
-      onCardPress: handler,
+  it(`should render card without pressable wrapper`, () => {
+    const { queryByTestId } = renderCard({
       testID
     });
-    expect(component.queryByTestId(`${testID}-pressable`)).not.toBeNull();
+    expect(queryByTestId(`${testID}-pressable`)).toBeNull();
   });
 
-  it(`should render an error icon in case of error `, () => {
-    const component = renderCardSmall({
-      cardType: "PAYPAL",
-      isError: true,
+  it(`should render credit card details`, () => {
+    const { queryByText, queryByTestId } = renderCard({
+      hpan: "9900",
+      brand: "maestro",
+      onPress: () => undefined,
       testID
     });
-    expect(component).not.toBeNull();
-    expect(component.queryByTestId(`${testID}-errorIcon`)).not.toBeNull();
+    expect(queryByText("•••• 9900")).not.toBeNull();
+    expect(queryByTestId(`${testID}-errorIcon`)).toBeNull();
+    expect(queryByTestId(`${testID}-pressable`)).not.toBeNull();
   });
-  it(`should not render a pressable if no handler is passed`, () => {
-    const component = renderCardSmall({
-      cardType: "PAYPAL",
-      isError: true,
+
+  it(`should render error card`, () => {
+    const { queryByText, queryByTestId } = renderCard({
+      hpan: "9900",
+      brand: "maestro",
+      expireDate: new Date(2023, 10),
+      onPress: () => undefined,
       testID
     });
-    expect(component).not.toBeNull();
-    expect(component.queryByTestId(`${testID}-pressable`)).toBeNull();
+    expect(queryByText("•••• 9900")).not.toBeNull();
+    expect(queryByTestId(`${testID}-errorIcon`)).not.toBeNull();
+    expect(queryByTestId(`${testID}-pressable`)).not.toBeNull();
   });
-  it(`should render a skeleton if loading`, () => {
-    const component = renderCardSmall({
-      isLoading: true,
+
+  it(`should render pagobancomat card details`, () => {
+    const { queryByText, queryByTestId } = renderCard({
+      abiCode: "03069",
+      brand: "pagoBancomat",
+      bankName: "Intesa San Paolo",
+      onPress: () => undefined,
       testID
     });
-    expect(component.queryByTestId(`${testID}-skeleton`)).not.toBeNull();
+    expect(queryByText("Intesa San Paolo")).not.toBeNull();
+    expect(queryByTestId(`${testID}-pressable`)).not.toBeNull();
+  });
+
+  it(`should render paypal card details`, () => {
+    const { queryByText, queryByTestId } = renderCard({
+      holderEmail: "test@test.it",
+      onPress: () => undefined,
+      testID
+    });
+    expect(queryByText("PayPal")).not.toBeNull();
+    expect(queryByTestId(`${testID}-pressable`)).not.toBeNull();
+  });
+
+  it(`should render bpay card details`, () => {
+    const { queryByText, queryByTestId } = renderCard({
+      holderPhone: "1234",
+      onPress: () => undefined,
+      testID
+    });
+    expect(queryByText("BANCOMAT Pay")).not.toBeNull();
+    expect(queryByTestId(`${testID}-pressable`)).not.toBeNull();
   });
 });
 
-function renderCardSmall(props: PaymentCardSmallProps) {
+function renderCard(props: PaymentCardSmallProps) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <PaymentCardSmall {...props} />,
