@@ -27,12 +27,10 @@ const sampleMarkdown = `
 ###### I am a Header 6
 
 A simple paragraph.
-
 Text can be emphasized with *asterisk* or _underscore_.
-
 If you need bold use **double asterisk**.
-
-A Link to [Google](https://www.google.com) with some text
+A worked link to [Google](https://www.google.com) with some text.
+A malformed link [Error](httssdps://www.error.com) that show toast error.
 `;
 
 /**
