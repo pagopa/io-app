@@ -270,7 +270,7 @@ startup:
     title: Startup problems?
 login:
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
-  expiration_info_FL: For security reasons, you’ll need to sign in again with CIE or SPID yearly.
+  expiration_info_FL: For security reasons, you’ll need to sign in using SPID or CIE once a year.
   biometric_info: To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face.
 inbox:
   enableButton: Enable Inbox
