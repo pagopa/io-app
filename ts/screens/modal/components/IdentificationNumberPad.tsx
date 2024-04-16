@@ -1,13 +1,13 @@
-import * as React from "react";
-import { useState, useCallback } from "react";
 import {
-  CodeInput,
-  NumberPad,
-  VSpacer,
-  IOStyles,
   BiometricsValidType,
-  IconButton
+  CodeInput,
+  IOStyles,
+  IconButton,
+  NumberPad,
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 import I18n from "../../../i18n";
 import { isDevEnv } from "../../../utils/environment";
@@ -82,6 +82,31 @@ export const IdentificationNumberPad = (
           onValidate={onPinValidated}
         />
       </View>
+      {isDevEnv && (
+        <View
+          accessible={false}
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden
+          style={{
+            zIndex: 10,
+            opacity: 0.75,
+            alignSelf: "center",
+            position: "absolute",
+            /* Ugly magic number, but the position is nicer with this value */
+            bottom: 38
+          }}
+        >
+          <IconButton
+            icon="unlocked"
+            iconSize={16}
+            color="contrast"
+            onPress={() => {
+              setValue(pin);
+            }}
+            accessibilityLabel={"Insert valid pin button (dev only)"}
+          />
+        </View>
+      )}
       <VSpacer size={48} />
       <View>
         <NumberPad
@@ -92,24 +117,6 @@ export const IdentificationNumberPad = (
           {...biometricsConfig}
         />
       </View>
-      {isDevEnv && (
-        <View
-          accessible={false}
-          importantForAccessibility="no-hide-descendants"
-          accessibilityElementsHidden
-          style={IOStyles.alignCenter}
-        >
-          <VSpacer size={16} />
-          <IconButton
-            icon={"systemPermissionsAndroid"}
-            color="contrast"
-            onPress={() => {
-              setValue(pin);
-            }}
-            accessibilityLabel={"Insert valid pin button (dev only)"}
-          />
-        </View>
-      )}
     </>
   );
 };
