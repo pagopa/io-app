@@ -16,15 +16,15 @@ import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
 } from "../../analytics";
-import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
+import { servicePreferenceSelector } from "../../../services/store/reducers/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../../services/types/ServicePreferenceResponse";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
 function* handlePnActivation(
   upsertPnActivation: PnClient["upsertPNActivation"],
   action: ActionType<typeof pnActivationUpsert.request>
 ) {
-  const activation_status = action.payload;
+  const activation_status = action.payload.value;
   try {
     const isTest: ReturnType<typeof isPnTestEnabledSelector> = yield* select(
       isPnTestEnabledSelector
@@ -41,9 +41,11 @@ function* handlePnActivation(
       yield* put(
         pnActivationUpsert.failure(new Error(readableReport(result.left)))
       );
+      action.payload.onFailure?.();
     } else if (result.right.status === 204) {
       trackPNServiceStatusChangeSuccess(activation_status);
       yield* put(pnActivationUpsert.success(activation_status));
+      action.payload.onSuccess?.();
     } else {
       yield* call(reportPNServiceStatusOnFailure, !activation_status);
       yield* put(
@@ -51,6 +53,7 @@ function* handlePnActivation(
           new Error(`response status ${result.right.status}`)
         )
       );
+      action.payload.onFailure?.();
     }
   } catch (e) {
     yield* call(reportPNServiceStatusOnFailure, !activation_status);

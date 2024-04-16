@@ -1,20 +1,17 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import {
-  PaymentStartOrigin,
-  PaymentStartRoute,
-  WalletPaymentStepEnum
-} from "../../types";
+import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
 
 export const walletPaymentSetCurrentStep = createStandardAction(
   "WALLET_PAYMENT_SET_CURRENT_STEP"
 )<WalletPaymentStepEnum>();
 
+export type OnPaymentSuccessAction = "showHome" | "showTransaction";
+
 export type PaymentInitStateParams = {
   startOrigin?: PaymentStartOrigin;
-  startRoute?: PaymentStartRoute;
-  showTransaction?: boolean;
+  onSuccess?: OnPaymentSuccessAction;
 };
 
 /**

@@ -2,22 +2,22 @@ import { SagaIterator } from "redux-saga";
 import { fork, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
+import { handleGetServicePreference } from "../../features/services/saga/handleGetServicePreference";
+import { handleUpsertServicePreference } from "../../features/services/saga/handleUpsertServicePreference";
 import {
   loadServiceDetail,
   loadVisibleServices
 } from "../../store/actions/services";
 import {
+  loadServicePreference,
+  upsertServicePreference
+} from "../../features/services/store/actions";
+import {
   loadServiceDetailRequestHandler,
   watchServicesDetailLoadSaga
 } from "../startup/loadServiceDetailRequestHandler";
 import { loadVisibleServicesRequestHandler } from "../startup/loadVisibleServicesHandler";
-import {
-  loadServicePreference,
-  upsertServicePreference
-} from "../../store/actions/services/servicePreference";
 import { handleFirstVisibleServiceLoadSaga } from "./handleFirstVisibleServiceLoadSaga";
-import { handleGetServicePreference } from "./servicePreference/handleGetServicePreferenceSaga";
-import { handleUpsertServicePreference } from "./servicePreference/handleUpsertServicePreferenceSaga";
 
 /**
  * A saga for managing requests to load/refresh services data from backend

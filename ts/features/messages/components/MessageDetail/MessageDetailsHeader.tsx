@@ -9,7 +9,7 @@ import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { logosForService } from "../../../../utils/services";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
+import { serviceByIdPotSelector } from "../../../services/store/reducers/servicesById";
 import { gapBetweenItemsInAGrid } from "../../utils";
 import { OrganizationHeader } from "./OrganizationHeader";
 
@@ -51,7 +51,7 @@ export const MessageDetailsHeader = ({
   ...rest
 }: MessageDetailsHeaderProps) => {
   const service = pipe(
-    useIOSelector(state => serviceByIdSelector(state, serviceId)),
+    useIOSelector(state => serviceByIdPotSelector(state, serviceId)),
     pot.toOption,
     O.toUndefined
   );

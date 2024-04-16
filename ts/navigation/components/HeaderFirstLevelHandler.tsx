@@ -147,7 +147,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
       case ROUTES.PAYMENTS_HOME:
         return {
-          title: "Pagamenti",
+          title: I18n.t("features.payments.title"),
           type: "singleAction",
           firstAction: helpAction
         };
