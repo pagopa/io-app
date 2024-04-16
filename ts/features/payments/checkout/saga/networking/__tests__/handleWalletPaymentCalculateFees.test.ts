@@ -1,17 +1,16 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { preferredLanguageSelector } from "../../../../../../store/reducers/persistedPreferences";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsCalculatePaymentFeesAction } from "../../../store/actions/networking";
-import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculateFees";
-import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
-import { preferredLanguageSelector } from "../../../../../../store/reducers/persistedPreferences";
-import { selectPaymentPspAction } from "../../../store/actions/orchestration";
+import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculateFees";
 
 describe("Test handleWalletPaymentCalculateFees saga", () => {
   const calculateFeesPayload: CalculateFeeRequest & {
@@ -57,7 +56,6 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
         paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
       )
       .next(E.right({ status: 200, value: calculateFeesResponse }))
-      .next()
       .put(paymentsCalculatePaymentFeesAction.success(calculateFeesResponse))
       .next()
       .isDone();
@@ -119,46 +117,6 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )
-      .next()
-      .isDone();
-  });
-
-  it(`should put ${getType(
-    selectPaymentPspAction
-  )} with first psp in the list when calculateFees is 200 and bundles is only one in list`, () => {
-    const mockCalculateFees = jest.fn();
-    const calculateFeesResponse: CalculateFeeResponse = {
-      bundles: [
-        {
-          idBundle: "idBundle"
-        }
-      ],
-      asset: "asset",
-      paymentMethodDescription: "paymentMethodDescription",
-      paymentMethodName: "paymentMethodName",
-      paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
-    };
-
-    testSaga(
-      handleWalletPaymentCalculateFees,
-      mockCalculateFees,
-      paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
-    )
-      .next()
-      .select(preferredLanguageSelector)
-      .next("IT")
-      .select(selectWalletPaymentSessionToken)
-      .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockCalculateFees(),
-        paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
-      )
-      .next(E.right({ status: 200, value: calculateFeesResponse }))
-      .next()
-      .put(selectPaymentPspAction(calculateFeesResponse.bundles[0]))
-      .next()
-      .put(paymentsCalculatePaymentFeesAction.success(calculateFeesResponse))
       .next()
       .isDone();
   });

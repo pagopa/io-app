@@ -48,7 +48,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
         hpan: T_HPAN,
         brand: "VISA",
         expireDate: getDateFromExpiryDate(T_EXPIRE_DATE),
-        abiCode: undefined,
+        abiCode: "", // TODO IOBP-622 refactor payment card
         holderEmail: undefined,
         holderPhone: undefined
       }

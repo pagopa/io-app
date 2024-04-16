@@ -21,7 +21,6 @@ import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
-  resetPaymentPspAction,
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../store/actions/orchestration";
@@ -64,13 +63,6 @@ const WalletPaymentPickPspScreen = () => {
       });
     }
   }, [isError, navigation]);
-
-  React.useEffect(
-    () => () => {
-      dispatch(resetPaymentPspAction());
-    },
-    [dispatch]
-  );
 
   const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
     setShowFeaturedPsp(sortType === "default");
