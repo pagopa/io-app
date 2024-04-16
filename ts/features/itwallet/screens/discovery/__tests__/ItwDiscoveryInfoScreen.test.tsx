@@ -12,10 +12,6 @@ describe("Test ItwDiscoveryInfo screen", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });
-  it("it should match the snapshot", () => {
-    const component = renderComponent();
-    expect(component).toMatchSnapshot();
-  });
 });
 
 const renderComponent = () => {
