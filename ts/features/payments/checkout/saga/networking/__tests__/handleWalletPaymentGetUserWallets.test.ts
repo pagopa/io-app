@@ -7,7 +7,7 @@ import { handleWalletPaymentGetUserWallets } from "../handleWalletPaymentGetUser
 import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/walletv3/WalletStatus";
+import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletStatus";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
 describe("Test handleWalletPaymentGetUserWallets saga", () => {
@@ -25,7 +25,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
           paymentMethodId: "paymentMethodId",
           paymentMethodAsset: "paymentMethodAsset",
           applications: [],
-          status: WalletStatusEnum.CREATED,
+          status: WalletStatusEnum.VALIDATED,
           updateDate: new Date()
         }
       ]
