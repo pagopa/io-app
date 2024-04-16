@@ -73,7 +73,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
       <WalletOnboardingPaymentMethodsList
         isLoadingMethods={isLoadingPaymentMethods}
         onSelectPaymentMethod={handleSelectedPaymentMethod}
-        paymentMethods={availablePaymentMethods || []}
+        paymentMethods={availablePaymentMethods ?? []}
         isLoadingWebView={isLoading || isPendingOnboarding}
       />
     </RNavScreenWithLargeHeader>
