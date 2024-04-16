@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Root } from "native-base";
 import * as React from "react";
 import {
   AppState,
@@ -96,7 +95,7 @@ class RootContainer extends React.PureComponent<Props> {
     // if we have no information about the backend, don't force the update
 
     return (
-      <Root>
+      <>
         <StatusBar
           barStyle={"dark-content"}
           backgroundColor={customVariables.androidStatusBarColor}
@@ -127,7 +126,7 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         <RootModal />
         <LightModalRoot />
-      </Root>
+      </>
     );
   }
 }
