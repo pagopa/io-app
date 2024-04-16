@@ -2,7 +2,11 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
@@ -12,13 +16,8 @@ import { H4 } from "../../../../../../components/core/typography/H4";
 import { Label } from "../../../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../../../components/buttons/ButtonConfigurations";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
@@ -102,28 +101,37 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <VSpacer size={16} />
         </ScrollView>
-        {isCoBadgeBlocked(props.pan) ? (
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={confirmButtonProps(
-              props.handleSkip,
-              I18n.t("global.buttons.continue")
-            )}
-          />
-        ) : (
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={cancelButtonProps(
-              props.handleSkip,
-              I18n.t("global.buttons.skip")
-            )}
-            rightButton={confirmButtonProps(
-              props.handleContinue,
-              I18n.t("global.buttons.add")
-            )}
-          />
-        )}
       </SafeAreaView>
+      {isCoBadgeBlocked(props.pan) ? (
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.continue"),
+              onPress: props.handleSkip
+            }
+          }}
+        />
+      ) : (
+        <FooterWithButtons
+          type="TwoButtonsInlineThird"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.skip"),
+              onPress: props.handleSkip
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.add"),
+              onPress: props.handleContinue
+            }
+          }}
+        />
+      )}
     </BaseScreenComponent>
   );
 };

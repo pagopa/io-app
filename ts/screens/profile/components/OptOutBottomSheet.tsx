@@ -1,13 +1,8 @@
 import { View } from "react-native";
 import * as React from "react";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import {
-  cancelButtonProps,
-  errorButtonProps
-} from "../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
@@ -27,16 +22,22 @@ export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
     350,
     <FooterWithButtons
       type={"TwoButtonsInlineThird"}
-      leftButton={{
-        ...cancelButtonProps(() => dismiss()),
-        onPressWithGestureHandler: true
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          onPress: () => dismiss(),
+          label: I18n.t("global.buttons.cancel")
+        }
       }}
-      rightButton={{
-        ...errorButtonProps(() => {
-          dismiss();
-          onConfirm();
-        }, I18n.t("global.buttons.confirm")),
-        onPressWithGestureHandler: true
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          onPress: () => {
+            dismiss();
+            onConfirm();
+          },
+          label: I18n.t("global.buttons.confirm")
+        }
       }}
     />
   );

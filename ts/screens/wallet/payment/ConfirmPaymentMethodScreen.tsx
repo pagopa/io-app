@@ -1,4 +1,5 @@
 import {
+  FooterWithButtons,
   HSpacer,
   IOColors,
   IOToast,
@@ -33,7 +34,6 @@ import {
   isReady
 } from "../../../common/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -42,7 +42,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   LightModalContext,
   LightModalContextInterface
@@ -552,23 +551,23 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
               modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
             />
           )}
-
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={confirmButtonProps(
-              () =>
+        </SafeAreaView>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: `${I18n.t("wallet.ConfirmPayment.pay")} ${formattedTotal}`,
+              disabled: O.isSome(props.payStartWebviewPayload),
+              onPress: () =>
                 props.dispatchPaymentStart({
                   idWallet: wallet.idWallet,
                   idPayment,
                   language: getLocalePrimaryWithFallback()
-                }),
-              `${I18n.t("wallet.ConfirmPayment.pay")} ${formattedTotal}`,
-              undefined,
-              undefined,
-              O.isSome(props.payStartWebviewPayload)
-            )}
-          />
-        </SafeAreaView>
+                })
+            }
+          }}
+        />
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );
