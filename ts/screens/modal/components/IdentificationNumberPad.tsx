@@ -2,7 +2,7 @@ import {
   BiometricsValidType,
   CodeInput,
   IOStyles,
-  IconButtonContained,
+  IconButton,
   NumberPad,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -88,13 +88,17 @@ export const IdentificationNumberPad = (
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden
           style={{
+            zIndex: 10,
+            opacity: 0.75,
             alignSelf: "center",
             position: "absolute",
-            bottom: -56
+            /* Ugly magic number, but the position is nicer with this value */
+            bottom: 38
           }}
         >
-          <IconButtonContained
+          <IconButton
             icon="unlocked"
+            iconSize={16}
             color="contrast"
             onPress={() => {
               setValue(pin);
