@@ -1,7 +1,7 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet } from "react-native";
-import Animated, { Easing, Layout } from "react-native-reanimated";
+import Animated, { Layout } from "react-native-reanimated";
 
 // Wallet card base component props, which declares common props that wallet cards must have
 export type WalletCardComponentBaseProps<P> = WithTestID<{
@@ -21,7 +21,7 @@ export const withWalletCardBaseComponent =
       <Animated.View
         testID={testID}
         style={[styles.container, isStacked && styles.containerStacked]}
-        layout={Layout.duration(300).easing(Easing.inOut(Easing.exp))}
+        layout={Layout.duration(200)}
       >
         <CardContent {...cardProps} />
       </Animated.View>

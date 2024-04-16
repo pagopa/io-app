@@ -49,7 +49,7 @@ describe("PaymentCard", () => {
       />
     );
     expect(queryByTestId("paymentCardPayPalLogoTestId")).not.toBeNull();
-    expect(queryByTestId("paymentCardTestID.expired")).not.toBeNull();
+    expect(queryByTestId("paymentCardTestID-expired")).not.toBeNull();
     expect(queryByText("abc@abc.it")).not.toBeNull();
   });
 });
