@@ -49,7 +49,8 @@ describe("handleGetPaymentsWalletUserMethods", () => {
         brand: "VISA",
         expireDate: getDateFromExpiryDate(T_EXPIRE_DATE),
         holderEmail: undefined,
-        holderPhone: undefined
+        holderPhone: undefined,
+        isExpired: false
       }
     ];
 

@@ -24,7 +24,8 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
     {
       holderEmail: "test@test.it",
       onPress,
-      testID: "card-2"
+      testID: "card-2",
+      isExpired: true
     },
     {
       holderPhone: "1234",
@@ -42,6 +43,9 @@ describe("PaymentCardsCarousel", () => {
     expect(
       within(queryByTestId("card-1")!).queryByText("•••• 9900")
     ).not.toBeNull();
+    expect(
+      within(queryByTestId("card-2")!).queryByTestId("card-1-errorIcon")
+    ).toBeNull();
 
     expect(queryByTestId("card-2")).not.toBeNull();
     expect(
@@ -55,6 +59,9 @@ describe("PaymentCardsCarousel", () => {
     expect(
       within(queryByTestId("card-3")!).queryByText("BANCOMAT Pay")
     ).not.toBeNull();
+    expect(
+      within(queryByTestId("card-3")!).queryByTestId("card-3-errorIcon")
+    ).toBeNull();
   });
 });
 
