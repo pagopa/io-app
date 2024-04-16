@@ -2976,8 +2976,8 @@ features:
         success: ""
   itWallet:
     discovery:
-      title: Inizia dalla tua Identità Digitale
-      content: "Usa le credenziali SPID o CIE per aggiungere la tua Identità Digitale al Portafoglio. **È un passaggio necessario per aggiungere i tuoi documenti digitali** (ad esempio la patente di guida) in modo sicuro.\n### Utile da sapere \nIn futuro potrai usare l’Identità Digitale salvata nel Portafoglio per identificarti tramite la funzionalità IT Wallet. \n\nPer maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()"
+      title: Start with your Digital Identity
+      content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
