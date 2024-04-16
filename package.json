@@ -133,8 +133,6 @@
     "lodash": "^4.17.21",
     "metro-babel-register": "^0.72.1",
     "mixpanel-react-native": "2.4.1",
-    "native-base": "^2.15.2",
-    "native-base-shoutem-theme": "0.3.1",
     "pako": "^2.1.0",
     "path-browserify": "0.0.0",
     "pdf-lib": "^1.17.1",

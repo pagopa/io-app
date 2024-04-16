@@ -8,7 +8,6 @@
 /* eslint-disable no-invalid-this */
 
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { FontWeight, makeFontStyleObject } from "./fonts";
@@ -19,7 +18,7 @@ export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 
 // eslint-disable-next-line
-const customVariables = Object.assign(materialVariables, {
+const customVariables = {
   minTouchableAreaSize: 48,
 
   // Android
@@ -169,6 +168,6 @@ const customVariables = Object.assign(materialVariables, {
 
   // Spacing
   spacingBase: 8
-});
+};
 
 export default customVariables;

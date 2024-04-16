@@ -1,5 +1,3 @@
-import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import React, { ComponentProps, PropsWithChildren, ReactNode } from "react";
 import { ColorValue, View } from "react-native";
 import { useDispatch } from "react-redux";
@@ -48,7 +46,7 @@ export type Props = PropsWithChildren<
   OwnProps & ComponentProps<typeof BaseHeader>
 >;
 
-const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
+const BaseScreenComponent = React.forwardRef<ReactNode, Props>(
   (props: Props, _) => {
     const {
       accessibilityEvents,
@@ -154,8 +152,4 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
   }
 );
 
-export default connectStyle(
-  "UIComponent.BaseScreenComponent",
-  {},
-  mapPropsToStyleNames
-)(BaseScreenComponentFC);
+export default BaseScreenComponent;
