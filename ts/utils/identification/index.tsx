@@ -1,9 +1,9 @@
-import * as React from "react";
 import {
   BiometricsValidType,
-  IOStyles,
-  LabelSmall
+  Body,
+  IOStyles
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
 import { View } from "react-native";
 import I18n from "../../i18n";
 
@@ -94,26 +94,28 @@ export const IdentificationInstructionsComponent = (props: {
   } = getTranlations();
   const instructionComponent = (
     <View style={IOStyles.row}>
-      <LabelSmall color="white" weight="Regular">
+      <Body color="white" weight="Regular">
         {unlockCodePrefix}
-      </LabelSmall>
-      <LabelSmall color="white"> {unlockCode}</LabelSmall>
+        <Body color="white" weight="Bold">
+          {` ${unlockCode}`}
+        </Body>
+      </Body>
     </View>
   );
   const instructionComponentWithFingerprint = (
     <View style={IOStyles.row}>
-      <LabelSmall color="white" weight="Regular">
+      <Body color="white" weight="Regular">
         {fingerprintPrefix}
-      </LabelSmall>
-      <LabelSmall color="white"> {fingerprint}</LabelSmall>
+        <Body color="white" weight="Bold">{` ${fingerprint}`}</Body>
+      </Body>
     </View>
   );
   const instructionComponentWithFaceId = (
     <View style={IOStyles.row}>
-      <LabelSmall color="white" weight="Regular">
+      <Body color="white" weight="Regular">
         {faceIdPrefix}
-      </LabelSmall>
-      <LabelSmall color="white"> {faceId}</LabelSmall>
+        <Body color="white" weight="Bold">{` ${faceId}`}</Body>
+      </Body>
     </View>
   );
 
@@ -131,10 +133,10 @@ export const IdentificationInstructionsComponent = (props: {
           style={IOStyles.row}
         >
           {instructionComponentWithFingerprint}
-          <LabelSmall color="white" weight="Regular">
+          <Body color="white" weight="Regular">
             {" "}
             {congiunction}{" "}
-          </LabelSmall>
+          </Body>
           {instructionComponent}
         </View>
       );
@@ -146,10 +148,10 @@ export const IdentificationInstructionsComponent = (props: {
           style={IOStyles.row}
         >
           {instructionComponentWithFaceId}
-          <LabelSmall color="white" weight="Regular">
+          <Body color="white" weight="Regular">
             {" "}
             {congiunction}{" "}
-          </LabelSmall>
+          </Body>
           {instructionComponent}
         </View>
       );

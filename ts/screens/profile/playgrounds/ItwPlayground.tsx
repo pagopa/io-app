@@ -1,11 +1,35 @@
 import {
   ContentWrapper,
   Divider,
-  ListItemNav
+  H3,
+  ListItemNav,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import ItwMarkdown from "../../../features/itwallet/components/ItwMarkdown";
+
+// Sample markdown text
+const sampleMarkdown = `
+# I am a Header 1
+
+## I am a Header 2
+
+### I am a Header 3
+
+#### I am a Header 4
+
+##### I am a Header 5
+
+###### I am a Header 6
+
+A simple paragraph.
+Text can be emphasized with *asterisk* or _underscore_.
+If you need bold use **double asterisk**.
+A worked link to [Google](https://www.google.com) with some text.
+A malformed link [Error](httssdps://www.error.com) that show toast error.
+`;
 
 /**
  * ITW Playground screen
@@ -50,6 +74,11 @@ const ItwPlayground = () => {
           description="Start the issuing flow to get your health card"
           onPress={() => undefined}
         />
+        <Divider />
+        <VSpacer />
+        <H3>{"IT Wallet markdown preview"}</H3>
+        {/* Markdown ITW Playground */}
+        <ItwMarkdown content={sampleMarkdown} />
         {/* TODO: Add more items here */}
       </ContentWrapper>
     </ScrollView>
