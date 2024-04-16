@@ -6,6 +6,7 @@
 import {
   ContentWrapper,
   FooterWithButtons,
+  HSpacer,
   IOColors,
   IOToast,
   VSpacer
@@ -16,8 +17,13 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useState } from "react";
-import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
+import {
+  Keyboard,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -64,10 +70,6 @@ const styles = StyleSheet.create({
   creditCardForm: {
     height: 24,
     width: 24
-  },
-  verticalSpacing: {
-    width: 16,
-    flex: 0
   },
   whiteBg: {
     backgroundColor: IOColors.white
@@ -353,8 +355,9 @@ const AddCardScreen: React.FC = () => {
             />
 
             <VSpacer size={16} />
-            <Grid>
-              <Col>
+
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ flexGrow: 1 }}>
                 <LabelledItem
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="calendar"
@@ -378,9 +381,9 @@ const AddCardScreen: React.FC = () => {
                   )}
                   testID={"expirationDate"}
                 />
-              </Col>
-              <Col style={styles.verticalSpacing} />
-              <Col>
+              </View>
+              <HSpacer size={16} />
+              <View style={{ flexGrow: 1 }}>
                 <LabelledItem
                   label={I18n.t(
                     detectedBrand.cvvLength === 4
@@ -414,8 +417,8 @@ const AddCardScreen: React.FC = () => {
                   )}
                   testID={"securityCode"}
                 />
-              </Col>
-            </Grid>
+              </View>
+            </View>
 
             <VSpacer size={16} />
 
