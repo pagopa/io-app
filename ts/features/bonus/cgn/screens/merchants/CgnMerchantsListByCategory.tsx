@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useMemo } from "react";
-import { View, LayoutChangeEvent } from "react-native";
+import { View, LayoutChangeEvent, RefreshControl } from "react-native";
 import {
   H3,
   HSpacer,
@@ -14,9 +14,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
-  interpolate,
   useAnimatedScrollHandler,
-  useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
@@ -57,7 +55,9 @@ const CgnMerchantsListByCategory = () => {
 
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
-    setTitleHeight(height);
+    if (titleHeight === 0) {
+      setTitleHeight(height);
+    }
   };
 
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -106,11 +106,20 @@ const CgnMerchantsListByCategory = () => {
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
   const merchantsAll = useMemo(
-    () =>
-      mixAndSortMerchants(
+    () => [
+      ...mixAndSortMerchants(
         getValueOrElse(onlineMerchants, []),
         getValueOrElse(offlineMerchants, [])
       ),
+      ...mixAndSortMerchants(
+        getValueOrElse(onlineMerchants, []),
+        getValueOrElse(offlineMerchants, [])
+      ),
+      ...mixAndSortMerchants(
+        getValueOrElse(onlineMerchants, []),
+        getValueOrElse(offlineMerchants, [])
+      )
+    ],
     [onlineMerchants, offlineMerchants]
   );
 
@@ -140,46 +149,39 @@ const CgnMerchantsListByCategory = () => {
     supportRequest: true
   });
 
-  const headingAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      translationY.value,
-      [0, titleHeight],
-      [1, 0],
-      Animated.Extrapolate.CLAMP
-    ),
-    transform: [
-      {
-        translateY: interpolate(
-          translationY.value,
-          [0, titleHeight],
-          [0, -titleHeight],
-          Animated.Extrapolate.CLAMP
-        )
-      }
-    ]
-  }));
-
   return (
     <>
       <FocusAwareStatusBar
         backgroundColor={categorySpecs?.colors}
-        barStyle={"light-content"}
+        barStyle={"dark-content"}
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
         <GenericErrorComponent onRetry={initLoadingLists} />
       ) : (
-        <>
+        <Animated.ScrollView
+          style={{ flexGrow: 1 }}
+          onScroll={scrollHandler}
+          scrollEventThrottle={8}
+          contentOffset={{ x: 0, y: titleHeight }}
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                isLoading(onlineMerchants) || isLoading(offlineMerchants)
+              }
+              onRefresh={initLoadingLists}
+            />
+          }
+        >
           {categorySpecs && (
-            <Animated.View
+            <View
               onLayout={getTitleHeight}
               style={[
                 IOStyles.horizontalContentPadding,
                 {
                   paddingTop: insets.top,
-                  paddingBottom: 24,
-                  backgroundColor: categorySpecs.colors
-                },
-                headingAnimatedStyle
+                  backgroundColor: categorySpecs.colors,
+                  paddingBottom: 24
+                }
               ]}
             >
               <VSpacer size={48} />
@@ -207,19 +209,13 @@ const CgnMerchantsListByCategory = () => {
                   {I18n.t(categorySpecs.nameKey)}
                 </H3>
               </View>
-            </Animated.View>
+            </View>
           )}
           <CgnMerchantsListView
             merchantList={merchantsAll}
-            onScroll={scrollHandler}
-            titleHeight={titleHeight}
             onItemPress={onItemPress}
-            onRefresh={initLoadingLists}
-            refreshing={
-              isLoading(onlineMerchants) || isLoading(offlineMerchants)
-            }
           />
-        </>
+        </Animated.ScrollView>
       )}
     </>
   );
