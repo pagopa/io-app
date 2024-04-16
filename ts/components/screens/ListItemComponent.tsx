@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
 /**
  *
- * @deprecated It should be more appropriate to use a proper list item or just let the Flatlist handel the rendering.
+ * @deprecated It should be more appropriate to use a proper list item or just let the Flatlist handle the rendering.
  */
 export default class ListItemComponent extends React.Component<Props> {
   public render() {

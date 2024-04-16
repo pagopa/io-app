@@ -4,6 +4,7 @@ import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import {
   Body,
+  FooterWithButtons,
   H1,
   IOColors,
   IOStyles,
@@ -13,7 +14,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../components/core/typography/H4";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
@@ -47,14 +47,6 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
     </PressableListItemBase>
   </View>
 );
-
-const buttonProps = {
-  leftButton: { title: I18n.t("global.buttons.back"), bordered: true },
-  rightButton: {
-    title: I18n.t("global.buttons.continue"),
-    bordered: false
-  }
-};
 
 const MultiValuePrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
@@ -116,14 +108,20 @@ const MultiValuePrerequisitesScreen = () => {
       </BaseScreenComponent>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={{
-          onPress: goBack,
-          ...buttonProps.leftButton
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            onPress: goBack
+          }
         }}
-        rightButton={{
-          onPress: continueOnPress,
-          disabled: selectedIndex === undefined,
-          ...buttonProps.rightButton
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: continueOnPress,
+            disabled: selectedIndex === undefined
+          }
         }}
       />
     </SafeAreaView>

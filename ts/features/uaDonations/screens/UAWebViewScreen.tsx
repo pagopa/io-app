@@ -1,4 +1,4 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, IOToast } from "@pagopa/io-app-design-system";
 import {
   AmountInEuroCents,
   PaymentNoticeNumber,
@@ -25,8 +25,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../../components/ui/BlockButtons";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -67,19 +65,21 @@ type ErrorComponentProps = {
   buttonTitle: string;
   image: React.ReactNode;
 };
-const ErrorComponent: React.FunctionComponent<ErrorComponentProps> = props => {
-  const buttonProps: BlockButtonProps = {
-    primary: true,
-    title: props.buttonTitle,
-    onPress: props.onRetry
-  };
-  return (
-    <>
-      <InfoScreenComponent image={props.image} title={props.errorText} />
-      <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
-    </>
-  );
-};
+const ErrorComponent: React.FunctionComponent<ErrorComponentProps> = props => (
+  <>
+    <InfoScreenComponent image={props.image} title={props.errorText} />
+    <FooterWithButtons
+      type={"SingleButton"}
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          label: props.buttonTitle,
+          onPress: props.onRetry
+        }
+      }}
+    />
+  </>
+);
 
 // a loading component rendered during the webview loading states
 const renderLoading = () => (

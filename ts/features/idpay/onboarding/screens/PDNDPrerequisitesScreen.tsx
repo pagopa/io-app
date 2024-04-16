@@ -9,14 +9,14 @@ import {
   ButtonSolid,
   VSpacer,
   ContentWrapper,
-  ButtonExtendedOutline
+  ButtonExtendedOutline,
+  FooterWithButtons
 } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
@@ -27,17 +27,6 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { getPDNDCriteriaDescription } from "../utils/strings";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
-
-const secondaryButtonProps = {
-  block: true,
-  bordered: true,
-  title: I18n.t("global.buttons.back")
-};
-const primaryButtonProps = {
-  block: true,
-  bordered: false,
-  title: I18n.t("global.buttons.continue")
-};
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -147,8 +136,20 @@ export const PDNDPrerequisitesScreen = () => {
       </BaseScreenComponent>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={{ onPress: goBackOnPress, ...secondaryButtonProps }}
-        rightButton={{ onPress: continueOnPress, ...primaryButtonProps }}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            onPress: goBackOnPress
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: continueOnPress
+          }
+        }}
       />
       {bottomSheet}
     </SafeAreaView>
