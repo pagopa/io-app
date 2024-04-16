@@ -51,8 +51,9 @@ export const isPaymentMethodExpired = (
 ): boolean =>
   pipe(
     details?.expiryDate,
+    O.fromNullable,
     O.chainNullableK(getDateFromExpiryDate),
-    O.map(isExpiredDate),
+    O.chainNullableK(isExpiredDate),
     O.getOrElse(() => false)
   );
 
@@ -153,14 +154,7 @@ export const getPaymentCardPropsFromWalletInfo = (
   wallet: WalletInfo
 ): PaymentCardProps => {
   const details = wallet.details as UIWalletInfoDetails;
-
-  const isExpired = pipe(
-    details.expiryDate,
-    O.fromNullable,
-    O.chainNullableK(getDateFromExpiryDate),
-    O.chainNullableK(isExpiredDate),
-    O.getOrElse(() => false)
-  );
+  const isExpired = isPaymentMethodExpired(details);
 
   return {
     hpan: details.lastFourDigits,
