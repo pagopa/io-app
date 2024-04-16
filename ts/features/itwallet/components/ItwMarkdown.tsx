@@ -13,12 +13,14 @@ import {
   h5FontSize,
   H6,
   h6FontSize,
+  IOToast,
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import Markdown, { ASTNode } from "react-native-markdown-display";
 import { StyleSheet } from "react-native";
 import { openWebUrl } from "../../../utils/url";
+import I18n from "../../../i18n";
 
 interface MarkdownParserProps {
   content?: string;
@@ -58,7 +60,11 @@ const rules = {
   link: (node: ASTNode, children: Array<ReactNode>) => (
     <LabelLink
       key={node.key}
-      onPress={() => openWebUrl(node.attributes.href)}
+      onPress={() =>
+        openWebUrl(node.attributes.href, () =>
+          IOToast.error(I18n.t("global.jserror.title"))
+        )
+      }
       numberOfLines={1}
     >
       {children}
