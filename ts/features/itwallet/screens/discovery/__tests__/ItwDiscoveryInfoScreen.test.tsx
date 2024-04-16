@@ -8,11 +8,11 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { GlobalState } from "../../../../../store/reducers/types";
 
 describe("Test ItwDiscoveryInfo screen", () => {
-  it("should render the ItwDiscoveryInfo screen", () => {
+  it("it should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });
-  it("should match the snapshot", () => {
+  it("it should match the snapshot", () => {
     const component = renderComponent();
     expect(component).toMatchSnapshot();
   });
