@@ -1,17 +1,26 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  ContentWrapper,
+  HSpacer,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  View
+} from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
-import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { H2 } from "../../../../components/core/typography/H2";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import variables from "../../../../theme/variables";
@@ -122,72 +131,84 @@ const renderFooter = (
   onDownload?: () => void
 ) =>
   isIos ? (
-    <FooterWithButtons
-      type={"SingleButton"}
-      leftButton={confirmButtonProps(() => {
-        onShare?.();
-        ReactNativeBlobUtil.ios.presentOptionsMenu(downloadPath);
-      }, I18n.t("messagePDFPreview.singleBtn"))}
-    />
+    <ContentWrapper>
+      <View style={{ paddingTop: 16 }}>
+        <ButtonSolid
+          fullWidth
+          onPress={() => {
+            onShare?.();
+            ReactNativeBlobUtil.ios.presentOptionsMenu(downloadPath);
+          }}
+          label={I18n.t("messagePDFPreview.singleBtn")}
+        />
+      </View>
+    </ContentWrapper>
   ) : (
-    <FooterWithButtons
-      type={"ThreeButtonsInLine"}
-      leftButton={{
-        bordered: true,
-        primary: false,
-        buttonFontSize: variables.btnSmallFontSize,
-        onPress: () => {
-          onShare?.();
-          share(`file://${downloadPath}`, undefined, false)().catch(_ => {
-            IOToast.error(I18n.t("messagePDFPreview.errors.sharing"));
-          });
-        },
-        title: I18n.t("global.buttons.share")
-      }}
-      midButton={{
-        bordered: true,
-        primary: false,
-        buttonFontSize: variables.btnSmallFontSize,
-        onPress: () => {
-          onDownload?.();
-          ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
-            {
-              name,
-              parentFolder: "",
-              mimeType
-            },
-            "Download",
-            downloadPath
-          )
-            .then(_ => {
-              IOToast.success(
-                I18n.t("messagePDFPreview.savedAtLocation", {
-                  name
+    <ContentWrapper>
+      <View
+        style={{
+          flexDirection: "row",
+          paddingTop: 16
+        }}
+      >
+        <View style={{ flexGrow: 1 }}>
+          <ButtonOutline
+            fullWidth
+            onPress={() => {
+              onShare?.();
+              share(`file://${downloadPath}`, undefined, false)().catch(_ => {
+                IOToast.error(I18n.t("messagePDFPreview.errors.sharing"));
+              });
+            }}
+            label={I18n.t("global.buttons.share")}
+          />
+        </View>
+        <HSpacer size={16} />
+        <View style={{ flexGrow: 1 }}>
+          <ButtonOutline
+            fullWidth
+            onPress={() => {
+              onDownload?.();
+              ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
+                {
+                  name,
+                  parentFolder: "",
+                  mimeType
+                },
+                "Download",
+                downloadPath
+              )
+                .then(_ => {
+                  IOToast.success(
+                    I18n.t("messagePDFPreview.savedAtLocation", {
+                      name
+                    })
+                  );
                 })
-              );
-            })
-            .catch(_ => {
-              IOToast.error(I18n.t("messagePDFPreview.errors.saving"));
-            });
-        },
-        title: I18n.t("messagePDFPreview.save")
-      }}
-      rightButton={confirmButtonProps(
-        () => {
-          onOpen?.();
-          ReactNativeBlobUtil.android
-            .actionViewIntent(downloadPath, mimeType)
-            .catch(_ => {
-              IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
-            });
-        },
-        I18n.t("messagePDFPreview.open"),
-        undefined,
-        undefined,
-        undefined,
-        variables.btnSmallFontSize
-      )}
-    />
+                .catch(_ => {
+                  IOToast.error(I18n.t("messagePDFPreview.errors.saving"));
+                });
+            }}
+            label={I18n.t("messagePDFPreview.save")}
+          />
+        </View>
+        <HSpacer size={16} />
+        <View style={{ flexGrow: 1 }}>
+          <ButtonSolid
+            fullWidth
+            onPress={() => {
+              onOpen?.();
+              ReactNativeBlobUtil.android
+                .actionViewIntent(downloadPath, mimeType)
+                .catch(_ => {
+                  IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
+                });
+            }}
+            label={I18n.t("messagePDFPreview.open")}
+          />
+        </View>
+      </View>
+    </ContentWrapper>
   );
 
 export const LegacyMessageAttachmentPreview = ({
