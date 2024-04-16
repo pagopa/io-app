@@ -13,7 +13,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import LegacyFooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -117,18 +116,23 @@ const UnsubscriptionConfirmationScreen = () => {
           <VSpacer size={48} />
         </ContentWrapper>
       </ScrollView>
-      <LegacyFooterWithButtons
+      <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
-        leftButton={{
-          bordered: true,
-          title: I18n.t("global.buttons.cancel"),
-          onPress: handleClosePress
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: handleClosePress
+          }
         }}
-        rightButton={{
-          title: I18n.t("idpay.unsubscription.button.continue"),
-          onPress: confirmModal.present,
-          disabled: !checks.areFulfilled,
-          danger: checks.areFulfilled
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            color: checks.areFulfilled ? "danger" : "primary",
+            label: I18n.t("idpay.unsubscription.button.continue"),
+            onPress: confirmModal.present,
+            disabled: !checks.areFulfilled
+          }
         }}
       />
     </SafeAreaView>
