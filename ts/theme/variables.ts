@@ -48,6 +48,9 @@ const customVariables = {
     return this.textColor;
   },
 
+  // Inputs (after removing `native-base` dependency)
+  inputHeightBase: 50,
+
   /* ALIAS TOKENS */
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
