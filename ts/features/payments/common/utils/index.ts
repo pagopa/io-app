@@ -11,7 +11,6 @@ import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
 import { WalletPaymentPspSortType } from "../../checkout/types";
 import { PaymentCardProps } from "../components/PaymentCard";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
-import { PaymentCardProps } from "../components/PaymentCard";
 
 /**
  * A simple function to get the corresponding translated badge text,
