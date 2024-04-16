@@ -1,9 +1,17 @@
-import { IOColors, IOToast, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  BlockButtonProps,
+  FooterWithButtons,
+  IOColors,
+  IOToast,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext, useState } from "react";
 import {
   Dimensions,
   Image,
+  Pressable,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -12,15 +20,9 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../components/buttons/ButtonConfigurations";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -142,11 +144,7 @@ const addBottomSheetItem = (config: {
   subTitle: string;
   onPress: () => void;
 }) => (
-  <ButtonDefaultOpacity
-    onPress={config.onPress}
-    style={styles.container}
-    onPressWithGestureHandler={true}
-  >
+  <Pressable onPress={config.onPress} style={styles.container}>
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View style={IOStyles.flex}>
@@ -161,7 +159,7 @@ const addBottomSheetItem = (config: {
       </View>
     </View>
     <VSpacer size={40} />
-  </ButtonDefaultOpacity>
+  </Pressable>
 );
 
 type FooterProps = Props & { onSave: () => void };
@@ -197,10 +195,14 @@ const Footer = (props: FooterProps): React.ReactElement => {
     320
   );
 
-  const saveButton = confirmButtonProps(
-    presentBottomSheet,
-    I18n.t("global.genericSave")
-  );
+  const saveButton: BlockButtonProps = {
+    type: "Solid",
+    buttonProps: {
+      onPress: presentBottomSheet,
+      label: I18n.t("global.genericSave")
+    }
+  };
+
   const markdownDetails = props.validCertificate.markdownDetails;
 
   return (
@@ -209,14 +211,17 @@ const Footer = (props: FooterProps): React.ReactElement => {
       {markdownDetails ? (
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(
-            () => props.navigateToMarkdown(markdownDetails),
-            I18n.t("global.buttons.details")
-          )}
-          rightButton={saveButton}
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              onPress: () => props.navigateToMarkdown(markdownDetails),
+              label: I18n.t("global.buttons.details")
+            }
+          }}
+          secondary={saveButton}
         />
       ) : (
-        <FooterWithButtons type={"SingleButton"} leftButton={saveButton} />
+        <FooterWithButtons type="SingleButton" primary={saveButton} />
       )}
     </>
   );
