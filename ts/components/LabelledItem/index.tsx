@@ -9,7 +9,7 @@
  * icon  |
  *       input
  */
-import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
+import { HSpacer, IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
 import * as React from "react";
@@ -33,6 +33,7 @@ import { makeFontStyleObject } from "../core/fonts";
 import { H5 } from "../core/typography/H5";
 import { IOStyles } from "../core/variables/IOStyles";
 import TextInputMask from "../ui/MaskedInput";
+import variables from "../../theme/variables";
 import { LabelledItemIconOrImage } from "./LabelledItemIconOrImage";
 
 const styles = StyleSheet.create({
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   textInputMask: {
+    height: variables.inputHeightBase,
     ...makeFontStyleObject("Regular")
   }
 });
@@ -189,14 +191,17 @@ export const LabelledItem: React.FC<Props> = ({
           credit card sorting have a fallback value that's an icon,
           not an image */}
           {iconPosition === "left" && props.icon && (
-            <LabelledItemIconOrImage
-              icon={props.icon}
-              iconColor={iconColor}
-              imageStyle={props.imageStyle}
-              accessible={false}
-              accessibilityLabelIcon={props.accessibilityLabelIcon}
-              onPress={props.onPress}
-            />
+            <>
+              <LabelledItemIconOrImage
+                icon={props.icon}
+                iconColor={iconColor}
+                imageStyle={props.imageStyle}
+                accessible={false}
+                accessibilityLabelIcon={props.accessibilityLabelIcon}
+                onPress={props.onPress}
+              />
+              <HSpacer size={8} />
+            </>
           )}
 
           {props.inputMaskProps && (

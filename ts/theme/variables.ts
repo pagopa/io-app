@@ -49,7 +49,9 @@ const customVariables = {
   },
 
   // Inputs (after removing `native-base` dependency)
+  // Source: https://docs-v2.nativebase.io/docs/ThemeVariables.html
   inputHeightBase: 50,
+  inputFontSize: 16,
 
   /* ALIAS TOKENS */
   /* Don't put hardcoded color values here.
