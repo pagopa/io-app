@@ -1,8 +1,4 @@
-import {
-  IOLogoPaymentType,
-  IOPaymentLogos,
-  ListItemTransactionStatusWithBadge
-} from "@pagopa/io-app-design-system";
+import { ListItemTransactionStatusWithBadge } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18n-js";
@@ -12,10 +8,9 @@ import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/w
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletPaymentPspSortType } from "../../checkout/types";
-import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { PaymentCardProps } from "../components/PaymentCard";
+import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -102,28 +97,6 @@ export const isPaymentSupported = (
     O.alt(() => notAvailableCustomRepresentation),
     O.getOrElseW(() => "notAvailable" as const)
   );
-};
-
-export const getPaymentLogo = (
-  details: UIWalletInfoDetails
-): IOLogoPaymentType | undefined => {
-  if (details.maskedEmail !== undefined) {
-    return "payPal";
-  } else if (details.maskedNumber !== undefined) {
-    return "bancomatPay";
-  } else if (details.lastFourDigits !== undefined) {
-    return pipe(
-      details.brand,
-      O.fromNullable,
-      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
-      O.fold(
-        () => undefined,
-        ([logoName, _]) => logoName
-      )
-    ) as IOLogoPaymentType;
-  }
-
-  return undefined;
 };
 
 export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
