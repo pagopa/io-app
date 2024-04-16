@@ -153,7 +153,7 @@ const CgnMerchantsListByCategory = () => {
           style={{ flexGrow: 1 }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
-          contentOffset={{ x: 0, y: titleHeight }}
+          snapToOffsets={[0, titleHeight]}
           refreshControl={
             <RefreshControl
               refreshing={
