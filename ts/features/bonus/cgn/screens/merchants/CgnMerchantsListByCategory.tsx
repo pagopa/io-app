@@ -106,20 +106,11 @@ const CgnMerchantsListByCategory = () => {
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
   const merchantsAll = useMemo(
-    () => [
-      ...mixAndSortMerchants(
+    () =>
+      mixAndSortMerchants(
         getValueOrElse(onlineMerchants, []),
         getValueOrElse(offlineMerchants, [])
       ),
-      ...mixAndSortMerchants(
-        getValueOrElse(onlineMerchants, []),
-        getValueOrElse(offlineMerchants, [])
-      ),
-      ...mixAndSortMerchants(
-        getValueOrElse(onlineMerchants, []),
-        getValueOrElse(offlineMerchants, [])
-      )
-    ],
     [onlineMerchants, offlineMerchants]
   );
 
