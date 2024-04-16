@@ -26,7 +26,7 @@ export const selectPaymentOnboardingMethods = createSelector(
             method.methodManagement ===
               PaymentMethodManagementTypeEnum.ONBOARDABLE &&
             method.status === PaymentMethodStatusEnum.ENABLED
-        ) || []
+        ) ?? []
     )
 );
 
