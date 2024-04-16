@@ -15,7 +15,15 @@ import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import * as React from "react";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
-import { Alert, ColorSchemeName, Modal, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  ColorSchemeName,
+  Modal,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
@@ -330,6 +338,7 @@ const IdentificationModal = () => {
       transparent
       onRequestClose={onRequestCloseHandler}
     >
+      {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
       <SafeAreaView style={[styles.safeArea, { backgroundColor: blueColor }]}>
         {isValidatingTask && (
           <View accessible style={styles.closeButton}>
