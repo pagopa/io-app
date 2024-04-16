@@ -72,7 +72,7 @@ describe("PreferenceToggleRow component", () => {
       expect(component.getByTestId("preference-toggle-row")).toBeDefined();
       const switchComponent = component.getByRole("switch");
       expect(switchComponent).toBeDefined();
-      expect(switchComponent).toBeDisabled();
+      expect(switchComponent).toHaveProp("disabled", true);
     });
   });
 });
