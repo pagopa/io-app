@@ -119,7 +119,12 @@ export const MessageDetails = ({
           <VSpacer size={16} />
           <MessageInfo iun={message.iun} />
         </ContentWrapper>
-        <MessageBottomMenu serviceId={serviceId} />
+        <MessageBottomMenu
+          iun={message.iun}
+          messageId={messageId}
+          payments={payments}
+          serviceId={serviceId}
+        />
       </ScrollView>
       {canShowMorePaymentsLink(isCancelled, payments) && (
         <MessagePaymentBottomSheet

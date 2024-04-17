@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import {
   Divider,
   IOIcons,
@@ -24,6 +25,7 @@ export type ShowMoreItems = ReadonlyArray<{
   icon?: IOIcons;
   label: string;
   value: string;
+  valueToCopy?: string;
 }>;
 
 export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
@@ -45,7 +47,11 @@ export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
                     label={item.label}
                     value={item.value}
                     icon={item.icon}
-                    onPress={() => clipboardSetStringWithFeedback(item.value)}
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(
+                        item.valueToCopy ?? item.value
+                      )
+                    }
                   />
                   {itemIndex < items.length - 1 && (
                     <Divider key={`SMLI_F${sectionIndex}_D${itemIndex}`} />
@@ -56,7 +62,8 @@ export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
           ))}
         </>
       ),
-      title: I18n.t("messageDetails.showMoreDataBottomSheet.title")
+      title: I18n.t("messageDetails.showMoreDataBottomSheet.title"),
+      footer: <View />
     },
     100
   );

@@ -57,7 +57,8 @@ const generateMessageSectionData = (
           ),
           icon: "docPaymentCode",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
-          value: formatPaymentNoticeNumber(noticeNumber)
+          value: formatPaymentNoticeNumber(noticeNumber),
+          valueToCopy: noticeNumber
         }
       ]
     : [];
