@@ -58,6 +58,7 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ROUTES.AUTHENTICATION_IDP_SELECTION}
       component={IdpSelectionScreen}
     />

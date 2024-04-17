@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessageFooter should match snapshot 1`] = `
+exports[`MessageBottomMenu should match snapshot 1`] = `
 <View
   style={
     Object {
@@ -171,7 +171,7 @@ exports[`MessageFooter should match snapshot 1`] = `
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessageFooter should match snapshot 1`] = `
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -358,8 +344,8 @@ exports[`MessageFooter should match snapshot 1`] = `
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

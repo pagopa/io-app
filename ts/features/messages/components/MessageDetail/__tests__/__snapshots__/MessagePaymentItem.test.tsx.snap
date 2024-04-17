@@ -171,7 +171,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -455,8 +441,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -633,7 +619,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -641,25 +627,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1033,8 +1005,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1211,7 +1183,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -1219,25 +1191,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1624,8 +1582,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
