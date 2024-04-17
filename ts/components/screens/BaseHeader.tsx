@@ -326,12 +326,12 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   private renderGoBack = () => {
     const { goBack, dark, customGoBack, backButtonTestID } = this.props;
     return customGoBack ? (
-      <View style={{ ...IOStyles.flex, alignSelf: "flex-start" }}>
+      <View style={{ ...IOStyles.flex, alignSelf: "center" }}>
         {customGoBack}
       </View>
     ) : (
       goBack && (
-        <View style={{ ...IOStyles.flex, alignSelf: "flex-start" }}>
+        <View style={{ ...IOStyles.flex, alignSelf: "center" }}>
           <GoBackButton
             testID={backButtonTestID ?? "back-button"}
             onPress={goBack}
