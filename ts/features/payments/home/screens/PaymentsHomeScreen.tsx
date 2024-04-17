@@ -1,39 +1,81 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { GradientScrollView } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletPaymentGetUserWallets } from "../../payment/store/actions/networking";
-import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
-import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
-import { isAnySectionSomeOrLoadingSelector } from "../store/selectors";
-import { useTransactionHistory } from "../utils/hooks/useTransactionHistory";
+import { ScrollView } from "react-native";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
+import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyScreenContent";
+import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
+import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
+import {
+  isPaymentsSectionEmptySelector,
+  isPaymentsSectionLoadingSelector,
+  isPaymentsTransactionsEmptySelector
+} from "../store/selectors";
 
-export const PaymentsHomeScreen = () => {
-  const dispatch = useIODispatch();
-  const { loadFirstHistoryPage } = useTransactionHistory();
-  const shouldRenderEmptyState = !useIOSelector(
-    isAnySectionSomeOrLoadingSelector
+const PaymentsHomeScreen = () => {
+  const navigation = useIONavigation();
+
+  const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const isTransactionsEmpty = useIOSelector(
+    isPaymentsTransactionsEmptySelector
   );
 
-  const fetchData = React.useCallback(() => {
-    dispatch(walletPaymentGetUserWallets.request());
-    loadFirstHistoryPage();
-  }, [dispatch, loadFirstHistoryPage]);
-  useFocusEffect(fetchData);
+  const handleOnPayNoticedPress = () => {
+    navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
+      screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
+    });
+  };
 
-  if (shouldRenderEmptyState) {
-    return <></>;
+  if (isTransactionsEmpty) {
+    return (
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          flexGrow: 1
+        }}
+      >
+        <PaymentsHomeScreenContent />
+      </ScrollView>
+    );
   }
 
-  // let the single components handle empty cases.
-  //
-  // else if neither is some/loading, render empty page.
+  return (
+    <GradientScrollView
+      primaryActionProps={
+        isLoading
+          ? undefined
+          : {
+              accessibilityLabel: I18n.t("features.payments.cta"),
+              label: I18n.t("features.payments.cta"),
+              onPress: handleOnPayNoticedPress,
+              icon: "qrCode",
+              iconPosition: "end",
+              testID: "PaymentsHomeScreenTestID-cta"
+            }
+      }
+      excludeSafeAreaMargins={true}
+    >
+      <PaymentsHomeScreenContent />
+    </GradientScrollView>
+  );
+};
+
+const PaymentsHomeScreenContent = () => {
+  const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+  const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
+
+  if (isEmpty) {
+    return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
+  }
 
   return (
     <>
-      <PaymentMethodsSection />
-      <VSpacer size={24} />
-      <PaymentHistorySection />
+      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
+      <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
     </>
   );
 };
+
+export { PaymentsHomeScreen };

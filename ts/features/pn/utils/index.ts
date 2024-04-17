@@ -24,8 +24,8 @@ export function getNotificationStatusInfo(status: NotificationStatus) {
 
 export type PNOptInMessageInfo = {
   isPNOptInMessage: boolean;
-  cta1HasServiceNavigationLink: boolean;
-  cta2HasServiceNavigationLink: boolean;
+  cta1LinksToPNService: boolean;
+  cta2LinksToPNService: boolean;
 };
 
 export const isPNOptInMessage = (
@@ -50,24 +50,24 @@ export const isPNOptInMessage = (
         ctas,
         O.fromNullable,
         O.map(ctas => ({
-          cta1HasServiceNavigationLink: isServiceDetailNavigationLink(
+          cta1LinksToPNService: isServiceDetailNavigationLink(
             ctas.cta_1.action
           ),
-          cta2HasServiceNavigationLink:
+          cta2LinksToPNService:
             !!ctas.cta_2 && isServiceDetailNavigationLink(ctas.cta_2.action)
         })),
         O.map(ctaNavigationLinkInfo => ({
           isPNOptInMessage:
-            ctaNavigationLinkInfo.cta1HasServiceNavigationLink ||
-            ctaNavigationLinkInfo.cta2HasServiceNavigationLink,
+            ctaNavigationLinkInfo.cta1LinksToPNService ||
+            ctaNavigationLinkInfo.cta2LinksToPNService,
           ...ctaNavigationLinkInfo
         }))
       )
     ),
     O.getOrElse<PNOptInMessageInfo>(() => ({
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }))
   );
 
@@ -115,3 +115,11 @@ export const containsF24FromPNMessagePot = (
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
+
+export const canShowMorePaymentsLink = (
+  isCancelled: boolean,
+  payments?: ReadonlyArray<NotificationPaymentInfo>
+): payments is ReadonlyArray<NotificationPaymentInfo> =>
+  !isCancelled &&
+  !!payments &&
+  payments.length > maxVisiblePaymentCountGenerator();

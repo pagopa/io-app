@@ -14,7 +14,7 @@ import * as React from "react";
 import { FlatList } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIOSelector } from "../../../../store/hooks";
-import { walletOnboardingSelectedPaymentMethodSelector } from "../store";
+import { selectPaymentOnboardingSelectedMethod } from "../store/selectors";
 import { WalletPaymentMethodItemSkeleton } from "./WalletPaymentMethodItemSkeleton";
 
 type OwnProps = Readonly<{
@@ -22,7 +22,6 @@ type OwnProps = Readonly<{
   onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
   isLoadingMethods?: boolean;
   isLoadingWebView?: boolean;
-  header?: React.ReactElement;
 }>;
 
 type PaymentMethodItemProps = {
@@ -62,11 +61,10 @@ const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
   onSelectPaymentMethod,
   isLoadingMethods,
-  isLoadingWebView,
-  header
+  isLoadingWebView
 }: OwnProps) => {
   const selectedPaymentMethodId = useIOSelector(
-    walletOnboardingSelectedPaymentMethodSelector
+    selectPaymentOnboardingSelectedMethod
   );
   const isMethodLoading = (itemId: string) =>
     isLoadingWebView && itemId === selectedPaymentMethodId;
@@ -78,7 +76,6 @@ const WalletOnboardingPaymentMethodsList = ({
       contentContainerStyle={IOStyles.horizontalContentPadding}
       data={paymentMethods}
       keyExtractor={item => item.id}
-      ListHeaderComponent={header}
       ListFooterComponent={<ListFooter />}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (

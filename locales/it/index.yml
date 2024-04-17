@@ -215,7 +215,7 @@ tablet:
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.
-  learnMoreButton: 
+  learnMoreButton:
     title: Cosa significa?
   learnMoreBottomsheet:
     title: Sicurezza del dispositivo
@@ -235,6 +235,7 @@ locales:
   en: Inglese
   de: Tedesco
 clipboard:
+  copyIntoClipboard: copia negli appunti
   copyFeedback: Copiato negli appunti
   copyText: copia
   copyFeedbackButton: copiato
@@ -268,8 +269,8 @@ startup:
   contextualHelp:
     title: Problemi di inizializzazione?
 login:
-  expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
-  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
+  expiration_info: Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.
+  expiration_info_FL: Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.
   biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto.
 inbox:
   enableButton: Abilita Inbox
@@ -454,6 +455,9 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    itWallet:
+      itWalletTest: IT Wallet
+      itWalletTestDescription: Abilita ambiente di test per IT Wallet
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -660,6 +664,7 @@ authentication:
         cardLocked: Carta CIE bloccata
         wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
         wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
+        genericError: Si è verificato un errore imprevisto. Riprova.
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostTitleiOS: Hai rimosso la carta troppo presto
@@ -760,10 +765,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: Non hai confermato il tuo indirizzo email
-      subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
-      editButton: Modifica email
-      validateButton: Conferma email
+      title: È questa la tua email?
+      subtitle: Per continuare a usare l’app, devi confermare che la tua email è
+      editButton: No, modifica
+      validateButton: Sì, conferma
       header:
         title: Configura IO
       help:
@@ -771,7 +776,7 @@ email:
     emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
-      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      subtitleEnd: è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.
       editButton: Modifica email
       header:
         title: Configura IO
@@ -802,16 +807,16 @@ email:
     label: Indirizzo email personale
     alert:
       title: "{{email}} è già in uso, inseriscine un’altra."
-      description1: Email già in uso 
+      description1: Email già in uso
       description2: Inserisci un indirizzo diverso da quello attuale
       description3: Stai già usando questa email
-      invalidemail: Inserisci un indirizzo email valido 
+      invalidemail: Inserisci un indirizzo email valido
       modaltitle: Questa email è già in uso
       modaldescription: Può succedere se condividi lo stesso indirizzo con un familiare
       modalbutton: Usa un’altra email
   edit:
     title: Modifica la tua email
-    subtitle: Ora stai usando 
+    subtitle: Ora stai usando
     validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
@@ -834,7 +839,7 @@ email:
     title: Ti abbiamo inviato un’email
     subtitle: Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a
     link: Non è corretto?
-    countdowntext: Richiedi una nuova email tra 
+    countdowntext: Richiedi una nuova email tra
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
     toast: Fatto! Controlla la tua casella di posta.
@@ -937,18 +942,6 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
-  homeScreen:
-    title: Pagamenti
-    methodsSection:
-      header: Metodi di pagamento
-      headerCTA: Aggiungi
-    historySection:
-      header: Storico operazioni
-      headerCTA: Vedi tutte
-      transactionStatusBadges:
-        failure: "FALLITA"
-        success: ""
-    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
     message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
@@ -2080,6 +2073,32 @@ services:
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
+  details:
+    failure:
+      title: "C'è un problema temporaneo, riprova"
+      subtitle: "Stiamo recuperando i dettagli del servizio"
+      back: "Indietro"
+      retry: "Riprova"
+    preferences:
+      title: "Questo servizio può"
+      inbox: "Contattarti in app"
+      pushNotifications: "Inviarti notifiche push"
+      messageReadStatus: "Ricevere conferme di lettura"
+    metadata:
+      title: "Contatti ed informazioni"
+      website: "Visita il sito"
+      downloadApp: "Scarica l'app"
+      support: "Richiedi assistenza"
+      phone: "Contatta l'ente"
+      email: "Invia un'email"
+      pec: "Invia una PEC"
+      fiscalCode: "Codice fiscale ente"
+      address: "Indirizzo"
+      serviceId: "ID servizio"
+    tosAndPrivacy: 
+      title: "Termini e Privacy"
+      tosLink: "Termini e condizioni d'uso"
+      privacyLink: "Informativa sulla privacy"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
@@ -2918,16 +2937,43 @@ features:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
       cta: Aggiungi al Portafoglio
+      toast:
+        newMethod: Elemento aggiunto!
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
     cards:
       categories:
+        all: Tutti
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
-        payment: Metodo di pagamento
+        payment: Metodi di pagamento
+    onboarding:
+      title: Cosa vuoi aggiungere al portafoglio?
+      options:
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
+  payments:
+    title: Pagamenti
+    cta: Paga un avviso
+    methods:
+      title: Metodi di pagamento
+      button: Aggiungi
+      banner:
+        content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        action: Aggiungi un metodo
+    transactions:
+      title: Storico operazioni
+      button: Vedi tutte
+      empty:
+        title: Qui vedrai le tue ricevute pagoPA
+        content: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+      status:
+        failure: FALLITA
+        success: ""
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -2963,7 +3009,8 @@ support:
     navigationData: "Dati di navigazione in app IO"
     navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"
     devicePerformance: "Performance del dispositivo"
-    devicePerformanceData: "Livello di memoria e batteria"
+    devicePerformanceDataAndroid: "Livello di memoria e batteria"
+    devicePerformanceDataiOS: "Livello di memoria ({{storage}}) e batteria"
     stock: "Dati dell’avviso di pagamento"
     stockValue: "Incluso l’errore che hai appena ricevuto"
     card: "Dati del metodo di pagamento"

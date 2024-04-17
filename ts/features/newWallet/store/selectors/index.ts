@@ -1,33 +1,30 @@
-import { pipe } from "fp-ts/lib/function";
-import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { WalletCard, WalletCardCategory } from "../../types";
 
-const selectWalletFeature = (state: GlobalState) => state.features.wallet;
-
-export const isWalletPaymentsRedirectBannerVisibleSelector = (
-  state: GlobalState
-) =>
-  pipe(
-    state,
-    selectWalletFeature,
-    wallet => wallet.preferences.shouldShowPaymentsRedirectBanner
+const groupCardsByCategory = (cards: ReadonlyArray<WalletCard>) =>
+  cards.reduce(
+    (acc, card) => ({
+      ...acc,
+      [card.category]: [...(acc[card.category] || []), card]
+    }),
+    {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
   );
 
-export const selectWalletCards = (state: GlobalState) =>
-  pipe(state, selectWalletFeature, wallet => Object.values(wallet.cards));
+const selectWalletFeature = (state: GlobalState) => state.features.wallet;
+
+export const isWalletPaymentsRedirectBannerVisibleSelector = createSelector(
+  selectWalletFeature,
+  wallet => wallet.preferences.shouldShowPaymentsRedirectBanner
+);
+
+export const selectWalletCards = createSelector(selectWalletFeature, wallet =>
+  Object.values(wallet.cards)
+);
 
 export const getWalletCardsByCategorySelector = createSelector(
   selectWalletCards,
-  cards =>
-    cards.reduce(
-      (acc, card) => ({
-        ...acc,
-        [card.category]: [...(acc[card.category] || []), card]
-      }),
-      {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
-    )
+  groupCardsByCategory
 );
 
 export const getWalletCardsCategorySelector = (category: WalletCardCategory) =>
@@ -35,3 +32,22 @@ export const getWalletCardsCategorySelector = (category: WalletCardCategory) =>
     getWalletCardsByCategorySelector,
     cardsByCategory => cardsByCategory[category]
   );
+
+export const selectWalletCategoryFilter = createSelector(
+  selectWalletFeature,
+  wallet => wallet.preferences.categoryFilter
+);
+
+export const selectFilteredWalletCards = createSelector(
+  selectWalletCards,
+  selectWalletCategoryFilter,
+  (cards, categoryFilter) =>
+    cards.filter(card =>
+      categoryFilter ? card.category === categoryFilter : true
+    )
+);
+
+export const getWalletCardsByCategoryWithFilterSelector = createSelector(
+  selectFilteredWalletCards,
+  groupCardsByCategory
+);

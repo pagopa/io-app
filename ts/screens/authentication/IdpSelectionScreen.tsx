@@ -1,23 +1,24 @@
-import * as React from "react";
+import React, {
+  ReactElement,
+  createRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, View } from "react-native";
-import { connect, useSelector, useStore } from "react-redux";
-import { Dispatch } from "redux";
-import { useEffect, useState } from "react";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import IdpsGrid from "../../components/IdpsGrid";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import { useSelector, useStore } from "react-redux";
+import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
+import _ from "lodash";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
-import { GlobalState } from "../../store/reducers/types";
-import { idpsSelector, idpsStateSelector } from "../../store/reducers/content";
+import { idpsRemoteValueSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { LocalIdpsFallback } from "../../utils/idps";
+import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { isLoading } from "../../common/model/RemoteValue";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
@@ -26,19 +27,17 @@ import {
 import ROUTES from "../../navigation/routes";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
-import { H1 } from "../../components/core/typography/H1";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
-import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import IdpsGridRevamp from "../../components/IdpsGridRevamp";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { isReady } from "../../common/model/RemoteValue";
 import { trackSpidLoginIdpSelection } from "./analytics";
 import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
 
 const TestIdp: SpidIdp = {
   id: "test" as keyof IdpData,
@@ -55,18 +54,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.idp_selection.contextualHelpContent"
 };
 
+export const randomOrderIdps = <T extends object>(
+  array: Array<T> | ReadonlyArray<T>
+): Array<T> =>
+  array
+    .map(value => ({ value, sort: Math.random() })) // Assigns a random value to each array element
+    .sort((a, b) => a.sort - b.sort) // Sorts the array according to the random values assigned
+    .map(({ value }) => value); // Extract only the original values from the array
+
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-const IdpSelectionScreen = (props: Props): React.ReactElement => {
-  useOnFirstRender(() => {
-    trackSpidLoginIdpSelection();
-  });
-
-  const [counter, setCounter] = useState(0);
-  const { requestIdps, setSelectedIdp } = props;
-  const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
-
+const IdpSelectionScreen = (): ReactElement => {
+  const dispatch = useIODispatch();
+  const store = useStore();
   const navigation =
     useNavigation<
       IOStackNavigationProp<
@@ -74,20 +75,61 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
         "AUTHENTICATION_IDP_SELECTION"
       >
     >();
-
+  const [counter, setCounter] = useState(0);
+  const idps = useIOSelector(idpsRemoteValueSelector);
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const nativeLoginFeature = useIOSelector(nativeLoginSelector);
   const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
-
   const isNativeLoginFeatureFlagEnabled = useSelector(
     isNativeLoginEnabledSelector
   );
 
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+  const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
+  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
+    randomOrderIdps(idpValue)
+  );
+  const firstIdpsRef = useRef<ReadonlyArray<SpidIdp> | LocalIdpsFallback>(
+    idpValue
+  );
+
+  const requestIdps = useCallback(
+    () => dispatch(loadIdps.request()),
+    [dispatch]
+  );
+
+  const setSelectedIdp = useCallback(
+    (idp: SpidIdp) => dispatch(idpSelected(idp)),
+    [dispatch]
+  );
+
+  // When the screen is landed, metadata are retrieved.
+  // This retrieval causes glitches in 2 different cases:
+  // 1. When the app is installed from zero there is no data
+  // in memory so there will always be the glitch because the
+  // idpsFallback object is shown first while the metadata is retrieved
+  // 2. When logging in with the app installed the existing data is
+  // shown first -> the call to retrieve the metadata is invoked ->
+  // the call is loading so the data of the idpsFallback object is shown ->
+  // the data is retrieved and then the array is updated.
+
+  // To resolve the second glitch, the existing metadata (present on the first render)
+  // is saved in firstIdpsRef and then compared with the data that is
+  // collected after the data is updated (so when it isReady again).
+  if (isReady(idps)) {
+    if (!_.isEqual(firstIdpsRef.current, idps.value.items)) {
+      // eslint-disable-next-line functional/immutable-data
+      randomIdps.current = randomOrderIdps(idps.value.items);
+    }
+    // eslint-disable-next-line functional/immutable-data
+    firstIdpsRef.current = idps.value.items;
+  }
+
   const isNativeLoginEnabled = () =>
     (Platform.OS !== "ios" ||
       (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
-    props.nativeLoginFeature.enabled &&
+    nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
-
-  const store = useStore();
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
@@ -111,6 +153,10 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     }
   };
 
+  useOnFirstRender(() => {
+    trackSpidLoginIdpSelection();
+  });
+
   useEffect(() => {
     requestIdps();
   }, [requestIdps]);
@@ -125,70 +171,49 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     }
   }, [counter, setSelectedIdp, navigation]);
 
-  const spacerComponent = () => <VSpacer size={24} />;
+  const headerComponent = () => {
+    const viewRef = createRef<View>();
 
-  const headerComponent = () => (
-    <>
-      <View style={IOStyles.horizontalContentPadding}>
-        <VSpacer size={24} />
+    return (
+      <>
         {/* Secret login for App Store reviewers */}
         <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
           {/* Add `accessible=false` 'cause it useful only
             for debug mode (stores reviewers).
             Original issue: https://www.pivotaltracker.com/story/show/172082895 */}
-          <H1
-            accessible={true}
-            accessibilityRole="header"
-            weight="Bold"
-            testID={"screen-content-header-title"}
-            color={"bluegreyDark"}
-          >
-            {I18n.t("authentication.idp_selection.contentTitle")}
-          </H1>
+          <Banner
+            viewRef={viewRef}
+            color="neutral"
+            size="small"
+            content={
+              isFastLoginFeatureFlagEnabled
+                ? I18n.t("login.expiration_info_FL")
+                : I18n.t("login.expiration_info")
+            }
+            pictogramName="passcode"
+          />
         </Pressable>
         <VSpacer size={8} />
-        <Body>
-          {isFastLoginFeatureFlagEnabled
-            ? I18n.t("login.expiration_info_FL")
-            : I18n.t("login.expiration_info")}
-        </Body>
-      </View>
-      <VSpacer />
-      <View style={{ backgroundColor: IOColors.greyUltraLight }}>
-        <VSpacer size={24} />
-      </View>
-    </>
-  );
+      </>
+    );
+  };
+  useHeaderSecondLevel({
+    title: "",
+    contextualHelpMarkdown,
+    supportRequest: true,
+    faqCategories: ["authentication_IPD_selection"]
+  });
 
   return (
-    <BaseScreenComponent
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["authentication_IPD_selection"]}
-      goBack={true}
-      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-    >
-      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
-        <IdpsGrid
-          idps={[...props.idps]}
-          onIdpSelected={onIdpSelected}
-          headerComponent={headerComponent}
-          footerComponent={spacerComponent}
-        />
-      </LoadingSpinnerOverlay>
-    </BaseScreenComponent>
+    <SafeAreaView edges={["bottom"]}>
+      <IdpsGridRevamp
+        idps={randomIdps.current}
+        onIdpSelected={onIdpSelected}
+        headerComponent={headerComponent}
+        footerComponent={<VSpacer size={24} />}
+      />
+    </SafeAreaView>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  idps: idpsSelector(state),
-  isIdpsLoading: isLoading(idpsStateSelector(state)),
-  assistanceToolConfig: assistanceToolConfigSelector(state),
-  nativeLoginFeature: nativeLoginSelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestIdps: () => dispatch(loadIdps.request()),
-  setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(IdpSelectionScreen);
+export default IdpSelectionScreen;

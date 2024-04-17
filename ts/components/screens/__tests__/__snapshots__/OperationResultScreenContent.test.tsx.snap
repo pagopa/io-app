@@ -319,7 +319,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
                         style={
                           Object {
                             "flexGrow": 1,
@@ -395,14 +395,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               }
                             />
                             <Text
-                              color="grey-650"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              allowFontScaling={false}
+                              color="bluegrey"
+                              defaultColor="bluegrey"
+                              defaultWeight="Regular"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
+                                  "fontSize": 16,
+                                  "lineHeight": 24,
                                 }
                               }
                               style={
@@ -411,11 +412,11 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                     "textAlign": "center",
                                   },
                                   Object {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
+                                    "fontSize": 16,
+                                    "lineHeight": 24,
                                   },
                                   Object {
-                                    "color": "#636B82",
+                                    "color": "#475A6D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -660,7 +661,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                             </View>
                           </View>
                         </RCTScrollView>
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
