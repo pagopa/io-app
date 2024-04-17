@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
 import preferencesPersistor, { WalletPreferencesState } from "./preferences";
 import cardsReducer, { WalletCardsState } from "./cards";
-import placeholdersPersistor, { WalletPlaceholdersState } from "./placeholder";
+import placeholdersPersistor, { WalletPlaceholdersState } from "./placeholders";
 
 export type WalletState = {
   cards: WalletCardsState;
