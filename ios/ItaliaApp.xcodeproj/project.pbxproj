@@ -50,6 +50,7 @@
 		F2B163172B753C9D00F6E487 /* TitilliumSansPro-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630B2B753C9D00F6E487 /* TitilliumSansPro-BlackItalic.otf */; };
 		F2B163182B753C9D00F6E487 /* TitilliumSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630C2B753C9D00F6E487 /* TitilliumSansPro-Bold.otf */; };
 		F2B163192B753C9D00F6E487 /* TitilliumSansPro-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630D2B753C9D00F6E487 /* TitilliumSansPro-ThinItalic.otf */; };
+		F6095D192BC6E01F000EA253 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F6095D182BC6E01F000EA253 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		F2B1630B2B753C9D00F6E487 /* TitilliumSansPro-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TitilliumSansPro-BlackItalic.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-BlackItalic.otf"; sourceTree = "<group>"; };
 		F2B1630C2B753C9D00F6E487 /* TitilliumSansPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TitilliumSansPro-Bold.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-Bold.otf"; sourceTree = "<group>"; };
 		F2B1630D2B753C9D00F6E487 /* TitilliumSansPro-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TitilliumSansPro-ThinItalic.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-ThinItalic.otf"; sourceTree = "<group>"; };
+		F6095D182BC6E01F000EA253 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = ItaliaApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Italic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				2AD40B9824CB049500E4124A /* LaunchScreen.storyboard */,
+				F6095D182BC6E01F000EA253 /* PrivacyInfo.xcprivacy */,
 				7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */,
 				133638FC213D788900B0C079 /* InfoPlist.strings */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -425,6 +428,7 @@
 				D18E075B28304466B6CA2381 /* TitilliumWeb-LightItalic.ttf in Resources */,
 				F2B163102B753C9D00F6E487 /* TitilliumSansPro-LightItalic.otf in Resources */,
 				F2B163182B753C9D00F6E487 /* TitilliumSansPro-Bold.otf in Resources */,
+				F6095D192BC6E01F000EA253 /* PrivacyInfo.xcprivacy in Resources */,
 				4D331CF68DAC4800A6D6297A /* TitilliumWeb-Regular.ttf in Resources */,
 				3A3CA4696BA44782A02FE37E /* TitilliumWeb-SemiBold.ttf in Resources */,
 				72E4B1EFF7D4414483079F91 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */,
@@ -780,7 +784,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -821,7 +825,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;

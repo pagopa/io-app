@@ -1,35 +1,48 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import {
   ContentWrapper,
   IOColors,
-  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { ServicesParamsList } from "../navigation/params";
+import { loadServiceDetail } from "../../../store/actions/services";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { logosForService } from "../../../utils/services";
+import {
+  CardWithMarkdownContent,
+  CardWithMarkdownContentSkeleton
+} from "../components/CardWithMarkdownContent";
+import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
+import {
+  ServiceDetailsHeader,
+  ServiceDetailsHeaderSkeleton
+} from "../components/ServiceDetailsHeader";
+import { ServiceDetailsMetadata } from "../components/ServiceDetailsMetadata";
+import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
+import {
+  ServiceActionsProps,
+  ServiceDetailsScreenComponent
+} from "../components/ServiceDetailsScreenComponent";
+import { ServiceDetailsTosAndPrivacy } from "../components/ServiceDetailsTosAndPrivacy";
+import { ServicesParamsList } from "../navigation/params";
 import {
   isErrorServiceByIdSelector,
   isLoadingServiceByIdSelector,
-  serviceByIdSelector
+  serviceByIdSelector,
+  serviceMetadataByIdSelector,
+  serviceMetadataInfoSelector
 } from "../store/reducers/servicesById";
-import { loadServiceDetail } from "../../../store/actions/services";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { ServiceDetailsHeader } from "../components/ServiceDetailsHeader";
-import { logosForService } from "../../../utils/services";
-import { CardWithMarkdownContent } from "../components/CardWithMarkdownContent";
-import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
-import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
 import { loadServicePreference } from "../store/actions";
+import { CTA, CTAS } from "../../messages/types/MessageCTA";
+import { getServiceCTA, handleCtaAction } from "../../messages/utils/messages";
+import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
+import { useFirstEffect } from "../common/hooks/useFirstEffect";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -44,12 +57,11 @@ type ServiceDetailsScreenProps = IOStackNavigationRouteProps<
   "SERVICE_DETAIL"
 >;
 
-const headerPaddingBottom = 138;
+export const headerPaddingBottom = 138;
+
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
-  scrollContentContainer: {
-    flexGrow: 1
-  },
   headerContainer: {
     backgroundColor: IOColors["grey-50"],
     paddingBottom: headerPaddingBottom
@@ -61,99 +73,189 @@ const styles = StyleSheet.create({
 });
 
 export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
-  const { serviceId } = route.params;
+  const { serviceId, activate } = route.params;
 
+  const linkTo = useLinkTo();
   const dispatch = useIODispatch();
+  const headerHeight = useHeaderHeight();
+  const isFirstRender = useFirstEffect();
 
-  useEffect(() => {
-    dispatch(loadServiceDetail.request(serviceId));
-    dispatch(loadServicePreference.request(serviceId));
-  }, [dispatch, serviceId]);
+  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
 
-  const serviceById = useIOSelector(state =>
-    serviceByIdSelector(state, serviceId)
-  );
-
-  const isLoadingServiceById = useIOSelector(state =>
+  const isLoadingService = useIOSelector(state =>
     isLoadingServiceByIdSelector(state, serviceId)
   );
 
-  const isErrorServiceById = useIOSelector(state =>
+  const isErrorService = useIOSelector(state =>
     isErrorServiceByIdSelector(state, serviceId)
   );
 
-  if (!serviceById) {
+  const serviceMetadata = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, serviceId)
+  );
+
+  const serviceMetadataInfo = useIOSelector(state =>
+    serviceMetadataInfoSelector(state, serviceId)
+  );
+
+  const serviceCtas = useMemo(
+    () => pipe(serviceMetadata, getServiceCTA, O.toUndefined),
+    [serviceMetadata]
+  );
+
+  useEffect(() => {
+    dispatch(loadServiceDetail.request(serviceId));
+  }, [dispatch, serviceId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(loadServicePreference.request(serviceId));
+    }, [serviceId, dispatch])
+  );
+
+  if (!service) {
     return null;
   }
 
-  if (isErrorServiceById) {
+  if (isErrorService) {
     return <ServiceDetailsFailure serviceId={serviceId} />;
   }
 
-  if (isLoadingServiceById) {
-    // TODO: add a loading screen
+  if (isFirstRender || isLoadingService) {
+    return (
+      <ServiceDetailsScreenComponent>
+        <View
+          style={[
+            styles.headerContainer,
+            {
+              paddingTop: windowHeight + headerHeight,
+              marginTop: -windowHeight
+            }
+          ]}
+        >
+          <ContentWrapper>
+            <ServiceDetailsHeaderSkeleton />
+            <VSpacer size={16} />
+          </ContentWrapper>
+        </View>
+        <ContentWrapper>
+          <View style={styles.cardContainer}>
+            <CardWithMarkdownContentSkeleton />
+          </View>
+        </ContentWrapper>
+      </ServiceDetailsScreenComponent>
+    );
   }
 
-  return <ServiceDetailsContent service={serviceById} />;
-};
+  const handlePressCta = (cta: CTA) => handleCtaAction(cta, linkTo, serviceId);
 
-const scrollTriggerOffsetValue: number = 88;
-const windowHeight = Dimensions.get("window").height;
+  const getActionsProps = (
+    ctas?: CTAS,
+    serviceMetadataInfo?: ServiceMetadataInfo
+  ): ServiceActionsProps | undefined => {
+    const customSpecialFlow = serviceMetadataInfo?.customSpecialFlow;
+    const isSpecialService = serviceMetadataInfo?.isSpecialService ?? false;
 
-type ServiceDetailsContentProps = {
-  service: ServicePublic;
-};
+    if (isSpecialService && ctas?.cta_1 && ctas.cta_2) {
+      const { cta_1, cta_2 } = ctas;
 
-const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
-  const safeAreaInsets = useSafeAreaInsets();
+      return {
+        type: "TwoCtasWithCustomFlow",
+        primaryActionProps: {
+          serviceId,
+          activate,
+          customSpecialFlowOpt: customSpecialFlow
+        },
+        secondaryActionProps: {
+          label: cta_1.text,
+          accessibilityLabel: cta_1.text,
+          onPress: () => handlePressCta(cta_1)
+        },
+        tertiaryActionProps: {
+          label: cta_2.text,
+          accessibilityLabel: cta_2.text,
+          onPress: () => handlePressCta(cta_2)
+        }
+      };
+    }
 
-  const headerHeight = useHeaderHeight();
-  const scrollTranslationY = useSharedValue(0);
+    if (isSpecialService && ctas?.cta_1) {
+      const { cta_1 } = ctas;
 
-  const safeBottomAreaHeight: number = useMemo(
-    () =>
-      safeAreaInsets.bottom === 0
-        ? IOVisualCostants.appMarginDefault
-        : safeAreaInsets.bottom,
-    [safeAreaInsets]
-  );
+      return {
+        type: "SingleCtaWithCustomFlow",
+        primaryActionProps: {
+          serviceId,
+          activate,
+          customSpecialFlowOpt: customSpecialFlow
+        },
+        secondaryActionProps: {
+          label: cta_1.text,
+          accessibilityLabel: cta_1.text,
+          onPress: () => handlePressCta(cta_1)
+        }
+      };
+    }
+
+    if (ctas?.cta_1 && ctas?.cta_2) {
+      const { cta_1, cta_2 } = ctas;
+
+      return {
+        type: "TwoCtas",
+        primaryActionProps: {
+          label: cta_1.text,
+          accessibilityLabel: cta_1.text,
+          onPress: () => handlePressCta(cta_1)
+        },
+        secondaryActionProps: {
+          label: cta_2.text,
+          accessibilityLabel: cta_2.text,
+          onPress: () => handlePressCta(cta_2)
+        }
+      };
+    }
+
+    if (ctas?.cta_1) {
+      return {
+        type: "SingleCta",
+        primaryActionProps: {
+          label: ctas.cta_1.text,
+          accessibilityLabel: ctas.cta_1.text,
+          onPress: () => handlePressCta(ctas.cta_1)
+        }
+      };
+    }
+
+    if (isSpecialService) {
+      return {
+        type: "SingleCtaCustomFlow",
+        primaryActionProps: {
+          serviceId,
+          activate,
+          customSpecialFlowOpt: customSpecialFlow
+        }
+      };
+    }
+
+    return undefined;
+  };
 
   const {
     organization_name,
+    organization_fiscal_code,
     service_id,
     service_name,
     available_notification_channels,
     service_metadata
   } = service;
 
-  useHeaderSecondLevel({
-    title: service_name,
-    supportRequest: true,
-    transparent: true,
-    scrollValues: {
-      triggerOffset: scrollTriggerOffsetValue,
-      contentOffsetY: scrollTranslationY
-    }
-  });
-
-  const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
-    // eslint-disable-next-line functional/immutable-data
-    scrollTranslationY.value = contentOffset.y;
-  });
-
   return (
-    <Animated.ScrollView
-      contentContainerStyle={[
-        styles.scrollContentContainer,
-        {
-          paddingBottom: safeBottomAreaHeight
-        }
-      ]}
-      onScroll={scrollHandler}
-      scrollEventThrottle={16}
-      snapToOffsets={[0, scrollTriggerOffsetValue]}
-      snapToEnd={false}
-      decelerationRate="normal"
+    <ServiceDetailsScreenComponent
+      actionsProps={getActionsProps(
+        serviceCtas,
+        serviceMetadataInfo as ServiceMetadataInfo
+      )}
+      title={service_name}
     >
       <View
         style={[
@@ -181,12 +283,20 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
           </View>
         )}
 
+        <ServiceDetailsTosAndPrivacy serviceId={service_id} />
+
         <VSpacer size={40} />
         <ServiceDetailsPreferences
           serviceId={service_id}
           availableChannels={available_notification_channels}
         />
+
+        <VSpacer size={40} />
+        <ServiceDetailsMetadata
+          organizationFiscalCode={organization_fiscal_code}
+          serviceId={service_id}
+        />
       </ContentWrapper>
-    </Animated.ScrollView>
+    </ServiceDetailsScreenComponent>
   );
 };

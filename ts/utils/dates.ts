@@ -227,16 +227,13 @@ export const isExpired = (
 };
 
 /**
- * This function returns true or false is the provided expiryDate in format "YYYYMM" is expired or not
+ * This function returns true or false is the provided expiryDate is expired or not
  * @param expiryDate
  */
-export const isExpiredDate = (expiryDate: string): boolean => {
-  const year = +expiryDate.slice(0, 4);
-  const month = +expiryDate.slice(4, 6);
+export const isExpiredDate = (expiryDate: Date): boolean => {
   const now = new Date();
-  const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
-  const cardExpirationDate = new Date(year, month);
-  return nowYearMonth > cardExpirationDate;
+  const nowYearMonth = new Date(now.getFullYear(), now.getMonth());
+  return nowYearMonth > expiryDate;
 };
 
 /**
@@ -329,7 +326,8 @@ export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {
   try {
     const year = +expiryDate.slice(0, 4);
     const month = +expiryDate.slice(4, 6);
-    return new Date(year, month - 1);
+    const date = new Date(year, month - 1);
+    return isNaN(date.getDate()) ? undefined : date;
   } catch {
     return undefined;
   }
