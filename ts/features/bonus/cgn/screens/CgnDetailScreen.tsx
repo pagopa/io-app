@@ -178,27 +178,25 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 </View>
               </ScrollView>
               <SectionStatusComponent sectionKey={"cgn"} />
-              {props.isCgnEnabled &&
-                props.cgnDetails?.status === StatusEnum.ACTIVATED && (
-                  <View>
-                    <FooterWithButtons
-                      type="SingleButton"
-                      primary={{
-                        type: "Solid",
-                        buttonProps: {
-                          label: I18n.t("bonus.cgn.detail.cta.buyers"),
-                          accessibilityLabel: I18n.t(
-                            "bonus.cgn.detail.cta.buyers"
-                          ),
-                          onPress: onPressShowCgnDiscounts
-                        }
-                      }}
-                    />
-                  </View>
-                )}
             </>
           )}
         </SafeAreaView>
+        {props.isCgnEnabled &&
+          props.cgnDetails?.status === StatusEnum.ACTIVATED && (
+            <View>
+              <FooterWithButtons
+                type="SingleButton"
+                primary={{
+                  type: "Solid",
+                  buttonProps: {
+                    label: I18n.t("bonus.cgn.detail.cta.buyers"),
+                    accessibilityLabel: I18n.t("bonus.cgn.detail.cta.buyers"),
+                    onPress: onPressShowCgnDiscounts
+                  }
+                }}
+              />
+            </View>
+          )}
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );

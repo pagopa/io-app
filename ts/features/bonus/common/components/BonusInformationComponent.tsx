@@ -33,7 +33,6 @@ import { LightModalContextInterface } from "../../../../components/ui/LightModal
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
-import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import TosBonusComponent from "./TosBonusComponent";
@@ -151,7 +150,6 @@ const getTosFooter = (
  */
 const BonusInformationComponent: React.FunctionComponent<Props> = props => {
   const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
-  const isScreenReaderEnabled = useScreenReaderEnabled();
 
   const bonusType = props.bonus;
   const bonusTypeLocalizedContent: BonusAvailableContent =
@@ -211,20 +209,16 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     bonusType.sponsorship_description
   );
   const footerComponent = props.onConfirm ? (
-    <View>
-      <FooterWithButtons
-        type="TwoButtonsInlineThird"
-        secondary={{ type: "Solid", buttonProps: requestButtonProps }}
-        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-      />
-    </View>
+    <FooterWithButtons
+      type="TwoButtonsInlineThird"
+      secondary={{ type: "Solid", buttonProps: requestButtonProps }}
+      primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+    />
   ) : (
-    <View>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-      />
-    </View>
+    <FooterWithButtons
+      type="SingleButton"
+      primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+    />
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
@@ -235,7 +229,6 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       faqCategories={props.faqCategories}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <View style={styles.row}>
             <View style={styles.flexStart}>
@@ -266,7 +259,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           >
             {bonusTypeLocalizedContent.content}
           </LegacyMarkdown>
-          <VSpacer size={40} />
+          <VSpacer size={24} />
           {isMarkdownLoaded && renderUrls()}
           {getTosFooter(
             maybeBonusTos,
@@ -276,8 +269,8 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           )}
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </ScrollView>
-        {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
       </SafeAreaView>
+      {isMarkdownLoaded && footerComponent}
     </BaseScreenComponent>
   ));
   return (
