@@ -22,8 +22,8 @@ import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/Me
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { UIMessageId } from "../../messages/types";
 import {
-  canShowMorePaymentsLink,
-  maxVisiblePaymentCountGenerator
+  maxVisiblePaymentCountGenerator,
+  shouldUseBottomSheetForPayments
 } from "../utils";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
@@ -122,13 +122,6 @@ export const MessageDetails = ({
         </ContentWrapper>
         <MessageBottomMenu serviceId={serviceId} />
       </ScrollView>
-      {canShowMorePaymentsLink(isCancelled, payments) && (
-        <MessagePaymentBottomSheet
-          messageId={messageId}
-          payments={payments}
-          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
-        />
-      )}
       <MessageFooter
         messageId={messageId}
         payments={payments}
@@ -136,6 +129,13 @@ export const MessageDetails = ({
         isCancelled={isCancelled}
         presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
       />
+      {shouldUseBottomSheetForPayments(isCancelled, payments) && (
+        <MessagePaymentBottomSheet
+          messageId={messageId}
+          payments={payments}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+        />
+      )}
     </>
   );
 };

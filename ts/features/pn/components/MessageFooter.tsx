@@ -18,6 +18,7 @@ import { trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { shouldUseBottomSheetForPayments } from "../utils";
 
 const styles = StyleSheet.create({
   container: {
@@ -58,7 +59,10 @@ export const MessageFooter = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
   const onFooterPressCallback = useCallback(() => {
-    if (payments?.length === 1) {
+    if (shouldUseBottomSheetForPayments(false, payments)) {
+      trackPNShowAllPayments();
+      presentPaymentsBottomSheetRef.current?.();
+    } else if (payments) {
       const firstPayment = payments[0];
       const paymentId = getRptIdStringFromPayment(firstPayment);
       initializeAndNavigateToWalletForPayment(
@@ -71,9 +75,6 @@ export const MessageFooter = ({
         true,
         () => toast.error(I18n.t("genericError"))
       );
-    } else {
-      trackPNShowAllPayments();
-      presentPaymentsBottomSheetRef.current?.();
     }
   }, [
     canNavigateToPayment,
