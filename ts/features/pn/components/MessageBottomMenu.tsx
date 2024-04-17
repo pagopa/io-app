@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
   }
 });
 
-type MessageFooterProps = {
+type MessageBottomMenuProps = {
   serviceId: ServiceId;
 };
 
-export const MessageFooter = ({ serviceId }: MessageFooterProps) => {
+export const MessageBottomMenu = ({ serviceId }: MessageBottomMenuProps) => {
   const serviceMetadata = useIOSelector(state =>
     serviceMetadataByIdSelector(state, serviceId)
   );
