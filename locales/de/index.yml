@@ -268,8 +268,6 @@ startup:
   contextualHelp:
     title: "Initialisierungsprobleme?"
 login:
-  expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
-  expiration_info_FL: "Aus Sicherheitsgründen wirst du einmal im Jahr aufgefordert, dich mittels SPID oder CIE zu authentifizieren."
   biometric_info: "Um dich anzumelden, gib einfach den Entsperrcode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
 inbox:
   enableButton: "Posteingang aktivieren"
@@ -2494,7 +2492,8 @@ support:
     navigationData: "IO-App Navigationsdaten"
     navigationDataValue: "z.B. der letzte Bildschirm oder die letzte in der IO-App angezeigte Nachricht"
     devicePerformance: "Leistung des Geräts"
-    devicePerformanceData: "Speicher und Akkustand"
+    devicePerformanceDataAndroid: "Speicher und Akkustand"
+    devicePerformanceDataiOS: "Speicher ({{storage}}) und Akkustand"
     stock: "Daten zur Zahlungsaufforderung"
     stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
     card: "Angaben zur Zahlungsmethode"

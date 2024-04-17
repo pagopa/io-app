@@ -5,10 +5,10 @@ import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/per
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
-import { MessageFooter } from "../MessageFooter";
+import { MessageBottomMenu } from "../MessageBottomMenu";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
-describe("MessageFooter", () => {
+describe("MessageBottomMenu", () => {
   it("should match snapshot", () => {
     const component = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();
@@ -25,7 +25,9 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <MessageFooter serviceId={"01HT25YR72A8N42AJ0TEKAB2V7" as ServiceId} />
+      <MessageBottomMenu
+        serviceId={"01HT25YR72A8N42AJ0TEKAB2V7" as ServiceId}
+      />
     ),
     PN_ROUTES.MESSAGE_DETAILS,
     {},
