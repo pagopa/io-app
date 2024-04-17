@@ -338,13 +338,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                           <View
                             style={
                               Object {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
+                                "alignItems": "center",
                                 "flexDirection": "row",
                                 "height": 56,
                               }
@@ -353,7 +347,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             <View
                               style={
                                 Object {
-                                  "alignSelf": "flex-start",
+                                  "alignSelf": "center",
                                   "flex": 1,
                                 }
                               }
@@ -938,13 +932,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           <View
                             style={
                               Object {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
+                                "alignItems": "center",
                                 "flexDirection": "row",
                                 "height": 56,
                               }
@@ -953,7 +941,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             <View
                               style={
                                 Object {
-                                  "alignSelf": "flex-start",
+                                  "alignSelf": "center",
                                   "flex": 1,
                                 }
                               }
@@ -1538,13 +1526,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                           <View
                             style={
                               Object {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
+                                "alignItems": "center",
                                 "flexDirection": "row",
                                 "height": 56,
                               }
@@ -1553,7 +1535,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                             <View
                               style={
                                 Object {
-                                  "alignSelf": "flex-start",
+                                  "alignSelf": "center",
                                   "flex": 1,
                                 }
                               }
@@ -2452,13 +2434,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                           <View
                             style={
                               Object {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
+                                "alignItems": "center",
                                 "flexDirection": "row",
                                 "height": 56,
                               }
@@ -2467,7 +2443,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             <View
                               style={
                                 Object {
-                                  "alignSelf": "flex-start",
+                                  "alignSelf": "center",
                                   "flex": 1,
                                 }
                               }
@@ -3052,13 +3028,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           <View
                             style={
                               Object {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
+                                "alignItems": "center",
                                 "flexDirection": "row",
                                 "height": 56,
                               }
@@ -3067,7 +3037,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             <View
                               style={
                                 Object {
-                                  "alignSelf": "flex-start",
+                                  "alignSelf": "center",
                                   "flex": 1,
                                 }
                               }

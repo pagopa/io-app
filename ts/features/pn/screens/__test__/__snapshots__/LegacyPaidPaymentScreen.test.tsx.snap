@@ -338,13 +338,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                           <View
                             style={
                               Object {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
+                                "alignItems": "center",
                                 "flexDirection": "row",
                                 "height": 56,
                               }
@@ -353,7 +347,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                             <View
                               style={
                                 Object {
-                                  "alignSelf": "flex-start",
+                                  "alignSelf": "center",
                                   "flex": 1,
                                 }
                               }
@@ -1292,13 +1286,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                           <View
                             style={
                               Object {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
+                                "alignItems": "center",
                                 "flexDirection": "row",
                                 "height": 56,
                               }
@@ -1307,7 +1295,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                             <View
                               style={
                                 Object {
-                                  "alignSelf": "flex-start",
+                                  "alignSelf": "center",
                                   "flex": 1,
                                 }
                               }
