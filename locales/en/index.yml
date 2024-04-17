@@ -3534,6 +3534,8 @@ unsupportedDevice:
   cta:
     faq: "Learn more"
 fastLogin:
+  loadingScreen:
+    title: "Ti stiamo autenticando"
   userInteraction:
     sessionExpired:
       noPin:
