@@ -54,6 +54,8 @@ const customVariables = {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
+  brandPrimary: IOColors.blue,
+  brandDanger: IOColors.red,
   colorHighlight: IOColors.aqua,
 
   btnLightBorderColor: IOColors.grey,
