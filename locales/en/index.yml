@@ -3026,7 +3026,8 @@ support:
     body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
     listHeader: "If you consent, we'll access this data:"
     devicePerformance: "Device performance"
-    devicePerformanceData: "Memory and battery level"
+    devicePerformanceDataAndroid: "Memory and battery level"
+    devicePerformanceDataiOS: "Memory ({{storage}}) and battery level"
     prominentDisclosure: "Access to the device gallery"
     prominentDisclosureData: "To upload photos and screenshots"
     cta:
