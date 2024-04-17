@@ -71,12 +71,8 @@ export const ServiceDetailsPreferences = ({
     serviceMetadataInfoSelector(state, serviceId)
   );
 
-  const isInboxPreferenceEnabled = pipe(
-    servicePreferenceResponseSuccess,
-    O.fromNullable,
-    O.map(servicePreference => servicePreference.value.inbox),
-    O.getOrElse(() => false)
-  );
+  const isInboxPreferenceEnabled =
+    servicePreferenceResponseSuccess?.value.inbox ?? false;
 
   useEffect(() => {
     if (!isFirstRender && isErrorServicePreference) {

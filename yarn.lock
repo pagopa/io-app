@@ -3277,10 +3277,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.33.0":
-  version "1.33.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.33.0.tgz#eab0591ed04458f5adb45e358a69154cb6dd164f"
-  integrity sha512-1wFFGP0xRsjt+OULMtLR/Hk0t5Jj0IfvbshKDbmiY++wlMVUfjKan/s0/gJwe+lL+5x0L1X8Ibw+ynJ03iuzDA==
+"@pagopa/io-app-design-system@1.34.0":
+  version "1.34.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.34.0.tgz#981c460b2158aae0a6400f13fbbe7f60b3f37c08"
+  integrity sha512-8YCVrQASsz1kxTB6XaWtkVksZbBUX9md1sUEN3v4ZpVES+CzQrapdJYq8GT4GcTMfzTkkqxBeYfYe+VxpCS1kw==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -14508,6 +14508,13 @@ react-native-fingerprint-scanner@^6.0.0:
   resolved "https://registry.yarnpkg.com/react-native-fingerprint-scanner/-/react-native-fingerprint-scanner-6.0.0.tgz#ecb47ad0682d2a66a5e126d2b9e4d95e73c8dbf2"
   integrity sha512-8VoKSA0Z0kWnIni96yABZfUUzfmWFXQEXcELwWr1CNLloPt3WoPptYb/6pGsBcH0YxSsW3X4+C8tl0clgyBsvA==
 
+react-native-fit-image@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/react-native-fit-image/-/react-native-fit-image-1.5.5.tgz#c660d1ad74b9dcaa1cba27a0d9c23837e000226c"
+  integrity sha512-Wl3Vq2DQzxgsWKuW4USfck9zS7YzhvLNPpkwUUCF90bL32e1a0zOVQ3WsJILJOwzmPdHfzZmWasiiAUNBkhNkg==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-flag-secure-android@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-flag-secure-android/-/react-native-flag-secure-android-1.0.3.tgz#0e86b24836c68ff38f75d43774bf475ae6f70793"
@@ -14598,6 +14605,16 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-markdown-display@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-markdown-display/-/react-native-markdown-display-7.0.2.tgz#b6584cec8d6670c0141fb8780bc2f0710188a4c2"
+  integrity sha512-Mn4wotMvMfLAwbX/huMLt202W5DsdpMO/kblk+6eUs55S57VVNni1gzZCh5qpznYLjIQELNh50VIozEfY6fvaQ==
+  dependencies:
+    css-to-react-native "^3.0.0"
+    markdown-it "^10.0.0"
+    prop-types "^15.7.2"
+    react-native-fit-image "^1.5.5"
 
 react-native-masked-text@^1.13.0:
   version "1.13.0"
