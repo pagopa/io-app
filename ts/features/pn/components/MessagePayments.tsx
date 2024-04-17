@@ -100,7 +100,7 @@ export const MessagePayments = ({
   presentPaymentsBottomSheetRef
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
-  const morePaymentsLinkState = useIOSelector(state =>
+  const paymentsButtonStatus = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
       messageId,
@@ -187,7 +187,7 @@ export const MessagePayments = ({
           {showMorePaymentsLink && (
             <>
               <VSpacer size={32} />
-              {morePaymentsLinkState === "visibleLoading" && (
+              {paymentsButtonStatus === "visibleLoading" && (
                 <View style={styles.morePaymentsSkeletonContainer}>
                   <Placeholder.Box
                     animate="fade"
@@ -197,7 +197,7 @@ export const MessagePayments = ({
                   />
                 </View>
               )}
-              {morePaymentsLinkState === "visibleEnabled" && (
+              {paymentsButtonStatus === "visibleEnabled" && (
                 <View style={styles.morePaymentsLinkContainer}>
                   <ButtonLink
                     accessibilityLabel={morePaymentsLabel}
