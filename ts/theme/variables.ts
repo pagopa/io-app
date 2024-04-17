@@ -21,9 +21,6 @@ export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 const customVariables = {
   minTouchableAreaSize: 48,
 
-  // Android
-  buttonUppercaseAndroidText: false /* NB Theme variable, don't remove */,
-
   // Button
   btnTextFontWeight: "700" as FontWeight,
   textLightButtonWeight: "600" as FontWeight,
@@ -57,10 +54,7 @@ const customVariables = {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: IOColors.blue /* NB Theme variable, don't remove */,
   colorHighlight: IOColors.aqua,
-  brandSuccess: IOColors.green /* NB Theme variable, don't remove */,
-  brandDanger: IOColors.red /* NB Theme variable, don't remove */,
 
   btnLightBorderColor: IOColors.grey,
 
@@ -81,7 +75,6 @@ const customVariables = {
   lineHeightBase: 24,
 
   // Icon
-  iconFamily: "Entypo" /* NB Theme variable, don't remove */,
   iconSizeBase: 24,
 
   // Content
@@ -107,7 +100,6 @@ const customVariables = {
   gridGutter: 10,
 
   // Header
-  toolbarDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
   appHeaderHeight: 56,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
@@ -115,10 +107,7 @@ const customVariables = {
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,
-  get toolbarBtnColor(): ThemeSimpleValue {
-    /* NB Theme variable, don't remove */
-    return this.textColor;
-  },
+
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
@@ -162,9 +151,6 @@ const customVariables = {
   borderRadiusBase: 4,
 
   // Tabs
-  tabDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
-  topTabBarTextColor: IOColors.bluegrey /* NB Theme variable, don't remove */,
-  topTabBarActiveTextColor: IOColors.blue /* NB Theme variable, don't remove */,
   tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
 
