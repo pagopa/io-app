@@ -12,6 +12,9 @@ export const getModel = (): string => DeviceInfo.getModel();
 
 export const getSystemVersion = (): string => DeviceInfo.getSystemVersion();
 
+export const getFreeDiskStorage = (): number =>
+  DeviceInfo.getFreeDiskStorageSync();
+
 // true if at least one screen lock method is set
 export const isScreenLockSet = (): Promise<boolean> =>
   DeviceInfo.isPinOrFingerprintSet();
