@@ -32,13 +32,13 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
   cards: [
     {
       hpan: "9999",
-      isError: false,
+      expireDate: new Date(2021, 10),
       brand: "maestro",
       onPress
     },
     {
       holderEmail: "test@test.it",
-      isError: true,
+      expireDate: new Date(2021, 10),
       onPress
     },
     {
@@ -52,7 +52,7 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
     },
     {
       hpan: "9999",
-      isError: true,
+      expireDate: new Date(2021, 10),
       onPress
     },
     {
@@ -146,7 +146,11 @@ export const DSCards = () => (
         <View style={styles.content}>
           <PaymentCardSmall hpan="9900" brand="maestro" onPress={onPress} />
           <HSpacer size={16} />
-          <PaymentCardSmall hpan="9900" brand="maestro" isError />
+          <PaymentCardSmall
+            hpan="9900"
+            brand="maestro"
+            expireDate={new Date(2021, 10)}
+          />
         </View>
       </DSComponentViewerBox>
       <DSComponentViewerBox name="PagoBANCOMAT">
@@ -163,7 +167,7 @@ export const DSCards = () => (
             brand="pagoBancomat"
             bankName="Intesa San Paolo"
             onPress={onPress}
-            isError
+            expireDate={new Date(2021, 10)}
           />
         </View>
       </DSComponentViewerBox>
@@ -177,7 +181,7 @@ export const DSCards = () => (
           <PaymentCardSmall
             holderEmail="anna_v********@**hoo.it"
             onPress={onPress}
-            isError
+            expireDate={new Date(2021, 10)}
           />
         </View>
       </DSComponentViewerBox>
@@ -193,7 +197,7 @@ export const DSCards = () => (
             bankName="Intesa San Paolo"
             brand="maestro"
             onPress={onPress}
-            isError
+            expireDate={new Date(2021, 10)}
           />
         </View>
       </DSComponentViewerBox>
@@ -209,7 +213,7 @@ export const DSCards = () => (
             holderName="Anna Verdi"
             holderPhone="+39 340 *** **62"
             onPress={onPress}
-            isError
+            expireDate={new Date(2021, 10)}
           />
         </View>
       </DSComponentViewerBox>
