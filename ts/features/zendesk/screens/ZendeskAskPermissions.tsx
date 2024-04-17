@@ -10,8 +10,8 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import React, { useCallback, useEffect } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { default as React, useCallback, useEffect } from "react";
+import { Platform, SafeAreaView, ScrollView, View } from "react-native";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -34,9 +34,14 @@ import {
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { getAppVersion } from "../../../utils/appVersion";
-import { getModel, getSystemVersion } from "../../../utils/device";
+import {
+  getFreeDiskStorage,
+  getModel,
+  getSystemVersion
+} from "../../../utils/device";
 import { getFullLocale } from "../../../utils/locale";
 import { isIos } from "../../../utils/platform";
+import { formatBytesWithUnit } from "../../../utils/strings";
 import {
   addTicketCustomField,
   addTicketTag,
@@ -146,7 +151,12 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     icon: <Icon name="battery" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.devicePerformance"),
-    value: I18n.t("support.askPermissions.devicePerformanceData"),
+    value: Platform.select({
+      ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
+        storage: formatBytesWithUnit(getFreeDiskStorage())
+      }),
+      android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
+    }),
     testId: "devicePerformance"
   },
   {
