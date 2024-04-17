@@ -33,6 +33,8 @@ const reducer = (
   return state;
 };
 
+// We have no control over what can be used as a key to store cards.
+// Key hashing avoids storing sensitive data
 const hashKey = (key: string) => sha("sha256").update(key).digest("hex");
 
 const CURRENT_REDUX_WALLET_PLACEHOLDERS_STORE_VERSION = -1;
