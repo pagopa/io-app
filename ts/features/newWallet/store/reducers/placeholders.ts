@@ -1,17 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
+import sha from "sha.js";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { WalletCardCategory } from "../../types";
-import {
-  walletAddCards,
-  walletRemoveCards,
-  walletUpsertCard
-} from "../actions/cards";
+import { walletAddCards, walletRemoveCards } from "../actions/cards";
 
-export type WalletPlaceholdersState = {
-  [key in WalletCardCategory]?: Set<string>;
-};
+export type WalletPlaceholdersState = { [key: string]: WalletCardCategory };
 
 const INITIAL_STATE: WalletPlaceholdersState = {};
 
@@ -20,17 +15,25 @@ const reducer = (
   action: Action
 ): WalletPlaceholdersState => {
   switch (action.type) {
-    case getType(walletUpsertCard):
-      return {
-        ...state
-      };
     case getType(walletAddCards):
-      return {};
+      return action.payload.reduce(
+        (acc, { category, key }) => ({
+          ...acc,
+          [hashKey(key)]: category
+        }),
+        state
+      );
     case getType(walletRemoveCards):
-      return {};
+      return Object.fromEntries(
+        Object.entries(state).filter(
+          ([key]) => !action.payload.map(hashKey).includes(key)
+        )
+      );
   }
   return state;
 };
+
+const hashKey = (key: string) => sha("sha256").update(key).digest("hex");
 
 const CURRENT_REDUX_WALLET_PLACEHOLDERS_STORE_VERSION = -1;
 
