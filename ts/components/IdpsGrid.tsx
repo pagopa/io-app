@@ -69,9 +69,8 @@ const renderItem =
     );
   };
 
-const IdpsGridRevamp: React.FunctionComponent<Props> = (props: Props) => (
+const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
   <FlatList
-    bounces={false}
     data={props.idps}
     numColumns={1}
     horizontal={false}
@@ -84,4 +83,4 @@ const IdpsGridRevamp: React.FunctionComponent<Props> = (props: Props) => (
   />
 );
 
-export default IdpsGridRevamp;
+export default IdpsGrid;

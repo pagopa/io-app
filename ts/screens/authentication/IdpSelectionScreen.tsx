@@ -10,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, View } from "react-native";
 import { useSelector, useStore } from "react-redux";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -32,7 +31,7 @@ import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import IdpsGridRevamp from "../../components/IdpsGridRevamp";
+import IdpsGrid from "../../components/IdpsGrid";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isReady } from "../../common/model/RemoteValue";
@@ -205,14 +204,12 @@ const IdpSelectionScreen = (): ReactElement => {
   });
 
   return (
-    <SafeAreaView edges={["bottom"]}>
-      <IdpsGridRevamp
-        idps={randomIdps.current}
-        onIdpSelected={onIdpSelected}
-        headerComponent={headerComponent}
-        footerComponent={<VSpacer size={24} />}
-      />
-    </SafeAreaView>
+    <IdpsGrid
+      idps={randomIdps.current}
+      onIdpSelected={onIdpSelected}
+      headerComponent={headerComponent}
+      footerComponent={<VSpacer size={40} />}
+    />
   );
 };
 
