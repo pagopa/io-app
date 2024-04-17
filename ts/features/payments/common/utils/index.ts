@@ -11,10 +11,11 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
-import { isExpiredDate } from "../../../../utils/dates";
+import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletPaymentPspSortType } from "../../checkout/types";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { PaymentCardProps } from "../components/PaymentCard";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -49,7 +50,7 @@ export const isPaymentMethodExpired = (
 ): boolean =>
   pipe(
     details?.expiryDate,
-    O.fromNullable,
+    O.chainNullableK(getDateFromExpiryDate),
     O.map(isExpiredDate),
     O.getOrElse(() => false)
   );
@@ -145,4 +146,19 @@ export const getSortedPspList = (
     default:
       return _.orderBy(pspList, ["onUs", "taxPayerFee"]);
   }
+};
+
+export const getPaymentCardPropsFromWalletInfo = (
+  wallet: WalletInfo
+): PaymentCardProps => {
+  const details = wallet.details as UIWalletInfoDetails;
+
+  return {
+    hpan: details.lastFourDigits,
+    abiCode: "", // TODO IOBP-622 refactor payment card
+    brand: details.brand,
+    expireDate: getDateFromExpiryDate(details.expiryDate),
+    holderEmail: details.maskedEmail,
+    holderPhone: details.maskedNumber
+  };
 };

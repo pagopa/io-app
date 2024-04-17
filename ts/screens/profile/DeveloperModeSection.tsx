@@ -382,13 +382,6 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "Payments",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.WALLET_PLAYGROUND
-        })
-    },
-    {
       condition: isItWalletTestEnabled,
       value: "IT Wallet",
       onPress: () =>
