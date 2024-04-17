@@ -1,8 +1,6 @@
 import {
   Body,
   GradientScrollView,
-  IOLogoPaymentType,
-  IOPaymentLogos,
   LabelLink,
   ListItemHeader,
   ModuleCheckout,
@@ -21,7 +19,10 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { capitalize } from "../../../../utils/strings";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
-import { WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL } from "../../common/utils";
+import {
+  WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
+  getPaymentLogoFromWalletDetails
+} from "../../common/utils";
 import { WalletPaymentTotalAmount } from "../components/WalletPaymentTotalAmount";
 import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
@@ -43,7 +44,6 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
@@ -193,7 +193,12 @@ const SelectedPaymentMethodModuleCheckout = () => {
 
   if (O.isSome(selectedWalletOption) && selectedWalletOption.value.details) {
     const details = selectedWalletOption.value.details;
-    const paymentLogo = getPaymentLogo(details);
+    const paymentLogo = getPaymentLogoFromWalletDetails(details);
+    const imageProps = {
+      ...(paymentLogo !== undefined
+        ? { paymentLogo }
+        : { image: { uri: selectedWalletOption.value.paymentMethodAsset } })
+    };
 
     return (
       <ModuleCheckout
@@ -201,7 +206,7 @@ const SelectedPaymentMethodModuleCheckout = () => {
         subtitle={getPaymentSubtitle(details)}
         ctaText={I18n.t("payment.confirm.editButton")}
         onPress={handleOnPress}
-        paymentLogo={paymentLogo as IOLogoPaymentType}
+        {...imageProps}
       />
     );
   }
@@ -251,24 +256,6 @@ const SelectedPspModuleCheckout = () => {
       }
     />
   );
-};
-
-const getPaymentLogo = (
-  details: UIWalletInfoDetails
-): IOLogoPaymentType | undefined => {
-  if (details.maskedEmail !== undefined) {
-    return "payPal";
-  } else if (details.maskedNumber !== undefined) {
-    return "bancomatPay";
-  } else {
-    return pipe(
-      details.brand,
-      O.fromNullable,
-      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
-      O.map(([logoName, _]) => logoName as IOLogoPaymentType),
-      O.toUndefined
-    );
-  }
 };
 
 const getPaymentSubtitle = (

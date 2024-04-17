@@ -25,6 +25,7 @@ import {
   walletPaymentSelectedWalletIdOptionSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors/paymentMethods";
+import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 
 const CheckoutPaymentMethodsList = () => {
   const alertRef = React.useRef<View>(null);
@@ -171,30 +172,30 @@ const mapUserWalletToRadioItem = (
   method: WalletInfo
 ): RadioItem<string> | undefined => {
   const details = method.details as UIWalletInfoDetails;
+  const paymentLogo = getPaymentLogoFromWalletDetails(details);
+  const startImage = {
+    ...(paymentLogo !== undefined
+      ? { paymentLogo }
+      : { uri: method.paymentMethodAsset })
+  };
 
   if (details.lastFourDigits !== undefined) {
     return {
       id: method.walletId,
       value: `${capitalize(details.brand)} ••${details.lastFourDigits}`,
-      startImage: {
-        uri: method.paymentMethodAsset
-      }
+      startImage
     };
   } else if (details.maskedEmail !== undefined) {
     return {
       id: method.walletId,
       value: "PayPal",
-      startImage: {
-        uri: method.paymentMethodAsset
-      }
+      startImage
     };
   } else if (details.maskedNumber !== undefined) {
     return {
       id: method.walletId,
       value: "BANCOMAT Pay",
-      startImage: {
-        uri: method.paymentMethodAsset
-      }
+      startImage
     };
   }
 
