@@ -52,6 +52,7 @@ import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
+import { formatPaymentNoticeNumber } from "../../common/utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -176,7 +177,7 @@ const WalletPaymentDetailContent = ({
     O.fromEither,
     O.map(({ paymentNoticeNumber }) => paymentNoticeNumber),
     O.map(PaymentNoticeNumberFromString.encode),
-    O.map(_ => _.replace(/(\d{4})/g, "$1  ").trim()),
+    O.map(formatPaymentNoticeNumber),
     O.getOrElse(() => "")
   );
 

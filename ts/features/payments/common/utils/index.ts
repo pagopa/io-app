@@ -162,3 +162,10 @@ export const getPaymentCardPropsFromWalletInfo = (
     holderPhone: details.maskedNumber
   };
 };
+
+/**
+ * Function that returns a formatted payment notice number
+ * by placing two spaces between every four numbers
+ */
+export const formatPaymentNoticeNumber = (noticeNumber: string) =>
+  noticeNumber.replace(/(\d{4})/g, "$1  ").trim();
