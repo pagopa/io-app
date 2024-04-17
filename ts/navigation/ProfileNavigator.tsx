@@ -8,6 +8,8 @@ import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesS
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
+import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
+import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
@@ -26,13 +28,9 @@ import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
-import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
-import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPaymentPlayground";
-import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
-import { isGestureEnabled } from "../utils/navigation";
-import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
-import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
 import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
+import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
+import { isGestureEnabled } from "../utils/navigation";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -149,14 +147,6 @@ const ProfileStackNavigator = () => (
       }}
       name={ROUTES.IDPAY_CODE_PLAYGROUND}
       component={IdPayCodePlayGround}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_PLAYGROUND}
-      component={WalletPlayground}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_PAYMENT_PLAYGROUND}
-      component={WalletPaymentPlayground}
     />
     <Stack.Screen
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
