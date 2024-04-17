@@ -1,7 +1,7 @@
 import React, { MutableRefObject } from "react";
 import { Dimensions, View } from "react-native";
-import I18n from "i18n-js";
 import { useDispatch } from "react-redux";
+import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../messages/types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
