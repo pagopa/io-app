@@ -24,7 +24,6 @@ import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBo
 import { getRecepientName } from "../../../../utils/strings";
 import { format } from "../../../../utils/dates";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
-import { formatPaymentNoticeNumber } from "../../../../features/payments/common/utils";
 
 const styles = StyleSheet.create({
   spacer: {
@@ -135,9 +134,9 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     O.toUndefined
   );
 
-  const formattedPaymentNoticeNumber = formatPaymentNoticeNumber(
-    props.paymentNoticeNumber
-  );
+  const formattedPaymentNoticeNumber = props.paymentNoticeNumber
+    .replace(/(\d{4})/g, "$1  ")
+    .trim();
 
   const { presentPaymentInfoBottomSheet, paymentInfoBottomSheet } =
     usePaymentAmountInfoBottomSheet();

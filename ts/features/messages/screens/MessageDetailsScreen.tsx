@@ -166,6 +166,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
       />
     );
   }
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.scrollContentContainer}>
@@ -201,12 +202,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
           </ContentWrapper>
         </View>
         <VSpacer size={24} />
-        <MessageDetailsFooter
-          messageId={messageId}
-          noticeNumber={messageDetails.paymentData?.noticeNumber}
-          payeeFiscalCode={messageDetails.paymentData?.payee.fiscalCode}
-          serviceId={serviceId}
-        />
+        <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
         <MessageDetailsScrollViewAdditionalSpace
           hasCTA1={!!maybeCTAs?.cta_1}
           hasCTA2={!!maybeCTAs?.cta_2}

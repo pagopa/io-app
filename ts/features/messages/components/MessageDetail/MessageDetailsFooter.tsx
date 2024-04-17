@@ -18,15 +18,11 @@ const styles = StyleSheet.create({
 
 export type MessageDetailsFooterProps = {
   messageId: UIMessageId;
-  noticeNumber?: string;
-  payeeFiscalCode?: string;
   serviceId: ServiceId;
 };
 
 export const MessageDetailsFooter = ({
   messageId,
-  noticeNumber,
-  payeeFiscalCode,
   serviceId
 }: MessageDetailsFooterProps) => {
   const serviceMetadata = useIOSelector(state =>
@@ -43,11 +39,7 @@ export const MessageDetailsFooter = ({
         />
       )}
 
-      <ShowMoreListItem
-        messageId={messageId}
-        noticeNumber={noticeNumber}
-        payeeFiscalCode={payeeFiscalCode}
-      />
+      <ShowMoreListItem messageId={messageId} />
     </View>
   );
 };

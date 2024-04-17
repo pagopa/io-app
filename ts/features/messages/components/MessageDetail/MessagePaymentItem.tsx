@@ -38,7 +38,6 @@ import {
 import { UIMessageId } from "../../types";
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
-import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
@@ -139,8 +138,9 @@ const modulePaymentNoticeFromPaymentStatus = (
       );
     },
     processedPaymentDetails => {
-      const formattedPaymentNoticeNumber =
-        formatPaymentNoticeNumber(noticeNumber);
+      const formattedPaymentNoticeNumber = noticeNumber
+        .replace(/(\d{4})/g, "$1  ")
+        .trim();
       const { paymentNoticeStatus, badgeText } =
         processedUIPaymentFromDetailV2Enum(processedPaymentDetails);
       return (
