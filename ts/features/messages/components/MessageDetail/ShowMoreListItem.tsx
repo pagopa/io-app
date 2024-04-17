@@ -1,80 +1,55 @@
 import React from "react";
 import {
   Divider,
+  IOIcons,
   ListItemAction,
   ListItemHeader,
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { UIMessageId } from "../../types";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 
 type ShowMoreListItemProps = {
-  messageId: UIMessageId;
-  noticeNumber?: string;
-  payeeFiscalCode?: string;
+  sections: ReadonlyArray<{
+    title: string;
+    items: ReadonlyArray<{
+      accessibilityLabel: string;
+      icon?: IOIcons;
+      label: string;
+      value: string;
+    }>;
+  }>;
 };
 
-export const ShowMoreListItem = ({
-  messageId,
-  noticeNumber,
-  payeeFiscalCode
-}: ShowMoreListItemProps) => {
-  const hasPaymentData = noticeNumber || payeeFiscalCode;
+export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
   const { bottomSheet, present } = useIOBottomSheetAutoresizableModal(
     {
       component: (
         <>
-          <ListItemHeader label={I18n.t("messageDetails.headerTitle")} />
-          <ListItemInfoCopy
-            value={messageId}
-            label={I18n.t("messageDetails.showMoreDataBottomSheet.messageId")}
-            accessibilityLabel={I18n.t(
-              "messageDetails.showMoreDataBottomSheet.messageIdAccessibility"
-            )}
-            icon="docPaymentTitle"
-            onPress={() => clipboardSetStringWithFeedback(messageId)}
-          />
-          {hasPaymentData && (
+          {sections.map((section, sectionIndex) => (
             <>
               <ListItemHeader
-                label={I18n.t(
-                  "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
-                )}
+                key={`SMLI_SEC${sectionIndex}`}
+                label={section.title}
               />
-              {noticeNumber && (
-                <ListItemInfoCopy
-                  value={formatPaymentNoticeNumber(noticeNumber)}
-                  label={I18n.t(
-                    "messageDetails.showMoreDataBottomSheet.noticeCode"
+              {section.items.map((item, itemIndex, items) => (
+                <>
+                  <ListItemInfoCopy
+                    accessibilityLabel={item.accessibilityLabel}
+                    icon={item.icon}
+                    key={`SMLI_SEC${sectionIndex}_ITE${itemIndex}`}
+                    label={item.label}
+                    onPress={() => clipboardSetStringWithFeedback(item.value)}
+                    value={item.value}
+                  />
+                  {itemIndex < items.length - 1 && (
+                    <Divider key={`SMLI_SEC${sectionIndex}_DIV${itemIndex}`} />
                   )}
-                  accessibilityLabel={I18n.t(
-                    "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
-                  )}
-                  icon="docPaymentCode"
-                  onPress={() => clipboardSetStringWithFeedback(noticeNumber)}
-                />
-              )}
-              {noticeNumber && payeeFiscalCode && <Divider />}
-              {payeeFiscalCode && (
-                <ListItemInfoCopy
-                  value={payeeFiscalCode}
-                  label={I18n.t(
-                    "messageDetails.showMoreDataBottomSheet.entityFiscalCode"
-                  )}
-                  accessibilityLabel={I18n.t(
-                    "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
-                  )}
-                  icon="entityCode"
-                  onPress={() =>
-                    clipboardSetStringWithFeedback(payeeFiscalCode)
-                  }
-                />
-              )}
+                </>
+              ))}
             </>
-          )}
+          ))}
         </>
       ),
       title: I18n.t("messageDetails.showMoreDataBottomSheet.title")
