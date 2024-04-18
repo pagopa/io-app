@@ -13,6 +13,7 @@ import { UIMessageId } from "../../messages/types";
 import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
+import { TimelineListItem } from "./TimelineListItem";
 
 const styles = StyleSheet.create({
   container: {
@@ -109,6 +110,7 @@ export const MessageBottomMenu = ({
   );
   return (
     <View style={styles.container}>
+      <TimelineListItem />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
         <ContactsListItem
           email={serviceMetadata.email}
