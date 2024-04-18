@@ -2178,8 +2178,8 @@ messageUpdateAppAlert: È disponibile una nuova versione di IO su {{storeName}},
 openStore: Apri {{storeName}}
 btnUpdateApp: Aggiorna l'app IO
 systemsOff:
-  title: Impossibile usare IO
-  closeApp: chiudi l'applicazione e riprova
+  title: C'è un problema sui nostri sistemi
+  closeApp: Chiudi l'app e riprova tra qualche minuto.
 contextualHelp:
   title: IO ti aiuto
   sendPersonalInfo:

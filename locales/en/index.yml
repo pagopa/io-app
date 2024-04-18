@@ -2178,8 +2178,8 @@ messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To
 openStore: Open {{storeName}}
 btnUpdateApp: Update the IO app
 systemsOff:
-  title: Unable to start IO
-  closeApp: close the application and try again
+  title: C'è un problema sui nostri sistemi
+  closeApp: Chiudi l'app e riprova tra qualche minuto.
 contextualHelp:
   title: IO helps you
   sendPersonalInfo:
