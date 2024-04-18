@@ -120,6 +120,7 @@ export const MessageDetails = ({
           <MessageInfo iun={message.iun} />
         </ContentWrapper>
         <MessageBottomMenu
+          history={message.notificationStatusHistory}
           iun={message.iun}
           messageId={messageId}
           payments={payments}

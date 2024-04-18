@@ -9,27 +9,28 @@ import { MessageBottomMenu } from "../MessageBottomMenu";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../../messages/types";
+import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 
 describe("MessageBottomMenu", () => {
-  it("should match snapshot, undefined payments", () => {
-    const component = renderComponent();
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, empty payments", () => {
+  it("should match snapshot, no history, undefined payments", () => {
     const component = renderComponent([]);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot, one payment", () => {
+  it("should match snapshot, no history, empty payments", () => {
+    const component = renderComponent([]);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, no history, one payment", () => {
     const payments = [
       {
         creditorTaxId: "01234567890",
         noticeCode: "111122223333444400"
       } as NotificationPaymentInfo
     ];
-    const component = renderComponent(payments);
+    const component = renderComponent([], payments);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot, two payments", () => {
+  it("should match snapshot, no history, two payments", () => {
     const payments = [
       {
         creditorTaxId: "01234567890",
@@ -40,10 +41,10 @@ describe("MessageBottomMenu", () => {
         noticeCode: "111122223333444401"
       } as NotificationPaymentInfo
     ];
-    const component = renderComponent(payments);
+    const component = renderComponent([], payments);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot, three payments", () => {
+  it("should match snapshot, no history, three payments", () => {
     const payments = [
       {
         creditorTaxId: "01234567890",
@@ -58,12 +59,15 @@ describe("MessageBottomMenu", () => {
         noticeCode: "111122223333444402"
       } as NotificationPaymentInfo
     ];
-    const component = renderComponent(payments);
+    const component = renderComponent([], payments);
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
 
-const renderComponent = (payments?: ReadonlyArray<NotificationPaymentInfo>) => {
+const renderComponent = (
+  history: NotificationStatusHistory,
+  payments?: ReadonlyArray<NotificationPaymentInfo>
+) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const designSystemState = appReducer(
     initialState,
@@ -74,6 +78,7 @@ const renderComponent = (payments?: ReadonlyArray<NotificationPaymentInfo>) => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageBottomMenu
+        history={history}
         iun={"randomIUN"}
         messageId={"01HVPB9XYZMWNEPTDKZJ8ZJV28" as UIMessageId}
         payments={payments}
