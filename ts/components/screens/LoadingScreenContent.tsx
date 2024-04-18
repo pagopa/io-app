@@ -31,10 +31,11 @@ const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 type LoadingScreenContentProps = {
   contentTitle: string;
+  children?: React.ReactNode;
 };
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
-  const { contentTitle } = props;
+  const { contentTitle, children } = props;
 
   useOnFirstRender(() => {
     // Since the screen is shown for a very short time,
@@ -65,6 +66,7 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
           </H3>
         </View>
       </ContentWrapper>
+      {children}
     </SafeAreaView>
   );
 };
