@@ -56,8 +56,8 @@ import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
 import { PaymentsTransactionParamsList } from "../../features/payments/transaction/navigation/params";
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
-import { ServicesParamsList } from "../../features/services/navigation/params";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
+import { ServicesParamsList } from "../../features/services/common/navigation/params";
+import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";

@@ -11,11 +11,9 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ServiceDetailsScreen from "../LegacyServiceDetailsScreen";
-import {
-  loadServiceDetail,
-  loadVisibleServices
-} from "../../../store/actions/services";
-import { SERVICES_ROUTES } from "../../../features/services/navigation/routes";
+import { loadServiceDetail } from "../../../features/services/details/store/actions/details";
+import { loadVisibleServices } from "../../../store/actions/services";
+import { SERVICES_ROUTES } from "../../../features/services/common/navigation/routes";
 
 jest.useFakeTimers();
 

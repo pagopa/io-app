@@ -21,7 +21,7 @@ import {
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { SERVICES_ROUTES } from "../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";

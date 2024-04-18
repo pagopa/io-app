@@ -30,11 +30,11 @@ import {
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
-import { servicePreferenceSelector } from "../../../services/store/reducers/servicePreference";
-import { loadServicePreference } from "../../../services/store/actions";
+import { servicePreferenceSelector } from "../../../services/details/store/reducers/servicePreference";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
-import { isServicePreferenceResponseSuccess } from "../../../services/types/ServicePreferenceResponse";
+import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../../analytics";
 import LoadingComponent from "../../components/LoadingComponent";
