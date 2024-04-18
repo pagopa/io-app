@@ -3535,7 +3535,7 @@ unsupportedDevice:
     faq: "Learn more"
 fastLogin:
   loadingScreen:
-    title: "Ti stiamo autenticando"
+    title: "We are checking your identity"
   userInteraction:
     sessionExpired:
       noPin:
