@@ -2,6 +2,7 @@ import {
   ButtonLink,
   ButtonOutline,
   ButtonSolid,
+  HeaderSecondLevel,
   IOColors,
   IOSpacer,
   IOSpacingScale,
@@ -15,7 +16,7 @@ import {
   ComponentProps,
   Fragment,
   PropsWithChildren,
-  ReactNode,
+  useLayoutEffect,
   useMemo,
   useState
 } from "react";
@@ -23,7 +24,6 @@ import {
   ColorValue,
   LayoutChangeEvent,
   LayoutRectangle,
-  ScrollViewProps,
   StyleSheet,
   View
 } from "react-native";
@@ -38,6 +38,7 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 import { WithTestID } from "../../types/WithTestID";
 
 type IOScrollViewActions =
@@ -60,12 +61,16 @@ type IOScrollViewActions =
       tertiary: ComponentProps<typeof ButtonLink>;
     };
 
+type IOSCrollViewHeaderScrollValues = ComponentProps<
+  typeof HeaderSecondLevel
+>["scrollValues"];
+
 type IOScrollView = WithTestID<
   PropsWithChildren<{
-    header?: ReactNode;
+    headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
     actions?: IOScrollViewActions;
     debugMode?: boolean;
-    snapToOffsets?: ScrollViewProps["snapToOffsets"];
+    snapOffset?: number;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
     /* Include page margins */
@@ -106,10 +111,10 @@ const styles = StyleSheet.create({
 });
 
 export const IOScrollView = ({
-  header,
+  headerConfig,
   children,
   actions,
-  snapToOffsets,
+  snapOffset,
   excludeSafeAreaMargins = false,
   includeContentMargins = true,
   debugMode = false,
@@ -122,8 +127,14 @@ export const IOScrollView = ({
   const secondaryAction = actions?.secondary;
   const tertiaryAction = actions?.tertiary;
 
+  /* Navigation */
+  const navigation = useNavigation();
+
   /* Shared Values for `reanimated` */
-  const scrollPositionPercentage = useSharedValue(0); /* Scroll position */
+  const scrollPositionAbsolute =
+    useSharedValue(0); /* Scroll position (Absolute) */
+  const scrollPositionPercentage =
+    useSharedValue(0); /* Scroll position (Relative) */
 
   /* Total height of actions */
   const [actionBlockHeight, setActionBlockHeight] =
@@ -190,15 +201,14 @@ export const IOScrollView = ({
     [actionBlockHeight, bottomMargin]
   );
 
-  /* Set custom header with `react-navigation` library using
-     `useLayoutEffect` hook */
-
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
       const scrollPosition = contentOffset.y;
       const maxScrollHeight = contentSize.height - layoutMeasurement.height;
       const scrollPercentage = scrollPosition / maxScrollHeight;
 
+      // eslint-disable-next-line functional/immutable-data
+      scrollPositionAbsolute.value = scrollPosition;
       // eslint-disable-next-line functional/immutable-data
       scrollPositionPercentage.value = scrollPercentage;
     }
@@ -213,17 +223,37 @@ export const IOScrollView = ({
     )
   }));
 
+  /* Set custom header with `react-navigation` library using
+     `useLayoutEffect` hook */
+
+  const scrollValues: IOSCrollViewHeaderScrollValues = useMemo(
+    () => ({
+      contentOffsetY: scrollPositionAbsolute,
+      triggerOffset: snapOffset || 0
+    }),
+    [scrollPositionAbsolute, snapOffset]
+  );
+
+  useLayoutEffect(() => {
+    if (headerConfig) {
+      navigation.setOptions({
+        header: () => (
+          <HeaderSecondLevel {...headerConfig} scrollValues={scrollValues} />
+        )
+      });
+    }
+  }, [headerConfig, navigation, scrollValues]);
+
   return (
     <Fragment>
       <Animated.ScrollView
         testID={testID}
         onScroll={handleScroll}
         scrollEventThrottle={8}
-        snapToOffsets={snapToOffsets}
+        snapToOffsets={[0, snapOffset || 0]}
         snapToEnd={false}
         decelerationRate="normal"
         contentContainerStyle={{
-          backgroundColor: IOColors[theme["appBackground-primary"]],
           paddingBottom: actions
             ? safeBottomAreaHeight
             : bottomMargin + contentEndMargin,

@@ -7,13 +7,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React, { ComponentProps, useLayoutEffect, useState } from "react";
+import React, { ComponentProps, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   BackProps,
   HeaderActionProps,
@@ -21,6 +16,7 @@ import {
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
+import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
   label: string;
@@ -30,7 +26,7 @@ export type LargeHeaderTitleProps = {
 
 type Props = {
   children: React.ReactNode;
-  fixedBottomSlot?: React.ReactNode;
+  actions?: ComponentProps<typeof IOScrollView>["actions"];
   title: LargeHeaderTitleProps;
   description?: string;
   goBack?: BackProps["goBack"];
@@ -41,50 +37,31 @@ type Props = {
 /**
  * Special `IOScrollView` screen with a large title that is hidden by a transition when
  * the user scrolls. It also handles the contextual help and the FAQ.
- * The use of LargeHeader naming is due to similar behavior offered by the native iOS API.
- * @param children
- * @param fixedBottomSlot An optional React node that is fixed to the bottom of the screen. Useful for buttons or other actions. It will be positioned outside the main `ScrollView`.
- * @param title
- * @param titleTestID
- * @param contextualHelp
- * @param contextualHelpMarkdown
- * @param faqCategories
- * @param headerProps
- * @param canGoback allows to show/not show the back button and consequently does not pass to the HeaderSecondLevel the props that would display the back button
+ * Use of LargeHeader naming is due to similar behavior offered by the native iOS API.
  */
-export const RNavScreenWithLargeHeader = ({
+export const IOScrollViewWithLargeHeader = ({
   children,
-  fixedBottomSlot,
   title,
+  description,
+  actions,
   goBack,
   canGoback = true,
-  description,
   contextualHelp,
   contextualHelpMarkdown,
   faqCategories,
   headerActionsProp = {}
 }: Props) => {
   const [titleHeight, setTitleHeight] = useState(0);
-  const translationY = useSharedValue(0);
 
-  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
+
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
     setTitleHeight(height);
   };
 
-  const scrollHandler = useAnimatedScrollHandler(event => {
-    // eslint-disable-next-line functional/immutable-data
-    translationY.value = event.contentOffset.y;
-  });
-
   const headerPropsWithoutGoBack = {
     title: title.label,
-    scrollValues: {
-      contentOffsetY: translationY,
-      triggerOffset: titleHeight
-    },
     contextualHelp,
     contextualHelpMarkdown,
     faqCategories,
@@ -101,50 +78,33 @@ export const RNavScreenWithLargeHeader = ({
       : headerPropsWithoutGoBack
   );
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => <HeaderSecondLevel {...headerProps} />
-    });
-  }, [headerProps, navigation]);
-
   return (
-    <>
-      <Animated.ScrollView
-        contentContainerStyle={{
-          paddingBottom: insets.bottom,
-          flexGrow: 1
-        }}
-        onScroll={scrollHandler}
-        scrollEventThrottle={8}
-        snapToOffsets={[0, titleHeight]}
-        snapToEnd={false}
-        decelerationRate="normal"
-      >
-        <View
-          style={IOStyles.horizontalContentPadding}
-          onLayout={getTitleHeight}
+    <IOScrollView
+      actions={actions}
+      headerConfig={headerProps}
+      snapOffset={titleHeight}
+      includeContentMargins={false}
+    >
+      <View style={IOStyles.horizontalContentPadding} onLayout={getTitleHeight}>
+        <H2
+          testID={title.testID}
+          accessibilityLabel={title.accessibilityLabel ?? title.label}
+          accessibilityRole="header"
         >
-          <H2
-            testID={title.testID}
-            accessibilityLabel={title.accessibilityLabel ?? title.label}
-            accessibilityRole="header"
-          >
-            {title.label}
-          </H2>
-        </View>
+          {title.label}
+        </H2>
+      </View>
 
-        {description && (
-          <ContentWrapper>
-            <VSpacer size={4} />
-            <Body color="grey-700">{description}</Body>
-          </ContentWrapper>
-        )}
+      {description && (
+        <ContentWrapper>
+          <VSpacer size={4} />
+          <Body color="grey-700">{description}</Body>
+        </ContentWrapper>
+      )}
 
-        <VSpacer size={16} />
+      <VSpacer size={16} />
 
-        {children}
-      </Animated.ScrollView>
-      {fixedBottomSlot}
-    </>
+      {children}
+    </IOScrollView>
   );
 };
