@@ -28,10 +28,8 @@ import {
   navigateBack,
   navigateToServiceDetailsScreen
 } from "../../../../store/actions/navigation";
-import {
-  loadServiceDetail,
-  showServiceDetails
-} from "../../../../store/actions/services";
+import { showServiceDetails } from "../../../../store/actions/services";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { Dispatch } from "../../../../store/actions/types";
 import {
   isCGNEnabledSelector,
@@ -56,8 +54,8 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
+import { ServiceDetailsScreenNavigationParams } from "../../../services/details/screens/ServiceDetailsScreen";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ServiceDetailsScreenNavigationParams } from "../../../services/screens/ServiceDetailsScreen";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

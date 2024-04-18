@@ -58,8 +58,8 @@ import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/nav
 import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
 import { PaymentsTransactionNavigator } from "../features/payments/transaction/navigation/navigator";
 import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
-import ServicesNavigator from "../features/services/navigation/navigator";
-import { SERVICES_ROUTES } from "../features/services/navigation/routes";
+import ServicesNavigator from "../features/services/common/navigation/navigator";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
