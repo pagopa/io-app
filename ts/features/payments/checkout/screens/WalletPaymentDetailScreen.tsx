@@ -25,8 +25,7 @@ import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
-import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -83,8 +82,8 @@ const WalletPaymentDetailScreen = () => {
       O.fromEither,
       // NetworkError is transformed to GENERIC_ERROR only for display purposes
       O.getOrElse<WalletPaymentFailure>(() => ({
-        faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-        faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+        faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
+        faultCodeDetail: ""
       }))
     );
     return <WalletPaymentFailureDetail failure={failure} />;

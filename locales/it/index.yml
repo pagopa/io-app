@@ -1711,7 +1711,7 @@ wallet:
     failure:
       PAYMENT_UNAVAILABLE:
         title: "C’è un problema tecnico con questo avviso"
-      PAYMENT_UNKNOWN:
+      PAYMENT_DATA_ERROR:
         title: "I dati dell’avviso non sono corretti"
       DOMAIN_UNKNOWN:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
@@ -1730,7 +1730,7 @@ wallet:
       GENERIC_ERROR:
         title: "Si è verificato un errore imprevisto"
         subtitle: "Riprova, oppure contatta l’assistenza."
-      PAA_PAGAMENTO_SCONOSCIUTO:
+      PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
     outcome:
