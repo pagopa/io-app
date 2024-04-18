@@ -9,15 +9,15 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { servicePreferenceSelector } from "../../services/store/reducers/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../services/types/ServicePreferenceResponse";
+import { servicePreferenceSelector } from "../../services/details/store/reducers/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
 import { AppDispatch } from "../../../App";
 import { pnActivationUpsert } from "../store/actions";
 import { pnActivationSelector } from "../store/reducers/activation";
 import { showToast } from "../../../utils/showToast";
 import { Link } from "../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { loadServicePreference } from "../../services/store/actions";
+import { loadServicePreference } from "../../services/details/store/actions/preference";
 import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,
