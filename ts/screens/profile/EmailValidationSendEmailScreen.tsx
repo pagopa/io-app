@@ -14,11 +14,11 @@ import {
   Body,
   IOStyles,
   H3,
-  IOVisualCostants,
   ButtonOutline,
   ButtonSolid,
   ButtonLink,
-  IOToast
+  IOToast,
+  ContentWrapper
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -54,6 +54,7 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import ROUTES from "../../navigation/routes";
+import SectionStatusComponent from "../../components/SectionStatus";
 import Countdown from "./components/CountdownComponent";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
@@ -242,6 +243,7 @@ const EmailValidationSendEmailScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <SectionStatusComponent sectionKey={"email_validation"} />
       <ScrollView
         centerContent={true}
         contentContainerStyle={[
@@ -250,85 +252,87 @@ const EmailValidationSendEmailScreen = () => {
           Platform.OS === "android" && styles.wrapper_android
         ]}
       >
-        <View style={IOStyles.selfCenter}>
-          <Pictogram
-            name={isEmailValidated ? "emailDotCheck" : "emailDotNotif"}
-            size={VALIDATION_ILLUSTRATION_WIDTH}
-          />
-        </View>
-        <VSpacer size={24} />
-        <View
-          style={IOStyles.alignCenter}
-          accessible={true}
-          ref={accessibilityFirstFocuseViewRef}
-        >
-          <H3 testID="title-test">
-            {I18n.t(
-              isEmailValidated
-                ? "email.newvalidemail.title"
-                : "email.newvalidate.title"
-            )}
-          </H3>
-        </View>
-        <VSpacer size={16} />
-        <View style={{ display: "flex", flexDirection: "column" }}>
-          <Body
-            weight="Regular"
-            style={{ textAlign: "center" }}
-            testID="subtitle-test"
+        <ContentWrapper>
+          <View style={IOStyles.selfCenter}>
+            <Pictogram
+              name={isEmailValidated ? "emailDotCheck" : "emailDotNotif"}
+              size={VALIDATION_ILLUSTRATION_WIDTH}
+            />
+          </View>
+          <VSpacer size={24} />
+          <View
+            style={IOStyles.alignCenter}
+            accessible={true}
+            ref={accessibilityFirstFocuseViewRef}
           >
-            {I18n.t(
-              isEmailValidated
-                ? "email.newvalidemail.subtitle"
-                : "email.newvalidate.subtitle"
-            )}{" "}
-            <Body weight="SemiBold">{email}</Body>
-          </Body>
-        </View>
-        <VSpacer size={24} />
-        {!isEmailValidated && (
-          <View style={IOStyles.selfCenter}>
-            <ButtonLink
-              label={I18n.t("email.newvalidate.link")}
-              accessibilityLabel={I18n.t("email.newvalidate.link")}
-              onPress={navigateBackToInsertEmail}
-              testID="link-test"
-            />
-            <VSpacer size={24} />
+            <H3 testID="title-test">
+              {I18n.t(
+                isEmailValidated
+                  ? "email.newvalidemail.title"
+                  : "email.newvalidate.title"
+              )}
+            </H3>
           </View>
-        )}
-        <CountdownProvider
-          timerTiming={emailSentTimeout / 1000}
-          intervalDuration={countdownIntervalDuration}
-        >
-          <Countdown
-            onContdownCompleted={() => {
-              setShowCountdown(false);
-            }}
-            visible={showCountdown && !isEmailValidated}
-          />
-        </CountdownProvider>
-        {isEmailValidated ? (
-          <View style={IOStyles.selfCenter}>
-            <ButtonSolid
-              label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
-              onPress={handleContinue}
-            />
+          <VSpacer size={16} />
+          <View style={{ display: "flex", flexDirection: "column" }}>
+            <Body
+              weight="Regular"
+              style={{ textAlign: "center" }}
+              testID="subtitle-test"
+            >
+              {I18n.t(
+                isEmailValidated
+                  ? "email.newvalidemail.subtitle"
+                  : "email.newvalidate.subtitle"
+              )}{" "}
+              <Body weight="SemiBold">{email}</Body>
+            </Body>
           </View>
-        ) : (
-          !showCountdown && (
+          <VSpacer size={24} />
+          {!isEmailValidated && (
             <View style={IOStyles.selfCenter}>
-              <ButtonOutline
-                label={I18n.t("email.newvalidate.buttonlabelsentagain")}
-                accessibilityLabel={I18n.t(
-                  "email.newvalidate.buttonlabelsentagain"
-                )}
-                onPress={handleResendEmail}
+              <ButtonLink
+                label={I18n.t("email.newvalidate.link")}
+                accessibilityLabel={I18n.t("email.newvalidate.link")}
+                onPress={navigateBackToInsertEmail}
+                testID="link-test"
+              />
+              <VSpacer size={24} />
+            </View>
+          )}
+          <CountdownProvider
+            timerTiming={emailSentTimeout / 1000}
+            intervalDuration={countdownIntervalDuration}
+          >
+            <Countdown
+              onContdownCompleted={() => {
+                setShowCountdown(false);
+              }}
+              visible={showCountdown && !isEmailValidated}
+            />
+          </CountdownProvider>
+          {isEmailValidated ? (
+            <View style={IOStyles.selfCenter}>
+              <ButtonSolid
+                label={I18n.t("global.buttons.continue")}
+                accessibilityLabel={I18n.t("global.buttons.continue")}
+                onPress={handleContinue}
               />
             </View>
-          )
-        )}
+          ) : (
+            !showCountdown && (
+              <View style={IOStyles.selfCenter}>
+                <ButtonOutline
+                  label={I18n.t("email.newvalidate.buttonlabelsentagain")}
+                  accessibilityLabel={I18n.t(
+                    "email.newvalidate.buttonlabelsentagain"
+                  )}
+                  onPress={handleResendEmail}
+                />
+              </View>
+            )
+          )}
+        </ContentWrapper>
       </ScrollView>
     </SafeAreaView>
   );
@@ -336,8 +340,7 @@ const EmailValidationSendEmailScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    marginHorizontal: IOVisualCostants.appMarginDefault
+    flexGrow: 1
   },
   wrapper: {
     flex: 1,
