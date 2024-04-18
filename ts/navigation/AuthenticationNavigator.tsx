@@ -88,7 +88,11 @@ const AuthenticationStackNavigator = () => (
       component={CieExpiredOrInvalidScreen}
     />
 
-    <Stack.Screen name={ROUTES.CIE_PIN_SCREEN} component={CiePinScreen} />
+    <Stack.Screen
+      name={ROUTES.CIE_PIN_SCREEN}
+      component={CiePinScreen}
+      options={{ headerShown: true }}
+    />
 
     <Stack.Screen
       name={ROUTES.CIE_LOGIN_CONFIG_SCREEN}
