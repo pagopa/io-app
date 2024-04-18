@@ -1650,7 +1650,7 @@ wallet:
     failure:
       PAYMENT_UNAVAILABLE:
         title: "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung."
-      PAYMENT_UNKNOWN:
+      PAYMENT_DATA_ERROR:
         title: "Die Daten der Zahlungsmitteilung sind falsch"
       DOMAIN_UNKNOWN:
         title: "Die ausstellende Körperschaft hat Probleme bei der Bearbeitung"
@@ -1669,7 +1669,7 @@ wallet:
       GENERIC_ERROR:
         title: "Ein unerwarteter Fehler ist aufgetreten"
         subtitle: "Versuche es erneut oder wende dich an den Support."
-      PAA_PAGAMENTO_SCONOSCIUTO:
+      PAYMENT_UNKNOWN:
         title: "Wir können die Zahlungsmitteilung nicht finden"
         subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
     outcome:
