@@ -44,9 +44,17 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   SCREENS: {
-    GRADIENT_SCROLL: {
-      route: "GRADIENT_SCROLL",
-      title: "Gradient scroll + Actions"
+    IOSCROLLVIEW: {
+      route: "IOSCROLLVIEW",
+      title: "IOScrollView"
+    },
+    IOSCROLLVIEW_WO_ACTIONS: {
+      route: "IOSCROLLVIEW_WO_ACTIONS",
+      title: "IOScrollView w/o Actions"
+    },
+    IOSCROLLVIEW_LARGEHEADER: {
+      route: "IOSCROLLVIEW_LARGEHEADER",
+      title: "IOScrollView w/ Large header"
     },
     OPERATION_RESULT: {
       route: "DS_SCREEN_OPERATION_RESULT",
