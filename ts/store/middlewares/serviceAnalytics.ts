@@ -1,15 +1,12 @@
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../mixpanel";
 import { Action } from "../actions/types";
-import {
-  loadServiceDetail,
-  loadServicesDetail,
-  loadVisibleServices
-} from "../actions/services";
+import { loadServicesDetail, loadVisibleServices } from "../actions/services";
+import { loadServiceDetail } from "../../features/services/details/store/actions/details";
 import {
   loadServicePreference,
   upsertServicePreference
-} from "../../features/services/store/actions";
+} from "../../features/services/details/store/actions/preference";
 
 // Isolated tracker for services actions
 export const trackServiceAction =

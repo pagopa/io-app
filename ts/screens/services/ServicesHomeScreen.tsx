@@ -76,7 +76,7 @@ import {
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
-import { servicesByIdSelector } from "../../features/services/store/reducers/servicesById";
+import { servicesByIdSelector } from "../../features/services/details/store/reducers/servicesById";
 import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
@@ -95,7 +95,7 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
