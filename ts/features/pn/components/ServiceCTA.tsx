@@ -9,11 +9,11 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   servicePreferenceResponseSuccessSelector,
   servicePreferenceSelector
-} from "../../services/store/reducers/servicePreference";
+} from "../../services/details/store/reducers/servicePreference";
 import { pnActivationUpsert } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { loadServicePreference } from "../../services/store/actions";
+import { loadServicePreference } from "../../services/details/store/actions/preference";
 import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,

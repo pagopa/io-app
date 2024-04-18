@@ -8,13 +8,13 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   servicePreferenceResponseSuccessSelector,
   servicePreferenceSelector
-} from "../../../services/store/reducers/servicePreference";
+} from "../../../services/details/store/reducers/servicePreference";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { fold, isLoading } from "../../../../common/model/RemoteValue";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { loadServicePreference } from "../../../services/store/actions";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 
 type CgnServiceCtaProps = {
