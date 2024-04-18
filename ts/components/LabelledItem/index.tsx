@@ -42,6 +42,16 @@ const styles = StyleSheet.create({
   },
   textInputMask: {
     height: variables.inputHeightBase,
+    color: IOColors["grey-850"],
+    paddingLeft: 5,
+    paddingRight: 5,
+    flex: 1,
+    fontSize: variables.inputFontSize,
+    ...makeFontStyleObject("Regular")
+  },
+  regularInput: {
+    flexGrow: 1,
+    paddingVertical: 8,
     ...makeFontStyleObject("Regular")
   }
 });
@@ -212,15 +222,7 @@ export const LabelledItem: React.FC<Props> = ({
               })}
               accessibilityHint={props.accessibilityHint}
               underlineColorAndroid="transparent"
-              style={{
-                ...styles.textInputMask,
-                height: variables.inputHeightBase,
-                color: IOColors["grey-850"],
-                paddingLeft: 5,
-                paddingRight: 5,
-                flex: 1,
-                fontSize: variables.inputFontSize
-              }}
+              style={styles.textInputMask}
               {...props.inputMaskProps}
               onChangeText={(formatted: string, text?: string) => {
                 props.inputMaskProps?.onChangeText?.(formatted, text);
@@ -252,7 +254,7 @@ export const LabelledItem: React.FC<Props> = ({
               editable={props.inputProps?.disabled}
               placeholderTextColor={placeholderTextColor}
               inputAccessoryViewID={props.inputAccessoryViewID}
-              style={{ flexGrow: 1, paddingVertical: 8 }}
+              style={styles.regularInput}
             />
           )}
 
