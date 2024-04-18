@@ -16,6 +16,7 @@ import { WalletPaymentPspSortType } from "../../checkout/types";
 import { PaymentCardProps } from "../components/PaymentCard";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { WalletCard } from "../../../newWallet/types";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -50,8 +51,9 @@ export const isPaymentMethodExpired = (
 ): boolean =>
   pipe(
     details?.expiryDate,
+    O.fromNullable,
     O.chainNullableK(getDateFromExpiryDate),
-    O.map(isExpiredDate),
+    O.chainNullableK(isExpiredDate),
     O.getOrElse(() => false)
   );
 
@@ -130,14 +132,15 @@ export const getPaymentCardPropsFromWalletInfo = (
   wallet: WalletInfo
 ): PaymentCardProps => {
   const details = wallet.details as UIWalletInfoDetails;
+  const isExpired = isPaymentMethodExpired(details);
 
   return {
     hpan: details.lastFourDigits,
-    abiCode: "", // TODO IOBP-622 refactor payment card
     brand: details.brand,
     expireDate: getDateFromExpiryDate(details.expiryDate),
     holderEmail: details.maskedEmail,
-    holderPhone: details.maskedNumber
+    holderPhone: details.maskedNumber,
+    isExpired
   };
 };
 
@@ -158,3 +161,17 @@ export const getPaymentLogoFromWalletDetails = (
     );
   }
 };
+
+export const mapWalletIdToCardKey = (walletId: string) => `method_${walletId}`;
+
+export const mapWalletsToCards = (
+  wallets: ReadonlyArray<WalletInfo>
+): ReadonlyArray<WalletCard> =>
+  wallets.map<WalletCard>(wallet => ({
+    ...getPaymentCardPropsFromWalletInfo(wallet),
+    key: mapWalletIdToCardKey(wallet.walletId),
+    type: "payment",
+    category: "payment",
+    walletId: wallet.walletId
+  }));
+

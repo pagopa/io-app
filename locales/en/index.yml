@@ -2960,6 +2960,8 @@ features:
       banner:
         content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
         action: Aggiungi un metodo
+      status:
+        expired: Scaduta
     transactions:
       title: Storico operazioni
       button: Vedi tutte

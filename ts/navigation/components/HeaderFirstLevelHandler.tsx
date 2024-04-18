@@ -13,7 +13,7 @@ import { navigateToServicePreferenceScreen } from "../../store/actions/navigatio
 import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isNewWalletSectionEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 

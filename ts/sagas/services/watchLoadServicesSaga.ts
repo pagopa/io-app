@@ -1,22 +1,12 @@
 import { SagaIterator } from "redux-saga";
-import { fork, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
+import { fork, put, takeEvery } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-import { handleGetServicePreference } from "../../features/services/saga/handleGetServicePreference";
-import { handleUpsertServicePreference } from "../../features/services/saga/handleUpsertServicePreference";
-import {
-  loadServiceDetail,
-  loadVisibleServices
-} from "../../store/actions/services";
-import {
-  loadServicePreference,
-  upsertServicePreference
-} from "../../features/services/store/actions";
-import {
-  loadServiceDetailRequestHandler,
-  watchServicesDetailLoadSaga
-} from "../startup/loadServiceDetailRequestHandler";
+import { loadServiceDetail } from "../../features/services/details/store/actions/details";
+import { loadVisibleServices } from "../../store/actions/services";
+import { watchServicesDetailLoadSaga } from "../startup/loadServiceDetailRequestHandler";
 import { loadVisibleServicesRequestHandler } from "../startup/loadVisibleServicesHandler";
+import { watchServicesDetailsSaga } from "../../features/services/details/saga";
 import { handleFirstVisibleServiceLoadSaga } from "./handleFirstVisibleServiceLoadSaga";
 
 /**
@@ -32,26 +22,7 @@ export function* watchLoadServicesSaga(
     backendClient.getVisibleServices
   );
 
-  // handle the single load service request
-  yield* takeEvery(
-    getType(loadServiceDetail.request),
-    loadServiceDetailRequestHandler,
-    backendClient.getService
-  );
-
-  // handle the load of service preference request
-  yield* takeLatest(
-    getType(loadServicePreference.request),
-    handleGetServicePreference,
-    backendClient.getServicePreference
-  );
-
-  // handle the upsert request for the current service
-  yield* takeLatest(
-    getType(upsertServicePreference.request),
-    handleUpsertServicePreference,
-    backendClient.upsertServicePreference
-  );
+  yield* fork(watchServicesDetailsSaga, backendClient);
 
   // start a watcher to handle the load of services details in a bunch (i.e when visible services are loaded)
   yield* fork(watchServicesDetailLoadSaga, backendClient.getService);
