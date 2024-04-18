@@ -36,7 +36,7 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { SERVICES_ROUTES } from "../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
