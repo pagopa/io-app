@@ -214,7 +214,7 @@ tablet:
 rooted:
   title: "Es sieht so aus, als ob die Sicherheit deines Geräts kompromittiert ist!"
   body: "Wenn du auf “Weiter” klickst, erklärst du dich damit einverstanden, auf eigene Gefahr fortzufahren, andernfalls schließe die App."
-  learnMoreButton: 
+  learnMoreButton:
     title: "Was bedeutet das?"
   learnMoreBottomsheet:
     title: "Sicherheit deines Geräts"
@@ -2029,7 +2029,7 @@ services:
       fiscalCode: "Steuernummer Körperschaft"
       address: "Adresse"
       serviceId: "Dienst ID"
-    tosAndPrivacy: 
+    tosAndPrivacy:
       title: "Nutzungsbedingungen und Datenschutzbestimmungen"
       tosLink: "Nutzungsbedingungen"
       privacyLink: "Datenschutzerklärung"
@@ -2051,13 +2051,13 @@ serviceDetail:
   notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
   instructions:
-      unlockCode: "Entsperrcode"
-      unlockCodepPrefix: "Benutze deinen"
-      fingerprint: "Fingerabdruck"
-      fingerprintPrefix: "benutze deinen"
-      faceId: "Gesicht"
-      faceIdPrefix: "benutze dein"
-      congiunction: "oder"
+    unlockCode: "Entsperrcode"
+    unlockCodepPrefix: "Benutze deinen"
+    fingerprint: "Fingerabdruck"
+    fingerprintPrefix: "benutze deinen"
+    faceId: "Gesicht"
+    faceIdPrefix: "benutze dein"
+    congiunction: "oder"
   title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
   titleValidation: "Bestätige den Vorgang"
@@ -2433,9 +2433,9 @@ features:
         cgn: "Nationale Jugendkarte"
         itw: "IT Wallet"
         payment: "Zahlungsmethoden"
-    onboarding: 
+    onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
-      options: 
+      options:
         cgn: "Nationale Jugendkarte"
         welfare: "Initiativen für das Gemeinwohl"
         payments: "Zahlungsmethoden"
@@ -2556,10 +2556,6 @@ fastLogin:
     sessionExpired:
       noPin:
         title: "Es ist zu lange her!"
-        submitButtonTitle: "Fortfahren"
-      continueNavigation:
-        title: "Deine Sitzung ist abgelaufen"
-        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE identifizieren. Anschließend kannst du die IO-Konfiguration dort fortfahren, wo du aufgehört hast."
         submitButtonTitle: "Fortfahren"
       continueNavigation:
         title: "Deine Sitzung ist abgelaufen"
