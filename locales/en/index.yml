@@ -2100,7 +2100,7 @@ services:
       fiscalCode: "Organization's fiscal code"
       address: "Address"
       serviceId: "Service ID"
-    tosAndPrivacy: 
+    tosAndPrivacy:
       title: "Terms of use and Privacy"
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
@@ -2970,6 +2970,8 @@ features:
       banner:
         content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
         action: Aggiungi un metodo
+      status:
+        expired: Scaduta
     transactions:
       title: Storico operazioni
       button: Vedi tutte
