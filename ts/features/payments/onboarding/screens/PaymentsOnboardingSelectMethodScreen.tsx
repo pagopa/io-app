@@ -21,7 +21,6 @@ const PaymentsOnboardingSelectMethodScreen = () => {
   const isLoadingPaymentMethods = pot.isLoading(paymentMethodsPot);
   const availablePaymentMethods = pot.toUndefined(paymentMethodsPot);
 
-
   const { startOnboarding, isLoading, isPendingOnboarding } =
     useWalletOnboardingWebView({
       onOnboardingOutcome: (outcome, walletId) => {
