@@ -28,7 +28,7 @@ import { format } from "../../../../utils/dates";
 import { Table, TableRow } from "../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IDPayUnsubscriptionRoutes } from "../../unsubscription/navigation/navigator";
-import { SERVICES_ROUTES } from "../../../services/navigation/routes";
+import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
