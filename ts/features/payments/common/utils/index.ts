@@ -174,4 +174,3 @@ export const mapWalletsToCards = (
     category: "payment",
     walletId: wallet.walletId
   }));
-
