@@ -212,7 +212,15 @@ export const LabelledItem: React.FC<Props> = ({
               })}
               accessibilityHint={props.accessibilityHint}
               underlineColorAndroid="transparent"
-              style={styles.textInputMask}
+              style={{
+                ...styles.textInputMask,
+                height: variables.inputHeightBase,
+                color: IOColors["grey-850"],
+                paddingLeft: 5,
+                paddingRight: 5,
+                flex: 1,
+                fontSize: variables.inputFontSize
+              }}
               {...props.inputMaskProps}
               onChangeText={(formatted: string, text?: string) => {
                 props.inputMaskProps?.onChangeText?.(formatted, text);
