@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React, { useRef, useCallback, useEffect, useState } from "react";
-import { Platform, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   IOPictogramSizeScale,
   Pictogram,
@@ -243,15 +243,8 @@ const EmailValidationSendEmailScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SectionStatusComponent sectionKey={"email_validation"} />
-      <ScrollView
-        centerContent={true}
-        contentContainerStyle={[
-          styles.wrapper,
-          /* Android fallback because `centerContent` is only an iOS property */
-          Platform.OS === "android" && styles.wrapper_android
-        ]}
-      >
+      <ScrollView centerContent={true} contentContainerStyle={[styles.wrapper]}>
+        <SectionStatusComponent sectionKey={"email_validation"} />
         <ContentWrapper>
           <View style={IOStyles.selfCenter}>
             <Pictogram
@@ -343,14 +336,10 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   wrapper: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: "stretch",
     justifyContent: "center",
     alignContent: "center"
-  },
-  wrapper_android: {
-    flexGrow: 1,
-    justifyContent: "center"
   }
 });
 
