@@ -15,7 +15,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Banner,
   ButtonSolid,
@@ -39,7 +39,6 @@ import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import { nfcIsEnabled } from "../../../store/actions/cie";
-import { Dispatch } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
@@ -60,14 +59,7 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import ROUTES from "../../../navigation/routes";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request()),
-  doLoginSuccess: (token: SessionToken, idp: keyof IdpData) =>
-    dispatch(loginSuccess({ token, idp }))
-});
-
-type Props = ReturnType<typeof mapDispatchToProps>;
+import { useIODispatch } from "../../../store/hooks";
 
 const styles = StyleSheet.create({
   container: {
@@ -88,10 +80,23 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
 });
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
-const CiePinScreen = (props: Props) => {
+const CiePinScreen = () => {
   useOnFirstRender(() => {
     trackLoginCiePinScreen();
   });
+
+  const dispatch = useIODispatch();
+
+  const requestNfcEnabledCheck = useCallback(
+    () => dispatch(nfcIsEnabled.request()),
+    [dispatch]
+  );
+
+  const doLoginSuccess = useCallback(
+    (token: SessionToken, idp: keyof IdpData) =>
+      dispatch(loginSuccess({ token, idp })),
+    [dispatch]
+  );
 
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const navigation =
@@ -139,8 +144,6 @@ const CiePinScreen = (props: Props) => {
     hideModal();
   }, [setAuthUrlGenerated, hideModal]);
 
-  const { doLoginSuccess } = props;
-
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
       if (cieFlowForDevServerEnabled) {
@@ -164,7 +167,7 @@ const CiePinScreen = (props: Props) => {
   ]);
 
   const showModal = () => {
-    props.requestNfcEnabledCheck();
+    requestNfcEnabledCheck();
     Keyboard.dismiss();
     showAnimatedModal(
       <CieRequestAuthenticationOverlay
@@ -252,4 +255,4 @@ const CiePinScreen = (props: Props) => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(CiePinScreen);
+export default CiePinScreen;
