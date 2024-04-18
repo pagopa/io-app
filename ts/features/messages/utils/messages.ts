@@ -31,7 +31,7 @@ import {
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
-import { SERVICES_ROUTES } from "../../services/navigation/routes";
+import { SERVICES_ROUTES } from "../../services/common/navigation/routes";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,

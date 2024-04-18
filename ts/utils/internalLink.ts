@@ -16,7 +16,7 @@ import FIMS_ROUTES from "../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { SERVICES_ROUTES } from "../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { isTestEnv } from "./environment";
 import {
   IO_FIMS_LINK_PREFIX,
