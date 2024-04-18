@@ -12,8 +12,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
-  StyleSheet
+  ScrollView
 } from "react-native";
 import { useSelector } from "react-redux";
 import {
@@ -21,15 +20,13 @@ import {
   ButtonSolid,
   ContentWrapper,
   H2,
-  IOColors,
+  IOStyles,
   LabelLink,
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
-import { Link } from "../../../components/core/typography/Link";
 import {
   BottomTopAnimation,
   LightModalContext
@@ -60,17 +57,6 @@ import ROUTES from "../../../navigation/routes";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { useIODispatch } from "../../../store/hooks";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  bsLinkButton: {
-    paddingRight: 0,
-    paddingLeft: 0,
-    backgroundColor: IOColors.white
-  }
-});
 
 const CIE_PIN_LENGTH = 8;
 
@@ -126,13 +112,10 @@ const CiePinScreen = () => {
         <LegacyMarkdown avoidTextSelection>
           {I18n.t("bottomSheets.ciePin.content")}
         </LegacyMarkdown>
-        <ButtonDefaultOpacity
-          onPress={onOpenForgotPinPage}
-          style={styles.bsLinkButton}
-          onPressWithGestureHandler={true}
-        >
-          <Link>{I18n.t("authentication.cie.pin.bottomSheetCTA")}</Link>
-        </ButtonDefaultOpacity>
+        <VSpacer size={24} />
+        <LabelLink onPress={onOpenForgotPinPage}>
+          {I18n.t("authentication.cie.pin.bottomSheetCTA")}
+        </LabelLink>
         <VSpacer size={24} />
       </View>
     ),
@@ -209,7 +192,7 @@ const CiePinScreen = () => {
             {I18n.t("authentication.cie.pin.subtitleCTA")}
           </LabelLink>
           <VSpacer size={24} />
-          <View style={styles.container} accessible={true} ref={pinPadViewRef}>
+          <View style={IOStyles.flex} accessible={true} ref={pinPadViewRef}>
             <OTPInput
               secret
               value={pin}
