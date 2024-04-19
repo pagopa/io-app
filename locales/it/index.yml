@@ -1957,6 +1957,11 @@ messageDetails:
     title: "Dati identificativi"
     messageId: "ID messaggio"
     messageIdAccessibility: "ID messaggio, copia"
+    pagoPAHeader: "Avviso pagoPA"
+    noticeCode: "Codice Avviso"
+    noticeCodeAccessibility: "Codice avviso, copia"
+    entityFiscalCode: "Codice Fiscale Ente"
+    entityFiscalCodeAccessibility: "Codice fiscale ente, copia"
   contactsBottomSheet:
     title: "Assistenza"
     body: "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato."
