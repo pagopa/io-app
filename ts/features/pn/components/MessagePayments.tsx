@@ -6,7 +6,6 @@ import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
   ButtonLink,
-  FeatureInfo,
   ListItemHeader,
   ModulePaymentNotice,
   VSpacer
@@ -50,7 +49,7 @@ const readonlyArrayHasNoData = <T,>(maybeArray: ReadonlyArray<T> | undefined) =>
 /*
  * Skip the payment section when the notification is not cancelled but there are no payments to show
  * or
- * Skip the payment section when the notification is cancelled and there are no payments nor completed payments to show
+ * Skip the payment section when the notification is cancelled and there are no completed payments to show
  */
 const paymentSectionShouldRenderNothing = (
   isCancelled: boolean,
@@ -58,9 +57,7 @@ const paymentSectionShouldRenderNothing = (
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined
 ) =>
   (!isCancelled && readonlyArrayHasNoData(payments)) ||
-  (isCancelled &&
-    readonlyArrayHasNoData(payments) &&
-    readonlyArrayHasNoData(completedPaymentNoticeCodes));
+  (isCancelled && readonlyArrayHasNoData(completedPaymentNoticeCodes));
 
 const generateNavigationToPaidPaymentScreenAction = (
   noticeCode: string,
@@ -122,17 +119,15 @@ export const MessagePayments = ({
     return (
       <>
         <ListItemHeader
-          label={I18n.t("features.pn.details.cancelledMessage.payments")}
-        />
-        <FeatureInfo
-          body={I18n.t("features.pn.details.cancelledMessage.unpaidPayments")}
-          iconName="info"
+          label={I18n.t("features.pn.details.paymentSection.title")}
+          iconName={"productPagoPA"}
+          iconColor={"blueIO-500"}
         />
         {completedPaymentNoticeCodes &&
           completedPaymentNoticeCodes.map(
             (completedPaymentNoticeCode, index) => (
               <View key={`MPN_${index}`}>
-                <VSpacer size={index > 0 ? 8 : 24} />
+                <VSpacer size={8} />
                 <ModulePaymentNotice
                   title={I18n.t("features.pn.details.noticeCode")}
                   subtitle={completedPaymentNoticeCode}
