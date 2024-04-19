@@ -123,3 +123,9 @@ export const canShowMorePaymentsLink = (
   !isCancelled &&
   !!payments &&
   payments.length > maxVisiblePaymentCountGenerator();
+
+export const shouldUseBottomSheetForPayments = (
+  isCancelled: boolean,
+  payments?: ReadonlyArray<NotificationPaymentInfo>
+): payments is ReadonlyArray<NotificationPaymentInfo> =>
+  !isCancelled && (payments?.length ?? 0) > 1;
