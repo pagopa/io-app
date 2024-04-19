@@ -5,6 +5,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { WalletCardCategory } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
+import { walletToggleLoadingState } from "../actions/placeholders";
 
 export type WalletPlaceholders = { [key: string]: WalletCardCategory };
 
@@ -15,7 +16,7 @@ export type WalletPlaceholdersState = {
 
 const INITIAL_STATE: WalletPlaceholdersState = {
   items: {},
-  isLoading: true
+  isLoading: false
 };
 
 const reducer = (
@@ -25,22 +26,28 @@ const reducer = (
   switch (action.type) {
     case getType(walletAddCards):
       return {
+        ...state,
         items: action.payload.reduce(
           (acc, { category, key }) => ({
             ...acc,
             [hashKey(key)]: category
           }),
           state.items
-        ),
-        isLoading: false
+        )
       };
     case getType(walletRemoveCards):
       return {
+        ...state,
         items: Object.fromEntries(
           Object.entries(state.items).filter(
             ([key]) => !action.payload.map(hashKey).includes(key)
           )
-        ),
+        )
+      };
+
+    case getType(walletToggleLoadingState):
+      return {
+        ...state,
         isLoading: false
       };
   }
