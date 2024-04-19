@@ -62,7 +62,111 @@ describe("MessageBottomMenu", () => {
     const component = renderComponent([], payments);
     expect(component.toJSON()).toMatchSnapshot();
   });
+
+  it("should match snapshot, all handled-status items history, undefined payments", () => {
+    const component = renderComponent(fullHistory());
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, all handled-status items history, empty payments", () => {
+    const component = renderComponent(fullHistory());
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, all handled-status items history, one payment", () => {
+    const payments = [
+      {
+        creditorTaxId: "01234567890",
+        noticeCode: "111122223333444400"
+      } as NotificationPaymentInfo
+    ];
+    const component = renderComponent(fullHistory(), payments);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, all handled-status items history, two payments", () => {
+    const payments = [
+      {
+        creditorTaxId: "01234567890",
+        noticeCode: "111122223333444400"
+      } as NotificationPaymentInfo,
+      {
+        creditorTaxId: "01234567890",
+        noticeCode: "111122223333444401"
+      } as NotificationPaymentInfo
+    ];
+    const component = renderComponent(fullHistory(), payments);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, all handled-status items history, three payments", () => {
+    const payments = [
+      {
+        creditorTaxId: "01234567890",
+        noticeCode: "111122223333444400"
+      } as NotificationPaymentInfo,
+      {
+        creditorTaxId: "01234567890",
+        noticeCode: "111122223333444401"
+      } as NotificationPaymentInfo,
+      {
+        creditorTaxId: "01234567890",
+        noticeCode: "111122223333444402"
+      } as NotificationPaymentInfo
+    ];
+    const component = renderComponent(fullHistory(), payments);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 });
+
+const fullHistory = (): NotificationStatusHistory => [
+  {
+    activeFrom: new Date(2024, 1, 1, 1, 10),
+    relatedTimelineElements: [],
+    status: "VIEWED"
+  },
+  {
+    activeFrom: new Date(2024, 2, 3, 3, 15),
+    relatedTimelineElements: [],
+    status: "EFFECTIVE_DATE"
+  },
+  {
+    activeFrom: new Date(2024, 3, 7, 5, 20),
+    relatedTimelineElements: [],
+    status: "UNREACHABLE"
+  },
+  {
+    activeFrom: new Date(2024, 4, 10, 7, 25),
+    relatedTimelineElements: [],
+    status: "CANCELLED"
+  },
+  {
+    activeFrom: new Date(2024, 5, 13, 9, 30),
+    relatedTimelineElements: [],
+    status: "IN_VALIDATION"
+  },
+  {
+    activeFrom: new Date(2024, 6, 18, 11, 35),
+    relatedTimelineElements: [],
+    status: "ACCEPTED"
+  },
+  {
+    activeFrom: new Date(2024, 7, 20, 13, 40),
+    relatedTimelineElements: [],
+    status: "REFUSED"
+  },
+  {
+    activeFrom: new Date(2024, 8, 23, 15, 45),
+    relatedTimelineElements: [],
+    status: "DELIVERING"
+  },
+  {
+    activeFrom: new Date(2024, 9, 25, 17, 50),
+    relatedTimelineElements: [],
+    status: "DELIVERED"
+  },
+  {
+    activeFrom: new Date(2024, 10, 28, 19, 55),
+    relatedTimelineElements: [],
+    status: "PAID"
+  }
+];
 
 const renderComponent = (
   history: NotificationStatusHistory,
