@@ -4,17 +4,21 @@
  * - a subtitle, displayed below the title
  */
 import * as React from "react";
-import { View, Animated, ImageSourcePropType, StyleSheet } from "react-native";
+import {
+  View,
+  Animated,
+  ImageSourcePropType,
+  StyleSheet,
+  Platform
+} from "react-native";
 import {
   IOColors,
   IOIcons,
   IOPictograms,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import {
-  HEADER_ANIMATION_DURATION,
-  HEADER_HEIGHT
-} from "../../utils/constants";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useEffect } from "react";
 import ScreenHeader from "../ScreenHeader";
 import { H1 } from "../../components/core/typography/H1";
 
@@ -48,94 +52,94 @@ const styles = StyleSheet.create({
 const shouldCollapse = 1 as unknown as Animated.AnimatedInterpolation<number>;
 const shouldExpand = 0 as unknown as Animated.AnimatedInterpolation<number>;
 
-export class ScreenContentHeader extends React.PureComponent<Props> {
-  private heightAnimation: Animated.Value;
-  private elapse: Animated.CompositeAnimation;
-  private collapse: Animated.CompositeAnimation;
+export const ScreenContentHeader = ({
+  title,
+  subtitle,
+  subtitleLink,
+  dynamicHeight,
+  dark,
+  rasterIcon,
+  icon,
+  pictogram,
+  rightComponent
+}: Props) => {
+  const insets = useSafeAreaInsets();
 
-  constructor(props: Props) {
-    super(props);
+  // Moved from legacy `constants.ts` file
+  // The entire logic is moved to use `useSafeAreaInsets` hook
+  const HEADER_HEIGHT =
+    variables.appHeaderHeight +
+    (Platform.OS === "ios"
+      ? insets.top !== 0
+        ? 18
+        : insets.top
+      : variables.spacerHeight);
 
-    // Initialize animated value
-    this.heightAnimation = new Animated.Value(HEADER_HEIGHT);
+  const HEADER_ANIMATION_DURATION = 200;
 
-    // Animation to elapse the header height from 0 to HEADER_HEIGHT
-    this.elapse = Animated.timing(this.heightAnimation, {
-      useNativeDriver: false,
-      toValue: HEADER_HEIGHT,
-      duration: HEADER_ANIMATION_DURATION
-    });
+  const heightAnimation = new Animated.Value(HEADER_HEIGHT);
 
-    // Animation to collapse the header height from HEADER_HEIGHT to 0
-    this.collapse = Animated.timing(this.heightAnimation, {
-      useNativeDriver: false,
-      toValue: 0,
-      duration: HEADER_ANIMATION_DURATION
-    });
-  }
+  const elapse = Animated.timing(heightAnimation, {
+    useNativeDriver: false,
+    toValue: HEADER_HEIGHT,
+    duration: HEADER_ANIMATION_DURATION
+  });
 
-  public componentDidUpdate(prevProps: Props) {
-    if (this.props.dynamicHeight !== prevProps.dynamicHeight) {
-      if (this.props.dynamicHeight === shouldCollapse) {
-        this.elapse.stop();
-        this.collapse.start();
+  const collapse = Animated.timing(heightAnimation, {
+    useNativeDriver: false,
+    toValue: 0,
+    duration: HEADER_ANIMATION_DURATION
+  });
+
+  useEffect(() => {
+    if (dynamicHeight !== undefined) {
+      if (dynamicHeight === shouldCollapse) {
+        elapse.stop();
+        collapse.start();
       }
-      if (this.props.dynamicHeight === shouldExpand) {
-        this.collapse.stop();
-        this.elapse.start();
+      if (dynamicHeight === shouldExpand) {
+        collapse.stop();
+        elapse.start();
       }
     }
-  }
+  }, [collapse, dynamicHeight, elapse]);
 
-  public render() {
-    const {
-      subtitle,
-      subtitleLink,
-      dark,
-      rasterIcon,
-      icon,
-      pictogram,
-      title,
-      rightComponent
-    } = this.props;
-
-    return (
-      <View style={dark && styles.darkGrayBg}>
-        <Animated.View
-          style={
-            this.props.dynamicHeight !== undefined && {
-              height: this.heightAnimation
-            }
-          } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
-        >
-          <VSpacer size={16} />
-          <ScreenHeader
-            heading={
-              <H1
-                accessible={true}
-                accessibilityRole="header"
-                weight="Bold"
-                testID={"screen-content-header-title"}
-                color={dark ? "white" : "bluegreyDark"}
-              >
-                {title}
-              </H1>
-            }
-            rasterIcon={rasterIcon}
-            icon={icon}
-            pictogram={pictogram}
-            dark={dark}
-            rightComponent={rightComponent}
-          />
-          {subtitle && (
-            <View style={styles.subheaderContainer}>
-              <Body testID={"screen-content-header-subtitle"}>{subtitle}</Body>
-              {subtitleLink}
-              <VSpacer size={24} />
-            </View>
-          )}
-        </Animated.View>
-      </View>
-    );
-  }
-}
+  return (
+    <View style={dark && styles.darkGrayBg}>
+      <Animated.View
+        style={
+          dynamicHeight !== undefined && {
+            height: heightAnimation
+          }
+        }
+      >
+        <VSpacer size={16} />
+        <ScreenHeader
+          heading={
+            <H1
+              accessible={true}
+              accessibilityRole="header"
+              weight="Bold"
+              testID={"screen-content-header-title"}
+              color={dark ? "white" : "bluegreyDark"}
+            >
+              {title}
+            </H1>
+          }
+          rasterIcon={rasterIcon}
+          icon={icon}
+          pictogram={pictogram}
+          dark={dark}
+          rightComponent={rightComponent}
+        />
+        {subtitle && (
+          <View style={styles.subheaderContainer}>
+            <Body testID={"screen-content-header-subtitle"}>{subtitle}</Body>
+            {subtitleLink}
+            <VSpacer size={24} />
+          </View>
+        )}
+      </Animated.View>
+    </View>
+  );
+};

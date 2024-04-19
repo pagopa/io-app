@@ -1,9 +1,9 @@
 import * as React from "react";
 import { FC, useState } from "react";
 import { View, Platform, StyleSheet } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { IOColors } from "@pagopa/io-app-design-system";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getAppVersion } from "../utils/appVersion";
 import { Label } from "../components/core/typography/Label";
 import { Body } from "../components/core/typography/Body";
@@ -11,10 +11,6 @@ import { Body } from "../components/core/typography/Body";
 const styles = StyleSheet.create({
   versionContainer: {
     position: "absolute",
-    top: Platform.select({
-      ios: 35 + (isIphoneX() ? getStatusBarHeight() : 0),
-      android: 0
-    }),
     left: 0,
     right: 0,
     bottom: 0,
@@ -36,12 +32,24 @@ interface Props {
 
 export const BetaTestingOverlay: FC<Props> = ({ title, body }): JSX.Element => {
   const [isVisible, setIsVisible] = useState(true);
+  const insets = useSafeAreaInsets();
 
   const handleVisibility = (): void => setIsVisible(!isVisible);
   const bodyString = body ? `- ${body}` : "";
 
   return (
-    <View style={styles.versionContainer} pointerEvents="box-none">
+    <View
+      style={[
+        styles.versionContainer,
+        {
+          top: Platform.select({
+            ios: 35 + insets.top,
+            android: 0
+          })
+        }
+      ]}
+      pointerEvents="box-none"
+    >
       {isVisible && (
         <TouchableOpacity onPress={handleVisibility}>
           <Label style={styles.versionText}>{title}</Label>
