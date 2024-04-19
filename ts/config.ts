@@ -59,8 +59,6 @@ export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
-export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
-
 export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
