@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LegacyMessageFooter should match snapshot for cancelled PN notification 1`] = `
+exports[`MessageFooter should match snapshot for cancelled PN notification 1`] = `
 <View
   style={
     Object {
@@ -331,7 +331,7 @@ exports[`LegacyMessageFooter should match snapshot for cancelled PN notification
 </View>
 `;
 
-exports[`LegacyMessageFooter should match snapshot for hidden button 1`] = `
+exports[`MessageFooter should match snapshot for hidden button 1`] = `
 <View
   style={
     Object {
@@ -662,7 +662,7 @@ exports[`LegacyMessageFooter should match snapshot for hidden button 1`] = `
 </View>
 `;
 
-exports[`LegacyMessageFooter should match snapshot for visibleEnabled button 1`] = `
+exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
 <View
   style={
     Object {
@@ -983,15 +983,7 @@ exports[`LegacyMessageFooter should match snapshot for visibleEnabled button 1`]
                     >
                       <View
                         style={
-                          Object {
-                            "marginTop": -50,
-                            "overflow": "hidden",
-                            "paddingTop": 50,
-                          }
-                        }
-                      >
-                        <View
-                          style={
+                          Array [
                             Object {
                               "backgroundColor": "#FFFFFF",
                               "elevation": 20,
@@ -1005,115 +997,118 @@ exports[`LegacyMessageFooter should match snapshot for visibleEnabled button 1`]
                               },
                               "shadowOpacity": 0.5,
                               "shadowRadius": 37,
+                            },
+                            Object {
+                              "paddingBottom": 16,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          accessibilityLabel="Go to payment"
+                          accessibilityRole="button"
+                          accessibilityState={
+                            Object {
+                              "busy": false,
+                              "disabled": false,
                             }
                           }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          style={Object {}}
                         >
                           <View
-                            accessibilityLabel="Go to payment"
-                            accessibilityRole="button"
-                            accessibilityState={
-                              Object {
-                                "busy": false,
-                                "disabled": false,
-                              }
+                            style={
+                              Array [
+                                Object {
+                                  "alignItems": "center",
+                                  "borderRadius": 4,
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "paddingHorizontal": 16,
+                                  "textAlignVertical": "center",
+                                },
+                                Object {
+                                  "overflow": "hidden",
+                                },
+                                false,
+                                Object {
+                                  "height": 40,
+                                },
+                                Object {
+                                  "backgroundColor": "#0073E6",
+                                },
+                                Object {
+                                  "backgroundColor": undefined,
+                                  "transform": Array [
+                                    Object {
+                                      "scale": undefined,
+                                    },
+                                  ],
+                                },
+                              ]
                             }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            style={Object {}}
                           >
                             <View
                               style={
                                 Array [
                                   Object {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
-                                    "textAlignVertical": "center",
-                                  },
-                                  Object {
-                                    "overflow": "hidden",
                                   },
                                   false,
-                                  Object {
-                                    "height": 40,
-                                  },
-                                  Object {
-                                    "backgroundColor": "#0073E6",
-                                  },
-                                  Object {
-                                    "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
-                                        "scale": undefined,
-                                      },
-                                    ],
-                                  },
                                 ]
                               }
                             >
-                              <View
+                              <Text
+                                accessibilityElementsHidden={true}
+                                accessible={false}
+                                allowFontScaling={false}
+                                color="white"
+                                defaultColor="white"
+                                defaultWeight="Bold"
+                                ellipsizeMode="tail"
+                                font="TitilliumWeb"
+                                fontStyle={
+                                  Object {
+                                    "fontSize": 16,
+                                  }
+                                }
+                                importantForAccessibility="no-hide-descendants"
+                                maxFontSizeMultiplier={1.3}
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
+                                      "alignSelf": "center",
                                     },
-                                    false,
-                                  ]
-                                }
-                              >
-                                <Text
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  allowFontScaling={false}
-                                  color="white"
-                                  defaultColor="white"
-                                  defaultWeight="Bold"
-                                  ellipsizeMode="tail"
-                                  font="TitilliumWeb"
-                                  fontStyle={
                                     Object {
                                       "fontSize": 16,
-                                    }
-                                  }
-                                  importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
-                                  numberOfLines={1}
-                                  style={
-                                    Array [
-                                      Object {
-                                        "alignSelf": "center",
-                                      },
-                                      Object {
-                                        "fontSize": 16,
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Web",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "700",
-                                      },
-                                    ]
-                                  }
-                                  weight="Bold"
-                                >
-                                  Go to payment
-                                </Text>
-                              </View>
+                                    },
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "fontFamily": "Titillium Web",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "700",
+                                    },
+                                  ]
+                                }
+                                weight="Bold"
+                              >
+                                Go to payment
+                              </Text>
                             </View>
                           </View>
                         </View>
@@ -1131,7 +1126,7 @@ exports[`LegacyMessageFooter should match snapshot for visibleEnabled button 1`]
 </View>
 `;
 
-exports[`LegacyMessageFooter should match snapshot for visibleLoading button 1`] = `
+exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
 <View
   style={
     Object {
@@ -1452,15 +1447,7 @@ exports[`LegacyMessageFooter should match snapshot for visibleLoading button 1`]
                     >
                       <View
                         style={
-                          Object {
-                            "marginTop": -50,
-                            "overflow": "hidden",
-                            "paddingTop": 50,
-                          }
-                        }
-                      >
-                        <View
-                          style={
+                          Array [
                             Object {
                               "backgroundColor": "#FFFFFF",
                               "elevation": 20,
@@ -1474,165 +1461,184 @@ exports[`LegacyMessageFooter should match snapshot for visibleLoading button 1`]
                               },
                               "shadowOpacity": 0.5,
                               "shadowRadius": 37,
+                            },
+                            Object {
+                              "paddingBottom": 16,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          accessibilityLabel="Go to payment"
+                          accessibilityRole="button"
+                          accessibilityState={
+                            Object {
+                              "busy": true,
+                              "disabled": true,
                             }
                           }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          style={Object {}}
                         >
                           <View
-                            accessibilityLabel="Go to payment"
-                            accessibilityRole="button"
-                            accessibilityState={
-                              Object {
-                                "busy": true,
-                                "disabled": true,
-                              }
+                            style={
+                              Array [
+                                Object {
+                                  "alignItems": "center",
+                                  "borderRadius": 4,
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "paddingHorizontal": 16,
+                                  "textAlignVertical": "center",
+                                },
+                                Object {
+                                  "overflow": "hidden",
+                                },
+                                false,
+                                Object {
+                                  "height": 40,
+                                },
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                },
+                                false,
+                              ]
                             }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            style={Object {}}
                           >
                             <View
+                              exiting={[Function]}
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "borderRadius": 4,
-                                    "elevation": 0,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "paddingHorizontal": 16,
-                                    "textAlignVertical": "center",
-                                  },
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  false,
-                                  Object {
-                                    "height": 40,
-                                  },
-                                  Object {
-                                    "backgroundColor": "#CCD4DC",
-                                  },
-                                  false,
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                }
                               }
                             >
                               <View
-                                exiting={[Function]}
+                                accessibilityRole="progressbar"
+                                accessible={true}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
+                                    "height": 24,
+                                    "width": 24,
                                   }
                                 }
+                                testID="LoadingSpinnerTestID"
                               >
                                 <View
-                                  accessibilityRole="progressbar"
-                                  accessible={true}
-                                  importantForAccessibility="no-hide-descendants"
+                                  collapsable={false}
                                   style={
                                     Object {
-                                      "height": 24,
-                                      "width": 24,
+                                      "transform": Array [
+                                        Object {
+                                          "rotateZ": "0deg",
+                                        },
+                                      ],
                                     }
                                   }
-                                  testID="LoadingSpinnerTestID"
+                                  testID="LoadingSpinnerAnimatedTestID"
                                 >
-                                  <View
-                                    collapsable={false}
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={24}
+                                    bbWidth={24}
+                                    fill="none"
+                                    focusable={false}
+                                    height={24}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
                                     style={
-                                      Object {
-                                        "transform": Array [
-                                          Object {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
-                                      }
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        Object {
+                                          "flex": 0,
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
                                     }
-                                    testID="LoadingSpinnerAnimatedTestID"
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={24}
                                   >
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      fill="none"
-                                      focusable={false}
-                                      height={24}
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
+                                    <RNSVGGroup
+                                      fill={null}
+                                      propList={
                                         Array [
-                                          Object {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          Object {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
+                                          "fill",
                                         ]
                                       }
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
                                     >
+                                      <RNSVGDefs>
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            Array [
+                                              0,
+                                              16777215,
+                                              1,
+                                              -1,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="spinner-secondHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            Array [
+                                              0,
+                                              -1,
+                                              1,
+                                              -1,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="spinner-firstHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                      </RNSVGDefs>
                                       <RNSVGGroup
-                                        fill={null}
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
                                         propList={
                                           Array [
-                                            "fill",
+                                            "strokeWidth",
                                           ]
                                         }
+                                        strokeWidth={3}
                                       >
-                                        <RNSVGDefs>
-                                          <RNSVGLinearGradient
-                                            gradient={
-                                              Array [
-                                                0,
-                                                16777215,
-                                                1,
-                                                -1,
-                                              ]
-                                            }
-                                            gradientTransform={null}
-                                            gradientUnits={0}
-                                            name="spinner-secondHalf"
-                                            x1="0%"
-                                            x2="100%"
-                                            y1="0%"
-                                            y2="0%"
-                                          />
-                                          <RNSVGLinearGradient
-                                            gradient={
-                                              Array [
-                                                0,
-                                                -1,
-                                                1,
-                                                -1,
-                                              ]
-                                            }
-                                            gradientTransform={null}
-                                            gradientUnits={0}
-                                            name="spinner-firstHalf"
-                                            x1="0%"
-                                            x2="100%"
-                                            y1="0%"
-                                            y2="0%"
-                                          />
-                                        </RNSVGDefs>
-                                        <RNSVGGroup
+                                        <RNSVGPath
+                                          d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
                                           fill={
                                             Object {
                                               "payload": 4278190080,
@@ -1641,77 +1647,61 @@ exports[`LegacyMessageFooter should match snapshot for visibleLoading button 1`]
                                           }
                                           propList={
                                             Array [
-                                              "strokeWidth",
+                                              "stroke",
                                             ]
                                           }
-                                          strokeWidth={3}
-                                        >
-                                          <RNSVGPath
-                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                            fill={
-                                              Object {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
+                                          stroke={
+                                            Object {
+                                              "brushRef": "spinner-secondHalf",
+                                              "type": 1,
                                             }
-                                            propList={
-                                              Array [
-                                                "stroke",
-                                              ]
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
                                             }
-                                            stroke={
-                                              Object {
-                                                "brushRef": "spinner-secondHalf",
-                                                "type": 1,
-                                              }
+                                          }
+                                          propList={
+                                            Array [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            Object {
+                                              "brushRef": "spinner-firstHalf",
+                                              "type": 1,
                                             }
-                                          />
-                                          <RNSVGPath
-                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                            fill={
-                                              Object {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
                                             }
-                                            propList={
-                                              Array [
-                                                "stroke",
-                                              ]
+                                          }
+                                          propList={
+                                            Array [
+                                              "stroke",
+                                              "strokeLinecap",
+                                            ]
+                                          }
+                                          stroke={
+                                            Object {
+                                              "payload": 4294967295,
+                                              "type": 0,
                                             }
-                                            stroke={
-                                              Object {
-                                                "brushRef": "spinner-firstHalf",
-                                                "type": 1,
-                                              }
-                                            }
-                                          />
-                                          <RNSVGPath
-                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                            fill={
-                                              Object {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
-                                            }
-                                            propList={
-                                              Array [
-                                                "stroke",
-                                                "strokeLinecap",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeLinecap={1}
-                                          />
-                                        </RNSVGGroup>
+                                          }
+                                          strokeLinecap={1}
+                                        />
                                       </RNSVGGroup>
-                                    </RNSVGSvgView>
-                                  </View>
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
                                 </View>
                               </View>
                             </View>

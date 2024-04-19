@@ -23,11 +23,12 @@ import PN_ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { getRptIdStringFromPayment } from "../utils/rptId";
+import { canShowMorePaymentsLink } from "../utils";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
     flex: 1,
-    alignItems: "flex-start"
+    alignItems: "center"
   },
   morePaymentsLinkContainer: {
     alignSelf: "center"
@@ -154,8 +155,6 @@ export const MessagePayments = ({
     );
   }
 
-  const showMorePaymentsLink =
-    payments && payments.length > maxVisiblePaymentCount;
   const morePaymentsLabel = payments
     ? `${I18n.t("features.pn.details.paymentSection.morePayments")} (${
         payments.length
@@ -184,7 +183,7 @@ export const MessagePayments = ({
               />
             );
           })}
-          {showMorePaymentsLink && (
+          {canShowMorePaymentsLink(isCancelled, payments) && (
             <>
               <VSpacer size={32} />
               {paymentsButtonStatus === "visibleLoading" && (
