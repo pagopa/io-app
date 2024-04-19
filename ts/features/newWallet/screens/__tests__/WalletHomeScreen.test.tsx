@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
@@ -6,7 +5,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { WalletCards, WalletCardsState } from "../../store/reducers/cards";
+import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletHomeScreen } from "../WalletHomeScreen";
 
 jest.mock("react-native-reanimated", () => ({
@@ -16,7 +15,7 @@ jest.mock("react-native-reanimated", () => ({
   }
 }));
 
-const T_CARDS: WalletCards = {
+const T_CARDS: WalletCardsState = {
   "1": {
     key: "1",
     type: "payment",
@@ -50,7 +49,7 @@ describe("WalletHomeScreen", () => {
   it("should correctly render empty screen with redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent(pot.none, true);
+    } = renderComponent({}, true, false);
 
     jest.runOnlyPendingTimers();
 
@@ -63,7 +62,7 @@ describe("WalletHomeScreen", () => {
   it("should correctly render empty screen without redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent(pot.none, false);
+    } = renderComponent({}, false, false);
 
     jest.runOnlyPendingTimers();
 
@@ -76,7 +75,7 @@ describe("WalletHomeScreen", () => {
   it("should correctly render card list screen with redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent(pot.some(T_CARDS), true);
+    } = renderComponent(T_CARDS, true, false);
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).not.toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
@@ -87,7 +86,7 @@ describe("WalletHomeScreen", () => {
   it("should correctly render card list  screen without redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent(pot.some(T_CARDS), false);
+    } = renderComponent(T_CARDS, false, false);
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
@@ -98,7 +97,8 @@ describe("WalletHomeScreen", () => {
 
 const renderComponent = (
   cards: WalletCardsState,
-  shouldShowPaymentsRedirectBanner: boolean
+  shouldShowPaymentsRedirectBanner: boolean,
+  isLoading: boolean
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -110,6 +110,9 @@ const renderComponent = (
           cards,
           preferences: {
             shouldShowPaymentsRedirectBanner
+          },
+          placeholders: {
+            isLoading
           }
         }
       }

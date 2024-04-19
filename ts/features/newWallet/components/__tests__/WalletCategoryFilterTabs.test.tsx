@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
@@ -6,7 +5,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { WalletCards, WalletCardsState } from "../../store/reducers/cards";
+import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletCategoryFilterTabs } from "../WalletCategoryFilterTabs";
 
 jest.mock("react-native-reanimated", () => ({
@@ -16,7 +15,7 @@ jest.mock("react-native-reanimated", () => ({
   }
 }));
 
-const T_CARDS: WalletCards = {
+const T_CARDS: WalletCardsState = {
   "1": {
     key: "1",
     type: "payment",
@@ -52,7 +51,7 @@ describe("WalletCategoryFilterTabs", () => {
   });
 
   it("should render tabs based on available categories", () => {
-    const { queryByTestId } = renderComponent(pot.some(T_CARDS));
+    const { queryByTestId } = renderComponent(T_CARDS);
 
     expect(queryByTestId(`CategoryTabsContainerTestID`)).not.toBeNull();
     expect(queryByTestId(`CategoryTabTestID-payment`)).not.toBeNull();
@@ -61,22 +60,20 @@ describe("WalletCategoryFilterTabs", () => {
   });
 
   it("should not render tabs if only one category", () => {
-    const { queryByTestId } = renderComponent(
-      pot.some({
-        "1": {
-          key: "1",
-          type: "payment",
-          category: "payment",
-          walletId: ""
-        },
-        "2": {
-          key: "2",
-          type: "payment",
-          category: "payment",
-          walletId: ""
-        }
-      })
-    );
+    const { queryByTestId } = renderComponent({
+      "1": {
+        key: "1",
+        type: "payment",
+        category: "payment",
+        walletId: ""
+      },
+      "2": {
+        key: "2",
+        type: "payment",
+        category: "payment",
+        walletId: ""
+      }
+    });
 
     expect(queryByTestId(`CategoryTabsContainerTestID`)).toBeNull();
     expect(queryByTestId(`CategoryTabTestID-payment`)).toBeNull();

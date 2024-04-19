@@ -6,9 +6,17 @@ import { Action } from "../../../../store/actions/types";
 import { WalletCardCategory } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
 
-export type WalletPlaceholdersState = { [key: string]: WalletCardCategory };
+export type WalletPlaceholders = { [key: string]: WalletCardCategory };
 
-const INITIAL_STATE: WalletPlaceholdersState = {};
+export type WalletPlaceholdersState = {
+  items: WalletPlaceholders;
+  isLoading: boolean;
+};
+
+const INITIAL_STATE: WalletPlaceholdersState = {
+  items: {},
+  isLoading: true
+};
 
 const reducer = (
   state: WalletPlaceholdersState = INITIAL_STATE,
@@ -16,19 +24,25 @@ const reducer = (
 ): WalletPlaceholdersState => {
   switch (action.type) {
     case getType(walletAddCards):
-      return action.payload.reduce(
-        (acc, { category, key }) => ({
-          ...acc,
-          [hashKey(key)]: category
-        }),
-        state
-      );
+      return {
+        items: action.payload.reduce(
+          (acc, { category, key }) => ({
+            ...acc,
+            [hashKey(key)]: category
+          }),
+          state.items
+        ),
+        isLoading: false
+      };
     case getType(walletRemoveCards):
-      return Object.fromEntries(
-        Object.entries(state).filter(
-          ([key]) => !action.payload.map(hashKey).includes(key)
-        )
-      );
+      return {
+        items: Object.fromEntries(
+          Object.entries(state.items).filter(
+            ([key]) => !action.payload.map(hashKey).includes(key)
+          )
+        ),
+        isLoading: false
+      };
   }
   return state;
 };

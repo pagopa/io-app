@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as S from "fp-ts/string";
@@ -9,7 +8,7 @@ import {
   WalletCardCategory,
   walletCardCategories
 } from "../../types";
-import { WalletPlaceholdersState } from "../reducers/placeholders";
+import { WalletPlaceholders } from "../reducers/placeholders";
 
 const groupCardsByCategory = (cards: ReadonlyArray<WalletCard>) =>
   cards.reduce(
@@ -20,7 +19,7 @@ const groupCardsByCategory = (cards: ReadonlyArray<WalletCard>) =>
     {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
   );
 
-const groupPlaceholdersByCategory = (placeholders: WalletPlaceholdersState) =>
+const groupPlaceholdersByCategory = (placeholders: WalletPlaceholders) =>
   Object.entries(placeholders).reduce(
     (acc, [key, category]) => ({
       ...acc,
@@ -37,12 +36,7 @@ export const isWalletPaymentsRedirectBannerVisibleSelector = createSelector(
 );
 
 export const selectWalletCards = createSelector(selectWalletFeature, wallet =>
-  Object.values(pot.getOrElse(wallet.cards, {}))
-);
-
-export const selectISWalletCardsLoading = createSelector(
-  selectWalletFeature,
-  wallet => pot.isLoading(wallet.cards)
+  Object.values(wallet.cards)
 );
 
 export const selectWalletCardsByCategory = createSelector(
@@ -77,7 +71,12 @@ export const selectWalletCardsByCategoryWithFilter = createSelector(
 
 export const selectWalletPlaceholders = createSelector(
   selectWalletFeature,
-  wallet => wallet.placeholders
+  wallet => wallet.placeholders.items
+);
+
+export const selectIsWalletCardsLoading = createSelector(
+  selectWalletFeature,
+  wallet => wallet.placeholders.isLoading
 );
 
 const selectFilteredWalletPlaceholders = createSelector(

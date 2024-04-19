@@ -3,7 +3,7 @@ import { View } from "react-native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {
-  selectISWalletCardsLoading,
+  selectIsWalletCardsLoading,
   selectWalletCards,
   selectWalletCardsByCategoryWithFilter,
   selectWalletCategoriesIncludingPlaceholders,
@@ -19,7 +19,7 @@ import {
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 const WalletCardsContainer = () => {
-  const isLoading = useIOSelector(selectISWalletCardsLoading);
+  const isLoading = useIOSelector(selectIsWalletCardsLoading);
   const cards = useIOSelector(selectWalletCards);
   const cardsByCategory = useIOSelector(selectWalletCardsByCategoryWithFilter);
   const placeholdersByCategory = useIOSelector(

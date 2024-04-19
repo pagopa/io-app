@@ -4,7 +4,10 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { WalletCard } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
-import { selectWalletPlaceholdersByCategory } from "../selectors";
+import {
+  selectIsWalletCardsLoading,
+  selectWalletPlaceholdersByCategory
+} from "../selectors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",
@@ -34,16 +37,33 @@ const T_CARD_3: WalletCard = {
 describe("Wallet placeholders reducer", () => {
   it("should start with initial state", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.placeholders).toStrictEqual({});
+    expect(globalState.features.wallet.placeholders).toStrictEqual({
+      items: {},
+      isLoading: true
+    });
 
     const store = createStore(appReducer, globalState as any);
 
     expect(selectWalletPlaceholdersByCategory(store.getState())).toEqual({});
+    expect(selectIsWalletCardsLoading(store.getState())).toEqual(true);
   });
 
-  it("should get card placeholders count from the store", () => {
+  it("should disable loading state when at least a card is added", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
+    expect(globalState.features.wallet.placeholders).toStrictEqual({
+      items: {},
+      isLoading: true
+    });
+
+    const store = createStore(appReducer, globalState as any);
+
+    store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
+
+    expect(selectIsWalletCardsLoading(store.getState())).toEqual(false);
+  });
+
+  it("should get card placeholders by category from the store", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
 
     const store = createStore(appReducer, globalState as any);
 

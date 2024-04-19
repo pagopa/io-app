@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -41,7 +40,7 @@ const T_CARD_3: WalletCard = {
 describe("Wallet cards reducer", () => {
   it("should start with initial state", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual(pot.noneLoading);
+    expect(globalState.features.wallet.cards).toStrictEqual({});
   });
 
   it("should add cards to the store", () => {
@@ -50,8 +49,7 @@ describe("Wallet cards reducer", () => {
 
     store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
 
-    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
-    expect(cards).toStrictEqual({
+    expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1,
       [T_CARD_2.key]: T_CARD_2,
       [T_CARD_3.key]: T_CARD_3
@@ -72,18 +70,13 @@ describe("Wallet cards reducer", () => {
 
     store.dispatch(walletAddCards([T_CARD_1]));
 
-    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
-    expect(cards).toStrictEqual({
+    expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1
     });
 
     store.dispatch(walletUpsertCard({ ...T_CARD_1, type: "cgn" }));
 
-    const updatedCards = pot.getOrElse(
-      store.getState().features.wallet.cards,
-      {}
-    );
-    expect(updatedCards).toStrictEqual({
+    expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_1.key]: { ...T_CARD_1, type: "cgn" }
     });
   });
@@ -94,18 +87,13 @@ describe("Wallet cards reducer", () => {
 
     store.dispatch(walletAddCards([T_CARD_1]));
 
-    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
-    expect(cards).toStrictEqual({
+    expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1
     });
 
     store.dispatch(walletUpsertCard(T_CARD_2));
 
-    const updatedCards = pot.getOrElse(
-      store.getState().features.wallet.cards,
-      {}
-    );
-    expect(updatedCards).toStrictEqual({
+    expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1,
       [T_CARD_2.key]: T_CARD_2
     });
@@ -117,8 +105,7 @@ describe("Wallet cards reducer", () => {
 
     store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
 
-    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
-    expect(cards).toStrictEqual({
+    expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1,
       [T_CARD_2.key]: T_CARD_2,
       [T_CARD_3.key]: T_CARD_3
@@ -126,11 +113,7 @@ describe("Wallet cards reducer", () => {
 
     store.dispatch(walletRemoveCards([T_CARD_1.key, T_CARD_3.key]));
 
-    const updatedCards = pot.getOrElse(
-      store.getState().features.wallet.cards,
-      {}
-    );
-    expect(updatedCards).toStrictEqual({
+    expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_2.key]: T_CARD_2
     });
   });
