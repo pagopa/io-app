@@ -10,6 +10,8 @@ import {
   isErrorPaginatedInstitutionsSelector,
   isLoadingPaginatedInstitutionsSelector,
   isUpdatingPaginatedInstitutionsSelector,
+  paginatedInstitutionsCurrentPageSelector,
+  paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -329,6 +331,63 @@ describe("Services home paginatedInstitutions selectors", () => {
           )
         )
       ).toStrictEqual(false);
+    });
+  });
+
+  describe("paginatedInstitutionsCurrentPageSelector", () => {
+    [
+      { expectedPage: 0, offset: 0, limit: 20, count: 55 },
+      { expectedPage: 1, offset: 20, limit: 20, count: 55 },
+      { expectedPage: 2, offset: 40, limit: 20, count: 55 },
+      { expectedPage: -1, offset: 60, limit: 20, count: 55 }
+    ].forEach(({ expectedPage, offset, limit, count }) => {
+      it(`should return page "${expectedPage}" when offset is "${offset}", limit is "${limit}" and count is "${count}"`, () => {
+        const currentPage = paginatedInstitutionsCurrentPageSelector(
+          appReducer(
+            {} as GlobalState,
+            paginatedInstitutionsGet.success({
+              institutions: MOCK_INSTITUTIONS,
+              count,
+              offset,
+              limit
+            })
+          )
+        );
+
+        expect(currentPage).toStrictEqual(expectedPage);
+      });
+    });
+
+    it(`should return page "0" when not pot.some`, () => {
+      expect(
+        paginatedInstitutionsCurrentPageSelector(
+          appReducer(undefined, {} as Action)
+        )
+      ).toStrictEqual(0);
+    });
+  });
+
+  describe("paginatedInstitutionsLastPageSelector", () => {
+    [
+      { isLastPage: false, offset: 0, limit: 20, count: 55 },
+      { isLastPage: false, offset: 20, limit: 20, count: 55 },
+      { isLastPage: true, offset: 40, limit: 20, count: 55 }
+    ].forEach(({ isLastPage, offset, limit, count }) => {
+      it(`should return isLastPage===${isLastPage} when offset is "${offset}", limit is "${limit}" and count is "${count}"`, () => {
+        const lastPage = paginatedInstitutionsLastPageSelector(
+          appReducer(
+            {} as GlobalState,
+            paginatedInstitutionsGet.success({
+              institutions: MOCK_INSTITUTIONS,
+              count,
+              offset,
+              limit
+            })
+          )
+        );
+
+        expect(lastPage).toStrictEqual(isLastPage);
+      });
     });
   });
 });
