@@ -214,7 +214,7 @@ tablet:
 rooted:
   title: "Es sieht so aus, als ob die Sicherheit deines Geräts kompromittiert ist!"
   body: "Wenn du auf “Weiter” klickst, erklärst du dich damit einverstanden, auf eigene Gefahr fortzufahren, andernfalls schließe die App."
-  learnMoreButton: 
+  learnMoreButton:
     title: "Was bedeutet das?"
   learnMoreBottomsheet:
     title: "Sicherheit deines Geräts"
@@ -1655,7 +1655,7 @@ wallet:
     failure:
       PAYMENT_UNAVAILABLE:
         title: "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung."
-      PAYMENT_UNKNOWN:
+      PAYMENT_DATA_ERROR:
         title: "Die Daten der Zahlungsmitteilung sind falsch"
       DOMAIN_UNKNOWN:
         title: "Die ausstellende Körperschaft hat Probleme bei der Bearbeitung"
@@ -1674,7 +1674,7 @@ wallet:
       GENERIC_ERROR:
         title: "Ein unerwarteter Fehler ist aufgetreten"
         subtitle: "Versuche es erneut oder wende dich an den Support."
-      PAA_PAGAMENTO_SCONOSCIUTO:
+      PAYMENT_UNKNOWN:
         title: "Wir können die Zahlungsmitteilung nicht finden"
         subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
     outcome:
@@ -2034,7 +2034,7 @@ services:
       fiscalCode: "Steuernummer Körperschaft"
       address: "Adresse"
       serviceId: "Dienst ID"
-    tosAndPrivacy: 
+    tosAndPrivacy:
       title: "Nutzungsbedingungen und Datenschutzbestimmungen"
       tosLink: "Nutzungsbedingungen"
       privacyLink: "Datenschutzerklärung"
@@ -2056,20 +2056,20 @@ serviceDetail:
   notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
   instructions:
-      unlockCode: "Entsperrcode"
-      unlockCodepPrefix: "Benutze deinen"
-      fingerprint: "Fingerabdruck"
-      fingerprintPrefix: "benutze deinen"
-      faceId: "Gesicht"
-      faceIdPrefix: "benutze dein"
-      congiunction: "oder"
+    unlockCode: "Entsperrcode"
+    unlockCodepPrefix: "Benutze deinen"
+    fingerprint: "Fingerabdruck"
+    fingerprintPrefix: "benutze deinen"
+    faceId: "Gesicht"
+    faceIdPrefix: "benutze dein"
+    congiunction: "oder"
   title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
   titleValidation: "Bestätige den Vorgang"
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
-  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."  
+  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
   biometric:
     fingerprintType: "Fingerabdruck"
     title: "Biometrische Identifikation"
@@ -2435,9 +2435,9 @@ features:
         cgn: "Nationale Jugendkarte"
         itw: "IT Wallet"
         payment: "Zahlungsmethoden"
-    onboarding: 
+    onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
-      options: 
+      options:
         cgn: "Nationale Jugendkarte"
         welfare: "Initiativen für das Gemeinwohl"
         payments: "Zahlungsmethoden"
