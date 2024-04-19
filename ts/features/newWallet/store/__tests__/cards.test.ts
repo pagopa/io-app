@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -40,18 +41,17 @@ const T_CARD_3: WalletCard = {
 describe("Wallet cards reducer", () => {
   it("should start with initial state", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
+    expect(globalState.features.wallet.cards).toStrictEqual(pot.noneLoading);
   });
 
   it("should add cards to the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
+    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
+    expect(cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1,
       [T_CARD_2.key]: T_CARD_2,
       [T_CARD_3.key]: T_CARD_3
@@ -68,38 +68,44 @@ describe("Wallet cards reducer", () => {
 
   it("should update a specific card in the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1]));
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
+    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
+    expect(cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1
     });
 
     store.dispatch(walletUpsertCard({ ...T_CARD_1, type: "cgn" }));
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
+    const updatedCards = pot.getOrElse(
+      store.getState().features.wallet.cards,
+      {}
+    );
+    expect(updatedCards).toStrictEqual({
       [T_CARD_1.key]: { ...T_CARD_1, type: "cgn" }
     });
   });
 
   it("should add a card in the store if not present another with the same key", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1]));
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
+    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
+    expect(cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1
     });
 
     store.dispatch(walletUpsertCard(T_CARD_2));
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
+    const updatedCards = pot.getOrElse(
+      store.getState().features.wallet.cards,
+      {}
+    );
+    expect(updatedCards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1,
       [T_CARD_2.key]: T_CARD_2
     });
@@ -107,13 +113,12 @@ describe("Wallet cards reducer", () => {
 
   it("should remove cards from the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
+    const cards = pot.getOrElse(store.getState().features.wallet.cards, {});
+    expect(cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1,
       [T_CARD_2.key]: T_CARD_2,
       [T_CARD_3.key]: T_CARD_3
@@ -121,7 +126,11 @@ describe("Wallet cards reducer", () => {
 
     store.dispatch(walletRemoveCards([T_CARD_1.key, T_CARD_3.key]));
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
+    const updatedCards = pot.getOrElse(
+      store.getState().features.wallet.cards,
+      {}
+    );
+    expect(updatedCards).toStrictEqual({
       [T_CARD_2.key]: T_CARD_2
     });
   });

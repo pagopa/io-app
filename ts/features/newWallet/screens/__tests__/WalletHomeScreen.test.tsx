@@ -51,6 +51,8 @@ describe("WalletHomeScreen", () => {
       component: { queryByTestId }
     } = renderComponent({}, true);
 
+    jest.runOnlyPendingTimers();
+
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).not.toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();
     expect(queryByTestId("walletCardsContainerTestID")).toBeNull();
@@ -61,6 +63,8 @@ describe("WalletHomeScreen", () => {
     const {
       component: { queryByTestId }
     } = renderComponent({}, false);
+
+    jest.runOnlyPendingTimers();
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();

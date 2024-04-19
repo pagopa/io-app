@@ -3,6 +3,7 @@ import { View } from "react-native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {
+  selectISWalletCardsLoading,
   selectWalletCards,
   selectWalletCardsByCategoryWithFilter,
   selectWalletCategoriesIncludingPlaceholders,
@@ -18,31 +19,23 @@ import {
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 const WalletCardsContainer = () => {
+  const isLoading = useIOSelector(selectISWalletCardsLoading);
   const cards = useIOSelector(selectWalletCards);
   const cardsByCategory = useIOSelector(selectWalletCardsByCategoryWithFilter);
   const placeholdersByCategory = useIOSelector(
     selectWalletPlaceholdersByCategory
   );
   const categories = useIOSelector(selectWalletCategoriesIncludingPlaceholders);
-
-  const [isLoading, setIsLoading] = React.useState(true);
   const placeholders = Object.values(placeholdersByCategory);
 
-  React.useEffect(() => {
-    if (categories.length > 0) {
-      setIsLoading(false);
-    } else if (isLoading) {
-      const timeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
-      return () => clearTimeout(timeout);
-    }
-
-    return undefined;
-  }, [isLoading, categories, setIsLoading]);
-
   if (isLoading && categories.length === 0) {
-    return <WalletCardSkeleton cardProps={{}} isStacked={false} />;
+    return (
+      <WalletCardSkeleton
+        testID="walletCardSkeletonTestID"
+        cardProps={{}}
+        isStacked={false}
+      />
+    );
   }
 
   if (categories.length === 0) {

@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as S from "fp-ts/string";
@@ -36,7 +37,12 @@ export const isWalletPaymentsRedirectBannerVisibleSelector = createSelector(
 );
 
 export const selectWalletCards = createSelector(selectWalletFeature, wallet =>
-  Object.values(wallet.cards)
+  Object.values(pot.getOrElse(wallet.cards, {}))
+);
+
+export const selectISWalletCardsLoading = createSelector(
+  selectWalletFeature,
+  wallet => pot.isLoading(wallet.cards)
 );
 
 export const selectWalletCardsByCategory = createSelector(

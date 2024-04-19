@@ -77,8 +77,12 @@ const WalletCardsCategoryContainerSkeleton = (
   <BaseCategoryContainer
     {...props}
     keyExtractorFn={identity}
-    renderCardnFn={(_, isStacked) => (
-      <WalletCardSkeleton cardProps={{}} isStacked={isStacked} />
+    renderCardnFn={(key, isStacked) => (
+      <WalletCardSkeleton
+        testID={`walletCardSkeletonTestID_${key}`}
+        cardProps={{}}
+        isStacked={isStacked}
+      />
     )}
   />
 );
