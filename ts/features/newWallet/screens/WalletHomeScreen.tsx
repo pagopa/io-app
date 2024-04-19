@@ -22,6 +22,7 @@ import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { WalletRoutes } from "../navigation/routes";
 import { selectWalletCards } from "../store/selectors";
+import { walletToggleLoadingState } from "../store/actions/placeholders";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -31,6 +32,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   React.useEffect(() => {
     // TODO SIW-960 Move cards request to app startup
+    dispatch(walletToggleLoadingState(true));
     dispatch(getPaymentsWalletUserMethods.request());
     dispatch(idPayWalletGet.request());
     dispatch(cgnDetails.request());

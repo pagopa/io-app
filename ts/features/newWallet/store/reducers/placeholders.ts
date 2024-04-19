@@ -48,7 +48,7 @@ const reducer = (
     case getType(walletToggleLoadingState):
       return {
         ...state,
-        isLoading: false
+        isLoading: action.payload
       };
   }
   return state;
