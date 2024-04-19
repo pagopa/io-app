@@ -16,11 +16,7 @@ const UnsupportedDeviceScreen = () => {
 
   const title = I18n.t("unsupportedDevice.title");
   const subtitle = I18n.t("unsupportedDevice.subtitle");
-  const secondaryAction = {
-    label: I18n.t("unsupportedDevice.cta.faq"),
-    accessibilityLabel: I18n.t("unsupportedDevice.cta.faq"),
-    onPress: handleLearnMorePress
-  };
+  const label = I18n.t("unsupportedDevice.cta.faq");
 
   return (
     <Modal>
@@ -28,7 +24,11 @@ const UnsupportedDeviceScreen = () => {
         pictogram="umbrellaNew"
         title={title}
         subtitle={subtitle}
-        secondaryAction={secondaryAction}
+        secondaryAction={{
+          label,
+          accessibilityLabel: label,
+          onPress: handleLearnMorePress
+        }}
       />
     </Modal>
   );
