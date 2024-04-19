@@ -1,9 +1,10 @@
 import { createStore } from "redux";
+import sha from "sha.js";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { WalletCard } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
-import { getWalletPlaceholdersCountByCategorySelector } from "../selectors/placeholders";
+import { selectWalletPlaceholdersByCategory } from "../selectors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",
@@ -37,9 +38,7 @@ describe("Wallet placeholders reducer", () => {
 
     const store = createStore(appReducer, globalState as any);
 
-    expect(
-      getWalletPlaceholdersCountByCategorySelector(store.getState())
-    ).toEqual({});
+    expect(selectWalletPlaceholdersByCategory(store.getState())).toEqual({});
   });
 
   it("should get card placeholders count from the store", () => {
@@ -50,19 +49,20 @@ describe("Wallet placeholders reducer", () => {
 
     store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
 
-    expect(
-      getWalletPlaceholdersCountByCategorySelector(store.getState())
-    ).toEqual({
-      [T_CARD_1.category]: 1,
-      [T_CARD_2.category]: 2
+    expect(selectWalletPlaceholdersByCategory(store.getState())).toEqual({
+      [T_CARD_1.category]: expect.arrayContaining([hashKey(T_CARD_1.key)]),
+      [T_CARD_2.category]: expect.arrayContaining([
+        hashKey(T_CARD_2.key),
+        hashKey(T_CARD_3.key)
+      ])
     });
 
     store.dispatch(walletRemoveCards([T_CARD_1.key, T_CARD_2.key]));
 
-    expect(
-      getWalletPlaceholdersCountByCategorySelector(store.getState())
-    ).toEqual({
-      [T_CARD_2.category]: 1
+    expect(selectWalletPlaceholdersByCategory(store.getState())).toEqual({
+      [T_CARD_3.category]: expect.arrayContaining([hashKey(T_CARD_3.key)])
     });
   });
 });
+
+const hashKey = (key: string) => sha("sha256").update(key).digest("hex");
