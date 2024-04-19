@@ -24,11 +24,11 @@ import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { FooterTopShadow } from "../../components/FooterTopShadow";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { loadServiceDetail } from "../../store/actions/services";
+import { loadServiceDetail } from "../../features/services/details/store/actions/details";
 import { Dispatch } from "../../store/actions/types";
 import { contentSelector } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { serviceByIdPotSelector } from "../../features/services/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../features/services/details/store/reducers/servicesById";
 import {
   isEmailEnabledSelector,
   isInboxEnabledSelector,
@@ -40,7 +40,7 @@ import { getServiceCTA } from "../../features/messages/utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 import { useIOSelector } from "../../store/hooks";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

@@ -29,10 +29,7 @@ import {
   navigateBack,
   navigateToServiceDetailsScreen
 } from "../../../../store/actions/navigation";
-import {
-  loadServiceDetail,
-  showServiceDetails
-} from "../../../../store/actions/services";
+import { showServiceDetails } from "../../../../store/actions/services";
 import { Dispatch } from "../../../../store/actions/types";
 import {
   isCGNEnabledSelector,
@@ -40,7 +37,8 @@ import {
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { storeUrl } from "../../../../utils/appVersion";
-import { ServiceDetailsScreenNavigationParams } from "../../../services/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenNavigationParams } from "../../../services/details/screens/ServiceDetailsScreen";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
   AvailableBonusItem,

@@ -47,7 +47,6 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import ServicesSearch from "../../components/services/ServicesSearch";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
 import I18n from "../../i18n";
 import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
 import {
@@ -77,7 +76,7 @@ import {
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
-import { servicesByIdSelector } from "../../features/services/store/reducers/servicesById";
+import { servicesByIdSelector } from "../../features/services/details/store/reducers/servicesById";
 import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { ProfileState, profileSelector } from "../../store/reducers/profile";
@@ -95,6 +94,7 @@ import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../../utils/profile";
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 

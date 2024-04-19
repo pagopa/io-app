@@ -40,7 +40,7 @@ import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
-import { serviceMetadataByIdSelector } from "../../services/store/reducers/servicesById";
+import { serviceMetadataByIdSelector } from "../../services/details/store/reducers/servicesById";
 import { isPNOptInMessage } from "../../pn/utils";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {

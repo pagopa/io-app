@@ -16,10 +16,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import {
-  loadServiceDetail,
-  showServiceDetails
-} from "../../../../store/actions/services";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import { showServiceDetails } from "../../../../store/actions/services";
 import { Dispatch } from "../../../../store/actions/types";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -36,7 +34,7 @@ import {
 } from "../../../bonus/common/store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../../../bonus/common/utils";
 import { getRemoteLocale } from "../../../messages/utils/messages";
-import { SERVICES_ROUTES } from "../../../services/navigation/routes";
+import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &

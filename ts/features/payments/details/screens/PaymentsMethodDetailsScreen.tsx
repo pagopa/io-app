@@ -69,7 +69,7 @@ const PaymentsMethodDetailsScreen = () => {
 
     return (
       <PaymentsMethodDetailsBaseScreenComponent
-        card={cardProps}
+        card={{ ...cardProps, isExpired: false }}
         headerTitle={headerTitle}
       >
         <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />

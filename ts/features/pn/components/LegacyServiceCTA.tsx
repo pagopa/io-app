@@ -11,13 +11,13 @@ import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { servicePreferenceSelector } from "../../services/store/reducers/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../services/types/ServicePreferenceResponse";
+import { servicePreferenceSelector } from "../../services/details/store/reducers/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
 import { AppDispatch } from "../../../App";
 import { pnActivationUpsert } from "../store/actions";
 import { pnActivationSelector } from "../store/reducers/activation";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { loadServicePreference } from "../../services/store/actions";
+import { loadServicePreference } from "../../services/details/store/actions/preference";
 import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,

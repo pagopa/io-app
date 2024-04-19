@@ -12,10 +12,6 @@ import {
 import { PaginatedServiceTupleCollection } from "../../../../definitions/backend/PaginatedServiceTupleCollection";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import {
-  loadServicePreference,
-  upsertServicePreference
-} from "../../../features/services/store/actions";
 
 //
 // service loading at startup
@@ -35,24 +31,10 @@ export const loadVisibleServices = createAsyncAction(
   "SERVICES_VISIBLE_LOAD_FAILURE"
 )<void, PaginatedServiceTupleCollection["items"], Error>();
 
-//
-// load single service
-//
-
-type ServiceLoadFailurePayload = {
-  error: Error;
-  service_id: string;
-};
-
 // a specific action used when a requested service is not found
 export const loadServiceDetailNotFound = createStandardAction(
   "LOAD_SERVICE_DETAIL_NOT_FOUND"
 )<ServiceId>();
-export const loadServiceDetail = createAsyncAction(
-  "LOAD_SERVICE_DETAIL_REQUEST",
-  "LOAD_SERVICE_DETAIL_SUCCESS",
-  "LOAD_SERVICE_DETAIL_FAILURE"
-)<string, ServicePublic, ServiceLoadFailurePayload>();
 
 export const loadServicesDetail = createStandardAction(
   "LOAD_SERVICES_DETAIL_REQUEST"
@@ -82,11 +64,8 @@ export const removeServiceTuples = createStandardAction(
 export type ServicesActions =
   | ActionType<typeof firstServiceLoadSuccess>
   | ActionType<typeof loadVisibleServices>
-  | ActionType<typeof loadServiceDetail>
   | ActionType<typeof loadServicesDetail>
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>
-  | ActionType<typeof loadServiceDetailNotFound>
-  | ActionType<typeof loadServicePreference>
-  | ActionType<typeof upsertServicePreference>;
+  | ActionType<typeof loadServiceDetailNotFound>;
