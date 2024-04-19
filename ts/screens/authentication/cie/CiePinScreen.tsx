@@ -161,18 +161,21 @@ const CiePinScreen = () => {
     );
   };
 
-  useFocusEffect(() =>
-    setAccessibilityFocus(pinPadViewRef, 100 as Millisecond)
-  );
+  const a11yFocusRef = useRef<boolean>(false);
+
+  useFocusEffect(() => {
+    if (!a11yFocusRef.current) {
+      setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
+      // eslint-disable-next-line functional/immutable-data
+      a11yFocusRef.current = true;
+    }
+  });
 
   const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
   const useCieUat = useSelector(isCieLoginUatEnabledSelector);
 
   useHeaderSecondLevel({
-    title: withTrailingPoliceCarLightEmojii(
-      I18n.t("authentication.cie.pin.pinCardHeader"),
-      useCieUat
-    ),
+    title: withTrailingPoliceCarLightEmojii("", useCieUat),
     supportRequest: true,
     contextualHelpMarkdown: getContextualHelp()
   });
@@ -192,13 +195,24 @@ const CiePinScreen = () => {
             {I18n.t("authentication.cie.pin.subtitleCTA")}
           </LabelLink>
           <VSpacer size={24} />
-          <View style={IOStyles.flex} accessible={true} ref={pinPadViewRef}>
-            <OTPInput
-              secret
-              value={pin}
-              onValueChange={setPin}
-              length={CIE_PIN_LENGTH}
-            />
+          <View style={IOStyles.flex}>
+            <View
+              accessible
+              accessibilityLabel={I18n.t(
+                "authentication.cie.pin.accessibility.label"
+              )}
+              accessibilityHint={I18n.t(
+                "authentication.cie.pin.accessibility.hint"
+              )}
+              ref={pinPadViewRef}
+            >
+              <OTPInput
+                secret
+                value={pin}
+                onValueChange={setPin}
+                length={CIE_PIN_LENGTH}
+              />
+            </View>
             <VSpacer size={24} />
             <Banner
               viewRef={bannerRef}
@@ -229,7 +243,7 @@ const CiePinScreen = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "android" ? "height" : "padding"}
         keyboardVerticalOffset={Platform.select({
-          ios: 0,
+          ios: 110 + 16,
           android: variables.contentPadding
         })}
       />
