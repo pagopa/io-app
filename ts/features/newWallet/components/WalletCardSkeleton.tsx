@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import Placeholder, { BoxProps } from "rn-placeholder";
 import { withWalletCardBaseComponent } from "./WalletCardBaseComponent";
 
-const CardSkeleton = () => (
+const WalletCardSkeleton = withWalletCardBaseComponent(() => (
   <View style={styleSheet.card}>
     <View style={styleSheet.wrapper}>
       <View style={styleSheet.paymentInfo}>
@@ -22,7 +22,7 @@ const CardSkeleton = () => (
       </View>
     </View>
   </View>
-);
+));
 
 const SkeletonPlaceholder = (props: Pick<BoxProps, "width" | "height">) => (
   <Placeholder.Box
@@ -57,7 +57,5 @@ const styleSheet = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
-
-const WalletCardSkeleton = withWalletCardBaseComponent(CardSkeleton);
 
 export { WalletCardSkeleton };
