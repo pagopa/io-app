@@ -39,20 +39,20 @@ describe("Wallet placeholders reducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.wallet.placeholders).toStrictEqual({
       items: {},
-      isLoading: true
+      isLoading: false
     });
 
     const store = createStore(appReducer, globalState as any);
 
     expect(selectWalletPlaceholdersByCategory(store.getState())).toEqual({});
-    expect(selectIsWalletCardsLoading(store.getState())).toEqual(true);
+    expect(selectIsWalletCardsLoading(store.getState())).toEqual(false);
   });
 
   it("should disable loading state when at least a card is added", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.wallet.placeholders).toStrictEqual({
       items: {},
-      isLoading: true
+      isLoading: false
     });
 
     const store = createStore(appReducer, globalState as any);

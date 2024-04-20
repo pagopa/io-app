@@ -1,3 +1,4 @@
+import * as React from "react";
 import { within } from "@testing-library/react-native";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
@@ -203,7 +204,7 @@ const renderComponent = (
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
-    _.merge(globalState, {
+    _.merge(undefined, globalState, {
       features: {
         wallet: {
           cards,
@@ -217,7 +218,7 @@ const renderComponent = (
   );
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    WalletCardsContainer,
+    () => <WalletCardsContainer />,
     ROUTES.WALLET_HOME,
     {},
     store
