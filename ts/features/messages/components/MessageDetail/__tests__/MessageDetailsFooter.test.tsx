@@ -11,6 +11,8 @@ import { messageId_1, service_1 } from "../../../__mocks__/messages";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { MessageDetailsFooter } from "../MessageDetailsFooter";
 import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
+import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 const mockPresentBottomSheet = jest.fn();
 
@@ -25,14 +27,18 @@ const defaultProps: ComponentProps<typeof MessageDetailsFooter> = {
   serviceId: service_1.service_id
 };
 
+const noticeNumber = "111122223333444455";
+const payeeFiscalCode = "01234567890";
+
 describe("MessageDetailsFooter component", () => {
   beforeEach(() => {
     mockPresentBottomSheet.mockReset();
   });
 
-  it("should match the snapshot when the service's contact details are defined", () => {
+  it("should match the snapshot, with service's contact details, no notice number, no payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success({
         ...service_1,
         service_metadata: {
@@ -52,9 +58,89 @@ describe("MessageDetailsFooter component", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it("should match the snapshot when the service's contact details are not defined", () => {
+  it("should match the snapshot, with service's contact details, with notice number, no payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
+      loadServiceDetail.success({
+        ...service_1,
+        service_metadata: {
+          email: "test@test.com",
+          phone: "+393331234567"
+        } as ServiceMetadata
+      })
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const { component } = renderComponent(state, {
+      ...defaultProps,
+      noticeNumber
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match the snapshot, with service's contact details, no notice number, with payee fiscal code", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
+      loadServiceDetail.success({
+        ...service_1,
+        service_metadata: {
+          email: "test@test.com",
+          phone: "+393331234567"
+        } as ServiceMetadata
+      })
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const { component } = renderComponent(state, {
+      ...defaultProps,
+      payeeFiscalCode
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match the snapshot, with service's contact details, with notice number, with payee fiscal code", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
+      loadServiceDetail.success({
+        ...service_1,
+        service_metadata: {
+          email: "test@test.com",
+          phone: "+393331234567"
+        } as ServiceMetadata
+      })
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const { component } = renderComponent(state, {
+      ...defaultProps,
+      noticeNumber,
+      payeeFiscalCode
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match the snapshot, no service's contact details, no notice number, no payee fiscal code", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success(service_1)
     ];
 
@@ -65,6 +151,67 @@ describe("MessageDetailsFooter component", () => {
     );
 
     const { component } = renderComponent(state, defaultProps);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match the snapshot, no service's contact details, with notice number, no payee fiscal code", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
+      loadServiceDetail.success(service_1)
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const { component } = renderComponent(state, {
+      ...defaultProps,
+      noticeNumber
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match the snapshot, no service's contact details, no notice number, with payee fiscal code", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
+      loadServiceDetail.success(service_1)
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const { component } = renderComponent(state, {
+      ...defaultProps,
+      payeeFiscalCode
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match the snapshot, no service's contact details, with notice number, with payee fiscal code", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
+      loadServiceDetail.success(service_1)
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const { component } = renderComponent(state, {
+      ...defaultProps,
+      noticeNumber,
+      payeeFiscalCode
+    });
     expect(component.toJSON()).toMatchSnapshot();
   });
 
@@ -123,7 +270,7 @@ const renderComponent = (
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageDetailsFooter {...props} />,
-      "DUMMY_ROUTE",
+      MESSAGES_ROUTES.MESSAGE_DETAIL,
       {},
       store
     ),
