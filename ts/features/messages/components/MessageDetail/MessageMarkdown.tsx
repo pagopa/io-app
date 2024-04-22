@@ -43,9 +43,10 @@ h3 {
 
 h4 {
   font-size: 16px;
-  text-transform: uppercase;
   line-height: 1.25;
+  text-transform: uppercase;
   letter-spacing: 0.5px;
+  
 }
 
 h5 {
@@ -55,8 +56,9 @@ h5 {
 
 h6 {
   font-size: 12px;
-  text-transform: uppercase;
   line-height: 1.35;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 img {
