@@ -6,14 +6,19 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import { useCallback, useEffect, useState, createRef } from "react";
+import { Alert, View } from "react-native";
 import { useStore } from "react-redux";
-import { Body } from "../../components/core/typography/Body";
+import {
+  Alert as AlertDS,
+  H1,
+  IOStyles,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
@@ -23,33 +28,12 @@ import {
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import customVariables from "../../theme/variables";
-import { showToast } from "../../utils/showToast";
-import { H1 } from "../../components/core/typography/H1";
 import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
-
-const styles = StyleSheet.create({
-  titlePadding: {
-    paddingVertical: customVariables.spacingBase,
-    paddingHorizontal: customVariables.contentPadding
-  },
-  alert: {
-    backgroundColor: customVariables.toastColor,
-    borderRadius: 4,
-    marginTop: customVariables.spacerExtrasmallHeight,
-    marginBottom: 0,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignContent: "flex-start"
-  },
-  webViewContainer: {
-    flex: 1
-  }
-});
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
@@ -61,7 +45,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const viewRef = createRef<View>();
 
+  const store = useStore();
   const dispatch = useIODispatch();
   const potProfile = useIOSelector(profileSelector);
 
@@ -95,7 +81,7 @@ const OnboardingTosScreen = () => {
 
   useEffect(() => {
     if (hasProfileError) {
-      showToast(I18n.t("global.genericError"));
+      IOToast.error(I18n.t("global.genericError"));
     }
   }, [hasProfileError]);
 
@@ -127,57 +113,61 @@ const OnboardingTosScreen = () => {
       ]
     );
 
-  const store = useStore();
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    goBack: handleGoBack,
+    contextualHelpMarkdown,
+    faqCategories: ["privacy"]
+  });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
-      <BaseScreenComponent
-        goBack={handleGoBack}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["privacy"]}
-        headerTitle={I18n.t("onboarding.tos.headerTitle")}
-      >
-        <SafeAreaView style={styles.webViewContainer}>
-          <View style={styles.titlePadding}>
-            <H1
-              accessible={true}
-              accessibilityRole="header"
-              weight="Bold"
-              testID={"screen-content-header-title"}
-              color={"bluegreyDark"}
-            >
-              {I18n.t("profile.main.privacy.privacyPolicy.title")}
-            </H1>
-          </View>
-          {!hasAcceptedCurrentTos && (
-            <View
-              style={[styles.alert, styles.titlePadding]}
-              testID={"currentToSNotAcceptedView"}
-            >
-              <Body testID={"currentToSNotAcceptedText"}>
-                {hasAcceptedOldTosVersion
+      <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
+        <View style={IOStyles.horizontalContentPadding}>
+          <H1
+            accessible={true}
+            accessibilityRole="header"
+            testID="screen-content-header-title"
+          >
+            {I18n.t("profile.main.privacy.privacyPolicy.title")}
+          </H1>
+          <VSpacer size={16} />
+        </View>
+        {!hasAcceptedCurrentTos && (
+          <View
+            style={IOStyles.horizontalContentPadding}
+            testID={"currentToSNotAcceptedView"}
+          >
+            <AlertDS
+              viewRef={viewRef}
+              testID="currentToSNotAcceptedText"
+              variant="info"
+              content={
+                hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
-                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
-              </Body>
-            </View>
-          )}
-          <TosWebviewComponent
-            handleLoadEnd={handleLoadEnd}
-            handleReload={handleReload}
-            webViewSource={{ uri: privacyUrl }}
-            shouldRenderFooter={!isLoading}
-            onExit={handleGoBack}
-            onAcceptTos={() => {
-              dispatch(tosAccepted(tosVersion));
-              void trackTosAccepted(
-                tosVersion,
-                getFlowType(true, isFirstOnBoarding),
-                store.getState()
-              );
-            }}
-          />
-        </SafeAreaView>
-      </BaseScreenComponent>
+                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")
+              }
+            />
+          </View>
+        )}
+        <TosWebviewComponent
+          handleLoadEnd={handleLoadEnd}
+          handleReload={handleReload}
+          webViewSource={{ uri: privacyUrl }}
+          shouldRenderFooter={!isLoading}
+          onAcceptTos={() => {
+            // eslint-disable-next-line no-console
+            console.log("click");
+            dispatch(tosAccepted(tosVersion));
+            void trackTosAccepted(
+              tosVersion,
+              getFlowType(true, isFirstOnBoarding),
+              store.getState()
+            );
+          }}
+        />
+      </SafeAreaView>
     </LoadingSpinnerOverlay>
   );
 };

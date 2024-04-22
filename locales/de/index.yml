@@ -373,7 +373,7 @@ profile:
         title: "Datenschutz und Nutzungsbedingungen"
         description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
         header: "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App"
-        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert"
+        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert."
         infobox: "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren"
         contextualHelpTitlePolicy: "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes"
         contextualHelpTitle: "Deine Datenschutzeinstellungen"
@@ -811,7 +811,6 @@ onboarding:
   tos:
     headerTitle: "IO einrichten"
     accept: "Akzeptieren"
-    error: "Ladefehler"
     alert:
       title: "Achtung"
       message: "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"

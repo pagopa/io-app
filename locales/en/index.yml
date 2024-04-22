@@ -379,7 +379,7 @@ profile:
         title: Privacy Policy and Terms of Service
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
-        updated: We updated our Terms and conditions
+        updated: We updated our Terms and conditions.
         infobox: It is necessary to read and accept the Terms and Conditions
         contextualHelpTitlePolicy: What is the information on the processing of personal data
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
@@ -852,7 +852,7 @@ onboarding:
   tos:
     headerTitle: Configure IO
     accept: Accept and continue
-    error: Loading error
+    error: Non siamo riusciti a caricare l’Informativa privacy e i Termini e condizioni
     alert:
       title: Attention
       message: Please, read the full content of the Terms of Service and Privacy Policy to continue

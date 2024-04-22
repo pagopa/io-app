@@ -40,7 +40,7 @@ const OnboardingNavigator = () => (
       component={ServicePreferenceCompleteScreen}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
+      options={{ headerShown: true }}
       name={ROUTES.ONBOARDING_TOS}
       component={OnboardingTosScreen}
     />
