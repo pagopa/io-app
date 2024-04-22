@@ -310,7 +310,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchLoadServicesSaga, backendClient);
 
   // Start watching for services actions
-  yield* fork(watchServicesSaga);
+  yield* fork(watchServicesSaga, sessionToken);
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga, backendClient, sessionToken);
