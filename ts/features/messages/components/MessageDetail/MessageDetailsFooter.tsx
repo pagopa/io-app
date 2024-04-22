@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../../../services/store/reducers/servicesById";
+import { serviceMetadataByIdSelector } from "../../../services/details/store/reducers/servicesById";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIMessageId } from "../../types";
 import { ContactsListItem } from "./ContactsListItem";
@@ -18,11 +18,15 @@ const styles = StyleSheet.create({
 
 export type MessageDetailsFooterProps = {
   messageId: UIMessageId;
+  noticeNumber?: string;
+  payeeFiscalCode?: string;
   serviceId: ServiceId;
 };
 
 export const MessageDetailsFooter = ({
   messageId,
+  noticeNumber,
+  payeeFiscalCode,
   serviceId
 }: MessageDetailsFooterProps) => {
   const serviceMetadata = useIOSelector(state =>
@@ -39,7 +43,11 @@ export const MessageDetailsFooter = ({
         />
       )}
 
-      <ShowMoreListItem messageId={messageId} />
+      <ShowMoreListItem
+        messageId={messageId}
+        noticeNumber={noticeNumber}
+        payeeFiscalCode={payeeFiscalCode}
+      />
     </View>
   );
 };

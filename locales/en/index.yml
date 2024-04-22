@@ -1711,7 +1711,7 @@ wallet:
     failure:
       PAYMENT_UNAVAILABLE:
         title: "C’è un problema tecnico con questo avviso"
-      PAYMENT_UNKNOWN:
+      PAYMENT_DATA_ERROR:
         title: "I dati dell’avviso non sono corretti"
       DOMAIN_UNKNOWN:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
@@ -1730,7 +1730,7 @@ wallet:
       GENERIC_ERROR:
         title: "Si è verificato un errore imprevisto"
         subtitle: "Riprova, oppure contatta l’assistenza."
-      PAA_PAGAMENTO_SCONOSCIUTO:
+      PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
     outcome:
@@ -1957,6 +1957,11 @@ messageDetails:
     title: "Identification data"
     messageId: "Message ID"
     messageIdAccessibility: "ID messaggio, copy"
+    pagoPAHeader: "pagoPA notice"
+    noticeCode: "Notice code"
+    noticeCodeAccessibility: "Notice code, copy"
+    entityFiscalCode: "Payee fiscal code"
+    entityFiscalCodeAccessibility: "Payee fiscal code, copy"
   contactsBottomSheet:
     title: "Support"
     body: "If you are unclear about the content of the message, contact the Institution that sent it to you."
@@ -2095,7 +2100,7 @@ services:
       fiscalCode: "Organization's fiscal code"
       address: "Address"
       serviceId: "Service ID"
-    tosAndPrivacy: 
+    tosAndPrivacy:
       title: "Terms of use and Privacy"
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
@@ -2965,6 +2970,8 @@ features:
       banner:
         content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
         action: Aggiungi un metodo
+      status:
+        expired: Scaduta
     transactions:
       title: Storico operazioni
       button: Vedi tutte

@@ -8,7 +8,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { WalletClient } from "../../common/api/client";
-import { mapWalletsToCards } from "../../common/utils/wallet";
+import { mapWalletsToCards } from "../../common/utils";
 import { getPaymentsWalletUserMethods } from "../store/actions";
 
 export function* handleGetPaymentsWalletUserMethods(

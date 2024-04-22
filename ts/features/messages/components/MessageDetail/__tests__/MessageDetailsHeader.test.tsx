@@ -7,7 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { loadServiceDetail } from "../../../../../store/actions/services";
+import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { service_1 } from "../../../__mocks__/messages";
 import { reproduceSequence } from "../../../../../utils/tests";
 
