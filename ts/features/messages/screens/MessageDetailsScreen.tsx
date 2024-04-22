@@ -40,7 +40,7 @@ import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
-import { serviceMetadataByIdSelector } from "../../services/store/reducers/servicesById";
+import { serviceMetadataByIdSelector } from "../../services/details/store/reducers/servicesById";
 import { isPNOptInMessage } from "../../pn/utils";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
@@ -166,7 +166,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
       />
     );
   }
-
   return (
     <>
       <ScrollView contentContainerStyle={styles.scrollContentContainer}>
@@ -202,7 +201,12 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
           </ContentWrapper>
         </View>
         <VSpacer size={24} />
-        <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
+        <MessageDetailsFooter
+          messageId={messageId}
+          noticeNumber={messageDetails.paymentData?.noticeNumber}
+          payeeFiscalCode={messageDetails.paymentData?.payee.fiscalCode}
+          serviceId={serviceId}
+        />
         <MessageDetailsScrollViewAdditionalSpace
           hasCTA1={!!maybeCTAs?.cta_1}
           hasCTA2={!!maybeCTAs?.cta_2}
