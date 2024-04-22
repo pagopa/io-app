@@ -11,10 +11,12 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
-import { isExpiredDate } from "../../../../utils/dates";
+import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletPaymentPspSortType } from "../../checkout/types";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { PaymentCardProps } from "../components/PaymentCard";
+import { WalletCard } from "../../../newWallet/types";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -50,7 +52,8 @@ export const isPaymentMethodExpired = (
   pipe(
     details?.expiryDate,
     O.fromNullable,
-    O.map(isExpiredDate),
+    O.chainNullableK(getDateFromExpiryDate),
+    O.chainNullableK(isExpiredDate),
     O.getOrElse(() => false)
   );
 
@@ -146,3 +149,39 @@ export const getSortedPspList = (
       return _.orderBy(pspList, ["onUs", "taxPayerFee"]);
   }
 };
+
+export const getPaymentCardPropsFromWalletInfo = (
+  wallet: WalletInfo
+): PaymentCardProps => {
+  const details = wallet.details as UIWalletInfoDetails;
+  const isExpired = isPaymentMethodExpired(details);
+
+  return {
+    hpan: details.lastFourDigits,
+    brand: details.brand,
+    expireDate: getDateFromExpiryDate(details.expiryDate),
+    holderEmail: details.maskedEmail,
+    holderPhone: details.maskedNumber,
+    isExpired
+  };
+};
+
+/**
+ * Function that returns a formatted payment notice number
+ * by placing two spaces between every four numbers
+ */
+export const formatPaymentNoticeNumber = (noticeNumber: string) =>
+  noticeNumber.replace(/(\d{4})/g, "$1  ").trim();
+
+export const mapWalletIdToCardKey = (walletId: string) => `method_${walletId}`;
+
+export const mapWalletsToCards = (
+  wallets: ReadonlyArray<WalletInfo>
+): ReadonlyArray<WalletCard> =>
+  wallets.map<WalletCard>(wallet => ({
+    ...getPaymentCardPropsFromWalletInfo(wallet),
+    key: mapWalletIdToCardKey(wallet.walletId),
+    type: "payment",
+    category: "payment",
+    walletId: wallet.walletId
+  }));

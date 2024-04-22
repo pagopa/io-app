@@ -1,4 +1,4 @@
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
@@ -8,8 +8,9 @@ import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig"
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
 import {
   PaymentCardsCarousel,
-  PaymentCardsCarouselProps
-} from "../../payments/common/components/PaymentCardsCarousel";
+  PaymentCardsCarouselProps,
+  PaymentCardsCarouselSkeleton
+} from "../../payments/home/components/PaymentsCardsCarousel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
@@ -27,43 +28,44 @@ const onPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
+const expiredDate = new Date(new Date().getTime() - 10000 * 60 * 10 * 24 * 30);
+const validDate = new Date(new Date().getTime() + 10000 * 60 * 10 * 24 * 30);
+
 const cardsDataForCarousel: PaymentCardsCarouselProps = {
   cards: [
     {
-      isLoading: true
-    },
-    {
-      cardType: "CREDIT",
       hpan: "9999",
-      isError: false,
-      cardIcon: "maestro",
-      onCardPress: onPress
+      expireDate: validDate,
+      brand: "maestro",
+      onPress
     },
     {
-      cardType: "PAYPAL",
-      isError: true,
-      onCardPress: onPress
+      holderEmail: "test@test.it",
+      expireDate: validDate,
+      onPress
     },
     {
-      cardType: "BANCOMATPAY",
-      onCardPress: onPress
+      holderPhone: "1234",
+      onPress
     },
     {
-      cardType: "PAGOBANCOMAT",
-      providerName: "banca intesa",
-      onCardPress: onPress
-    },
-    {
-      cardType: "CREDIT",
       hpan: "9999",
-      isError: true,
-      onCardPress: onPress
+      expireDate: validDate,
+      brand: "",
+      onPress
     },
     {
-      cardType: "COBADGE",
-      providerName: "banca intesa",
-      cardIcon: "maestro",
-      onCardPress: onPress
+      hpan: "9999",
+      expireDate: expiredDate,
+      isExpired: true,
+      brand: "maestro",
+      onPress
+    },
+    {
+      holderEmail: "test@test.it",
+      expireDate: expiredDate,
+      isExpired: true,
+      onPress
     }
   ]
 };
@@ -79,25 +81,25 @@ export const DSCards = () => (
           style={{ aspectRatio: 16 / 10, marginHorizontal: -24 }}
           contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 16 }}
         >
-          <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={new Date()} />
+          <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={validDate} />
           <HSpacer size={16} />
           <PaymentCard
-            holderName="Anna Verdi"
-            expireDate={new Date()}
-            abiCode="03069"
-            brand="pagoBancomat"
+            holderEmail="anna_v********@**hoo.it"
+            expireDate={validDate}
           />
           <HSpacer size={16} />
           <PaymentCard
-            holderName="Anna Verdi"
-            expireDate={new Date()}
-            abiCode="08509"
-            brand="maestro"
+            brand="MASTERCARD"
+            hpan="9900"
+            expireDate={expiredDate}
+            isExpired={true}
           />
           <HSpacer size={16} />
-          <PaymentCard holderEmail="anna_v********@**hoo.it" />
-          <HSpacer size={16} />
-          <PaymentCard holderName="Anna Verdi" holderPhone="+39 340 *** **62" />
+          <PaymentCard
+            holderEmail="anna_v********@**hoo.it"
+            expireDate={expiredDate}
+            isExpired={true}
+          />
           <HSpacer size={16} />
           <PaymentCard isLoading />
         </ScrollView>
@@ -145,37 +147,81 @@ export const DSCards = () => (
           <PaymentCardBig isLoading={true} />
         </ScrollView>
       </DSComponentViewerBox>
-      <DSComponentViewerBox name="PaymentCardSmall">
+    </DesignSystemSection>
+    <DesignSystemSection title="PaymentCardSmall">
+      <DSComponentViewerBox name="Credit card">
         <View style={styles.content}>
-          <PaymentCardSmall hpan="9999" isError={false} cardType={"CREDIT"} />
+          <PaymentCardSmall hpan="9900" brand="maestro" onPress={onPress} />
           <HSpacer size={16} />
-          <PaymentCardSmall cardType="PAYPAL" />
+          <PaymentCardSmall
+            hpan="9900"
+            brand="maestro"
+            expireDate={new Date(2021, 10)}
+          />
         </View>
-        <VSpacer size={16} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="PagoBANCOMAT">
         <View style={styles.content}>
           <PaymentCardSmall
-            cardType={"COBADGE"}
-            isError={true}
-            providerName="A very very long name for a provider"
-            cardIcon="maestro"
-            onCardPress={onPress}
+            brand="pagoBancomat"
+            bankName="Intesa San Paolo"
+            onPress={onPress}
+          />
+          <HSpacer size={16} />
+          <PaymentCardSmall />
+        </View>
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="PayPal">
+        <View style={styles.content}>
+          <PaymentCardSmall
+            holderEmail="anna_v********@**hoo.it"
+            onPress={onPress}
           />
           <HSpacer size={16} />
           <PaymentCardSmall
-            cardType={"BANCOMATPAY"}
-            isError={true}
-            onCardPress={onPress}
+            holderEmail="anna_v********@**hoo.it"
+            onPress={onPress}
+            expireDate={new Date(2021, 10)}
           />
         </View>
-        <VSpacer size={16} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Co-badge">
         <View style={styles.content}>
-          <PaymentCardSmall isLoading={true} />
+          <PaymentCardSmall
+            bankName="Intesa San Paolo"
+            brand="maestro"
+            onPress={onPress}
+          />
           <HSpacer size={16} />
-          <PaymentCardSmall isLoading={true} />
+          <PaymentCardSmall
+            bankName="Intesa San Paolo"
+            brand="maestro"
+            onPress={onPress}
+            expireDate={new Date(2021, 10)}
+          />
+        </View>
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="BANCOMAT Pay">
+        <View style={styles.content}>
+          <PaymentCardSmall
+            holderName="Anna Verdi"
+            holderPhone="+39 340 *** **62"
+            onPress={onPress}
+          />
+          <HSpacer size={16} />
+          <PaymentCardSmall
+            holderName="Anna Verdi"
+            holderPhone="+39 340 *** **62"
+            onPress={onPress}
+            expireDate={new Date(2021, 10)}
+          />
         </View>
       </DSComponentViewerBox>
       <DSComponentViewerBox name="PaymentCardsCarousel">
         <PaymentCardsCarousel {...cardsDataForCarousel} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="PaymentCardsCarouselSkeleton">
+        <PaymentCardsCarouselSkeleton />
       </DSComponentViewerBox>
     </DesignSystemSection>
     <DesignSystemSection title="IdPayCard">

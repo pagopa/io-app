@@ -25,8 +25,7 @@ import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
-import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -52,6 +51,7 @@ import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
+import { formatPaymentNoticeNumber } from "../../common/utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -82,8 +82,8 @@ const WalletPaymentDetailScreen = () => {
       O.fromEither,
       // NetworkError is transformed to GENERIC_ERROR only for display purposes
       O.getOrElse<WalletPaymentFailure>(() => ({
-        faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-        faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+        faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
+        faultCodeDetail: ""
       }))
     );
     return <WalletPaymentFailureDetail failure={failure} />;
@@ -135,7 +135,7 @@ const WalletPaymentDetailContent = ({
 
   const navigateToMakePaymentScreen = () => {
     dispatch(storeNewPaymentAttemptAction(rptId));
-    navigation.push(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
       screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
     });
   };
@@ -176,7 +176,7 @@ const WalletPaymentDetailContent = ({
     O.fromEither,
     O.map(({ paymentNoticeNumber }) => paymentNoticeNumber),
     O.map(PaymentNoticeNumberFromString.encode),
-    O.map(_ => _.replace(/(\d{4})/g, "$1  ").trim()),
+    O.map(formatPaymentNoticeNumber),
     O.getOrElse(() => "")
   );
 

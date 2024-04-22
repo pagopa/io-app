@@ -3,7 +3,7 @@
  */
 import { getType } from "typesafe-actions";
 import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
-import { loadServiceDetail } from "../../../actions/services";
+import { loadServiceDetail } from "../../../../features/services/details/store/actions/details";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 

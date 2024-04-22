@@ -1,76 +1,66 @@
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  IOVisualCostants,
+  ListItemHeader,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { View } from "react-native";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { paymentsGetPaymentUserMethodsAction } from "../../checkout/store/actions/networking";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
-import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";
-import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
+import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
-import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
-const loadingCards: Array<PaymentCardSmallProps> = Array.from({
-  length: 3
-}).map(() => ({
-  isLoading: true
-}));
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
+import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
+import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
+import {
+  PaymentCardsCarousel,
+  PaymentCardsCarouselSkeleton
+} from "./PaymentsCardsCarousel";
 
-type PaymentMethodsSectionProps = {
-  isLoading?: boolean;
+type Props = {
+  enforcedLoadingState?: boolean;
 };
 
-const PaymentsHomeUserMethodsList = ({
-  isLoading
-}: PaymentMethodsSectionProps) => {
+const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
+  const bannerRef = React.createRef<View>();
+
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
-  const isLoadingSection = isLoading || pot.isLoading(paymentMethodsPot);
-  const methods = pot.getOrElse(paymentMethodsPot, []);
+
+  const shouldShowAddMethodsBanner = useIOSelector(
+    isAddMethodsBannerVisibleSelector
+  );
+  const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
+  const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
+
+  const isLoading = pot.isLoading(paymentMethodsPot) || enforcedLoadingState;
+  const isEmpty = paymentMethods.length === 0;
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(paymentsGetPaymentUserMethodsAction.request());
+      dispatch(getPaymentsWalletUserMethods.request());
     }, [dispatch])
   );
 
-  const mapMethods = (
-    // this function is here to allow future navigation usage
-    method: NonNullable<WalletInfo>
-  ): PaymentCardSmallProps | undefined => {
-    const details = method.details as UIWalletInfoDetails;
-
-    if (details.lastFourDigits !== undefined) {
-      return {
-        cardType: "CREDIT",
-        hpan: details.lastFourDigits,
-        cardIcon: details.brand,
-        isLoading: false
-      };
-    }
-    if (details.maskedEmail !== undefined) {
-      return {
-        cardType: "PAYPAL"
-      };
-    }
-    if (details.maskedNumber !== undefined) {
-      return {
-        cardType: "BANCOMATPAY"
-      };
-    }
-    return undefined;
+  const handleOnMethodPress = (walletId: string) => () => {
+    navigation.navigate(
+      PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
+      {
+        screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
+        params: {
+          walletId
+        }
+      }
+    );
   };
-
-  const renderMethods = isLoadingSection
-    ? loadingCards
-    : methods
-        .map(mapMethods)
-        .filter((item): item is PaymentCardSmallProps => item !== undefined) ??
-      loadingCards;
 
   const handleOnAddMethodPress = () => {
     navigation.navigate(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
@@ -78,28 +68,60 @@ const PaymentsHomeUserMethodsList = ({
     });
   };
 
+  const userMethods = paymentMethods.map(
+    (method: WalletInfo): PaymentCardSmallProps => ({
+      ...getPaymentCardPropsFromWalletInfo(method),
+      onPress: handleOnMethodPress(method.walletId)
+    })
+  );
+
+  if (!isLoading && isEmpty) {
+    if (!shouldShowAddMethodsBanner) {
+      return null;
+    }
+
+    return (
+      <View style={{ paddingVertical: IOVisualCostants.appMarginDefault }}>
+        <Banner
+          testID="PaymentsHomeUserMethodsListTestID-banner"
+          pictogramName="cardAdd"
+          content={I18n.t("features.payments.methods.banner.content")}
+          action={I18n.t("features.payments.methods.banner.action")}
+          onPress={handleOnAddMethodPress}
+          size="big"
+          color="neutral"
+          viewRef={bannerRef}
+          labelClose={I18n.t("global.buttons.close")}
+          onClose={() => dispatch(paymentsSetAddMethodsBannerVisible(false))}
+        />
+      </View>
+    );
+  }
+
   return (
-    <>
+    <View>
       <ListItemHeader
-        label={I18n.t("payment.homeScreen.methodsSection.header")}
-        accessibilityLabel={I18n.t("payment.homeScreen.methodsSection.header")}
+        label={I18n.t("features.payments.methods.title")}
+        accessibilityLabel={I18n.t("features.payments.methods.title")}
         endElement={{
           type: "buttonLink",
           componentProps: {
-            label: I18n.t("payment.homeScreen.methodsSection.headerCTA"),
+            label: I18n.t("features.payments.methods.button"),
             onPress: handleOnAddMethodPress
           }
         }}
       />
-      <View style={styles.fixedCardsHeight}>
-        <PaymentCardsCarousel cards={renderMethods} />
-      </View>
-    </>
+      {isLoading ? (
+        <PaymentCardsCarouselSkeleton testID="PaymentsHomeUserMethodsListTestID-loading" />
+      ) : (
+        <PaymentCardsCarousel
+          cards={userMethods}
+          testID="PaymentsHomeUserMethodsListTestID"
+        />
+      )}
+      <VSpacer size={24} />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  fixedCardsHeight: { height: 96 }
-});
 
 export { PaymentsHomeUserMethodsList };

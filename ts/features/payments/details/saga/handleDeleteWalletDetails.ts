@@ -11,7 +11,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
-import { mapWalletIdToCardKey } from "../../common/utils/wallet";
+import { mapWalletIdToCardKey } from "../../common/utils";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -38,7 +38,9 @@ export function* handleDeleteWalletDetails(
         );
 
         // handled success
-        const successAction = paymentsDeleteMethodAction.success();
+        const successAction = paymentsDeleteMethodAction.success(
+          action.payload.walletId
+        );
         yield* put(successAction);
         if (action.payload.onSuccess) {
           action.payload.onSuccess();

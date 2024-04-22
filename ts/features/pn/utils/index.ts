@@ -115,3 +115,17 @@ export const containsF24FromPNMessagePot = (
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
+
+export const canShowMorePaymentsLink = (
+  isCancelled: boolean,
+  payments?: ReadonlyArray<NotificationPaymentInfo>
+): payments is ReadonlyArray<NotificationPaymentInfo> =>
+  !isCancelled &&
+  !!payments &&
+  payments.length > maxVisiblePaymentCountGenerator();
+
+export const shouldUseBottomSheetForPayments = (
+  isCancelled: boolean,
+  payments?: ReadonlyArray<NotificationPaymentInfo>
+): payments is ReadonlyArray<NotificationPaymentInfo> =>
+  !isCancelled && (payments?.length ?? 0) > 1;

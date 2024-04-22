@@ -13,7 +13,7 @@ import { navigateToServicePreferenceScreen } from "../../store/actions/navigatio
 import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isNewWalletSectionEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 
@@ -147,7 +147,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
       case ROUTES.PAYMENTS_HOME:
         return {
-          title: "Pagamenti",
+          title: I18n.t("features.payments.title"),
           type: "singleAction",
           firstAction: helpAction
         };
