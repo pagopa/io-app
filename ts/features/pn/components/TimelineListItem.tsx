@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import {
   Alert,
   IOVisualCostants,
   ListItemAction
 } from "@pagopa/io-app-design-system";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
@@ -19,6 +19,10 @@ import { handleItemOnPress } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
 import { Timeline, TimelineItemProps } from "./Timeline";
+
+const topBottomSheetMargin = 122;
+const timelineBottomMargin = 292;
+const timelineItemHeight = 70;
 
 type TimelineListItemProps = {
   history: NotificationStatusHistory;
@@ -39,34 +43,37 @@ const generateTimelineData = (
   }));
 
 export const TimelineListItem = ({ history }: TimelineListItemProps) => {
+  const windowHeight = Dimensions.get("window").height;
+  const snapPoint = Math.min(
+    windowHeight - topBottomSheetMargin,
+    timelineBottomMargin + timelineItemHeight * history.length
+  );
   const sendExternalUrl = useIOSelector(pnFrontendUrlSelector);
   const timelineData = useMemo(() => generateTimelineData(history), [history]);
-  const { bottomSheet, present } = useIOBottomSheetAutoresizableModal(
-    {
-      component: <Timeline data={timelineData} />,
-      title: I18n.t("features.pn.details.timeline.menuTitle"),
-      footer: (
-        <View style={{ padding: IOVisualCostants.appMarginDefault }}>
-          <Alert
-            variant="info"
-            content={`${I18n.t("features.pn.details.timeline.newInfo")}`}
-            action={
-              sendExternalUrl
-                ? I18n.t("features.pn.details.timeline.goToSend")
-                : undefined
+  const { bottomSheet, present } = useIOBottomSheetModal({
+    component: <Timeline data={timelineData} />,
+    title: I18n.t("features.pn.details.timeline.menuTitle"),
+    footer: (
+      <View style={{ padding: IOVisualCostants.appMarginDefault }}>
+        <Alert
+          variant="info"
+          content={`${I18n.t("features.pn.details.timeline.newInfo")}`}
+          action={
+            sendExternalUrl
+              ? I18n.t("features.pn.details.timeline.goToSend")
+              : undefined
+          }
+          onPress={() => {
+            if (sendExternalUrl) {
+              trackPNTimelineExternal();
+              handleItemOnPress(sendExternalUrl)();
             }
-            onPress={() => {
-              if (sendExternalUrl) {
-                trackPNTimelineExternal();
-                handleItemOnPress(sendExternalUrl)();
-              }
-            }}
-          />
-        </View>
-      )
-    },
-    100
-  );
+          }}
+        />
+      </View>
+    ),
+    snapPoint: [snapPoint]
+  });
 
   return (
     <>
