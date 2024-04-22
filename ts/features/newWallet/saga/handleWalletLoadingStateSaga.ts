@@ -7,7 +7,7 @@ import { selectWalletCards } from "../store/selectors";
 
 const LOADING_STATE_TIMEOUT = 3000 as Millisecond;
 
-export function* handleWalletLoadingStateSaga(
+export function* handleWalletToggleLoadingStateSaga(
   action: ActionType<typeof walletToggleLoadingState>
 ) {
   const cards = yield* select(selectWalletCards);
