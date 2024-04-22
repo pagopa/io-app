@@ -3,9 +3,12 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import sha from "sha.js";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { WalletCardCategory } from "../../types";
+import { WalletCard, WalletCardCategory } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
-import { walletToggleLoadingState } from "../actions/placeholders";
+import {
+  walletResetPlaceholders,
+  walletToggleLoadingState
+} from "../actions/placeholders";
 
 export type WalletPlaceholders = { [key: string]: WalletCardCategory };
 
@@ -27,13 +30,7 @@ const reducer = (
     case getType(walletAddCards):
       return {
         ...state,
-        items: action.payload.reduce(
-          (acc, { category, key }) => ({
-            ...acc,
-            [hashKey(key)]: category
-          }),
-          state.items
-        )
+        items: action.payload.reduce(cardPlaceholderReducerFn, state.items)
       };
     case getType(walletRemoveCards):
       return {
@@ -50,9 +47,23 @@ const reducer = (
         ...state,
         isLoading: action.payload
       };
+
+    case getType(walletResetPlaceholders):
+      return {
+        ...state,
+        items: action.payload.reduce(cardPlaceholderReducerFn, {})
+      };
   }
   return state;
 };
+
+const cardPlaceholderReducerFn = (
+  acc: WalletPlaceholders,
+  { category, key }: WalletCard
+) => ({
+  ...acc,
+  [hashKey(key)]: category
+});
 
 // We have no control over what can be used as a key to store cards.
 // Key hashing avoids storing sensitive data
