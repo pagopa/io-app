@@ -3539,7 +3539,7 @@ barcodeScan:
 unsupportedDevice:
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
-  subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device."
+  subtitle: "Make sure your operating system is updated to the latest version. If it is already updated, you will need to log in from a different device to continue using IO."
   cta:
     faq: "Learn more"
 fastLogin:
