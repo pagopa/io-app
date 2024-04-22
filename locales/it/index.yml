@@ -1957,6 +1957,11 @@ messageDetails:
     title: "Dati identificativi"
     messageId: "ID messaggio"
     messageIdAccessibility: "ID messaggio, copia"
+    pagoPAHeader: "Avviso pagoPA"
+    noticeCode: "Codice Avviso"
+    noticeCodeAccessibility: "Codice avviso, copia"
+    entityFiscalCode: "Codice Fiscale Ente"
+    entityFiscalCodeAccessibility: "Codice fiscale ente, copia"
   contactsBottomSheet:
     title: "Assistenza"
     body: "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato."
@@ -2813,6 +2818,8 @@ features:
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN
+        iunAccessibility: Codice IUN, copia
+        iunSectionTitle: Notifica
       timeline:
         title: STATO DELLA NOTIFICA
         status:
@@ -3535,7 +3542,7 @@ barcodeScan:
 unsupportedDevice:
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
-  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo."
+  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO devi accedere da un altro dispositivo."
   cta:
     faq: "Come mai?"
 fastLogin:
