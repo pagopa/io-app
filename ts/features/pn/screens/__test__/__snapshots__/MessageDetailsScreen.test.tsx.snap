@@ -1815,7 +1815,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               importantForAccessibility="yes"
                               snapPoints={
                                 Array [
-                                  1,
+                                  292,
                                 ]
                               }
                               style={
@@ -1836,11 +1836,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   }
                                 }
                               >
-                                <View>
-                                  <View
-                                    onLayout={[Function]}
-                                  />
-                                </View>
+                                <View />
                               </RCTScrollView>
                             </Modal>
                             <View

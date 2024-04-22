@@ -1226,7 +1226,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               importantForAccessibility="yes"
                               snapPoints={
                                 Array [
-                                  1,
+                                  292,
                                 ]
                               }
                               style={
@@ -1247,11 +1247,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   }
                                 }
                               >
-                                <View>
-                                  <View
-                                    onLayout={[Function]}
-                                  />
-                                </View>
+                                <View />
                               </RCTScrollView>
                             </Modal>
                             <View
