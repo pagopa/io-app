@@ -1,8 +1,10 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { ServicesClient } from "../../common/api/client";
 import { paginatedInstitutionsGet } from "../store/actions";
 
@@ -16,7 +18,11 @@ export function* handleFindInstitutions(
   action: ActionType<typeof paginatedInstitutionsGet.request>
 ) {
   try {
-    const response = yield* call(findInstitutions, action.payload);
+    const response = (yield* call(
+      withRefreshApiCall,
+      findInstitutions(action.payload),
+      action
+    )) as unknown as SagaCallReturnType<typeof findInstitutions>;
 
     if (E.isRight(response)) {
       if (response.right.status === 200) {

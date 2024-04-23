@@ -3,6 +3,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { ServicesClient } from "../../../common/api/__mocks__/client";
 import {
   PaginatedInstitutionsGetPayload,
@@ -20,17 +21,17 @@ const MOCK_RESPONSE_PAYLOAD: InstitutionsResource = {
     {
       fiscal_code: "FRLFNC82A04D969A" as OrganizationFiscalCode,
       id: "1",
-      name: "Fornitori"
+      name: "Institution 1"
     },
     {
       fiscal_code: "FRLFNC82A04D969B" as OrganizationFiscalCode,
       id: "2",
-      name: "Fornitori"
+      name: "Institution 2"
     },
     {
       fiscal_code: "FRLFNC82A04D969C" as OrganizationFiscalCode,
       id: "3",
-      name: "Fornitori"
+      name: "Institution 3"
     }
   ],
   count: 23,
@@ -49,7 +50,11 @@ describe("handleFindInstitutions", () => {
         paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
-        .call(ServicesClient.findInstitutions, DEFAULT_REQUEST_PAYLOAD)
+        .call(
+          withRefreshApiCall,
+          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
+        )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
         .put(paginatedInstitutionsGet.success(MOCK_RESPONSE_PAYLOAD))
         .next()
@@ -69,7 +74,11 @@ describe("handleFindInstitutions", () => {
         paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
-        .call(ServicesClient.findInstitutions, DEFAULT_REQUEST_PAYLOAD)
+        .call(
+          withRefreshApiCall,
+          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
+        )
         .next(
           E.right({
             status: statusCode,

@@ -20,17 +20,17 @@ const MOCK_INSTITUTIONS: InstitutionsResource["institutions"] = [
   {
     fiscal_code: "FRLFNC82A04D969A" as OrganizationFiscalCode,
     id: "1",
-    name: "Fornitori"
+    name: "Institution 1"
   },
   {
     fiscal_code: "FRLFNC82A04D969B" as OrganizationFiscalCode,
     id: "2",
-    name: "Fornitori"
+    name: "Institution 2"
   },
   {
     fiscal_code: "FRLFNC82A04D969C" as OrganizationFiscalCode,
     id: "3",
-    name: "Fornitori"
+    name: "Institution 3"
   }
 ];
 
