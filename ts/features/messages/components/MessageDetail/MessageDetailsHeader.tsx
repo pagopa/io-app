@@ -9,7 +9,7 @@ import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { logosForService } from "../../../../utils/services";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdPotSelector } from "../../../services/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
 import { gapBetweenItemsInAGrid } from "../../utils";
 import { OrganizationHeader } from "./OrganizationHeader";
 

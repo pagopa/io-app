@@ -194,7 +194,7 @@ export const unsupportedDeviceMoreInfoUrl: string = pipe(
 export const unsupportedDeviceLearnMoreUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
   NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
+  E.getOrElse(() => "https://io.italia.it/faq/#n1_15")
 );
 
 export const cieSpidMoreInfoUrl: string = pipe(
