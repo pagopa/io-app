@@ -38,7 +38,7 @@ h2 {
 
 h3 {
   font-size: 18px;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 h4 {
