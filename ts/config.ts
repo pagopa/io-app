@@ -59,8 +59,6 @@ export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
-export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
-
 export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
@@ -194,7 +192,7 @@ export const unsupportedDeviceMoreInfoUrl: string = pipe(
 export const unsupportedDeviceLearnMoreUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
   NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
+  E.getOrElse(() => "https://io.italia.it/faq/#n1_15")
 );
 
 export const cieSpidMoreInfoUrl: string = pipe(

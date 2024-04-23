@@ -25,7 +25,7 @@ type Props = {
 };
 
 const renderCtaButton = (
-  { service, serviceMetadata }: Props,
+  { serviceMetadata }: Props,
   linkTo: (path: string) => void,
   primary: boolean,
   isPNOptInMessage: boolean,
@@ -35,7 +35,7 @@ const renderCtaButton = (
     if (isPNOptInMessage) {
       trackPNOptInMessageAccepted();
     }
-    handleCtaAction(cta, linkTo, service?.service_id);
+    handleCtaAction(cta, linkTo);
   };
 
   if (cta !== undefined && isCtaActionValid(cta, serviceMetadata)) {
