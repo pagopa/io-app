@@ -345,13 +345,6 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "MyPortal Web",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.WEB_PLAYGROUND
-        })
-    },
-    {
       value: "Markdown",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {

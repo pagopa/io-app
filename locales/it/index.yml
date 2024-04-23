@@ -1689,11 +1689,6 @@ wallet:
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
-      missingMethodsError:
-        title: Aggiungi un metodo per effettuare pagamenti in app
-        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        addMethod: Aggiungi metodo
-        notNow: Non ora
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -3539,7 +3534,7 @@ barcodeScan:
 unsupportedDevice:
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
-  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo."
+  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO devi accedere da un altro dispositivo."
   cta:
     faq: "Come mai?"
 fastLogin:
