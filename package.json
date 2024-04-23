@@ -85,7 +85,6 @@
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
-    "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
     "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\"",
     "prepare": "husky install"
   },
@@ -276,7 +275,6 @@
     "jest-circus": "^26.6.3",
     "jest-junit": "^13.0.0",
     "js-yaml": "^3.13.1",
-    "jsdoc-to-markdown": "^6.0.1",
     "lint-staged": "^13.2.0",
     "metro-react-native-babel-preset": "^0.73.0",
     "mockdate": "^3.0.2",
