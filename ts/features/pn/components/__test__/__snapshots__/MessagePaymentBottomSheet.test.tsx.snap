@@ -2086,7 +2086,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "paddingVertical": 4,
                                           },
                                           Object {
-                                            "backgroundColor": "#FFE0E0",
+                                            "backgroundColor": "#FFD9D9",
                                           },
                                         ]
                                       }
@@ -2109,7 +2109,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontWeight": "600",
                                             },
                                             Object {
-                                              "color": "#761F1F",
+                                              "color": "#5D1313",
                                             },
                                           ]
                                         }
@@ -2331,7 +2331,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             "paddingVertical": 4,
                                           },
                                           Object {
-                                            "backgroundColor": "#FFE0E0",
+                                            "backgroundColor": "#FFD9D9",
                                           },
                                         ]
                                       }
@@ -2354,7 +2354,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontWeight": "600",
                                             },
                                             Object {
-                                              "color": "#761F1F",
+                                              "color": "#5D1313",
                                             },
                                           ]
                                         }
