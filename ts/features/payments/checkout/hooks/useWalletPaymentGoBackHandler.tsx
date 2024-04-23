@@ -8,7 +8,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsDeleteTransactionAction } from "../store/actions/networking";
-import { walletPaymentTransactionSelector } from "../store/selectors";
+import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 

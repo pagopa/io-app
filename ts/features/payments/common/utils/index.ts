@@ -12,10 +12,10 @@ import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/w
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletPaymentPspSortType } from "../../checkout/types";
-import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { PaymentCardProps } from "../components/PaymentCard";
+import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletCard } from "../../../newWallet/types";
 
 /**
@@ -106,28 +106,6 @@ export const isPaymentSupported = (
   );
 };
 
-export const getPaymentLogo = (
-  details: UIWalletInfoDetails
-): IOLogoPaymentType | undefined => {
-  if (details.maskedEmail !== undefined) {
-    return "payPal";
-  } else if (details.maskedNumber !== undefined) {
-    return "bancomatPay";
-  } else if (details.lastFourDigits !== undefined) {
-    return pipe(
-      details.brand,
-      O.fromNullable,
-      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
-      O.fold(
-        () => undefined,
-        ([logoName, _]) => logoName
-      )
-    ) as IOLogoPaymentType;
-  }
-
-  return undefined;
-};
-
 export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
   "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/";
 
@@ -166,6 +144,24 @@ export const getPaymentCardPropsFromWalletInfo = (
   };
 };
 
+export const getPaymentLogoFromWalletDetails = (
+  details: UIWalletInfoDetails
+): IOLogoPaymentType | undefined => {
+  if (details.maskedEmail !== undefined) {
+    return "payPal";
+  } else if (details.maskedNumber !== undefined) {
+    return "bancomatPay";
+  } else {
+    return pipe(
+      details.brand,
+      O.fromNullable,
+      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
+      O.map(([logoName, _]) => logoName as IOLogoPaymentType),
+      O.toUndefined
+    );
+  }
+};
+
 export const mapWalletIdToCardKey = (walletId: string) => `method_${walletId}`;
 
 export const mapWalletsToCards = (
@@ -178,3 +174,10 @@ export const mapWalletsToCards = (
     category: "payment",
     walletId: wallet.walletId
   }));
+
+/**
+ * Function that returns a formatted payment notice number
+ * by placing two spaces between every four numbers
+ */
+export const formatPaymentNoticeNumber = (noticeNumber: string) =>
+  noticeNumber.replace(/(\d{4})/g, "$1  ").trim();
