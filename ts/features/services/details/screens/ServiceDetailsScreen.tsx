@@ -150,7 +150,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     );
   }
 
-  const handlePressCta = (cta: CTA) => handleCtaAction(cta, linkTo, serviceId);
+  const handlePressCta = (cta: CTA) => handleCtaAction(cta, linkTo);
 
   const getActionsProps = (
     ctas?: CTAS,
