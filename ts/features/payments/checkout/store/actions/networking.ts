@@ -1,20 +1,16 @@
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { NewSessionTokenResponse } from "../../../../../../definitions/pagopa/ecommerce/NewSessionTokenResponse";
 import { NewTransactionRequest } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RequestAuthorizationResponse } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 
@@ -76,7 +72,8 @@ export const paymentsDeleteTransactionAction = createAsyncAction(
 
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;
-  walletId: string;
+  walletId?: string;
+  paymentMethodId: string;
   pspId: string;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;
@@ -94,10 +91,6 @@ export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
   undefined
 >();
 
-export const paymentsResetPaymentPspList = createStandardAction(
-  "PAYMENTS_RESET_PAYMENT_PSP_LIST"
-)();
-
 export type PaymentsCheckoutNetworkingActions =
   | ActionType<typeof paymentsGetNewSessionTokenAction>
   | ActionType<typeof paymentsGetPaymentDetailsAction>
@@ -107,5 +100,4 @@ export type PaymentsCheckoutNetworkingActions =
   | ActionType<typeof paymentsCreateTransactionAction>
   | ActionType<typeof paymentsGetPaymentTransactionInfoAction>
   | ActionType<typeof paymentsDeleteTransactionAction>
-  | ActionType<typeof paymentsStartPaymentAuthorizationAction>
-  | ActionType<typeof paymentsResetPaymentPspList>;
+  | ActionType<typeof paymentsStartPaymentAuthorizationAction>;
