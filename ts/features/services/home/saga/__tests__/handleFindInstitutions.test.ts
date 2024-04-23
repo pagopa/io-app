@@ -3,6 +3,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { ServicesClient } from "../../../common/api/__mocks__/client";
 import {
   PaginatedInstitutionsGetPayload,
@@ -49,7 +50,11 @@ describe("handleFindInstitutions", () => {
         paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
-        .call(ServicesClient.findInstitutions, DEFAULT_REQUEST_PAYLOAD)
+        .call(
+          withRefreshApiCall,
+          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
+        )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
         .put(paginatedInstitutionsGet.success(MOCK_RESPONSE_PAYLOAD))
         .next()
@@ -69,7 +74,11 @@ describe("handleFindInstitutions", () => {
         paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
-        .call(ServicesClient.findInstitutions, DEFAULT_REQUEST_PAYLOAD)
+        .call(
+          withRefreshApiCall,
+          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
+        )
         .next(
           E.right({
             status: statusCode,
