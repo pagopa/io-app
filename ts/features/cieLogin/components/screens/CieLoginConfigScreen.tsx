@@ -5,6 +5,8 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import CieLoginConfigScreenContent from "./CieLoginConfigScreenContent";
 
+const PIN_LENGTH = 6;
+
 type PinViewProps = {
   pin: string;
   setPin: (pin: string) => void;
@@ -14,7 +16,7 @@ const PinView = (props: PinViewProps) => (
     <OTPInput
       secret
       value={props.pin}
-      length={6}
+      length={PIN_LENGTH}
       onValueChange={props.setPin}
     />
   </>
@@ -29,7 +31,7 @@ const CieLoginConfigScreen = () => {
     const day = new Date().toISOString().slice(2, 10).replace(/-/g, "");
     if (pin === day) {
       setLocked(false);
-    } else {
+    } else if (pin.length === PIN_LENGTH) {
       setPin("");
     }
   }, [pin]);
