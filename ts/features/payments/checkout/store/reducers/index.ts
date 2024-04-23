@@ -1,8 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
@@ -11,6 +13,7 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/Walle
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
+import { getSortedPspList } from "../../../common/utils";
 import { WalletPaymentStepEnum } from "../../types";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
@@ -22,18 +25,15 @@ import {
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
-  paymentsResetPaymentPspList,
   paymentsStartPaymentAuthorizationAction
 } from "../actions/networking";
 import {
   OnPaymentSuccessAction,
   initPaymentStateAction,
-  resetPaymentPspAction,
   selectPaymentMethodAction,
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -47,8 +47,9 @@ export type PaymentsCheckoutState = {
   userWallets: pot.Pot<Wallets, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
-  chosenPaymentMethod: O.Option<WalletInfo>;
-  chosenPsp: O.Option<Bundle>;
+  selectedWallet: O.Option<WalletInfo>;
+  selectedPaymentMethod: O.Option<PaymentMethodResponse>;
+  selectedPsp: O.Option<Bundle>;
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
   onSuccess?: OnPaymentSuccessAction;
@@ -61,8 +62,9 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   userWallets: pot.none,
   allPaymentMethods: pot.none,
   pspList: pot.none,
-  chosenPaymentMethod: O.none,
-  chosenPsp: O.none,
+  selectedWallet: O.none,
+  selectedPaymentMethod: O.none,
+  selectedPsp: O.none,
   transaction: pot.none,
   authorizationUrl: pot.none
 };
@@ -157,7 +159,11 @@ const reducer = (
     case getType(selectPaymentMethodAction):
       return {
         ...state,
-        chosenPaymentMethod: O.some(action.payload)
+        selectedWallet: O.fromNullable(action.payload.userWallet),
+        selectedPaymentMethod: O.fromNullable(action.payload.paymentMethod),
+        // If payment method changes, reset PSP list
+        selectedPsp: O.none,
+        pspList: pot.none
       };
 
     // PSP list
@@ -167,9 +173,34 @@ const reducer = (
         pspList: pot.toLoading(state.pspList)
       };
     case getType(paymentsCalculatePaymentFeesAction.success):
+      const bundles = action.payload.bundles;
+      // We choose the next step based on the PSP list lenght
+      // If only 1 PSP we do not have the need to selected one
+      const currentStep =
+        bundles.length > 1
+          ? WalletPaymentStepEnum.PICK_PSP
+          : WalletPaymentStepEnum.CONFIRM_TRANSACTION;
+
+      // Bundles are stored sorted by default sort rule
+      const sortedBundles = getSortedPspList(bundles, "default");
+
+      // Automatically select PSP if only 1 received or with `onUs` property
+      const preselectedPsp =
+        sortedBundles.length === 1 || sortedBundles[0]?.onUs
+          ? O.some(sortedBundles[0])
+          : state.selectedPsp;
+
+      // Use the preselected PSP only if there isn't any already selected PSP
+      const selectedPsp = pipe(
+        state.selectedPsp,
+        O.alt(() => preselectedPsp)
+      );
+
       return {
         ...state,
-        pspList: pot.some(action.payload.bundles)
+        pspList: pot.some(sortedBundles),
+        currentStep,
+        selectedPsp
       };
     case getType(paymentsCalculatePaymentFeesAction.failure):
       return {
@@ -180,19 +211,7 @@ const reducer = (
     case getType(selectPaymentPspAction):
       return {
         ...state,
-        chosenPsp: O.some(action.payload)
-      };
-
-    case getType(resetPaymentPspAction):
-      return {
-        ...state,
-        chosenPsp: O.none
-      };
-
-    case getType(paymentsResetPaymentPspList):
-      return {
-        ...state,
-        pspList: pot.none
+        selectedPsp: O.some(action.payload)
       };
 
     // Transaction
