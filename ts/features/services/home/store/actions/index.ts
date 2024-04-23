@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { ScopeType } from "../../../../../../definitions/services/ScopeType";
+import { ScopeEnum } from "../../../../../../definitions/content/Service";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { NetworkError } from "../../../../../utils/errors";
 
@@ -7,7 +7,7 @@ export type PaginatedInstitutionsGetPayload = {
   limit: number;
   offset: number;
   search?: string;
-  scope?: ScopeType;
+  scope?: ScopeEnum;
 };
 
 export const paginatedInstitutionsGet = createAsyncAction(
