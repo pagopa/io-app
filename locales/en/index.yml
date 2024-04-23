@@ -1689,11 +1689,6 @@ wallet:
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
-      missingMethodsError:
-        title: Aggiungi un metodo per effettuare pagamenti in app
-        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        addMethod: Aggiungi metodo
-        notNow: Non ora
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -2078,6 +2073,9 @@ services:
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
+  home:
+    institutions:
+      title: National
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2183,8 +2181,8 @@ messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To
 openStore: Open {{storeName}}
 btnUpdateApp: Aggiorna l'app
 systemsOff:
-  title: Unable to start IO
-  closeApp: close the application and try again
+  title: C'è un problema sui nostri sistemi
+  closeApp: Chiudi l'app e riprova tra qualche minuto.
 contextualHelp:
   title: IO helps you
   sendPersonalInfo:
@@ -3539,7 +3537,7 @@ barcodeScan:
 unsupportedDevice:
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
-  subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device."
+  subtitle: "Make sure your operating system is updated to the latest version. If it is already updated, you will need to log in from a different device to continue using IO."
   cta:
     faq: "Learn more"
 fastLogin:
