@@ -4,17 +4,13 @@ import { pipe } from "fp-ts/lib/function";
 import { toUpper } from "lodash";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
-import { getSortedPspList } from "../../../common/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
-import { selectPaymentPspAction } from "../../store/actions/orchestration";
-import { walletPaymentPickedPspSelector } from "../../store/selectors";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentCalculateFees(
@@ -65,37 +61,21 @@ export function* handleWalletPaymentCalculateFees(
     } else {
       const res = calculateFeesResult.right;
       if (res.status === 200) {
-        const bundlesSortedByDefault = getSortedPspList(
-          res.value.bundles,
-          "default"
-        );
-        const chosenPsp = yield* select(walletPaymentPickedPspSelector);
-        // If the sorted psp list has the first element marked as "onUs" and the user has not already chosen a psp, we pre-select the first element
-        if (
-          (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) ||
-          bundlesSortedByDefault.length === 1
-        ) {
-          yield* put(selectPaymentPspAction(bundlesSortedByDefault[0]));
-        }
-        if (bundlesSortedByDefault.length === 0) {
+        if (res.value.bundles.length === 0) {
           yield* put(
-            paymentsCalculatePaymentFeesAction.failure({
-              ...getGenericError(new Error(`Error: The bundles list is empty`))
-            })
+            paymentsCalculatePaymentFeesAction.failure(
+              getGenericError(new Error(`Error: The bundles list is empty`))
+            )
           );
           return;
         }
-        const sortedResponse: CalculateFeeResponse = {
-          ...res.value,
-          bundles: res.value.bundles
-        };
-        yield* put(paymentsCalculatePaymentFeesAction.success(sortedResponse));
+        yield* put(paymentsCalculatePaymentFeesAction.success(res.value));
         return;
       }
       yield* put(
-        paymentsCalculatePaymentFeesAction.failure({
-          ...getGenericError(new Error(`Error: ${res.status}`))
-        })
+        paymentsCalculatePaymentFeesAction.failure(
+          getGenericError(new Error(`Error: ${res.status}`))
+        )
       );
     }
   } catch (e) {
