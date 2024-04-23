@@ -97,8 +97,8 @@ const OnboardingTosScreen = () => {
 
   const handleGoBack = () =>
     Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
+      I18n.t("onboarding.exitAlert.title"),
+      I18n.t("onboarding.exitAlert.description"),
       [
         {
           text: I18n.t("global.buttons.cancel"),

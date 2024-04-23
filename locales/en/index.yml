@@ -877,6 +877,9 @@ onboarding:
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
+  exitAlert: 
+    title: Vuoi uscire da IO?
+    description: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
   biometric:
     headerTitle: Configure IO
     available:
