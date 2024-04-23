@@ -123,9 +123,10 @@ const CiePinScreen = () => {
   });
 
   const handleAuthenticationOverlayOnClose = useCallback(() => {
+    setPin("");
     setAuthUrlGenerated(undefined);
     hideModal();
-  }, [setAuthUrlGenerated, hideModal]);
+  }, [hideModal]);
 
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
@@ -196,23 +197,19 @@ const CiePinScreen = () => {
           </LabelLink>
           <VSpacer size={24} />
           <View style={IOStyles.flex}>
-            <View
-              accessible
+            <OTPInput
+              ref={pinPadViewRef}
+              secret
+              value={pin}
               accessibilityLabel={I18n.t(
                 "authentication.cie.pin.accessibility.label"
               )}
               accessibilityHint={I18n.t(
                 "authentication.cie.pin.accessibility.hint"
               )}
-              ref={pinPadViewRef}
-            >
-              <OTPInput
-                secret
-                value={pin}
-                onValueChange={setPin}
-                length={CIE_PIN_LENGTH}
-              />
-            </View>
+              onValueChange={setPin}
+              length={CIE_PIN_LENGTH}
+            />
             <VSpacer size={24} />
             <Banner
               viewRef={bannerRef}
