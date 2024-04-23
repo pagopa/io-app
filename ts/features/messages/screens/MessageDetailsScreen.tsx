@@ -218,7 +218,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         messageId={messageId}
         ctas={maybeCTAs}
         secondCTAIsPNOptInMessage={pnOptInMessageInfo.cta2LinksToPNService}
-        serviceId={serviceId}
       />
     </>
   );
