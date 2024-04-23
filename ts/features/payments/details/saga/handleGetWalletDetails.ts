@@ -8,7 +8,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
-import { mapWalletsToCards } from "../../common/utils/wallet";
+import { mapWalletsToCards } from "../../common/utils";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
