@@ -24,32 +24,29 @@ export function* handleGetPaymentMethods(
       getPaymentMethodsRequest,
       action
     )) as unknown as SagaCallReturnType<typeof getPaymentMethods>;
-    if (E.isRight(getPaymentMethodsResult)) {
-      if (getPaymentMethodsResult.right.status === 200) {
-        // handled success
-        yield* put(
-          paymentsOnboardingGetMethodsAction.success(
-            getPaymentMethodsResult.right.value
-          )
-        );
-        return;
-      }
-      // not handled error codes
-      yield* put(
-        paymentsOnboardingGetMethodsAction.failure({
-          ...getGenericError(
-            new Error(
-              `response status code ${getPaymentMethodsResult.right.status}`
-            )
-          )
-        })
-      );
-    } else {
-      // cannot decode response
+
+    if (E.isLeft(getPaymentMethodsResult)) {
       yield* put(
         paymentsOnboardingGetMethodsAction.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(getPaymentMethodsResult.left))
+          )
+        })
+      );
+      return;
+    }
+
+    if (getPaymentMethodsResult.right.status === 200) {
+      yield* put(
+        paymentsOnboardingGetMethodsAction.success(
+          getPaymentMethodsResult.right.value
+        )
+      );
+    } else if (getPaymentMethodsResult.right.status !== 401) {
+      yield* put(
+        paymentsOnboardingGetMethodsAction.failure({
+          ...getGenericError(
+            new Error(`response status code ${getPaymentMethodsResult.right.status}`)
           )
         })
       );

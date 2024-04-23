@@ -39,26 +39,30 @@ export function* handleWalletPaymentGetTransactionInfo(
       action
     )) as SagaCallReturnType<typeof getTransactionInfo>;
 
-    yield* put(
-      pipe(
-        getTransactionInfoResult,
-        E.fold(
-          error =>
-            paymentsGetPaymentTransactionInfoAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-          ({ status, value }) => {
-            if (status === 200) {
-              return paymentsGetPaymentTransactionInfoAction.success(value);
-            } else {
-              return paymentsGetPaymentTransactionInfoAction.failure({
-                ...getGenericError(new Error(JSON.stringify(value)))
-              });
-            }
-          }
+    if (E.isLeft(getTransactionInfoResult)) {
+      yield* put(
+        paymentsGetPaymentTransactionInfoAction.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(getTransactionInfoResult.left))
+          )
+        })
+      );
+      return;
+    }
+
+    if (getTransactionInfoResult.right.status === 200) {
+      yield* put(
+        paymentsGetPaymentTransactionInfoAction.success(
+          getTransactionInfoResult.right.value
         )
-      )
-    );
+      );
+    } else if (getTransactionInfoResult.right.status !== 401) {
+      yield* put(
+        paymentsGetPaymentTransactionInfoAction.failure({
+          ...getGenericError(new Error(JSON.stringify(getTransactionInfoResult.right.value)))
+        })
+      );
+    }
   } catch (e) {
     yield* put(
       paymentsGetPaymentTransactionInfoAction.failure({ ...getNetworkError(e) })

@@ -56,26 +56,24 @@ export function* handleWalletPaymentNewSessionToken(
       action
     )) as SagaCallReturnType<typeof newSessionToken>;
 
-    yield* put(
-      pipe(
-        newSessionTokenResult,
-        E.fold(
-          error =>
-            paymentsGetNewSessionTokenAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-          ({ status, value }) => {
-            if (status === 200) {
-              return paymentsGetNewSessionTokenAction.success(value);
-            } else {
-              return paymentsGetNewSessionTokenAction.failure({
-                ...getGenericError(new Error(`Error: ${status}`))
-              });
-            }
-          }
-        )
-      )
-    );
+    if (E.isLeft(newSessionTokenResult)) {
+      yield* put(
+        paymentsGetNewSessionTokenAction.failure({
+          ...getGenericError(new Error(readablePrivacyReport(newSessionTokenResult.left)))
+        })
+      );
+      return;
+    }
+
+    if (newSessionTokenResult.right.status === 200) {
+      yield* put(paymentsGetNewSessionTokenAction.success(newSessionTokenResult.right.value));
+    } else if (newSessionTokenResult.right.status !== 401) {
+      yield* put(
+        paymentsGetNewSessionTokenAction.failure({
+          ...getGenericError(new Error(`Error: ${newSessionTokenResult.right.status}`))
+        })
+      );
+    }
   } catch (e) {
     yield* put(
       paymentsGetNewSessionTokenAction.failure({ ...getNetworkError(e) })

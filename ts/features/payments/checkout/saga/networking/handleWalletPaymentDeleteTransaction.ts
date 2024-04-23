@@ -38,26 +38,27 @@ export function* handleWalletPaymentDeleteTransaction(
       action
     )) as SagaCallReturnType<typeof requestTransactionUserCancellation>;
 
-    yield* put(
-      pipe(
-        requestTransactionUserCancellationResult,
-        E.fold(
-          error =>
-            paymentsDeleteTransactionAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
+    if (E.isLeft(requestTransactionUserCancellationResult)) {
+      yield* put(
+        paymentsDeleteTransactionAction.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(requestTransactionUserCancellationResult.left))
+          )
+        })
+      );
+      return;
+    }
 
-          res => {
-            if (res.status === 202) {
-              return paymentsDeleteTransactionAction.success();
-            }
-            return paymentsDeleteTransactionAction.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
-          }
-        )
-      )
-    );
+    if (requestTransactionUserCancellationResult.right.status === 202) {
+      yield* put(paymentsDeleteTransactionAction.success());
+    } else if (requestTransactionUserCancellationResult.right.status !== 401) {
+      yield* put(
+        paymentsDeleteTransactionAction.failure({
+          ...getGenericError(new Error(`Error: ${requestTransactionUserCancellationResult.right.status}`))
+        })
+      );
+    }
+
   } catch (e) {
     yield* put(
       paymentsDeleteTransactionAction.failure({ ...getNetworkError(e) })

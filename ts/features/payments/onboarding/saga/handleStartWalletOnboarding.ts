@@ -31,32 +31,26 @@ export function* handleStartWalletOnboarding(
       startOnboardingRequest,
       action
     )) as unknown as SagaCallReturnType<typeof startOnboarding>;
-    if (E.isRight(startOnboardingResult)) {
-      if (startOnboardingResult.right.status === 201) {
-        // handled success
-        yield* put(
-          paymentsStartOnboardingAction.success(
-            startOnboardingResult.right.value
-          )
-        );
-        return;
-      }
-      // not handled error codes
-      yield* put(
-        paymentsStartOnboardingAction.failure({
-          ...getGenericError(
-            new Error(
-              `response status code ${startOnboardingResult.right.status}`
-            )
-          )
-        })
-      );
-    } else {
-      // cannot decode response
+    if (E.isLeft(startOnboardingResult)) {
       yield* put(
         paymentsStartOnboardingAction.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(startOnboardingResult.left))
+          )
+        })
+      );
+      return;
+    }
+    if (startOnboardingResult.right.status === 201) {
+      yield* put(
+        paymentsStartOnboardingAction.success(startOnboardingResult.right.value)
+      );
+      return;
+    } else if (startOnboardingResult.right.status !== 401) {
+      yield* put(
+        paymentsStartOnboardingAction.failure({
+          ...getGenericError(
+            new Error(`response status code ${startOnboardingResult.right.status}`)
           )
         })
       );

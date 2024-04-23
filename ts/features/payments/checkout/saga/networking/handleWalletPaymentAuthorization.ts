@@ -38,13 +38,13 @@ export function* handleWalletPaymentAuthorization(
     const details: AuthorizationDetails =
       action.payload.walletId !== undefined
         ? {
-            detailType: WalletDetailTypeEnum.wallet,
-            walletId: action.payload.walletId
-          }
+          detailType: WalletDetailTypeEnum.wallet,
+          walletId: action.payload.walletId
+        }
         : {
-            detailType: ApmDetailTypeEnum.apm,
-            paymentMethodId: action.payload.paymentMethodId
-          };
+          detailType: ApmDetailTypeEnum.apm,
+          paymentMethodId: action.payload.paymentMethodId
+        };
 
     const requestBody: RequestAuthorizationRequest = {
       amount: action.payload.paymentAmount,
@@ -67,26 +67,30 @@ export function* handleWalletPaymentAuthorization(
       action
     )) as SagaCallReturnType<typeof requestTransactionAuthorization>;
 
-    yield* put(
-      pipe(
-        requestTransactionAuthorizationResult,
-        E.fold(
-          error =>
-            paymentsStartPaymentAuthorizationAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
+    if (E.isLeft(requestTransactionAuthorizationResult)) {
+      yield* put(
+        paymentsStartPaymentAuthorizationAction.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(requestTransactionAuthorizationResult.left))
+          )
+        })
+      );
+      return;
+    }
 
-          res => {
-            if (res.status === 200) {
-              return paymentsStartPaymentAuthorizationAction.success(res.value);
-            }
-            return paymentsStartPaymentAuthorizationAction.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
-          }
+    if (requestTransactionAuthorizationResult.right.status === 200) {
+      yield* put(
+        paymentsStartPaymentAuthorizationAction.success(
+          requestTransactionAuthorizationResult.right.value
         )
-      )
-    );
+      );
+    } else if (requestTransactionAuthorizationResult.right.status !== 401) {
+      yield* put(
+        paymentsStartPaymentAuthorizationAction.failure({
+          ...getGenericError(new Error(`Error: ${requestTransactionAuthorizationResult.right.status}`))
+        })
+      );
+    }
   } catch (e) {
     yield* put(
       paymentsStartPaymentAuthorizationAction.failure({ ...getNetworkError(e) })
