@@ -43,6 +43,7 @@ import {
   getWalletPaymentOutcomeEnumByValue
 } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { formatPaymentNoticeNumber } from "../../common/utils";
 
 type PaymentFailureSupportModalParams = {
   failure?: WalletPaymentFailure;
@@ -110,9 +111,8 @@ const usePaymentFailureSupportModal = ({
     O.getOrElse(() => "")
   );
 
-  const formattedPaymentNoticeNumber = paymentNoticeNumber
-    .replace(/(\d{4})/g, "$1  ")
-    .trim();
+  const formattedPaymentNoticeNumber =
+    formatPaymentNoticeNumber(paymentNoticeNumber);
 
   const organizationFiscalCode = pipe(
     rptId,

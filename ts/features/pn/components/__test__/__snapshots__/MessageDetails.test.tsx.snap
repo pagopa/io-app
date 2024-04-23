@@ -1064,12 +1064,846 @@ exports[`MessageDetails component should match the snapshot with default props 1
                             }
                           >
                             <View
-                              style={
+                              accessibilityLabel="Show more data"
+                              accessibilityRole="button"
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
+                              testID="show-more-data-action"
+                            >
+                              <View
+                                importantForAccessibility="no-hide-descendants"
+                                style={
+                                  Array [
+                                    Object {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                    Object {
+                                      "backgroundColor": undefined,
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      Object {
+                                        "transform": Array [
+                                          Object {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "marginRight": 16,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      focusable={false}
+                                      height={24}
+                                      importantForAccessibility="no-hide-descendants"
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          Object {
+                                            "color": "#0073E6",
+                                          },
+                                          Object {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
+                                      }
+                                      tintColor="#0073E6"
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
+                                    >
+                                      <RNSVGGroup
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                      >
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M23.0692 1H16.1192C14.4002 1 12.9076 1.55894 12.0012 2.43149C11.0924 1.55894 9.59977 1 7.88084 1H0.928523C0.415514 1 0 1.41429 0 1.92578V20.3349C0 20.8464 0.415514 21 0.928523 21H7.88084C9.70655 21 11 21.5454 11 22.2999C11 22.8114 11.4858 23 11.9988 23C12.5118 23 13 22.8114 13 22.2999C13 21.5454 14.2911 21 16.1168 21H23.0692C23.5822 21 23.9977 20.8464 23.9977 20.3349V1.92578C23.9977 1.41429 23.5822 1 23.0692 1ZM11 19.5C10.1365 19.0244 9.10185 19 7.882 19H2.25C2.11193 19 2 18.8881 2 18.75V3.25C2 3.11193 2.11193 3 2.25 3H4.86894H7.88084C9.70655 3 11.0703 3.69633 11.0703 4.45084L11 12.309V19.5ZM22 18.75C22 18.8881 21.8881 19 21.75 19H16.1192C14.8982 19 13.8635 19.0244 13 19.5V12.3096V4.45084C13 3.69633 14.2935 3 16.1192 3H21.75C21.8881 3 22 3.11193 22 3.25V18.75ZM15 6C15 5.44772 15.4477 5 16 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H16C15.4477 7 15 6.55228 15 6ZM16 8C15.4477 8 15 8.44772 15 9C15 9.55229 15.4477 10 16 10H19C19.5523 10 20 9.55229 20 9C20 8.44772 19.5523 8 19 8H16Z"
+                                          fill={
+                                            Object {
+                                              "type": 2,
+                                            }
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                  <View
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "fontFamily": "Titillium Web",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 20,
+                                          },
+                                          Object {
+                                            "color": "#0073E6",
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Show more data
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <Modal
+                              accessibilityPositionChangeAnnouncement=""
+                              accessible={false}
+                              backdropComponent={[Function]}
+                              enableDismissOnClose={true}
+                              footerComponent={[Function]}
+                              handleComponent={[Function]}
+                              handleComponentAccessibility={
                                 Object {
-                                  "height": 16,
+                                  "accessible": false,
                                 }
                               }
-                            />
+                              hardwareAccelerated={false}
+                              importantForAccessibility="yes"
+                              snapPoints={
+                                Array [
+                                  1,
+                                ]
+                              }
+                              style={
+                                Object {
+                                  "borderCurve": "continuous",
+                                  "borderTopLeftRadius": 24,
+                                  "borderTopRightRadius": 24,
+                                  "overflow": "hidden",
+                                }
+                              }
+                              visible={true}
+                            >
+                              <RCTScrollView
+                                style={
+                                  Object {
+                                    "flex": 1,
+                                    "paddingHorizontal": 24,
+                                  }
+                                }
+                              >
+                                <View>
+                                  <View
+                                    onLayout={[Function]}
+                                  >
+                                    <View
+                                      accessibilityLabel="Notifica"
+                                      accessible={true}
+                                      style={
+                                        Object {
+                                          "marginHorizontal": -24,
+                                          "paddingHorizontal": 24,
+                                          "paddingVertical": 12,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        importantForAccessibility="no-hide-descendants"
+                                        style={
+                                          Object {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "space-between",
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Object {
+                                              "flex": 1,
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            accessibilityElementsHidden={false}
+                                            accessible={true}
+                                            importantForAccessibility="yes"
+                                          >
+                                            <Text
+                                              allowFontScaling={false}
+                                              color="grey-700"
+                                              defaultColor="black"
+                                              defaultWeight="SemiBold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 18,
+                                                  "lineHeight": 25,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 18,
+                                                    "lineHeight": 25,
+                                                  },
+                                                  Object {
+                                                    "color": "#555C70",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "400",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Regular"
+                                            >
+                                              Notifica
+                                            </Text>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <View
+                                      accessibilityLabel="Codice IUN, copia"
+                                      accessibilityRole="button"
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                    >
+                                      <View
+                                        importantForAccessibility="no-hide-descendants"
+                                        style={
+                                          Array [
+                                            Object {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            Object {
+                                              "backgroundColor": undefined,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "alignItems": "center",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              },
+                                              Object {
+                                                "transform": Array [
+                                                  Object {
+                                                    "scale": undefined,
+                                                  },
+                                                ],
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              Object {
+                                                "marginRight": 16,
+                                              }
+                                            }
+                                          >
+                                            <RNSVGSvgView
+                                              accessibilityElementsHidden={true}
+                                              accessibilityLabel=""
+                                              accessible={false}
+                                              align="xMidYMid"
+                                              bbHeight={24}
+                                              bbWidth={24}
+                                              focusable={false}
+                                              height={24}
+                                              importantForAccessibility="no-hide-descendants"
+                                              meetOrSlice={0}
+                                              minX={0}
+                                              minY={0}
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "backgroundColor": "transparent",
+                                                    "borderWidth": 0,
+                                                  },
+                                                  Object {
+                                                    "color": "#99A3C1",
+                                                  },
+                                                  Object {
+                                                    "flex": 0,
+                                                    "height": 24,
+                                                    "width": 24,
+                                                  },
+                                                ]
+                                              }
+                                              tintColor="#99A3C1"
+                                              vbHeight={24}
+                                              vbWidth={24}
+                                              width={24}
+                                            >
+                                              <RNSVGGroup
+                                                fill={
+                                                  Object {
+                                                    "payload": 4278190080,
+                                                    "type": 0,
+                                                  }
+                                                }
+                                              >
+                                                <RNSVGPath
+                                                  clipRule={0}
+                                                  d="M5 2C3.34315 2 2 3.34315 2 5V19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V10H17C15.3431 10 14 8.65685 14 7V2H5ZM16 2.49902V7C16 7.55229 16.4477 8 17 8H21.501C21.3911 7.83409 21.2641 7.67835 21.1213 7.53553L16.4645 2.87868C16.3216 2.73586 16.1659 2.60893 16 2.49902ZM0 5C0 2.23858 2.23858 0 5 0H14.3431C15.6692 0 16.941 0.526784 17.8787 1.46447L22.5355 6.12132C23.4732 7.059 24 8.33077 24 9.65685V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5ZM5 6.5C5 5.67157 5.67157 5 6.5 5H9.5C10.3284 5 11 5.67157 11 6.5C11 7.32843 10.3284 8 9.5 8H6.5C5.67157 8 5 7.32843 5 6.5ZM6 13C5.44772 13 5 13.4477 5 14C5 14.5523 5.44772 15 6 15H18C18.5523 15 19 14.5523 19 14C19 13.4477 18.5523 13 18 13H6ZM5 18C5 17.4477 5.44772 17 6 17H18C18.5523 17 19 17.4477 19 18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z"
+                                                  fill={
+                                                    Object {
+                                                      "type": 2,
+                                                    }
+                                                  }
+                                                  fillRule={0}
+                                                  propList={
+                                                    Array [
+                                                      "fill",
+                                                      "fillRule",
+                                                    ]
+                                                  }
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGSvgView>
+                                          </View>
+                                          <View
+                                            style={
+                                              Object {
+                                                "flex": 1,
+                                              }
+                                            }
+                                          >
+                                            <Text
+                                              allowFontScaling={false}
+                                              color="grey-700"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 14,
+                                                  "lineHeight": 21,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 14,
+                                                    "lineHeight": 21,
+                                                  },
+                                                  Object {
+                                                    "color": "#555C70",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "400",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Regular"
+                                            >
+                                              Codice IUN
+                                            </Text>
+                                            <Text
+                                              allowFontScaling={false}
+                                              color="blue"
+                                              defaultColor="black"
+                                              defaultWeight="SemiBold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 18,
+                                                  "lineHeight": 25,
+                                                }
+                                              }
+                                              numberOfLines={2}
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 18,
+                                                    "lineHeight": 25,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "600",
+                                                  },
+                                                ]
+                                              }
+                                              weight="SemiBold"
+                                            >
+                                              731143-7-0317-8200-0
+                                            </Text>
+                                          </View>
+                                          <View
+                                            style={
+                                              Object {
+                                                "marginLeft": 16,
+                                              }
+                                            }
+                                          >
+                                            <RNSVGSvgView
+                                              accessibilityElementsHidden={true}
+                                              accessibilityLabel=""
+                                              accessible={false}
+                                              align="xMidYMid"
+                                              bbHeight={24}
+                                              bbWidth={24}
+                                              focusable={false}
+                                              height={24}
+                                              importantForAccessibility="no-hide-descendants"
+                                              meetOrSlice={0}
+                                              minX={0}
+                                              minY={0}
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "backgroundColor": "transparent",
+                                                    "borderWidth": 0,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                  },
+                                                  Object {
+                                                    "flex": 0,
+                                                    "height": 24,
+                                                    "width": 24,
+                                                  },
+                                                ]
+                                              }
+                                              tintColor="#0073E6"
+                                              vbHeight={24}
+                                              vbWidth={24}
+                                              width={24}
+                                            >
+                                              <RNSVGGroup
+                                                fill={
+                                                  Object {
+                                                    "payload": 4278190080,
+                                                    "type": 0,
+                                                  }
+                                                }
+                                              >
+                                                <RNSVGPath
+                                                  clipRule={0}
+                                                  d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
+                                                  fill={
+                                                    Object {
+                                                      "type": 2,
+                                                    }
+                                                  }
+                                                  fillRule={0}
+                                                  propList={
+                                                    Array [
+                                                      "fill",
+                                                      "fillRule",
+                                                    ]
+                                                  }
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGSvgView>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <View
+                                      accessibilityLabel="Message"
+                                      accessible={true}
+                                      style={
+                                        Object {
+                                          "marginHorizontal": -24,
+                                          "paddingHorizontal": 24,
+                                          "paddingVertical": 12,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        importantForAccessibility="no-hide-descendants"
+                                        style={
+                                          Object {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "space-between",
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Object {
+                                              "flex": 1,
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            accessibilityElementsHidden={false}
+                                            accessible={true}
+                                            importantForAccessibility="yes"
+                                          >
+                                            <Text
+                                              allowFontScaling={false}
+                                              color="grey-700"
+                                              defaultColor="black"
+                                              defaultWeight="SemiBold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 18,
+                                                  "lineHeight": 25,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 18,
+                                                    "lineHeight": 25,
+                                                  },
+                                                  Object {
+                                                    "color": "#555C70",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "400",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Regular"
+                                            >
+                                              Message
+                                            </Text>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                    <View
+                                      accessibilityLabel="ID messaggio, copy"
+                                      accessibilityRole="button"
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                    >
+                                      <View
+                                        importantForAccessibility="no-hide-descendants"
+                                        style={
+                                          Array [
+                                            Object {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            Object {
+                                              "backgroundColor": undefined,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "alignItems": "center",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              },
+                                              Object {
+                                                "transform": Array [
+                                                  Object {
+                                                    "scale": undefined,
+                                                  },
+                                                ],
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              Object {
+                                                "marginRight": 16,
+                                              }
+                                            }
+                                          >
+                                            <RNSVGSvgView
+                                              accessibilityElementsHidden={true}
+                                              accessibilityLabel=""
+                                              accessible={false}
+                                              align="xMidYMid"
+                                              bbHeight={24}
+                                              bbWidth={24}
+                                              focusable={false}
+                                              height={24}
+                                              importantForAccessibility="no-hide-descendants"
+                                              meetOrSlice={0}
+                                              minX={0}
+                                              minY={0}
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "backgroundColor": "transparent",
+                                                    "borderWidth": 0,
+                                                  },
+                                                  Object {
+                                                    "color": "#99A3C1",
+                                                  },
+                                                  Object {
+                                                    "flex": 0,
+                                                    "height": 24,
+                                                    "width": 24,
+                                                  },
+                                                ]
+                                              }
+                                              tintColor="#99A3C1"
+                                              vbHeight={24}
+                                              vbWidth={24}
+                                              width={24}
+                                            >
+                                              <RNSVGGroup
+                                                fill={
+                                                  Object {
+                                                    "payload": 4278190080,
+                                                    "type": 0,
+                                                  }
+                                                }
+                                              >
+                                                <RNSVGPath
+                                                  clipRule={0}
+                                                  d="M5 2C3.34315 2 2 3.34315 2 5V19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V10H17C15.3431 10 14 8.65685 14 7V2H5ZM16 2.49902V7C16 7.55229 16.4477 8 17 8H21.501C21.3911 7.83409 21.2641 7.67835 21.1213 7.53553L16.4645 2.87868C16.3216 2.73586 16.1659 2.60893 16 2.49902ZM0 5C0 2.23858 2.23858 0 5 0H14.3431C15.6692 0 16.941 0.526784 17.8787 1.46447L22.5355 6.12132C23.4732 7.059 24 8.33077 24 9.65685V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5ZM5 6.5C5 5.67157 5.67157 5 6.5 5H9.5C10.3284 5 11 5.67157 11 6.5C11 7.32843 10.3284 8 9.5 8H6.5C5.67157 8 5 7.32843 5 6.5ZM6 13C5.44772 13 5 13.4477 5 14C5 14.5523 5.44772 15 6 15H18C18.5523 15 19 14.5523 19 14C19 13.4477 18.5523 13 18 13H6ZM5 18C5 17.4477 5.44772 17 6 17H18C18.5523 17 19 17.4477 19 18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z"
+                                                  fill={
+                                                    Object {
+                                                      "type": 2,
+                                                    }
+                                                  }
+                                                  fillRule={0}
+                                                  propList={
+                                                    Array [
+                                                      "fill",
+                                                      "fillRule",
+                                                    ]
+                                                  }
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGSvgView>
+                                          </View>
+                                          <View
+                                            style={
+                                              Object {
+                                                "flex": 1,
+                                              }
+                                            }
+                                          >
+                                            <Text
+                                              allowFontScaling={false}
+                                              color="grey-700"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 14,
+                                                  "lineHeight": 21,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 14,
+                                                    "lineHeight": 21,
+                                                  },
+                                                  Object {
+                                                    "color": "#555C70",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "400",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Regular"
+                                            >
+                                              Message ID
+                                            </Text>
+                                            <Text
+                                              allowFontScaling={false}
+                                              color="blue"
+                                              defaultColor="black"
+                                              defaultWeight="SemiBold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 18,
+                                                  "lineHeight": 25,
+                                                }
+                                              }
+                                              numberOfLines={2}
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 18,
+                                                    "lineHeight": 25,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "600",
+                                                  },
+                                                ]
+                                              }
+                                              weight="SemiBold"
+                                            >
+                                              01HRYR6C761DGH3S84HBBXMMKT
+                                            </Text>
+                                          </View>
+                                          <View
+                                            style={
+                                              Object {
+                                                "marginLeft": 16,
+                                              }
+                                            }
+                                          >
+                                            <RNSVGSvgView
+                                              accessibilityElementsHidden={true}
+                                              accessibilityLabel=""
+                                              accessible={false}
+                                              align="xMidYMid"
+                                              bbHeight={24}
+                                              bbWidth={24}
+                                              focusable={false}
+                                              height={24}
+                                              importantForAccessibility="no-hide-descendants"
+                                              meetOrSlice={0}
+                                              minX={0}
+                                              minY={0}
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "backgroundColor": "transparent",
+                                                    "borderWidth": 0,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                  },
+                                                  Object {
+                                                    "flex": 0,
+                                                    "height": 24,
+                                                    "width": 24,
+                                                  },
+                                                ]
+                                              }
+                                              tintColor="#0073E6"
+                                              vbHeight={24}
+                                              vbWidth={24}
+                                              width={24}
+                                            >
+                                              <RNSVGGroup
+                                                fill={
+                                                  Object {
+                                                    "payload": 4278190080,
+                                                    "type": 0,
+                                                  }
+                                                }
+                                              >
+                                                <RNSVGPath
+                                                  clipRule={0}
+                                                  d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
+                                                  fill={
+                                                    Object {
+                                                      "type": 2,
+                                                    }
+                                                  }
+                                                  fillRule={0}
+                                                  propList={
+                                                    Array [
+                                                      "fill",
+                                                      "fillRule",
+                                                    ]
+                                                  }
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGSvgView>
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                              </RCTScrollView>
+                            </Modal>
                           </View>
                         </View>
                       </RCTScrollView>
