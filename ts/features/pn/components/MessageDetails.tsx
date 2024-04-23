@@ -22,8 +22,8 @@ import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/Me
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { UIMessageId } from "../../messages/types";
 import {
-  canShowMorePaymentsLink,
-  maxVisiblePaymentCountGenerator
+  maxVisiblePaymentCountGenerator,
+  shouldUseBottomSheetForPayments
 } from "../utils";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
@@ -31,6 +31,7 @@ import { MessageBottomMenu } from "./MessageBottomMenu";
 import { MessagePayments } from "./MessagePayments";
 import { MessageInfo } from "./MessageInfo";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
+import { MessageFooter } from "./MessageFooter";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -119,9 +120,21 @@ export const MessageDetails = ({
           <VSpacer size={16} />
           <MessageInfo iun={message.iun} />
         </ContentWrapper>
-        <MessageBottomMenu serviceId={serviceId} />
+        <MessageBottomMenu
+          iun={message.iun}
+          messageId={messageId}
+          payments={payments}
+          serviceId={serviceId}
+        />
       </ScrollView>
-      {canShowMorePaymentsLink(isCancelled, payments) && (
+      <MessageFooter
+        messageId={messageId}
+        payments={payments}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+        isCancelled={isCancelled}
+        presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+      />
+      {shouldUseBottomSheetForPayments(isCancelled, payments) && (
         <MessagePaymentBottomSheet
           messageId={messageId}
           payments={payments}

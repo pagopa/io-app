@@ -12,10 +12,11 @@ import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/w
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletPaymentPspSortType } from "../../checkout/types";
-import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { PaymentCardProps } from "../components/PaymentCard";
+import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { WalletCard } from "../../../newWallet/types";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -50,8 +51,9 @@ export const isPaymentMethodExpired = (
 ): boolean =>
   pipe(
     details?.expiryDate,
+    O.fromNullable,
     O.chainNullableK(getDateFromExpiryDate),
-    O.map(isExpiredDate),
+    O.chainNullableK(isExpiredDate),
     O.getOrElse(() => false)
   );
 
@@ -104,28 +106,6 @@ export const isPaymentSupported = (
   );
 };
 
-export const getPaymentLogo = (
-  details: UIWalletInfoDetails
-): IOLogoPaymentType | undefined => {
-  if (details.maskedEmail !== undefined) {
-    return "payPal";
-  } else if (details.maskedNumber !== undefined) {
-    return "bancomatPay";
-  } else if (details.lastFourDigits !== undefined) {
-    return pipe(
-      details.brand,
-      O.fromNullable,
-      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
-      O.fold(
-        () => undefined,
-        ([logoName, _]) => logoName
-      )
-    ) as IOLogoPaymentType;
-  }
-
-  return undefined;
-};
-
 export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
   "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/";
 
@@ -152,13 +132,52 @@ export const getPaymentCardPropsFromWalletInfo = (
   wallet: WalletInfo
 ): PaymentCardProps => {
   const details = wallet.details as UIWalletInfoDetails;
+  const isExpired = isPaymentMethodExpired(details);
 
   return {
     hpan: details.lastFourDigits,
-    abiCode: "", // TODO IOBP-622 refactor payment card
     brand: details.brand,
     expireDate: getDateFromExpiryDate(details.expiryDate),
     holderEmail: details.maskedEmail,
-    holderPhone: details.maskedNumber
+    holderPhone: details.maskedNumber,
+    isExpired
   };
 };
+
+export const getPaymentLogoFromWalletDetails = (
+  details: UIWalletInfoDetails
+): IOLogoPaymentType | undefined => {
+  if (details.maskedEmail !== undefined) {
+    return "payPal";
+  } else if (details.maskedNumber !== undefined) {
+    return "bancomatPay";
+  } else {
+    return pipe(
+      details.brand,
+      O.fromNullable,
+      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
+      O.map(([logoName, _]) => logoName as IOLogoPaymentType),
+      O.toUndefined
+    );
+  }
+};
+
+export const mapWalletIdToCardKey = (walletId: string) => `method_${walletId}`;
+
+export const mapWalletsToCards = (
+  wallets: ReadonlyArray<WalletInfo>
+): ReadonlyArray<WalletCard> =>
+  wallets.map<WalletCard>(wallet => ({
+    ...getPaymentCardPropsFromWalletInfo(wallet),
+    key: mapWalletIdToCardKey(wallet.walletId),
+    type: "payment",
+    category: "payment",
+    walletId: wallet.walletId
+  }));
+
+/**
+ * Function that returns a formatted payment notice number
+ * by placing two spaces between every four numbers
+ */
+export const formatPaymentNoticeNumber = (noticeNumber: string) =>
+  noticeNumber.replace(/(\d{4})/g, "$1  ").trim();

@@ -5,14 +5,11 @@ import {
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import { WithTestID } from "../../../../types/WithTestID";
-import { isExpiredDate } from "../../../../utils/dates";
 import { PaymentCardProps } from "./PaymentCard";
 import { PaymentCardPressableBase } from "./PaymentCardPressableBase";
 
@@ -62,13 +59,6 @@ const PaymentCardSmall = ({
     return props.brand;
   }, [props]);
 
-  const isExpired = pipe(
-    props.expireDate,
-    O.fromNullable,
-    O.chainNullableK(isExpiredDate),
-    O.getOrElse(() => false)
-  );
-
   return (
     <PaymentCardPressableBase
       onPress={onPress}
@@ -76,12 +66,12 @@ const PaymentCardSmall = ({
       accessibilityLabel={accessibilityLabel}
     >
       <View
-        style={[styles.card, isExpired && styles.cardError]}
+        style={[styles.card, props.isExpired && styles.cardError]}
         testID={testID}
       >
         <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
           <LogoPaymentWithFallback brand={iconName} size={24} />
-          {isExpired && (
+          {props.isExpired && (
             <Icon
               testID={`${testID}-errorIcon`}
               name="errorFilled"
@@ -95,7 +85,7 @@ const PaymentCardSmall = ({
           ellipsizeMode="tail"
           weight="Regular"
           numberOfLines={1}
-          color={isExpired ? "error-850" : "grey-700"}
+          color={props.isExpired ? "error-850" : "grey-700"}
         >
           {labelText}
         </Chip>

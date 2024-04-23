@@ -12,7 +12,7 @@ import {
   WalletPaymentAuthorizePayload,
   paymentsStartPaymentAuthorizationAction
 } from "../store/actions/networking";
-import { walletPaymentAuthorizationUrlSelector } from "../store/selectors";
+import { walletPaymentAuthorizationUrlSelector } from "../store/selectors/transaction";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
