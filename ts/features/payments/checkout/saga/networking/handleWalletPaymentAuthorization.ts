@@ -2,6 +2,8 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { ApmDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/ApmDetailType";
+import { AuthorizationDetails } from "../../../../../../definitions/pagopa/ecommerce/AuthorizationDetails";
 import {
   LanguageEnum,
   RequestAuthorizationRequest
@@ -33,16 +35,24 @@ export function* handleWalletPaymentAuthorization(
       return;
     }
 
+    const details: AuthorizationDetails =
+      action.payload.walletId !== undefined
+        ? {
+            detailType: WalletDetailTypeEnum.wallet,
+            walletId: action.payload.walletId
+          }
+        : {
+            detailType: ApmDetailTypeEnum.apm,
+            paymentMethodId: action.payload.paymentMethodId
+          };
+
     const requestBody: RequestAuthorizationRequest = {
       amount: action.payload.paymentAmount,
       fee: action.payload.paymentFees,
       isAllCCP: true,
       language: LanguageEnum.IT,
       pspId: action.payload.pspId,
-      details: {
-        detailType: WalletDetailTypeEnum.wallet,
-        walletId: action.payload.walletId
-      }
+      details
     };
     const requestTransactionAuthorizationRequest =
       requestTransactionAuthorization({
