@@ -11,6 +11,7 @@ import renderer from "react-test-renderer";
 // import I18n from "i18n-js";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TosWebviewComponent from "../TosWebviewComponent";
+import { FlowType } from "../../utils/analytics";
 // import * as urlUtils from "../../../ts/utils/url";
 // import brokenLinkImage from "../../../img/broken-link.png";
 
@@ -29,6 +30,7 @@ describe("TosWebviewComponent", () => {
         .create(
           <SafeAreaProvider>
             <TosWebviewComponent
+              flow="firstOnboarding"
               shouldRenderFooter={true}
               webViewSource={{
                 html: "<html><head></head><body></body></html>"
@@ -213,17 +215,20 @@ type CurrentTestConfiguration = {
   onReload?: () => void;
   onLoaded?: () => void;
   onWebViewMessageReceived?: (event: any) => void;
+  flow?: FlowType;
 };
 
 const commonSetup = ({
   shouldRenderFooter = true,
   onRightButton = () => undefined,
   onReload = () => undefined,
-  onLoaded = () => undefined
+  onLoaded = () => undefined,
+  flow = "firstOnboarding"
 }: CurrentTestConfiguration = {}) =>
   render(
     <SafeAreaProvider>
       <TosWebviewComponent
+        flow={flow}
         shouldRenderFooter={shouldRenderFooter}
         webViewSource={{ html: "<html><head></head><body></body></html>" }}
         handleLoadEnd={onLoaded}

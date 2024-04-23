@@ -15,6 +15,11 @@ import {
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
+import {
+  trackToSWebViewError,
+  trackToSWebViewErrorRetry
+} from "../screens/authentication/analytics";
+import { FlowType } from "../utils/analytics";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
 
@@ -24,6 +29,7 @@ type Props = {
   handleReload: () => void;
   onAcceptTos?: () => void;
   shouldRenderFooter?: boolean;
+  flow: FlowType;
 } & Pick<ViewProps, "testID">;
 
 const TosWebviewComponent: React.FunctionComponent<Props> = ({
@@ -31,19 +37,22 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
   handleReload,
   webViewSource,
   shouldRenderFooter,
-  onAcceptTos
+  onAcceptTos,
+  flow
 }: Props) => {
   const [hasError, setHasError] = useState(false);
 
   const handleError = useCallback(() => {
     handleLoadEnd();
     setHasError(true);
-  }, [setHasError, handleLoadEnd]);
+    trackToSWebViewError(flow);
+  }, [handleLoadEnd, flow]);
 
   const handleRetry = useCallback(() => {
     handleReload();
     setHasError(false);
-  }, [setHasError, handleReload]);
+    trackToSWebViewErrorRetry(flow);
+  }, [handleReload, flow]);
 
   const renderError = () => (
     <>

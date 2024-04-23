@@ -64,6 +64,8 @@ const OnboardingTosScreen = () => {
   const tosVersion = tosConfig.tos_version;
   const privacyUrl = tosConfig.tos_url;
 
+  const flow = getFlowType(true, isFirstOnBoarding);
+
   const hasAcceptedCurrentTos = pot.getOrElse(
     pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
     false
@@ -106,7 +108,7 @@ const OnboardingTosScreen = () => {
           text: I18n.t("global.buttons.exit"),
           style: "default",
           onPress: () => {
-            trackTosUserExit(getFlowType(true, isFirstOnBoarding));
+            trackTosUserExit(flow);
             dispatch(abortOnboarding());
           }
         }
@@ -152,6 +154,7 @@ const OnboardingTosScreen = () => {
           </View>
         )}
         <TosWebviewComponent
+          flow={flow}
           handleLoadEnd={handleLoadEnd}
           handleReload={handleReload}
           webViewSource={{ uri: privacyUrl }}
@@ -160,11 +163,7 @@ const OnboardingTosScreen = () => {
             // eslint-disable-next-line no-console
             console.log("click");
             dispatch(tosAccepted(tosVersion));
-            void trackTosAccepted(
-              tosVersion,
-              getFlowType(true, isFirstOnBoarding),
-              store.getState()
-            );
+            void trackTosAccepted(tosVersion, flow, store.getState());
           }}
         />
       </SafeAreaView>

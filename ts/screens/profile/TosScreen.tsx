@@ -25,9 +25,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const flow = getFlowType(false, false);
 
   useOnFirstRender(() => {
-    trackTosScreen(getFlowType(false, false));
+    trackTosScreen(flow);
   });
 
   const handleLoadEnd = useCallback(() => {
@@ -49,6 +50,7 @@ const TosScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
         <TosWebviewComponent
+          flow={flow}
           handleLoadEnd={handleLoadEnd}
           handleReload={handleReload}
           webViewSource={{ uri: privacyUrl }}
