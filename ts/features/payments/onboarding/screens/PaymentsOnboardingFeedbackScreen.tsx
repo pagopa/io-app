@@ -76,8 +76,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
           }
         ]
       });
-    } else {
-      navigation.popToTop();
     }
   };
 
