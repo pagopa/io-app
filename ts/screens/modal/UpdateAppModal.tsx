@@ -3,25 +3,58 @@
  *
  */
 
-import React, { useCallback } from "react";
-import { Linking } from "react-native";
-import { IOToast } from "@pagopa/io-app-design-system";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  AccessibilityInfo,
+  Linking,
+  Modal,
+  StyleSheet,
+  View
+} from "react-native";
+import {
+  IOVisualCostants,
+  ToastNotification
+} from "@pagopa/io-app-design-system";
+import Animated, {
+  Easing,
+  SequencedTransition,
+  SlideInUp,
+  SlideOutUp
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
 import { openWebUrl } from "../../utils/url";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
-import withModalAndToastProvider from "../../hocs/withModalAndToastProvider";
+import { Dismissable } from "../../components/ui/Dismissable";
 import { trackForcedUpdateScreen, trackUpdateAppButton } from "./analytics";
 
 const UpdateAppModal: React.FC = () => {
+  // Disable Android back button
+  useHardwareBackButton(() => true);
+  trackForcedUpdateScreen();
+
+  const insets = useSafeAreaInsets();
+  const timeoutRef = useRef<number>();
+  const [isError, setIsError] = useState(false);
+
   const title = I18n.t("titleUpdateApp");
   const subtitle = I18n.t("messageUpdateApp");
   const actionLabel = I18n.t("btnUpdateApp");
-  // Disable Android back button
-  useHardwareBackButton(() => true);
+  const errorMessage = I18n.t("msgErrorUpdateApp");
 
-  trackForcedUpdateScreen();
+  useEffect(() => {
+    if (isError) {
+      AccessibilityInfo.announceForAccessibility(errorMessage);
+      // eslint-disable-next-line functional/immutable-data
+      timeoutRef.current = setTimeout(() => setIsError(false), 5000);
+    }
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, [isError, errorMessage]);
 
   // Tries to open the native app store, falling to browser web store
   const openAppStore = useCallback(async () => {
@@ -31,23 +64,57 @@ const UpdateAppModal: React.FC = () => {
       await Linking.openURL(storeUrl);
     } catch (e) {
       openWebUrl(webStoreURL, () => {
-        IOToast.error(I18n.t("msgErrorUpdateApp"));
+        setIsError(true);
       });
     }
   }, []);
 
+  const handleCloseError = useCallback(() => {
+    setIsError(false);
+  }, []);
+
   return (
-    <OperationResultScreenContent
-      pictogram="updateOS"
-      title={title}
-      subtitle={subtitle}
-      action={{
-        label: actionLabel,
-        accessibilityLabel: actionLabel,
-        onPress: openAppStore
-      }}
-    />
+    <Modal>
+      <OperationResultScreenContent
+        pictogram="updateOS"
+        title={title}
+        subtitle={subtitle}
+        action={{
+          label: actionLabel,
+          accessibilityLabel: actionLabel,
+          onPress: openAppStore
+        }}
+      />
+      {/* Temporary, to be replaced */}
+      {isError && (
+        <View accessible style={[styles.alertContainer, { top: insets.top }]}>
+          <Animated.View
+            entering={SlideInUp.duration(300).easing(Easing.inOut(Easing.exp))}
+            exiting={SlideOutUp.duration(300).easing(Easing.inOut(Easing.exp))}
+            layout={SequencedTransition.duration(300)}
+            style={{ paddingBottom: 8 }}
+          >
+            <Dismissable onDismiss={handleCloseError}>
+              <ToastNotification
+                message={errorMessage}
+                icon="errorFilled"
+                variant="error"
+              />
+            </Dismissable>
+          </Animated.View>
+        </View>
+      )}
+    </Modal>
   );
 };
 
-export default withModalAndToastProvider(UpdateAppModal);
+const styles = StyleSheet.create({
+  alertContainer: {
+    position: "absolute",
+    right: IOVisualCostants.appMarginDefault,
+    left: IOVisualCostants.appMarginDefault,
+    zIndex: 1000
+  }
+});
+
+export default UpdateAppModal;
