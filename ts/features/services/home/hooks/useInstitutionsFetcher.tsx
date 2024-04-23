@@ -10,7 +10,7 @@ import {
   paginatedInstitutionsSelector
 } from "../store/reducers";
 
-const LIMIT: number = 20;
+const LIMIT: number = 10;
 
 export const useInstitutionsFetcher = () => {
   const dispatch = useIODispatch();
