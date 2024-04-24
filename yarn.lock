@@ -4545,7 +4545,7 @@
   resolved "https://registry.yarnpkg.com/@xstate/machine-extractor/-/machine-extractor-0.7.1.tgz#157d5083db3f116b7ae28b5b3aef8f457f052491"
   integrity sha512-dQEt6enmHXtD93vDcMefhb5bh1zh0mLCRT8CvYJjCpTjaTth7sXqlU6ri1qP0HDR6IbU9s2/WVNw7Oy7O/Sqfg==
 
-"@xstate/react5@npm:@xstate/react@4.1.1":
+"@xstate/react@npm:@xstate/react@4":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@xstate/react/-/react-4.1.1.tgz#2f580fc5f83d195f95b56df6cd8061c66660d9fa"
   integrity sha512-pFp/Y+bnczfaZ0V8B4LOhx3d6Gd71YKAPbzerGqydC2nsYN/mp7RZu3q/w6/kvI2hwR/jeDeetM7xc3JFZH2NA==
@@ -4553,20 +4553,20 @@
     use-isomorphic-layout-effect "^1.1.2"
     use-sync-external-store "^1.2.0"
 
-"@xstate/react@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-3.0.1.tgz#937eeb5d5d61734ab756ca40146f84a6fe977095"
-  integrity sha512-/tq/gg92P9ke8J+yDNDBv5/PAxBvXJf2cYyGDByzgtl5wKaxKxzDT82Gj3eWlCJXkrBg4J5/V47//gRJuVH2fA==
-  dependencies:
-    use-isomorphic-layout-effect "^1.0.0"
-    use-sync-external-store "^1.0.0"
-
 "@xstate/tools-shared@1.2.3":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@xstate/tools-shared/-/tools-shared-1.2.3.tgz#a2e19119a7a273bbbdd35adaf6ea52cb80add064"
   integrity sha512-6CL2Tz2S0+FSSP+940G9glMHG8g326amsVoU+b5wkY2KsbPrGga53r25PjiiP7bGrNtf4SCSsbYW/NClrHmZGQ==
   dependencies:
     "@xstate/machine-extractor" "0.7.1"
+
+"@xstate4/react@npm:@xstate/react@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-3.0.1.tgz#937eeb5d5d61734ab756ca40146f84a6fe977095"
+  integrity sha512-/tq/gg92P9ke8J+yDNDBv5/PAxBvXJf2cYyGDByzgtl5wKaxKxzDT82Gj3eWlCJXkrBg4J5/V47//gRJuVH2fA==
+  dependencies:
+    use-isomorphic-layout-effect "^1.0.0"
+    use-sync-external-store "^1.0.0"
 
 "@yarnpkg/lockfile@^1.0.0", "@yarnpkg/lockfile@^1.1.0":
   version "1.1.0"
@@ -17363,15 +17363,20 @@ xss@1.0.10:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-"xstate5@npm:xstate@5.11.0":
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.11.0.tgz#2155f750d9ff6c4d24b3a9aee620e7e6661dae0c"
-  integrity sha512-0MqTLpc7dr/hXFHY25oN4sdnO3Ey6MYy9WkWxOgiwjPV0S6rWwLb5nZlRlPDSku2GEV4/y6AR8bX+GNCOxnEwA==
+"xstate4@npm:xstate@4.33.6":
+  version "4.33.6"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.33.6.tgz#9e23f78879af106f1de853aba7acb2bc3b1eb950"
+  integrity sha512-A5R4fsVKADWogK2a43ssu8Fz1AF077SfrKP1ZNyDBD8lNa/l4zfR//Luofp5GSWehOQr36Jp0k2z7b+sH2ivyg==
 
-xstate@^4.29.0, xstate@^4.33.6:
+xstate@^4.29.0:
   version "4.35.4"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.4.tgz#87b2a45b6c7e84d820f56378408c6531ca5c4662"
   integrity sha512-mqRBYHhljP1xIItI4xnSQNHEv6CKslSM1cOGmvhmxeoDPAZgNbhSUYAL5N6DZIxRfpYY+M+bSm3mUFHD63iuvg==
+
+xstate@^5:
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.11.0.tgz#2155f750d9ff6c4d24b3a9aee620e7e6661dae0c"
+  integrity sha512-0MqTLpc7dr/hXFHY25oN4sdnO3Ey6MYy9WkWxOgiwjPV0S6rWwLb5nZlRlPDSku2GEV4/y6AR8bX+GNCOxnEwA==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"

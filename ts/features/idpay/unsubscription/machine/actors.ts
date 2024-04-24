@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { flow, pipe } from "fp-ts/lib/function";
-import { fromPromise } from "xstate5";
+import { fromPromise } from "xstate";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { IDPayClient } from "../../common/api/client";

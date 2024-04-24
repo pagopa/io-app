@@ -27,6 +27,7 @@ import {
 
 const UnsubscriptionConfirmationScreen = () => {
   const { useActorRef, useSelector } = IdPayUnsubscriptionMachineContext;
+
   const machine = useActorRef();
 
   const isLoading = useSelector(isLoadingSelector);

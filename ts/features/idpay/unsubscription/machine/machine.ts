@@ -1,4 +1,4 @@
-import { assertEvent, fromPromise, setup } from "xstate5";
+import { assertEvent, assign, fromPromise, setup } from "xstate";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   LOADING_TAG,
@@ -43,7 +43,8 @@ export const idPayUnsubscriptionMachine = setup({
   },
   guards: {
     hasMissingInitiativeData: ({ context }) =>
-      !!context.initiativeName || !!context.initiativeType,
+      context.initiativeName === undefined ||
+      context.initiativeType === undefined,
     isSessionExpired: data => {
       // eslint-disable-next-line no-console
       console.log(data);
@@ -63,20 +64,24 @@ export const idPayUnsubscriptionMachine = setup({
     onError: {
       target: ".UnsubscriptionFailure"
     },
-    onDone: [
-      {
-        guard: "hasMissingInitiativeData",
-        target: ".LoadingInitiativeInfo"
-      },
-      {
-        target: ".Idle"
-      }
-    ]
+    onDone: {
+      actions: assign(event => ({ ...event.event.output })),
+      target: ".Idle"
+    }
   },
   initial: "Idle",
   states: {
     Idle: {
-      tags: [LOADING_TAG]
+      tags: [LOADING_TAG],
+      always: [
+        {
+          guard: "hasMissingInitiativeData",
+          target: "LoadingInitiativeInfo"
+        },
+        {
+          target: "WaitingConfirmation"
+        }
+      ]
     },
     LoadingInitiativeInfo: {
       tags: [LOADING_TAG],
@@ -86,14 +91,19 @@ export const idPayUnsubscriptionMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: ".SessionExpired"
+            target: "SessionExpired"
           },
           {
-            target: ".UnsubscriptionFailure"
+            target: "UnsubscriptionFailure"
           }
         ],
         onDone: {
-          target: ".WaitingConfirmation"
+          actions: assign(({ event }) => ({
+            initiativeId: event.output.initiativeId,
+            initiativeName: event.output.initiativeName,
+            initiativeType: event.output.initiativeRewardType
+          })),
+          target: "WaitingConfirmation"
         }
       }
     },
@@ -101,7 +111,10 @@ export const idPayUnsubscriptionMachine = setup({
       tags: [WAITING_USER_INPUT_TAG],
       on: {
         "confirm-unsubscription": {
-          target: ".Unsubscribing"
+          target: "Unsubscribing"
+        },
+        exit: {
+          actions: "exitUnsubscription"
         }
       }
     },
@@ -113,14 +126,14 @@ export const idPayUnsubscriptionMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: ".SessionExpired"
+            target: "SessionExpired"
           },
           {
-            target: ".UnsubscriptionFailure"
+            target: "UnsubscriptionFailure"
           }
         ],
         onDone: {
-          target: ".UnsubscriptionSuccess"
+          target: "UnsubscriptionSuccess"
         }
       }
     },

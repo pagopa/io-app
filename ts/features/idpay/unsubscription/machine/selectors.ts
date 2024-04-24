@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { StateFrom } from "xstate5";
+import { StateFrom } from "xstate";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
 import { LOADING_TAG } from "../../../../xstate/utils";

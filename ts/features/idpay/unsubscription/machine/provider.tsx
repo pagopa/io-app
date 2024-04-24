@@ -1,4 +1,4 @@
-import { createActorContext } from "@xstate/react5";
+import { createActorContext } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -33,7 +33,12 @@ type Props = {
   initiativeType?: InitiativeRewardTypeEnum;
 };
 
-export const IDPayUnsubscriptionMachineProvider = ({ children }: Props) => {
+export const IDPayUnsubscriptionMachineProvider = ({
+  children,
+  initiativeId,
+  initiativeName,
+  initiativeType
+}: Props) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
@@ -66,7 +71,10 @@ export const IDPayUnsubscriptionMachineProvider = ({ children }: Props) => {
   });
 
   return (
-    <IdPayUnsubscriptionMachineContext.Provider logic={machine}>
+    <IdPayUnsubscriptionMachineContext.Provider
+      logic={machine}
+      options={{ input: { initiativeId, initiativeName, initiativeType } }}
+    >
       {children}
     </IdPayUnsubscriptionMachineContext.Provider>
   );
