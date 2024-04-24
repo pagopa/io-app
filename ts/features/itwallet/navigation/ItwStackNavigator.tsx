@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import ItwDiscoveryInfoScreen from "../screens/discovery/ItwDiscoveryInfoScreen";
+import { ItwDiscoveryInfoScreen } from "../screens/discovery/ItwDiscoveryInfoScreen";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";

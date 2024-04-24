@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createStore } from "redux";
-import ItwDiscoveryInfoScreen from "../ItwDiscoveryInfoScreen";
+import { ItwDiscoveryInfoScreen } from "../ItwDiscoveryInfoScreen";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";

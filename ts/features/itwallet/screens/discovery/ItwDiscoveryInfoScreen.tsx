@@ -15,14 +15,14 @@ import { FooterStackButton } from "../../components/FooterStackButton";
  */
 const ItwDiscoveryInfoScreen = () => {
   useHeaderSecondLevel({
-    title: I18n.t("features.itWallet.discovery.title"),
+    title: I18n.t("features.itWallet.discovery.info.title"),
     contextualHelp: emptyContextualHelp,
     supportRequest: true
   });
 
   return (
     <RNavScreenWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.discovery.title") }}
+      title={{ label: I18n.t("features.itWallet.discovery.info.title") }}
       fixedBottomSlot={
         <FooterStackButton
           primaryActionProps={{
@@ -40,10 +40,12 @@ const ItwDiscoveryInfoScreen = () => {
     >
       <ContentWrapper>
         {/* Info activation */}
-        <ItwMarkdown content={I18n.t("features.itWallet.discovery.content")} />
+        <ItwMarkdown
+          content={I18n.t("features.itWallet.discovery.info.content")}
+        />
       </ContentWrapper>
     </RNavScreenWithLargeHeader>
   );
 };
 
-export default ItwDiscoveryInfoScreen;
+export { ItwDiscoveryInfoScreen };
