@@ -39,7 +39,6 @@ import {
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { Wallets } from "../../../../../definitions/pagopa/ecommerce/Wallets";
 import { PaymentMethodsResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
-import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 
 const WalletPaymentPickMethodScreen = () => {
