@@ -23,6 +23,7 @@ import PN_ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { getRptIdStringFromPayment } from "../utils/rptId";
+import { canShowMorePaymentsLink } from "../utils";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 
 const styles = StyleSheet.create({
@@ -162,8 +163,6 @@ export const LegacyMessagePayments = ({
     );
   }
 
-  const showMorePaymentsLink =
-    payments && payments.length > maxVisiblePaymentCount;
   const morePaymentsLabel = payments
     ? `${I18n.t("features.pn.details.paymentSection.morePayments")} (${
         payments.length
@@ -190,7 +189,7 @@ export const LegacyMessagePayments = ({
               />
             );
           })}
-          {showMorePaymentsLink && (
+          {canShowMorePaymentsLink(isCancelled, payments) && (
             <>
               <VSpacer size={16} />
               {morePaymentsLinkState === "visibleLoading" && (

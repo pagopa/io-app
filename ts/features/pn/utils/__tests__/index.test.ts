@@ -1,8 +1,14 @@
 import * as O from "fp-ts/lib/Option";
-import { isPNOptInMessage } from "..";
+import {
+  canShowMorePaymentsLink,
+  isPNOptInMessage,
+  notificationStatusToTimelineStatus,
+  shouldUseBottomSheetForPayments
+} from "..";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../messages/types/MessageCTA";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 
 const navigateToServiceLink = () =>
   "ioit://services/service-detail?serviceId=optInServiceId&activate=true";
@@ -259,5 +265,178 @@ describe("isPNOptInMessage", () => {
       );
       expect(isPNOptInMessageInfo).toEqual(testData.output);
     });
+  });
+});
+
+describe("canShowMorePaymentsLink", () => {
+  it("should return false (hide), cancelled message, undefined payments", () => {
+    const showMorePayments = canShowMorePaymentsLink(true, undefined);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), cancelled message, empty payments", () => {
+    const showMorePayments = canShowMorePaymentsLink(true, []);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), cancelled message, less than five (max-visible) payments", () => {
+    const payments = [...Array(4).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = canShowMorePaymentsLink(true, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), cancelled message, five (max-visible) payments", () => {
+    const payments = [...Array(5).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = canShowMorePaymentsLink(true, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), cancelled message, more than five (max-visible) payments", () => {
+    const payments = [...Array(6).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = canShowMorePaymentsLink(true, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), not cancelled message, undefined payments", () => {
+    const showMorePayments = canShowMorePaymentsLink(false, undefined);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), not cancelled message, empty payments", () => {
+    const showMorePayments = canShowMorePaymentsLink(false, []);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), not cancelled message, less than five (max-visible) payments", () => {
+    const payments = [...Array(4).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = canShowMorePaymentsLink(false, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false (hide), not cancelled message, five (max-visible) payments", () => {
+    const payments = [...Array(5).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = canShowMorePaymentsLink(false, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return true (visible), not cancelled message, more than five (max-visible) payments", () => {
+    const payments = [...Array(6).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = canShowMorePaymentsLink(false, payments);
+    expect(showMorePayments).toBe(true);
+  });
+});
+
+describe("notificationStatusToTimelineStatus", () => {
+  it("should return 'viewed' for 'VIEWED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("VIEWED");
+    expect(timelineStatus).toBe("viewed");
+  });
+  it("should return 'effective' for 'EFFECTIVE_DATE'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("EFFECTIVE_DATE");
+    expect(timelineStatus).toBe("effective");
+  });
+  it("should return 'unreachable' for 'UNREACHABLE'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("UNREACHABLE");
+    expect(timelineStatus).toBe("unreachable");
+  });
+  it("should return 'cancelled' for 'CANCELLED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("CANCELLED");
+    expect(timelineStatus).toBe("cancelled");
+  });
+  it("should return 'default' for 'IN_VALIDATION'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("IN_VALIDATION");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'ACCEPTED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("ACCEPTED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'REFUSED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("REFUSED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'DELIVERING'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("DELIVERING");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'DELIVERED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("DELIVERED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'PAID'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("PAID");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for empty string", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for unmapped string", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("whatever");
+    expect(timelineStatus).toBe("default");
+  });
+});
+
+describe("shouldUseBottomSheetForPayments", () => {
+  it("should return false, cancelled message, undefined payments", () => {
+    const showMorePayments = shouldUseBottomSheetForPayments(true, undefined);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false, cancelled message, empty payments", () => {
+    const showMorePayments = shouldUseBottomSheetForPayments(true, []);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false, cancelled message, one payment", () => {
+    const payments = [...Array(1).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = shouldUseBottomSheetForPayments(true, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false, cancelled message, two payments", () => {
+    const payments = [...Array(2).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = shouldUseBottomSheetForPayments(true, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false, cancelled message, more than two payments", () => {
+    const payments = [...Array(3).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = shouldUseBottomSheetForPayments(true, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false, not cancelled message, undefined payments", () => {
+    const showMorePayments = shouldUseBottomSheetForPayments(false, undefined);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false, not cancelled message, empty payments", () => {
+    const showMorePayments = shouldUseBottomSheetForPayments(false, []);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return false, not cancelled message, one payment", () => {
+    const payments = [...Array(1).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = shouldUseBottomSheetForPayments(false, payments);
+    expect(showMorePayments).toBe(false);
+  });
+  it("should return true, not cancelled message, two payments", () => {
+    const payments = [...Array(2).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = shouldUseBottomSheetForPayments(false, payments);
+    expect(showMorePayments).toBe(true);
+  });
+  it("should return true, not cancelled message, more than two payments", () => {
+    const payments = [...Array(3).keys()].map(
+      _ => ({} as NotificationPaymentInfo)
+    );
+    const showMorePayments = shouldUseBottomSheetForPayments(false, payments);
+    expect(showMorePayments).toBe(true);
   });
 });

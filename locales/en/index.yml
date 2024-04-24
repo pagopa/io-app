@@ -1689,11 +1689,6 @@ wallet:
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
-      missingMethodsError:
-        title: Aggiungi un metodo per effettuare pagamenti in app
-        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        addMethod: Aggiungi metodo
-        notNow: Non ora
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -1711,7 +1706,7 @@ wallet:
     failure:
       PAYMENT_UNAVAILABLE:
         title: "C’è un problema tecnico con questo avviso"
-      PAYMENT_UNKNOWN:
+      PAYMENT_DATA_ERROR:
         title: "I dati dell’avviso non sono corretti"
       DOMAIN_UNKNOWN:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
@@ -1730,7 +1725,7 @@ wallet:
       GENERIC_ERROR:
         title: "Si è verificato un errore imprevisto"
         subtitle: "Riprova, oppure contatta l’assistenza."
-      PAA_PAGAMENTO_SCONOSCIUTO:
+      PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
     outcome:
@@ -1957,6 +1952,11 @@ messageDetails:
     title: "Identification data"
     messageId: "Message ID"
     messageIdAccessibility: "ID messaggio, copy"
+    pagoPAHeader: "pagoPA notice"
+    noticeCode: "Notice code"
+    noticeCodeAccessibility: "Notice code, copy"
+    entityFiscalCode: "Payee fiscal code"
+    entityFiscalCodeAccessibility: "Payee fiscal code, copy"
   contactsBottomSheet:
     title: "Support"
     body: "If you are unclear about the content of the message, contact the Institution that sent it to you."
@@ -2073,6 +2073,9 @@ services:
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
+  home:
+    institutions:
+      title: National
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2095,7 +2098,7 @@ services:
       fiscalCode: "Organization's fiscal code"
       address: "Address"
       serviceId: "Service ID"
-    tosAndPrivacy: 
+    tosAndPrivacy:
       title: "Terms of use and Privacy"
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
@@ -2178,8 +2181,8 @@ messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To
 openStore: Open {{storeName}}
 btnUpdateApp: Update the IO app
 systemsOff:
-  title: Unable to start IO
-  closeApp: close the application and try again
+  title: C'è un problema sui nostri sistemi
+  closeApp: Chiudi l'app e riprova tra qualche minuto.
 contextualHelp:
   title: IO helps you
   sendPersonalInfo:
@@ -2810,18 +2813,24 @@ features:
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN
+        iunAccessibility: Codice IUN, copia
+        iunSectionTitle: Notifica
       timeline:
+        goToSend: "Accedi a SEND"
+        menuTitle: Stato della notifica
+        newInfo: "Accedi alla versione web per vedere maggiori dettagli, le ricevute e le attestazioni opponibili a terzi."
         title: STATO DELLA NOTIFICA
         status:
+          ACCEPTED: Depositata
+          CANCELLED: Annullata
           DELIVERED: Consegnata
           DELIVERING: Invio in corso
-          UNREACHABLE: Destinatario irreperibile
-          PAID: Pagata
-          ACCEPTED: Depositata
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
-          VIEWED: Avvenuto accesso
+          UNREACHABLE: Destinatario irreperibile
+          VIEWED: Avvenuto accesso          
+          PAID: Pagata
           REFUSED: REFUSED
-          CANCELLED: Annullata
+          IN_VALIDATION: IN VALIDATION
         expand: mostra gli stati precedenti
         info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
         cta: Accedi alla versione web
@@ -2965,6 +2974,8 @@ features:
       banner:
         content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
         action: Aggiungi un metodo
+      status:
+        expired: Scaduta
     transactions:
       title: Storico operazioni
       button: Vedi tutte
@@ -3022,7 +3033,8 @@ support:
     body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
     listHeader: "If you consent, we'll access this data:"
     devicePerformance: "Device performance"
-    devicePerformanceData: "Memory and battery level"
+    devicePerformanceDataAndroid: "Memory and battery level"
+    devicePerformanceDataiOS: "Memory ({{storage}}) and battery level"
     prominentDisclosure: "Access to the device gallery"
     prominentDisclosureData: "To upload photos and screenshots"
     cta:
@@ -3529,7 +3541,7 @@ barcodeScan:
 unsupportedDevice:
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
-  subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device."
+  subtitle: "Make sure your operating system is updated to the latest version. If it is already updated, you will need to log in from a different device to continue using IO."
   cta:
     faq: "Learn more"
 fastLogin:

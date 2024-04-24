@@ -18,7 +18,7 @@ export type TimelineStatus =
   | "effective"
   | "cancelled";
 
-type TimelineItemProps = {
+export type TimelineItemProps = {
   day: string;
   description: string;
   month: string;
@@ -27,7 +27,7 @@ type TimelineItemProps = {
 };
 
 export type TimelineProps = {
-  data: Array<TimelineItemProps>;
+  data: ReadonlyArray<TimelineItemProps>;
 };
 
 const styles = StyleSheet.create({
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   },
   oppositeContent: {
     alignItems: "center",
-    paddingVertical: 12
+    paddingVertical: 12,
+    width: 30
   },
   content: {
     flexShrink: 1,
