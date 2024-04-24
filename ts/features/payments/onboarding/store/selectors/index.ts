@@ -24,7 +24,7 @@ export const selectPaymentOnboardingMethods = createSelector(
         paymentMethods?.filter(
           method =>
             method.methodManagement ===
-            PaymentMethodManagementTypeEnum.ONBOARDABLE &&
+              PaymentMethodManagementTypeEnum.ONBOARDABLE &&
             method.status === PaymentMethodStatusEnum.ENABLED
         ) ?? []
     )
@@ -35,7 +35,7 @@ export const selectPaymentOnboardingSelectedMethod = createSelector(
   onboarding => onboarding.selectedPaymentMethodId
 );
 
-export const selectPaymentOnboardingResumePaymentRptId = createSelector(
+export const selectPaymentOnboardingRptIdToResume = createSelector(
   walletOnboardingSelector,
-  onboarding => onboarding.resumePaymentRptId
+  onboarding => onboarding.rptIdToResume
 );

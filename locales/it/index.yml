@@ -1224,6 +1224,7 @@ wallet:
         title: "Il metodo è stato aggiunto"
         subtitle: ""
         primaryAction: "Vedi dettagli"
+        continueAction: "Continua"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza

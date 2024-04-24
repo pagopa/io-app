@@ -40,7 +40,7 @@ import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { Wallets } from "../../../../../definitions/pagopa/ecommerce/Wallets";
 import { PaymentMethodsResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
-import { paymentsOnboardingInitTransactionParams } from "../../onboarding/store/actions";
+import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -85,8 +85,6 @@ const WalletPaymentPickMethodScreen = () => {
     [paymentMethodsPot]
   );
 
-  const paymentDetails = pot.toUndefined(paymentDetailsPot);
-
   useFocusEffect(
     React.useCallback(() => {
       dispatch(paymentsGetPaymentMethodsAction.request());
@@ -94,17 +92,23 @@ const WalletPaymentPickMethodScreen = () => {
     }, [dispatch])
   );
 
+  // If the user doesn't have any onboarded payment method and the backend doesn't return any payment method as guest ..
+  // .. we redirect the user to the outcome screen with an outcome that allow the user to start the onboarding process of a new payment method.
+  // .. This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
   useEffect(() => {
     if (
       pot.isSome(paymentMethodsPot) &&
       _.isEmpty(allPaymentMethods) &&
       pot.isSome(userWalletsPots) &&
       _.isEmpty(userPaymentMethods) &&
-      pot.isSome(paymentDetailsPot) &&
-      !_.isEmpty(paymentDetails)
+      pot.isSome(paymentDetailsPot)
     ) {
       const paymentDetails = pot.toUndefined(paymentDetailsPot);
-      paymentsOnboardingInitTransactionParams({ rptId: paymentDetails?.rptId });
+      dispatch(
+        paymentsInitOnboardingWithRptIdToResume({
+          rptId: paymentDetails?.rptId
+        })
+      );
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
@@ -114,10 +118,12 @@ const WalletPaymentPickMethodScreen = () => {
     }
   }, [
     userWalletsPots,
+    allPaymentMethods,
+    userPaymentMethods,
     paymentMethodsPot,
     paymentDetailsPot,
     navigation,
-    paymentsOnboardingInitTransactionParams
+    dispatch
   ]);
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {

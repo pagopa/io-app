@@ -1,6 +1,8 @@
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
+import * as O from "fp-ts/lib/Option";
 import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -18,9 +20,10 @@ import {
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
 import { ONBOARDING_FAQ_ENABLE_3DS } from "../utils";
-import { useIOSelector } from "../../../../store/hooks";
-import { selectPaymentOnboardingResumePaymentRptId } from "../store/selectors";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { selectPaymentOnboardingRptIdToResume } from "../store/selectors";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
+import { paymentsResetRptIdToResume } from "../store/actions";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -47,21 +50,30 @@ export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
 const PaymentsOnboardingFeedbackScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const route = useRoute<PaymentsOnboardingFeedbackScreenRouteProps>();
+  const dispatch = useIODispatch();
   const { outcome, walletId } = route.params;
 
-  const paymentRptId = useIOSelector(selectPaymentOnboardingResumePaymentRptId);
-  const { startPaymentFlowWithRptId } = usePagoPaPayment();
+  const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
+  const { startPaymentFlow } = usePagoPaPayment();
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
   ] as keyof typeof WalletOnboardingOutcomeEnum;
 
+  React.useEffect(
+    () => () => {
+      dispatch(paymentsResetRptIdToResume());
+    },
+    [dispatch]
+  );
+
   const handleContinueButton = () => {
     navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
-      console.log(paymentRptId);
-      if (paymentRptId) {
-        startPaymentFlowWithRptId(paymentRptId);
+      if (rptIdToResume) {
+        // Resume payment flow
+        // This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
+        startPaymentFlow(rptIdToResume);
         return;
       }
       navigation.reset({
@@ -104,6 +116,15 @@ const PaymentsOnboardingFeedbackScreen = () => {
     return undefined;
   };
 
+  const actionButtonLabel = pipe(
+    rptIdToResume,
+    O.fromNullable,
+    O.fold(
+      () => I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`),
+      () => I18n.t(`wallet.onboarding.outcome.SUCCESS.continueAction`)
+    )
+  );
+
   return (
     <View style={IOStyles.flex}>
       <OperationResultScreenContent
@@ -113,12 +134,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
         )}
         pictogram={pictogramByOutcome[outcome]}
         action={{
-          label: I18n.t(
-            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
-          ),
-          accessibilityLabel: I18n.t(
-            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
-          ),
+          label: actionButtonLabel,
+          accessibilityLabel: actionButtonLabel,
           onPress: handleContinueButton
         }}
         secondaryAction={renderSecondaryAction()}

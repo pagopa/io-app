@@ -1,4 +1,3 @@
-import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
@@ -7,23 +6,25 @@ import { NetworkError } from "../../../../../utils/errors";
 
 import {
   paymentsOnboardingGetMethodsAction,
-  paymentsOnboardingInitTransactionParams,
-  paymentsStartOnboardingAction
+  paymentsInitOnboardingWithRptIdToResume,
+  paymentsStartOnboardingAction,
+  paymentsResetRptIdToResume
 } from "../actions";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
 export type PaymentsOnboardingState = {
   result: pot.Pot<WalletCreateResponse, NetworkError>;
   paymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   selectedPaymentMethodId?: string;
-  resumePaymentRptId?: RptId;
+  rptIdToResume?: RptId;
 };
 
 const INITIAL_STATE: PaymentsOnboardingState = {
   result: pot.none,
   paymentMethods: pot.noneLoading,
   selectedPaymentMethodId: undefined,
-  resumePaymentRptId: undefined
+  rptIdToResume: undefined
 };
 
 const reducer = (
@@ -75,10 +76,17 @@ const reducer = (
         ...state,
         paymentMethods: pot.none
       };
-    case getType(paymentsOnboardingInitTransactionParams): {
+    // This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
+    case getType(paymentsInitOnboardingWithRptIdToResume): {
       return {
         ...state,
-        resumePaymentRptId: action.payload.rptId
+        rptIdToResume: action.payload.rptId
+      };
+    }
+    case getType(paymentsResetRptIdToResume): {
+      return {
+        ...state,
+        rptIdToResume: undefined
       };
     }
   }
