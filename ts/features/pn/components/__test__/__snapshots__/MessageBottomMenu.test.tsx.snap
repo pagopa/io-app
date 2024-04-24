@@ -2093,7 +2093,7 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                                           "width": 14,
                                         },
                                         Object {
-                                          "backgroundColor": "#FE6666",
+                                          "backgroundColor": "#FF4040",
                                           "borderWidth": 1.5,
                                         },
                                       ]
@@ -5560,7 +5560,7 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                                           "width": 14,
                                         },
                                         Object {
-                                          "backgroundColor": "#FE6666",
+                                          "backgroundColor": "#FF4040",
                                           "borderWidth": 1.5,
                                         },
                                       ]
@@ -9616,7 +9616,7 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                                           "width": 14,
                                         },
                                         Object {
-                                          "backgroundColor": "#FE6666",
+                                          "backgroundColor": "#FF4040",
                                           "borderWidth": 1.5,
                                         },
                                       ]
@@ -14850,7 +14850,7 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                                           "width": 14,
                                         },
                                         Object {
-                                          "backgroundColor": "#FE6666",
+                                          "backgroundColor": "#FF4040",
                                           "borderWidth": 1.5,
                                         },
                                       ]
@@ -19495,7 +19495,7 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                                           "width": 14,
                                         },
                                         Object {
-                                          "backgroundColor": "#FE6666",
+                                          "backgroundColor": "#FF4040",
                                           "borderWidth": 1.5,
                                         },
                                       ]
