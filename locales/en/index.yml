@@ -1684,8 +1684,8 @@ wallet:
       cancel: No, torna indietro
     methodSelection:
       header: Seleziona un metodo
-      yourMethods: I tuoi metodi
-      otherMethods: Altri metodi
+      yourMethods: Saved
+      otherMethods: All methods
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
@@ -2985,6 +2985,11 @@ features:
       status:
         failure: FALLITA
         success: ""
+  itWallet:
+    discovery:
+      info:
+        title: Start with your Digital Identity
+        content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
