@@ -19,8 +19,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import Markdown, { ASTNode } from "react-native-markdown-display";
 import { StyleSheet } from "react-native";
-import { openWebUrl } from "../../../utils/url";
-import I18n from "../../../i18n";
+import { openWebUrl } from "../../../../utils/url";
+import I18n from "../../../../i18n";
 
 interface MarkdownParserProps {
   content?: string;
