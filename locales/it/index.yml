@@ -2816,17 +2816,21 @@ features:
         iunAccessibility: Codice IUN, copia
         iunSectionTitle: Notifica
       timeline:
+        goToSend: "Accedi a SEND"
+        menuTitle: Stato della notifica
+        newInfo: "Accedi alla versione web per vedere maggiori dettagli, le ricevute e le attestazioni opponibili a terzi."
         title: STATO DELLA NOTIFICA
         status:
+          ACCEPTED: Depositata
+          CANCELLED: Annullata
           DELIVERED: Consegnata
           DELIVERING: Invio in corso
-          UNREACHABLE: Destinatario irreperibile
-          PAID: Pagata
-          ACCEPTED: Depositata
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
+          UNREACHABLE: Destinatario irreperibile
           VIEWED: Avvenuto accesso
+          PAID: Pagata
           REFUSED: REFUSED
-          CANCELLED: Annullata
+          IN_VALIDATION: IN VALIDATION
         expand: mostra gli stati precedenti
         info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
         cta: Accedi alla versione web
