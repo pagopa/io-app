@@ -1633,11 +1633,6 @@ wallet:
       alert:
         body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
         cta: "OK, habe verstanden!"
-      missingMethodsError:
-        title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
-        subtitle: "Die Zahlungsmethode wird in deinem Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
-        addMethod: "Zahlungsmethode hinzufügen"
-        notNow: "Jetzt nicht"
     psp:
       title: "Wähle, von wem die Zahlung abgewickelt werden soll"
       description: "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor."
@@ -2115,9 +2110,6 @@ titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
 messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen."
 openStore: "Öffne {{storeName}}"
 btnUpdateApp: "Aktualisiere IO"
-systemsOff:
-  title: "IO kann nicht verwendet werden"
-  closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
   title: "IO hilft dir"
   sendPersonalInfo:
@@ -2561,13 +2553,11 @@ fastLogin:
     sessionExpired:
       noPin:
         title: "Es ist zu lange her!"
-        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE identifizieren. Anschließend kannst du die IO-Konfiguration dort fortfahren, wo du aufgehört hast."
         submitButtonTitle: "Fortfahren"
       continueNavigation:
         title: "Deine Sitzung ist abgelaufen"
         subtitle: "Melde dich an, um die App weiter zu nutzen."
         submitButtonTitle: "Anmelden"
-        cancelButtonTitle: "Abbrechen"
       transientError:
         title: "Wir konnten dich nicht authentifizieren"
         subtitle: "Schließ die App und versuche es in ein paar Minuten erneut."

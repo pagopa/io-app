@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.59.0-rc.0](https://github.com/pagopa/io-app/compare/2.58.0-rc.1...2.59.0-rc.0) (2024-04-23)
+
+
+### Features
+
+* [[IOCOM-1207](https://pagopa.atlassian.net/browse/IOCOM-1207)] Payment data on the "More info" bottom sheet ([#5695](https://github.com/pagopa/io-app/issues/5695)) ([106b791](https://github.com/pagopa/io-app/commit/106b791c40a0ec196fa20fdb79fb1b46b3d134b5))
+* [[IOCOM-871](https://pagopa.atlassian.net/browse/IOCOM-871)] Pay button on SEND message details, with new DS system ([#5664](https://github.com/pagopa/io-app/issues/5664)) ([96d0120](https://github.com/pagopa/io-app/commit/96d0120ab120b498d5aadfe4575eb6148dfd8e46))
+* [[IOCOM-877](https://pagopa.atlassian.net/browse/IOCOM-877)] More Info on SEND message ([#5700](https://github.com/pagopa/io-app/issues/5700)) ([3abb6d8](https://github.com/pagopa/io-app/commit/3abb6d88ad35b590815accc7cf99278bfc76e923))
+* [[IOPID-1537](https://pagopa.atlassian.net/browse/IOPID-1537)] Integrate new DS on Unsupported Device Screen ([#5697](https://github.com/pagopa/io-app/issues/5697)) ([7cb38e1](https://github.com/pagopa/io-app/commit/7cb38e1f1152718df5f46b8d64d6e15fe61feb93)), closes [/io.italia.it/faq/#n1_11](https://github.com/pagopa//io.italia.it/faq//issues/n1_11) [/io.italia.it/faq/#n1_11](https://github.com/pagopa//io.italia.it/faq//issues/n1_11)
+* [[IOPID-1538](https://pagopa.atlassian.net/browse/IOPID-1538)] Integrate new DS in SystemOffModal and update it to functional component ([#5703](https://github.com/pagopa/io-app/issues/5703)) ([b1014b8](https://github.com/pagopa/io-app/commit/b1014b8dda6a344474bfa92a21890559b8344ab3))
+
+
+### Chores
+
+* [[IOBP-564](https://pagopa.atlassian.net/browse/IOBP-564)] Update payment's validation failure mapping ([#5694](https://github.com/pagopa/io-app/issues/5694)) ([8bc70f5](https://github.com/pagopa/io-app/commit/8bc70f5c370deca18d70bde911b6511ae152fa0e))
+* [[IOBP-622](https://pagopa.atlassian.net/browse/IOBP-622)] Update `PaymentCard` components ([#5681](https://github.com/pagopa/io-app/issues/5681)) ([a36b832](https://github.com/pagopa/io-app/commit/a36b8321d763bde1cd54b28f0deff90a84a9e84b))
+* [[IOBP-625](https://pagopa.atlassian.net/browse/IOBP-625)] Add guest payment flow to the new wallet section ([#5686](https://github.com/pagopa/io-app/issues/5686)) ([be75399](https://github.com/pagopa/io-app/commit/be75399c076e8343276bbcec6fda0ff0f132cfb9))
+* [[IOPAE-1069](https://pagopa.atlassian.net/browse/IOPAE-1069)] MyPortal reference code removal ([#5708](https://github.com/pagopa/io-app/issues/5708)) ([5a278b2](https://github.com/pagopa/io-app/commit/5a278b2ddf1f539fce31c66afea4a133110ef3d9))
+* [[IOPAE-1090](https://pagopa.atlassian.net/browse/IOPAE-1090)] Add `handleFindInstitutions` saga ([#5702](https://github.com/pagopa/io-app/issues/5702)) ([2e377cb](https://github.com/pagopa/io-app/commit/2e377cb596a6f2305d0f94e06a65bd0e90a9d8f7))
+* [[IOPAE-1091](https://pagopa.atlassian.net/browse/IOPAE-1091)] Add the new list of national institutions ([#5709](https://github.com/pagopa/io-app/issues/5709)) ([b28df07](https://github.com/pagopa/io-app/commit/b28df07cc64f6085b7f2615bb8a1eaaa7643c0f6))
+* [[IOPAE-1097](https://pagopa.atlassian.net/browse/IOPAE-1097)] Refactor `services` folder structure ([#5690](https://github.com/pagopa/io-app/issues/5690)) ([1ff6089](https://github.com/pagopa/io-app/commit/1ff608957efc444952e7f61f0db548416343cf44))
+* [[IOPAE-1098](https://pagopa.atlassian.net/browse/IOPAE-1098)] Add reducer and selectors for the list of institutions in the services section ([#5701](https://github.com/pagopa/io-app/issues/5701)) ([036ecb1](https://github.com/pagopa/io-app/commit/036ecb1ef98c73afe07658be79e3a441a59eee27))
+* **Cross:** [[IOAPPX-287](https://pagopa.atlassian.net/browse/IOAPPX-287)] Improve current visual hierarchy in the `MessageMarkdown` component ([#5712](https://github.com/pagopa/io-app/issues/5712)) ([d1c916c](https://github.com/pagopa/io-app/commit/d1c916cc37a67d3fb5b1a15f0122bb7ec470170e))
+* **IT Wallet:** [[SIW-1046](https://pagopa.atlassian.net/browse/SIW-1046)] Persist wallet cards count by category ([#5698](https://github.com/pagopa/io-app/issues/5698)) ([4f204b4](https://github.com/pagopa/io-app/commit/4f204b40dac82ac3b142785e9a83c72fde000164))
+
 ## [2.58.0-rc.1](https://github.com/pagopa/io-app/compare/2.58.0-rc.0...2.58.0-rc.1) (2024-04-17)
 
 

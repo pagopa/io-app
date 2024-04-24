@@ -1479,7 +1479,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "width": 14,
                                 },
                                 Object {
-                                  "backgroundColor": "#FE6666",
+                                  "backgroundColor": "#FF4040",
                                   "borderWidth": 1.5,
                                 },
                               ]

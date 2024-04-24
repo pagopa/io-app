@@ -2082,7 +2082,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "width": 14,
                                       },
                                       Object {
-                                        "backgroundColor": "#FE6666",
+                                        "backgroundColor": "#FF4040",
                                         "borderWidth": 1.5,
                                       },
                                     ]
@@ -4696,7 +4696,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "width": 14,
                                       },
                                       Object {
-                                        "backgroundColor": "#FE6666",
+                                        "backgroundColor": "#FF4040",
                                         "borderWidth": 1.5,
                                       },
                                     ]
