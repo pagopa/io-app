@@ -1,844 +1,3176 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Timeline component should match the snapshot with default props 1`] = `
-Array [
-  <View
-    accessible={true}
+exports[`Timeline component should match the snapshot, default data 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "flexDirection": "row",
-        "flexShrink": 1,
-        "paddingHorizontal": 24,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
     }
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
+        Array [
           Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        25
-      </Text>
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        03
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "paddingHorizontal": 16,
-        }
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
+        pointerEvents="box-none"
         style={
-          Array [
-            Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            Object {
-              "opacity": 0,
-            },
-          ]
+          Object {
+            "zIndex": 1,
+          }
         }
-      />
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": Object {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 718,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  collapsable={false}
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  PN_ROUTES_MESSAGE_DETAILS
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
       <View
+        onLayout={[Function]}
         style={
-          Array [
-            Object {
-              "borderColor": "#FFFFFF",
-              "borderRadius": 7,
-              "height": 14,
-              "marginVertical": 4,
-              "width": 14,
-            },
-            Object {
-              "backgroundColor": "#6CC66A",
-              "borderWidth": 0,
-            },
-          ]
+          Object {
+            "flex": 1,
+          }
         }
-      />
-      <View
-        style={
-          Array [
+      >
+        <View
+          activityState={2}
+          collapsable={false}
+          forwardedRef={[Function]}
+          pointerEvents="box-none"
+          style={
             Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            undefined,
-          ]
-        }
-      />
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              Array [
+                Object {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              Object {
+                "close": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                handlerTag={2}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                    "transform": Array [
+                      Object {
+                        "translateX": 0,
+                      },
+                      Object {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      Array [
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            1
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            01
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                Object {
+                                  "opacity": 0,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#6CC66A",
+                                  "borderWidth": 0,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Depositata
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            01:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            3
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            02
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#FFCB46",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Annullata
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            03:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            6
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            03
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#BBC2D6",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Consegnata
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            05:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            9
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            04
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#BBC2D6",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Invio in corso
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            07:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            11
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            05
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#6BCFFB",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Perfezionata per decorrenza termini
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            09:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            14
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            06
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#FF4040",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Destinatario irreperibile
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            11:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            15
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            07
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#6CC66A",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Avvenuto accesso
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            13:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            18
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            08
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#BBC2D6",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Pagata
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            15:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            21
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            09
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#BBC2D6",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            REFUSED
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            17:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            24
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            10
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#BBC2D6",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            IN VALIDATION
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            19:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            27
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            11
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#BBC2D6",
+                                  "borderWidth": 1.5,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Depositata
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            21:00
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessible={true}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "flexShrink": 1,
+                            "paddingHorizontal": 24,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingVertical": 12,
+                              "width": 30,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            30
+                          </Text>
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            12
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "paddingHorizontal": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                undefined,
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 7,
+                                  "height": 14,
+                                  "marginVertical": 4,
+                                  "width": 14,
+                                },
+                                Object {
+                                  "backgroundColor": "#FFCB46",
+                                  "borderWidth": 0,
+                                },
+                              ]
+                            }
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "backgroundColor": "#CCD4DC",
+                                  "flexGrow": 1,
+                                  "width": 2,
+                                },
+                                Object {
+                                  "opacity": 0,
+                                },
+                              ]
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexShrink": 1,
+                              "paddingVertical": 12,
+                            }
+                          }
+                        >
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-700"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 18,
+                                "lineHeight": 25,
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 18,
+                                  "lineHeight": 25,
+                                },
+                                Object {
+                                  "color": "#555C70",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "600",
+                                },
+                              ]
+                            }
+                            weight="SemiBold"
+                          >
+                            Annullata
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "height": 4,
+                              }
+                            }
+                          />
+                          <Text
+                            allowFontScaling={false}
+                            color="grey-450"
+                            defaultColor="black"
+                            defaultWeight="Regular"
+                            font="TitilliumWeb"
+                            fontStyle={
+                              Object {
+                                "fontSize": 12,
+                                "textTransform": "uppercase",
+                              }
+                            }
+                            style={
+                              Array [
+                                Object {
+                                  "fontSize": 12,
+                                  "textTransform": "uppercase",
+                                },
+                                Object {
+                                  "color": "#99A3C1",
+                                  "fontFamily": "Titillium Web",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "400",
+                                },
+                              ]
+                            }
+                            weight="Regular"
+                          >
+                            23:00
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
-    <View
-      style={
-        Object {
-          "flexShrink": 1,
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </Text>
-      <View
-        style={
-          Object {
-            "height": 4,
-          }
-        }
-      />
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        10:00
-      </Text>
-    </View>
-  </View>,
-  <View
-    accessible={true}
-    style={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "flexDirection": "row",
-        "flexShrink": 1,
-        "paddingHorizontal": 24,
-      }
-    }
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        25
-      </Text>
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        03
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "paddingHorizontal": 16,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            undefined,
-          ]
-        }
-      />
-      <View
-        style={
-          Array [
-            Object {
-              "borderColor": "#FFFFFF",
-              "borderRadius": 7,
-              "height": 14,
-              "marginVertical": 4,
-              "width": 14,
-            },
-            Object {
-              "backgroundColor": "#BBC2D6",
-              "borderWidth": 1.5,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            undefined,
-          ]
-        }
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "flexShrink": 1,
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </Text>
-      <View
-        style={
-          Object {
-            "height": 4,
-          }
-        }
-      />
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        10:00
-      </Text>
-    </View>
-  </View>,
-  <View
-    accessible={true}
-    style={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "flexDirection": "row",
-        "flexShrink": 1,
-        "paddingHorizontal": 24,
-      }
-    }
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        25
-      </Text>
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        03
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "paddingHorizontal": 16,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            undefined,
-          ]
-        }
-      />
-      <View
-        style={
-          Array [
-            Object {
-              "borderColor": "#FFFFFF",
-              "borderRadius": 7,
-              "height": 14,
-              "marginVertical": 4,
-              "width": 14,
-            },
-            Object {
-              "backgroundColor": "#BBC2D6",
-              "borderWidth": 1.5,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            undefined,
-          ]
-        }
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "flexShrink": 1,
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </Text>
-      <View
-        style={
-          Object {
-            "height": 4,
-          }
-        }
-      />
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        10:00
-      </Text>
-    </View>
-  </View>,
-  <View
-    accessible={true}
-    style={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "flexDirection": "row",
-        "flexShrink": 1,
-        "paddingHorizontal": 24,
-      }
-    }
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        25
-      </Text>
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        03
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "paddingHorizontal": 16,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            undefined,
-          ]
-        }
-      />
-      <View
-        style={
-          Array [
-            Object {
-              "borderColor": "#FFFFFF",
-              "borderRadius": 7,
-              "height": 14,
-              "marginVertical": 4,
-              "width": 14,
-            },
-            Object {
-              "backgroundColor": "#BBC2D6",
-              "borderWidth": 0,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#CCD4DC",
-              "flexGrow": 1,
-              "width": 2,
-            },
-            Object {
-              "opacity": 0,
-            },
-          ]
-        }
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "flexShrink": 1,
-          "paddingVertical": 12,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={false}
-        color="grey-700"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 18,
-            "lineHeight": 25,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 18,
-              "lineHeight": 25,
-            },
-            Object {
-              "color": "#555C70",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </Text>
-      <View
-        style={
-          Object {
-            "height": 4,
-          }
-        }
-      />
-      <Text
-        allowFontScaling={false}
-        color="grey-450"
-        defaultColor="black"
-        defaultWeight="Regular"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 12,
-            "textTransform": "uppercase",
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 12,
-              "textTransform": "uppercase",
-            },
-            Object {
-              "color": "#99A3C1",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "400",
-            },
-          ]
-        }
-        weight="Regular"
-      >
-        10:00
-      </Text>
-    </View>
-  </View>,
-]
+  </RNCSafeAreaProvider>
+</View>
 `;
 
-exports[`Timeline component should match the snapshot with empty data 1`] = `null`;
+exports[`Timeline component should match the snapshot, empty data 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          Object {
+            "zIndex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": Object {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 718,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  collapsable={false}
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  PN_ROUTES_MESSAGE_DETAILS
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          activityState={2}
+          collapsable={false}
+          forwardedRef={[Function]}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              Array [
+                Object {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              Object {
+                "close": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                handlerTag={1}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                    "transform": Array [
+                      Object {
+                        "translateX": 0,
+                      },
+                      Object {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      Array [
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
