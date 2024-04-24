@@ -33,8 +33,8 @@ const cardMapIcon: { [key in string]: any } = {
   carta_vpay: require("../../../../img/wallet/cards-icons/vPay.png")
 };
 
-import defaultCardIcon from "../../../../img/wallet/cards-icons/unknown.png";
 import { CardInfo } from "../../../../definitions/pagopa/walletv2/CardInfo";
+import defaultCardIcon from "../../../../img/wallet/cards-icons/unknown.png";
 /**
  * pagoPA's "brandLogo" field contains an url to an image
  * From the given url it will check if there is a matching and an icon will be returned
@@ -81,6 +81,7 @@ const Logo: React.SFC<Props> = props => {
 
   return (
     <Image
+      accessibilityIgnoresInvertColors
       style={props.imageStyle ? props.imageStyle : styles.issuerLogo}
       source={getSource()}
     />
