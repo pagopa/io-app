@@ -19,7 +19,7 @@ type BaseCategoryContainerProps<T> = WithTestID<{
 
 export type RenderProps<T> = {
   keyExtractorFn: (card: T) => string;
-  renderCardnFn: (card: T, isStacked: boolean) => JSX.Element | null;
+  renderCardFn: (card: T, isStacked: boolean) => JSX.Element | null;
 };
 
 const BaseCategoryContainer = <T,>({
@@ -28,7 +28,7 @@ const BaseCategoryContainer = <T,>({
   iconName,
   cards,
   keyExtractorFn,
-  renderCardnFn
+  renderCardFn
 }: BaseCategoryContainerProps<T> & RenderProps<T>) => {
   if (cards.length === 0) {
     // If cards are not provided or are an empty array, the component should not render
@@ -43,7 +43,7 @@ const BaseCategoryContainer = <T,>({
       {cards.map((card, index) => (
         <React.Fragment key={`wallet_card_${keyExtractorFn(card)}`}>
           {!isStacked && index !== 0 && <VSpacer size={16} />}
-          {renderCardnFn(card, isStacked && index < cards.length - 1)}
+          {renderCardFn(card, isStacked && index < cards.length - 1)}
         </React.Fragment>
       ))}
       <VSpacer size={16} />
@@ -64,7 +64,7 @@ const WalletCardsCategoryContainer = (
   <BaseCategoryContainer
     {...props}
     keyExtractorFn={({ key }) => key}
-    renderCardnFn={renderWalletCardFn}
+    renderCardFn={renderWalletCardFn}
   />
 );
 
@@ -77,7 +77,7 @@ const WalletCardsCategoryContainerSkeleton = (
   <BaseCategoryContainer
     {...props}
     keyExtractorFn={identity}
-    renderCardnFn={(key, isStacked) => (
+    renderCardFn={(key, isStacked) => (
       <WalletCardSkeleton
         testID={`walletCardSkeletonTestID_${key}`}
         cardProps={{}}
