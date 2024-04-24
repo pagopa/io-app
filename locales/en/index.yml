@@ -1770,6 +1770,10 @@ wallet:
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
+      PAYMENT_METHODS_NOT_AVAILABLE:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        onboardPaymentMethod: Aggiungi metodo
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza

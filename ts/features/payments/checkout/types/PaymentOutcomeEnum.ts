@@ -18,7 +18,8 @@ export enum WalletPaymentOutcomeEnum {
   KO_RETRIABLE = "13", // transaction failed
   INVALID_SESSION = "14", // transaction failed
   METHOD_NOT_ENABLED = "15", // payment method not enabled
-  WAITING_CONFIRMATION_EMAIL = "17" // waiting for confirmation email
+  WAITING_CONFIRMATION_EMAIL = "17", // waiting for confirmation email
+  PAYMENT_METHODS_NOT_AVAILABLE = "18" // payment methods not available
 }
 
 export type WalletPaymentOutcome = t.TypeOf<typeof WalletPaymentOutcome>;

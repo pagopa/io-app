@@ -18,6 +18,9 @@ import {
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
 import { ONBOARDING_FAQ_ENABLE_3DS } from "../utils";
+import { useIOSelector } from "../../../../store/hooks";
+import { selectPaymentOnboardingResumePaymentRptId } from "../store/selectors";
+import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -46,6 +49,9 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const route = useRoute<PaymentsOnboardingFeedbackScreenRouteProps>();
   const { outcome, walletId } = route.params;
 
+  const paymentRptId = useIOSelector(selectPaymentOnboardingResumePaymentRptId);
+  const { startPaymentFlowWithRptId } = usePagoPaPayment();
+
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
   ] as keyof typeof WalletOnboardingOutcomeEnum;
@@ -53,6 +59,11 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const handleContinueButton = () => {
     navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
+      console.log(paymentRptId);
+      if (paymentRptId) {
+        startPaymentFlowWithRptId(paymentRptId);
+        return;
+      }
       navigation.reset({
         index: 1,
         routes: [

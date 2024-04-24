@@ -25,6 +25,7 @@ import {
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
 import ROUTES from "../../../../navigation/routes";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -107,6 +108,24 @@ const WalletPaymentOutcomeScreen = () => {
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleContactSupport
   };
+
+  const onboardPaymentMethodAction: OperationResultScreenContentProps["action"] =
+    {
+      label: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.onboardPaymentMethod"
+      ),
+      accessibilityLabel: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.onboardPaymentMethod"
+      ),
+      onPress: () => {
+        navigation.replace(
+          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+          {
+            screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
+          }
+        );
+      }
+    };
 
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
@@ -219,6 +238,18 @@ const WalletPaymentOutcomeScreen = () => {
             "wallet.payment.outcome.METHOD_NOT_ENABLED.subtitle"
           ),
           action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
+        return {
+          pictogram: "cardAdd",
+          title: I18n.t(
+            "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
+          ),
+          action: onboardPaymentMethodAction,
+          secondaryAction: closeFailureAction
         };
     }
   };

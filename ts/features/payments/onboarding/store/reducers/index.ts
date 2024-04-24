@@ -1,3 +1,4 @@
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
@@ -6,6 +7,7 @@ import { NetworkError } from "../../../../../utils/errors";
 
 import {
   paymentsOnboardingGetMethodsAction,
+  paymentsOnboardingInitTransactionParams,
   paymentsStartOnboardingAction
 } from "../actions";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
@@ -14,12 +16,14 @@ export type PaymentsOnboardingState = {
   result: pot.Pot<WalletCreateResponse, NetworkError>;
   paymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   selectedPaymentMethodId?: string;
+  resumePaymentRptId?: RptId;
 };
 
 const INITIAL_STATE: PaymentsOnboardingState = {
   result: pot.none,
   paymentMethods: pot.noneLoading,
-  selectedPaymentMethodId: undefined
+  selectedPaymentMethodId: undefined,
+  resumePaymentRptId: undefined
 };
 
 const reducer = (
@@ -71,6 +75,12 @@ const reducer = (
         ...state,
         paymentMethods: pot.none
       };
+    case getType(paymentsOnboardingInitTransactionParams): {
+      return {
+        ...state,
+        resumePaymentRptId: action.payload.rptId
+      };
+    }
   }
   return state;
 };

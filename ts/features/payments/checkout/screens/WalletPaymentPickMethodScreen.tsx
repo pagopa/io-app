@@ -4,7 +4,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useEffect } from "react";
+import _ from "lodash";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -36,6 +37,10 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { Wallets } from "../../../../../definitions/pagopa/ecommerce/Wallets";
+import { PaymentMethodsResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { paymentsOnboardingInitTransactionParams } from "../../onboarding/store/actions";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -60,12 +65,60 @@ const WalletPaymentPickMethodScreen = () => {
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
     React.useState(false);
 
+  const userPaymentMethods = React.useMemo(
+    () =>
+      pipe(
+        userWalletsPots,
+        pot.toOption,
+        O.getOrElse(() => [] as Wallets["wallets"])
+      ),
+    [userWalletsPots]
+  );
+
+  const allPaymentMethods = React.useMemo(
+    () =>
+      pipe(
+        paymentMethodsPot,
+        pot.toOption,
+        O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
+      ),
+    [paymentMethodsPot]
+  );
+
+  const paymentDetails = pot.toUndefined(paymentDetailsPot);
+
   useFocusEffect(
     React.useCallback(() => {
       dispatch(paymentsGetPaymentMethodsAction.request());
       dispatch(paymentsGetPaymentUserMethodsAction.request());
     }, [dispatch])
   );
+
+  useEffect(() => {
+    if (
+      pot.isSome(paymentMethodsPot) &&
+      _.isEmpty(allPaymentMethods) &&
+      pot.isSome(userWalletsPots) &&
+      _.isEmpty(userPaymentMethods) &&
+      pot.isSome(paymentDetailsPot) &&
+      !_.isEmpty(paymentDetails)
+    ) {
+      const paymentDetails = pot.toUndefined(paymentDetailsPot);
+      paymentsOnboardingInitTransactionParams({ rptId: paymentDetails?.rptId });
+      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
+        params: {
+          outcome: WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+        }
+      });
+    }
+  }, [
+    userWalletsPots,
+    paymentMethodsPot,
+    paymentDetailsPot,
+    navigation,
+    paymentsOnboardingInitTransactionParams
+  ]);
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(

@@ -8,7 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { capitalize } from "lodash";
+import _, { capitalize } from "lodash";
 import React, { useEffect, useMemo } from "react";
 import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
@@ -131,18 +131,22 @@ const CheckoutPaymentMethodsList = () => {
           action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
-      <ListItemHeader
-        label={I18n.t("wallet.payment.methodSelection.yourMethods")}
-      />
+      {!_.isEmpty(userPaymentMethodListItems) && (
+        <ListItemHeader
+          label={I18n.t("wallet.payment.methodSelection.yourMethods")}
+        />
+      )}
       <RadioGroup<string>
         type="radioListItem"
         selectedItem={selectedWalletId}
         items={userPaymentMethodListItems}
         onPress={handleSelectUserWallet}
       />
-      <ListItemHeader
-        label={I18n.t("wallet.payment.methodSelection.otherMethods")}
-      />
+      {!_.isEmpty(allPaymentMethodListItems) && (
+        <ListItemHeader
+          label={I18n.t("wallet.payment.methodSelection.otherMethods")}
+        />
+      )}
       <RadioGroup<string>
         type="radioListItem"
         selectedItem={!selectedWalletId ? selectedPaymentMethodId : undefined}
