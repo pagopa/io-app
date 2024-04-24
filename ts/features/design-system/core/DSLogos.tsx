@@ -104,7 +104,7 @@ export const DSLogos = () => {
   );
 };
 
-const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 
 const organizationsURIs = [
   {
