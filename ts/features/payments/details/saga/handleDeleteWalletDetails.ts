@@ -47,15 +47,17 @@ export function* handleDeleteWalletDetails(
         }
         return;
       }
-      // not handled error codes
-      const failureAction = paymentsDeleteMethodAction.failure({
-        ...getGenericError(
-          new Error(`response status code ${deleteWalletResult.right.status}`)
-        )
-      });
-      yield* put(failureAction);
-      if (action.payload.onFailure) {
-        action.payload.onFailure();
+      // not handled error codes (401 is handled by withRefreshApiCall)
+      if (deleteWalletResult.right.status !== 401) {
+        const failureAction = paymentsDeleteMethodAction.failure({
+          ...getGenericError(
+            new Error(`response status code ${deleteWalletResult.right.status}`)
+          )
+        });
+        yield* put(failureAction);
+        if (action.payload.onFailure) {
+          action.payload.onFailure();
+        }
       }
     } else {
       // cannot decode response
