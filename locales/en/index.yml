@@ -1685,7 +1685,7 @@ wallet:
     methodSelection:
       header: Seleziona un metodo
       yourMethods: Saved
-      otherMethods: Tutti i metodi
+      otherMethods: All methods
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
