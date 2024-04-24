@@ -13,12 +13,10 @@ import {
 } from "../../analytics/emailAnalytics";
 import { getFlowType } from "../../../utils/analytics";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
-import {
-  BodyProps,
-  OperationResultScreenContent
-} from "../../../components/screens/OperationResultScreenContent";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
+import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
 
 export type EmailNotVerifiedScreenParamList = {
   email: string;

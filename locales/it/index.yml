@@ -1945,6 +1945,11 @@ messageDetails:
   bottomSheet:
     title: "Cos'è un messaggio dinamico?"
     body: "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
+    bodyPt1: "È un messaggio che l'ente può modificare "
+    bodyPt2: "dopo averlo inviato"
+    bodyPt3: ". In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo " 
+    bodyPt4: "in casi specifici" 
+    bodyPt5: ", per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio." 
   footer:
     contacts: "Contatta il mittente"
     showMoreData: "Mostra altri dati"
