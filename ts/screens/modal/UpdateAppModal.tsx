@@ -85,7 +85,7 @@ const UpdateAppModal: React.FC = () => {
           onPress: openAppStore
         }}
       />
-      {/* Temporary, to be replaced */}
+      {/* Temporary, to be replaced after this Jira task (IOPID-1799) has been closed  */}
       {isError && (
         <View accessible style={[styles.alertContainer, { top: insets.top }]}>
           <Animated.View
