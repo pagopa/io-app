@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:react-native-a11y/all",
     "plugin:sonarjs/recommended",
     "prettier"
   ],
@@ -104,7 +105,9 @@ module.exports = {
     "react-native/no-color-literals": "error",
     "react-native/no-raw-text":
       "off" /* Error when you launch the lint command */,
-    "react-native/no-single-element-style-arrays": "warn"
+    "react-native/no-single-element-style-arrays": "warn",
+    /* Too much verbose. It also requires a lot of effort in the main repo */
+    "react-native-a11y/has-accessibility-hint": "off"
   },
   env: {
     "react-native/react-native": true

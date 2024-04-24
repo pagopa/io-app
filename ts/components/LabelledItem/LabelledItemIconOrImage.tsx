@@ -1,3 +1,5 @@
+import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
+import { isString } from "lodash";
 import * as React from "react";
 import {
   Image,
@@ -5,8 +7,6 @@ import {
   ImageStyle,
   StyleSheet
 } from "react-native";
-import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
-import { isString } from "lodash";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
@@ -53,7 +53,12 @@ export const LabelledItemIconOrImage = ({
         testID="LabelledItem_Icon"
       />
     ) : (
-      <Image source={icon} style={imageStyle} testID="LabelledItem_Image" />
+      <Image
+        accessibilityIgnoresInvertColors
+        source={icon}
+        style={imageStyle}
+        testID="LabelledItem_Image"
+      />
     )}
   </ButtonDefaultOpacity>
 );

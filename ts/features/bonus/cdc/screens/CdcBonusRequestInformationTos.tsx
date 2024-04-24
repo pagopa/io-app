@@ -21,8 +21,8 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { getRemoteLocale } from "../../../messages/utils/messages";
-import { ID_CDC_TYPE } from "../../common/utils";
 import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
+import { ID_CDC_TYPE } from "../../common/utils";
 import { CdcBonusRequestParamsList } from "../navigation/params";
 import { CDC_ROUTES } from "../navigation/routes";
 
@@ -86,7 +86,13 @@ const CdcBonusRequestInformationTos = () => {
               </H4>
               <H2>{bonusTypeLocalizedContent.title}</H2>
             </View>
-            {cdcLogo && <Image source={cdcLogo} style={styles.logo} />}
+            {cdcLogo && (
+              <Image
+                accessibilityIgnoresInvertColors
+                source={cdcLogo}
+                style={styles.logo}
+              />
+            )}
           </View>
           <VSpacer size={16} />
           <IORenderHtml
