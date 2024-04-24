@@ -1,13 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { StateFrom } from "xstate";
+import { StateFrom } from "xstate5";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
 import { LOADING_TAG } from "../../../../xstate/utils";
-import { IDPayUnsubscriptionMachineType } from "./machine";
+import { IdPayUnsubscriptionMachine } from "./machine";
 
-type StateWithContext = StateFrom<IDPayUnsubscriptionMachineType>;
+type StateWithContext = StateFrom<IdPayUnsubscriptionMachine>;
 
 export const selectInitiativeName = (state: StateWithContext) =>
   state.context.initiativeName;
@@ -19,7 +19,7 @@ export const isLoadingSelector = createSelector(selectTags, tags =>
 );
 
 export const selectIsFailure = (state: StateWithContext) =>
-  state.matches("UNSUBSCRIPTION_FAILURE");
+  state.matches("UnsubscriptionFailure");
 
 export const selectInitiativeType = (state: StateWithContext) =>
   pipe(

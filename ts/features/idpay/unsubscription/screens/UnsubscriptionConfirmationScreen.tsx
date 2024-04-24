@@ -4,7 +4,6 @@ import {
   IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -19,29 +18,31 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
-import { useUnsubscriptionMachineService } from "../xstate/provider";
+import { IdPayUnsubscriptionMachineContext } from "../machine/provider";
 import {
   isLoadingSelector,
   selectInitiativeName,
   selectUnsubscriptionChecks
-} from "../xstate/selectors";
+} from "../machine/selectors";
 
 const UnsubscriptionConfirmationScreen = () => {
-  const machine = useUnsubscriptionMachineService();
-  const isLoading = useSelector(machine, isLoadingSelector);
-  const initiativeName = useSelector(machine, selectInitiativeName);
-  const unsubscriptionChecks = useSelector(machine, selectUnsubscriptionChecks);
+  const { useActorRef, useSelector } = IdPayUnsubscriptionMachineContext;
+  const machine = useActorRef();
+
+  const isLoading = useSelector(isLoadingSelector);
+  const initiativeName = useSelector(selectInitiativeName);
+  const unsubscriptionChecks = useSelector(selectUnsubscriptionChecks);
 
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
 
   const handleClosePress = () =>
     machine.send({
-      type: "EXIT"
+      type: "exit"
     });
 
   const handleConfirmPress = () => {
     machine.send({
-      type: "CONFIRM_UNSUBSCRIPTION"
+      type: "confirm-unsubscription"
     });
   };
 

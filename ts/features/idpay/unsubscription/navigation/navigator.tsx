@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import UnsubscriptionConfirmationScreen from "../screens/UnsubscriptionConfirmationScreen";
 import UnsubscriptionResultScreen from "../screens/UnsubscriptionResultScreen";
-import { IDPayUnsubscriptionMachineProvider } from "../xstate/provider";
+import { IDPayUnsubscriptionMachineProvider } from "../machine/provider";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 
 export const IDPayUnsubscriptionRoutes = {

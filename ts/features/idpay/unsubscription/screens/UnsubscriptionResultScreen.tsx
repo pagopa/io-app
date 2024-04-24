@@ -1,19 +1,18 @@
-import { useSelector } from "@xstate/react";
+import {
+  Body,
+  ButtonOutline,
+  IOPictograms,
+  IOStyles,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import {
-  ButtonOutline,
-  VSpacer,
-  IOPictograms,
-  Pictogram,
-  Body,
-  IOStyles
-} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
-import { useUnsubscriptionMachineService } from "../xstate/provider";
-import { selectIsFailure } from "../xstate/selectors";
+import { IdPayUnsubscriptionMachineContext } from "../machine/provider";
+import { selectIsFailure } from "../machine/selectors";
 
 type ScreenContentType = {
   pictogram: IOPictograms;
@@ -23,8 +22,9 @@ type ScreenContentType = {
 };
 
 const UnsubscriptionResultScreen = () => {
-  const machine = useUnsubscriptionMachineService();
-  const isFailure = useSelector(machine, selectIsFailure);
+  const { useActorRef, useSelector } = IdPayUnsubscriptionMachineContext;
+  const machine = useActorRef();
+  const isFailure = useSelector(selectIsFailure);
 
   const { pictogram, title, content, buttonLabel }: ScreenContentType =
     isFailure

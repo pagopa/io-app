@@ -7,9 +7,9 @@ import {
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context } from "../context";
 
-import { createServicesImplementation } from "../services";
+import { createServicesImplementation } from "../actors";
 import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
-import { UnsubscriptionFailureEnum } from "../failure";
+import { UnsubscriptionFailureEnum } from "../../types/failure";
 
 const T_PREFERRED_LANGUAGE = PreferredLanguageEnum.it_IT;
 const T_AUTH_TOKEN = "abc123";

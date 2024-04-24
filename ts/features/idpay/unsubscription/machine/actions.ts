@@ -1,14 +1,11 @@
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayUnsubscriptionRoutes } from "../navigation/navigator";
 
 const createActionsImplementation = (
-  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
+  navigation: ReturnType<typeof useIONavigation>,
   dispatch: ReturnType<typeof useIODispatch>
 ) => {
   const handleSessionExpired = () => {
