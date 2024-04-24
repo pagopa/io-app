@@ -43,10 +43,13 @@ export function* handleGetPaymentMethods(
         )
       );
     } else if (getPaymentMethodsResult.right.status !== 401) {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsOnboardingGetMethodsAction.failure({
           ...getGenericError(
-            new Error(`response status code ${getPaymentMethodsResult.right.status}`)
+            new Error(
+              `response status code ${getPaymentMethodsResult.right.status}`
+            )
           )
         })
       );

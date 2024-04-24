@@ -37,13 +37,13 @@ export function* handleWalletPaymentAuthorization(
     const details: AuthorizationDetails =
       action.payload.walletId !== undefined
         ? {
-          detailType: WalletDetailTypeEnum.wallet,
-          walletId: action.payload.walletId
-        }
+            detailType: WalletDetailTypeEnum.wallet,
+            walletId: action.payload.walletId
+          }
         : {
-          detailType: ApmDetailTypeEnum.apm,
-          paymentMethodId: action.payload.paymentMethodId
-        };
+            detailType: ApmDetailTypeEnum.apm,
+            paymentMethodId: action.payload.paymentMethodId
+          };
 
     const requestBody: RequestAuthorizationRequest = {
       amount: action.payload.paymentAmount,
@@ -70,7 +70,9 @@ export function* handleWalletPaymentAuthorization(
       yield* put(
         paymentsStartPaymentAuthorizationAction.failure({
           ...getGenericError(
-            new Error(readablePrivacyReport(requestTransactionAuthorizationResult.left))
+            new Error(
+              readablePrivacyReport(requestTransactionAuthorizationResult.left)
+            )
           )
         })
       );
@@ -84,9 +86,14 @@ export function* handleWalletPaymentAuthorization(
         )
       );
     } else if (requestTransactionAuthorizationResult.right.status !== 401) {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsStartPaymentAuthorizationAction.failure({
-          ...getGenericError(new Error(`Error: ${requestTransactionAuthorizationResult.right.status}`))
+          ...getGenericError(
+            new Error(
+              `Error: ${requestTransactionAuthorizationResult.right.status}`
+            )
+          )
         })
       );
     }

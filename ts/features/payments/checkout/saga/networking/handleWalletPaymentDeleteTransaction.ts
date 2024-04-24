@@ -41,7 +41,11 @@ export function* handleWalletPaymentDeleteTransaction(
       yield* put(
         paymentsDeleteTransactionAction.failure({
           ...getGenericError(
-            new Error(readablePrivacyReport(requestTransactionUserCancellationResult.left))
+            new Error(
+              readablePrivacyReport(
+                requestTransactionUserCancellationResult.left
+              )
+            )
           )
         })
       );
@@ -51,13 +55,17 @@ export function* handleWalletPaymentDeleteTransaction(
     if (requestTransactionUserCancellationResult.right.status === 202) {
       yield* put(paymentsDeleteTransactionAction.success());
     } else if (requestTransactionUserCancellationResult.right.status !== 401) {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsDeleteTransactionAction.failure({
-          ...getGenericError(new Error(`Error: ${requestTransactionUserCancellationResult.right.status}`))
+          ...getGenericError(
+            new Error(
+              `Error: ${requestTransactionUserCancellationResult.right.status}`
+            )
+          )
         })
       );
     }
-
   } catch (e) {
     yield* put(
       paymentsDeleteTransactionAction.failure({ ...getNetworkError(e) })

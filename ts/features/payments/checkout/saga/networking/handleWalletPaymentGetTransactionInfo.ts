@@ -56,9 +56,12 @@ export function* handleWalletPaymentGetTransactionInfo(
         )
       );
     } else if (getTransactionInfoResult.right.status !== 401) {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsGetPaymentTransactionInfoAction.failure({
-          ...getGenericError(new Error(JSON.stringify(getTransactionInfoResult.right.value)))
+          ...getGenericError(
+            new Error(JSON.stringify(getTransactionInfoResult.right.value))
+          )
         })
       );
     }

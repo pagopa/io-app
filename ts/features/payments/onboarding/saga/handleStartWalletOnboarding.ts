@@ -47,10 +47,13 @@ export function* handleStartWalletOnboarding(
       );
       return;
     } else if (startOnboardingResult.right.status !== 401) {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsStartOnboardingAction.failure({
           ...getGenericError(
-            new Error(`response status code ${startOnboardingResult.right.status}`)
+            new Error(
+              `response status code ${startOnboardingResult.right.status}`
+            )
           )
         })
       );

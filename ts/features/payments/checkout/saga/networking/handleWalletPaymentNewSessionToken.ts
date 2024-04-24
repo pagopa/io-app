@@ -58,18 +58,27 @@ export function* handleWalletPaymentNewSessionToken(
     if (E.isLeft(newSessionTokenResult)) {
       yield* put(
         paymentsGetNewSessionTokenAction.failure({
-          ...getGenericError(new Error(readablePrivacyReport(newSessionTokenResult.left)))
+          ...getGenericError(
+            new Error(readablePrivacyReport(newSessionTokenResult.left))
+          )
         })
       );
       return;
     }
 
     if (newSessionTokenResult.right.status === 200) {
-      yield* put(paymentsGetNewSessionTokenAction.success(newSessionTokenResult.right.value));
+      yield* put(
+        paymentsGetNewSessionTokenAction.success(
+          newSessionTokenResult.right.value
+        )
+      );
     } else if (newSessionTokenResult.right.status !== 401) {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsGetNewSessionTokenAction.failure({
-          ...getGenericError(new Error(`Error: ${newSessionTokenResult.right.status}`))
+          ...getGenericError(
+            new Error(`Error: ${newSessionTokenResult.right.status}`)
+          )
         })
       );
     }
