@@ -9,13 +9,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
+import _ from "lodash";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import I18n from "../../i18n";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import { getFullLocale } from "../../utils/locale";
-
 const SystemOffModal = () => {
-  const backendStatus = useSelector(backendStatusSelector);
+  const backendStatus = useSelector(backendStatusSelector, _.isEqual);
   const locale = getFullLocale();
 
   const subtitle = React.useMemo(() => {
