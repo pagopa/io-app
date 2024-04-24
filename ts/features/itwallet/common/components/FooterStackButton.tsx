@@ -3,7 +3,7 @@ import * as React from "react";
 import { ComponentProps } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { FooterTopShadow } from "../../../components/FooterTopShadow";
+import { FooterTopShadow } from "../../../../components/FooterTopShadow";
 
 type FooterStackButtonProps = {
   primaryActionProps: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;

@@ -3,9 +3,9 @@ import { ContentWrapper } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import ItwMarkdown from "../../components/ItwMarkdown";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
-import { FooterStackButton } from "../../components/FooterStackButton";
+import ItwMarkdown from "../components/ItwMarkdown";
+import { FooterStackButton } from "../../common/components/FooterStackButton";
 
 /**
  * This is the screen that shows the information about the discovery process

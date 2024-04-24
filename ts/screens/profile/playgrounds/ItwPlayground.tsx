@@ -8,7 +8,7 @@ import {
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../../features/itwallet/components/ItwMarkdown";
+import ItwMarkdown from "../../../features/itwallet/discovery/components/ItwMarkdown";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../../features/itwallet/navigation/routes";
 
