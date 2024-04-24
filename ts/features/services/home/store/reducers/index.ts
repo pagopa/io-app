@@ -96,3 +96,37 @@ export const isUpdatingPaginatedInstitutionsSelector = (state: GlobalState) =>
 
 export const isErrorPaginatedInstitutionsSelector = (state: GlobalState) =>
   pipe(state, paginatedInstitutionsPotSelector, pot.isError);
+
+/**
+ * Returns the current page of the paginated institutions.
+ *
+ * | count | offset | limit | result |
+ * |------:|-------:|------:|-------:|
+ * | 55    | 0      | 20    | 0      |
+ * | 55    | 20     | 20    | 1      |
+ * | 55    | 40     | 20    | 2      |
+ * | 55    | 60     | 20    | -1     |
+ */
+export const paginatedInstitutionsCurrentPageSelector = createSelector(
+  paginatedInstitutionsPotSelector,
+  paginatedInstitutions =>
+    pot.getOrElse(
+      pot.map(paginatedInstitutions, ({ count: total, limit, offset }) =>
+        offset >= total ? -1 : offset / limit
+      ),
+      0
+    )
+);
+
+export const paginatedInstitutionsLastPageSelector = createSelector(
+  paginatedInstitutionsPotSelector,
+  paginatedInstitutionsCurrentPageSelector,
+  (paginatedInstitutionsPot, currentPage) =>
+    pot.getOrElse(
+      pot.map(
+        paginatedInstitutionsPot,
+        ({ count: total, limit }) => (currentPage + 1) * limit >= total
+      ),
+      false
+    )
+);
