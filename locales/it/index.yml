@@ -2985,6 +2985,11 @@ features:
       status:
         failure: FALLITA
         success: ""
+  itWallet:
+    discovery:
+      info:
+        title: Inizia dalla tua Identità Digitale
+        content: "Usa le credenziali SPID o CIE per aggiungere la tua Identità Digitale al Portafoglio. **È un passaggio necessario per aggiungere i tuoi documenti digitali** (ad esempio la patente di guida) in modo sicuro.\n### Utile da sapere \nIn futuro potrai usare l’Identità Digitale salvata nel Portafoglio per identificarti tramite la funzionalità IT Wallet. \n\nPer maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

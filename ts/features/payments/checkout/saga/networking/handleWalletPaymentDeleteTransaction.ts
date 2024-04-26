@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -38,26 +37,35 @@ export function* handleWalletPaymentDeleteTransaction(
       action
     )) as SagaCallReturnType<typeof requestTransactionUserCancellation>;
 
-    yield* put(
-      pipe(
-        requestTransactionUserCancellationResult,
-        E.fold(
-          error =>
-            paymentsDeleteTransactionAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
+    if (E.isLeft(requestTransactionUserCancellationResult)) {
+      yield* put(
+        paymentsDeleteTransactionAction.failure({
+          ...getGenericError(
+            new Error(
+              readablePrivacyReport(
+                requestTransactionUserCancellationResult.left
+              )
+            )
+          )
+        })
+      );
+      return;
+    }
 
-          res => {
-            if (res.status === 202) {
-              return paymentsDeleteTransactionAction.success();
-            }
-            return paymentsDeleteTransactionAction.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
-          }
-        )
-      )
-    );
+    if (requestTransactionUserCancellationResult.right.status === 202) {
+      yield* put(paymentsDeleteTransactionAction.success());
+    } else if (requestTransactionUserCancellationResult.right.status !== 401) {
+      // The 401 status is handled by the withRefreshApiCall
+      yield* put(
+        paymentsDeleteTransactionAction.failure({
+          ...getGenericError(
+            new Error(
+              `Error: ${requestTransactionUserCancellationResult.right.status}`
+            )
+          )
+        })
+      );
+    }
   } catch (e) {
     yield* put(
       paymentsDeleteTransactionAction.failure({ ...getNetworkError(e) })

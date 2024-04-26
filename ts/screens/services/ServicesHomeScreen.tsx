@@ -21,20 +21,21 @@
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
  */
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   Image,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -43,16 +44,15 @@ import GenericErrorComponent from "../../components/screens/GenericErrorComponen
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import SectionStatusComponent from "../../components/SectionStatus";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
+import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
-import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
 import {
   navigateToServiceDetailsScreen,
   navigateToServicePreferenceScreen
@@ -68,10 +68,10 @@ import {
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
 import {
+  ServicesSectionState,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector,
-  ServicesSectionState,
   servicesSelector,
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
@@ -79,7 +79,7 @@ import { readServicesByIdSelector } from "../../store/reducers/entities/services
 import { servicesByIdSelector } from "../../features/services/details/store/reducers/servicesById";
 import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
-import { profileSelector, ProfileState } from "../../store/reducers/profile";
+import { ProfileState, profileSelector } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
@@ -221,6 +221,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <VSpacer size={40} />
         <VSpacer size={40} />
         <Image
+          accessibilityIgnoresInvertColors
           source={require("../../../img/services/icon-loading-services.png")}
         />
         <VSpacer size={40} />

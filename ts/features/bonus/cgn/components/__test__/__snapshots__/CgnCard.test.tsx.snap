@@ -159,6 +159,7 @@ exports[`CgnCard should match the snapshot 1`] = `
     testID="cgnLogoTestID"
   >
     <Image
+      accessibilityIgnoresInvertColors={true}
       source={
         Object {
           "testUri": "../../../img/bonus/cgn/cgn_logo.png",
@@ -191,6 +192,7 @@ exports[`CgnCard should match the snapshot 1`] = `
     testID="cgnEycaLogoTestID"
   >
     <Image
+      accessibilityIgnoresInvertColors={true}
       source={
         Object {
           "testUri": "../../../img/bonus/cgn/eyca_logo.png",

@@ -1,20 +1,22 @@
-import { Route, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
-import {
-  View,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
-import { useDispatch } from "react-redux";
 import {
   Icon,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React, { useEffect } from "react";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
+import { useDispatch } from "react-redux";
+import { isError, isReady } from "../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -32,8 +34,6 @@ import { useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
-import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
-import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
@@ -131,6 +131,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
             ),
             imgDim => (
               <Image
+                accessibilityIgnoresInvertColors
                 testID={"pspNameLogoID"}
                 source={{ uri: psp.logoUrl }}
                 style={[

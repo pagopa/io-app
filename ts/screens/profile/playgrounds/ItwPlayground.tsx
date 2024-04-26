@@ -8,7 +8,9 @@ import {
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../../features/itwallet/components/ItwMarkdown";
+import ItwMarkdown from "../../../features/itwallet/discovery/components/ItwMarkdown";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../../features/itwallet/navigation/routes";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -36,9 +38,17 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
+  const navigation = useIONavigation();
+
   useHeaderSecondLevel({
     title: "ITW Playground"
   });
+
+  const navigateToDiscovery = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO
+    });
+  };
 
   return (
     <ScrollView>
@@ -48,7 +58,7 @@ const ItwPlayground = () => {
           value="Discovery"
           accessibilityLabel={"Discovery Playground"}
           description="Start the discovery flow before activate IT-Wallet"
-          onPress={() => undefined}
+          onPress={() => navigateToDiscovery()}
         />
         <Divider />
         {/* Issuing eID Playground */}
