@@ -22,6 +22,6 @@ jobs:
       - id: run-test
         run: yarn test:ci
       - id: codecov-script        
-        uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0, needs token
+        uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
