@@ -1,8 +1,8 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Button, Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
@@ -68,6 +68,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
       <Content style={styles.container}>
         <React.Fragment>
           <Image
+            accessibilityIgnoresInvertColors
             style={IOStyles.selfCenter}
             source={require("../../img/icons/update-icon.png")}
           />

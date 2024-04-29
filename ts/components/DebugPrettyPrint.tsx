@@ -40,6 +40,7 @@ export const DebugPrettyPrint = ({
     <>
       {title && (
         <Pressable
+          accessibilityRole="button"
           style={{
             backgroundColor: IOColors["grey-700"],
             padding: 8,

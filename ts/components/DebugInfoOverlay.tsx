@@ -68,14 +68,19 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const [showRootName, setShowRootName] = useState(true);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
+  const appVersionText = `v. ${appVersion}`;
+
   return (
     <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
       <View style={IOStyles.row}>
         <Pressable
           style={styles.versionTextWrapper}
           onPress={() => setShowRootName(prevState => !prevState)}
+          accessibilityRole="button"
+          accessibilityLabel={appVersionText}
+          accessibilityHint={"Tap here to show/hide the root name"}
         >
-          <Text style={styles.versionText}>{`v. ${appVersion}`}</Text>
+          <Text style={styles.versionText}>{appVersionText}</Text>
         </Pressable>
         {isPagoPATestEnabled && (
           <>
@@ -87,6 +92,8 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
       {showRootName && (
         <Pressable
           style={styles.routeText}
+          accessibilityRole="button"
+          accessibilityHint={"Copy the technical screen name"}
           onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
         >
           <Text style={styles.screenDebugText}>{props.screenNameDebug}</Text>

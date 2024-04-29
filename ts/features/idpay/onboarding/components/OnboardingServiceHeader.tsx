@@ -1,9 +1,9 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { Body } from "../../../../components/core/typography/Body";
 import { H2 } from "../../../../components/core/typography/H2";
@@ -31,7 +31,11 @@ const OnboardingServiceHeader = (props: Props) => {
             <H2>{initiativeName}</H2>
             <Body>{organizationName}</Body>
           </View>
-          <Image style={styles.logo} source={{ uri: logoURL }} />
+          <Image
+            accessibilityIgnoresInvertColors
+            style={styles.logo}
+            source={{ uri: logoURL }}
+          />
         </View>
       )
     )
