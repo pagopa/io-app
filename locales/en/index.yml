@@ -379,7 +379,7 @@ profile:
         title: Privacy Policy and Terms of Service
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
-        updated: We updated our Terms and conditions.
+        updated: We updated our Terms and conditions
         infobox: It is necessary to read and accept the Terms and Conditions
         contextualHelpTitlePolicy: What is the information on the processing of personal data
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
@@ -852,7 +852,7 @@ onboarding:
   tos:
     headerTitle: Configure IO
     accept: Accept and continue
-    error: Non siamo riusciti a caricare l’Informativa privacy e i Termini e condizioni
+    error: We could not load the Privacy Policy and Terms and Conditions
     alert:
       title: Attention
       message: Please, read the full content of the Terms of Service and Privacy Policy to continue
@@ -878,8 +878,8 @@ onboarding:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
   exitAlert: 
-    title: Vuoi uscire da IO?
-    description: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
+    title: Do you want to quit IO?
+    description: You will have to log in again with SPID or CIE to use the app.
   biometric:
     headerTitle: Configure IO
     available:
