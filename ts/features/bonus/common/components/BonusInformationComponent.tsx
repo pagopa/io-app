@@ -1,16 +1,3 @@
-import * as AR from "fp-ts/lib/Array";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ComponentProps } from "react";
-import {
-  View,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView
-} from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   Body,
   ButtonOutline,
@@ -21,12 +8,25 @@ import {
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as AR from "fp-ts/lib/Array";
+import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { ComponentProps } from "react";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
@@ -34,8 +34,8 @@ import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useScreenReaderEnabled } from "../../../../utils/accessibility";
-import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
@@ -248,6 +248,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
             <View style={styles.flexEnd}>
               {O.isSome(maybeCover) && (
                 <Image
+                  accessibilityIgnoresInvertColors
                   source={{ uri: maybeCover.value }}
                   style={styles.cover}
                 />

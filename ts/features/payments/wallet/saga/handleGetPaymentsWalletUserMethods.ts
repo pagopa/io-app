@@ -42,7 +42,8 @@ export function* handleGetPaymentsWalletUserMethods(
             yield* put(getPaymentsWalletUserMethods.success(res.value));
           } else if (res.status === 404) {
             yield* put(getPaymentsWalletUserMethods.success({ wallets: [] }));
-          } else {
+          } else if (res.status !== 401) {
+            // The 401 status is handled by the withRefreshApiCall
             yield* put(
               getPaymentsWalletUserMethods.failure({
                 ...getGenericError(new Error(`Error: ${res.status}`))

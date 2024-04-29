@@ -1,3 +1,4 @@
+import { Icon } from "@pagopa/io-app-design-system";
 import { Body, Container, Right } from "native-base";
 import * as React from "react";
 import {
@@ -8,7 +9,6 @@ import {
   StyleSheet
 } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
-import { Icon } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
 import AppHeader from "./../../../components/ui/AppHeader";
@@ -74,6 +74,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
           cropWidth={screenWidth}
         >
           <Image
+            accessibilityIgnoresInvertColors
             source={require("../../../../img/wallet/payment-notice-pagopa.png")}
             style={styles.imageStyle}
           />

@@ -3,20 +3,20 @@
  * with different appearences based on
  * the props passed
  */
+import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { View, StyleSheet, Alert, Image, Platform } from "react-native";
+import { Alert, Image, Platform, StyleSheet, View } from "react-native";
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -26,10 +26,10 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
 import { Label } from "../../core/typography/Label";
-import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import Logo, { cardIcons } from "./Logo";
 
 interface BaseProps {
@@ -301,6 +301,7 @@ export default class CardComponent extends React.Component<Props> {
           return (
             <View style={{ alignSelf: "flex-end" }}>
               <Image
+                accessibilityIgnoresInvertColors
                 source={logo}
                 style={{
                   width: BASE_ICON_W,
