@@ -3,7 +3,7 @@
  * This screen is used as Privacy screen From Profile section.
  */
 import * as React from "react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -31,13 +31,13 @@ const TosScreen = () => {
     trackTosScreen(flow);
   });
 
-  const handleLoadEnd = useCallback(() => {
+  const handleLoadEnd = () => {
     setIsLoading(false);
-  }, [setIsLoading]);
+  };
 
-  const handleReload = useCallback(() => {
+  const handleReload = () => {
     setIsLoading(true);
-  }, [setIsLoading]);
+  };
 
   useHeaderSecondLevel({
     title: "",

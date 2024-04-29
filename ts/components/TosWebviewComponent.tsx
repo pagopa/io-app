@@ -6,7 +6,8 @@ import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import {
-  FooterWithButtons,
+  ButtonSolid,
+  ContentWrapper,
   H3,
   IOStyles,
   Pictogram,
@@ -46,15 +47,15 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
     handleLoadEnd();
     setHasError(true);
     trackToSWebViewError(flow);
-  }, [handleLoadEnd, flow]);
+  }, [flow, handleLoadEnd]);
 
   const handleRetry = useCallback(() => {
     handleReload();
     setHasError(false);
     trackToSWebViewErrorRetry(flow);
-  }, [handleReload, flow]);
+  }, [flow, handleReload]);
 
-  const renderError = () => (
+  const ErrorComponent = () => (
     <>
       <View
         style={[
@@ -71,19 +72,14 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           {I18n.t("onboarding.tos.error")}
         </H3>
       </View>
-      <FooterWithButtons
-        type="SingleButton"
-        sticky={true}
-        primary={{
-          type: "Solid",
-          buttonProps: {
-            onPress: () => handleRetry,
-            label: I18n.t("global.buttons.retry"),
-            accessibilityLabel: I18n.t("global.buttons.retry"),
-            testID: "RetryButtonTest"
-          }
-        }}
-      />
+      <ContentWrapper>
+        <ButtonSolid
+          fullWidth
+          onPress={handleRetry}
+          label={I18n.t("global.buttons.retry")}
+          testID="RetryButtonTest"
+        />
+      </ContentWrapper>
     </>
   );
 
@@ -101,7 +97,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
   };
 
   return hasError ? (
-    renderError()
+    <ErrorComponent />
   ) : (
     <>
       <View style={IOStyles.flex} testID="toSWebViewContainer">
@@ -112,6 +108,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           style={IOStyles.flex}
           onLoadEnd={handleLoadEnd}
           onError={handleError}
+          onHttpError={handleError}
           source={webViewSource}
           onMessage={handleWebViewMessage}
           injectedJavaScript={closeInjectedScript(
@@ -120,19 +117,14 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
         />
       </View>
       {shouldRenderFooter && onAcceptTos && (
-        <FooterWithButtons
-          type="SingleButton"
-          sticky={true}
-          primary={{
-            type: "Solid",
-            buttonProps: {
-              onPress: onAcceptTos,
-              label: I18n.t("onboarding.tos.accept"),
-              accessibilityLabel: I18n.t("onboarding.tos.accept"),
-              testID: "AcceptToSButton"
-            }
-          }}
-        />
+        <ContentWrapper>
+          <ButtonSolid
+            fullWidth
+            onPress={onAcceptTos}
+            label={I18n.t("onboarding.tos.accept")}
+            testID="AcceptToSButton"
+          />
+        </ContentWrapper>
       )}
     </>
   );

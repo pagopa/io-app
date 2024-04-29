@@ -6,12 +6,12 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { useCallback, useEffect, useState, createRef } from "react";
+import { useEffect, useState, createRef } from "react";
 import { Alert, View } from "react-native";
 import { useStore } from "react-redux";
 import {
   Alert as AlertDS,
-  H1,
+  H2,
   IOStyles,
   IOToast,
   VSpacer
@@ -87,13 +87,13 @@ const OnboardingTosScreen = () => {
     }
   }, [hasProfileError]);
 
-  const handleLoadEnd = useCallback(() => {
+  const handleLoadEnd = () => {
     setIsLoading(false);
-  }, [setIsLoading]);
+  };
 
-  const handleReload = useCallback(() => {
+  const handleReload = () => {
     setIsLoading(true);
-  }, [setIsLoading]);
+  };
 
   const handleGoBack = () =>
     Alert.alert(
@@ -127,13 +127,13 @@ const OnboardingTosScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
         <View style={IOStyles.horizontalContentPadding}>
-          <H1
+          <H2
             accessible={true}
             accessibilityRole="header"
             testID="screen-content-header-title"
           >
             {I18n.t("profile.main.privacy.privacyPolicy.title")}
-          </H1>
+          </H2>
           <VSpacer size={16} />
         </View>
         {!hasAcceptedCurrentTos && (
@@ -160,8 +160,6 @@ const OnboardingTosScreen = () => {
           webViewSource={{ uri: privacyUrl }}
           shouldRenderFooter={!isLoading}
           onAcceptTos={() => {
-            // eslint-disable-next-line no-console
-            console.log("click");
             dispatch(tosAccepted(tosVersion));
             void trackTosAccepted(tosVersion, flow, store.getState());
           }}
