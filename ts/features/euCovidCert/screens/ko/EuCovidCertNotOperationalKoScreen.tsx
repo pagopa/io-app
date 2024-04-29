@@ -4,7 +4,7 @@ import { Image } from "react-native";
 import notOperational from "../../../../../img/messages/empty-due-date-list-icon.png";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
-import EuCovidCertLearnMoreLink from "../../components/EuCovidCertLearnMoreLink";
+import { EuCovidCertLearnMoreLink } from "../../components/EuCovidCertLearnMoreLink";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 const EuCovidCertNotOperationalComponent = (): React.ReactElement => (

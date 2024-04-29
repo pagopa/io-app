@@ -5,7 +5,7 @@ import expiredImage from "../../../../img/features/euCovidCert/certificate_expir
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
-import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
+import { EuCovidCertLearnMoreLink } from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
