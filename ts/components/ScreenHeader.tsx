@@ -1,17 +1,17 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import {
   IOColors,
-  IOStyles,
-  Icon,
-  Pictogram,
   IOIconSizeScale,
   IOIcons,
+  IOPictogramSizeScale,
   IOPictograms,
-  IOPictogramSizeScale
+  IOStyles,
+  Icon,
+  Pictogram
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 import customVariables from "../theme/variables";
 
 type ScreenHeader = {
@@ -71,7 +71,13 @@ const ScreenHeader = ({
   const getIcon = () => {
     // If the image is PNG or other raster formats
     if (rasterIcon) {
-      return <Image source={rasterIcon} style={styles.image} />;
+      return (
+        <Image
+          accessibilityIgnoresInvertColors
+          source={rasterIcon}
+          style={styles.image}
+        />
+      );
     }
     // If the image is a pictogram
     if (pictogram) {
