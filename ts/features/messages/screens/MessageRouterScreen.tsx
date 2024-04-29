@@ -97,8 +97,7 @@ export const MessageRouterScreen = (
               screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
               params: {
                 authCode: data.euCovidCerficateAuthCode,
-                messageId: data.messageId,
-                serviceId: data.serviceId
+                messageId: data.messageId
               }
             }
           })

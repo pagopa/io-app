@@ -16,10 +16,6 @@ import { useIOSelector } from "../../../store/hooks";
 import { EUCovidContext } from "../components/EUCovidContext";
 import { getPaginatedMessageCreatedAt } from "../../messages/store/reducers/paginatedById";
 import { localeDateFormat } from "../../../utils/locale";
-import { serviceByIdSelector } from "../../services/details/store/reducers/servicesById";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { OrganizationHeader } from "../../messages/components/MessageDetail/OrganizationHeader";
-import { isStringNullyOrEmpty } from "../../../utils/strings";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 const styles = StyleSheet.create({
@@ -41,12 +37,6 @@ const EuCovidCertRevokedContentComponent = (props: Props) => {
   const createdAt = useIOSelector(state =>
     getPaginatedMessageCreatedAt(state, messageId)
   );
-  const serviceId = (currentCert?.serviceId ?? "") as ServiceId;
-  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
-
-  const logoUriOrUndefined = !isStringNullyOrEmpty(props.headerData.logoUrl)
-    ? [{ uri: props.headerData.logoUrl }]
-    : undefined;
 
   return (
     <>
@@ -61,16 +51,6 @@ const EuCovidCertRevokedContentComponent = (props: Props) => {
       )}
       <VSpacer size={8} />
       <Divider />
-      {service && (
-        <>
-          <OrganizationHeader
-            logoUri={logoUriOrUndefined}
-            organizationName={service.organization_name}
-            serviceName={service.service_name}
-          />
-          <Divider />
-        </>
-      )}
       <VSpacer size={32} />
       <View style={styles.container}>
         <Pictogram name="accessDenied" />
@@ -88,19 +68,10 @@ const EuCovidCertRevokedContentComponent = (props: Props) => {
   );
 };
 
-export const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => {
-  const noLogoHeaderProps: WithEUCovidCertificateHeaderData = {
-    ...props,
-    headerData: {
-      ...props.headerData,
-      logoUrl: ""
-    }
-  };
-  return (
-    <BaseEuCovidCertificateLayout
-      testID={"EuCovidCertRevokedScreen"}
-      header={<EuCovidCertHeader {...noLogoHeaderProps} />}
-      content={<EuCovidCertRevokedContentComponent {...props} />}
-    />
-  );
-};
+export const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => (
+  <BaseEuCovidCertificateLayout
+    testID={"EuCovidCertRevokedScreen"}
+    header={<EuCovidCertHeader {...props} />}
+    content={<EuCovidCertRevokedContentComponent {...props} />}
+  />
+);

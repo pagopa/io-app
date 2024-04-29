@@ -28,7 +28,6 @@ import { EuCovidCertValidScreen } from "./valid/EuCovidCertValidScreen";
 export type EuCovidCertificateRouterScreenNavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
   messageId: string;
-  serviceId: string;
 }>;
 
 /**
@@ -94,7 +93,6 @@ export const EuCovidCertificateRouterScreen = (
 ): React.ReactElement | null => {
   const authCode = props.route.params.authCode;
   const messageId = props.route.params.messageId;
-  const serviceId = props.route.params.serviceId;
   const shouldBeLoaded = useIOSelector(state =>
     euCovidCertificateShouldBeLoadedSelector(state, authCode)
   );
@@ -117,7 +115,7 @@ export const EuCovidCertificateRouterScreen = (
 
   // handle with the fold the remote state and with routeEuCovidResponse the different response values
   return (
-    <EUCovidContext.Provider value={{ authCode, messageId, serviceId }}>
+    <EUCovidContext.Provider value={{ authCode, messageId }}>
       {pot.fold(
         euCovidCertificateResponse,
         () => (

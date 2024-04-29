@@ -34,8 +34,7 @@ describe("Test EuCovidCertificateRouterScreen", () => {
 
     navigateToEuCovidCertificateDetailScreen({
       authCode,
-      messageId: "messageId",
-      serviceId: "serviceId"
+      messageId: "messageId"
     });
 
     expect(
