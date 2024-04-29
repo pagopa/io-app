@@ -2,11 +2,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
+import { WalletCardCategory } from "../../types";
 import {
   walletSetCategoryFilter,
   walletSetPaymentsRedirectBannerVisible
 } from "../actions/preferences";
-import { WalletCardCategory } from "../../types";
 
 export type WalletPreferencesState = {
   shouldShowPaymentsRedirectBanner: boolean;
