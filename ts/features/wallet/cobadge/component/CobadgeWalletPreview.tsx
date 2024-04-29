@@ -1,5 +1,5 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import { connect } from "react-redux";
@@ -53,6 +53,7 @@ const renderLeft = (props: Props, size: O.Option<[number, number]>) =>
         };
         return imageUrl ? (
           <Image
+            accessibilityIgnoresInvertColors
             source={{ uri: imageUrl }}
             style={imageStyle}
             testID={"bankLogo"}

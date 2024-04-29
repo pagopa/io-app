@@ -20,7 +20,11 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
       testID="cgnEycaLogoTestID"
       style={[styles.logoContainer, { bottom: 12, right: 12 }]}
     >
-      <Image source={eycaLogo} style={styles.logo} />
+      <Image
+        accessibilityIgnoresInvertColors
+        source={eycaLogo}
+        style={styles.logo}
+      />
     </View>
   );
 
@@ -29,7 +33,11 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
       testID="cgnLogoTestID"
       style={[styles.logoContainer, { top: 12, right: 12 }]}
     >
-      <Image source={cgnLogo} style={styles.logo} />
+      <Image
+        accessibilityIgnoresInvertColors
+        source={cgnLogo}
+        style={styles.logo}
+      />
     </View>
   );
 

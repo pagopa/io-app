@@ -1,22 +1,22 @@
+import { HSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useEffect } from "react";
-import WebView from "react-native-webview";
-import { View, Image, ImageBackground, StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { HSpacer } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { H3 } from "../../../../../components/core/typography/H3";
-import I18n from "../../../../../i18n";
+import WebView from "react-native-webview";
+import { connect } from "react-redux";
 import { Card } from "../../../../../../definitions/cgn/Card";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
+import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
 import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../../img/bonus/cgn/eyca_logo.png";
-import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
-import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
+import { H3 } from "../../../../../components/core/typography/H3";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
+import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { eycaDetailSelector } from "../../store/reducers/eyca/details";
 import { canEycaCardBeShown } from "../../utils/eyca";
+import { Point, generateRandomSvgMovement } from "../../utils/svgBackground";
 import { playSvg } from "./CardSvgPayload";
 import DepartmentLabel from "./DepartmentLabel";
 
@@ -193,11 +193,19 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View style={[styles.column, styles.flex1, styles.spaced]}>
             {canDisplayEycaLogo ? (
-              <Image source={eycaLogo} style={styles.eycaLogo} />
+              <Image
+                accessibilityIgnoresInvertColors
+                source={eycaLogo}
+                style={styles.eycaLogo}
+              />
             ) : (
               <HSpacer size={16} />
             )}
-            <Image source={cgnLogo} style={styles.fullLogo} />
+            <Image
+              accessibilityIgnoresInvertColors
+              source={cgnLogo}
+              style={styles.fullLogo}
+            />
           </View>
         </View>
       </View>
