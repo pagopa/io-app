@@ -3551,6 +3551,8 @@ unsupportedDevice:
   cta:
     faq: "Learn more"
 fastLogin:
+  loadingScreen:
+    title: "We are checking your identity"
   userInteraction:
     sessionExpired:
       noPin:
