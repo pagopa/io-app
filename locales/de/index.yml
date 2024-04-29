@@ -2120,6 +2120,9 @@ titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
 messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen."
 openStore: "Öffne {{storeName}}"
 btnUpdateApp: "Aktualisiere IO"
+systemsOff:
+  title: "Es gibt ein Problem mit unseren Systemen"
+  closeApp: "Schließe die App und versuche es in ein paar Minuten erneut."
 contextualHelp:
   title: "IO hilft dir"
   sendPersonalInfo:
