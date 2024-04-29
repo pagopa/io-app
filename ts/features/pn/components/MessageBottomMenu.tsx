@@ -13,6 +13,8 @@ import { UIMessageId } from "../../messages/types";
 import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
+import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
+import { TimelineListItem } from "./TimelineListItem";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +27,7 @@ const styles = StyleSheet.create({
 });
 
 type MessageBottomMenuProps = {
+  history: NotificationStatusHistory;
   iun: string;
   messageId: UIMessageId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
@@ -95,6 +98,7 @@ const generateMessageSectionData = (
 };
 
 export const MessageBottomMenu = ({
+  history,
   iun,
   messageId,
   payments,
@@ -109,6 +113,7 @@ export const MessageBottomMenu = ({
   );
   return (
     <View style={styles.container}>
+      <TimelineListItem history={history} />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
         <ContactsListItem
           email={serviceMetadata.email}

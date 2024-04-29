@@ -1,8 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { myPortalEnabled } from "../../../../config";
 import LegacyServiceDetailsScreen from "../../../../screens/services/LegacyServiceDetailsScreen";
-import ServicesWebviewScreen from "../../../../screens/services/ServicesWebviewScreen";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../../../../utils/navigation";
@@ -31,12 +29,6 @@ const ServicesNavigator = () => {
           headerShown: isDesignSystemEnabled
         }}
       />
-      {myPortalEnabled && (
-        <Stack.Screen
-          name={SERVICES_ROUTES.SERVICE_WEBVIEW}
-          component={ServicesWebviewScreen}
-        />
-      )}
     </Stack.Navigator>
   );
 };

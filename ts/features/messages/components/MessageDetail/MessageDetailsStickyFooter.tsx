@@ -17,7 +17,6 @@ import {
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
 import { handleCtaAction } from "../../utils/messages";
 import { CTA, CTAS } from "../../types/MessageCTA";
@@ -42,7 +41,6 @@ type MessageDetailsPaymentButtonProps = {
   firstCTAIsPNOptInMessage: boolean;
   messageId: UIMessageId;
   secondCTAIsPNOptInMessage: boolean;
-  serviceId: ServiceId;
 };
 
 type FooterPaymentWithDoubleCTA = {
@@ -268,8 +266,7 @@ export const MessageDetailsStickyFooter = ({
   ctas,
   firstCTAIsPNOptInMessage,
   messageId,
-  secondCTAIsPNOptInMessage,
-  serviceId
+  secondCTAIsPNOptInMessage
 }: MessageDetailsPaymentButtonProps) => {
   const safeAreaInsets = useSafeAreaInsets();
   const paymentData = useIOSelector(state =>
@@ -288,9 +285,9 @@ export const MessageDetailsStickyFooter = ({
       if (isPNOptInMessage) {
         trackPNOptInMessageAccepted();
       }
-      handleCtaAction(cta, linkTo, serviceId);
+      handleCtaAction(cta, linkTo);
     },
-    [linkTo, serviceId]
+    [linkTo]
   );
 
   const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);

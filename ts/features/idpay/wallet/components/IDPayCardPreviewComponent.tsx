@@ -1,3 +1,9 @@
+import {
+  HSpacer,
+  IOColors,
+  VSpacer,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -9,12 +15,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import {
-  IOColors,
-  hexToRgba,
-  HSpacer,
-  VSpacer
-} from "@pagopa/io-app-design-system";
 import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -48,7 +48,11 @@ const IDPayCardPreviewComponent = (props: Props) => {
     O.fold(
       () => undefined,
       logoUrl => (
-        <Image source={{ uri: logoUrl }} style={styles.initiativeLogo} />
+        <Image
+          accessibilityIgnoresInvertColors
+          source={{ uri: logoUrl }}
+          style={styles.initiativeLogo}
+        />
       )
     )
   );
