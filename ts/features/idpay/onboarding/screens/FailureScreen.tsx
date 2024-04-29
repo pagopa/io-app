@@ -7,8 +7,8 @@ import {
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
-import { useOnboardingMachineService } from "../xstate/provider";
-import { selectOnboardingFailure } from "../xstate/selectors";
+import { useOnboardingMachineService } from "../machine/provider";
+import { selectOnboardingFailure } from "../machine/selectors";
 import I18n from "../../../../i18n";
 
 const FailureScreen = () => {

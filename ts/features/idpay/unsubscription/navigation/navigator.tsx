@@ -1,62 +1,42 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { IdPayUnsubscriptionMachineProvider } from "../machine/provider";
 import UnsubscriptionConfirmationScreen from "../screens/UnsubscriptionConfirmationScreen";
 import UnsubscriptionResultScreen from "../screens/UnsubscriptionResultScreen";
-import { IDPayUnsubscriptionMachineProvider } from "../machine/provider";
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import { IdPayUnsubscriptionParamsList } from "./params";
+import { IdPayUnsubscriptionRoutes } from "./routes";
 
-export const IDPayUnsubscriptionRoutes = {
-  IDPAY_UNSUBSCRIPTION_MAIN: "IDPAY_UNSUBSCRIPTION_MAIN",
-  IDPAY_UNSUBSCRIPTION_CONFIRMATION: "IDPAY_UNSUBSCRIPTION_CONFIRMATION",
-  IDPAY_UNSUBSCRIPTION_RESULT: "IDPAY_UNSUBSCRIPTION_RESULT"
-} as const;
+const Stack = createStackNavigator<IdPayUnsubscriptionParamsList>();
 
-export type IDPayUnsubscriptionParamsList = {
-  [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]: IDPayUnsubscriptionNavigatorParams;
-  [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION]: undefined;
-  [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT]: undefined;
-};
-
-const Stack = createStackNavigator<IDPayUnsubscriptionParamsList>();
-
-export type IDPayUnsubscriptionNavigatorParams = {
-  initiativeId: string;
-  initiativeName?: string;
-  initiativeType?: InitiativeRewardTypeEnum;
-};
-
-type IDPayUnsubscriptionScreenRouteProps = RouteProp<
-  IDPayUnsubscriptionParamsList,
-  "IDPAY_UNSUBSCRIPTION_MAIN"
+type IdPayUnsubscriptionScreenRouteProps = RouteProp<
+  IdPayUnsubscriptionParamsList,
+  "IDPAY_UNSUBSCRIPTION_NAVIGATOR"
 >;
 
 export const IDPayUnsubscriptionNavigator = () => {
-  const route = useRoute<IDPayUnsubscriptionScreenRouteProps>();
-
-  const { initiativeId, initiativeName, initiativeType } = route.params;
+  const { params } = useRoute<IdPayUnsubscriptionScreenRouteProps>();
+  const { initiativeId, initiativeName, initiativeType } = params;
 
   return (
-    <IDPayUnsubscriptionMachineProvider
-      initiativeId={initiativeId}
-      initiativeName={initiativeName}
-      initiativeType={initiativeType}
+    <IdPayUnsubscriptionMachineProvider
+      input={{ initiativeId, initiativeName, initiativeType }}
     >
       <Stack.Navigator
         initialRouteName={
-          IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
+          IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
         }
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
-          name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION}
+          name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION}
           component={UnsubscriptionConfirmationScreen}
         />
         <Stack.Screen
-          name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT}
+          name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT}
           component={UnsubscriptionResultScreen}
         />
       </Stack.Navigator>
-    </IDPayUnsubscriptionMachineProvider>
+    </IdPayUnsubscriptionMachineProvider>
   );
 };

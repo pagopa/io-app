@@ -25,8 +25,8 @@ import { serviceByIdPotSelector } from "../../../services/details/store/reducers
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getPDNDCriteriaDescription } from "../utils/strings";
-import { useOnboardingMachineService } from "../xstate/provider";
-import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
+import { useOnboardingMachineService } from "../machine/provider";
+import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
 
 const secondaryButtonProps = {
   block: true,

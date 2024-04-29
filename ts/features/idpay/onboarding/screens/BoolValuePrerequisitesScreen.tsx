@@ -15,13 +15,13 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useOnboardingMachineService } from "../xstate/provider";
+import { useOnboardingMachineService } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
   isLoadingSelector,
   selectSelfDeclarationBoolAnswers
-} from "../xstate/selectors";
+} from "../machine/selectors";
 import { openWebUrl } from "../../../../utils/url";
 import { dpr28Dec2000Url } from "../../../../urls";
 

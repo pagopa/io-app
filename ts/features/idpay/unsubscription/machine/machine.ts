@@ -16,21 +16,11 @@ export const idPayUnsubscriptionMachine = setup({
     events: {} as Events.Events
   },
   actions: {
-    navigateToConfirmationScreen: () => {
-      throw new Error("Not implemented");
-    },
-    navigateToResultScreen: () => {
-      throw new Error("Not implemented");
-    },
-    exitToWallet: () => {
-      throw new Error("Not implemented");
-    },
-    exitUnsubscription: () => {
-      throw new Error("Not implemented");
-    },
-    handleSessionExpired: () => {
-      throw new Error("Not implemented");
-    }
+    navigateToConfirmationScreen: notImplementedStub,
+    navigateToResultScreen: notImplementedStub,
+    exitToWallet: notImplementedStub,
+    exitUnsubscription: notImplementedStub,
+    handleSessionExpired: notImplementedStub
   },
   actors: {
     onInit: fromPromise<Context.Context, Input.Input>(({ input }) =>
@@ -45,11 +35,7 @@ export const idPayUnsubscriptionMachine = setup({
     hasMissingInitiativeData: ({ context }) =>
       context.initiativeName === undefined ||
       context.initiativeType === undefined,
-    isSessionExpired: data => {
-      // eslint-disable-next-line no-console
-      console.log(data);
-      return false;
-    }
+    isSessionExpired: () => false
   }
 }).createMachine({
   id: "idpay-unsubscription",

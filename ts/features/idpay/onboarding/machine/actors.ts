@@ -2,6 +2,7 @@
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { fromPromise } from "xstate";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
@@ -13,7 +14,7 @@ import {
   OnboardingFailure,
   OnboardingFailureEnum
 } from "../types/OnboardingFailure";
-import { Context } from "./machine";
+import * as Context from "./context";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
 /**
@@ -69,7 +70,7 @@ const mapErrorCodeToFailure = (
   }
 };
 
-const createServicesImplementation = (
+const createActorsImplementation = (
   client: IDPayClient,
   token: string,
   language: PreferredLanguage
@@ -79,44 +80,45 @@ const createServicesImplementation = (
     "Accept-Language": language
   };
 
-  const loadInitiative = async (context: Context) => {
-    if (context.serviceId === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
-    }
+  const getInitiativeInfo = fromPromise<InitiativeDataDTO, string>(
+    async params => {
+      const dataResponse = await client.getInitiativeData({
+        ...clientOptions,
+        serviceId: params.input
+      });
 
-    const dataResponse = await client.getInitiativeData({
-      ...clientOptions,
-      serviceId: context.serviceId
-    });
-
-    const data: Promise<InitiativeDataDTO> = pipe(
-      dataResponse,
-      E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        ({ status, value }) => {
-          switch (status) {
-            case 200:
-              return Promise.resolve(value);
-            case 401:
-              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-            default:
-              return Promise.reject(OnboardingFailureEnum.GENERIC);
+      const data: Promise<InitiativeDataDTO> = pipe(
+        dataResponse,
+        E.fold(
+          _ => Promise.reject(OnboardingFailureEnum.GENERIC),
+          ({ status, value }) => {
+            switch (status) {
+              case 200:
+                return Promise.resolve(value);
+              case 401:
+                return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+              default:
+                return Promise.reject(OnboardingFailureEnum.GENERIC);
+            }
           }
-        }
-      )
-    );
+        )
+      );
 
-    return data;
-  };
+      return data;
+    }
+  );
 
-  const loadInitiativeStatus = async (context: Context) => {
-    if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+  const getOnboardingStatus = fromPromise<
+    O.Option<OnboardingStatusEnum>,
+    O.Option<string>
+  >(async params => {
+    if (O.isNone(params.input)) {
+      throw new Error("Initiative ID was not provided");
     }
 
     const statusResponse = await client.onboardingStatus({
       ...clientOptions,
-      initiativeId: context.initiative.initiativeId
+      initiativeId: params.input.value
     });
 
     const data: Promise<O.Option<OnboardingStatusEnum>> = pipe(
@@ -148,17 +150,17 @@ const createServicesImplementation = (
     );
 
     return data;
-  };
+  });
 
-  const acceptTos = async (context: Context) => {
-    if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+  const acceptTos = fromPromise<undefined, O.Option<string>>(async params => {
+    if (O.isNone(params.input)) {
+      throw new Error("Initiative ID was not provided");
     }
 
     const response = await client.onboardingCitizen({
       ...clientOptions,
       body: {
-        initiativeId: context.initiative.initiativeId
+        initiativeId: params.input.value
       }
     });
 
@@ -182,17 +184,16 @@ const createServicesImplementation = (
     );
 
     return dataPromise;
-  };
+  });
 
-  const loadRequiredCriteria = async (context: Context) => {
-    if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
-    }
-
+  const getRequiredCriteria = fromPromise<
+    O.Option<RequiredCriteriaDTO>,
+    string
+  >(async params => {
     const response = await client.checkPrerequisites({
       ...clientOptions,
       body: {
-        initiativeId: context.initiative.initiativeId
+        initiativeId: params.input
       }
     });
 
@@ -218,63 +219,67 @@ const createServicesImplementation = (
     );
 
     return dataPromise;
-  };
+  });
 
-  const acceptRequiredCriteria = async (context: Context) => {
-    const { initiative, requiredCriteria, multiConsentsAnswers } = context;
+  const acceptRequiredCriteria = fromPromise<undefined, Context.Context>(
+    async params => {
+      const { initiative, requiredCriteria, multiConsentsAnswers } =
+        params.input;
 
-    if (initiative === undefined || requiredCriteria === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
-    }
-
-    if (O.isNone(requiredCriteria)) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
-    }
-
-    const consentsArray = [
-      ...getBoolRequiredCriteriaFromContext(context).map(_ => ({
-        _type: _._type,
-        code: _.code,
-        accepted: true
-      })),
-      ...Object.values(multiConsentsAnswers)
-    ] as Array<SelfConsentDTO>;
-
-    const response = await client.consentOnboarding({
-      ...clientOptions,
-      body: {
-        initiativeId: initiative.initiativeId,
-        pdndAccept: true,
-        selfDeclarationList: consentsArray
+      if (O.isNone(initiative) || O.isNone(requiredCriteria)) {
+        return Promise.reject(OnboardingFailureEnum.GENERIC);
       }
-    });
 
-    const dataPromise: Promise<undefined> = pipe(
-      response,
-      E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        ({ status }) => {
-          switch (status) {
-            case 202:
-              return Promise.resolve(undefined);
-            case 401:
-              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-            default:
-              return Promise.reject(OnboardingFailureEnum.GENERIC);
-          }
+      if (requiredCriteria === undefined) {
+        return Promise.reject(OnboardingFailureEnum.GENERIC);
+      }
+
+      const consentsArray = [
+        ...getBoolRequiredCriteriaFromContext(params.input).map(_ => ({
+          _type: _._type,
+          code: _.code,
+          accepted: true
+        })),
+        ...Object.values(multiConsentsAnswers)
+      ] as Array<SelfConsentDTO>;
+
+      const response = await client.consentOnboarding({
+        ...clientOptions,
+        body: {
+          initiativeId: initiative.value.initiativeId,
+          pdndAccept: true,
+          selfDeclarationList: consentsArray
         }
-      )
-    );
+      });
 
-    return dataPromise;
-  };
+      const dataPromise: Promise<undefined> = pipe(
+        response,
+        E.fold(
+          _ => Promise.reject(OnboardingFailureEnum.GENERIC),
+          ({ status }) => {
+            switch (status) {
+              case 202:
+                return Promise.resolve(undefined);
+              case 401:
+                return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+              default:
+                return Promise.reject(OnboardingFailureEnum.GENERIC);
+            }
+          }
+        )
+      );
+
+      return dataPromise;
+    }
+  );
+
   return {
-    loadInitiative,
-    loadInitiativeStatus,
+    getInitiativeInfo,
+    getOnboardingStatus,
     acceptTos,
-    loadRequiredCriteria,
+    getRequiredCriteria,
     acceptRequiredCriteria
   };
 };
 
-export { createServicesImplementation };
+export { createActorsImplementation };

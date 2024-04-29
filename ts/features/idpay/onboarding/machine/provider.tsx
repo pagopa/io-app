@@ -20,25 +20,21 @@ import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import * as Input from "./input";
-import { idPayUnsubscriptionMachine } from "./machine";
+import { idPayOnboardingMachine } from "./machine";
 
 type Props = {
   children: React.ReactNode;
   input: Input.Input;
 };
 
-export const IdPayUnsubscriptionMachineContext = createActorContext(
-  idPayUnsubscriptionMachine
+export const IdPayOnboardingMachineContext = createActorContext(
+  idPayOnboardingMachine
 );
 
-export const IdPayUnsubscriptionMachineProvider = ({
-  children,
-  input
-}: Props) => {
-  const navigation = useIONavigation();
+export const IdPayOnboardingMachineProvider = ({ children, input }: Props) => {
   const dispatch = useIODispatch();
+  const rootNavigation = useIONavigation();
 
-  const sessionInfo = useIOSelector(sessionInfoSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const preferredLanguageOption = useIOSelector(preferredLanguageSelector);
 
@@ -48,32 +44,30 @@ export const IdPayUnsubscriptionMachineProvider = ({
     O.getOrElse(() => PreferredLanguageEnum.it_IT)
   );
 
+  const sessionInfo = useIOSelector(sessionInfoSelector);
+
   if (O.isNone(sessionInfo)) {
     throw new Error("Session info is undefined");
   }
+
   const { bpdToken } = sessionInfo.value;
 
-  const idPayClient = createIDPayClient(
+  const token = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
+  const client = createIDPayClient(
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
   );
 
-  const actors = createActorsImplementation(
-    idPayClient,
-    idPayTestToken ?? bpdToken,
-    language
-  );
-  const actions = createActionsImplementation(navigation, dispatch);
-  const machine = idPayUnsubscriptionMachine.provide({
+  const actors = createActorsImplementation(client, token, language);
+  const actions = createActionsImplementation(rootNavigation, dispatch);
+
+  const machine = idPayOnboardingMachine.provide({
     actors,
     actions
   });
 
   return (
-    <IdPayUnsubscriptionMachineContext.Provider
-      logic={machine}
-      options={{ input }}
-    >
+    <IdPayOnboardingMachineContext.Provider logic={machine} options={{ input }}>
       {children}
-    </IdPayUnsubscriptionMachineContext.Provider>
+    </IdPayOnboardingMachineContext.Provider>
   );
 };

@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { DefaultContext } from "xstate";
+import { MachineContext } from "xstate";
 import { E_BACK } from "../types/events";
 
 type WrappedAction<TContext> = (context: TContext, event: any) => void;
@@ -27,7 +27,7 @@ const skipNavigation = (event: E_BACK) => event.skipNavigation || false;
  * and either skips the action or calls the original action based on the event.
  */
 export const guardedNavigationAction =
-  <TContext = DefaultContext>(action: WrappedAction<TContext>) =>
+  <TContext extends MachineContext>(action: WrappedAction<TContext>) =>
   (context: TContext, event: any) =>
     pipe(
       event,

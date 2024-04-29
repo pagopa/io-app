@@ -18,21 +18,9 @@ import {
 } from "../components/OnboardingDescriptionMarkdown";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
-import { IDPayOnboardingParamsList } from "../navigation/navigator";
-import { useOnboardingMachineService } from "../xstate/provider";
-import { isUpsertingSelector, selectInitiative } from "../xstate/selectors";
-
-type InitiativeDetailsScreenRouteParams = {
-  serviceId: string;
-};
-
-type InitiativeDetailsRouteProps = RouteProp<
-  IDPayOnboardingParamsList,
-  "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
->;
+import { isUpsertingSelector, selectInitiative } from "../machine/selectors";
 
 const InitiativeDetailsScreen = () => {
-  const route = useRoute<InitiativeDetailsRouteProps>();
   const machine = useOnboardingMachineService();
 
   const { serviceId } = route.params;

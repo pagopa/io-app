@@ -16,11 +16,11 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
-import { useOnboardingMachineService } from "../xstate/provider";
+import { useOnboardingMachineService } from "../machine/provider";
 import {
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector
-} from "../xstate/selectors";
+} from "../machine/selectors";
 import { Link } from "../../../../components/core/typography/Link";
 
 type ListItemProps = {

@@ -9,8 +9,8 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import { useOnboardingMachineService } from "../xstate/provider";
-import { isUpsertingSelector } from "../xstate/selectors";
+import { useOnboardingMachineService } from "../machine/provider";
+import { isUpsertingSelector } from "../machine/selectors";
 import themeVariables from "../../../../theme/variables";
 
 const CompletionScreen = () => {

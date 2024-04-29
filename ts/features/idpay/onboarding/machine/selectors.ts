@@ -8,12 +8,13 @@ import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDec
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../xstate/utils";
-import { Context, IDPayOnboardingMachineType } from "./machine";
+import { IdPayOnboardingMachine } from "./machine";
+import * as Context from "./context";
 
-type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
+type StateWithContext = StateFrom<IdPayOnboardingMachine>;
 
 const selectInitiativeStatus = (state: StateWithContext) =>
-  state.context.initiativeStatus;
+  state.context.onboardingStatus;
 
 const selectOnboardingFailure = (state: StateWithContext) =>
   state.context.failure;
@@ -38,13 +39,11 @@ export const selectInitiative = (state: StateWithContext) =>
 const selectServiceId = (state: StateWithContext) => state.context.serviceId;
 
 const filterCriteria = <T extends SelfDeclarationDTO>(
-  criteria: O.Option<RequiredCriteriaDTO> | undefined,
+  criteria: O.Option<RequiredCriteriaDTO>,
   filterFunc: typeof SelfDeclarationMultiDTO | typeof SelfDeclarationBoolDTO
 ) =>
   pipe(
     criteria,
-    O.fromNullable,
-    O.flatten,
     O.fold(
       () => [],
       some => some.selfDeclarationList.filter(filterFunc.is)
@@ -80,8 +79,6 @@ const pdndCriteriaSelector = createSelector(
   requiredCriteria =>
     pipe(
       requiredCriteria,
-      O.fromNullable,
-      O.flatten,
       O.fold(
         () => [],
         some => some.pdndCriteria
@@ -106,18 +103,25 @@ const isUpsertingSelector = createSelector(selectTags, tags =>
   tags.has(UPSERTING_TAG)
 );
 
-const initiativeIDSelector = createSelector(
-  selectInitiative,
-  initiative => initiative?.initiativeId ?? undefined
+const initiativeIDSelector = createSelector(selectInitiative, initiative =>
+  pipe(
+    initiative,
+    O.map(initiative => initiative.initiativeId),
+    O.toUndefined
+  )
 );
 
-const getMultiRequiredCriteriaFromContext = (context: Context) =>
+export const getMultiSelfDeclarationListFromContext = (
+  context: Context.Context
+) =>
   filterCriteria<SelfDeclarationMultiDTO>(
     context.requiredCriteria,
     SelfDeclarationMultiDTO
   );
 
-const getBoolRequiredCriteriaFromContext = (context: Context) =>
+export const getBooleanSelfDeclarationListFromContext = (
+  context: Context.Context
+) =>
   filterCriteria<SelfDeclarationBoolDTO>(
     context.requiredCriteria,
     SelfDeclarationBoolDTO
@@ -130,21 +134,3 @@ const areAllSelfDeclarationsToggledSelector = createSelector(
     boolSelfDeclarations.length ===
     Object.values(answers).filter(answer => answer).length
 );
-
-export {
-  selectServiceId,
-  selectInitiativeStatus,
-  selectOnboardingFailure,
-  isUpsertingSelector,
-  multiRequiredCriteriaSelector,
-  boolRequiredCriteriaSelector,
-  getMultiRequiredCriteriaFromContext,
-  getBoolRequiredCriteriaFromContext,
-  criteriaToDisplaySelector,
-  pdndCriteriaSelector,
-  prerequisiteAnswerIndexSelector,
-  isLoadingSelector,
-  initiativeIDSelector,
-  selectSelfDeclarationBoolAnswers,
-  areAllSelfDeclarationsToggledSelector
-};

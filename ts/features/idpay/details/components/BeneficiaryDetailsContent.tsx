@@ -25,10 +25,10 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { format } from "../../../../utils/dates";
+import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { Table, TableRow } from "../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
-import { IDPayUnsubscriptionRoutes } from "../../unsubscription/navigation/navigator";
-import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
+import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -184,11 +184,10 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     );
 
   const handleUnsubscribePress = () =>
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      initiativeId,
-      initiativeName,
-      initiativeType
-    });
+    navigation.navigate(
+      IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR,
+      { initiativeId, initiativeName, initiativeType }
+    );
 
   return (
     <>

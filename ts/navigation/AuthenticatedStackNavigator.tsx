@@ -31,7 +31,7 @@ import {
   IDPayDetailsRoutes
 } from "../features/idpay/details/navigation";
 import {
-  IDPayOnboardingNavigator,
+  IdPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
 import {
@@ -249,7 +249,7 @@ const AuthenticatedStackNavigator = () => {
         <>
           <Stack.Screen
             name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
-            component={IDPayOnboardingNavigator}
+            component={IdPayOnboardingNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
