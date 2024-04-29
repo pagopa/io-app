@@ -24,7 +24,7 @@ const WrappedIdPayCard = (props: IdPayWalletCardProps) => {
   };
 
   return (
-    <Pressable onPress={handleOnPress}>
+    <Pressable accessibilityRole="button" onPress={handleOnPress}>
       <IdPayCard {...cardProps} />
     </Pressable>
   );

@@ -1,6 +1,7 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
+import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
@@ -32,7 +33,7 @@ const WalletPaymentsRedirectBanner = () => {
   }
 
   return (
-    <>
+    <Animated.View layout={Layout.duration(200)}>
       <Banner
         testID="walletPaymentsRedirectBannerTestID"
         title={I18n.t("features.wallet.home.paymentsBanner.title")}
@@ -46,7 +47,7 @@ const WalletPaymentsRedirectBanner = () => {
         onClose={handleOnBannerClose}
       />
       <VSpacer size={16} />
-    </>
+    </Animated.View>
   );
 };
 

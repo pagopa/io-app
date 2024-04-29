@@ -80,6 +80,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
   </View>
   <Image
     accessibilityElementsHidden={true}
+    accessibilityIgnoresInvertColors={true}
     importantForAccessibility="no"
     resizeMode="contain"
     source={

@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.59.0-rc.1](https://github.com/pagopa/io-app/compare/2.59.0-rc.0...2.59.0-rc.1) (2024-04-24)
+
+
+### Features
+
+* [[IOCOM-875](https://pagopa.atlassian.net/browse/IOCOM-875)] SEND Timeline with new DS ([#5706](https://github.com/pagopa/io-app/issues/5706)) ([357490d](https://github.com/pagopa/io-app/commit/357490d1f3371fe7ad1e5e29db02980081baea04))
+
+
+### Bug Fixes
+
+* [[IOPAE-1125](https://pagopa.atlassian.net/browse/IOPAE-1125)] Wrong margins in `ServiceDetailsScreen` ([#5720](https://github.com/pagopa/io-app/issues/5720)) ([b85e49e](https://github.com/pagopa/io-app/commit/b85e49ea548b5471c6c53e56945d70733036f1f3))
+* restore `backendStatus` previous selector ([#5718](https://github.com/pagopa/io-app/issues/5718)) ([db731c3](https://github.com/pagopa/io-app/commit/db731c3cd524eba24d27d2567e9ae2991888d3cd))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1018](https://pagopa.atlassian.net/browse/SIW-1018)] Add discovery info activation screen ([#5696](https://github.com/pagopa/io-app/issues/5696)) ([025f1f4](https://github.com/pagopa/io-app/commit/025f1f4dc9266d897c7f9e2986848e88a8fdc638))
+* [[IOBP-630](https://pagopa.atlassian.net/browse/IOBP-630)] Changed label from CheckoutPaymentMethodList ([#5717](https://github.com/pagopa/io-app/issues/5717)) ([1354c43](https://github.com/pagopa/io-app/commit/1354c437a3b4d2f1ce731122d9be61710fbcb421))
+
 ## [2.59.0-rc.0](https://github.com/pagopa/io-app/compare/2.58.0-rc.1...2.59.0-rc.0) (2024-04-23)
 
 
