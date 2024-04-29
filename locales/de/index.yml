@@ -2445,6 +2445,8 @@ features:
       banner:
         content: "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst."
         action: "Zahlungsmethode hinzufügen"
+      status:
+        expired: "Abgelaufen"
     transactions:
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"
