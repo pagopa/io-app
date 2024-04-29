@@ -1,16 +1,10 @@
 import * as React from "react";
 import { View, ActivityIndicator } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { GlobalState } from "../../../store/reducers/types";
 import I18n from "../../../i18n";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
 
 const euActivityIndicator = (
   <ActivityIndicator
@@ -22,7 +16,7 @@ const euActivityIndicator = (
   />
 );
 
-const EuCovidCertLoadingScreen = (_: Props): React.ReactElement => (
+export const EuCovidCertLoadingScreen = (): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertLoadingScreen"}
     content={
@@ -43,11 +37,3 @@ const EuCovidCertLoadingScreen = (_: Props): React.ReactElement => (
     }
   />
 );
-
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertLoadingScreen);

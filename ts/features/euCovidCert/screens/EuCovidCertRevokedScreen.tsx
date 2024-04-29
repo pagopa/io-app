@@ -1,22 +1,18 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import revokedImage from "../../../../img/features/euCovidCert/certificate_revoked.png";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    revokeInfo?: string;
-  } & WithEUCovidCertificateHeaderData;
+type Props = {
+  revokeInfo?: string;
+} & WithEUCovidCertificateHeaderData;
 
 const EuCovidCertRevokedContentComponent = (props: Props) => (
   <>
@@ -44,18 +40,10 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
   </>
 );
 
-const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => (
+export const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertRevokedScreen"}
     header={<EuCovidCertHeader {...props} />}
     content={<EuCovidCertRevokedContentComponent {...props} />}
   />
 );
-
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertRevokedScreen);
