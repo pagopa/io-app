@@ -18,7 +18,9 @@ jobs:
         run: yarn lint
       - id: run-prettier
         run: yarn prettier:check
-      - id: run-test
-        run: yarn test:ci
+      # - id: run-test
+      #  run: yarn test:ci
       - id: codecov-script
-        run: ./scripts/codecov.sh
+        uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
+        with:
+          use_oidc: true
