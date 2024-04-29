@@ -55,6 +55,7 @@ const CgnLandingPlayground = () => {
         <View>
           <H5>{"Link alla landing"}</H5>
           <TextInput
+            accessibilityLabel="URL address"
             style={styles.textInput}
             onChangeText={setNavigationUri}
             value={navigationURI}
@@ -65,6 +66,7 @@ const CgnLandingPlayground = () => {
           <VSpacer size={8} />
           <H5>{"Referer"}</H5>
           <TextInput
+            accessibilityLabel="Referer field"
             style={styles.textInput}
             onChangeText={setRefererValue}
             value={refererValue}

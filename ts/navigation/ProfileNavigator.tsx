@@ -25,7 +25,6 @@ import SecurityScreen from "../screens/profile/SecurityScreen";
 import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
-import WebPlayground from "../screens/profile/WebPlayground";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
 import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
@@ -125,7 +124,6 @@ const ProfileStackNavigator = () => (
       name={ROUTES.DESIGN_SYSTEM}
       component={DesignSystemNavigator}
     />
-    <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
     <Stack.Screen
       name={ROUTES.LOLLIPOP_PLAYGROUND}
       component={LollipopPlayground}

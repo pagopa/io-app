@@ -57,8 +57,10 @@ const LollipopPlaygroundContent = (props: Props) => {
   return (
     <View style={styles.column}>
       <TextInput
+        accessibilityLabel="Change HTTP request body"
+        accessibilityHint={`Paste your body message here`}
         multiline={true}
-        placeholder={"paste here your body message"}
+        placeholder={"paste your body message here"}
         style={styles.textInput}
         onChangeText={setHttpRequestBodyText}
         value={httpRequestBodyText}

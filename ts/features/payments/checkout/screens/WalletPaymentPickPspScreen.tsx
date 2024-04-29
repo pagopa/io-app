@@ -22,13 +22,12 @@ import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   selectPaymentPspAction,
-  resetPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../store/actions/orchestration";
 import {
-  walletPaymentPickedPspSelector,
-  walletPaymentPspListSelector
-} from "../store/selectors";
+  walletPaymentPspListSelector,
+  walletPaymentSelectedPspSelector
+} from "../store/selectors/psps";
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
@@ -41,7 +40,7 @@ const WalletPaymentPickPspScreen = () => {
     React.useState<WalletPaymentPspSortType>("default");
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
-  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
+  const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
   const isLoading = pot.isLoading(pspListPot);
   const isError = pot.isError(pspListPot);
@@ -64,13 +63,6 @@ const WalletPaymentPickPspScreen = () => {
       });
     }
   }, [isError, navigation]);
-
-  React.useEffect(
-    () => () => {
-      dispatch(resetPaymentPspAction());
-    },
-    [dispatch]
-  );
 
   const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
     setShowFeaturedPsp(sortType === "default");
