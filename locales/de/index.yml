@@ -2014,6 +2014,9 @@ services:
   disableAllMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du alle Dienste deaktivierst, können diese dich nicht mehr über IO kontaktieren (bis du sie wieder aktivierst). Du kannst die Dienste weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
   close: "Schließen"
   emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
+  home:
+    institutions:
+      title: "National"
   details:
     failure:
       title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
