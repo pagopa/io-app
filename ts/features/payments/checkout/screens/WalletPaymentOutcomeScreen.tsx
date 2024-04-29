@@ -112,10 +112,10 @@ const WalletPaymentOutcomeScreen = () => {
   const onboardPaymentMethodAction: OperationResultScreenContentProps["action"] =
     {
       label: I18n.t(
-        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.onboardPaymentMethod"
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
       ),
       accessibilityLabel: I18n.t(
-        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.onboardPaymentMethod"
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
       ),
       onPress: () => {
         navigation.replace(

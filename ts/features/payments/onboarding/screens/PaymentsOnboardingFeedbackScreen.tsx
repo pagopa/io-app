@@ -121,7 +121,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     O.fromNullable,
     O.fold(
       () => I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`),
-      () => I18n.t(`wallet.onboarding.outcome.SUCCESS.continueAction`)
+      () => I18n.t(`wallet.onboarding.outcome.SUCCESS.secondaryAction`)
     )
   );
 

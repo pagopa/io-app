@@ -26,6 +26,7 @@ import {
   walletPaymentDetailsSelector
 } from "../store/selectors";
 import {
+  notHasValidPaymentMethodsSelector,
   walletPaymentAllMethodsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
   walletPaymentSelectedWalletIdOptionSelector,
@@ -37,8 +38,6 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { Wallets } from "../../../../../definitions/pagopa/ecommerce/Wallets";
-import { PaymentMethodsResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 
 const WalletPaymentPickMethodScreen = () => {
@@ -54,6 +53,9 @@ const WalletPaymentPickMethodScreen = () => {
     walletPaymentIsTransactionActivatedSelector
   );
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const notHasValidPaymentMethods = useIOSelector(
+    notHasValidPaymentMethodsSelector
+  );
 
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -63,26 +65,6 @@ const WalletPaymentPickMethodScreen = () => {
   );
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
     React.useState(false);
-
-  const userPaymentMethods = React.useMemo(
-    () =>
-      pipe(
-        userWalletsPots,
-        pot.toOption,
-        O.getOrElse(() => [] as Wallets["wallets"])
-      ),
-    [userWalletsPots]
-  );
-
-  const allPaymentMethods = React.useMemo(
-    () =>
-      pipe(
-        paymentMethodsPot,
-        pot.toOption,
-        O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
-      ),
-    [paymentMethodsPot]
-  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -95,13 +77,7 @@ const WalletPaymentPickMethodScreen = () => {
   // .. we redirect the user to the outcome screen with an outcome that allow the user to start the onboarding process of a new payment method.
   // .. This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
   useEffect(() => {
-    if (
-      pot.isSome(paymentMethodsPot) &&
-      _.isEmpty(allPaymentMethods) &&
-      pot.isSome(userWalletsPots) &&
-      _.isEmpty(userPaymentMethods) &&
-      pot.isSome(paymentDetailsPot)
-    ) {
+    if (notHasValidPaymentMethods) {
       const paymentDetails = pot.toUndefined(paymentDetailsPot);
       dispatch(
         paymentsInitOnboardingWithRptIdToResume({
@@ -115,15 +91,7 @@ const WalletPaymentPickMethodScreen = () => {
         }
       });
     }
-  }, [
-    userWalletsPots,
-    allPaymentMethods,
-    userPaymentMethods,
-    paymentMethodsPot,
-    paymentDetailsPot,
-    navigation,
-    dispatch
-  ]);
+  }, [notHasValidPaymentMethods, navigation, dispatch]);
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(

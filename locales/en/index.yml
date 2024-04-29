@@ -1224,7 +1224,7 @@ wallet:
         title: "Payment method added successfully!"
         subtitle: ""
         primaryAction: "Vedi dettagli"
-        continueAction: "Continue"
+        secondaryAction: "Continue"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
@@ -1774,7 +1774,7 @@ wallet:
       PAYMENT_METHODS_NOT_AVAILABLE:
         title: Aggiungi un metodo per effettuare pagamenti in app
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        onboardPaymentMethod: Aggiungi metodo
+        primaryAction: Aggiungi metodo
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza

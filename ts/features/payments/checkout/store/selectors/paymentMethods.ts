@@ -2,7 +2,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { selectPaymentsCheckoutState } from ".";
+import { selectPaymentsCheckoutState, walletPaymentDetailsSelector } from ".";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
+import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
+import _ from "lodash";
 
 export const walletPaymentUserWalletsSelector = createSelector(
   selectPaymentsCheckoutState,
@@ -68,4 +71,26 @@ export const walletPaymentSelectedWalletIdOptionSelector = createSelector(
       selectedWalletOption,
       O.map(({ walletId }) => walletId)
     )
+);
+
+export const notHasValidPaymentMethodsSelector = createSelector(
+  walletPaymentAllMethodsSelector,
+  walletPaymentUserWalletsSelector,
+  walletPaymentDetailsSelector,
+  (allMethodsPot, userWalletsPot, paymentDetailsPot) => {
+    const allMethods = pipe(
+      allMethodsPot,
+      pot.toOption,
+      O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
+    );
+    const userWallets = pipe(
+      userWalletsPot,
+      pot.toOption,
+      O.getOrElse(() => [] as Wallets["wallets"])
+    );
+
+    return (
+      (pot.isSome(allMethodsPot) && _.isEmpty(allMethods)) && (pot.isSome(userWalletsPot) && _.isEmpty(userWallets)) && pot.isSome(paymentDetailsPot)
+    )
+  }
 );
