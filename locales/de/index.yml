@@ -1630,8 +1630,8 @@ wallet:
       cancel: "Nein, zurück"
     methodSelection:
       header: "Zahlungsmethode auswählen"
-      yourMethods: "Deine Zahlungsmethoden"
-      otherMethods: "Andere Zahlungsmethoden"
+      yourMethods: "Gespeicherte"
+      otherMethods: "Alle Zahlungsmethoden"
       alert:
         body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
         cta: "OK, habe verstanden!"
