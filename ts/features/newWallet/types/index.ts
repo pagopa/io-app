@@ -14,7 +14,8 @@ import {
 } from "../../bonus/cgn/components/CgnWalletCard";
 
 // Used to group the cards in the wallet.
-export type WalletCardCategory = "itw" | "cgn" | "bonus" | "payment";
+export const walletCardCategories = ["itw", "cgn", "bonus", "payment"] as const;
+export type WalletCardCategory = (typeof walletCardCategories)[number];
 
 // Basic type definition for a wallet card, describes the properties that
 // each card MUST have in order to be placed inside the wallet.
