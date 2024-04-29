@@ -2573,6 +2573,8 @@ unsupportedDevice:
   cta:
     faq: "Warum?"
 fastLogin:
+  loadingScreen:
+    title: "Wir authentifizieren dich"
   userInteraction:
     sessionExpired:
       noPin:
