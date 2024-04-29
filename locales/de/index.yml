@@ -2405,6 +2405,8 @@ features:
       infoSection:
         title: "Informationen zur Zustellung"
         iun: "IUN-Code"
+        iunAccessibility: "IUN-Code, kopieren"
+        iunSectionTitle: "Zustellung"
       timeline:
         title: "STATUS DER ZUSTELLUNG"
         status:
