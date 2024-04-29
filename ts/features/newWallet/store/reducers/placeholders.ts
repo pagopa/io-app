@@ -5,10 +5,19 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { WalletCardCategory } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
+import { walletToggleLoadingState } from "../actions/placeholders";
 
-export type WalletPlaceholdersState = { [key: string]: WalletCardCategory };
+export type WalletPlaceholders = { [key: string]: WalletCardCategory };
 
-const INITIAL_STATE: WalletPlaceholdersState = {};
+export type WalletPlaceholdersState = {
+  items: WalletPlaceholders;
+  isLoading: boolean;
+};
+
+const INITIAL_STATE: WalletPlaceholdersState = {
+  items: {},
+  isLoading: false
+};
 
 const reducer = (
   state: WalletPlaceholdersState = INITIAL_STATE,
@@ -16,19 +25,31 @@ const reducer = (
 ): WalletPlaceholdersState => {
   switch (action.type) {
     case getType(walletAddCards):
-      return action.payload.reduce(
-        (acc, { category, key }) => ({
-          ...acc,
-          [hashKey(key)]: category
-        }),
-        state
-      );
-    case getType(walletRemoveCards):
-      return Object.fromEntries(
-        Object.entries(state).filter(
-          ([key]) => !action.payload.map(hashKey).includes(key)
+      return {
+        ...state,
+        items: action.payload.reduce(
+          (acc, { category, key }) => ({
+            ...acc,
+            [hashKey(key)]: category
+          }),
+          state.items
         )
-      );
+      };
+    case getType(walletRemoveCards):
+      return {
+        ...state,
+        items: Object.fromEntries(
+          Object.entries(state.items).filter(
+            ([key]) => !action.payload.map(hashKey).includes(key)
+          )
+        )
+      };
+
+    case getType(walletToggleLoadingState):
+      return {
+        ...state,
+        isLoading: action.payload
+      };
   }
   return state;
 };

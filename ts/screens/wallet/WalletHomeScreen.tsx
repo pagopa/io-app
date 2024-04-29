@@ -44,11 +44,11 @@ import { supportedAvailableBonusSelector } from "../../features/bonus/common/sto
 import IDPayCardsInWalletContainer from "../../features/idpay/wallet/components/IDPayCardsInWalletContainer";
 import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import { idPayWalletInitiativeListSelector } from "../../features/idpay/wallet/store/reducers";
+import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
+import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -372,6 +372,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Body>
           <Image
+            accessibilityIgnoresInvertColors
             source={require("../../../img/messages/empty-transaction-list-icon.png")}
           />
         </View>

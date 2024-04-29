@@ -21,6 +21,7 @@ export const PaymentCardBankLogo = ({
   return (
     <View testID={testID}>
       <Image
+        accessibilityIgnoresInvertColors
         accessible={true}
         accessibilityLabel={accessibilityLabel}
         source={{ uri: getBankLogosCdnUri(abiCode) }}
