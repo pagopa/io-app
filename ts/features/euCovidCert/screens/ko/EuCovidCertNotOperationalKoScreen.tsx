@@ -1,14 +1,14 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { GlobalState } from "../../../../store/reducers/types";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import notOperational from "../../../../../img/messages/empty-due-date-list-icon.png";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
-import notOperational from "../../../../../img/messages/empty-due-date-list-icon.png";
+import { GlobalState } from "../../../../store/reducers/types";
 import EuCovidCertLearnMoreLink from "../../components/EuCovidCertLearnMoreLink";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -20,6 +20,7 @@ const EuCovidCertNotOperationalComponent = (): React.ReactElement => (
     <InfoScreenComponent
       image={
         <Image
+          accessibilityIgnoresInvertColors
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}
           source={notOperational}

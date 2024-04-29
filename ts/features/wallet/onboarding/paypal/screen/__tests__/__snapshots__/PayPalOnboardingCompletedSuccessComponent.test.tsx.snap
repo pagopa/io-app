@@ -331,6 +331,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                         testID="InfoScreenComponent"
                       >
                         <Image
+                          accessibilityIgnoresInvertColors={true}
                           resizeMode="contain"
                           source={
                             Object {

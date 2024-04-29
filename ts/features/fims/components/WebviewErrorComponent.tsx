@@ -1,12 +1,12 @@
-import { View, Image, StyleSheet } from "react-native";
-import * as React from "react";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { Label } from "../../../components/core/typography/Label";
-import I18n from "../../../i18n";
+import * as React from "react";
+import { Image, StyleSheet, View } from "react-native";
+import brokenLinkImage from "../../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body as BodyText } from "../../../components/core/typography/Body";
-import brokenLinkImage from "../../../../img/broken-link.png";
+import { Label } from "../../../components/core/typography/Label";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import I18n from "../../../i18n";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -37,7 +37,11 @@ const WebviewErrorComponent = ({ onWebviewClose, handleReload }: Props) => (
   <View style={[styles.errorContainer, IOStyles.horizontalContentPadding]}>
     <VSpacer size={40} />
     <VSpacer size={40} />
-    <Image source={brokenLinkImage} resizeMode="contain" />
+    <Image
+      accessibilityIgnoresInvertColors
+      source={brokenLinkImage}
+      resizeMode="contain"
+    />
     <Label style={styles.errorTitle} weight={"Bold"}>
       {I18n.t("authentication.errors.network.title")}
     </Label>

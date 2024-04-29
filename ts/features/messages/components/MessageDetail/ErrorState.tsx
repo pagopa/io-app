@@ -1,14 +1,14 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { Image, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import I18n from "../../../../i18n";
+import customVariables from "../../../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const styles = StyleSheet.create({
   errorStateWrapper: {
@@ -69,6 +69,7 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
   <View style={styles.errorStateWrapper}>
     <View style={styles.errorStateContentWrapper}>
       <Image
+        accessibilityIgnoresInvertColors
         source={require("../../../../../img/messages/error-message-detail-icon.png")}
       />
       <H1 style={styles.errorStateHeader}>
