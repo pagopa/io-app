@@ -7,6 +7,7 @@ import {
 import React from "react";
 import { Alert } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import I18n from "../../../../i18n";
 
 export const ItwAuthModeSelectionScreen = () => {
   const handleSpidPress = () => {
@@ -23,26 +24,28 @@ export const ItwAuthModeSelectionScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={{ label: "Con quale metodo vuoi identificarti?" }}
+      title={{ label: I18n.t("features.itWallet.authentication.title") }}
     >
       <ContentWrapper>
-        <ListItemHeader label="Metodi disponibili" />
+        <ListItemHeader
+          label={I18n.t("features.itWallet.authentication.header")}
+        />
         <ModuleCredential
-          label="SPID"
+          label={I18n.t("features.itWallet.authentication.method.spid.title")}
           // description="Usa credenziali e app (o SMS)"
           icon="spid"
           onPress={handleSpidPress}
         />
         <VSpacer size={8} />
         <ModuleCredential
-          label="CIE + PIN"
+          label={I18n.t("features.itWallet.authentication.method.ciePin.title")}
           // description="Usa Carta d’Identità Elettronica e PIN"
           icon="fiscalCodeIndividual"
           onPress={handleCiePinPress}
         />
         <VSpacer size={8} />
         <ModuleCredential
-          label="CieID"
+          label={I18n.t("features.itWallet.authentication.method.cieId.title")}
           // description="Usa credenziali e app CieID"
           icon="device"
           onPress={handleCieIdPress}
