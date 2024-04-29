@@ -2473,6 +2473,11 @@ features:
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
+  itWallet:
+    discovery:
+      info:
+        title: "Beginne mit deiner Digitalen Identität"
+        content: "Verwende deine SPID- oder CIE-Anmeldedaten, um deine Digitale Identität zu deinem Konto hinzuzufügen. **Dies ist ein notwendiger Schritt, um deine digitalen Dokumente** (z.B. Führerschein) sicher hinzuzufügen.\n### Wissenswertes\nIn Zukunft kannst du die in dem Konto gespeicherte Digitale Identität verwenden, um dich über die IT-Wallet-Funktionalität zu identifizieren. \n\nFür weitere Informationen lies bitte die [Datenschutzrichtlinie]() und die [Nutzungsbedingungen]()."
 support:
   ticketList:
     noTicket:
