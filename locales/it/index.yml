@@ -3550,6 +3550,8 @@ unsupportedDevice:
   cta:
     faq: "Come mai?"
 fastLogin:
+  loadingScreen:
+    title: "Ti stiamo autenticando"
   userInteraction:
     sessionExpired:
       noPin:
