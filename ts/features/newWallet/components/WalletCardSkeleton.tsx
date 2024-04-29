@@ -2,8 +2,9 @@ import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder, { BoxProps } from "rn-placeholder";
+import { withWalletCardBaseComponent } from "./WalletCardBaseComponent";
 
-const WalletCardSkeleton = () => (
+const WalletCardSkeleton = withWalletCardBaseComponent(() => (
   <View style={styleSheet.card}>
     <View style={styleSheet.wrapper}>
       <View style={styleSheet.paymentInfo}>
@@ -21,7 +22,7 @@ const WalletCardSkeleton = () => (
       </View>
     </View>
   </View>
-);
+));
 
 const SkeletonPlaceholder = (props: Pick<BoxProps, "width" | "height">) => (
   <Placeholder.Box
@@ -38,7 +39,7 @@ const styleSheet = StyleSheet.create({
   card: {
     aspectRatio: 16 / 10,
     backgroundColor: IOColors["grey-100"],
-    borderRadius: 16,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor,
     paddingTop: 4

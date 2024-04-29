@@ -51,7 +51,14 @@ export class MultiImage extends React.PureComponent<Props, State> {
       }));
     };
     return (
-      source && <Image {...this.props} source={source} onError={onError} />
+      source && (
+        <Image
+          accessibilityIgnoresInvertColors
+          {...this.props}
+          source={source}
+          onError={onError}
+        />
+      )
     );
   }
 }

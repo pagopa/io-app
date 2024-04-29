@@ -516,6 +516,7 @@ exports[`PspRadioItem match snapshot 1`] = `
               >
                 <View>
                   <Text
+                    accessibilityRole="button"
                     accessible={true}
                     color="blue"
                     defaultColor="blue"

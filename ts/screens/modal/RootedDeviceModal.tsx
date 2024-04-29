@@ -1,8 +1,3 @@
-import * as React from "react";
-import { View, Platform, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
 import {
   ButtonLink,
   ButtonOutline,
@@ -12,9 +7,14 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import I18n from "../../i18n";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
+import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";

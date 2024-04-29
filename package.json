@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.59.0-rc.0",
+  "version": "2.59.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.30/definitions.yml",
@@ -268,6 +268,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react-native-a11y": "^3.3.0",
     "eslint-plugin-sonarjs": "^0.11.0",
     "fs-extra": "^7.0.0",
     "husky": "^8.0.0",

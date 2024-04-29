@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import {
   WalletCardsCategoryContainer,
-  WalletCategoryStackContainerProps
+  WalletCardsCategoryContainerProps
 } from "../WalletCardsCategoryContainer";
 
 jest.mock("react-native-reanimated", () => ({
@@ -47,7 +47,7 @@ describe("WalletCardsCategoryContainer", () => {
   });
 });
 
-const renderComponent = (props: WalletCategoryStackContainerProps) => {
+const renderComponent = (props: WalletCardsCategoryContainerProps) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
