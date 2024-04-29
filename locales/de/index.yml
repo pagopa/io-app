@@ -1895,6 +1895,11 @@ messageDetails:
     title: "Identifikationsdaten"
     messageId: "MitteilungsID"
     messageIdAccessibility: "MitteilungsID kopieren"
+    pagoPAHeader: "pagoPA Zahlungsaufforderung"
+    noticeCode: "Zahlungskodex"
+    noticeCodeAccessibility: "Zahlungskodex, kopieren"
+    entityFiscalCode: "Steuernummer Körperschaft"
+    entityFiscalCodeAccessibility: "Steuernummer Körperschaft, kopieren"
   contactsBottomSheet:
     title: "Hilfe"
     body: "Wenn du dir über den Inhalt der Nachricht im Unklaren bist, wende dich an die Körperschaft, von der du die Nachricht erhalten hast."
