@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { assign, createMachine } from "xstate";
+import { assign, createMachine } from "xstate4";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../xstate/utils";
 import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
 import { Context, INITIAL_CONTEXT } from "./context";

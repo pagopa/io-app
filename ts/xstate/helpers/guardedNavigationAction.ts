@@ -1,24 +1,27 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { MachineContext } from "xstate";
-import { E_BACK } from "../types/events";
+import { Back } from "../types/events";
 
-type WrappedAction<TContext> = (context: TContext, event: any) => void;
-type Events = { type: string } | E_BACK;
+type WrappedAction<TContext> = (args: {
+  context: TContext;
+  event: any;
+}) => void;
+type Events = { type: string } | Back;
 
 /**
  * Checks if the event is of type E_BACK
  * @param event The event object to check.
  * @returns True if the event is of type E_BACK, false otherwise.
  */
-const isBack = (event: Events): event is E_BACK => event.type === "BACK";
+const isBack = (event: Events): event is Back => event.type === "BACK";
 
 /**
  * Checks if an E_BACK event should skip the navigation action.
  * @param event The event object to check.
  * @returns True if the event has a skipNavigation property set to true; otherwise, false.
  */
-const skipNavigation = (event: E_BACK) => event.skipNavigation || false;
+const skipNavigation = (event: Back) => event.skipNavigation || false;
 
 /**
  * Wrap an action function with a guard clause that checks whether the event should be skipped.
@@ -28,9 +31,9 @@ const skipNavigation = (event: E_BACK) => event.skipNavigation || false;
  */
 export const guardedNavigationAction =
   <TContext extends MachineContext>(action: WrappedAction<TContext>) =>
-  (context: TContext, event: any) =>
+  (args: { context: TContext; event: any }) =>
     pipe(
-      event,
+      args.event,
       O.of,
       O.filter(isBack),
       O.filter(skipNavigation),
@@ -39,7 +42,7 @@ export const guardedNavigationAction =
          * The event is not of type E_BACK and/or does not contain the skipNavigation property.
          * WrappedAction should be executed.
          */
-        () => action(context, event),
+        () => action(args),
         /**
          * The event is of type E_BACK and contains the skipNavigation property.
          * No actions should be executed.

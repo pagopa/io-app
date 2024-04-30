@@ -1,30 +1,26 @@
-import { useSelector } from "@xstate/react";
+import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
-import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import { useOnboardingMachineService } from "../machine/provider";
-import { isUpsertingSelector } from "../machine/selectors";
 import themeVariables from "../../../../theme/variables";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { isLoadingSelector } from "../machine/selectors";
 
 const CompletionScreen = () => {
-  const onboardingMachineService = useOnboardingMachineService();
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
-  const isUpserting = useSelector(
-    onboardingMachineService,
-    isUpsertingSelector
-  );
+  const isLoading = useSelector(isLoadingSelector);
 
-  const handleClosePress = () =>
-    onboardingMachineService.send({ type: "QUIT_ONBOARDING" });
+  const handleClosePress = () => machine.send({ type: "close" });
 
-  if (isUpserting) {
+  if (isLoading) {
     return (
       <SafeAreaView style={IOStyles.flex}>
         <BaseScreenComponent

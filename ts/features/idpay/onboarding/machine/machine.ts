@@ -90,7 +90,7 @@ export const idPayOnboardingMachine = setup({
     },
     onDone: {
       actions: assign(event => ({ ...event.event.output })),
-      target: ".LoadingInitiativeInfo"
+      target: ".LoadingInitiative"
     }
   },
   initial: "LoadingInitiative",
@@ -103,6 +103,7 @@ export const idPayOnboardingMachine = setup({
     LoadingInitiative: {
       tags: [LOADING_TAG],
       entry: "navigateToInitiativeDetailsScreen",
+      initial: "LoadingInitiativeInfo",
       states: {
         LoadingInitiativeInfo: {
           invoke: {
@@ -112,7 +113,7 @@ export const idPayOnboardingMachine = setup({
               actions: assign(({ event }) => ({
                 initiative: O.some(event.output)
               })),
-              target: ".LoadingInitiative.LoadingOnboardingStatus"
+              target: "LoadingOnboardingStatus"
             }
           }
         },
@@ -225,7 +226,7 @@ export const idPayOnboardingMachine = setup({
           }
         ],
         back: {
-          target: "DisplayingInitiativeInfo"
+          target: "#idpay-onboarding.DisplayingInitiativeInfo"
         }
       }
     },
@@ -254,10 +255,10 @@ export const idPayOnboardingMachine = setup({
             back: [
               {
                 guard: "hasPdndCriteria",
-                target: "DisplayingPdndCriteria"
+                target: "#idpay-onboarding.DisplayingPdndCriteria"
               },
               {
-                target: "DisplayingInitiativeInfo"
+                target: "#idpay-onboarding.DisplayingInitiativeInfo"
               }
             ],
             "toggle-bool-criteria": {
@@ -274,7 +275,7 @@ export const idPayOnboardingMachine = setup({
                 target: "DisplayingMultiSelfDeclarationList"
               },
               {
-                target: "AcceptingCriteria"
+                target: "#idpay-onboarding.AcceptingCriteria"
               }
             ]
           }
@@ -302,7 +303,7 @@ export const idPayOnboardingMachine = setup({
               always: [
                 {
                   guard: "isLastMultiConsent",
-                  target: "AcceptingCriteria"
+                  target: "#idpay-onboarding.AcceptingCriteria"
                 },
                 {
                   actions: assign(({ context }) => ({

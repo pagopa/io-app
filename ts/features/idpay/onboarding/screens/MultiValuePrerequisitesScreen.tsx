@@ -1,7 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { useSelector } from "@xstate/react";
-import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import {
   Body,
   H1,
@@ -11,17 +8,19 @@ import {
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { H4 } from "../../../../components/core/typography/H4";
+import { Link } from "../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
-import { useOnboardingMachineService } from "../machine/provider";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector
 } from "../machine/selectors";
-import { Link } from "../../../../components/core/typography/Link";
 
 type ListItemProps = {
   text: string;
@@ -57,13 +56,11 @@ const buttonProps = {
 };
 
 const MultiValuePrerequisitesScreen = () => {
-  const machine = useOnboardingMachineService();
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
-  const currentPrerequisite = useSelector(machine, criteriaToDisplaySelector);
-  const possiblySelectedIndex = useSelector(
-    machine,
-    prerequisiteAnswerIndexSelector
-  );
+  const currentPrerequisite = useSelector(criteriaToDisplaySelector);
+  const possiblySelectedIndex = useSelector(prerequisiteAnswerIndexSelector);
 
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
     possiblySelectedIndex
@@ -73,7 +70,8 @@ const MultiValuePrerequisitesScreen = () => {
     if (selectedIndex === undefined) {
       return null;
     }
-    machine.send("SELECT_MULTI_CONSENT", {
+    machine.send({
+      type: "select-multi-consent",
       data: {
         _type: currentPrerequisite._type,
         value: currentPrerequisite.value[selectedIndex],
@@ -83,10 +81,10 @@ const MultiValuePrerequisitesScreen = () => {
 
     return null;
   };
-  const goBack = () => machine.send("BACK");
+  const goBack = () => machine.send({ type: "back" });
 
   useNavigationSwipeBackListener(() => {
-    machine.send({ type: "BACK", skipNavigation: true });
+    machine.send({ type: "back", skipNavigation: true });
   });
 
   return (

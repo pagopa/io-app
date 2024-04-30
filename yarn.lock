@@ -4545,7 +4545,7 @@
   resolved "https://registry.yarnpkg.com/@xstate/machine-extractor/-/machine-extractor-0.7.1.tgz#157d5083db3f116b7ae28b5b3aef8f457f052491"
   integrity sha512-dQEt6enmHXtD93vDcMefhb5bh1zh0mLCRT8CvYJjCpTjaTth7sXqlU6ri1qP0HDR6IbU9s2/WVNw7Oy7O/Sqfg==
 
-"@xstate/react@npm:@xstate/react@4":
+"@xstate/react@^4.0.3":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@xstate/react/-/react-4.1.1.tgz#2f580fc5f83d195f95b56df6cd8061c66660d9fa"
   integrity sha512-pFp/Y+bnczfaZ0V8B4LOhx3d6Gd71YKAPbzerGqydC2nsYN/mp7RZu3q/w6/kvI2hwR/jeDeetM7xc3JFZH2NA==

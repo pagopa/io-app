@@ -1,16 +1,15 @@
+import {
+  ButtonExtendedOutline,
+  ButtonSolid,
+  ContentWrapper,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  ButtonSolid,
-  VSpacer,
-  ContentWrapper,
-  ButtonExtendedOutline
-} from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -21,12 +20,12 @@ import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { getPDNDCriteriaDescription } from "../utils/strings";
-import { useOnboardingMachineService } from "../machine/provider";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
+import { getPDNDCriteriaDescription } from "../utils/strings";
 
 const secondaryButtonProps = {
   block: true,
@@ -46,9 +45,11 @@ const styles = StyleSheet.create({
 });
 
 export const PDNDPrerequisitesScreen = () => {
-  const machine = useOnboardingMachineService();
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
+
   const [authority, setAuthority] = React.useState<string | undefined>();
-  const serviceId = useSelector(machine, selectServiceId);
+  const serviceId = useSelector(selectServiceId);
 
   const serviceName = pipe(
     useIOSelector(state =>
@@ -61,9 +62,8 @@ export const PDNDPrerequisitesScreen = () => {
     )
   );
 
-  const continueOnPress = () =>
-    machine.send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
-  const goBackOnPress = () => machine.send({ type: "BACK" });
+  const continueOnPress = () => machine.send({ type: "next" });
+  const goBackOnPress = () => machine.send({ type: "back" });
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
     {
@@ -100,10 +100,10 @@ export const PDNDPrerequisitesScreen = () => {
     162
   );
 
-  const pdndCriteria = useSelector(machine, pdndCriteriaSelector);
+  const pdndCriteria = useSelector(pdndCriteriaSelector);
 
   useNavigationSwipeBackListener(() => {
-    machine.send({ type: "BACK", skipNavigation: true });
+    machine.send({ type: "back", skipNavigation: true });
   });
 
   return (

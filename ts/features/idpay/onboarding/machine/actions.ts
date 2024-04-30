@@ -11,44 +11,34 @@ const createActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
   dispatch: ReturnType<typeof useIODispatch>
 ) => {
-  const handleSessionExpired = () => {
-    dispatch(
-      refreshSessionToken.request({
-        withUserInteraction: true,
-        showIdentificationModalAtStartup: false,
-        showLoader: true
-      })
-    );
-  };
-
   const navigateToInitiativeDetailsScreen = guardedNavigationAction(() =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
     })
   );
 
-  const navigateToPDNDCriteriaScreen = guardedNavigationAction(() =>
+  const navigateToPdndCriteriaScreen = guardedNavigationAction(() =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
     })
   );
 
-  const navigateToBoolSelfDeclarationsScreen = guardedNavigationAction(() =>
+  const navigateToBoolSelfDeclarationListScreen = guardedNavigationAction(() =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     })
   );
 
-  const navigateToMultiSelfDeclarationsScreen = guardedNavigationAction(
-    (context: Context.Context) =>
+  const navigateToMultiSelfDeclarationListScreen =
+    guardedNavigationAction<Context.Context>(({ context }) =>
       navigation.navigate({
         name: IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR,
         params: {
           screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
         },
-        key: String(context.multiConsentsPage)
+        key: String(context.selfDeclarationsMultiPage)
       })
-  );
+    );
 
   const navigateToCompletionScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
@@ -60,17 +50,31 @@ const createActionsImplementation = (
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE
     });
 
-  const navigateToInitiativeMonitoringScreen = (context: Context.Context) => {
-    if (O.isNone(context.initiative)) {
+  const navigateToInitiativeMonitoringScreen = (args: {
+    context: Context.Context;
+  }) => {
+    if (O.isNone(args.context.initiative)) {
       throw new Error("Initiative is undefined");
     }
+
+    const initiativeId = args.context.initiative.value.initiativeId;
 
     navigation.replace(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
       params: {
-        initiativeId: context.initiative.value.initiativeId
+        initiativeId
       }
     });
+  };
+
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
   };
 
   const closeOnboarding = () => {
@@ -78,14 +82,14 @@ const createActionsImplementation = (
   };
 
   return {
-    handleSessionExpired,
     navigateToInitiativeDetailsScreen,
-    navigateToPDNDCriteriaScreen,
-    navigateToBoolSelfDeclarationsScreen,
-    navigateToMultiSelfDeclarationsScreen,
+    navigateToPdndCriteriaScreen,
+    navigateToBoolSelfDeclarationListScreen,
+    navigateToMultiSelfDeclarationListScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
+    handleSessionExpired,
     closeOnboarding
   };
 };

@@ -2,7 +2,7 @@ import * as p from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { assign, createMachine, forwardTo } from "xstate";
+import { assign, createMachine, forwardTo } from "xstate4";
 import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
@@ -810,42 +810,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
     },
     {
       actions: {
-        startConfiguration: assign((_, event) => ({
-          initiativeId: event.initiativeId,
-          mode: event.mode
-        })),
-        loadInitiativeSuccess: assign((_, event) => ({
-          initiative: p.some(event.data),
-          failure: undefined
-        })),
-        loadIbanListSuccess: assign((_, event) => ({
-          ibanList: p.some(event.data.ibanList),
-          failure: undefined
-        })),
-        selectIban: assign((_, event) => ({
-          selectedIban: event.iban,
-          failure: undefined
-        })),
-        enrollIbanSuccess: assign(context => ({
-          initiative: p.map(context.initiative, initiative => ({
-            ...initiative,
-            iban: context.selectedIban?.iban
-          })),
-          selectedIban: undefined,
-          failure: undefined
-        })),
-        confirmIbanOnboarding: assign((_, event) => ({
-          ibanBody: event.ibanBody,
-          failure: undefined
-        })),
-        loadWalletInstrumentsSuccess: assign((_, event) => ({
-          walletInstruments: event.data,
-          failure: undefined
-        })),
-        loadInitiativeInstrumentsSuccess: assign((_, event) => ({
-          initiativeInstruments: event.data,
-          failure: undefined
-        })),
+        startConfiguration: assign((_, event) => ({})),
+        loadInitiativeSuccess: assign((_, event) => ({})),
+        loadIbanListSuccess: assign((_, event) => ({})),
+        selectIban: assign((_, event) => ({})),
+        enrollIbanSuccess: assign(context => ({})),
+        confirmIbanOnboarding: assign((_, event) => ({})),
+        loadWalletInstrumentsSuccess: assign((_, event) => ({})),
+        loadInitiativeInstrumentsSuccess: assign((_, event) => ({})),
         updateInstrumentStatuses: assign((context, _) => {
           const updatedStatuses =
             context.initiativeInstruments.reduce<InstrumentStatusByIdWallet>(
@@ -876,88 +848,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
         forwardToInstrumentsEnrollmentService: forwardTo(
           "instrumentsEnrollmentService"
         ),
-        updateInstrumentEnrollStatus: assign((context, event) => ({
-          instrumentStatuses: {
-            ...context.instrumentStatuses,
-            [event.walletId]: p.noneLoading
-          }
-        })),
-        updateInstrumentEnrollStatusSuccess: assign((context, event) => {
-          const currentEnrollStatus =
-            context.instrumentStatuses[event.walletId];
-
-          if (p.isSome(currentEnrollStatus)) {
-            // No need to update instrument status
-            return {};
-          }
-
-          return {
-            instrumentStatuses: {
-              ...context.instrumentStatuses,
-              [event.walletId]: p.some(
-                InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST
-              )
-            }
-          };
-        }),
-        updateInstrumentEnrollStatusFailure: assign((context, event) => {
-          if (event.walletId === undefined) {
-            return {};
-          }
-
-          const { [event.walletId]: _removedStatus, ...updatedStatuses } =
-            context.instrumentStatuses;
-
-          return {
-            instrumentStatuses: updatedStatuses
-          };
-        }),
-        updateInstrumentDeleteStatus: assign((context, event) => {
-          if (event.walletId === undefined) {
-            return {};
-          }
-
-          return {
-            instrumentStatuses: {
-              ...context.instrumentStatuses,
-              [event.walletId]: p.noneLoading
-            }
-          };
-        }),
-        updateInstrumentDeleteStatusSuccess: assign((context, event) => {
-          if (event.walletId === undefined) {
-            return {};
-          }
-
-          const currentDeleteStatus =
-            context.instrumentStatuses[event.walletId];
-
-          if (p.isSome(currentDeleteStatus)) {
-            // No need to update instrument status
-            return {};
-          }
-
-          return {
-            instrumentStatuses: {
-              ...context.instrumentStatuses,
-              [event.walletId]: p.some(
-                InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
-              )
-            }
-          };
-        }),
-        updateInstrumentDeleteStatusFailure: assign((context, event) => {
-          if (event.walletId === undefined) {
-            return {};
-          }
-
-          return {
-            instrumentStatuses: {
-              ...context.instrumentStatuses,
-              [event.walletId]: p.some(InstrumentStatusEnum.ACTIVE)
-            }
-          };
-        }),
+        updateInstrumentEnrollStatus: assign((context, event) => ({})),
+        updateInstrumentEnrollStatusSuccess: assign((context, event) => ({})),
+        updateInstrumentEnrollStatusFailure: assign((context, event) => ({})),
+        updateInstrumentDeleteStatus: assign((context, event) => ({})),
+        updateInstrumentDeleteStatusSuccess: assign((context, event) => ({})),
+        updateInstrumentDeleteStatusFailure: assign((context, event) => ({})),
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
         })),

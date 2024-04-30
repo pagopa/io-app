@@ -1,42 +1,40 @@
 /* eslint-disable no-underscore-dangle */
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import { LOADING_TAG, UPSERTING_TAG } from "../../../../xstate/utils";
-import { IdPayOnboardingMachine } from "./machine";
+import { LOADING_TAG } from "../../../../xstate/utils";
 import * as Context from "./context";
+import { IdPayOnboardingMachine } from "./machine";
 
 type StateWithContext = StateFrom<IdPayOnboardingMachine>;
 
-const selectInitiativeStatus = (state: StateWithContext) =>
-  state.context.onboardingStatus;
-
-const selectOnboardingFailure = (state: StateWithContext) =>
+export const selectOnboardingFailure = (state: StateWithContext) =>
   state.context.failure;
 
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
 
-const selectSelfDeclarationBoolAnswers = (state: StateWithContext) =>
-  state.context.selfDeclarationBoolAnswers;
+export const selectSelfDeclarationBoolAnswers = (state: StateWithContext) =>
+  state.context.selfDeclarationsBoolAnswers;
 
 const selectMultiConsents = (state: StateWithContext) =>
-  state.context.multiConsentsAnswers;
+  state.context.selfDeclarationsMultiAnwsers;
 
 const selectCurrentPage = (state: StateWithContext) =>
-  state.context.multiConsentsPage;
+  state.context.selfDeclarationsMultiPage;
 
 const selectTags = (state: StateWithContext) => state.tags;
 
 export const selectInitiative = (state: StateWithContext) =>
   state.context.initiative;
 
-const selectServiceId = (state: StateWithContext) => state.context.serviceId;
+export const selectServiceId = (state: StateWithContext) =>
+  state.context.serviceId;
 
 const filterCriteria = <T extends SelfDeclarationDTO>(
   criteria: O.Option<RequiredCriteriaDTO>,
@@ -59,7 +57,7 @@ const multiRequiredCriteriaSelector = createSelector(
     )
 );
 
-const boolRequiredCriteriaSelector = createSelector(
+export const boolRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
     filterCriteria<SelfDeclarationBoolDTO>(
@@ -68,13 +66,13 @@ const boolRequiredCriteriaSelector = createSelector(
     )
 );
 
-const criteriaToDisplaySelector = createSelector(
+export const criteriaToDisplaySelector = createSelector(
   multiRequiredCriteriaSelector,
   selectCurrentPage,
   (criteria, currentPage) => criteria[currentPage]
 );
 
-const pdndCriteriaSelector = createSelector(
+export const pdndCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
     pipe(
@@ -86,7 +84,7 @@ const pdndCriteriaSelector = createSelector(
     )
 );
 
-const prerequisiteAnswerIndexSelector = createSelector(
+export const prerequisiteAnswerIndexSelector = createSelector(
   criteriaToDisplaySelector,
   selectMultiConsents,
   selectCurrentPage,
@@ -96,19 +94,8 @@ const prerequisiteAnswerIndexSelector = createSelector(
       : currentCriteria.value.indexOf(multiConsents[currentPage]?.value)
 );
 
-const isLoadingSelector = createSelector(selectTags, tags =>
+export const isLoadingSelector = createSelector(selectTags, tags =>
   tags.has(LOADING_TAG)
-);
-const isUpsertingSelector = createSelector(selectTags, tags =>
-  tags.has(UPSERTING_TAG)
-);
-
-const initiativeIDSelector = createSelector(selectInitiative, initiative =>
-  pipe(
-    initiative,
-    O.map(initiative => initiative.initiativeId),
-    O.toUndefined
-  )
 );
 
 export const getMultiSelfDeclarationListFromContext = (
@@ -127,7 +114,7 @@ export const getBooleanSelfDeclarationListFromContext = (
     SelfDeclarationBoolDTO
   );
 
-const areAllSelfDeclarationsToggledSelector = createSelector(
+export const areAllSelfDeclarationsToggledSelector = createSelector(
   boolRequiredCriteriaSelector,
   selectSelfDeclarationBoolAnswers,
   (boolSelfDeclarations, answers) =>

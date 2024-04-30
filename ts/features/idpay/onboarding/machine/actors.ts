@@ -15,7 +15,7 @@ import {
   OnboardingFailureEnum
 } from "../types/OnboardingFailure";
 import * as Context from "./context";
-import { getBoolRequiredCriteriaFromContext } from "./selectors";
+import { getBooleanSelfDeclarationListFromContext } from "./selectors";
 
 /**
  * Maps the status of the initiative to a possibile UI failure state
@@ -188,12 +188,16 @@ const createActorsImplementation = (
 
   const getRequiredCriteria = fromPromise<
     O.Option<RequiredCriteriaDTO>,
-    string
+    O.Option<string>
   >(async params => {
+    if (O.isNone(params.input)) {
+      throw new Error("Initiative ID was not provided");
+    }
+
     const response = await client.checkPrerequisites({
       ...clientOptions,
       body: {
-        initiativeId: params.input
+        initiativeId: params.input.value
       }
     });
 
@@ -223,7 +227,7 @@ const createActorsImplementation = (
 
   const acceptRequiredCriteria = fromPromise<undefined, Context.Context>(
     async params => {
-      const { initiative, requiredCriteria, multiConsentsAnswers } =
+      const { initiative, requiredCriteria, selfDeclarationsMultiAnwsers } =
         params.input;
 
       if (O.isNone(initiative) || O.isNone(requiredCriteria)) {
@@ -235,12 +239,12 @@ const createActorsImplementation = (
       }
 
       const consentsArray = [
-        ...getBoolRequiredCriteriaFromContext(params.input).map(_ => ({
+        ...getBooleanSelfDeclarationListFromContext(params.input).map(_ => ({
           _type: _._type,
           code: _.code,
           accepted: true
         })),
-        ...Object.values(multiConsentsAnswers)
+        ...Object.values(selfDeclarationsMultiAnwsers)
       ] as Array<SelfConsentDTO>;
 
       const response = await client.consentOnboarding({

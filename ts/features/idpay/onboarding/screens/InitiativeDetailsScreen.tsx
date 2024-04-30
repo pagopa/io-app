@@ -1,13 +1,11 @@
 /* eslint-disable functional/immutable-data */
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { useSelector } from "@xstate/react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
@@ -18,31 +16,22 @@ import {
 } from "../components/OnboardingDescriptionMarkdown";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
-import { isUpsertingSelector, selectInitiative } from "../machine/selectors";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { isLoadingSelector, selectInitiative } from "../machine/selectors";
 
-const InitiativeDetailsScreen = () => {
-  const machine = useOnboardingMachineService();
+export const InitiativeDetailsScreen = () => {
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
-  const { serviceId } = route.params;
-
-  React.useEffect(() => {
-    machine.send({
-      type: "SELECT_INITIATIVE",
-      serviceId
-    });
-  }, [machine, serviceId]);
-
-  const initiative = useSelector(machine, selectInitiative);
-  const isUpserting = useSelector(machine, isUpsertingSelector);
+  const initiative = useSelector(selectInitiative);
+  const isLoading = useSelector(isLoadingSelector);
   const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
 
-  const handleGoBackPress = () => machine.send({ type: "QUIT_ONBOARDING" });
-
-  const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
+  const handleGoBackPress = () => machine.send({ type: "close" });
+  const handleContinuePress = () => machine.send({ type: "next" });
 
   const onboardingPrivacyAdvice = pipe(
     initiative,
-    O.fromNullable,
     O.map(initiative => ({
       privacyUrl: initiative.privacyLink,
       tosUrl: initiative.tcLink
@@ -55,7 +44,6 @@ const InitiativeDetailsScreen = () => {
 
   const descriptionComponent = pipe(
     initiative,
-    O.fromNullable,
     O.fold(
       () => <OnboardingDescriptionMarkdownSkeleton />,
       ({ description }) => (
@@ -96,8 +84,8 @@ const InitiativeDetailsScreen = () => {
               accessibilityLabel: I18n.t("global.buttons.continue"),
               onPress: handleContinuePress,
               testID: "IDPayOnboardingContinue",
-              isLoading: isUpserting,
-              disabled: isUpserting
+              isLoading,
+              disabled: isLoading
             }}
           />
           <VSpacer size={48} />
@@ -116,7 +104,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24
   }
 });
-
-export type { InitiativeDetailsScreenRouteParams };
-
-export default InitiativeDetailsScreen;

@@ -1,4 +1,3 @@
-import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -6,20 +5,22 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import { OnboardingFailureEnum } from "../types/OnboardingFailure";
-import { useOnboardingMachineService } from "../machine/provider";
-import { selectOnboardingFailure } from "../machine/selectors";
 import I18n from "../../../../i18n";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { selectOnboardingFailure } from "../machine/selectors";
+import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 
 const FailureScreen = () => {
-  const machine = useOnboardingMachineService();
-  const failureOption = useSelector(machine, selectOnboardingFailure);
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
+
+  const failureOption = useSelector(selectOnboardingFailure);
 
   const defaultCloseAction = React.useMemo(
     () => ({
       label: I18n.t("global.buttons.close"),
       accessibilityLabel: I18n.t("global.buttons.close"),
-      onPress: () => machine.send({ type: "QUIT_ONBOARDING" })
+      onPress: () => machine.send({ type: "close" })
     }),
     [machine]
   );
@@ -30,7 +31,7 @@ const FailureScreen = () => {
       accessibilityLabel: I18n.t(
         "idpay.onboarding.failure.button.goToInitiative"
       ),
-      onPress: () => machine.send({ type: "SHOW_INITIATIVE_DETAILS" })
+      onPress: () => machine.send({ type: "next" })
     }),
     [machine]
   );
