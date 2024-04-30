@@ -17,9 +17,13 @@ import {
   isNfcEnabledSelector
 } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwAuthModeSelectionScreen = () => {
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
+
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
 
@@ -45,9 +49,11 @@ export const ItwAuthModeSelectionScreen = () => {
 
   const handleCiePinPress = () => {
     if (isNfcEnabled) {
-      Alert.alert("NFC not enabled");
-    } else {
       Alert.alert("Not implemented");
+    } else {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.AUTH.NFC_INSTRUCTIONS
+      });
     }
   };
 

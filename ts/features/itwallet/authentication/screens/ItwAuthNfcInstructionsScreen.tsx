@@ -1,99 +1,62 @@
 import {
   ContentWrapper,
+  Divider,
+  LabelLink,
   ListItemHeader,
-  ModuleCredential,
+  ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { Alert } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
-import I18n from "../../../../i18n";
-import { nfcIsEnabled } from "../../../../store/actions/cie";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isCieSupportedSelector,
-  isNfcEnabledSelector
-} from "../../../../store/reducers/cie";
-import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { FooterStackButton } from "../../common/components/FooterStackButton";
 
 export const ItwAuthNfcInstructionsScreen = () => {
-  const dispatch = useIODispatch();
-  const navigation = useIONavigation();
-
-  const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
-  const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(nfcIsEnabled.request());
-    }, [dispatch])
-  );
-
-  const isCieSupported = React.useMemo(
-    () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
-    [isCieSupportedPot]
-  );
-
-  const isNfcEnabled = React.useMemo(
-    () => pot.getOrElse(isNfcEnabledPot, false),
-    [isNfcEnabledPot]
-  );
-
-  const handleSpidPress = () => {
+  const handleOpenSettingsPress = () => {
     Alert.alert("Not implemented");
   };
 
-  const handleCiePinPress = () => {
-    if (isNfcEnabled) {
-      Alert.alert("NFC not enabled");
-    } else {
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.AUTH.NFC_INSTRUCTIONS
-      });
-    }
-  };
-
-  const handleCieIdPress = () => {
+  const handleClosePress = () => {
     Alert.alert("Not implemented");
   };
 
   return (
     <RNavScreenWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.authentication.title") }}
+      title={{ label: "Attiva l’NFC per continuare" }}
+      description="La funzionalità NFC permette al dispositivo di leggere la tua CIE."
+      fixedBottomSlot={
+        <FooterStackButton
+          primaryActionProps={{
+            label: "Vai alle Impostazioni",
+            onPress: handleOpenSettingsPress
+          }}
+          secondaryActionProps={{
+            label: "Ho fatto",
+            onPress: handleClosePress
+          }}
+        />
+      }
     >
       <ContentWrapper>
-        <ListItemHeader
-          label={I18n.t("features.itWallet.authentication.header")}
+        <LabelLink>Scopri di più</LabelLink>
+        <VSpacer size={16} />
+        <ListItemHeader label="Ecco come attivarlo:" />
+        <ListItemInfo
+          label={"1. Vai alle Impostazioni"}
+          value={"1. Vai alle Impostazioni"}
+          icon="systemSettingsAndroid"
         />
-        <ModuleCredential
-          label={I18n.t("features.itWallet.authentication.method.spid.title")}
-          // description="Usa credenziali e app (o SMS)"
-          icon="spid"
-          onPress={handleSpidPress}
+        <Divider />
+        <ListItemInfo
+          label={`2. Cerca "NFC"`}
+          value={`2. Cerca "NFC"`}
+          icon="systemAppsAndroid"
         />
-        <VSpacer size={8} />
-        {isCieSupported && (
-          <>
-            <ModuleCredential
-              label={I18n.t(
-                "features.itWallet.authentication.method.ciePin.title"
-              )}
-              // description="Usa Carta d’Identità Elettronica e PIN"
-              icon="fiscalCodeIndividual"
-              onPress={handleCiePinPress}
-            />
-            <VSpacer size={8} />
-          </>
-        )}
-        <ModuleCredential
-          label={I18n.t("features.itWallet.authentication.method.cieId.title")}
-          // description="Usa credenziali e app CieID"
-          icon="device"
-          onPress={handleCieIdPress}
+        <Divider />
+        <ListItemInfo
+          label={"3. Attivalo"}
+          value={"3. Attivalo"}
+          icon="systemToggleInstructions"
         />
       </ContentWrapper>
     </RNavScreenWithLargeHeader>
