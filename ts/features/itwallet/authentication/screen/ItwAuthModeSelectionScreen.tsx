@@ -5,22 +5,38 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { Alert } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isCieSupportedSelector } from "../../../../store/reducers/cie";
+import { nfcIsEnabled } from "../../../../store/actions/cie";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  isCieSupportedSelector,
+  isNfcEnabledSelector
+} from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 
 export const ItwAuthModeSelectionScreen = () => {
-  const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
+  const dispatch = useIODispatch();
+  const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
+  const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(nfcIsEnabled.request());
+    }, [dispatch])
+  );
 
   const isCieSupported = React.useMemo(
-    () =>
-      cieFlowForDevServerEnabled ||
-      pot.getOrElse(isCIEAuthenticationSupported, false),
-    [isCIEAuthenticationSupported]
+    () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
+    [isCieSupportedPot]
+  );
+
+  const isNfcEnabled = React.useMemo(
+    () => pot.getOrElse(isNfcEnabledPot, false),
+    [isNfcEnabledPot]
   );
 
   const handleSpidPress = () => {
@@ -28,7 +44,11 @@ export const ItwAuthModeSelectionScreen = () => {
   };
 
   const handleCiePinPress = () => {
-    Alert.alert("Not implemented");
+    if (isNfcEnabled) {
+      Alert.alert("NFC not enabled");
+    } else {
+      Alert.alert("Not implemented");
+    }
   };
 
   const handleCieIdPress = () => {
