@@ -1,8 +1,9 @@
-import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwAuthModeSelectionScreen } from "../authentication/screens/ItwAuthModeSelectionScreen";
+import { ItwAuthNfcInstructionsScreen } from "../authentication/screens/ItwAuthNfcInstructionsScreen";
+import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -22,6 +23,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.AUTH.MODE_SELECTION}
       component={ItwAuthModeSelectionScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.AUTH.NFC_INSTRUCTIONS}
+      component={ItwAuthNfcInstructionsScreen}
     />
   </Stack.Navigator>
 );
