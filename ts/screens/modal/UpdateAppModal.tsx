@@ -63,9 +63,7 @@ const UpdateAppModal: React.FC = () => {
     try {
       await Linking.openURL(storeUrl);
     } catch (e) {
-      openWebUrl(webStoreURL, () => {
-        setIsError(true);
-      });
+      openWebUrl(webStoreURL, () => setIsError(true));
     }
   }, []);
 
