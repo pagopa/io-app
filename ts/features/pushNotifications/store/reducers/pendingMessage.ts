@@ -3,12 +3,12 @@
  */
 import { getType } from "typesafe-actions";
 
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   clearNotificationPendingMessage,
   updateNotificationsPendingMessage
-} from "../../actions/notifications";
-import { Action } from "../../actions/types";
-import { GlobalState } from "../types";
+} from "../actions/notifications";
 
 export type PendingMessageState = Readonly<{
   id: string;
@@ -18,7 +18,7 @@ export type PendingMessageState = Readonly<{
 
 const INITIAL_STATE: PendingMessageState = null;
 
-const reducer = (
+export const pendingMessageReducer = (
   state: PendingMessageState = INITIAL_STATE,
   action: Action
 ): PendingMessageState => {
@@ -33,8 +33,6 @@ const reducer = (
       return state;
   }
 };
-
-export default reducer;
 
 // Selector
 export const pendingMessageStateSelector = (state: GlobalState) =>

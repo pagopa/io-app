@@ -3,7 +3,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Alert } from "react-native";
-import PushNotification from "react-native-push-notification";
 import { channel } from "redux-saga";
 import {
   call,
@@ -100,6 +99,12 @@ import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
 import { watchServicesSaga } from "../features/services/common/saga";
 import {
+  handlePendingMessageStateIfAllowedSaga,
+  updateInstallationSaga
+} from "../features/pushNotifications/sagas/notifications";
+import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
+import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
+import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
@@ -111,10 +116,6 @@ import {
   initMixpanel,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
-import {
-  handlePendingMessageStateIfAllowedSaga,
-  updateInstallationSaga
-} from "./notifications";
 import { setLanguageFromProfileIfExists } from "./preferences";
 import {
   loadProfile,
@@ -131,7 +132,6 @@ import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "./startup/checkEmailSaga";
-import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
@@ -707,20 +707,6 @@ function* waitForMainNavigator() {
   });
 }
 
-/**
- * Remove all the local notifications related to authentication with spid.
- *
- * With the previous library version (7.3.1 - now 8.1.1), cancelLocalNotifications
- * did not work. At the moment, the "first access spid" is the only kind of
- * scheduled notification and for this reason it is safe to use
- * PushNotification.cancelAllLocalNotifications();
- * If we add more scheduled notifications, we need to investigate if
- * cancelLocalNotifications works with the new library version
- */
-function cancellAllLocalNotifications() {
-  PushNotification.cancelAllLocalNotifications();
-}
-
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
   yield* takeLatest(
@@ -731,8 +717,4 @@ export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv
   ? waitForNavigatorServiceInitialization
-  : undefined;
-
-export const testCancellAllLocalNotifications = isTestEnv
-  ? cancellAllLocalNotifications
   : undefined;

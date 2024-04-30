@@ -1,9 +1,12 @@
 import * as React from "react";
-import I18n from "../../i18n";
-import { Body } from "../../components/core/typography/Body";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { IOBottomSheetModal, useLegacyIOBottomSheetModal } from "./bottomSheet";
+import I18n from "../../../i18n";
+import { Body } from "../../../components/core/typography/Body";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
+import {
+  IOBottomSheetModal,
+  useLegacyIOBottomSheetModal
+} from "../../../utils/hooks/bottomSheet";
 
 /**
  * Return on object to open an IO bottom sheet modal

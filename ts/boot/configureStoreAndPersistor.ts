@@ -41,8 +41,8 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
-import { NotificationsState } from "../store/reducers/notifications";
-import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
+import { NotificationsState } from "../features/pushNotifications/store/reducers";
+import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";

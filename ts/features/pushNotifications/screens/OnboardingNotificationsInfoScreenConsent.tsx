@@ -17,24 +17,24 @@ import {
 } from "@pagopa/io-app-design-system";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
-import I18n from "../../i18n";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { openAppSettings } from "../../utils/appSettings";
-import { useIODispatch } from "../../store/hooks";
-import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
-import { checkNotificationPermissions } from "../../utils/notification";
-import { profilePreferencesSelector } from "../../store/reducers/profile";
+} from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { BlockButtonProps } from "../../../components/ui/BlockButtons";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
+import { openAppSettings } from "../../../utils/appSettings";
+import { useIODispatch } from "../../../store/hooks";
+import { checkNotificationPermissions } from "../utils";
+import { profilePreferencesSelector } from "../../../store/reducers/profile";
+import { H2 } from "../../../components/core/typography/H2";
+import { H1 } from "../../../components/core/typography/H1";
+import { Body } from "../../../components/core/typography/Body";
+import { notificationsInfoScreenConsent } from "../store/actions/notifications";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
-} from "../../utils/analytics";
-import { H2 } from "../../components/core/typography/H2";
-import { H1 } from "../../components/core/typography/H1";
-import { Body } from "../../components/core/typography/Body";
+} from "../analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.infoConsent.contextualHelpTitle",
@@ -135,7 +135,7 @@ const instructions = Platform.select<ReadonlyArray<ListItemInfo>>({
   ]
 });
 
-const OnboardingNotificationsInfoScreenConsent = () => {
+export const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
   const optInPreferencesPot = useSelector(profilePreferencesSelector);
 
@@ -229,5 +229,3 @@ const OnboardingNotificationsInfoScreenConsent = () => {
     </BaseScreenComponent>
   );
 };
-
-export default OnboardingNotificationsInfoScreenConsent;

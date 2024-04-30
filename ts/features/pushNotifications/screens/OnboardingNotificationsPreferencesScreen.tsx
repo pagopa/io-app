@@ -11,39 +11,39 @@ import {
   ContentWrapper,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
-import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
-import { InfoBox } from "../../components/box/InfoBox";
-import { IOBadge } from "../../components/core/IOBadge";
-import { Body } from "../../components/core/typography/Body";
-import { H1 } from "../../components/core/typography/H1";
-import { H5 } from "../../components/core/typography/H5";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { PreferencesListItem } from "../../components/PreferencesListItem";
+import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
+import { InfoBox } from "../../../components/box/InfoBox";
+import { IOBadge } from "../../../components/core/IOBadge";
+import { Body } from "../../../components/core/typography/Body";
+import { H1 } from "../../../components/core/typography/H1";
+import { H5 } from "../../../components/core/typography/H5";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { PreferencesListItem } from "../../../components/PreferencesListItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Switch from "../../components/ui/Switch";
-import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import { profileUpsert } from "../../store/actions/profile";
-import { useIODispatch } from "../../store/hooks";
-import { profilePreferencesSelector } from "../../store/reducers/profile";
-import customVariables from "../../theme/variables";
-import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
-import { showToast } from "../../utils/showToast";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { getFlowType } from "../../utils/analytics";
+} from "../../../components/screens/BaseScreenComponent";
+import { BlockButtonProps } from "../../../components/ui/BlockButtons";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import Switch from "../../../components/ui/Switch";
+import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { OnboardingParamsList } from "../../../navigation/params/OnboardingParamsList";
+import { profileUpsert } from "../../../store/actions/profile";
+import { useIODispatch } from "../../../store/hooks";
+import { profilePreferencesSelector } from "../../../store/reducers/profile";
+import customVariables from "../../../theme/variables";
+import { usePreviewMoreInfo } from "../hooks/usePreviewMoreInfo";
+import { showToast } from "../../../utils/showToast";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../../utils/analytics";
 import {
   trackNotificationPreferenceConfiguration,
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
-} from "../profile/analytics";
-import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
+} from "../../../screens/profile/analytics";
+import { NotificationsPreferencesPreview } from "../components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
   containerActions: {
@@ -137,7 +137,7 @@ const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => {
   );
 });
 
-const OnboardingNotificationsPreferencesScreen = (props: Props) => {
+export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
   const [previewEnabled, setPreviewEnabled] = useState(true);
@@ -303,5 +303,3 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
     </BaseScreenComponent>
   );
 };
-
-export default OnboardingNotificationsPreferencesScreen;

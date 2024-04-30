@@ -2,8 +2,8 @@ import * as E from "fp-ts/lib/Either";
 import { Action } from "redux";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { applicationChangeState } from "../../store/actions/application";
-import { appReducer } from "../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import {
   handlePendingMessageStateIfAllowedSaga,
   notificationsPlatform,
@@ -15,7 +15,7 @@ import {
   logoutRequest,
   sessionExpired,
   sessionInvalid
-} from "../../store/actions/authentication";
+} from "../../../../store/actions/authentication";
 import {
   clearNotificationPendingMessage,
   notificationsInstallationTokenRegistered,
@@ -24,16 +24,16 @@ import {
 import {
   PendingMessageState,
   pendingMessageStateSelector
-} from "../../store/reducers/notifications/pendingMessage";
-import NavigationService from "../../navigation/NavigationService";
-import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
-import { navigateToMainNavigatorAction } from "../../store/actions/navigation";
-import { navigateToMessageRouterAction } from "../../features/messages/store/actions/navigation";
-import { UIMessageId } from "../../features/messages/types";
-import * as Analytics from "../../features/messages/analytics";
+} from "../../store/reducers/pendingMessage";
+import NavigationService from "../../../../navigation/NavigationService";
+import { isPaymentOngoingSelector } from "../../../../store/reducers/wallet/payment";
+import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
+import { navigateToMessageRouterAction } from "../../../messages/store/actions/navigation";
+import { UIMessageId } from "../../../messages/types";
+import * as Analytics from "../../../messages/analytics";
 
 const installationId = "installationId";
-jest.mock("../../utils/installation", () => ({
+jest.mock("../../utils/index", () => ({
   generateInstallationId: () => installationId
 }));
 

@@ -4,6 +4,7 @@ import { VersionInfoState } from "../../common/versionInfo/store/reducers/versio
 import { BonusState } from "../../features/bonus/common/store/reducers";
 import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { PersistedLollipopState } from "../../features/lollipop/store";
+import { NotificationsState } from "../../features/pushNotifications/store/reducers";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
@@ -18,7 +19,6 @@ import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";
 import { NavigationState } from "./navigation";
-import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PaymentsState } from "./payments";
 import { PersistedPreferencesState } from "./persistedPreferences";
