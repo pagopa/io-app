@@ -1,15 +1,15 @@
-import * as React from "react";
-import { ReactNode } from "react";
-import { View, StyleSheet } from "react-native";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Icon, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../../../i18n";
-import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
+import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
+import * as React from "react";
+import { ReactNode } from "react";
+import { StyleSheet, View } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Label } from "../../../../../components/core/typography/Label";
 import { Link } from "../../../../../components/core/typography/Link";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
+import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import { openWebUrl } from "../../../../../utils/url";
 
 const styles = StyleSheet.create({
@@ -62,6 +62,7 @@ const getItem = (props: Props) => [
     description: (
       <View>
         <TouchableWithoutFeedback
+          accessibilityRole="button"
           onPress={() => props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)}
         >
           <Link weight={"SemiBold"}>

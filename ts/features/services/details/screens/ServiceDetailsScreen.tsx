@@ -5,15 +5,22 @@ import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import {
   ContentWrapper,
   IOColors,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { loadServiceDetail } from "../store/actions/details";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { logosForService } from "../../../../utils/services";
+import { CTA, CTAS } from "../../../messages/types/MessageCTA";
+import {
+  getServiceCTA,
+  handleCtaAction
+} from "../../../messages/utils/messages";
+import { useFirstRender } from "../../common/hooks/useFirstRender";
+import { ServicesParamsList } from "../../common/navigation/params";
 import {
   CardWithMarkdownContent,
   CardWithMarkdownContentSkeleton
@@ -30,7 +37,8 @@ import {
   ServiceDetailsScreenComponent
 } from "../components/ServiceDetailsScreenComponent";
 import { ServiceDetailsTosAndPrivacy } from "../components/ServiceDetailsTosAndPrivacy";
-import { ServicesParamsList } from "../../common/navigation/params";
+import { loadServiceDetail } from "../store/actions/details";
+import { loadServicePreference } from "../store/actions/preference";
 import {
   isErrorServiceByIdSelector,
   isLoadingServiceByIdSelector,
@@ -38,14 +46,7 @@ import {
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "../store/reducers/servicesById";
-import { loadServicePreference } from "../store/actions/preference";
-import { CTA, CTAS } from "../../../messages/types/MessageCTA";
-import {
-  getServiceCTA,
-  handleCtaAction
-} from "../../../messages/utils/messages";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
-import { useFirstRender } from "../../common/hooks/useFirstRender";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -71,7 +72,8 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     marginTop: -headerPaddingBottom,
-    minHeight: headerPaddingBottom
+    minHeight: headerPaddingBottom,
+    paddingHorizontal: IOVisualCostants.appMarginDefault
   }
 });
 
@@ -141,11 +143,9 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
             <VSpacer size={16} />
           </ContentWrapper>
         </View>
-        <ContentWrapper>
-          <View style={styles.cardContainer}>
-            <CardWithMarkdownContentSkeleton />
-          </View>
-        </ContentWrapper>
+        <View style={styles.cardContainer}>
+          <CardWithMarkdownContentSkeleton />
+        </View>
       </ServiceDetailsScreenComponent>
     );
   }
@@ -279,27 +279,25 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         </ContentWrapper>
       </View>
 
-      <ContentWrapper>
-        {service_metadata?.description && (
-          <View style={styles.cardContainer}>
-            <CardWithMarkdownContent content={service_metadata.description} />
-          </View>
-        )}
+      {service_metadata?.description && (
+        <View style={styles.cardContainer}>
+          <CardWithMarkdownContent content={service_metadata.description} />
+        </View>
+      )}
 
-        <ServiceDetailsTosAndPrivacy serviceId={service_id} />
+      <ServiceDetailsTosAndPrivacy serviceId={service_id} />
 
-        <VSpacer size={40} />
-        <ServiceDetailsPreferences
-          serviceId={service_id}
-          availableChannels={available_notification_channels}
-        />
+      <VSpacer size={40} />
+      <ServiceDetailsPreferences
+        serviceId={service_id}
+        availableChannels={available_notification_channels}
+      />
 
-        <VSpacer size={40} />
-        <ServiceDetailsMetadata
-          organizationFiscalCode={organization_fiscal_code}
-          serviceId={service_id}
-        />
-      </ContentWrapper>
+      <VSpacer size={40} />
+      <ServiceDetailsMetadata
+        organizationFiscalCode={organization_fiscal_code}
+        serviceId={service_id}
+      />
     </ServiceDetailsScreenComponent>
   );
 };

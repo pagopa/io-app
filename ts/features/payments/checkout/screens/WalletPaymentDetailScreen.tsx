@@ -6,7 +6,6 @@ import {
   IOSpacingScale,
   ListItemInfo,
   ListItemInfoCopy,
-  LoadingSpinner,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -52,6 +51,7 @@ import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { formatPaymentNoticeNumber } from "../../common/utils";
+import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -100,7 +100,7 @@ const WalletPaymentDetailScreen = () => {
 
   return (
     <SafeAreaView style={styles.loadingContainer}>
-      <LoadingSpinner size={48} />
+      <LoadingIndicator size={48} />
       <VSpacer size={24} />
       <H3 style={{ textAlign: "center" }}>
         {I18n.t("wallet.firstTransactionSummary.loading")}

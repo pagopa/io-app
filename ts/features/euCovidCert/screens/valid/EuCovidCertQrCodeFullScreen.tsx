@@ -1,3 +1,4 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
   Dimensions,
@@ -6,7 +7,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -14,7 +15,6 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { withBase64Uri } from "../../../../utils/image";
-import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { EUCovidCertParamsList } from "../../navigation/params";
 
 export type EuCovidCertQrCodeFullScreenNavigationParams = Readonly<{
@@ -47,6 +47,7 @@ export const EuCovidCertQrCodeFullScreen = (
           <VSpacer size={40} />
           <VSpacer size={40} />
           <Image
+            accessibilityIgnoresInvertColors
             testID="fullScreenQRCode"
             accessible={true}
             accessibilityRole={"image"}

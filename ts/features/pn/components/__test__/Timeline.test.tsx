@@ -1,48 +1,123 @@
 import React from "react";
-import { render } from "@testing-library/react-native";
-import { Timeline, TimelineProps } from "../Timeline";
+import { createStore } from "redux";
+import { Timeline, TimelineItemProps, TimelineProps } from "../Timeline";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import PN_ROUTES from "../../navigation/routes";
 
 const defaultProps: TimelineProps = {
   data: [
     {
-      day: "25",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      month: "03",
-      time: "10:00",
+      day: "1",
+      description: "Depositata",
+      month: "01",
+      time: "01:00",
       status: "viewed"
     },
     {
-      day: "25",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      day: "3",
+      description: "Annullata",
+      month: "02",
+      time: "03:00",
+      status: "cancelled"
+    },
+    {
+      day: "6",
+      description: "Consegnata",
       month: "03",
-      time: "10:00",
+      time: "05:00",
       status: "default"
     },
     {
-      day: "25",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      month: "03",
-      time: "10:00",
+      day: "9",
+      description: "Invio in corso",
+      month: "04",
+      time: "07:00",
       status: "default"
     },
     {
-      day: "25",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      month: "03",
-      time: "10:00",
+      day: "11",
+      description: "Perfezionata per decorrenza termini",
+      month: "05",
+      time: "09:00",
+      status: "effective"
+    },
+    {
+      day: "14",
+      description: "Destinatario irreperibile",
+      month: "06",
+      time: "11:00",
+      status: "unreachable"
+    },
+    {
+      day: "15",
+      description: "Avvenuto accesso",
+      month: "07",
+      time: "13:00",
+      status: "viewed"
+    },
+    {
+      day: "18",
+      description: "Pagata",
+      month: "08",
+      time: "15:00",
       status: "default"
+    },
+    {
+      day: "21",
+      description: "REFUSED",
+      month: "09",
+      time: "17:00",
+      status: "default"
+    },
+    {
+      day: "24",
+      description: "IN VALIDATION",
+      month: "10",
+      time: "19:00",
+      status: "default"
+    },
+    {
+      day: "27",
+      description: "Depositata",
+      month: "11",
+      time: "21:00",
+      status: "default"
+    },
+    {
+      day: "30",
+      description: "Annullata",
+      month: "12",
+      time: "23:00",
+      status: "cancelled"
     }
   ]
 };
 
 describe("Timeline component", () => {
-  it("should match the snapshot with empty data", () => {
-    const component = render(<Timeline data={[]} />);
+  it("should match the snapshot, empty data", () => {
+    const component = renderComponent([]);
     expect(component.toJSON()).toMatchSnapshot();
   });
-
-  it("should match the snapshot with default props", () => {
-    const component = render(<Timeline {...defaultProps} />);
+  it("should match the snapshot, default data", () => {
+    const component = renderComponent(defaultProps.data);
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
+
+const renderComponent = (data: ReadonlyArray<TimelineItemProps>) => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const dsEnabledState = appReducer(
+    initialState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const store = createStore(appReducer, dsEnabledState as any);
+  return renderScreenWithNavigationStoreContext(
+    () => <Timeline data={data} />,
+    PN_ROUTES.MESSAGE_DETAILS,
+    {},
+    store
+  );
+};
