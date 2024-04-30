@@ -7,9 +7,6 @@ import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageB
 import { MessageContent } from "../../../../../definitions/backend/MessageContent";
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
-import { ServiceScope } from "../../../../../definitions/backend/ServiceScope";
-import { StandardServiceCategoryEnum } from "../../../../../definitions/backend/StandardServiceCategory";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
@@ -19,7 +16,6 @@ import {
   getMessageCTA,
   getMessagePaymentExpirationInfo,
   getRemoteLocale,
-  getServiceCTA,
   isCtaActionValid,
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
@@ -45,31 +41,6 @@ en:
     cta_2: 
         text: "go2"
         action: "ioit://PROFILE_MAIN2"
----
-` + messageBody;
-
-const CTA_WEBVIEW =
-  `---
-it:
-    cta_1: 
-        text: "Interno con params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-en:
-    cta_1: 
-        text: "Internal with params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
----
-` + messageBody;
-
-const CTA_MALFORMED =
-  `---
-it:
-    cta_1: 
-        text: "Interno con params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-    cta_1: 
-        text: "Internal with params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 ---
 ` + messageBody;
 
@@ -123,34 +94,6 @@ const messageInvalidAfterDueDate = {
       }
     }
   }
-};
-
-const serviceMetadataBase: ServiceMetadata = {
-  description:
-    "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>" as ServiceMetadata["description"],
-  scope: "LOCAL" as ServiceScope,
-  address: "Piazza di Spagna, Roma, Italia" as ServiceMetadata["address"],
-  email: "mock.service@email.com" as ServiceMetadata["email"],
-  pec: "mock.pec@email.com" as ServiceMetadata["pec"],
-  phone: "5555555" as ServiceMetadata["phone"],
-  web_url: "https://www.google.com" as ServiceMetadata["web_url"],
-  app_android: "https://www.google.com" as ServiceMetadata["app_android"],
-  app_ios: "https://www.google.com" as ServiceMetadata["app_ios"],
-  support_url: "https://www.sos.com" as ServiceMetadata["support_url"],
-  tos_url: "https://www.tos.com" as ServiceMetadata["tos_url"],
-  privacy_url: "https://www.privacy.com" as ServiceMetadata["privacy_url"],
-  cta: `---
-  it:
-      cta_1: 
-          text: "premi"
-          action: "ioit://SERVICE_WEBVIEW"
-  en:
-      cta_1: 
-          text: "go1"
-          action: "ioit://SERVICE_WEBVIEW"
-  ---
-  ` as ServiceMetadata["cta"],
-  category: StandardServiceCategoryEnum.STANDARD
 };
 
 // test "it" as default language
@@ -241,31 +184,6 @@ some noise`;
     const maybeCTA = getMessageCTA(NO_CTA as MessageBodyMarkdown);
     expect(O.isNone(maybeCTA)).toBeTruthy();
   });
-
-  it("should have a valid CTA for service", () => {
-    const validServiceMetadata: ServiceMetadata = {
-      ...serviceMetadataBase,
-      token_name: "myPortalToken" as ServiceMetadata["token_name"]
-    };
-    const maybeCTAs = getMessageCTA(
-      CTA_WEBVIEW as MessageBodyMarkdown,
-      validServiceMetadata
-    );
-    expect(O.isSome(maybeCTAs)).toBeTruthy();
-    if (O.isSome(maybeCTAs)) {
-      const ctas = maybeCTAs.value;
-      expect(ctas.cta_1).toBeDefined();
-      expect(ctas.cta_1.text).toEqual("Interno con params");
-      expect(ctas.cta_1.action).toEqual(
-        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-      );
-    }
-  });
-
-  it("should not have a valid CTA since the frontmatter is malformed", () => {
-    const maybeCTAs = getMessageCTA(CTA_MALFORMED as MessageBodyMarkdown);
-    expect(O.isSome(maybeCTAs)).toBeFalsy();
-  });
 });
 
 const test2CTA = (
@@ -289,60 +207,7 @@ const test2CTA = (
   }
 };
 
-describe("getServiceCTA", () => {
-  it("Should extract a valid CTA for the service", () => {
-    const CTA_SERVICE = `---
-it:
-    cta_1:
-        text: "Interno con params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-en:
-    cta_1:
-        text: "Internal with params"
-        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
----`;
-    const validServiceMetadata: ServiceMetadata = {
-      ...serviceMetadataBase,
-      token_name: "myPortalToken" as ServiceMetadata["token_name"],
-      cta: CTA_SERVICE as ServiceMetadata["cta"]
-    };
-    const maybeCTA = getServiceCTA(validServiceMetadata);
-    expect(O.isSome(maybeCTA)).toBeTruthy();
-    if (O.isSome(maybeCTA)) {
-      const ctas = maybeCTA.value;
-      expect(ctas.cta_1).toBeDefined();
-      expect(ctas.cta_1.text).toEqual("Interno con params");
-      expect(ctas.cta_1.action).toEqual(
-        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-      );
-    }
-  });
-
-  it("Should not extract a CTA for the service without cta attribute", () => {
-    const invalidServiceMetadata: ServiceMetadata = {
-      ...serviceMetadataBase,
-      token_name: "myPortalToken" as ServiceMetadata["token_name"]
-    };
-    const maybeCTA = getServiceCTA(invalidServiceMetadata);
-    expect(O.isSome(maybeCTA)).toBeFalsy();
-  });
-});
-
 describe("isCtaActionValid", () => {
-  it("should be a valid action for service", () => {
-    const validServiceMetadata: ServiceMetadata = {
-      ...serviceMetadataBase,
-      token_name: "myPortalToken" as ServiceMetadata["token_name"]
-    };
-    const CTA = {
-      text: "dummy",
-      action:
-        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
-    };
-    const isValid = isCtaActionValid(CTA, validServiceMetadata);
-    expect(isValid).toBeTruthy();
-  });
-
   it("should be a valid internal navigation action", async () => {
     const valid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
     const isValid = isCtaActionValid(valid);

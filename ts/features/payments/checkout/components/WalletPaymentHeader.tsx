@@ -16,8 +16,7 @@ import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHa
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { WALLET_PAYMENT_STEP_MAX } from "../store/reducers";
-import { walletPaymentPspListSelector } from "../store/selectors";
-import { paymentsResetPaymentPspList } from "../store/actions/networking";
+import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import { WalletPaymentStepEnum } from "../types";
 
 type WalletPaymentHeaderProps = {
@@ -50,7 +49,6 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
       dispatch(
         walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
       );
-      dispatch(paymentsResetPaymentPspList());
     } else {
       // For any other step just go back 1 step
       dispatch(walletPaymentSetCurrentStep(currentStep - 1));
