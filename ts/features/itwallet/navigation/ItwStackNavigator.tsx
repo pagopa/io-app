@@ -2,7 +2,7 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { ItwAuthModeSelectionScreen } from "../authentication/screen/ItwAuthModeSelectionScreen";
+import { ItwAuthModeSelectionScreen } from "../authentication/screens/ItwAuthModeSelectionScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
