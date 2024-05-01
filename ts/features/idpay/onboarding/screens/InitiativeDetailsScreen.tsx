@@ -17,7 +17,8 @@ import {
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { isLoadingSelector, selectInitiative } from "../machine/selectors";
+import { selectInitiative } from "../machine/selectors";
+import { isLoadingSelector } from "../../../../xstate/selectors";
 
 export const InitiativeDetailsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;

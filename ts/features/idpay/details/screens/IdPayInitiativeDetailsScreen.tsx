@@ -32,7 +32,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
@@ -49,6 +49,7 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { BonusStatus } from "../../../../components/BonusCard/type";
+import { ConfigurationMode } from "../../configuration/types";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -82,9 +83,9 @@ const IdPayInitiativeDetailsScreen = () => {
   };
 
   const navigateToConfiguration = () => {
-    navigation.push(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-      params: { initiativeId }
+    navigation.push(IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR, {
+      screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+      params: { initiativeId, mode: ConfigurationMode.COMPLETE }
     });
   };
   const discountBottomSheet = useIdPayDiscountDetailsBottomSheet(initiativeId);

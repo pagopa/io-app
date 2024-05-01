@@ -9,6 +9,8 @@ import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
+import { useIODispatch } from "../../../../store/hooks";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayClient } from "../../common/api/client";
 import {
   OnboardingFailure,
@@ -73,11 +75,22 @@ const mapErrorCodeToFailure = (
 const createActorsImplementation = (
   client: IDPayClient,
   token: string,
-  language: PreferredLanguage
+  language: PreferredLanguage,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
   const clientOptions = {
     bearerAuth: token,
     "Accept-Language": language
+  };
+
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
   };
 
   const getInitiativeInfo = fromPromise<InitiativeDataDTO, string>(
@@ -96,6 +109,7 @@ const createActorsImplementation = (
               case 200:
                 return Promise.resolve(value);
               case 401:
+                handleSessionExpired();
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(OnboardingFailureEnum.GENERIC);
@@ -141,6 +155,7 @@ const createActorsImplementation = (
               // Initiative not yet started by the citizen
               return Promise.resolve(O.none);
             case 401:
+              handleSessionExpired();
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
               return Promise.reject(OnboardingFailureEnum.GENERIC);
@@ -175,6 +190,7 @@ const createActorsImplementation = (
             case 403:
               return Promise.reject(mapErrorCodeToFailure(value.code));
             case 401:
+              handleSessionExpired();
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
               return Promise.reject(OnboardingFailureEnum.GENERIC);
@@ -214,6 +230,7 @@ const createActorsImplementation = (
             case 403:
               return Promise.reject(mapErrorCodeToFailure(value.code));
             case 401:
+              handleSessionExpired();
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
               return Promise.reject(OnboardingFailureEnum.GENERIC);
@@ -265,6 +282,7 @@ const createActorsImplementation = (
               case 202:
                 return Promise.resolve(undefined);
               case 401:
+                handleSessionExpired();
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(OnboardingFailureEnum.GENERIC);

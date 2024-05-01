@@ -10,4 +10,4 @@ export interface ConfirmUnsubscription {
   readonly type: "confirm-unsubscription";
 }
 
-export type Events = GlobalEvents | ConfirmUnsubscription;
+export type Events = GlobalEvents | AutoInit | ConfirmUnsubscription;

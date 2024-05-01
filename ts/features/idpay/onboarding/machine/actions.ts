@@ -1,15 +1,12 @@
 import * as O from "fp-ts/lib/Option";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
 import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayOnboardingRoutes } from "../navigation/routes";
 import * as Context from "./context";
 
 const createActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>,
-  dispatch: ReturnType<typeof useIODispatch>
+  navigation: ReturnType<typeof useIONavigation>
 ) => {
   const navigateToInitiativeDetailsScreen = guardedNavigationAction(() =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
@@ -67,16 +64,6 @@ const createActionsImplementation = (
     });
   };
 
-  const handleSessionExpired = () => {
-    dispatch(
-      refreshSessionToken.request({
-        withUserInteraction: true,
-        showIdentificationModalAtStartup: false,
-        showLoader: true
-      })
-    );
-  };
-
   const closeOnboarding = () => {
     navigation.popToTop();
   };
@@ -89,7 +76,6 @@ const createActionsImplementation = (
     navigateToCompletionScreen,
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
-    handleSessionExpired,
     closeOnboarding
   };
 };

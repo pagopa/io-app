@@ -41,9 +41,10 @@ export const IdPayPaymentMachineProvider = (props: Props) => {
 
   const actors = createActorsImplementation(
     IDPayPaymentClient,
-    idPayTestToken ?? bpdToken
+    idPayTestToken ?? bpdToken,
+    dispatch
   );
-  const actions = createActionsImplementation(navigation, dispatch);
+  const actions = createActionsImplementation(navigation);
 
   const machine = idPayPaymentMachine.provide({
     actors,

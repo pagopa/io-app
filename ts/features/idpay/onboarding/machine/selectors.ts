@@ -2,39 +2,36 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { StateFrom } from "xstate";
+import { SnapshotFrom } from "xstate";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import { LOADING_TAG } from "../../../../xstate/utils";
 import * as Context from "./context";
-import { IdPayOnboardingMachine } from "./machine";
+import { idPayOnboardingMachine } from "./machine";
 
-type StateWithContext = StateFrom<IdPayOnboardingMachine>;
+type MachineSnapshot = SnapshotFrom<typeof idPayOnboardingMachine>;
 
-export const selectOnboardingFailure = (state: StateWithContext) =>
-  state.context.failure;
+export const selectOnboardingFailure = (snapshot: MachineSnapshot) =>
+  snapshot.context.failure;
 
-const selectRequiredCriteria = (state: StateWithContext) =>
-  state.context.requiredCriteria;
+const selectRequiredCriteria = (snapshot: MachineSnapshot) =>
+  snapshot.context.requiredCriteria;
 
-export const selectSelfDeclarationBoolAnswers = (state: StateWithContext) =>
-  state.context.selfDeclarationsBoolAnswers;
+export const selectSelfDeclarationBoolAnswers = (snapshot: MachineSnapshot) =>
+  snapshot.context.selfDeclarationsBoolAnswers;
 
-const selectMultiConsents = (state: StateWithContext) =>
-  state.context.selfDeclarationsMultiAnwsers;
+const selectMultiConsents = (snapshot: MachineSnapshot) =>
+  snapshot.context.selfDeclarationsMultiAnwsers;
 
-const selectCurrentPage = (state: StateWithContext) =>
-  state.context.selfDeclarationsMultiPage;
+const selectCurrentPage = (snapshot: MachineSnapshot) =>
+  snapshot.context.selfDeclarationsMultiPage;
 
-const selectTags = (state: StateWithContext) => state.tags;
+export const selectInitiative = (snapshot: MachineSnapshot) =>
+  snapshot.context.initiative;
 
-export const selectInitiative = (state: StateWithContext) =>
-  state.context.initiative;
-
-export const selectServiceId = (state: StateWithContext) =>
-  state.context.serviceId;
+export const selectServiceId = (snapshot: MachineSnapshot) =>
+  snapshot.context.serviceId;
 
 const filterCriteria = <T extends SelfDeclarationDTO>(
   criteria: O.Option<RequiredCriteriaDTO>,
@@ -92,10 +89,6 @@ export const prerequisiteAnswerIndexSelector = createSelector(
     multiConsents[currentPage]?.value === undefined
       ? undefined
       : currentCriteria.value.indexOf(multiConsents[currentPage]?.value)
-);
-
-export const isLoadingSelector = createSelector(selectTags, tags =>
-  tags.has(LOADING_TAG)
 );
 
 export const getMultiSelfDeclarationListFromContext = (

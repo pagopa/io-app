@@ -1,11 +1,11 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
   ButtonSolid,
-  VSpacer,
+  ContentWrapper,
   Pictogram,
-  ContentWrapper
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -15,28 +15,16 @@ import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationS
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { useConfigurationMachineService } from "../xstate/provider";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
 
-const styles = StyleSheet.create({
-  mainContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingBottom: 90
-  },
-  textContainer: {
-    alignItems: "center",
-    justifyContent: "flex-start"
-  },
-  textCenter: { textAlign: "center" }
-});
+export const IbanConfigurationLanding = () => {
+  const { useActorRef } = IdPayConfigurationMachineContext;
+  const machine = useActorRef();
 
-const IbanConfigurationLanding = () => {
-  const configurationMachine = useConfigurationMachineService();
-
-  const customGoBack = () => configurationMachine.send({ type: "BACK" });
+  const customGoBack = () => machine.send({ type: "back" });
 
   useNavigationSwipeBackListener(() => {
-    configurationMachine.send({ type: "BACK", skipNavigation: true });
+    machine.send({ type: "back", skipNavigation: true });
   });
 
   const { bottomSheet, dismiss, present } = useIOBottomSheetAutoresizableModal(
@@ -94,7 +82,7 @@ const IbanConfigurationLanding = () => {
           type="SingleButton"
           leftButton={{
             title: I18n.t("global.buttons.continue"),
-            onPress: () => configurationMachine.send({ type: "NEXT" })
+            onPress: () => machine.send({ type: "next" })
           }}
         />
       </SafeAreaView>
@@ -102,4 +90,16 @@ const IbanConfigurationLanding = () => {
     </BaseScreenComponent>
   );
 };
-export default IbanConfigurationLanding;
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 90
+  },
+  textContainer: {
+    alignItems: "center",
+    justifyContent: "flex-start"
+  },
+  textCenter: { textAlign: "center" }
+});

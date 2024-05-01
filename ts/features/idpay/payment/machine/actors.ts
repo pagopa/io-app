@@ -6,11 +6,24 @@ import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPay
 import { CodeEnum as TransactionErrorCodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { IDPayClient } from "../../common/api/client";
 import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
+import { useIODispatch } from "../../../../store/hooks";
 
 export const createActorsImplementation = (
   client: IDPayClient,
-  token: string
+  token: string,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   const preAuthorizePayment = fromPromise<AuthPaymentResponseDTO, string>(
     async ({ input }) => {
       const putPreAuthPaymentTask = (trxCode: string) =>
@@ -35,6 +48,7 @@ export const createActorsImplementation = (
                 case 200:
                   return Promise.resolve(value);
                 case 401:
+                  handleSessionExpired();
                   return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
                 default:
                   return Promise.reject(mapErrorCodeToFailure(value.code));
@@ -72,6 +86,7 @@ export const createActorsImplementation = (
                 case 200:
                   return Promise.resolve(value);
                 case 401:
+                  handleSessionExpired();
                   return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
                 default:
                   return Promise.reject(mapErrorCodeToFailure(value.code));
@@ -108,6 +123,7 @@ export const createActorsImplementation = (
               case 200:
                 return Promise.resolve(value);
               case 401:
+                handleSessionExpired();
                 return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(mapErrorCodeToFailure(value.code));

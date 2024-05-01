@@ -19,7 +19,8 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { Skeleton } from "../../common/components/Skeleton";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
+import { ConfigurationMode } from "../../configuration/types";
 
 type Props = {
   initiative?: InitiativeDTO;
@@ -31,22 +32,29 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const navigateToInstrumentsConfiguration = (initiativeId: string) => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen:
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
-      params: {
-        initiativeId
+    navigation.navigate(
+      IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+      {
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+        params: {
+          initiativeId,
+          mode: ConfigurationMode.INSTRUMENTS
+        }
       }
-    });
+    );
   };
 
   const navigateToIbanConfiguration = (initiativeId: string) => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
-      params: {
-        initiativeId
+    navigation.navigate(
+      IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+      {
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+        params: {
+          initiativeId,
+          mode: ConfigurationMode.IBAN
+        }
       }
-    });
+    );
   };
 
   const instrumentsSettingsButton = pipe(

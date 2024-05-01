@@ -8,8 +8,7 @@ import {
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useActor } from "@xstate/react";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -20,19 +19,8 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { LOADING_TAG } from "../../../../xstate/utils";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
-import { ConfigurationMode } from "../xstate/context";
-import { useConfigurationMachineService } from "../xstate/provider";
-
-type InitiativeConfigurationIntroScreenRouteParams = {
-  initiativeId: string;
-};
-
-type InitiativeConfigurationIntroRouteProps = RouteProp<
-  IDPayConfigurationParamsList,
-  "IDPAY_CONFIGURATION_INTRO"
->;
+import { isLoadingSelector } from "../../../../xstate/selectors";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
 
 type RequiredDataItemProps = {
   icon?: React.ReactNode;
@@ -54,21 +42,18 @@ const RequiredDataItem = (props: RequiredDataItemProps) => (
   </View>
 );
 
-const InitiativeConfigurationIntroScreen = () => {
+export const InitiativeConfigurationIntroScreen = () => {
+  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
+  const machine = useActorRef();
+
   const navigation = useNavigation();
-  const route = useRoute<InitiativeConfigurationIntroRouteProps>();
-
-  const { initiativeId } = route.params;
-
-  const configurationMachine = useConfigurationMachineService();
-  const [state, send] = useActor(configurationMachine);
 
   const theme = useIOTheme();
 
-  const isLoading = state.tags.has(LOADING_TAG);
+  const isLoading = useSelector(isLoadingSelector);
 
   const handleContinuePress = () => {
-    send({ type: "NEXT" });
+    machine.send({ type: "next" });
   };
 
   const customGoBack = (
@@ -103,14 +88,6 @@ const InitiativeConfigurationIntroScreen = () => {
       )
     }
   ];
-
-  React.useEffect(() => {
-    send({
-      type: "START_CONFIGURATION",
-      initiativeId,
-      mode: ConfigurationMode.COMPLETE
-    });
-  }, [send, initiativeId]);
 
   return (
     <BaseScreenComponent
@@ -160,7 +137,3 @@ const styles = StyleSheet.create({
     marginRight: 16
   }
 });
-
-export type { InitiativeConfigurationIntroScreenRouteParams };
-
-export default InitiativeConfigurationIntroScreen;

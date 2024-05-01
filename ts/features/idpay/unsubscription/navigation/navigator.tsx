@@ -14,7 +14,7 @@ type IdPayUnsubscriptionScreenRouteProps = RouteProp<
   "IDPAY_UNSUBSCRIPTION_NAVIGATOR"
 >;
 
-export const IDPayUnsubscriptionNavigator = () => {
+export const IdPayUnsubscriptionNavigator = () => {
   const { params } = useRoute<IdPayUnsubscriptionScreenRouteProps>();
   const { initiativeId, initiativeName, initiativeType } = params;
 

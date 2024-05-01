@@ -9,6 +9,7 @@ import {
   WAITING_USER_INPUT_TAG,
   notImplementedStub
 } from "../../../../xstate/utils";
+import { OnboardingFailure } from "../types/OnboardingFailure";
 import * as Context from "./context";
 import * as Events from "./events";
 import * as Input from "./input";
@@ -31,7 +32,6 @@ export const idPayOnboardingMachine = setup({
     navigateToCompletionScreen: notImplementedStub,
     navigateToFailureScreen: notImplementedStub,
     navigateToInitiativeMonitoringScreen: notImplementedStub,
-    handleSessionExpired: notImplementedStub,
     closeOnboarding: notImplementedStub
   },
   actors: {
@@ -86,6 +86,9 @@ export const idPayOnboardingMachine = setup({
       return event.input;
     },
     onError: {
+      actions: assign(({ event }) => ({
+        failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+      })),
       target: ".OnboardingFailure"
     },
     onDone: {
@@ -130,15 +133,12 @@ export const idPayOnboardingMachine = setup({
           }
         }
       },
-      onError: [
-        {
-          guard: "isSessionExpired",
-          target: "SessionExpired"
-        },
-        {
-          target: "OnboardingFailure"
-        }
-      ],
+      onError: {
+        actions: assign(({ event }) => ({
+          failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+        })),
+        target: "OnboardingFailure"
+      },
       onDone: {
         target: "DisplayingInitiativeInfo"
       }
@@ -158,15 +158,12 @@ export const idPayOnboardingMachine = setup({
       invoke: {
         src: "acceptTos",
         input: ({ context }) => selectInitiativeId(context),
-        onError: [
-          {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
-          },
-          {
-            target: "OnboardingFailure"
-          }
-        ],
+        onError: {
+          actions: assign(({ event }) => ({
+            failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+          })),
+          target: "OnboardingFailure"
+        },
         onDone: {
           target: "LoadingCriteria"
         }
@@ -178,15 +175,12 @@ export const idPayOnboardingMachine = setup({
       invoke: {
         src: "getRequiredCriteria",
         input: ({ context }) => selectInitiativeId(context),
-        onError: [
-          {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
-          },
-          {
-            target: "OnboardingFailure"
-          }
-        ],
+        onError: {
+          actions: assign(({ event }) => ({
+            failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+          })),
+          target: "OnboardingFailure"
+        },
         onDone: {
           actions: assign(({ event }) => ({
             requiredCriteria: event.output
@@ -324,15 +318,12 @@ export const idPayOnboardingMachine = setup({
       invoke: {
         src: "acceptRequiredCriteria",
         input: ({ context }) => context,
-        onError: [
-          {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
-          },
-          {
-            target: "OnboardingFailure"
-          }
-        ],
+        onError: {
+          actions: assign(({ event }) => ({
+            failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+          })),
+          target: "OnboardingFailure"
+        },
         onDone: {
           target: "OnboardingCompleted"
         }
@@ -346,6 +337,10 @@ export const idPayOnboardingMachine = setup({
 
     OnboardingFailure: {
       entry: "navigateToFailureScreen",
+      always: {
+        guard: "isSessionExpired",
+        target: "SessionExpired"
+      },
       on: {
         next: {
           actions: "navigateToInitiativeMonitoringScreen"
@@ -354,7 +349,7 @@ export const idPayOnboardingMachine = setup({
     },
 
     SessionExpired: {
-      entry: ["handleSessionExpired", "closeOnboarding"]
+      entry: "closeOnboarding"
     }
   }
 });

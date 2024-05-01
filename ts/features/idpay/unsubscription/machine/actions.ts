@@ -1,33 +1,26 @@
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIODispatch } from "../../../../store/hooks";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
-import { IDPayUnsubscriptionRoutes } from "../navigation/navigator";
+import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
 
 const createActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>,
-  dispatch: ReturnType<typeof useIODispatch>
+  navigation: ReturnType<typeof useIONavigation>
 ) => {
-  const handleSessionExpired = () => {
-    dispatch(
-      refreshSessionToken.request({
-        withUserInteraction: true,
-        showIdentificationModalAtStartup: false,
-        showLoader: true
-      })
+  const navigateToConfirmationScreen = () => {
+    navigation.navigate(
+      IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR,
+      {
+        screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
+      }
     );
   };
 
-  const navigateToConfirmationScreen = () => {
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
-    });
-  };
-
   const navigateToResultScreen = () =>
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT
-    });
+    navigation.navigate(
+      IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR,
+      {
+        screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT
+      }
+    );
 
   const exitUnsubscription = () => {
     navigation.pop();
@@ -42,7 +35,6 @@ const createActionsImplementation = (
   };
 
   return {
-    handleSessionExpired,
     navigateToConfirmationScreen,
     navigateToResultScreen,
     exitUnsubscription,

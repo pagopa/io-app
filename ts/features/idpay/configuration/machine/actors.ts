@@ -1,35 +1,46 @@
+/* eslint-disable sonarjs/no-identical-functions */
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { InvokeCreator, Receiver, Sender } from "xstate";
+import { fromCallback, fromPromise } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
+import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
 import { TypeEnum } from "../../../../../definitions/pagopa/Wallet";
 import { PaymentManagerClient } from "../../../../api/pagopa";
+import { useIODispatch } from "../../../../store/hooks";
 import { PaymentManagerToken, Wallet } from "../../../../types/pagopa";
 import { SessionManager } from "../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayClient } from "../../common/api/client";
-import { Context } from "./context";
-import { Events } from "./events";
-import { InitiativeFailureType } from "./failure";
+import { InitiativeFailureType } from "../types/failure";
+import * as Events from "./events";
 
 const createServicesImplementation = (
   idPayClient: IDPayClient,
   paymentManagerClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   bearerToken: string,
-  language: PreferredLanguageEnum
+  language: PreferredLanguageEnum,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
-  const loadInitiative = async (context: Context) => {
-    if (context.initiativeId === undefined) {
-      return Promise.reject(InitiativeFailureType.GENERIC);
-    }
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
 
+  const getInitiative = fromPromise<InitiativeDTO, string>(async params => {
     const response = await idPayClient.getWalletDetail({
-      initiativeId: context.initiativeId,
+      initiativeId: params.input,
       bearerAuth: bearerToken,
       "Accept-Language": language
     });
@@ -43,6 +54,7 @@ const createServicesImplementation = (
             case 200:
               return Promise.resolve(value);
             case 401:
+              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(InitiativeFailureType.GENERIC);
@@ -52,9 +64,9 @@ const createServicesImplementation = (
     );
 
     return data;
-  };
+  });
 
-  const loadIbanList = async (_: Context) => {
+  const getIbanList = fromPromise<IbanListDTO>(async () => {
     const response = await idPayClient.getIbanList({
       bearerAuth: bearerToken,
       "Accept-Language": language
@@ -76,6 +88,7 @@ const createServicesImplementation = (
               );
               return Promise.resolve({ ibanList: uniqueIbanList });
             case 401:
+              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -87,18 +100,21 @@ const createServicesImplementation = (
     );
 
     return data;
-  };
+  });
 
-  const confirmIban = async (context: Context): Promise<undefined> => {
-    if (context.initiativeId === undefined) {
-      return Promise.reject(InitiativeFailureType.GENERIC);
-    }
+  const enrollIban = fromPromise<
+    undefined,
+    { initiativeId: string; iban: IbanDTO | IbanPutDTO }
+  >(async ({ input }) => {
     try {
       const res = await idPayClient.enrollIban({
         "Accept-Language": language,
         bearerAuth: bearerToken,
-        initiativeId: context.initiativeId,
-        body: context.ibanBody
+        initiativeId: input.initiativeId,
+        body: {
+          iban: input.iban.iban,
+          description: input.iban.description
+        }
       });
       return pipe(
         res,
@@ -109,6 +125,7 @@ const createServicesImplementation = (
               case 200:
                 return Promise.resolve(undefined);
               case 401:
+                handleSessionExpired();
                 return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
               default:
                 return Promise.reject(
@@ -121,27 +138,9 @@ const createServicesImplementation = (
     } catch (e) {
       return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
     }
-  };
+  });
 
-  const enrollIban = async (context: Context): Promise<undefined> => {
-    if (context.initiativeId === undefined) {
-      return Promise.reject(InitiativeFailureType.GENERIC);
-    }
-
-    if (context.selectedIban === undefined) {
-      return Promise.reject(InitiativeFailureType.GENERIC);
-    }
-
-    return confirmIban({
-      ...context,
-      ibanBody: {
-        iban: context.selectedIban.iban,
-        description: context.selectedIban.description
-      }
-    });
-  };
-
-  const loadWalletInstruments = async () => {
+  const getWalletInstruments = fromPromise<ReadonlyArray<Wallet>>(async () => {
     const response = await pmSessionManager.withRefresh(
       paymentManagerClient.getWalletsV2
     )();
@@ -168,6 +167,7 @@ const createServicesImplementation = (
               return Promise.resolve(wallet);
 
             case 401:
+              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -179,15 +179,14 @@ const createServicesImplementation = (
     );
 
     return data;
-  };
+  });
 
-  const loadInitiativeInstruments = async (context: Context) => {
-    if (context.initiativeId === undefined) {
-      return Promise.reject(InitiativeFailureType.GENERIC);
-    }
-
+  const getInitiativeInstruments = fromPromise<
+    ReadonlyArray<InstrumentDTO>,
+    string
+  >(async ({ input }) => {
     const response = await idPayClient.getInstrumentList({
-      initiativeId: context.initiativeId,
+      initiativeId: input,
       bearerAuth: bearerToken,
       "Accept-Language": language
     });
@@ -202,6 +201,7 @@ const createServicesImplementation = (
             case 200:
               return Promise.resolve(value.instrumentList);
             case 401:
+              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -213,7 +213,7 @@ const createServicesImplementation = (
     );
 
     return data;
-  };
+  });
 
   const enrollInstrument = async (initiativeId?: string, idWallet?: string) => {
     if (initiativeId === undefined || idWallet === undefined) {
@@ -236,6 +236,7 @@ const createServicesImplementation = (
             case 200:
               return Promise.resolve(undefined);
             case 401:
+              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -273,6 +274,7 @@ const createServicesImplementation = (
             case 200:
               return Promise.resolve(undefined);
             case 401:
+              handleSessionExpired();
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
             default:
               return Promise.reject(
@@ -286,38 +288,38 @@ const createServicesImplementation = (
     return data;
   };
 
-  const instrumentsEnrollmentService: InvokeCreator<Context, Events> =
-    (context: Context) =>
-    (callback: Sender<Events>, onReceive: Receiver<Events>) =>
-      onReceive(async event => {
+  const instrumentsEnrollmentLogic = fromCallback<Events.Events, string>(
+    ({ sendBack, receive, input }) => {
+      receive(event => {
         switch (event.type) {
-          case "DELETE_INSTRUMENT":
-            deleteInstrument(context.initiativeId, event.instrumentId)
+          case "delete-instrument":
+            deleteInstrument(input, event.instrumentId)
               .then(() =>
-                callback({
+                sendBack({
                   ...event,
-                  type: "DELETE_INSTRUMENT_SUCCESS"
+                  type: "update-instrument-success"
                 })
               )
               .catch(() =>
-                callback({
+                sendBack({
                   ...event,
-                  type: "DELETE_INSTRUMENT_FAILURE"
+                  type: "update-instrument-failure"
                 })
               );
             break;
-          case "ENROLL_INSTRUMENT":
-            enrollInstrument(context.initiativeId, event.walletId)
+          case "enroll-instrument":
+            enrollInstrument(input, event.walletId)
               .then(() =>
-                callback({
+                sendBack({
                   ...event,
-                  type: "ENROLL_INSTRUMENT_SUCCESS"
+                  type: "update-instrument-success",
+                  enrolling: true
                 })
               )
               .catch(() =>
-                callback({
+                sendBack({
                   ...event,
-                  type: "ENROLL_INSTRUMENT_FAILURE"
+                  type: "update-instrument-failure"
                 })
               );
             break;
@@ -325,15 +327,16 @@ const createServicesImplementation = (
             break;
         }
       });
+    }
+  );
 
   return {
-    loadInitiative,
-    loadIbanList,
+    getInitiative,
+    getIbanList,
     enrollIban,
-    confirmIban,
-    loadWalletInstruments,
-    loadInitiativeInstruments,
-    instrumentsEnrollmentService
+    getWalletInstruments,
+    getInitiativeInstruments,
+    instrumentsEnrollmentLogic
   };
 };
 

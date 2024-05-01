@@ -19,8 +19,7 @@ export const idPayUnsubscriptionMachine = setup({
     navigateToConfirmationScreen: notImplementedStub,
     navigateToResultScreen: notImplementedStub,
     exitToWallet: notImplementedStub,
-    exitUnsubscription: notImplementedStub,
-    handleSessionExpired: notImplementedStub
+    exitUnsubscription: notImplementedStub
   },
   actors: {
     onInit: fromPromise<Context.Context, Input.Input>(({ input }) =>
@@ -74,15 +73,9 @@ export const idPayUnsubscriptionMachine = setup({
       invoke: {
         input: ({ context }) => context.initiativeId,
         src: "getInitiativeInfo",
-        onError: [
-          {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
-          },
-          {
-            target: "UnsubscriptionFailure"
-          }
-        ],
+        onError: {
+          target: "UnsubscriptionFailure"
+        },
         onDone: {
           actions: assign(({ event }) => ({
             initiativeId: event.output.initiativeId,
@@ -109,15 +102,9 @@ export const idPayUnsubscriptionMachine = setup({
       invoke: {
         input: ({ context }) => context.initiativeId,
         src: "unsubscribeFromInitiative",
-        onError: [
-          {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
-          },
-          {
-            target: "UnsubscriptionFailure"
-          }
-        ],
+        onError: {
+          target: "UnsubscriptionFailure"
+        },
         onDone: {
           target: "UnsubscriptionSuccess"
         }
@@ -133,6 +120,10 @@ export const idPayUnsubscriptionMachine = setup({
     },
     UnsubscriptionFailure: {
       entry: "navigateToResultScreen",
+      always: {
+        guard: "isSessionExpired",
+        target: "SessionExpired"
+      },
       on: {
         close: {
           actions: "exitUnsubscription"
@@ -140,7 +131,7 @@ export const idPayUnsubscriptionMachine = setup({
       }
     },
     SessionExpired: {
-      entry: ["handleSessionExpired", "exitUnsubscription"]
+      entry: "exitUnsubscription"
     }
   }
 });

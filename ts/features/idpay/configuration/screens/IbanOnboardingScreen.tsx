@@ -1,5 +1,4 @@
 import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -17,15 +16,17 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useConfigurationMachineService } from "../xstate/provider";
-import { isLoadingSelector } from "../xstate/selectors";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
+import { isLoadingSelector } from "../machine/selectors";
 
-const IbanOnboardingScreen = () => {
-  const configurationMachine = useConfigurationMachineService();
-  const customGoBack = () => configurationMachine.send({ type: "BACK" });
+export const IbanOnboardingScreen = () => {
+  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
+  const machine = useActorRef();
+
+  const customGoBack = () => machine.send({ type: "back" });
   const [iban, setIban] = React.useState<string | undefined>(undefined);
   const [ibanName, setIbanName] = React.useState<string | undefined>(undefined);
-  const isLoading = useSelector(configurationMachine, isLoadingSelector);
+  const isLoading = useSelector(isLoadingSelector);
   const isIbanValid = () =>
     pipe(
       iban,
@@ -47,7 +48,7 @@ const IbanOnboardingScreen = () => {
     );
 
   useNavigationSwipeBackListener(() => {
-    configurationMachine.send({ type: "BACK", skipNavigation: true });
+    machine.send({ type: "back", skipNavigation: true });
   });
 
   return (
@@ -117,8 +118,8 @@ const IbanOnboardingScreen = () => {
                 ibanName !== undefined &&
                 ibanName.length > 0;
               if (isDataSendable) {
-                configurationMachine.send({
-                  type: "CONFIRM_IBAN",
+                machine.send({
+                  type: "confirm-iban-onboarding",
                   ibanBody: { iban, description: ibanName }
                 });
               } else {
@@ -133,5 +134,3 @@ const IbanOnboardingScreen = () => {
     </BaseScreenComponent>
   );
 };
-
-export default IbanOnboardingScreen;

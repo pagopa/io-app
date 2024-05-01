@@ -1,3 +1,5 @@
+import { Divider, H1, VSpacer } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   RouteProp,
   useFocusEffect,
@@ -5,42 +7,39 @@ import {
   useRoute
 } from "@react-navigation/native";
 import React from "react";
-import { Divider, H1, VSpacer } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import { ScrollView, StyleSheet } from "react-native";
+import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
+import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import I18n from "../../../../i18n";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  idPayInitiativeInstrumentsRefreshStart,
-  idPayInitiativeInstrumentsRefreshStop,
-  idpayInitiativeInstrumentDelete
-} from "../store/actions";
+import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
+import { IdPayCodeParamsList } from "../../code/navigation/params";
+import { IdPayCodeRoutes } from "../../code/navigation/routes";
+import { IdPayDiscountInstrumentEnrollmentSwitch } from "../components/IdPayDiscountInstrumentEnrollmentSwitch";
+import { IdPayConfigurationParamsList } from "../navigation/params";
 import {
   idPayIsLoadingInitiativeInstrumentSelector,
   idpayDiscountInitiativeInstrumentsSelector,
   isLoadingDiscountInitiativeInstrumentsSelector
 } from "../store";
-import { IdPayDiscountInstrumentEnrollmentSwitch } from "../components/IdPayDiscountInstrumentEnrollmentSwitch";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
-import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
-import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
-import { IdPayCodeRoutes } from "../../code/navigation/routes";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { IdPayCodeParamsList } from "../../code/navigation/params";
+import {
+  idPayInitiativeInstrumentsRefreshStart,
+  idPayInitiativeInstrumentsRefreshStop,
+  idpayInitiativeInstrumentDelete
+} from "../store/actions";
 
-type IdPayDiscountInstrumentsScreenRouteParams = {
+export type IdPayDiscountInstrumentsScreenRouteParams = {
   initiativeId: string;
   initiativeName?: string;
 };
 
 type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
-  IDPayConfigurationParamsList,
+  IdPayConfigurationParamsList,
   "IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS"
 >;
 
@@ -48,7 +47,7 @@ type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
  * Screen that shows the list of available instruments for a discount initiative which has been selected
  * Actually are available only the CIE and the QRCode
  */
-const IdPayDiscountInstrumentsScreen = () => {
+export const IdPayDiscountInstrumentsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<IdPayDiscountInstrumentsScreenRouteProps>();
   const navigation =
@@ -156,7 +155,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding
   }
 });
-
-export type { IdPayDiscountInstrumentsScreenRouteParams };
-
-export default IdPayDiscountInstrumentsScreen;

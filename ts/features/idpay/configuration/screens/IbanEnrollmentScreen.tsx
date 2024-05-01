@@ -1,6 +1,4 @@
 import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
@@ -16,37 +14,24 @@ import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationS
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
-import { ConfigurationMode } from "../xstate/context";
-import { useConfigurationMachineService } from "../xstate/provider";
+import { isUpseringSelector } from "../../../../xstate/selectors";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   ibanListSelector,
   isLoadingSelector,
-  isUpsertingIbanSelector,
   selectEnrolledIban,
   selectIsIbanOnlyMode
-} from "../xstate/selectors";
+} from "../machine/selectors";
 
-type IbanEnrollmentScreenRouteParams = {
-  initiativeId?: string;
-};
+export const IbanEnrollmentScreen = () => {
+  const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
+  const machine = useActorRef();
 
-type IbanEnrollmentScreenRouteProps = RouteProp<
-  IDPayConfigurationParamsList,
-  "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
->;
-
-const IbanEnrollmentScreen = () => {
-  const route = useRoute<IbanEnrollmentScreenRouteProps>();
-  const { initiativeId } = route.params;
-
-  const configurationMachine = useConfigurationMachineService();
-
-  const isLoading = useSelector(configurationMachine, isLoadingSelector);
-  const ibanList = useSelector(configurationMachine, ibanListSelector);
-  const isIbanOnly = useSelector(configurationMachine, selectIsIbanOnlyMode);
-
-  const enrolledIban = useSelector(configurationMachine, selectEnrolledIban);
+  const isLoading = useSelector(isLoadingSelector);
+  const ibanList = useSelector(ibanListSelector);
+  const isIbanOnly = useSelector(selectIsIbanOnlyMode);
+  const isUpsertingIban = useSelector(isUpseringSelector);
+  const enrolledIban = useSelector(selectEnrolledIban);
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
 
   React.useEffect(() => {
@@ -55,38 +40,33 @@ const IbanEnrollmentScreen = () => {
     }
   }, [enrolledIban]);
 
-  const isUpsertingIban = useSelector(
-    configurationMachine,
-    isUpsertingIbanSelector
-  );
-
   const handleSelectIban = React.useCallback(
     (iban: IbanDTO) => {
       setSelectedIban(iban);
 
       if (isIbanOnly) {
-        configurationMachine.send({ type: "ENROLL_IBAN", iban });
+        machine.send({ type: "enroll-iban", iban });
       }
     },
-    [isIbanOnly, configurationMachine]
+    [isIbanOnly, machine]
   );
 
   const handleBackPress = () => {
-    configurationMachine.send({ type: "BACK" });
+    machine.send({ type: "back" });
   };
 
   const handleContinuePress = () => {
     if (selectedIban !== undefined) {
-      configurationMachine.send({ type: "ENROLL_IBAN", iban: selectedIban });
+      machine.send({ type: "enroll-iban", iban: selectedIban });
     }
   };
 
   const handleAddNewIbanPress = () => {
-    configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
+    machine.send({ type: "new-iban-onboarding" });
   };
 
   useNavigationSwipeBackListener(() => {
-    configurationMachine.send({ type: "BACK", skipNavigation: true });
+    machine.send({ type: "back", skipNavigation: true });
   });
 
   const renderFooter = () => {
@@ -124,20 +104,6 @@ const IbanEnrollmentScreen = () => {
       />
     );
   };
-
-  /**
-   * If when navigating to this screen we have an initiativeId, we set the configuration machine to
-   * show only the IBAN related screens and not the whole configuration flow.
-   */
-  React.useEffect(() => {
-    if (initiativeId) {
-      configurationMachine.send({
-        type: "START_CONFIGURATION",
-        initiativeId,
-        mode: ConfigurationMode.IBAN
-      });
-    }
-  }, [configurationMachine, initiativeId]);
 
   const renderIbanList = () =>
     ibanList.map(iban => {
@@ -206,7 +172,3 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-
-export type { IbanEnrollmentScreenRouteParams };
-
-export default IbanEnrollmentScreen;

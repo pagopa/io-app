@@ -9,7 +9,7 @@ import { IdPayPaymentRoutes } from "./routes";
 
 const Stack = createStackNavigator<IdPayPaymentParamsList>();
 
-export const IDPayPaymentNavigator = () => (
+export const IdPayPaymentNavigator = () => (
   <IdPayPaymentMachineProvider>
     <Stack.Navigator
       initialRouteName={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}

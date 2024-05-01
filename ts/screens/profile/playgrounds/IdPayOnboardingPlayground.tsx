@@ -15,7 +15,7 @@ import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { IDPayOnboardingRoutes } from "../../../features/idpay/onboarding/navigation/navigator";
+import { IdPayOnboardingRoutes } from "../../../features/idpay/onboarding/navigation/routes";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -27,8 +27,8 @@ const IdPayOnboardingPlayground = () => {
   const [serviceId, setServiceId] = React.useState<string | undefined>();
 
   const navigateToIDPayOnboarding = (serviceId: string) => {
-    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR,
       params: {
         serviceId
       }

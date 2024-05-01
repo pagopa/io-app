@@ -1,18 +1,16 @@
+import { ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
+import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { Skeleton } from "../../common/components/Skeleton";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
-import {
-  IDPayConfigurationParamsList,
-  IDPayConfigurationRoutes
-} from "../../configuration/navigation/navigator";
+import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -22,16 +20,21 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
   const { initiative } = props;
 
   const navigation =
-    useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
+    useNavigation<IOStackNavigationProp<IdPayConfigurationParamsList>>();
 
   const navigateToInstrumentsConfiguration = (initiative: InitiativeDTO) => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS,
-      params: {
-        initiativeId: initiative.initiativeId,
-        initiativeName: initiative.initiativeName
+    navigation.navigate(
+      IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+      {
+        screen:
+          IdPayConfigurationRoutes.IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS,
+        params: {
+          initiativeId: initiative.initiativeId,
+          initiativeName: initiative.initiativeName
+        },
+        initiativeId: initiative.initiativeId
       }
-    });
+    );
   };
 
   const instrumentsSettingsButton = pipe(

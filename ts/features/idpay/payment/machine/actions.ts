@@ -2,27 +2,14 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
 import { showToast } from "../../../../utils/showToast";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayPaymentRoutes } from "../navigation/routes";
 import { Context } from "./context";
 
 const createActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>,
-  dispatch: ReturnType<typeof useIODispatch>
+  navigation: ReturnType<typeof useIONavigation>
 ) => {
-  const handleSessionExpired = () => {
-    dispatch(
-      refreshSessionToken.request({
-        withUserInteraction: true,
-        showIdentificationModalAtStartup: false,
-        showLoader: true
-      })
-    );
-  };
-
   const navigateToAuthorizationScreen = () => {
     navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
       screen: IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
@@ -53,7 +40,6 @@ const createActionsImplementation = (
   };
 
   return {
-    handleSessionExpired,
     navigateToAuthorizationScreen,
     navigateToResultScreen,
     showErrorToast,

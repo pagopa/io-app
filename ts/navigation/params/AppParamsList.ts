@@ -21,10 +21,7 @@ import { IdPayBarcodeParamsList } from "../../features/idpay/barcode/navigation/
 import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/routes";
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
-import {
-  IDPayConfigurationParamsList,
-  IDPayConfigurationRoutes
-} from "../../features/idpay/configuration/navigation/navigator";
+
 import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
@@ -35,6 +32,11 @@ import {
 } from "../../features/idpay/onboarding/navigation/params";
 import { IdPayOnboardingRoutes } from "../../features/idpay/onboarding/navigation/routes";
 
+import {
+  IdPayConfigurationNavigatorParams,
+  IdPayConfigurationParamsList
+} from "../../features/idpay/configuration/navigation/params";
+import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import { IdPayPaymentParamsList } from "../../features/idpay/payment/navigation/params";
 import { IdPayPaymentRoutes } from "../../features/idpay/payment/navigation/routes";
 import {
@@ -103,7 +105,9 @@ export type AppParamsList = {
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR]:
     | IdPayOnboardingNavigatorParams
     | NavigatorScreenParams<IdPayOnboardingParamsList>;
-  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
+  [IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR]:
+    | IdPayConfigurationNavigatorParams
+    | NavigatorScreenParams<IdPayConfigurationParamsList>;
   [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: NavigatorScreenParams<IDPayDetailsParamsList>;
   [IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR]:
     | IdPayUnsubscriptionNavigatorParams

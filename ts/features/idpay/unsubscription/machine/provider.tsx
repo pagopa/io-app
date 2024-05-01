@@ -60,9 +60,10 @@ export const IdPayUnsubscriptionMachineProvider = ({
   const actors = createActorsImplementation(
     idPayClient,
     idPayTestToken ?? bpdToken,
-    language
+    language,
+    dispatch
   );
-  const actions = createActionsImplementation(navigation, dispatch);
+  const actions = createActionsImplementation(navigation);
   const machine = idPayUnsubscriptionMachine.provide({
     actors,
     actions

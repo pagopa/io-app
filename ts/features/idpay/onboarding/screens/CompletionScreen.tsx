@@ -10,7 +10,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { isLoadingSelector } from "../machine/selectors";
+import { isLoadingSelector } from "../../../../xstate/selectors";
 
 const CompletionScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;

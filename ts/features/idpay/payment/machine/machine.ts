@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { assertEvent, assign, fromPromise, setup } from "xstate";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import {
@@ -7,6 +8,7 @@ import {
   WAITING_USER_INPUT_TAG,
   notImplementedStub
 } from "../../../../xstate/utils";
+import { PaymentFailure } from "../types/PaymentFailure";
 import * as Context from "./context";
 import * as Events from "./events";
 import * as Input from "./input";
@@ -32,7 +34,6 @@ export const idPayPaymentMachine = setup({
   actions: {
     navigateToAuthorizationScreen: notImplementedStub,
     navigateToResultScreen: notImplementedStub,
-    handleSessionExpired: notImplementedStub,
     closeAuthorization: notImplementedStub,
     setFailure: notImplementedStub,
     showErrorToast: notImplementedStub
@@ -70,15 +71,12 @@ export const idPayPaymentMachine = setup({
           })),
           target: "AwaitingConfirmation"
         },
-        onError: [
-          {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
-          },
-          {
-            target: "AuthorizationFailure"
-          }
-        ]
+        onError: {
+          actions: assign(({ event }) => ({
+            failure: pipe(PaymentFailure.decode(event.error), O.fromEither)
+          })),
+          target: "AuthorizationFailure"
+        }
       }
     },
 
@@ -105,18 +103,20 @@ export const idPayPaymentMachine = setup({
         },
         onError: [
           {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: assign(({ event }) => ({
+              failure: pipe(PaymentFailure.decode(event.error), O.fromEither)
+            }))
           },
-          {
-            actions: "setFailure",
-            guard: "isBlockingFailure",
-            target: "AuthorizationFailure"
-          },
-          {
-            actions: ["setFailure", "showErrorToast"],
-            target: "AwaitingConfirmation"
-          }
+          [
+            {
+              guard: "isBlockingFailure",
+              target: "AuthorizationFailure"
+            },
+            {
+              actions: "showErrorToast",
+              target: "AwaitingConfirmation"
+            }
+          ]
         ]
       }
     },
@@ -132,18 +132,20 @@ export const idPayPaymentMachine = setup({
         },
         onError: [
           {
-            guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: assign(({ event }) => ({
+              failure: pipe(PaymentFailure.decode(event.error), O.fromEither)
+            }))
           },
-          {
-            actions: "setFailure",
-            guard: "isBlockingFailure",
-            target: "AuthorizationFailure"
-          },
-          {
-            actions: ["setFailure", "showErrorToast"],
-            target: "AwaitingConfirmation"
-          }
+          [
+            {
+              guard: "isBlockingFailure",
+              target: "AuthorizationFailure"
+            },
+            {
+              actions: "showErrorToast",
+              target: "AwaitingConfirmation"
+            }
+          ]
         ]
       }
     },
@@ -168,6 +170,10 @@ export const idPayPaymentMachine = setup({
 
     AuthorizationFailure: {
       entry: "navigateToResultScreen",
+      always: {
+        guard: "isSessionExpired",
+        target: "SessionExpired"
+      },
       on: {
         close: {
           actions: "closeAuthorization"
@@ -176,7 +182,7 @@ export const idPayPaymentMachine = setup({
     },
 
     SessionExpired: {
-      entry: ["handleSessionExpired", "closeAuthorization"]
+      entry: "closeAuthorization"
     }
   }
 });

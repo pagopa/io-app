@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { InterpreterFrom } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { PaymentManagerClient } from "../../../../api/pagopa";
 import {
@@ -26,18 +25,23 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
-import { idPayInitiativeConfigurationMachine } from "./machine";
-import { createServicesImplementation } from "./services";
+import { createServicesImplementation } from "./actors";
+import { idPayConfigurationMachine } from "./machine";
+import * as Input from "./input";
 
 type Props = {
   children: React.ReactNode;
+  input: Input.Input;
 };
 
-export const IdPayInitiativeConfigurationMachineContext = createActorContext(
-  idPayInitiativeConfigurationMachine
+export const IdPayConfigurationMachineContext = createActorContext(
+  idPayConfigurationMachine
 );
 
-export const IDPayConfigurationMachineProvider = (props: Props) => {
+export const IDPayConfigurationMachineProvider = ({
+  children,
+  input
+}: Props) => {
   const dispatch = useIODispatch();
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
@@ -90,19 +94,22 @@ export const IDPayConfigurationMachineProvider = (props: Props) => {
     paymentManagerClient,
     pmSessionManager,
     idPayToken,
-    language
+    language,
+    dispatch
   );
+  const actions = createActionsImplementation(navigation);
 
-  const actions = createActionsImplementation(navigation, dispatch);
-
-  const machine = idPayInitiativeConfigurationMachine.provide({
+  const machine = idPayConfigurationMachine.provide({
     actors,
     actions
   });
 
   return (
-    <IdPayInitiativeConfigurationMachineContext.Provider logic={machine}>
-      {props.children}
-    </IdPayInitiativeConfigurationMachineContext.Provider>
+    <IdPayConfigurationMachineContext.Provider
+      logic={machine}
+      options={{ input }}
+    >
+      {children}
+    </IdPayConfigurationMachineContext.Provider>
   );
 };

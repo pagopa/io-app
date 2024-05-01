@@ -22,27 +22,19 @@ import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navi
 import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
-import {
-  IDPayConfigurationNavigator,
-  IDPayConfigurationRoutes
-} from "../features/idpay/configuration/navigation/navigator";
+import { IdPayConfigurationNavigator } from "../features/idpay/configuration/navigation/navigator";
+import { IdPayConfigurationRoutes } from "../features/idpay/configuration/navigation/routes";
 import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
 } from "../features/idpay/details/navigation";
-import {
-  IdPayOnboardingNavigator,
-  IDPayOnboardingRoutes
-} from "../features/idpay/onboarding/navigation/navigator";
-import {
-  IDPayPaymentNavigator,
-  IDPayPaymentRoutes
-} from "../features/idpay/payment/navigation/navigator";
+import { IdPayOnboardingNavigator } from "../features/idpay/onboarding/navigation/navigator";
+import { IdPayOnboardingRoutes } from "../features/idpay/onboarding/navigation/routes";
+import { IdPayPaymentNavigator } from "../features/idpay/payment/navigation/navigator";
+import { IdPayPaymentRoutes } from "../features/idpay/payment/navigation/routes";
 import { IDPayPaymentCodeScanScreen } from "../features/idpay/payment/screens/IDPayPaymentCodeScanScreen";
-import {
-  IDPayUnsubscriptionNavigator,
-  IDPayUnsubscriptionRoutes
-} from "../features/idpay/unsubscription/navigation/navigator";
+import { IdPayUnsubscriptionNavigator } from "../features/idpay/unsubscription/navigation/navigator";
+import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navigation/routes";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -248,7 +240,7 @@ const AuthenticatedStackNavigator = () => {
       {isIdPayEnabled && (
         <>
           <Stack.Screen
-            name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+            name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR}
             component={IdPayOnboardingNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
@@ -258,13 +250,13 @@ const AuthenticatedStackNavigator = () => {
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
-            name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
-            component={IDPayConfigurationNavigator}
+            name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
+            component={IdPayConfigurationNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
-            name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
-            component={IDPayUnsubscriptionNavigator}
+            name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR}
+            component={IdPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           {/* 
@@ -272,7 +264,7 @@ const AuthenticatedStackNavigator = () => {
             FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
           */}
           <Stack.Screen
-            name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
+            name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
             component={IDPayPaymentCodeScanScreen}
             options={{
               ...hideHeaderOptions,
@@ -281,8 +273,8 @@ const AuthenticatedStackNavigator = () => {
             }}
           />
           <Stack.Screen
-            name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
-            component={IDPayPaymentNavigator}
+            name={IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
+            component={IdPayPaymentNavigator}
             options={{ gestureEnabled: false, ...hideHeaderOptions }}
           />
           <Stack.Screen

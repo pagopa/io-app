@@ -20,9 +20,9 @@ import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
-  isLoadingSelector,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
+import { isLoadingSelector } from "../../../../xstate/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;

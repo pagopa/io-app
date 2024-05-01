@@ -6,12 +6,25 @@ import { PreferredLanguage } from "../../../../../definitions/backend/PreferredL
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { IDPayClient } from "../../common/api/client";
 import { UnsubscriptionFailureEnum } from "../types/failure";
+import { useIODispatch } from "../../../../store/hooks";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 
 export const createActorsImplementation = (
   client: IDPayClient,
   token: string,
-  language: PreferredLanguage
+  language: PreferredLanguage,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   const getInitiativeInfo = fromPromise(
     async (params: { input: string }): Promise<InitiativeDTO> => {
       const dataResponse = await TE.tryCatch(
@@ -34,6 +47,7 @@ export const createActorsImplementation = (
                 case 200:
                   return Promise.resolve(value);
                 case 401:
+                  handleSessionExpired();
                   return Promise.reject(
                     UnsubscriptionFailureEnum.SESSION_EXPIRED
                   );
@@ -70,6 +84,7 @@ export const createActorsImplementation = (
                 case 204:
                   return Promise.resolve(undefined);
                 case 401:
+                  handleSessionExpired();
                   return Promise.reject(
                     UnsubscriptionFailureEnum.SESSION_EXPIRED
                   );
