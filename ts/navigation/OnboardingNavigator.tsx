@@ -81,12 +81,10 @@ const OnboardingNavigator = () => (
       component={OnboardingCompletedScreen}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
       name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
       component={OnboardingNotificationsPreferencesScreen}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
       name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
       component={OnboardingNotificationsInfoScreenConsent}
     />

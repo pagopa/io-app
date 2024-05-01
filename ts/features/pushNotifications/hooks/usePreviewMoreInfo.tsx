@@ -1,11 +1,9 @@
 import * as React from "react";
+import { Body } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import { Body } from "../../../components/core/typography/Body";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import {
   IOBottomSheetModal,
-  useLegacyIOBottomSheetModal
+  useIOBottomSheetModal
 } from "../../../utils/hooks/bottomSheet";
 
 /**
@@ -14,19 +12,16 @@ import {
  * preferences views
  */
 export const usePreviewMoreInfo = (): IOBottomSheetModal => {
-  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
-    <Body>
-      {I18n.t("profile.preferences.notifications.preview.bottomSheet.content")}
-    </Body>,
-    I18n.t("profile.preferences.notifications.preview.bottomSheet.title"),
-    400,
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={confirmButtonProps(() => {
-        dismiss();
-      }, I18n.t("profile.preferences.notifications.preview.bottomSheet.cta"))}
-    />
-  );
-
-  return { present, bottomSheet, dismiss };
+  const { bottomSheet, dismiss, present } = useIOBottomSheetModal({
+    component: (
+      <Body>
+        {I18n.t(
+          "profile.preferences.notifications.preview.bottomSheet.content"
+        )}
+      </Body>
+    ),
+    snapPoint: [340],
+    title: I18n.t("profile.preferences.notifications.preview.bottomSheet.title")
+  });
+  return { bottomSheet, dismiss, present };
 };
