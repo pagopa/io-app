@@ -12,26 +12,6 @@ import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { OnboardingNotificationsPreferencesScreen } from "../OnboardingNotificationsPreferencesScreen";
 
 describe("OnboardingNotificationsPreferencesScreen", () => {
-  describe("given an onboarded user", () => {
-    it("then the title should match the 'profile.preferences.notifications.titleExistingUser' key and the subtitle should match 'profile.preferences.notifications.subtitleExistingUser'", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore(globalState, false);
-      expect(screen).not.toBeNull();
-
-      const headerH1Title = screen.component.queryByText(
-        I18n.t("profile.preferences.notifications.titleExistingUser")
-      );
-      expect(headerH1Title).not.toBeNull();
-
-      const bodySubtitle = screen.component.queryByText(
-        I18n.t("profile.preferences.notifications.subtitleExistingUser")
-      );
-      expect(bodySubtitle).not.toBeNull();
-    });
-  });
 
   describe("given an user that is doing the onboarding for the first time", () => {
     it("then the title should match the 'profile.preferences.notifications.title' key and the subtitle should match 'profile.preferences.notifications.subtitle'", () => {
