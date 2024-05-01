@@ -1,7 +1,7 @@
-import { useInterpret } from "@xstate/react";
+import { createActorContext } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
@@ -14,7 +14,6 @@ import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../config";
-import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
@@ -22,32 +21,24 @@ import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
+import { SessionManager } from "../../../../utils/SessionManager";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
-import { SessionManager } from "../../../../utils/SessionManager";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
-import {
-  createIDPayInitiativeConfigurationMachine,
-  IDPayInitiativeConfigurationMachineType
-} from "./machine";
+import { idPayInitiativeConfigurationMachine } from "./machine";
 import { createServicesImplementation } from "./services";
-
-type ConfigurationMachineContext =
-  InterpreterFrom<IDPayInitiativeConfigurationMachineType>;
-
-const ConfigurationMachineContext =
-  React.createContext<ConfigurationMachineContext>(
-    {} as ConfigurationMachineContext
-  );
 
 type Props = {
   children: React.ReactNode;
 };
 
-const IDPayConfigurationMachineProvider = (props: Props) => {
+export const IdPayInitiativeConfigurationMachineContext = createActorContext(
+  idPayInitiativeConfigurationMachine
+);
+
+export const IDPayConfigurationMachineProvider = (props: Props) => {
   const dispatch = useIODispatch();
-  const [machine] = useXStateMachine(createIDPayInitiativeConfigurationMachine);
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
@@ -94,7 +85,7 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
   );
 
-  const services = createServicesImplementation(
+  const actors = createServicesImplementation(
     idPayClient,
     paymentManagerClient,
     pmSessionManager,
@@ -104,23 +95,14 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const actions = createActionsImplementation(navigation, dispatch);
 
-  const machineService = useInterpret(machine, {
-    actions,
-    services
+  const machine = idPayInitiativeConfigurationMachine.provide({
+    actors,
+    actions
   });
 
   return (
-    <ConfigurationMachineContext.Provider value={machineService}>
+    <IdPayInitiativeConfigurationMachineContext.Provider logic={machine}>
       {props.children}
-    </ConfigurationMachineContext.Provider>
+    </IdPayInitiativeConfigurationMachineContext.Provider>
   );
-};
-
-const useConfigurationMachineService = () =>
-  React.useContext(ConfigurationMachineContext);
-
-export {
-  IDPayConfigurationMachineProvider,
-  useConfigurationMachineService,
-  ConfigurationMachineContext
 };

@@ -1,6 +1,6 @@
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
-import { E_BACK } from "../../../../xstate/types/events";
+import { Back } from "../../../../xstate/types/events";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
@@ -91,5 +91,5 @@ export type Events =
   | E_COMPLETE_CONFIGURATION
   | E_SKIP
   | E_NEXT
-  | E_BACK
+  | Back
   | E_QUIT;

@@ -7,7 +7,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -19,8 +18,8 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IDPayTransactionCode } from "../common/types";
-import { usePaymentMachineService } from "../xstate/provider";
-import { isLoadingSelector } from "../xstate/selectors";
+import { IdPayPaymentMachineContext } from "../machine/provider";
+import { isLoadingSelector } from "../../../../xstate/selectors";
 
 type InputState = {
   value?: string;
@@ -28,21 +27,23 @@ type InputState = {
 };
 
 const IDPayPaymentCodeInputScreen = () => {
-  const machine = usePaymentMachineService();
+  const { useActorRef, useSelector } = IdPayPaymentMachineContext;
+  const machine = useActorRef();
+
   const [inputState, setInputState] = React.useState<InputState>({
     value: undefined,
     code: O.none
   });
 
   const isInputValid = pipe(inputState.code, O.map(E.isRight), O.toUndefined);
-  const isLoading = useSelector(machine, isLoadingSelector);
+  const isLoading = useSelector(isLoadingSelector);
 
   const navigateToPaymentAuthorization = () =>
     pipe(
       inputState.code,
       O.filter(E.isRight),
       O.map(trxCode => trxCode.right),
-      O.map(trxCode => machine.send("START_AUTHORIZATION", { trxCode }))
+      O.map(trxCode => machine.send({ type: "authorize-payment", trxCode }))
     );
 
   return (

@@ -99,7 +99,7 @@ export const idPayUnsubscriptionMachine = setup({
         "confirm-unsubscription": {
           target: "Unsubscribing"
         },
-        exit: {
+        close: {
           actions: "exitUnsubscription"
         }
       }
@@ -126,7 +126,7 @@ export const idPayUnsubscriptionMachine = setup({
     UnsubscriptionSuccess: {
       entry: "navigateToResultScreen",
       on: {
-        exit: {
+        close: {
           actions: "exitToWallet"
         }
       }
@@ -134,7 +134,7 @@ export const idPayUnsubscriptionMachine = setup({
     UnsubscriptionFailure: {
       entry: "navigateToResultScreen",
       on: {
-        exit: {
+        close: {
           actions: "exitUnsubscription"
         }
       }
@@ -144,5 +144,3 @@ export const idPayUnsubscriptionMachine = setup({
     }
   }
 });
-
-export type IdPayUnsubscriptionMachine = typeof idPayUnsubscriptionMachine;

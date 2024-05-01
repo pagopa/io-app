@@ -1,18 +1,17 @@
+import {
+  ContentWrapper,
+  Divider,
+  H6,
+  HSpacer,
+  Icon,
+  ListItemInfo,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import {
-  Icon,
-  Divider,
-  HSpacer,
-  VSpacer,
-  ContentWrapper,
-  ListItemInfo,
-  H6
-} from "@pagopa/io-app-design-system";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
@@ -20,62 +19,58 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
+import { identificationRequest } from "../../../../store/actions/identification";
+import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import {
+  isLoadingSelector,
+  isUpseringSelector
+} from "../../../../xstate/selectors";
 import { Skeleton } from "../../common/components/Skeleton";
 import {
   formatDateOrDefault,
   formatNumberCurrencyCents,
   formatNumberCurrencyCentsOrDefault
 } from "../../common/utils/strings";
-import { IDPayPaymentParamsList } from "../navigation/navigator";
-import { usePaymentMachineService } from "../xstate/provider";
+import { IdPayPaymentMachineContext } from "../machine/provider";
 import {
-  selectIsAuthorizing,
-  selectIsCancelling,
-  selectIsPreAuthorizing,
-  selectTransactionData
-} from "../xstate/selectors";
-import { useIODispatch } from "../../../../store/hooks";
-import { identificationRequest } from "../../../../store/actions/identification";
+  isAuthorizingSelector,
+  isCancellingSelector,
+  transactionDataSelector
+} from "../machine/selectors";
+import { IdPayPaymentParamsList } from "../navigation/params";
 
 export type IDPayPaymentAuthorizationScreenRouteParams = {
   trxCode?: string;
 };
 
 type IDPayPaymentAuthorizationRouteProps = RouteProp<
-  IDPayPaymentParamsList,
+  IdPayPaymentParamsList,
   "IDPAY_PAYMENT_AUTHORIZATION"
 >;
 
 const IDPayPaymentAuthorizationScreen = () => {
-  const route = useRoute<IDPayPaymentAuthorizationRouteProps>();
-
-  const machine = usePaymentMachineService();
+  const { useActorRef, useSelector } = IdPayPaymentMachineContext;
+  const { params } = useRoute<IDPayPaymentAuthorizationRouteProps>();
+  const machine = useActorRef();
   const dispatch = useIODispatch();
-
-  const transactionData = useSelector(machine, selectTransactionData);
-
-  const { trxCode } = route.params;
 
   React.useEffect(() => {
     pipe(
-      trxCode,
+      params.trxCode,
       O.fromNullable,
-      O.map(code =>
-        machine.send({ type: "START_AUTHORIZATION", trxCode: code })
-      )
+      O.map(code => machine.send({ type: "authorize-payment", trxCode: code }))
     );
-  }, [trxCode, machine]);
+  }, [params, machine]);
 
-  // Loading state for screen content
-  const isLoading = useSelector(machine, selectIsPreAuthorizing);
-  // Loading state for "Confirm" button
-  const isAuthorizing = useSelector(machine, selectIsAuthorizing);
-  const isCancelling = useSelector(machine, selectIsCancelling);
-  const isUpserting = isAuthorizing || isCancelling;
+  const transactionData = useSelector(transactionDataSelector);
+  const isLoading = useSelector(isLoadingSelector);
+  const isUpserting = useSelector(isUpseringSelector);
+  const isAuthorizing = useSelector(isAuthorizingSelector);
+  const isCancelling = useSelector(isCancellingSelector);
 
   const handleCancel = () => {
-    machine.send("CANCEL_AUTHORIZATION");
+    machine.send({ type: "close" });
   };
 
   const handleConfirm = () => {
@@ -89,15 +84,15 @@ const IDPayPaymentAuthorizationScreen = () => {
           onCancel: () => undefined
         },
         {
-          onSuccess: () => machine.send("CONFIRM_AUTHORIZATION")
+          onSuccess: () => machine.send({ type: "next" })
         }
       )
     );
   };
 
   const renderContent = () => {
-    if (!isLoading && transactionData !== undefined) {
-      return <AuthorizationScreenContent data={transactionData} />;
+    if (!isLoading && O.isSome(transactionData)) {
+      return <AuthorizationScreenContent data={transactionData.value} />;
     }
     return <AuthorizationScreenSkeleton />;
   };

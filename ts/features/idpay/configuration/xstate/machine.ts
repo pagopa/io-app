@@ -1,64 +1,18 @@
-import * as p from "@pagopa/ts-commons/lib/pot";
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { assign, createMachine, forwardTo } from "xstate4";
-import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
-import {
-  InitiativeDTO,
-  StatusEnum as InitiativeStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
-import {
-  InstrumentDTO,
-  StatusEnum as InstrumentStatusEnum
-} from "../../../../../definitions/idpay/InstrumentDTO";
-import { Wallet } from "../../../../types/pagopa";
+import { assign, createMachine, forwardTo } from "xstate";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../xstate/utils";
-import {
-  ConfigurationMode,
-  Context,
-  INITIAL_CONTEXT,
-  InstrumentStatusByIdWallet
-} from "./context";
-import { Events } from "./events";
-import { InitiativeFailure, InitiativeFailureType } from "./failure";
-
-type Services = {
-  loadInitiative: {
-    data: InitiativeDTO;
-  };
-  loadIbanList: {
-    data: IbanListDTO;
-  };
-  enrollIban: {
-    data: undefined;
-  };
-  loadWalletInstruments: {
-    data: ReadonlyArray<Wallet>;
-  };
-  loadInitiativeInstruments: {
-    data: ReadonlyArray<InstrumentDTO>;
-  };
-};
+import { INITIAL_CONTEXT } from "./context";
 
 /** PLEASE DO NO USE AUTO-LAYOUT WHEN USING VISUAL EDITOR */
-const createIDPayInitiativeConfigurationMachine = () =>
+export const idPayInitiativeConfigurationMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBWXgIy8AdAHYALPwCc4qaSlSBAZgA0IAJ6JRvKcNKiAbKPkGDADgNKlBgL421aTMIDqAQSIEAcgHEA+gGUMV2RsQOCMXwBhVE8AMQJvPGRXDAIYskokEDpGFnZOHgQAJjNDYVNSAXEDIqV+USK1TWKzXXkFXlEhUiLSAyq7B3QMYQAZVFcAES8-Lw8UggA1AFEsCHYwYQY2ADdaAGtNgBtaAEMIAjZmBlOWHbAMzhzr-KzC3lKi4SVapVkFJTaJqIARmL68UiQqS8IrGGRFKSDECOEbjKYzXxzVILFZYMAAJ3xtHxwmoR1uADNiQBbYQnc6Xa63Bj3R5ZZ55DhvPifb6-f5SQG8YEIJSkcTCMwCwSAqSfJEo4TLRauUZ4BY+TGeeapFZRGLxRLJVIxLBsmj0F5c0CFAydESVCy8ao6CxSEVFASkPSGZ28O2iVoGUhmBXDJUqtUa2ba7G65b6uIJJILU3EASZC25VjW7gg-QigRyESlXh-KSiaFyu1hpzK1Xq1KarEEHEJ6JJo2pzxmoqZ7KWzkFRC1QXCBTBj6g4xVAyFgQSH2WST8cziIpFWsjetRpsxnVLdsG5PGtI94hKfscnPDhABh2gu0u6vujSIcTiURLmqGSxFAziFKW7CNM-gAAqjK4ACaGJeBgaBYJ4ywABokBQTyDje3IIJ0ShmJKSgyH0oLiICqhvggAgIuChh4XaOgwpYwEdoaSSwQAQq4PbrGwmywEwtybIqLEnhxXHmgO2avDafCCCIEjSLI7TKCKgLBsIXr6JIsignhzHHkaYncRswj8YJwjCQZbHNpxnjplemHSXmOH-l8RSSF64ghtYliFuIVF8gBPxynI1iiPpnbWbMtljBM0w2VxvijAQgRrCZ2x7IcdJnBcABGpxsKMDD8RJ15OYUPyQsIOi0ZCzrmCpFHudUBEwr6C5eUx9jIuGImGQlnixeiA1JSl2AEkSJJkpSNLZQy+WFcVTClY5ubvII3oKToSkKI1zQ-P6wjVGYZj6DIEJyJu3WWZFyBGUN8XRYlyWpRNxKkuSTBUvitL0nlBVFSVGYYVJa2yUIYgrjIci7eRzT-oCehmB87Q-P5iLXb1Vl3QNEYNtGmK2aNqUraDt7WEoAiQzV-nmPojRNZ+BjjoG-COpT4WY04fVRYTXF47uRnE9g9kg1a5OWFTCkVrTp0NB6VgShuUqfvofysxFrE409g2gRB0FCzE7ETMgj2IShaEOWT2H+XhBFSOYgaAaCZgK+u1UlNUG7mDoAia6JuN65BMEjUbJtm5xkQANKk+L2H8BDW3Q8pcP5lVnR2pUa7+nK-v9TrIEpfrIc674YfBBHrjR6L7KrbeCfyVDO2KKnxQfMzHydAuauEUBXMjDz2t87rRfB4bnjGxXGKxKgyAALJYCJ8-D7HQ421U3qeoB-nt1R4gekWIj2gYcqnTIAi2P3wiD-dQcG6HE-h9Ps8L5HMfobX1syQgn529o1gVn4HUT0HoSib2hHhB2gFvZ515gQGKd8S7DzLo-KemoZ7zywG-GuWY47f1tvhMwhFHZSjMC7UBUgvg9CISfLy0JjCXyGNzbG90l5zyMmlXiWxdgHE2AAY3YBSBgP0CALVXlhfByhCHENKKQ8hFEhCEUCpTMUXkqiVlgUPeB-M2EcLelNT631aQCLYEIkRYiP64LXpIu2RCHayOdidD0+gRAX0FJCIQp1SyaNvqPe+pcXrYGwZYySeDnIN2pttGGLdCykEEEuBEgI6p9B8YHPxSDtGeGFlgquMdgafzCetROTdol7RHGWZmIZ-TuS3oCUQnMmEDxYWk8CY8RqBPNs4ZB5dTYzHEeVd8cthCwlED8ZGYpAzIwVmKMQ0JoEQgaNURhPVmG3V8a0-xyCOnLE8GgUYowV4hLKmDH+rQvh2lqFKHoXQ8KFhkEoPQCIajyB6MFXgqSC47L2clAanDNgZV4cIMAbAiRHCOKIgq-STm-3wv-E+2gywwgEM4pR8zKF-FXEQj5w8lS7NQPsjhPF-k8KysC0F4KxH5KsRI5yMKxAVMAYikBCi7T4QznUTuC4JBXUadfZpny8UEt+foj6M0fpApBbQMFEK2BQtvHSuFjLgHIqakIXQJ1WjRPMA7ZZN0tawU8IEZAeA547IwP4P5pkBJMCEljNZzZDXwRNWa-wcrsKjgeROOJZDSiVGqKpaEVNkbyEBFKf8phsVeCNc6zw5rLVmRtRZO1+qHXRtNbG11VLQnWOch68cDtvXTj9XOCiakqbBi0ooeQDQL6Rsdca9N5qHoGrTS6+N1rbWrJTTGVtGbm2pqdY211Ry67YQEIo4Z64ijOmgRIMEHo4T5s9BuAtsh3lXxvgOhtLr+09sHW2olVrzJ6oDnu7dfa0SPS1L281ODs00sKOOssk6NwzrBHOhm8NTBfFkL0MigIaniDrTe-wu7r37oze249ybT3gfPU2y9LaIO3r7GLHNhQ81eqnL62cqkz4aUhEQ3+CIJDAeQ6BxDW6Y0IbihiNw+zlgRCjeR3dlqAVZT+s4U4YKwBMEuPxfEABXakwKmCwDdd-YMzND51C8V6UwqlehfloUQhxRYMa8s3We6jFHaNUaHWB+joxGNwZ06xkV00vqzU49xo4vH+NMCEyJtgYmJO5sIp6gt2GZz+tLb3coMhVNO3U2R+DunhraYM5RvwRmTPMbC+Zwk71LNGLmhALjPG+NsAE8J0T4ms3HNvJhrzPqfMlvhjoXQnc-gbinTLULZnoumai3p-ccZDzNZ3dFtjJLjg5UZCwZk9wHNOby2594Y5ISQkrP6D8oJP0jlOm5dcIY-UnRPg1lrEXOsXta1qA8ep4uNda3iJLBixW-X61cQbdwwAjdyy58TI6v7ubHFh0rxaPSnWZv+eok4pQNJWU0+1kWut7aO1tq9LY2w7ZoxF07k1RVWfFX9AbNxbv3ec65gro7v7Ff+0W3DjNKwaUDPcnQJgNNA75SD2HoHEFIbC1gMI3gEwQ7NeNkE0gfTrhhOt-0pRQHaDEFUWEYvJbik2zuhn+m21fPxQc9nsbOeUV+2IO0J8tJCGna7JqwZdCSEpsWRQNMpd9pl6DyDkxljGYwGz+t1GVdUQAuUeQbNDAnQrCiqmQo2r0wRGCM3TaLd06wFMSYvgwLQUbb4U1GAAASqBJhO5hJvPCfwPOfgdgfEn-5NLikInKQHJ78508LhsjJDuh05Ors9wpI4PP5oJzh3zzRSjqvDXEowFQeXU602XkPSu43YJxy9jDjf3uE9byOdc+EjAnQWUb2QSgg-0-SYznT5tUJO5oZKGpCgpSdGMLr+GH4vwKCnaOB2DRV-l+Lhv6v-go4EDAjv6we-1wH8kPUkMCt4nOjd0qGUD+AsFv3lyFUt2wEPXY02DJSlXBWy0cwe2Wjr3QxBAnRqWnQ-HfWgQVnMHKDoWhm0C9AdjAMFR+UgIR2S0MVmjgOlUQNGxcydwwKnTfVhFwMZhqD0HhArWnVMCAw3X5QHxt0YwfzNR60yk2AgDADsxtUx1E2YOfUwLYI-QPlhD3zIQrCMHcjLFv2t1tzENjSoPO2R1pGkNkLuwYOQMUIeWUOwPYPnSag3CphKFnDFzFBDGAhD0Hm7ACDwEiEiGWH8AtWiDnggkYyPFum7BVwiSTmbjKVFCGQrSIXHW6DkAEN5W8Oxl8P8H8MCOCLD0mAjyjyghjzj0T2T1QIfUQGsB0HHH8gRE-GRh0lUnMAeSqDIVIHT0-GdF7xLxTBNCyU8EwF8CQmWGt0mEXlQDCNt0iK1miKqIGWKAnxKyn3KxqIUF0DqC9FqGfBIjsG6jYFoGkPgCyBRDQ2qJwhFBkHzU2LuLuIyOpzcA8E1DCBCAuKWPDR+3cQ-FMErASMphoifHMEsGRkDF1XDCa2h3jA+JOX4BKA0jklGUECnSBCalaCXCUl0m70-GAh3EbANQOzmJPG7FhNvGeW9FIgD14KdmcQlCZjLHkA8galDCvkH1jTQDJPjl5B+EVk2KFA9H6F0AYTqkAnFDiUjVsi5Lx2Rjn2DDcI5XlgUQ8j3xqC5RPl6HXU0yEMyTA0yWFmlNzTkGZgqAVPqAWzblKGqjwlIkP3fS6MlP5nxIJn1MCUNIqkL3qOUHHXMCIUqGFE4MIXHQsDzw5msEdJHgr3Hknl6R8HdJqKWw0l6FKDqB8nOgVhDBZlU1kH4Jv0ENp11MHyJh6SvQwTnnjJ-jqQ0gUDiUUEAi6DtAoQlFDTBAWW1wrAjJp3iHniMgrLwlqG+DqlhAhCI33iahDF0BqFHEsAkD6El3zO7RxSLOejGgrI2geRqCZn0G0CrQDNP16FanNKIUYk7PAIoOHgrI-A+ElB6JuX12nTpO9HW2oUDTFD0gXNg11P1J8MGP1BmIiMmDXOrWGVfQviqScRZS6HKGsGnU6EPzqlXzXNbiLFIklG0FIlBEqA5RXw-NLyH3CyhyrxdQrK9BVQqxPmGRdhVm2L9lwrgSIt2223wsM1VFtzpxIq4MPlhGRgvgAkDAtMpnkFJ1BEEBnAUmLxgzwoYrh0IpAxYoYyY2koIpmArM9G9C4tZl4qaIEqLBNJuUkBKAuRSToq0SUr1LMqa1i0UrksvT8ICKCP8ArIsGbLqAdmnXURq0UwRPXFF0fAhC6m1ILIsvB2CqYtjFbHjHYoKTQMolkAXS6JFxhjFH4KEFvyhNCsIqJLL2ixIq9yan+MotlNMEECLDSpCpspCqyuYtstyPsuCKcpdysB0BqBRNGXXC+w3HHBBL-BIysD0PX1lwzRIphAeTarm1plInFAVnqQ0iMD9EqARnDJMsMKbTPJWorMrAeVaB4qLC6LBAvgViIRfS6D6FaHbj0JEL3Fhw2qlGGQdjmQ-Adm2LpIlC0Jmw3i6NhFv3wr-PCLt0AuisuN6CEorBKA3B6EoUUDIobzISOhq3U2DF2IkqcCyKiN-NqvyMcsBqWJgvBBlnRV6AAgEqdld23I-HLHkE0V8OGIiDGImJIq6K-GsD3gsFGW7nWNFC0O+Auj+LBMBCpt-NCL+vGLXJ5P5H5LRP2hkC-GBrkChGDHqQFrPCiHGH8BFuxrhLFr5IBElsQAP3HDz2MCsD6D4qVpiF8FiHcDVGQGWFFoaD5G1sFF1tFEAgN0AlqM9GXE5jsCAA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
-      tsTypes: {} as import("./machine.typegen").Typegen0,
-      schema: {
-        context: {} as Context,
-        events: {} as Events,
-        services: {} as Services
-      },
       id: "ROOT",
-      predictableActionArguments: true,
       initial: "WAITING_START",
       on: {
         /**
@@ -101,7 +55,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             onError: [
               {
-                cond: "isSessionExpired",
+                guard: "isSessionExpired",
                 target: "SESSION_EXPIRED"
               },
               {
@@ -123,21 +77,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
               /**
                * Configuration in "INSTRUMENTS" mode
                */
-              cond: "isInstrumentsOnlyMode",
+              guard: "isInstrumentsOnlyMode",
               target: "CONFIGURING_INSTRUMENTS"
             },
             {
               /**
                * Configuration in "IBAN" mode
                */
-              cond: "isIbanOnlyMode",
+              guard: "isIbanOnlyMode",
               target: "CONFIGURING_IBAN"
             },
             {
               /**
                * Configuration in "COMPLETE" mode, no iban or instruments already configured
                */
-              cond: "isInitiativeConfigurationNeeded",
+              guard: "isInitiativeConfigurationNeeded",
               target: "DISPLAYING_INTRO"
             },
             {
@@ -187,7 +141,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 },
                 onError: [
                   {
-                    cond: "isSessionExpired",
+                    guard: "isSessionExpired",
                     target: "#ROOT.SESSION_EXPIRED"
                   },
                   {
@@ -195,7 +149,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                      * If configuration mode is "IBAN", the machine should set the received failure to the
                      * context and go to the failure state
                      */
-                    cond: "isIbanOnlyMode",
+                    guard: "isIbanOnlyMode",
                     target: "#ROOT.CONFIGURATION_FAILURE",
                     actions: "setFailure"
                   },
@@ -222,7 +176,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                    * If at least one iban is present, next state should be the iban selection state.
                    */
                   target: "DISPLAYING_IBAN_LIST",
-                  cond: "hasIbanList"
+                  guard: "hasIbanList"
                 },
                 {
                   /**
@@ -254,7 +208,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     /**
                      * If configuration mode is "IBAN", the machine should go the the final state
                      */
-                    cond: "isIbanOnlyMode",
+                    guard: "isIbanOnlyMode",
                     target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
@@ -290,7 +244,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     /**
                      * If the user has at least one IBAN, the machine goes to the display state
                      */
-                    cond: "hasIbanList",
+                    guard: "hasIbanList",
                     target: "DISPLAYING_IBAN_LIST"
                   },
                   {
@@ -318,7 +272,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 },
                 onError: [
                   {
-                    cond: "isSessionExpired",
+                    guard: "isSessionExpired",
                     target: "#ROOT.SESSION_EXPIRED"
                   },
                   {
@@ -345,7 +299,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     /**
                      * If the configuration mode is "IBAN", the configuration should be closed
                      */
-                    cond: "isIbanOnlyMode",
+                    guard: "isIbanOnlyMode",
                     target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
@@ -387,7 +341,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                      * If success and configuration mode is "IBAN", the next state is the IBAN list
                      * A success toast is displayed
                      */
-                    cond: "isIbanOnlyMode",
+                    guard: "isIbanOnlyMode",
                     target: "DISPLAYING_IBAN_LIST",
                     actions: ["enrollIbanSuccess", "showUpdateIbanToast"]
                   },
@@ -401,7 +355,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 ],
                 onError: [
                   {
-                    cond: "isSessionExpired",
+                    guard: "isSessionExpired",
                     target: "#ROOT.SESSION_EXPIRED"
                   },
                   {
@@ -423,7 +377,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
               /**
                * If configuration mode is "IBAN", the configuration si completed
                */
-              cond: "isIbanOnlyMode",
+              guard: "isIbanOnlyMode",
               target: "CONFIGURATION_COMPLETED"
             },
             {
@@ -473,11 +427,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
                         },
                         onError: [
                           {
-                            cond: "isSessionExpired",
+                            guard: "isSessionExpired",
                             target: "#ROOT.SESSION_EXPIRED"
                           },
                           {
-                            cond: "isInstrumentsOnlyMode",
+                            guard: "isInstrumentsOnlyMode",
                             target: "#ROOT.CONFIGURATION_FAILURE",
                             actions: "setFailure"
                           },
@@ -514,11 +468,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
                         },
                         onError: [
                           {
-                            cond: "isSessionExpired",
+                            guard: "isSessionExpired",
                             target: "#ROOT.SESSION_EXPIRED"
                           },
                           {
-                            cond: "isInstrumentsOnlyMode",
+                            guard: "isInstrumentsOnlyMode",
                             target: "#ROOT.CONFIGURATION_FAILURE",
                             actions: "setFailure"
                           },
@@ -540,7 +494,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   /**
                    * If the user has PagoPA instruments we go to the state where we show the instrument toggles
                    */
-                  cond: "hasInstruments",
+                  guard: "hasInstruments",
                   target: "DISPLAYING_INSTRUMENTS"
                 },
                 {
@@ -548,7 +502,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                    * If the configuration mode is "INSTRUMENT", we go to the state where we show the instrument toggles.
                    * In this case we do not care if the user does not have any PagoPA instrument
                    */
-                  cond: "isInstrumentsOnlyMode",
+                  guard: "isInstrumentsOnlyMode",
                   target: "DISPLAYING_INSTRUMENTS"
                 },
                 {
@@ -644,7 +598,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     /**
                      * If we are configuring instruments only, back navigation should close the configuration flow
                      */
-                    cond: "isInstrumentsOnlyMode",
+                    guard: "isInstrumentsOnlyMode",
                     target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
@@ -700,7 +654,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     },
                     onError: [
                       {
-                        cond: "isSessionExpired",
+                        guard: "isSessionExpired",
                         target: "#ROOT.SESSION_EXPIRED"
                       },
                       {
@@ -725,7 +679,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
               /**
                * If we are configuring instruments, the next state is the final state
                */
-              cond: "isInstrumentsOnlyMode",
+              guard: "isInstrumentsOnlyMode",
               target: "CONFIGURATION_COMPLETED"
             },
             {
@@ -818,33 +772,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         confirmIbanOnboarding: assign((_, event) => ({})),
         loadWalletInstrumentsSuccess: assign((_, event) => ({})),
         loadInitiativeInstrumentsSuccess: assign((_, event) => ({})),
-        updateInstrumentStatuses: assign((context, _) => {
-          const updatedStatuses =
-            context.initiativeInstruments.reduce<InstrumentStatusByIdWallet>(
-              (acc, instrument) => {
-                if (instrument.idWallet === undefined) {
-                  return acc;
-                }
-
-                const currentStatus = acc[instrument.idWallet];
-
-                if (currentStatus !== undefined && p.isLoading(currentStatus)) {
-                  // Instrument is updating, its status will be updated by 'updateInstrumentStatus' action
-                  return acc;
-                }
-
-                return {
-                  ...acc,
-                  [instrument.idWallet]: p.some(instrument.status)
-                };
-              },
-              context.instrumentStatuses
-            );
-
-          return {
-            instrumentStatuses: updatedStatuses
-          };
-        }),
+        updateInstrumentStatuses: assign((context, _) => ({})),
         forwardToInstrumentsEnrollmentService: forwardTo(
           "instrumentsEnrollmentService"
         ),
@@ -857,42 +785,15 @@ const createIDPayInitiativeConfigurationMachine = () =>
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
         })),
-        setFailure: assign((_, event) => ({
-          failure: pipe(
-            event.data,
-            InitiativeFailure.decode,
-            E.getOrElse(() => InitiativeFailureType.GENERIC)
-          )
-        }))
+        setFailure: assign((_, event) => ({}))
       },
       guards: {
-        isSessionExpired: (_, event) =>
-          pipe(
-            event.data,
-            InitiativeFailure.decode,
-            O.fromEither,
-            O.filter(
-              failure => failure === InitiativeFailureType.SESSION_EXPIRED
-            ),
-            O.isSome
-          ),
-        isInitiativeConfigurationNeeded: (context, _) =>
-          p.getOrElse(
-            p.map(
-              context.initiative,
-              i => i.status === InitiativeStatusEnum.NOT_REFUNDABLE
-            ),
-            false
-          ),
-        isIbanOnlyMode: (context, _) => context.mode === ConfigurationMode.IBAN,
-        hasIbanList: (context, _) =>
-          p.getOrElse(
-            p.map(context.ibanList, list => list.length > 0),
-            false
-          ),
-        isInstrumentsOnlyMode: (context, _) =>
-          context.mode === ConfigurationMode.INSTRUMENTS,
-        hasInstruments: (context, _) => context.walletInstruments.length > 0
+        isSessionExpired: (_, event) => false,
+        isInitiativeConfigurationNeeded: (_, event) => false,
+        isIbanOnlyMode: (_, event) => false,
+        hasIbanList: (_, event) => false,
+        isInstrumentsOnlyMode: (_, event) => false,
+        hasInstruments: (_, event) => false
       },
       delays: {
         /**
@@ -902,10 +803,3 @@ const createIDPayInitiativeConfigurationMachine = () =>
       }
     }
   );
-
-type IDPayInitiativeConfigurationMachineType = ReturnType<
-  typeof createIDPayInitiativeConfigurationMachine
->;
-
-export { createIDPayInitiativeConfigurationMachine };
-export type { IDPayInitiativeConfigurationMachineType };

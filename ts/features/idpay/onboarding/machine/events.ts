@@ -18,8 +18,4 @@ export interface SelectMultiConsent {
   readonly data: SelfConsentMultiDTO;
 }
 
-export type Events =
-  | AutoInit
-  | SelectMultiConsent
-  | ToggleBoolCriteria
-  | GlobalEvents;
+export type Events = GlobalEvents | SelectMultiConsent | ToggleBoolCriteria;

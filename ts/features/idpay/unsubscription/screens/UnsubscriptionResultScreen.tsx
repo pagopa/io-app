@@ -41,7 +41,7 @@ const UnsubscriptionResultScreen = () => {
           buttonLabel: I18n.t("idpay.unsubscription.success.button")
         };
 
-  const handleButtonPress = () => machine.send({ type: "exit" });
+  const handleButtonPress = () => machine.send({ type: "close" });
 
   return (
     <SafeAreaView style={[IOStyles.flex, { flexGrow: 1 }]}>

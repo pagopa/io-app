@@ -1,10 +1,10 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { IOToast } from "@pagopa/io-app-design-system";
 import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 import I18n from "../../../../i18n";
 import {
@@ -22,7 +22,7 @@ import {
 } from "../../../barcode";
 import * as analytics from "../../../barcode/analytics";
 import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
-import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { IdPayPaymentRoutes } from "../navigation/routes";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -68,8 +68,8 @@ const IDPayPaymentCodeScanScreen = () => {
 
   const navigateToCodeInputScreen = () => {
     analytics.trackBarcodeManualEntryPath("idpay");
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
     });
   };
 

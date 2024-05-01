@@ -20,14 +20,13 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { IdPayUnsubscriptionMachineContext } from "../machine/provider";
 import {
-  isLoadingSelector,
   selectInitiativeName,
   selectUnsubscriptionChecks
 } from "../machine/selectors";
+import { isLoadingSelector } from "../../../../xstate/selectors";
 
 const UnsubscriptionConfirmationScreen = () => {
   const { useActorRef, useSelector } = IdPayUnsubscriptionMachineContext;
-
   const machine = useActorRef();
 
   const isLoading = useSelector(isLoadingSelector);
@@ -38,7 +37,7 @@ const UnsubscriptionConfirmationScreen = () => {
 
   const handleClosePress = () =>
     machine.send({
-      type: "exit"
+      type: "close"
     });
 
   const handleConfirmPress = () => {

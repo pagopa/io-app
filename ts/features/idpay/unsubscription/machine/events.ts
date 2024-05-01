@@ -1,3 +1,4 @@
+import { GlobalEvents } from "../../../../xstate/types/events";
 import * as Input from "./input";
 
 export interface AutoInit {
@@ -5,12 +6,8 @@ export interface AutoInit {
   readonly input: Input.Input;
 }
 
-export interface Exit {
-  readonly type: "exit";
-}
-
 export interface ConfirmUnsubscription {
   readonly type: "confirm-unsubscription";
 }
 
-export type Events = AutoInit | Exit | ConfirmUnsubscription;
+export type Events = GlobalEvents | ConfirmUnsubscription;

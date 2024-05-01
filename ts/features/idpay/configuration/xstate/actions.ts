@@ -30,16 +30,16 @@ const createActionsImplementation = (
     );
   };
 
-  const navigateToConfigurationIntro = guardedNavigationAction(
-    (context: Context) => {
-      if (context.initiativeId === undefined) {
+  const navigateToConfigurationIntro = guardedNavigationAction<Context>(
+    (args: { context: Context }) => {
+      if (args.context.initiativeId === undefined) {
         throw new Error("initiativeId is undefined");
       }
 
       navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
         screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
         params: {
-          initiativeId: context.initiativeId
+          initiativeId: args.context.initiativeId
         }
       });
     }

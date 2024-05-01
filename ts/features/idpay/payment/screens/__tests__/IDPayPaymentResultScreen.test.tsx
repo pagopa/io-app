@@ -7,15 +7,15 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IDPayPaymentRoutes } from "../../navigation/navigator";
-import { Context, INITIAL_CONTEXT } from "../../xstate/context";
+import { Context, INITIAL_CONTEXT } from "../../machine/context";
 import { PaymentFailureEnum } from "../../types/PaymentFailure";
-import { createIDPayPaymentMachine } from "../../xstate/machine";
-import { PaymentMachineContext } from "../../xstate/provider";
+import { createIDPayPaymentMachine } from "../../machine/machine";
+import { PaymentMachineContext } from "../../machine/provider";
 import {
   selectFailureOption,
   selectIsCancelled,
   selectIsFailure
-} from "../../xstate/selectors";
+} from "../../machine/selectors";
 import { IDPayPaymentResultScreen } from "../IDPayPaymentResultScreen";
 
 jest.mock("../../xstate/selectors", () => {

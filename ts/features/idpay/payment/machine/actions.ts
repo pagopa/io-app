@@ -1,19 +1,16 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { showToast } from "../../../../utils/showToast";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
-import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { IdPayPaymentRoutes } from "../navigation/routes";
 import { Context } from "./context";
 
 const createActionsImplementation = (
-  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
+  navigation: ReturnType<typeof useIONavigation>,
   dispatch: ReturnType<typeof useIODispatch>
 ) => {
   const handleSessionExpired = () => {
@@ -27,15 +24,15 @@ const createActionsImplementation = (
   };
 
   const navigateToAuthorizationScreen = () => {
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
+    navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
       params: {}
     });
   };
 
   const navigateToResultScreen = () =>
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT
+    navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT
     });
 
   const showErrorToast = () =>

@@ -1,29 +1,22 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { StateFrom } from "xstate";
+import { SnapshotFrom } from "xstate";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
-import { LOADING_TAG } from "../../../../xstate/utils";
-import { IdPayUnsubscriptionMachine } from "./machine";
+import { idPayUnsubscriptionMachine } from "./machine";
 
-type StateWithContext = StateFrom<IdPayUnsubscriptionMachine>;
+type MachineSnapshot = SnapshotFrom<typeof idPayUnsubscriptionMachine>;
 
-export const selectInitiativeName = (state: StateWithContext) =>
-  state.context.initiativeName;
+export const selectInitiativeName = ({ context }: MachineSnapshot) =>
+  context.initiativeName;
 
-const selectTags = (state: StateWithContext) => state.tags;
+export const selectIsFailure = (snapshot: MachineSnapshot) =>
+  snapshot.matches("UnsubscriptionFailure");
 
-export const isLoadingSelector = createSelector(selectTags, tags =>
-  tags.has(LOADING_TAG)
-);
-
-export const selectIsFailure = (state: StateWithContext) =>
-  state.matches("UnsubscriptionFailure");
-
-export const selectInitiativeType = (state: StateWithContext) =>
+export const selectInitiativeType = ({ context }: MachineSnapshot) =>
   pipe(
-    state.context.initiativeType,
+    context.initiativeType,
     O.fromNullable,
     O.getOrElse(() => InitiativeRewardTypeEnum.REFUND)
   );
