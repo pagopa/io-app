@@ -14,6 +14,7 @@ import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChec
 import { isGestureEnabled } from "../utils/navigation";
 import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
 import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
+import OnboardingPinConfirmationScreen from "../screens/onboarding/OnboardingPinConfirmationScreen";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
@@ -45,9 +46,12 @@ const OnboardingNavigator = () => (
       component={OnboardingTosScreen}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
       name={ROUTES.ONBOARDING_PIN}
       component={OnboardingPinScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_CONFIRMATION_PIN}
+      component={OnboardingPinConfirmationScreen}
     />
     <Stack.Screen
       options={{ headerShown: false }}

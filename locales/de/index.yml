@@ -826,7 +826,6 @@ onboarding:
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
     errors:
-      invalid: "Der Code ist ungültig"
       match: "Der Code stimmt nicht überein"
     policy:
       headerTitle: "Aus Sicherheitsgründen darf der Code folgendes nicht enthalten:"
