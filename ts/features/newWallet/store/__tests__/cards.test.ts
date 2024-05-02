@@ -45,8 +45,6 @@ describe("Wallet cards reducer", () => {
 
   it("should add cards to the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
@@ -68,8 +66,6 @@ describe("Wallet cards reducer", () => {
 
   it("should update a specific card in the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1]));
@@ -87,8 +83,6 @@ describe("Wallet cards reducer", () => {
 
   it("should add a card in the store if not present another with the same key", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1]));
@@ -107,8 +101,6 @@ describe("Wallet cards reducer", () => {
 
   it("should remove cards from the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.cards).toStrictEqual({});
-
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));

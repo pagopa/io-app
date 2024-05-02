@@ -10,7 +10,7 @@ import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { walletSetCategoryFilter } from "../store/actions/preferences";
 import {
-  getWalletCardsByCategorySelector,
+  selectWalletCardsByCategory,
   selectWalletCategoryFilter
 } from "../store/selectors";
 import { WalletCardCategory, walletCardCategoryIcons } from "../types";
@@ -18,7 +18,7 @@ import { WalletCardCategory, walletCardCategoryIcons } from "../types";
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
 
-  const cardsByCategory = useIOSelector(getWalletCardsByCategorySelector);
+  const cardsByCategory = useIOSelector(selectWalletCardsByCategory);
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
 
   const categories = Object.keys(

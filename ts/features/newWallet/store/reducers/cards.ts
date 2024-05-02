@@ -22,7 +22,7 @@ const reducer = (
         [action.payload.key]: action.payload
       };
 
-    case getType(walletAddCards): {
+    case getType(walletAddCards):
       return action.payload.reduce(
         (obj, card) => ({
           ...obj,
@@ -30,13 +30,11 @@ const reducer = (
         }),
         state
       );
-    }
 
-    case getType(walletRemoveCards): {
+    case getType(walletRemoveCards):
       return Object.fromEntries(
         Object.entries(state).filter(([key]) => !action.payload.includes(key))
       );
-    }
   }
   return state;
 };

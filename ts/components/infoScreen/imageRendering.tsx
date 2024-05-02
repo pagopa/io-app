@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
  */
 export const renderInfoRasterImage = (image: ImageSourcePropType) => (
   <Image
+    accessibilityIgnoresInvertColors
     source={image}
     resizeMode={"contain"}
     style={styles.raster}

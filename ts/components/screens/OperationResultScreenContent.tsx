@@ -60,8 +60,8 @@ export const ComposedBodyFromArray = ({
   textAlign = "center"
 }: PropsComposedBody) => (
   <Body style={{ textAlign }}>
-    {subtitle.map(({ text, key, ...props }) => (
-      <Body key={key} {...props}>
+    {subtitle.map(({ text, key, ...props }, i) => (
+      <Body key={key ?? `OpResScreen_${i}`} {...props}>
         {text}
       </Body>
     ))}
