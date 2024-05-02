@@ -93,27 +93,32 @@ const DetailStack = createStackNavigator<CgnDetailsParamsList>();
 export const CgnDetailsNavigator = () => (
   <DetailStack.Navigator
     initialRouteName={CGN_ROUTES.DETAILS.DETAILS}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.DETAILS}
       component={CgnDetailScreen}
+      options={{ headerShown: false }}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES}
       component={CgnMerchantsCategoriesSelectionScreen}
+      options={{ headerShown: false }}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.LIST}
       component={MerchantsListScreen}
+      options={{ headerShown: false }}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY}
       component={CgnMerchantsListByCategory}
+      options={{ headerShown: false }}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.TABS}
       component={CgnMerchantsTabsScreen}
+      options={{ headerShown: false }}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.DETAIL}

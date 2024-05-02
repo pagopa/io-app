@@ -2200,7 +2200,7 @@ bonus:
         deals: "Rabatte und Ermäßigungen"
         description: "Beschreibung"
         services: "Dienste"
-        addresses: "Adressen"
+        contactInfo: "Adressen"
         hours: "Öffnungszeiten"
         validity: "Gültigkeit"
         discountCode: "Rabattcode"

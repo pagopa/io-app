@@ -10,8 +10,6 @@ import {
   IOSpringValues,
   IOStyles,
   Icon,
-  IconContained,
-  ListItemNav,
   Tag,
   VSpacer,
   useIOExperimentalDesign

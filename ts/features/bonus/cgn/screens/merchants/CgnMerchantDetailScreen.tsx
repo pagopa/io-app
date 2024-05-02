@@ -1,37 +1,29 @@
-import { Icon, IconButton, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  GradientScrollView,
+  H1,
+  IOToast,
+  ListItemHeader,
+  ListItemInfo,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { constVoid, pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View
-} from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { H4 } from "../../../../../components/core/typography/H4";
+import { isReady } from "../../../../../common/model/RemoteValue";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../../utils/showToast";
-import { openWebUrl } from "../../../../../utils/url";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
+import { CgnAddressListItem } from "../../components/merchants/CgnMerchantAddressesList";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { openWebUrl } from "../../../../../utils/url";
+import Placeholder from "rn-placeholder";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -39,7 +31,6 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
 
 const CgnMerchantDetailScreen = () => {
   // -------    hooks
-  const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const route =
     useRoute<
@@ -68,136 +59,109 @@ const CgnMerchantDetailScreen = () => {
       <DiscountListItem item={discount} key={index} />
     ));
 
+  const handlePressMerchantWebsite = (websiteUrl?: string) => {
+    if (websiteUrl !== undefined) {
+      openWebUrl(websiteUrl, () =>
+        IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+      );
+    }
+  };
   // -------    render
 
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={
-        isReady(merchantDetail) ? merchantDetail.value.name : undefined
-      }
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       {isReady(merchantDetail) ? (
-        <ScrollView
-          scrollIndicatorInsets={{ right: 1 }}
-          contentContainerStyle={[
-            styles.scrollViewContainer,
-            { paddingBottom: insets.bottom }
-          ]}
-          bounces={true}
+        <GradientScrollView
+          primaryActionProps={{
+            label: "Vali al sito dell'esercente",
+            accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+            onPress: () =>
+              handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
+          }}
         >
-          <SafeAreaView style={IOStyles.flex}>
-            {merchantDetail.value.imageUrl !== undefined && (
+          {merchantDetail.value.imageUrl !== undefined && (
+            <>
               <Image
                 accessibilityIgnoresInvertColors
                 source={{ uri: merchantDetail.value.imageUrl }}
                 style={styles.merchantImage}
               />
-            )}
-            <VSpacer size={24} />
-            <H1>{merchantDetail.value.name}</H1>
-            <VSpacer size={16} />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
-            <VSpacer size={8} />
-            {renderDiscountsList(merchantDetail.value.discounts)}
-            <VSpacer size={8} />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
-            <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
-            <VSpacer size={16} />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
-            {pipe(
-              merchantDetail.value.websiteUrl,
-              O.fromNullable,
-              O.fold(
-                () => undefined,
-                url => (
-                  <TouchableDefaultOpacity
-                    style={[
-                      IOStyles.row,
-                      styles.spaced,
-                      { paddingVertical: 10 }
-                    ]}
-                    onPress={() =>
-                      openWebUrl(url, () =>
-                        showToast(I18n.t("bonus.cgn.generic.linkError"))
-                      )
-                    }
-                  >
-                    <H4 weight={"Regular"} style={IOStyles.flex}>
-                      {url}
-                    </H4>
-                    <Icon
-                      name="externalLink"
-                      size={EXTERNAL_LINK_ICON_SIZE}
-                      color="blue"
-                    />
-                  </TouchableDefaultOpacity>
-                )
-              )
-            )}
-            {renderAddressesList(
-              merchantDetail.value.addresses,
-              merchantDetail.value.allNationalAddresses
-            )}
-            <VSpacer size={24} />
-          </SafeAreaView>
-        </ScrollView>
+              <VSpacer size={24} />
+            </>
+          )}
+          <H1>{merchantDetail.value.name}</H1>
+          <VSpacer size={24} />
+          <ListItemHeader
+            label={I18n.t("bonus.cgn.merchantDetail.title.deals")}
+          />
+          {renderDiscountsList(merchantDetail.value.discounts)}
+          <VSpacer size={24} />
+          <ListItemInfo
+            numberOfLines={0}
+            label={I18n.t("bonus.cgn.merchantDetail.title.description")}
+            value={merchantDetail.value.description}
+          />
+          <VSpacer size={24} />
+          {renderMerchantAddressesList(
+            merchantDetail.value.addresses,
+            merchantDetail.value.allNationalAddresses
+          )}
+          <VSpacer size={24} />
+        </GradientScrollView>
       ) : (
         <SafeAreaView style={IOStyles.flex}>
-          <LoadingErrorComponent
+          <CgnMerchantDetailScreenSkeleton />
+          {/* <LoadingErrorComponent
             isLoading={isLoading(merchantDetail)}
             loadingCaption={I18n.t("global.remoteStates.loading")}
             onRetry={loadMerchantDetail}
-          />
+          /> */}
         </SafeAreaView>
       )}
-    </BaseScreenComponent>
+    </>
   );
 };
 
-// ------------------------ render utils
-
-type AddressesListItemProps = {
-  item: Address;
-  isAllNationalAddress: boolean;
-};
-
-const AddressesListItem = ({
-  item,
-  isAllNationalAddress
-}: AddressesListItemProps) => (
-  <TouchableDefaultOpacity
-    style={[IOStyles.row, styles.spaced, { paddingVertical: 10 }]}
-  >
-    <H4 weight={"Regular"} style={IOStyles.flex}>
-      {item.full_address}
-    </H4>
-    {!isAllNationalAddress && (
-      <View style={styles.flexEnd}>
-        <IconButton
-          accessibilityLabel={I18n.t("global.buttons.copy")}
-          icon="copy"
-          onPress={() => clipboardSetStringWithFeedback(item.full_address)}
-        />
-      </View>
-    )}
-  </TouchableDefaultOpacity>
+const CgnMerchantDetailScreenSkeleton = () => (
+  <GradientScrollView primaryActionProps={undefined}>
+    <Placeholder.Box animate="fade" radius={4} />
+    <VSpacer size={24} />
+    <H1 />
+    <VSpacer size={24} />
+    <ListItemHeader label="" />
+    {/* <CgnMerchantDiscountItemSkeleton /> */}
+    <VSpacer size={24} />
+    <ListItemInfo label="" value="" />
+    <VSpacer size={24} />
+    <ListItemHeader label="" />
+  </GradientScrollView>
 );
 
-const renderAddressesList = (
+// ------------------------ render utils
+
+const renderMerchantAddressesList = (
   addresses: ReadonlyArray<Address> | undefined,
   isAllNationalAddressMerchant: boolean
 ) =>
-  addresses !== undefined && addresses.length > 0
-    ? addresses.map((address, index) => (
-        <AddressesListItem
+  addresses !== undefined && addresses.length > 0 ? (
+    <>
+      <ListItemHeader
+        label={I18n.t("bonus.cgn.merchantDetail.title.contactInfo")}
+      />
+      {addresses.map((address, index) => (
+        <CgnAddressListItem
           item={address}
           key={index}
           isAllNationalAddress={isAllNationalAddressMerchant}
         />
-      ))
-    : null;
+      ))}
+    </>
+  ) : null;
 
 // ------------------------ styles - consts - export
 
@@ -215,7 +179,5 @@ const styles = StyleSheet.create({
   spaced: { justifyContent: "space-between" },
   flexEnd: { alignSelf: "flex-end" }
 });
-
-const EXTERNAL_LINK_ICON_SIZE = 20;
 
 export default CgnMerchantDetailScreen;
