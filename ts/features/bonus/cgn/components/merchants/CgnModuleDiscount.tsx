@@ -10,6 +10,8 @@ import {
   IOSpringValues,
   IOStyles,
   Icon,
+  IconContained,
+  ListItemNav,
   Tag,
   VSpacer,
   useIOExperimentalDesign
@@ -27,24 +29,26 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import I18n from "../../../../../i18n";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { getCategorySpecs } from "../../utils/filters";
 
 type Props = {
   onPress: () => void;
-  merchantName: string;
   discount: Discount;
-  merchantType?: DiscountCodeType;
 };
 
 const styles = StyleSheet.create({
-  bacgroundDefault: {
-    backgroundColor: IOColors["grey-50"]
+  backgroundDefault: {
+    backgroundColor: IOColors["grey-50"],
+    borderColor: IOColors["grey-100"]
   },
   backgroundNewItem: {
-    backgroundColor: IOColors["hanPurple-250"]
+    backgroundColor: IOColors["hanPurple-50"],
+    borderColor: IOColors["hanPurple-250"]
+  },
+  moduleButton: {
+    borderWidth: 1
   }
 });
 type CategoryTagProps = {
@@ -57,19 +61,21 @@ const CategoryTag = ({ category }: CategoryTagProps) => {
   return O.isSome(categorySpecs) ? (
     <>
       <View>
-        <Tag text={I18n.t(categorySpecs.value.nameKey)} variant="noIcon" />
+        <Tag
+          text={I18n.t(categorySpecs.value.nameKey)}
+          variant="customIcon"
+          customIconProps={{
+            iconName: categorySpecs.value.icon,
+            iconColor: "grey-300"
+          }}
+        />
         <VSpacer size={4} />
       </View>
       <HSpacer size={4} />
     </>
   ) : null;
 };
-export const CgnModuleDiscount = ({
-  onPress,
-  merchantName,
-  discount,
-  merchantType
-}: Props) => {
+export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
   const { isExperimental } = useIOExperimentalDesign();
   const isPressed = useSharedValue(0);
   // Scaling transformation applied when the button is pressed
@@ -119,7 +125,8 @@ export const CgnModuleDiscount = ({
       <Animated.View
         style={[
           IOModuleStyles.button,
-          discount.isNew ? styles.backgroundNewItem : styles.bacgroundDefault,
+          styles.moduleButton,
+          discount.isNew ? styles.backgroundNewItem : styles.backgroundDefault,
           animatedStyle
         ]}
       >
@@ -130,7 +137,7 @@ export const CgnModuleDiscount = ({
             { alignItems: "center", justifyContent: "space-between" }
           ]}
         >
-          <View>
+          <View style={IOStyles.flex}>
             <View style={[IOStyles.flex, IOStyles.row]}>
               {discount.isNew && (
                 <>
@@ -154,13 +161,11 @@ export const CgnModuleDiscount = ({
               ))}
             </View>
           </View>
-          <View style={IOStyles.flex}>
-            <Icon
-              name="chevronRightListItem"
-              color={isExperimental ? "blueIO-500" : "blue"}
-              size={24}
-            />
-          </View>
+          <Icon
+            name="chevronRightListItem"
+            color={isExperimental ? "blueIO-500" : "blue"}
+            size={24}
+          />
         </View>
       </Animated.View>
     </Pressable>
