@@ -6,6 +6,7 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import Placeholder from "rn-placeholder";
 import { Route, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
@@ -23,7 +24,6 @@ import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import { CgnAddressListItem } from "../../components/merchants/CgnAddressListItem";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { openWebUrl } from "../../../../../utils/url";
-import Placeholder from "rn-placeholder";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -180,13 +180,7 @@ const styles = StyleSheet.create({
     height: 210,
     resizeMode: "cover",
     borderRadius: 12
-  },
-  scrollViewContainer: {
-    flexGrow: 1,
-    ...IOStyles.horizontalContentPadding
-  },
-  spaced: { justifyContent: "space-between" },
-  flexEnd: { alignSelf: "flex-end" }
+  }
 });
 
 export default CgnMerchantDetailScreen;
