@@ -141,7 +141,7 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
             value={previewEnabled}
             disabled={isUpdating}
             onSwitchValueChange={setPreviewEnabled}
-            testID={"previewsPreferenceSwitch"}
+            switchTestID={"previewsPreferenceSwitch"}
           />
           <Divider />
           <ListItemSwitch
@@ -152,7 +152,7 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
             value={remindersEnabled}
             disabled={isUpdating}
             onSwitchValueChange={setRemindersEnabled}
-            testID={"remindersPreferenceSwitch"}
+            switchTestID={"remindersPreferenceSwitch"}
           />
           <VSpacer size={40} />
           <FeatureInfo
