@@ -111,8 +111,11 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
         <>
           <ContentWrapper>
-            <ListItemHeader label="Tutti gli operatori" />
+            <ListItemHeader
+              label={I18n.t("bonus.cgn.merchantsList.merchantsAll")}
+            />
             <TextInput
+              accessibilityLabel={I18n.t("global.buttons.search")}
               icon="search"
               value={searchValue}
               onChangeText={setSearchValue}

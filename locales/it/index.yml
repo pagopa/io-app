@@ -2513,6 +2513,7 @@ bonus:
       places: Luoghi
       navigationTitle: Agevolazioni
       screenTitle: Scopri le proposte
+      merchantsAll: Tutti gli operatori
       cta:
         filter: Filtra
       categoriesList:

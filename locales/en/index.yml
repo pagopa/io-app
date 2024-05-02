@@ -2513,6 +2513,7 @@ bonus:
       places: Places
       navigationTitle: Benefits
       screenTitle: Find the benefits
+      merchantsAll: All the operators
       cta:
         filter: Filter
       categoriesList:
