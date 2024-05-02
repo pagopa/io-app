@@ -26,23 +26,14 @@ import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
 } from "../../features/idpay/details/navigation";
-import {
-  IdPayOnboardingNavigatorParams,
-  IdPayOnboardingParamsList
-} from "../../features/idpay/onboarding/navigation/params";
+import { IdPayOnboardingParamsList } from "../../features/idpay/onboarding/navigation/params";
 import { IdPayOnboardingRoutes } from "../../features/idpay/onboarding/navigation/routes";
 
-import {
-  IdPayConfigurationNavigatorParams,
-  IdPayConfigurationParamsList
-} from "../../features/idpay/configuration/navigation/params";
+import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import { IdPayPaymentParamsList } from "../../features/idpay/payment/navigation/params";
 import { IdPayPaymentRoutes } from "../../features/idpay/payment/navigation/routes";
-import {
-  IdPayUnsubscriptionNavigatorParams,
-  IdPayUnsubscriptionParamsList
-} from "../../features/idpay/unsubscription/navigation/params";
+import { IdPayUnsubscriptionParamsList } from "../../features/idpay/unsubscription/navigation/params";
 import { IdPayUnsubscriptionRoutes } from "../../features/idpay/unsubscription/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
@@ -102,16 +93,10 @@ export type AppParamsList = {
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
-  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR]:
-    | IdPayOnboardingNavigatorParams
-    | NavigatorScreenParams<IdPayOnboardingParamsList>;
-  [IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR]:
-    | IdPayConfigurationNavigatorParams
-    | NavigatorScreenParams<IdPayConfigurationParamsList>;
+  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR]: NavigatorScreenParams<IdPayOnboardingParamsList>;
+  [IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR]: NavigatorScreenParams<IdPayConfigurationParamsList>;
   [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: NavigatorScreenParams<IDPayDetailsParamsList>;
-  [IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR]:
-    | IdPayUnsubscriptionNavigatorParams
-    | NavigatorScreenParams<IdPayUnsubscriptionParamsList>;
+  [IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]: NavigatorScreenParams<IdPayUnsubscriptionParamsList>;
   [IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined; // FIXME IOBP-383: remove after react-navigation 6.x upgrade. This should be insde IDPAY_PAYMENT_MAIN
   [IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: NavigatorScreenParams<IdPayPaymentParamsList>;
   [IdPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IdPayCodeParamsList>;

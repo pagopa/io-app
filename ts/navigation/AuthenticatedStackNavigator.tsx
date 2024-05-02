@@ -255,7 +255,7 @@ const AuthenticatedStackNavigator = () => {
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
-            name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR}
+            name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IdPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />

@@ -1,6 +1,7 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -183,11 +184,27 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       )
     );
 
-  const handleUnsubscribePress = () =>
-    navigation.navigate(
-      IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_NAVIGATOR,
-      { initiativeId, initiativeName, initiativeType }
+  const handleUnsubscribePress = () => {
+    pipe(
+      sequenceS(O.Monad)({
+        initiativeName: O.fromNullable(initiativeName),
+        initiativeType: O.fromNullable(initiativeType)
+      }),
+      O.map(({ initiativeName, initiativeType }) => {
+        navigation.navigate(
+          IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN,
+          {
+            screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
+            params: {
+              initiativeId,
+              initiativeName,
+              initiativeType
+            }
+          }
+        );
+      })
     );
+  };
 
   return (
     <>
