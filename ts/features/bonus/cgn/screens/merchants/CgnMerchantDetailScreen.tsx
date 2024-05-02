@@ -20,7 +20,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
-import { CgnAddressListItem } from "../../components/merchants/CgnMerchantAddressesList";
+import { CgnAddressListItem } from "../../components/merchants/CgnAddressListItem";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { openWebUrl } from "../../../../../utils/url";
 import Placeholder from "rn-placeholder";
