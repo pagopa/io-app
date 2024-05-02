@@ -27,11 +27,7 @@ import {
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import {
-  trackToSWebViewError,
-  trackToSWebViewErrorRetry,
-  trackTosUserExit
-} from "../authentication/analytics";
+import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
@@ -48,7 +44,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [showError, setShowError] = useState(false);
   const viewRef = createRef<View>();
 
   const store = useStore();
@@ -95,18 +90,9 @@ const OnboardingTosScreen = () => {
     setIsLoading(false);
   };
 
-  const handleError = useCallback(() => {
-    setIsLoading(false);
-    setShowError(true);
-    trackToSWebViewError(flow);
-  }, [flow]);
-
-  const handleReload = useCallback(() => {
+  const handleReload = () => {
     setIsLoading(true);
-    setShowError(false);
-    trackToSWebViewErrorRetry(flow);
-  }, [flow]);
-
+  };
   const onAcceptTos = useCallback(() => {
     dispatch(tosAccepted(tosVersion));
     void trackTosAccepted(tosVersion, flow, store.getState());
@@ -171,8 +157,7 @@ const OnboardingTosScreen = () => {
           </View>
         )}
         <TosWebviewComponent
-          handleError={handleError}
-          showError={showError}
+          flow={flow}
           handleLoadEnd={handleLoadEnd}
           handleReload={handleReload}
           webViewSource={{ uri: privacyUrl }}

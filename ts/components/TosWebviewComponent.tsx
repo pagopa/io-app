@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import React, { FunctionComponent, memo } from "react";
+import React, { FunctionComponent, memo, useCallback, useState } from "react";
 import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
@@ -15,28 +15,45 @@ import {
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
+import {
+  trackToSWebViewError,
+  trackToSWebViewErrorRetry
+} from "../screens/authentication/analytics";
+import { FlowType } from "../utils/analytics";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
 
 type Props = {
   webViewSource: WebViewSource;
   handleLoadEnd: () => void;
-  handleError?: () => void;
   handleReload: () => void;
   onAcceptTos?: () => void;
   shouldRenderFooter?: boolean;
-  showError?: boolean;
+  flow: FlowType;
 } & Pick<ViewProps, "testID">;
 
 const TosWebviewComponent: FunctionComponent<Props> = ({
   handleLoadEnd,
-  handleError,
   handleReload,
   webViewSource,
   shouldRenderFooter,
   onAcceptTos,
-  showError
+  flow
 }: Props) => {
+  const [hasError, setHasError] = useState(false);
+
+  const handleError = useCallback(() => {
+    handleLoadEnd();
+    setHasError(true);
+    trackToSWebViewError(flow);
+  }, [flow, handleLoadEnd]);
+
+  const handleRetry = useCallback(() => {
+    handleReload();
+    setHasError(false);
+    trackToSWebViewErrorRetry(flow);
+  }, [flow, handleReload]);
+
   const ErrorComponent = () => (
     <>
       <View
@@ -57,7 +74,7 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
       <ContentWrapper>
         <ButtonSolid
           fullWidth
-          onPress={handleReload}
+          onPress={handleRetry}
           label={I18n.t("global.buttons.retry")}
           testID="RetryButtonTest"
         />
@@ -78,7 +95,7 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
     );
   };
 
-  return showError ? (
+  return hasError ? (
     <ErrorComponent />
   ) : (
     <>

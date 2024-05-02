@@ -2,7 +2,7 @@
  * A screen to show the app Terms of Service.
  * This screen is used as Privacy screen From Profile section.
  */
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -12,10 +12,6 @@ import { privacyUrl } from "../../config";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import {
-  trackToSWebViewError,
-  trackToSWebViewErrorRetry
-} from "../authentication/analytics";
 import { trackTosScreen } from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -28,7 +24,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [showError, setShowError] = useState(false);
 
   const flow = getFlowType(false, false);
 
@@ -39,17 +34,9 @@ const TosScreen = () => {
     setIsLoading(false);
   };
 
-  const handleError = useCallback(() => {
-    setIsLoading(false);
-    setShowError(true);
-    trackToSWebViewError(flow);
-  }, [flow]);
-
-  const handleReload = useCallback(() => {
+  const handleReload = () => {
     setIsLoading(true);
-    setShowError(false);
-    trackToSWebViewErrorRetry(flow);
-  }, [flow]);
+  };
 
   useHeaderSecondLevel({
     title: "",
@@ -62,9 +49,8 @@ const TosScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
         <TosWebviewComponent
-          showError={showError}
+          flow={flow}
           handleLoadEnd={handleLoadEnd}
-          handleError={handleError}
           handleReload={handleReload}
           webViewSource={{ uri: privacyUrl }}
           shouldRenderFooter={false}

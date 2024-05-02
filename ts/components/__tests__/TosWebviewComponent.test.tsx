@@ -30,6 +30,7 @@ describe("TosWebviewComponent", () => {
         .create(
           <SafeAreaProvider>
             <TosWebviewComponent
+              flow="firstOnboarding"
               shouldRenderFooter={true}
               webViewSource={{
                 html: "<html><head></head><body></body></html>"
@@ -221,11 +222,13 @@ const commonSetup = ({
   shouldRenderFooter = true,
   onRightButton = () => undefined,
   onReload = () => undefined,
-  onLoaded = () => undefined
+  onLoaded = () => undefined,
+  flow = "firstOnboarding"
 }: CurrentTestConfiguration = {}) =>
   render(
     <SafeAreaProvider>
       <TosWebviewComponent
+        flow={flow}
         shouldRenderFooter={shouldRenderFooter}
         webViewSource={{ html: "<html><head></head><body></body></html>" }}
         handleLoadEnd={onLoaded}
