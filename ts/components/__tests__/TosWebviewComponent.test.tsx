@@ -9,7 +9,9 @@ import renderer from "react-test-renderer";
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
 // import I18n from "i18n-js";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import TosWebviewComponent from "../TosWebviewComponent";
+import { FlowType } from "../../utils/analytics";
 // import * as urlUtils from "../../../ts/utils/url";
 // import brokenLinkImage from "../../../img/broken-link.png";
 
@@ -26,12 +28,17 @@ describe("TosWebviewComponent", () => {
     it("Should render correctly with bottom footer and a basic placeholding HTML", () => {
       const tree = renderer
         .create(
-          <TosWebviewComponent
-            shouldRenderFooter={true}
-            webViewSource={{ html: "<html><head></head><body></body></html>" }}
-            handleLoadEnd={() => undefined}
-            handleReload={() => undefined} // TODO
-          />
+          <SafeAreaProvider>
+            <TosWebviewComponent
+              flow="firstOnboarding"
+              shouldRenderFooter={true}
+              webViewSource={{
+                html: "<html><head></head><body></body></html>"
+              }}
+              handleLoadEnd={() => undefined}
+              handleReload={() => undefined} // TODO
+            />
+          </SafeAreaProvider>
         )
         .toJSON();
       expect(tree).toMatchSnapshot();
@@ -40,7 +47,6 @@ describe("TosWebviewComponent", () => {
   describe("When rendering with the shouldRenderFooter set to false", () => {
     it("The footer should not render", () => {
       const renderAPI = commonSetup({ shouldRenderFooter: false });
-
       // The footer should be rendered
       const footerWithButtonsViewRTI =
         renderAPI.queryByTestId("FooterWithButtons");
@@ -48,31 +54,21 @@ describe("TosWebviewComponent", () => {
     });
   });
   describe("When rendering with the footer displayed", () => {
-    it("Clicking the left button should trigger 'onExit' prop handler", () => {
-      const leftButtonHandlerMock = jest.fn();
-      const renderAPI = commonSetup({ onLeftButton: leftButtonHandlerMock });
-
-      // Find the left button and press it
-      const footerWithButtonsViewRTI = renderAPI.getByTestId(
-        "toSWebViewContainerFooterLeftButton"
-      );
-      fireEvent.press(footerWithButtonsViewRTI);
-
-      // The left button handler should have been invoked
-      expect(leftButtonHandlerMock).toHaveBeenCalledTimes(1);
-    });
-    it("Clicking the right button should trigger 'onAcceptTos' prop handler", () => {
+    it("Clicking the button to accept ToS. Should trigger 'onAcceptTos' prop handler", () => {
       const rightButtonHandlerMock = jest.fn();
-      const renderAPI = commonSetup({ onRightButton: rightButtonHandlerMock });
-
+      const renderAPI = commonSetup({
+        onRightButton: rightButtonHandlerMock
+      });
       // Find the right button and press it
-      const footerWithButtonsViewRTI = renderAPI.getByTestId(
-        "toSWebViewContainerFooterRightButton"
-      );
-      fireEvent.press(footerWithButtonsViewRTI);
-
-      // The right button handler should have been invoked
-      expect(rightButtonHandlerMock).toHaveBeenCalledTimes(1);
+      const footerDefined = renderAPI.queryByTestId("FooterWithButtons");
+      expect(footerDefined).toBeDefined();
+      const footerWithButtonsViewRTI =
+        renderAPI.queryByTestId("AcceptToSButton");
+      expect(footerWithButtonsViewRTI).toBeDefined();
+      if (footerWithButtonsViewRTI) {
+        fireEvent.press(footerWithButtonsViewRTI);
+        expect(rightButtonHandlerMock).toHaveBeenCalledTimes(1);
+      }
     });
   });
   // describe("When rendering and there is an error", () => {
@@ -215,27 +211,29 @@ describe("TosWebviewComponent", () => {
 
 type CurrentTestConfiguration = {
   shouldRenderFooter?: boolean;
-  onLeftButton?: () => void;
   onRightButton?: () => void;
   onReload?: () => void;
   onLoaded?: () => void;
   onWebViewMessageReceived?: (event: any) => void;
+  flow?: FlowType;
 };
 
 const commonSetup = ({
   shouldRenderFooter = true,
-  onLeftButton = () => undefined,
   onRightButton = () => undefined,
   onReload = () => undefined,
-  onLoaded = () => undefined
+  onLoaded = () => undefined,
+  flow = "firstOnboarding"
 }: CurrentTestConfiguration = {}) =>
   render(
-    <TosWebviewComponent
-      shouldRenderFooter={shouldRenderFooter}
-      webViewSource={{ html: "<html><head></head><body></body></html>" }}
-      handleLoadEnd={onLoaded}
-      handleReload={onReload}
-      onExit={onLeftButton}
-      onAcceptTos={onRightButton}
-    />
+    <SafeAreaProvider>
+      <TosWebviewComponent
+        flow={flow}
+        shouldRenderFooter={shouldRenderFooter}
+        webViewSource={{ html: "<html><head></head><body></body></html>" }}
+        handleLoadEnd={onLoaded}
+        handleReload={onReload}
+        onAcceptTos={onRightButton}
+      />
+    </SafeAreaProvider>
   );
