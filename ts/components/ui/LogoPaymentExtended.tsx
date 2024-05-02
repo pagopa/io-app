@@ -24,6 +24,7 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
       case "payPal":
         return (
           <Image
+            accessibilityIgnoresInvertColors
             accessible={true}
             accessibilityLabel="PayPal"
             source={paypalLogoImage}
