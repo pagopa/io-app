@@ -2079,6 +2079,9 @@ services:
   home:
     institutions:
       title: National
+  institution:
+    header:
+      subtitle: "{{count}} available services"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
