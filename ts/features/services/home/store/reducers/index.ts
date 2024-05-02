@@ -2,18 +2,21 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { FeaturedItems } from "../../../../../../definitions/services/FeaturedItems";
 import { Institution } from "../../../../../../definitions/services/Institution";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { paginatedInstitutionsGet } from "../actions";
+import { featuredItemsGet, paginatedInstitutionsGet } from "../actions";
 
 export type ServicesHomeState = {
+  featuredItems: pot.Pot<FeaturedItems, NetworkError>;
   paginatedInstitutions: pot.Pot<InstitutionsResource, NetworkError>;
 };
 
 const INITIAL_STATE: ServicesHomeState = {
+  featuredItems: pot.none,
   paginatedInstitutions: pot.none
 };
 
@@ -22,6 +25,7 @@ const homeReducer = (
   action: Action
 ): ServicesHomeState => {
   switch (action.type) {
+    // Fetch Institutions actions
     case getType(paginatedInstitutionsGet.request):
       if (pot.isNone(state.paginatedInstitutions)) {
         return {
@@ -69,6 +73,31 @@ const homeReducer = (
           action.payload
         )
       };
+    // Get FeaturedItems actions
+    case getType(featuredItemsGet.request):
+      if (pot.isNone(state.featuredItems)) {
+        return {
+          ...state,
+          featuredItems: pot.noneLoading
+        };
+      }
+
+      return {
+        ...state,
+        featuredItems: pot.toUpdating(state.featuredItems, {
+          items: []
+        })
+      };
+    case getType(featuredItemsGet.success):
+      return {
+        ...state,
+        featuredItems: pot.some(action.payload)
+      };
+    case getType(featuredItemsGet.failure):
+      return {
+        ...state,
+        featuredItems: pot.toError(state.featuredItems, action.payload)
+      };
   }
   return state;
 };
@@ -88,6 +117,16 @@ export const paginatedInstitutionsSelector = createSelector(
   pot.toUndefined
 );
 
+export const featuredItemsPotSelector = createSelector(
+  homeSelector,
+  home => home.featuredItems
+);
+
+export const featuredItemsSelector = createSelector(
+  featuredItemsPotSelector,
+  pot.toUndefined
+);
+
 export const isLoadingPaginatedInstitutionsSelector = (state: GlobalState) =>
   pipe(state, paginatedInstitutionsPotSelector, pot.isLoading);
 
@@ -96,6 +135,15 @@ export const isUpdatingPaginatedInstitutionsSelector = (state: GlobalState) =>
 
 export const isErrorPaginatedInstitutionsSelector = (state: GlobalState) =>
   pipe(state, paginatedInstitutionsPotSelector, pot.isError);
+
+export const isLoadingFeaturedItemsSelector = (state: GlobalState) =>
+  pipe(state, featuredItemsPotSelector, pot.isLoading);
+
+export const isUpdatingFeaturedItemsSelector = (state: GlobalState) =>
+  pipe(state, featuredItemsPotSelector, pot.isUpdating);
+
+export const isErrorFeaturedItemsSelector = (state: GlobalState) =>
+  pipe(state, featuredItemsPotSelector, pot.isError);
 
 /**
  * Returns the current page of the paginated institutions.
