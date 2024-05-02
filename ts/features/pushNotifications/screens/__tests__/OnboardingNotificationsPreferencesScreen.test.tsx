@@ -12,7 +12,6 @@ import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { OnboardingNotificationsPreferencesScreen } from "../OnboardingNotificationsPreferencesScreen";
 
 describe("OnboardingNotificationsPreferencesScreen", () => {
-
   describe("given an user that is doing the onboarding for the first time", () => {
     it("then the title should match the 'profile.preferences.notifications.title' key and the subtitle should match 'profile.preferences.notifications.subtitle'", () => {
       const globalState = appReducer(
