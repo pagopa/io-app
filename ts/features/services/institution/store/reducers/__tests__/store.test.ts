@@ -40,7 +40,7 @@ const MOCK_NETWORK_ERROR: NetworkError = {
   value: new Error("response status code 500")
 };
 
-describe("Services institution paginatedServices reducer", () => {
+describe("Institution paginatedServices reducer", () => {
   it("should have initial state", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
 
@@ -195,7 +195,7 @@ describe("Services institution paginatedServices reducer", () => {
   });
 });
 
-describe("Services institution paginatedServices selectors", () => {
+describe("Institution paginatedServices selectors", () => {
   describe("paginatedServicesSelector", () => {
     it("should return the InstitutionServicesResource when pot.some", () => {
       const paginatedInstitutions = paginatedServicesSelector(

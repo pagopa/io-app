@@ -20,6 +20,6 @@ export const paginatedServicesGet = createAsyncAction(
   void
 >();
 
-export type ServicesInstitutionActions = ActionType<
+export type InstitutionServicesActions = ActionType<
   typeof paginatedServicesGet
 >;

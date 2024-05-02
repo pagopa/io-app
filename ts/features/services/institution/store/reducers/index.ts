@@ -8,18 +8,18 @@ import { NetworkError } from "../../../../../utils/errors";
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
 import { paginatedServicesGet } from "../actions";
 
-export type ServicesInstitutionState = {
+export type InstitutionState = {
   paginatedServices: pot.Pot<InstitutionServicesResource, NetworkError>;
 };
 
-const INITIAL_STATE: ServicesInstitutionState = {
+const INITIAL_STATE: InstitutionState = {
   paginatedServices: pot.none
 };
 
 const institutionReducer = (
-  state: ServicesInstitutionState = INITIAL_STATE,
+  state: InstitutionState = INITIAL_STATE,
   action: Action
-): ServicesInstitutionState => {
+): InstitutionState => {
   switch (action.type) {
     case getType(paginatedServicesGet.request):
       if (pot.isNone(state.paginatedServices)) {

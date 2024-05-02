@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import homeReducer, { ServicesHomeState } from "../../../home/store/reducers";
 import institutionReducer, {
-  ServicesInstitutionState
+  InstitutionState
 } from "../../../institution/store/reducers";
 
 export type ServicesState = {
   home: ServicesHomeState;
-  institution: ServicesInstitutionState;
+  institution: InstitutionState;
 };
 
 const servicesReducer = combineReducers({
