@@ -5,8 +5,7 @@
  * This screen is used also as Privacy screen From Profile section.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import { useEffect, useState, createRef } from "react";
+import React, { useEffect, useState, createRef, useCallback } from "react";
 import { Alert, View } from "react-native";
 import { useStore } from "react-redux";
 import {
@@ -28,7 +27,11 @@ import {
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import { trackTosUserExit } from "../authentication/analytics";
+import {
+  trackToSWebViewError,
+  trackToSWebViewErrorRetry,
+  trackTosUserExit
+} from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
@@ -45,6 +48,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showError, setShowError] = useState(false);
   const viewRef = createRef<View>();
 
   const store = useStore();
@@ -91,9 +95,22 @@ const OnboardingTosScreen = () => {
     setIsLoading(false);
   };
 
-  const handleReload = () => {
+  const handleError = useCallback(() => {
+    setIsLoading(false);
+    setShowError(true);
+    trackToSWebViewError(flow);
+  }, [flow]);
+
+  const handleReload = useCallback(() => {
     setIsLoading(true);
-  };
+    setShowError(false);
+    trackToSWebViewErrorRetry(flow);
+  }, [flow]);
+
+  const onAcceptTos = useCallback(() => {
+    dispatch(tosAccepted(tosVersion));
+    void trackTosAccepted(tosVersion, flow, store.getState());
+  }, [dispatch, flow, store, tosVersion]);
 
   const handleGoBack = () =>
     Alert.alert(
@@ -154,15 +171,13 @@ const OnboardingTosScreen = () => {
           </View>
         )}
         <TosWebviewComponent
-          flow={flow}
+          handleError={handleError}
+          showError={showError}
           handleLoadEnd={handleLoadEnd}
           handleReload={handleReload}
           webViewSource={{ uri: privacyUrl }}
           shouldRenderFooter={!isLoading}
-          onAcceptTos={() => {
-            dispatch(tosAccepted(tosVersion));
-            void trackTosAccepted(tosVersion, flow, store.getState());
-          }}
+          onAcceptTos={onAcceptTos}
         />
       </SafeAreaView>
     </LoadingSpinnerOverlay>
