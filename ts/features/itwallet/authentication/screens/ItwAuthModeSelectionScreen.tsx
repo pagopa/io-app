@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   ListItemHeader,
-  ModuleCredential,
+  ModuleNavigation,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -63,29 +63,29 @@ export const ItwAuthModeSelectionScreen = () => {
         <ListItemHeader
           label={I18n.t("features.itWallet.authentication.header")}
         />
-        <ModuleCredential
-          label={I18n.t("features.itWallet.authentication.method.spid.title")}
-          // description="Usa credenziali e app (o SMS)"
+        <ModuleNavigation
+          title={I18n.t("features.itWallet.authentication.method.spid.title")}
+          subtitle="Usa credenziali e app (o SMS)"
           icon="spid"
           onPress={handleSpidPress}
         />
         <VSpacer size={8} />
         {isCieSupported && (
           <>
-            <ModuleCredential
-              label={I18n.t(
+            <ModuleNavigation
+              title={I18n.t(
                 "features.itWallet.authentication.method.ciePin.title"
               )}
-              // description="Usa Carta d’Identità Elettronica e PIN"
+              subtitle="Usa Carta d’Identità Elettronica e PIN"
               icon="fiscalCodeIndividual"
               onPress={handleCiePinPress}
             />
             <VSpacer size={8} />
           </>
         )}
-        <ModuleCredential
-          label={I18n.t("features.itWallet.authentication.method.cieId.title")}
-          // description="Usa credenziali e app CieID"
+        <ModuleNavigation
+          title={I18n.t("features.itWallet.authentication.method.cieId.title")}
+          subtitle="Usa credenziali e app CieID"
           icon="device"
           onPress={handleCieIdPress}
         />
