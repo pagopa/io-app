@@ -6,10 +6,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 
-import {
-  emailAcknowledged,
-  emailInsert
-} from "../../../store/actions/onboarding";
 import { appReducer } from "../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
@@ -23,14 +19,15 @@ describe("checkAcknowledgedEmailSaga", () => {
     jest.useRealTimers();
   });
 
-  describe("when user is on his first onboarding and he has an email and it is validated", () => {
+  describe("when user is on his first onboarding and he has an email and it is not validated", () => {
     const profileEmailValidatedFirstOnboarding = {
       ...mockedProfile,
+      is_email_validated: false,
       service_preferences_settings: {
         mode: ServicesPreferencesModeEnum.LEGACY
       }
     };
-    it("should show email read screen", async () => {
+    it("should prompt the screen to insert it", async () => {
       await expectSaga(
         checkAcknowledgedEmailSaga,
         profileEmailValidatedFirstOnboarding
@@ -43,24 +40,6 @@ describe("checkAcknowledgedEmailSaga", () => {
     });
   });
 
-  describe("when user has an email and it not is validated", () => {
-    const profileWithEmailNotValidated = {
-      ...mockedProfile,
-      is_email_validated: false
-    };
-    it("should prompt the screen to remember to validate", async () => {
-      await expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
-        // read screen is wrapped in a HOC where if email is validate show ReadScreen
-        // otherwise a screen that remembers to validate it
-        .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
-          params: { isOnboarding: true }
-        })
-        .dispatch(emailAcknowledged())
-        .run();
-    });
-  });
-
   describe("when user has not an email", () => {
     const profileWithNoEmail = {
       ...mockedProfile,
@@ -68,21 +47,11 @@ describe("checkAcknowledgedEmailSaga", () => {
       email: undefined
     };
     it("should prompt the screen to insert it", async () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const store = createStore(appReducer, globalState as any);
-      renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
       await expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
           screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
-          params: {
-            isOnboarding: true
-          }
-        }) // go to email insert screen
-        .dispatch(emailInsert()) // dispatch email insert
-        .dispatch(emailAcknowledged()) // press continue
+          params: { isOnboarding: true }
+        })
         .run();
     });
   });
