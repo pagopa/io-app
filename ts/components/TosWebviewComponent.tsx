@@ -7,10 +7,7 @@ import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import {
   ButtonSolid,
   ContentWrapper,
-  H3,
-  IOStyles,
-  Pictogram,
-  VSpacer
+  IOStyles
 } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
@@ -22,6 +19,7 @@ import {
 import { FlowType } from "../utils/analytics";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
+import TosWebviewErrorComponent from "./TosWebviewErrorComponent";
 
 type Props = {
   webViewSource: WebViewSource;
@@ -54,34 +52,6 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
     trackToSWebViewErrorRetry(flow);
   }, [flow, handleReload]);
 
-  const ErrorComponent = () => (
-    <>
-      <View
-        style={[
-          IOStyles.flex,
-          IOStyles.alignCenter,
-          IOStyles.horizontalContentPadding,
-          IOStyles.centerJustified
-        ]}
-        testID="toSErrorContainerView"
-      >
-        <Pictogram name="stopSecurity" />
-        <VSpacer size={8} />
-        <H3 testID="toSErrorContainerTitle" style={{ textAlign: "center" }}>
-          {I18n.t("onboarding.tos.error")}
-        </H3>
-      </View>
-      <ContentWrapper>
-        <ButtonSolid
-          fullWidth
-          onPress={handleRetry}
-          label={I18n.t("global.buttons.retry")}
-          testID="RetryButtonTest"
-        />
-      </ContentWrapper>
-    </>
-  );
-
   // A function that handles message sent by the WebView component
   const handleWebViewMessage = (event: WebViewMessageEvent) => {
     pipe(
@@ -96,7 +66,7 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
   };
 
   return hasError ? (
-    <ErrorComponent />
+    <TosWebviewErrorComponent handleRetry={handleRetry} />
   ) : (
     <>
       <View style={IOStyles.flex} testID="toSWebViewContainer">
