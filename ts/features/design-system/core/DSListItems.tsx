@@ -112,7 +112,7 @@ export const DSListItems = () => {
         <BankPreviewItem
           bank={{
             abi: "03069",
-            logoUrl: "https://assets.cdn.io.italia.it/logos/abi/03069.png",
+            logoUrl: "https://assets.cdn.io.pagopa.it/logos/abi/03069.png",
             name: "Intesa Sanpaolo"
           }}
           onPress={() => alert("Action triggered")}
@@ -673,7 +673,7 @@ const renderListItemHeader = () => (
 /* LIST ITEM TRANSACTION */
 
 /* Mock assets */
-const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 const organizationLogoURI = {
   imageSource: `${cdnPath}82003830161.png`,
   name: "Comune di Milano"

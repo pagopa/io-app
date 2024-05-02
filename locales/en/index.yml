@@ -853,7 +853,7 @@ onboarding:
   tos:
     headerTitle: Configure IO
     accept: Accept and continue
-    error: Loading error
+    error: We could not load the Privacy Policy and Terms and Conditions
     alert:
       title: Attention
       message: Please, read the full content of the Terms of Service and Privacy Policy to continue
@@ -889,6 +889,9 @@ onboarding:
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
+  exitAlert: 
+    title: Do you want to quit IO?
+    description: You will have to log in again with SPID or CIE to use the app.
   biometric:
     headerTitle: Configure IO
     available:
@@ -2187,7 +2190,7 @@ openMaps:
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version.."
 titleUpdateAppAlert: To continue, update IO
 messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To start using this new feature, please download the update.
 openStore: Open {{storeName}}
@@ -3562,6 +3565,8 @@ unsupportedDevice:
   cta:
     faq: "Learn more"
 fastLogin:
+  loadingScreen:
+    title: "We are checking your identity"
   userInteraction:
     sessionExpired:
       noPin:

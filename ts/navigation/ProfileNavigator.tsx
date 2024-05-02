@@ -49,7 +49,11 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_PRIVACY_MAIN}
       component={PrivacyMainScreen}
     />
-    <Stack.Screen name={ROUTES.PROFILE_PRIVACY} component={TosScreen} />
+    <Stack.Screen
+      options={{ headerShown: true }}
+      name={ROUTES.PROFILE_PRIVACY}
+      component={TosScreen}
+    />
     <Stack.Screen
       name={ROUTES.PROFILE_PRIVACY_SHARE_DATA}
       component={ShareDataScreen}
