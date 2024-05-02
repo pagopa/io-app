@@ -77,12 +77,18 @@ const CgnMerchantDetailScreen = () => {
     <>
       {isReady(merchantDetail) ? (
         <GradientScrollView
-          primaryActionProps={{
-            label: "Vali al sito dell'esercente",
-            accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-            onPress: () =>
-              handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
-          }}
+          primaryActionProps={
+            merchantDetail.value.websiteUrl
+              ? {
+                  label: "Vali al sito dell'esercente",
+                  accessibilityLabel: I18n.t(
+                    "wallet.payment.psp.continueButton"
+                  ),
+                  onPress: () =>
+                    handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
+                }
+              : undefined
+          }
         >
           {merchantDetail.value.imageUrl !== undefined && (
             <>
@@ -116,33 +122,36 @@ const CgnMerchantDetailScreen = () => {
       ) : (
         <SafeAreaView style={IOStyles.flex}>
           <CgnMerchantDetailScreenSkeleton />
-          {/* <LoadingErrorComponent
-            isLoading={isLoading(merchantDetail)}
-            loadingCaption={I18n.t("global.remoteStates.loading")}
-            onRetry={loadMerchantDetail}
-          /> */}
         </SafeAreaView>
       )}
     </>
   );
 };
 
+// ------------------------ render utils
+
 const CgnMerchantDetailScreenSkeleton = () => (
   <GradientScrollView primaryActionProps={undefined}>
-    <Placeholder.Box animate="fade" radius={4} />
+    <Placeholder.Box
+      animate="fade"
+      radius={styles.merchantImage.borderRadius}
+      width="100%"
+      height={210}
+    />
     <VSpacer size={24} />
-    <H1 />
+    <Placeholder.Line animate="fade" textSize={24} />
+    <VSpacer size={16} />
+    <Placeholder.Line animate="fade" textSize={24} width="50%" />
+    <VSpacer size={48} />
+    <Placeholder.Box animate="fade" width={100} height={16} radius={4} />
     <VSpacer size={24} />
-    <ListItemHeader label="" />
-    {/* <CgnMerchantDiscountItemSkeleton /> */}
-    <VSpacer size={24} />
-    <ListItemInfo label="" value="" />
+    <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
+    <VSpacer size={8} />
+    <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
     <VSpacer size={24} />
     <ListItemHeader label="" />
   </GradientScrollView>
 );
-
-// ------------------------ render utils
 
 const renderMerchantAddressesList = (
   addresses: ReadonlyArray<Address> | undefined,
@@ -168,7 +177,7 @@ const renderMerchantAddressesList = (
 const styles = StyleSheet.create({
   merchantImage: {
     width: "100%",
-    height: 230,
+    height: 210,
     resizeMode: "cover",
     borderRadius: 12
   },
