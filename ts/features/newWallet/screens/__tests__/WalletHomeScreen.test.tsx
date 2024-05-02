@@ -49,7 +49,9 @@ describe("WalletHomeScreen", () => {
   it("should correctly render empty screen with redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent({}, true);
+    } = renderComponent({}, true, false);
+
+    jest.runOnlyPendingTimers();
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).not.toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();
@@ -60,7 +62,9 @@ describe("WalletHomeScreen", () => {
   it("should correctly render empty screen without redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent({}, false);
+    } = renderComponent({}, false, false);
+
+    jest.runOnlyPendingTimers();
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();
@@ -71,7 +75,7 @@ describe("WalletHomeScreen", () => {
   it("should correctly render card list screen with redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent(T_CARDS, true);
+    } = renderComponent(T_CARDS, true, false);
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).not.toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
@@ -82,7 +86,7 @@ describe("WalletHomeScreen", () => {
   it("should correctly render card list  screen without redirect banner", () => {
     const {
       component: { queryByTestId }
-    } = renderComponent(T_CARDS, false);
+    } = renderComponent(T_CARDS, false, false);
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
@@ -93,7 +97,8 @@ describe("WalletHomeScreen", () => {
 
 const renderComponent = (
   cards: WalletCardsState,
-  shouldShowPaymentsRedirectBanner: boolean
+  shouldShowPaymentsRedirectBanner: boolean,
+  isLoading: boolean
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -105,6 +110,9 @@ const renderComponent = (
           cards,
           preferences: {
             shouldShowPaymentsRedirectBanner
+          },
+          placeholders: {
+            isLoading
           }
         }
       }

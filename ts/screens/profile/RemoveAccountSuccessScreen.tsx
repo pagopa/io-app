@@ -81,7 +81,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
                 paddingVertical: IOVisualCostants.appMarginDefault
               }}
             >
-              <Image source={expiredIcon} />
+              <Image accessibilityIgnoresInvertColors source={expiredIcon} />
               <VSpacer size={16} />
               <H2 style={{ textAlign: "center" }}>
                 {I18n.t("profile.main.privacy.removeAccount.success.title")}

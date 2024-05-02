@@ -7,7 +7,7 @@ export const storeNewPaymentAttemptAction = createStandardAction(
 )<RptId>();
 
 export const storePaymentOutcomeToHistory = createStandardAction(
-  "PAYMENTS_STORE_OUTCMOE_TO_HISTORY"
+  "PAYMENTS_STORE_OUTCOME_TO_HISTORY"
 )<WalletPaymentOutcome>();
 
 export type PaymentsHistoryActions =

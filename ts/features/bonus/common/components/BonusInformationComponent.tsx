@@ -231,6 +231,7 @@ const BonusInformationComponent = (props: Props) => {
         {O.isSome(maybeHeroImage) && (
           <>
             <Image
+              accessibilityIgnoresInvertColors
               source={{ uri: maybeHeroImage.value }}
               style={{
                 width: "100%",

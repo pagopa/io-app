@@ -45,16 +45,18 @@ export function* handleGetWalletDetails(
         );
         return;
       }
-      // not handled error codes
-      yield* put(
-        paymentsGetMethodDetailsAction.failure({
-          ...getGenericError(
-            new Error(
-              `response status code ${getWalletDetailsResult.right.status}`
+      // not handled error codes (401 is handled by withRefreshApiCall)
+      if (getWalletDetailsResult.right.status !== 401) {
+        yield* put(
+          paymentsGetMethodDetailsAction.failure({
+            ...getGenericError(
+              new Error(
+                `response status code ${getWalletDetailsResult.right.status}`
+              )
             )
-          )
-        })
-      );
+          })
+        );
+      }
     } else {
       // cannot decode response
       yield* put(
