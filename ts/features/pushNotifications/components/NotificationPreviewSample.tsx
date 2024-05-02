@@ -6,7 +6,8 @@ import {
   HSpacer,
   IOSpacingScale,
   Label,
-  IOStyles
+  IOStyles,
+  H6
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { TranslationKeys } from "../../../../locales/locales";
@@ -76,7 +77,7 @@ export const NotificationPreviewSample = ({
       <Icon color="blueIO-450" name="productIOApp" />
       <HSpacer />
       <View style={IOStyles.flex}>
-        <Label weight="SemiBold">{I18n.t(titleKey)}</Label>
+        <H6 weight="SemiBold">{I18n.t(titleKey)}</H6>
         <Label fontSize="small" weight="Regular">
           {I18n.t(messageKey)}
         </Label>
