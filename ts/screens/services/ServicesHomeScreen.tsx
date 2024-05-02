@@ -211,6 +211,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <VSpacer size={40} />
         <VSpacer size={40} />
         <Image
+          accessibilityIgnoresInvertColors
           source={require("../../../img/services/icon-loading-services.png")}
         />
         <VSpacer size={40} />

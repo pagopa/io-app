@@ -1,13 +1,13 @@
-import * as React from "react";
-import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import { BadgeComponent } from "../screens/BadgeComponent";
 import { Body } from "../core/typography/Body";
-import { IOStyles } from "../core/variables/IOStyles";
 import { H3 } from "../core/typography/H3";
+import { IOStyles } from "../core/variables/IOStyles";
+import { BadgeComponent } from "../screens/BadgeComponent";
 
 type Props = Readonly<{
   title: string;
@@ -99,7 +99,9 @@ export const PaymentSummaryComponent = (props: Props) => {
           {renderItem(I18n.t("payment.noticeCode"), props.codiceAvviso)}
         </View>
 
-        {props.image !== undefined && <Image source={props.image} />}
+        {props.image !== undefined && (
+          <Image accessibilityIgnoresInvertColors source={props.image} />
+        )}
       </View>
     </React.Fragment>
   );

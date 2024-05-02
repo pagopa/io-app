@@ -130,6 +130,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
             ),
             imgDim => (
               <Image
+                accessibilityIgnoresInvertColors
                 testID={"pspNameLogoID"}
                 source={{ uri: psp.logoUrl }}
                 style={[
