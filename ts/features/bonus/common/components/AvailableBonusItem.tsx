@@ -73,7 +73,8 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     bonusItem[getRemoteLocale()];
 
   return (
-    <Pressable accessibilityRole="button"
+    <Pressable
+      accessibilityRole="button"
       style={styles.listItem}
       onPress={props.onPress}
       testID={`AvailableBonusItem-${bonusItem.id_type}`}

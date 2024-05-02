@@ -145,7 +145,11 @@ const addBottomSheetItem = (config: {
   subTitle: string;
   onPress: () => void;
 }) => (
-  <Pressable accessibilityRole="button" onPress={config.onPress} style={styles.container}>
+  <Pressable
+    accessibilityRole="button"
+    onPress={config.onPress}
+    style={styles.container}
+  >
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View style={IOStyles.flex}>

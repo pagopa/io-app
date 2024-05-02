@@ -52,7 +52,12 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
   onPress,
   testID
 }) => (
-  <Pressable accessibilityRole="button" onPress={onPress} testID={testID} style={{ paddingEnd: 0 }}>
+  <Pressable
+    accessibilityRole="button"
+    onPress={onPress}
+    testID={testID}
+    style={{ paddingEnd: 0 }}
+  >
     <VSpacer />
     <View style={styles.contentContainer}>
       <View style={[styles.row, IOStyles.flex]}>
