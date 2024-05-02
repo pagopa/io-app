@@ -108,6 +108,7 @@ const EuCovidCertValidComponent = (
           }
         >
           <Image
+            accessibilityIgnoresInvertColors
             source={{
               uri: withBase64Uri(props.validCertificate.qrCode.content, "png")
             }}
@@ -144,7 +145,7 @@ const addBottomSheetItem = (config: {
   subTitle: string;
   onPress: () => void;
 }) => (
-  <Pressable onPress={config.onPress} style={styles.container}>
+  <Pressable accessibilityRole="button" onPress={config.onPress} style={styles.container}>
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View style={IOStyles.flex}>

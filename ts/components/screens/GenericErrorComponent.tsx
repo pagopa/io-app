@@ -108,6 +108,7 @@ const GenericErrorComponent = (props: Props) => {
         <View style={IOStyles.alignCenter}>
           <VSpacer size={40} />
           <Image
+            accessibilityIgnoresInvertColors
             source={
               props.image ||
               require("../../../img/wallet/errors/generic-error-icon.png")

@@ -68,7 +68,13 @@ const CdcBonusRequestInformationTos = () => {
               </H4>
               <H2>{bonusTypeLocalizedContent.title}</H2>
             </View>
-            {cdcLogo && <Image source={cdcLogo} style={styles.logo} />}
+            {cdcLogo && (
+              <Image
+                accessibilityIgnoresInvertColors
+                source={cdcLogo}
+                style={styles.logo}
+              />
+            )}
           </View>
           <VSpacer size={16} />
           <IORenderHtml

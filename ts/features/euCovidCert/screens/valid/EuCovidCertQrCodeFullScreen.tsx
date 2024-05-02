@@ -45,6 +45,7 @@ export const EuCovidCertQrCodeFullScreen = (
           <VSpacer size={40} />
           <VSpacer size={40} />
           <Image
+            accessibilityIgnoresInvertColors
             testID="fullScreenQRCode"
             accessible={true}
             accessibilityRole={"image"}

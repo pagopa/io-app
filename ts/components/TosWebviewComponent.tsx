@@ -1,16 +1,16 @@
+import {
+  ButtonSolid,
+  FooterWithButtons,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Image, StyleSheet, View, ViewProps } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import {
-  ButtonSolid,
-  VSpacer,
-  FooterWithButtons
-} from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
@@ -67,6 +67,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
   const renderError = () => (
     <View style={styles.errorContainer} testID={"toSErrorContainerView"}>
       <Image
+        accessibilityIgnoresInvertColors
         source={brokenLinkImage}
         resizeMode="contain"
         testID={"toSErrorContainerImage"}

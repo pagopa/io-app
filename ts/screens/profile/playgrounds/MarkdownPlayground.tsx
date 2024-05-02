@@ -122,6 +122,7 @@ const MarkdownPlayground = () => {
       >
         <View style={styles.row}>
           <TextInput
+            accessibilityLabel="Markdown content"
             multiline={true}
             placeholder={"paste here your markdown and press the button"}
             style={styles.textInput}

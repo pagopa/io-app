@@ -2,11 +2,11 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { View, Image, StyleSheet, ScrollView } from "react-native";
 import { FooterWithButtons } from "@pagopa/io-app-design-system";
+import ScreenHeader from "../../components/ScreenHeader";
 import AnimatedRing from "../../components/animations/AnimatedRing";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -88,6 +88,7 @@ const CardSelectionScreen: React.SFC<Props> = props => (
         />
 
         <Image
+          accessibilityIgnoresInvertColors
           source={require("../../../img/cie/place-card-illustration.png")}
           style={styles.img}
         />

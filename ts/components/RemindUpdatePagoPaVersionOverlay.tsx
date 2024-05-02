@@ -67,6 +67,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
       <View style={styles.container}>
         <React.Fragment>
           <Image
+            accessibilityIgnoresInvertColors
             style={IOStyles.selfCenter}
             source={require("../../img/icons/update-icon.png")}
           />

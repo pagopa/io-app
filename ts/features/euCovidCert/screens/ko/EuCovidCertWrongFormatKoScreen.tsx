@@ -62,6 +62,7 @@ const EuCovidCertWrongFormatKoComponent: React.FC<{
     <InfoScreenComponent
       image={
         <Image
+          accessibilityIgnoresInvertColors
           source={wrongFormatImage}
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}

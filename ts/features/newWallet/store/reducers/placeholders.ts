@@ -3,12 +3,24 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import sha from "sha.js";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { WalletCardCategory } from "../../types";
+import { WalletCard, WalletCardCategory } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
+import {
+  walletResetPlaceholders,
+  walletToggleLoadingState
+} from "../actions/placeholders";
 
-export type WalletPlaceholdersState = { [key: string]: WalletCardCategory };
+export type WalletPlaceholders = { [key: string]: WalletCardCategory };
 
-const INITIAL_STATE: WalletPlaceholdersState = {};
+export type WalletPlaceholdersState = {
+  items: WalletPlaceholders;
+  isLoading: boolean;
+};
+
+const INITIAL_STATE: WalletPlaceholdersState = {
+  items: {},
+  isLoading: false
+};
 
 const reducer = (
   state: WalletPlaceholdersState = INITIAL_STATE,
@@ -16,22 +28,42 @@ const reducer = (
 ): WalletPlaceholdersState => {
   switch (action.type) {
     case getType(walletAddCards):
-      return action.payload.reduce(
-        (acc, { category, key }) => ({
-          ...acc,
-          [hashKey(key)]: category
-        }),
-        state
-      );
+      return {
+        ...state,
+        items: action.payload.reduce(cardPlaceholderReducerFn, state.items)
+      };
     case getType(walletRemoveCards):
-      return Object.fromEntries(
-        Object.entries(state).filter(
-          ([key]) => !action.payload.map(hashKey).includes(key)
+      return {
+        ...state,
+        items: Object.fromEntries(
+          Object.entries(state.items).filter(
+            ([key]) => !action.payload.map(hashKey).includes(key)
+          )
         )
-      );
+      };
+
+    case getType(walletToggleLoadingState):
+      return {
+        ...state,
+        isLoading: action.payload
+      };
+
+    case getType(walletResetPlaceholders):
+      return {
+        ...state,
+        items: action.payload.reduce(cardPlaceholderReducerFn, {})
+      };
   }
   return state;
 };
+
+const cardPlaceholderReducerFn = (
+  acc: WalletPlaceholders,
+  { category, key }: WalletCard
+) => ({
+  ...acc,
+  [hashKey(key)]: category
+});
 
 // We have no control over what can be used as a key to store cards.
 // Key hashing avoids storing sensitive data

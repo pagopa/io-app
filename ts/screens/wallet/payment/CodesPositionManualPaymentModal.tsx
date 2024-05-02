@@ -75,6 +75,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
           cropWidth={screenWidth}
         >
           <Image
+            accessibilityIgnoresInvertColors
             source={require("../../../../img/wallet/payment-notice-pagopa.png")}
             style={styles.imageStyle}
           />

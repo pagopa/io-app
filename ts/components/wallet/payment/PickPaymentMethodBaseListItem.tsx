@@ -1,16 +1,16 @@
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
-  View,
   Image,
   ImageSourcePropType,
+  Pressable,
   StyleSheet,
-  Pressable
+  View
 } from "react-native";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { WithTestID } from "../../../types/WithTestID";
 import { H4 } from "../../core/typography/H4";
 import { H5 } from "../../core/typography/H5";
 import { IOStyles } from "../../core/variables/IOStyles";
-import { WithTestID } from "../../../types/WithTestID";
 
 type Props = WithTestID<{
   isFirst: boolean;
@@ -52,11 +52,16 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
   onPress,
   testID
 }) => (
-  <Pressable onPress={onPress} testID={testID} style={{ paddingEnd: 0 }}>
+  <Pressable accessibilityRole="button" onPress={onPress} testID={testID} style={{ paddingEnd: 0 }}>
     <VSpacer />
     <View style={styles.contentContainer}>
       <View style={[styles.row, IOStyles.flex]}>
-        <Image source={logo} style={styles.cardLogo} testID={"cardImage"} />
+        <Image
+          accessibilityIgnoresInvertColors
+          source={logo}
+          style={styles.cardLogo}
+          testID={"cardImage"}
+        />
         <VSpacer size={16} />
         <View style={styles.paymentMethodInfo}>
           <H4 weight={"SemiBold"} color={"bluegreyDark"} numberOfLines={1}>

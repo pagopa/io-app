@@ -376,6 +376,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Body>
           <Image
+            accessibilityIgnoresInvertColors
             source={require("../../../img/messages/empty-transaction-list-icon.png")}
           />
         </View>

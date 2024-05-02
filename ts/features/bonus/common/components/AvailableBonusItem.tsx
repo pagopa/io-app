@@ -73,7 +73,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     bonusItem[getRemoteLocale()];
 
   return (
-    <Pressable
+    <Pressable accessibilityRole="button"
       style={styles.listItem}
       onPress={props.onPress}
       testID={`AvailableBonusItem-${bonusItem.id_type}`}
@@ -95,7 +95,11 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
       </View>
       <View style={[styles.columnRight, disabledStyle]}>
         {bonusItem.cover && (
-          <Image style={styles.methodImage} source={{ uri: bonusItem.cover }} />
+          <Image
+            accessibilityIgnoresInvertColors
+            style={styles.methodImage}
+            source={{ uri: bonusItem.cover }}
+          />
         )}
       </View>
     </Pressable>
