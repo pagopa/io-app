@@ -81,6 +81,7 @@ const ZendeskChooseCategory = (props: Props) => {
     const category = listItem.item;
     return (
       <Pressable
+        accessibilityRole="button"
         onPress={() => {
           selectedCategory(category);
           // Set category as custom field

@@ -125,7 +125,11 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       <View style={styles.errorContainer}>
         <VSpacer size={40} />
         <VSpacer size={40} />
-        <Image source={brokenLinkImage} resizeMode="contain" />
+        <Image
+          accessibilityIgnoresInvertColors={false}
+          source={brokenLinkImage}
+          resizeMode="contain"
+        />
         <Label style={styles.errorTitle} weight={"Bold"}>
           {I18n.t("authentication.errors.network.title")}
         </Label>

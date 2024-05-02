@@ -127,7 +127,11 @@ const UpdateAppModal: React.FC = () => {
           <H1>{I18n.t("titleUpdateApp")}</H1>
           <VSpacer size={24} />
           <Body>{I18n.t("messageUpdateApp")}</Body>
-          <Image style={styles.img} source={updateIcon} />
+          <Image
+            accessibilityIgnoresInvertColors={false}
+            style={styles.img}
+            source={updateIcon}
+          />
           {error && (
             <View style={IOStyles.alignCenter}>
               <VSpacer size={24} />

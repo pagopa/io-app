@@ -44,7 +44,11 @@ export const IdpAuthErrorScreen = ({
     <>
       <SafeAreaView edges={["top"]} style={IOStyles.flex}>
         <View style={styles.errorContainer}>
-          <Image source={brokenLinkImage} resizeMode="contain" />
+          <Image
+            accessibilityIgnoresInvertColors={false}
+            source={brokenLinkImage}
+            resizeMode="contain"
+          />
           <H4>
             {I18n.t(
               errorType === ErrorType.LOADING_ERROR

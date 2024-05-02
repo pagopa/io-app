@@ -14,6 +14,7 @@ type Props = {
 
 const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
   <Pressable
+    accessibilityRole="checkbox"
     style={{
       flexDirection: "row",
       justifyContent: "space-between",

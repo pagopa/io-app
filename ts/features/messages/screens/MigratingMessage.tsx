@@ -73,7 +73,11 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
                 <H2 style={styles.migrationMessageText}>
                   {I18n.t("messages.pagination.migration.failed")}
                 </H2>
-                <Pressable onPress={onRetry} style={{ width: "100%" }}>
+                <Pressable
+                  onPress={onRetry}
+                  accessibilityRole="button"
+                  style={{ width: "100%" }}
+                >
                   {/* TODO: Replace with BaseTypography component (custom Text
                 componented based on RN Text) */}
                   <Text style={styles.migrationMessageButtonText}>

@@ -141,6 +141,7 @@ const renderListItem = (
       const badgeStatus = getBadgeStatus(itemInfo.item, backendStatus);
       return (
         <Pressable
+          accessibilityRole="button"
           onPress={badgeStatus?.alert ?? itemInfo.item.onPress}
           style={styles.container}
         >
@@ -174,6 +175,7 @@ const renderListItem = (
     case "incoming":
       return (
         <Pressable
+          accessibilityRole="button"
           onPress={showPaymentMethodIncomingAlert}
           style={styles.container}
         >

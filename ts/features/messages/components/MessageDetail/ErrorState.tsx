@@ -54,6 +54,7 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
     <View style={styles.errorStateWrapper}>
       <View style={styles.errorStateContentWrapper}>
         <Image
+          accessibilityIgnoresInvertColors={false}
           source={require("../../../../../img/messages/error-message-detail-icon.png")}
         />
         <H1 style={styles.errorStateHeader}>

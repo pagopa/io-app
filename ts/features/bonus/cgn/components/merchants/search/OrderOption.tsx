@@ -12,6 +12,7 @@ type Props = {
 
 const OrderOption = ({ text, value, onPress, checked }: Props) => (
   <Pressable
+    accessibilityRole="radio"
     style={{
       flexDirection: "row",
       justifyContent: "space-between",

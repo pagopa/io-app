@@ -78,6 +78,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
     const subCategory = listItem.item;
     return (
       <Pressable
+        accessibilityRole="button"
         onPress={() => {
           selectedSubcategory(subCategory);
           // Set sub-category as custom field

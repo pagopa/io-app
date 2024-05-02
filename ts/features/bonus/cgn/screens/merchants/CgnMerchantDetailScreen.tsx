@@ -92,6 +92,7 @@ const CgnMerchantDetailScreen = () => {
       <SafeAreaView style={IOStyles.flex}>
         {merchantDetail.value.imageUrl !== undefined && (
           <Image
+            accessibilityIgnoresInvertColors
             source={{ uri: merchantDetail.value.imageUrl }}
             style={styles.merchantImage}
           />
