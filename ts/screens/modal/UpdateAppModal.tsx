@@ -3,19 +3,19 @@
  *
  */
 
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Button, Container, Text as NBButtonText } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
-  View,
   BackHandler,
   Image,
   Linking,
   Modal,
   Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import updateIcon from "../../../img/icons/update-icon.png";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
@@ -134,7 +134,11 @@ const UpdateAppModal: React.FC = () => {
             <H1>{I18n.t("titleUpdateApp")}</H1>
             <VSpacer size={24} />
             <Body>{I18n.t("messageUpdateApp")}</Body>
-            <Image style={styles.img} source={updateIcon} />
+            <Image
+              accessibilityIgnoresInvertColors
+              style={styles.img}
+              source={updateIcon}
+            />
             {error && (
               <View style={IOStyles.alignCenter}>
                 <VSpacer size={24} />

@@ -63,6 +63,8 @@ import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/scre
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
+import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
@@ -119,6 +121,8 @@ export type AppParamsList = {
   [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
   [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionParamsList>;
+
+  [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
 };
 
 /**
