@@ -172,11 +172,11 @@ export const idPayConfigurationMachine = setup({
       return event.input;
     },
     onError: {
-      target: "ConfigurationFailure"
+      target: ".ConfigurationFailure"
     },
     onDone: {
       actions: assign(event => ({ ...event.event.output })),
-      target: "LoadingInitiative"
+      target: ".LoadingInitiative"
     }
   },
   initial: "Idle",
@@ -260,10 +260,10 @@ export const idPayConfigurationMachine = setup({
               [
                 {
                   guard: "hasIbanList",
-                  target: "DisplayingIbanList"
+                  target: ".DisplayingIbanList"
                 },
                 {
-                  target: "DisplayingIbanOnboarding"
+                  target: ".DisplayingIbanOnboarding"
                 }
               ]
             ],
@@ -342,7 +342,7 @@ export const idPayConfigurationMachine = setup({
           on: {
             back: [
               {
-                target: "#idpay-configuration.DisplayingIbanOnboarding"
+                target: "DisplayingIbanOnboarding"
               }
             ],
             "confirm-iban-onboarding": {

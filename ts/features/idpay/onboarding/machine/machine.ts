@@ -227,6 +227,7 @@ export const idPayOnboardingMachine = setup({
 
     DisplayingSelfDeclarationList: {
       tags: [WAITING_USER_INPUT_TAG],
+      initial: "Evaluating",
       states: {
         Evaluating: {
           tags: [LOADING_TAG],
@@ -277,6 +278,7 @@ export const idPayOnboardingMachine = setup({
 
         DisplayingMultiSelfDeclarationList: {
           tags: [WAITING_USER_INPUT_TAG],
+          initial: "DisplayingMultiSelfDeclarationItem",
           states: {
             DisplayingMultiSelfDeclarationItem: {
               entry: "navigateToMultiSelfDeclarationListScreen",
