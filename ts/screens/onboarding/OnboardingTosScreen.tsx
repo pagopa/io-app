@@ -5,15 +5,19 @@
  * This screen is used also as Privacy screen From Profile section.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState, createRef, useCallback } from "react";
+import { Alert, View } from "react-native";
 import { useStore } from "react-redux";
-import { Body } from "../../components/core/typography/Body";
+import {
+  Alert as AlertDS,
+  H2,
+  IOStyles,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
@@ -23,33 +27,12 @@ import {
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import customVariables from "../../theme/variables";
-import { showToast } from "../../utils/showToast";
-import { H1 } from "../../components/core/typography/H1";
 import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
-
-const styles = StyleSheet.create({
-  titlePadding: {
-    paddingVertical: customVariables.spacingBase,
-    paddingHorizontal: customVariables.contentPadding
-  },
-  alert: {
-    backgroundColor: customVariables.toastColor,
-    borderRadius: 4,
-    marginTop: customVariables.spacerExtrasmallHeight,
-    marginBottom: 0,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignContent: "flex-start"
-  },
-  webViewContainer: {
-    flex: 1
-  }
-});
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
@@ -61,7 +44,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const viewRef = createRef<View>();
 
+  const store = useStore();
   const dispatch = useIODispatch();
   const potProfile = useIOSelector(profileSelector);
 
@@ -77,6 +62,8 @@ const OnboardingTosScreen = () => {
   const tosConfig = useIOSelector(tosConfigSelector);
   const tosVersion = tosConfig.tos_version;
   const privacyUrl = tosConfig.tos_url;
+
+  const flow = getFlowType(true, isFirstOnBoarding);
 
   const hasAcceptedCurrentTos = pot.getOrElse(
     pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
@@ -95,22 +82,26 @@ const OnboardingTosScreen = () => {
 
   useEffect(() => {
     if (hasProfileError) {
-      showToast(I18n.t("global.genericError"));
+      IOToast.error(I18n.t("global.genericError"));
     }
   }, [hasProfileError]);
 
-  const handleLoadEnd = useCallback(() => {
+  const handleLoadEnd = () => {
     setIsLoading(false);
-  }, [setIsLoading]);
+  };
 
-  const handleReload = useCallback(() => {
+  const handleReload = () => {
     setIsLoading(true);
-  }, [setIsLoading]);
+  };
+  const onAcceptTos = useCallback(() => {
+    dispatch(tosAccepted(tosVersion));
+    void trackTosAccepted(tosVersion, flow, store.getState());
+  }, [dispatch, flow, store, tosVersion]);
 
   const handleGoBack = () =>
     Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
+      I18n.t("onboarding.exitAlert.title"),
+      I18n.t("onboarding.exitAlert.description"),
       [
         {
           text: I18n.t("global.buttons.cancel"),
@@ -120,64 +111,60 @@ const OnboardingTosScreen = () => {
           text: I18n.t("global.buttons.exit"),
           style: "default",
           onPress: () => {
-            trackTosUserExit(getFlowType(true, isFirstOnBoarding));
+            trackTosUserExit(flow);
             dispatch(abortOnboarding());
           }
         }
       ]
     );
 
-  const store = useStore();
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    goBack: handleGoBack,
+    contextualHelpMarkdown,
+    faqCategories: ["privacy"]
+  });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
-      <BaseScreenComponent
-        goBack={handleGoBack}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["privacy"]}
-        headerTitle={I18n.t("onboarding.tos.headerTitle")}
-      >
-        <SafeAreaView style={styles.webViewContainer}>
-          <View style={styles.titlePadding}>
-            <H1
-              accessible={true}
-              accessibilityRole="header"
-              weight="Bold"
-              testID={"screen-content-header-title"}
-              color={"bluegreyDark"}
-            >
-              {I18n.t("profile.main.privacy.privacyPolicy.title")}
-            </H1>
-          </View>
-          {!hasAcceptedCurrentTos && (
-            <View
-              style={[styles.alert, styles.titlePadding]}
-              testID={"currentToSNotAcceptedView"}
-            >
-              <Body testID={"currentToSNotAcceptedText"}>
-                {hasAcceptedOldTosVersion
+      <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
+        <View style={IOStyles.horizontalContentPadding}>
+          <H2
+            accessible={true}
+            accessibilityRole="header"
+            testID="screen-content-header-title"
+          >
+            {I18n.t("profile.main.privacy.privacyPolicy.title")}
+          </H2>
+          <VSpacer size={16} />
+        </View>
+        {!hasAcceptedCurrentTos && (
+          <View
+            style={IOStyles.horizontalContentPadding}
+            testID={"currentToSNotAcceptedView"}
+          >
+            <AlertDS
+              viewRef={viewRef}
+              testID="currentToSNotAcceptedText"
+              variant="info"
+              content={
+                hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
-                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
-              </Body>
-            </View>
-          )}
-          <TosWebviewComponent
-            handleLoadEnd={handleLoadEnd}
-            handleReload={handleReload}
-            webViewSource={{ uri: privacyUrl }}
-            shouldRenderFooter={!isLoading}
-            onExit={handleGoBack}
-            onAcceptTos={() => {
-              dispatch(tosAccepted(tosVersion));
-              void trackTosAccepted(
-                tosVersion,
-                getFlowType(true, isFirstOnBoarding),
-                store.getState()
-              );
-            }}
-          />
-        </SafeAreaView>
-      </BaseScreenComponent>
+                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")
+              }
+            />
+          </View>
+        )}
+        <TosWebviewComponent
+          flow={flow}
+          handleLoadEnd={handleLoadEnd}
+          handleReload={handleReload}
+          webViewSource={{ uri: privacyUrl }}
+          shouldRenderFooter={!isLoading}
+          onAcceptTos={onAcceptTos}
+        />
+      </SafeAreaView>
     </LoadingSpinnerOverlay>
   );
 };
