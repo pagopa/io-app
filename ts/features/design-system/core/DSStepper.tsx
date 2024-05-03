@@ -1,6 +1,5 @@
 import {
   H3,
-  IOStyles,
   IOVisualCostants,
   Stepper,
   VSpacer,

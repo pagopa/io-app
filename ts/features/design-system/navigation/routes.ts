@@ -21,6 +21,7 @@ const DESIGN_SYSTEM_ROUTES = {
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
     ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
     STEPPER: { route: "DESIGN_SYSTEM_STEPPER", title: "Stepper" },
+    OTP_INPUT: { route: "DESIGN_SYSTEM_OTP_INPUT", title: "OTP Input" },
     ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice & Banners" },
     CARDS: { route: "DESIGN_SYSTEM_CARDS", title: "Cards" },
     BOTTOM_SHEET: {
