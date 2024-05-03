@@ -2991,18 +2991,19 @@ features:
         title: Start with your Digital Identity
         content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
     authentication:
-      title: Con quale metodo vuoi identificarti?
-      header: Metodi disponibili
-      method:
-        spid:
-          title: SPID
-          description: Usa credenziali e app (o SMS)
-        ciePin:
-          title: CIE + PIN
-          description: Usa Carta d’Identità Elettronica e PIN
-        cieId:
-          title: CieID
-          description: Usa credenziali e app CieID
+      mode:
+        title: Con quale metodo vuoi identificarti?
+        header: Metodi disponibili
+        method:
+          spid:
+            title: SPID
+            subtitle: Usa credenziali e app (o SMS)
+          ciePin:
+            title: CIE + PIN
+            subtitle: Usa Carta d’Identità Elettronica e PIN
+          cieId:
+            title: CieID
+            subtitle: Usa credenziali e app CieID
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

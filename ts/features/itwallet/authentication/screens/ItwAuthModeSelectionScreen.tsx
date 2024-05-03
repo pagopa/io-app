@@ -57,15 +57,19 @@ export const ItwAuthModeSelectionScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.authentication.title") }}
+      title={{ label: I18n.t("features.itWallet.authentication.mode.title") }}
     >
       <ContentWrapper>
         <ListItemHeader
-          label={I18n.t("features.itWallet.authentication.header")}
+          label={I18n.t("features.itWallet.authentication.mode.header")}
         />
         <ModuleNavigation
-          title={I18n.t("features.itWallet.authentication.method.spid.title")}
-          subtitle="Usa credenziali e app (o SMS)"
+          title={I18n.t(
+            "features.itWallet.authentication.mode.method.spid.title"
+          )}
+          subtitle={I18n.t(
+            "features.itWallet.authentication.mode.method.spid.subtitle"
+          )}
           icon="spid"
           onPress={handleSpidPress}
         />
@@ -74,9 +78,11 @@ export const ItwAuthModeSelectionScreen = () => {
           <>
             <ModuleNavigation
               title={I18n.t(
-                "features.itWallet.authentication.method.ciePin.title"
+                "features.itWallet.authentication.mode.method.ciePin.title"
               )}
-              subtitle="Usa Carta d’Identità Elettronica e PIN"
+              subtitle={I18n.t(
+                "features.itWallet.authentication.mode.method.ciePin.subtitle"
+              )}
               icon="fiscalCodeIndividual"
               onPress={handleCiePinPress}
             />
@@ -84,8 +90,12 @@ export const ItwAuthModeSelectionScreen = () => {
           </>
         )}
         <ModuleNavigation
-          title={I18n.t("features.itWallet.authentication.method.cieId.title")}
-          subtitle="Usa credenziali e app CieID"
+          title={I18n.t(
+            "features.itWallet.authentication.mode.method.cieId.title"
+          )}
+          subtitle={I18n.t(
+            "features.itWallet.authentication.mode.method.cieId.subtitle"
+          )}
           icon="device"
           onPress={handleCieIdPress}
         />

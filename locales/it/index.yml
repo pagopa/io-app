@@ -2991,18 +2991,19 @@ features:
         title: Inizia dalla tua Identità Digitale
         content: "Usa le credenziali SPID o CIE per aggiungere la tua Identità Digitale al Portafoglio. **È un passaggio necessario per aggiungere i tuoi documenti digitali** (ad esempio la patente di guida) in modo sicuro.\n### Utile da sapere \nIn futuro potrai usare l’Identità Digitale salvata nel Portafoglio per identificarti tramite la funzionalità IT Wallet. \n\nPer maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()"
     authentication:
-      title: Con quale metodo vuoi identificarti?
-      header: Metodi disponibili
-      method:
-        spid:
-          title: SPID
-          description: Usa credenziali e app (o SMS)
-        ciePin:
-          title: CIE + PIN
-          description: Usa Carta d’Identità Elettronica e PIN
-        cieId:
-          title: CieID
-          description: Usa credenziali e app CieID
+      mode:
+        title: Con quale metodo vuoi identificarti?
+        header: Metodi disponibili
+        method:
+          spid:
+            title: SPID
+            subtitle: Usa credenziali e app (o SMS)
+          ciePin:
+            title: CIE + PIN
+            subtitle: Usa Carta d’Identità Elettronica e PIN
+          cieId:
+            title: CieID
+            subtitle: Usa credenziali e app CieID
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
