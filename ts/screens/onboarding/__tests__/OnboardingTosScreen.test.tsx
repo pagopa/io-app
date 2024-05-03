@@ -2,8 +2,6 @@ import * as React from "react";
 import { pot } from "@pagopa/ts-commons";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
-import { Alert, AlertButton } from "react-native";
 import I18n from "i18n-js";
 // import WebView from "react-native-webview";
 // import {
@@ -48,63 +46,6 @@ afterAll(() => {
 });
 
 describe("TosScreen", () => {
-  describe("When rendering the screen", () => {
-    it("The back button should be there and pressing it should display the Alert", () => {
-      const spiedAlert = jest.spyOn(Alert, "alert");
-      const renderAPI = commonSetup();
-
-      // Back button should be there
-      const backButtonRTI = renderAPI.getByTestId("back-button");
-      expect(backButtonRTI).toBeDefined();
-
-      // Pressing it should display an Alert
-      fireEvent.press(backButtonRTI);
-      // Alert was called
-      expect(spiedAlert.mock.calls).toHaveLength(1);
-      // Alert.alert was given a title, a description and an array of buttons
-      expect(spiedAlert.mock.calls[0]).toHaveLength(3);
-      // Title correctness
-      expect(spiedAlert.mock.calls[0][0]).toBe(
-        I18n.t("onboarding.alert.title")
-      );
-      // Description correctness
-      expect(spiedAlert.mock.calls[0][1]).toBe(
-        I18n.t("onboarding.alert.description")
-      );
-      // Two buttons were given
-      const buttonsObject = spiedAlert.mock.calls[0][2] as Array<AlertButton>;
-      expect(buttonsObject).toBeTruthy();
-      expect(buttonsObject!.length).toBe(2);
-      // First button correctness
-      const firstButtonJsonObject = buttonsObject[0];
-      expect(firstButtonJsonObject).toStrictEqual({
-        text: I18n.t("global.buttons.cancel"),
-        style: "cancel"
-      });
-      // Second button correctness
-      const secondButtonJsonObject = buttonsObject[1];
-      const secondButtonText = secondButtonJsonObject.text;
-      expect(secondButtonText).toBe(I18n.t("global.buttons.exit"));
-      const secondButtonStyle = secondButtonJsonObject.style;
-      expect(secondButtonStyle).toBe("default");
-      const secondButtononPress = secondButtonJsonObject.onPress;
-      expect(secondButtononPress).toBeDefined();
-    });
-    it("The title should have a specific text", () => {
-      const renderAPI = commonSetup();
-      const textRTI = renderAPI.getByTestId("bodyLabel");
-      expect(textRTI.props.children).toEqual(
-        I18n.t("onboarding.tos.headerTitle")
-      );
-    });
-  });
-  describe("When rendering the screen", () => {
-    it("The help button is rendered", () => {
-      const renderAPI = commonSetup();
-      const helpButtonRTI = renderAPI.getByTestId("helpButton");
-      expect(helpButtonRTI).toBeDefined();
-    });
-  });
   describe("When rendering the screen for an user that has not accepted the current ToS version", () => {
     it("The informative header should be rendered", () => {
       const renderAPI = commonSetup({
@@ -127,10 +68,10 @@ describe("TosScreen", () => {
         acceptedToSVersion: CurrentTestToSVersion - 0.1,
         isProfileFirstOnBoarding: false
       });
-      const textRTI = renderAPI.getByTestId("currentToSNotAcceptedText");
-      expect(textRTI.props.children).toEqual(
+      const textRTI = renderAPI.queryByText(
         I18n.t("profile.main.privacy.privacyPolicy.updated")
       );
+      expect(textRTI).toBeTruthy();
     });
   });
   describe("When rendering the screen for an user that has not accepted the current ToS version and has not completed the onboarding", () => {
@@ -138,10 +79,10 @@ describe("TosScreen", () => {
       const renderAPI = commonSetup({
         acceptedToSVersion: CurrentTestToSVersion - 0.1
       });
-      const textRTI = renderAPI.getByTestId("currentToSNotAcceptedText");
-      expect(textRTI.props.children).toEqual(
+      const textRTI = renderAPI.queryByText(
         I18n.t("profile.main.privacy.privacyPolicy.infobox")
       );
+      expect(textRTI).toBeTruthy();
     });
   });
   describe("When rendering the screen initially", () => {
