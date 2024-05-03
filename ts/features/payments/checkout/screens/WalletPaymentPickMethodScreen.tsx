@@ -4,7 +4,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useEffect } from "react";
+import _ from "lodash";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -25,6 +26,7 @@ import {
   walletPaymentDetailsSelector
 } from "../store/selectors";
 import {
+  notHasValidPaymentMethodsSelector,
   walletPaymentAllMethodsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
   walletPaymentSelectedWalletIdOptionSelector,
@@ -36,6 +38,7 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -50,6 +53,9 @@ const WalletPaymentPickMethodScreen = () => {
     walletPaymentIsTransactionActivatedSelector
   );
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const notHasValidPaymentMethods = useIOSelector(
+    notHasValidPaymentMethodsSelector
+  );
 
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -66,6 +72,26 @@ const WalletPaymentPickMethodScreen = () => {
       dispatch(paymentsGetPaymentUserMethodsAction.request());
     }, [dispatch])
   );
+
+  // If the user doesn't have any onboarded payment method and the backend doesn't return any payment method as guest ..
+  // .. we redirect the user to the outcome screen with an outcome that allow the user to start the onboarding process of a new payment method.
+  // .. This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
+  useEffect(() => {
+    if (notHasValidPaymentMethods) {
+      const paymentDetails = pot.toUndefined(paymentDetailsPot);
+      dispatch(
+        paymentsInitOnboardingWithRptIdToResume({
+          rptId: paymentDetails?.rptId
+        })
+      );
+      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
+        params: {
+          outcome: WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+        }
+      });
+    }
+  }, [notHasValidPaymentMethods, navigation, dispatch]);
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(
