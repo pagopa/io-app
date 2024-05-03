@@ -47,6 +47,7 @@ import {
   trackPNOptInMessageCTADisplaySuccess,
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
+import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -86,6 +87,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     O.toUndefined
   );
 
+  const hasRemoteContent = messageDetails?.hasRemoteContent ?? false;
   const hasAttachments = useIOSelector(state =>
     hasAttachmentsSelector(state, messageId)
   );
@@ -198,6 +200,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             <MessageDetailsPayment messageId={messageId} />
             <VSpacer size={16} />
             <MessageDetailsAttachments messageId={messageId} />
+            {hasRemoteContent && <RemoteContentBanner />}
           </ContentWrapper>
         </View>
         <VSpacer size={24} />
