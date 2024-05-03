@@ -1,5 +1,10 @@
 This file describes the reason for the patches applied.
 
+### detox+19.13.0
+Created on 03/05/2024
+
+- Apply [fix/ios-17-regression](https://github.com/wix/Detox/pull/4171)
+
 ### native-base+2.15.2
 Created on **25/03/2024**
 
