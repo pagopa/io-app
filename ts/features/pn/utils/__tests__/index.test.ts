@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import {
   canShowMorePaymentsLink,
   isPNOptInMessage,
+  notificationStatusToTimelineStatus,
   shouldUseBottomSheetForPayments
 } from "..";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -325,6 +326,57 @@ describe("canShowMorePaymentsLink", () => {
     );
     const showMorePayments = canShowMorePaymentsLink(false, payments);
     expect(showMorePayments).toBe(true);
+  });
+});
+
+describe("notificationStatusToTimelineStatus", () => {
+  it("should return 'viewed' for 'VIEWED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("VIEWED");
+    expect(timelineStatus).toBe("viewed");
+  });
+  it("should return 'effective' for 'EFFECTIVE_DATE'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("EFFECTIVE_DATE");
+    expect(timelineStatus).toBe("effective");
+  });
+  it("should return 'unreachable' for 'UNREACHABLE'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("UNREACHABLE");
+    expect(timelineStatus).toBe("unreachable");
+  });
+  it("should return 'cancelled' for 'CANCELLED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("CANCELLED");
+    expect(timelineStatus).toBe("cancelled");
+  });
+  it("should return 'default' for 'IN_VALIDATION'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("IN_VALIDATION");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'ACCEPTED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("ACCEPTED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'REFUSED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("REFUSED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'DELIVERING'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("DELIVERING");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'DELIVERED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("DELIVERED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'PAID'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("PAID");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for empty string", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for unmapped string", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("whatever");
+    expect(timelineStatus).toBe("default");
   });
 });
 

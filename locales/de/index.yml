@@ -268,6 +268,8 @@ startup:
   contextualHelp:
     title: "Initialisierungsprobleme?"
 login:
+  expiration_info: "Aus Sicherheitsgründen musst du dich alle 30 Tage mit SPID oder CIE anmelden."
+  expiration_info_FL: "Aus Sicherheitsgründen musst du dich einmal im Jahr mit SPID oder CIE anmelden."
   biometric_info: "Um dich anzumelden, gib einfach den Entsperrcode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
 inbox:
   enableButton: "Posteingang aktivieren"
@@ -373,7 +375,7 @@ profile:
         title: "Datenschutz und Nutzungsbedingungen"
         description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
         header: "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App"
-        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert"
+        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert."
         infobox: "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren"
         contextualHelpTitlePolicy: "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes"
         contextualHelpTitle: "Deine Datenschutzeinstellungen"
@@ -811,7 +813,6 @@ onboarding:
   tos:
     headerTitle: "IO einrichten"
     accept: "Akzeptieren"
-    error: "Ladefehler"
     alert:
       title: "Achtung"
       message: "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"
@@ -1628,16 +1629,11 @@ wallet:
       cancel: "Nein, zurück"
     methodSelection:
       header: "Zahlungsmethode auswählen"
-      yourMethods: "Deine Zahlungsmethoden"
-      otherMethods: "Andere Zahlungsmethoden"
+      yourMethods: "Gespeicherte"
+      otherMethods: "Alle Zahlungsmethoden"
       alert:
         body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
         cta: "OK, habe verstanden!"
-      missingMethodsError:
-        title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
-        subtitle: "Die Zahlungsmethode wird in deinem Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
-        addMethod: "Zahlungsmethode hinzufügen"
-        notNow: "Jetzt nicht"
     psp:
       title: "Wähle, von wem die Zahlung abgewickelt werden soll"
       description: "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor."
@@ -1898,6 +1894,11 @@ messageDetails:
     title: "Identifikationsdaten"
     messageId: "MitteilungsID"
     messageIdAccessibility: "MitteilungsID kopieren"
+    pagoPAHeader: "pagoPA Zahlungsaufforderung"
+    noticeCode: "Zahlungskodex"
+    noticeCodeAccessibility: "Zahlungskodex, kopieren"
+    entityFiscalCode: "Steuernummer Körperschaft"
+    entityFiscalCodeAccessibility: "Steuernummer Körperschaft, kopieren"
   contactsBottomSheet:
     title: "Hilfe"
     body: "Wenn du dir über den Inhalt der Nachricht im Unklaren bist, wende dich an die Körperschaft, von der du die Nachricht erhalten hast."
@@ -2012,6 +2013,9 @@ services:
   disableAllMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du alle Dienste deaktivierst, können diese dich nicht mehr über IO kontaktieren (bis du sie wieder aktivierst). Du kannst die Dienste weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
   close: "Schließen"
   emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
+  home:
+    institutions:
+      title: "National"
   details:
     failure:
       title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
@@ -2110,14 +2114,13 @@ openMaps:
 genericError: "Ein Fehler ist aufgetreten"
 titleUpdateApp: "Aktualisiere IO!"
 msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
-messageUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, musst du sie auf die neueste Version aktualisieren."
 titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
 messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen."
 openStore: "Öffne {{storeName}}"
 btnUpdateApp: "Aktualisiere IO"
 systemsOff:
-  title: "IO kann nicht verwendet werden"
-  closeApp: "Schließe die App und versuche es erneut"
+  title: "Es gibt ein Problem mit unseren Systemen"
+  closeApp: "Schließe die App und versuche es in ein paar Minuten erneut."
 contextualHelp:
   title: "IO hilft dir"
   sendPersonalInfo:
@@ -2406,18 +2409,24 @@ features:
       infoSection:
         title: "Informationen zur Zustellung"
         iun: "IUN-Code"
+        iunAccessibility: "IUN-Code, kopieren"
+        iunSectionTitle: "Zustellung"
       timeline:
+        goToSend: "Zugang zu SEND"
+        menuTitle: "Status der Zustellung"
+        newInfo: "In der Web-Version findest du weitere Einzelheiten, Quittungen und Bescheinigungen, die gegenüber Dritten vollstreckbar sind."
         title: "STATUS DER ZUSTELLUNG"
         status:
+          ACCEPTED: "Hinterlegt"
+          CANCELLED: "Annulliert"
           DELIVERED: "Zugestellt"
           DELIVERING: "In Zustellung"
-          UNREACHABLE: "Empfänger nicht auffindbar"
-          PAID: "Bezahlt"
-          ACCEPTED: "Hinterlegt"
           EFFECTIVE_DATE: "Abgeschlossen wegen Ablaufs der Hinterlegungsfrist"
+          UNREACHABLE: "Empfänger nicht auffindbar"
           VIEWED: "Gelesen"
+          PAID: "Bezahlt"         
           REFUSED: "VERWEIGERT"
-          CANCELLED: "Annulliert"
+          IN_VALIDATION: "IN VALIDIERUNG"
         expand: "Vorherigen Status anzeigen"
         info: "Über die Web-Version des Dienstes kannst du die Details zu jedem Status, die Annahmebestätigung und den Zustellnachweis, die gegenüber Dritten geltend gemacht werden können, einsehen"
         cta: "Zugang zur Webversion"
@@ -2453,6 +2462,8 @@ features:
       banner:
         content: "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst."
         action: "Zahlungsmethode hinzufügen"
+      status:
+        expired: "Abgelaufen"
     transactions:
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"
@@ -2462,6 +2473,11 @@ features:
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
+  itWallet:
+    discovery:
+      info:
+        title: "Beginne mit deiner Digitalen Identität"
+        content: "Verwende deine SPID- oder CIE-Anmeldedaten, um deine Digitale Identität zu deinem Konto hinzuzufügen. **Dies ist ein notwendiger Schritt, um deine digitalen Dokumente** (z.B. Führerschein) sicher hinzuzufügen.\n### Wissenswertes\nIn Zukunft kannst du die in dem Konto gespeicherte Digitale Identität verwenden, um dich über die IT-Wallet-Funktionalität zu identifizieren. \n\nFür weitere Informationen lies bitte die [Datenschutzrichtlinie]() und die [Nutzungsbedingungen]()."
 support:
   ticketList:
     noTicket:
@@ -2557,6 +2573,8 @@ unsupportedDevice:
   cta:
     faq: "Warum?"
 fastLogin:
+  loadingScreen:
+    title: "Wir authentifizieren dich"
   userInteraction:
     sessionExpired:
       noPin:

@@ -3,156 +3,116 @@
  *
  */
 
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Container, Text as NBButtonText } from "native-base";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  View,
-  BackHandler,
-  Image,
+  AccessibilityInfo,
   Linking,
   Modal,
-  Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import updateIcon from "../../../img/icons/update-icon.png";
-import { Body } from "../../components/core/typography/Body";
-import { H1 } from "../../components/core/typography/H1";
-import { Label } from "../../components/core/typography/Label";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../components/SectionStatus";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import {
+  IOVisualCostants,
+  ToastNotification
+} from "@pagopa/io-app-design-system";
+import Animated, {
+  Easing,
+  SequencedTransition,
+  SlideInUp,
+  SlideOutUp
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../utils/url";
+import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
+import { Dismissable } from "../../components/ui/Dismissable";
 import { trackForcedUpdateScreen, trackUpdateAppButton } from "./analytics";
-
-const ERROR_MESSAGE_TIMEOUT: Millisecond = 5000 as Millisecond;
-
-const styles = StyleSheet.create({
-  container: {
-    margin: customVariables.contentPadding,
-    flex: 1,
-    alignItems: "flex-start"
-  },
-  img: {
-    marginTop: customVariables.contentPaddingLarge,
-    alignSelf: "center"
-  }
-});
-
-type FooterProps = { onOpenAppStore: () => void };
-
-const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
-  <View style={IOStyles.footer}>
-    <>
-      <Button
-        block={true}
-        primary={true}
-        onPress={onOpenAppStore}
-        accessibilityRole={"button"}
-      >
-        <NBButtonText>{I18n.t("btnUpdateApp")}</NBButtonText>
-      </Button>
-      <VSpacer size={16} />
-    </>
-  </View>
-);
-
-const AndroidFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => {
-  const cancelButtonProps = {
-    cancel: true,
-    block: true,
-    onPress: () => BackHandler.exitApp(),
-    title: I18n.t("global.buttons.close")
-  };
-
-  const updateButtonProps = {
-    block: true,
-    primary: true,
-    onPress: onOpenAppStore,
-    title: I18n.t("btnUpdateApp")
-  };
-
-  return (
-    <FooterWithButtons
-      type="TwoButtonsInlineThird"
-      leftButton={cancelButtonProps}
-      rightButton={updateButtonProps}
-    />
-  );
-};
 
 const UpdateAppModal: React.FC = () => {
   // Disable Android back button
   useHardwareBackButton(() => true);
-
   trackForcedUpdateScreen();
 
-  // Reset the error state after a given timeout
-  const [error, setError] = useState(false);
+  const insets = useSafeAreaInsets();
+  const timeoutRef = useRef<number>();
+  const [isError, setIsError] = useState(false);
+
+  const title = I18n.t("titleUpdateApp");
+  const subtitle = I18n.t("messageUpdateApp");
+  const actionLabel = I18n.t("btnUpdateApp");
+  const errorMessage = I18n.t("msgErrorUpdateApp");
 
   useEffect(() => {
-    if (error) {
-      const timeoutHandle = setTimeout(
-        () => setError(false),
-        ERROR_MESSAGE_TIMEOUT
-      );
-
-      return () => clearTimeout(timeoutHandle);
+    if (isError) {
+      AccessibilityInfo.announceForAccessibility(errorMessage);
+      // eslint-disable-next-line functional/immutable-data
+      timeoutRef.current = setTimeout(() => setIsError(false), 5000);
     }
 
-    return undefined;
-  }, [error]);
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, [isError, errorMessage]);
 
   // Tries to open the native app store, falling to browser web store
   const openAppStore = useCallback(async () => {
     trackUpdateAppButton();
+
     try {
       await Linking.openURL(storeUrl);
     } catch (e) {
-      openWebUrl(webStoreURL, () => setError(true));
+      openWebUrl(webStoreURL, () => setIsError(true));
     }
+  }, []);
+
+  const handleCloseError = useCallback(() => {
+    setIsError(false);
   }, []);
 
   return (
     <Modal>
-      <BaseScreenComponent
-        appLogo={true}
-        goBack={false}
-        accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-        contextualHelp={emptyContextualHelp}
-      >
-        <Container>
-          <View style={styles.container}>
-            <H1>{I18n.t("titleUpdateApp")}</H1>
-            <VSpacer size={24} />
-            <Body>{I18n.t("messageUpdateApp")}</Body>
-            <Image style={styles.img} source={updateIcon} />
-            {error && (
-              <View style={IOStyles.alignCenter}>
-                <VSpacer size={24} />
-                <Label color="red" weight="SemiBold">
-                  {I18n.t("msgErrorUpdateApp")}
-                </Label>
-              </View>
-            )}
-          </View>
-        </Container>
-        <SectionStatusComponent sectionKey={"app_update_required"} />
-      </BaseScreenComponent>
-      {Platform.select({
-        default: <AndroidFooter onOpenAppStore={openAppStore} />,
-        ios: <IOSFooter onOpenAppStore={openAppStore} />
-      })}
+      <OperationResultScreenContent
+        pictogram="updateOS"
+        title={title}
+        subtitle={subtitle}
+        action={{
+          label: actionLabel,
+          accessibilityLabel: actionLabel,
+          onPress: openAppStore
+        }}
+      />
+      {/* Temporary, to be replaced after this Jira task (IOPID-1799) has been closed  */}
+      {isError && (
+        <View accessible style={[styles.alertContainer, { top: insets.top }]}>
+          <Animated.View
+            entering={SlideInUp.duration(300).easing(Easing.inOut(Easing.exp))}
+            exiting={SlideOutUp.duration(300).easing(Easing.inOut(Easing.exp))}
+            layout={SequencedTransition.duration(300)}
+            style={{ paddingBottom: 8 }}
+          >
+            <Dismissable onDismiss={handleCloseError}>
+              <ToastNotification
+                message={errorMessage}
+                icon="errorFilled"
+                variant="error"
+              />
+            </Dismissable>
+          </Animated.View>
+        </View>
+      )}
     </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  alertContainer: {
+    position: "absolute",
+    right: IOVisualCostants.appMarginDefault,
+    left: IOVisualCostants.appMarginDefault,
+    zIndex: 1000
+  }
+});
 
 export default UpdateAppModal;

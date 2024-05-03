@@ -3,38 +3,86 @@ import { View } from "react-native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {
-  getWalletCardsByCategoryWithFilterSelector,
-  selectWalletCards
+  selectIsWalletCardsLoading,
+  selectWalletCards,
+  selectWalletCardsByCategoryWithFilter,
+  selectWalletCategoriesIncludingPlaceholders,
+  selectWalletPlaceholdersByCategory
 } from "../store/selectors";
-import { WalletCardCategory, walletCardCategoryIcons } from "../types";
+import { walletCardCategoryIcons } from "../types";
 import { renderWalletCardFn } from "../utils";
-import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
+import { WalletCardSkeleton } from "./WalletCardSkeleton";
+import {
+  WalletCardsCategoryContainer,
+  WalletCardsCategoryContainerSkeleton
+} from "./WalletCardsCategoryContainer";
+import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 const WalletCardsContainer = () => {
+  const isLoading = useIOSelector(selectIsWalletCardsLoading);
   const cards = useIOSelector(selectWalletCards);
-  const cardsByCategory = useIOSelector(
-    getWalletCardsByCategoryWithFilterSelector
+  const cardsByCategory = useIOSelector(selectWalletCardsByCategoryWithFilter);
+  const placeholdersByCategory = useIOSelector(
+    selectWalletPlaceholdersByCategory
   );
+  const categories = useIOSelector(selectWalletCategoriesIncludingPlaceholders);
+  const placeholders = Object.values(placeholdersByCategory);
 
-  if (cards.length === 1) {
-    // Single card does not need grouping
+  if (isLoading && categories.length === 0) {
+    return (
+      <WalletCardSkeleton
+        testID="walletCardSkeletonTestID"
+        cardProps={{}}
+        isStacked={false}
+      />
+    );
+  }
+
+  if (categories.length === 0) {
+    // In this case we can display the empty state: we do not have categories to display and
+    // the wallet is not in a loading state anymore
+    return <WalletEmptyScreenContent />;
+  }
+
+  if (cards.length === 1 && placeholders.length === 0) {
+    // Single card doesn't require grouping
     return renderWalletCardFn(cards[0]);
   }
 
   return (
     <View testID="walletCardsContainerTestID">
-      {Object.entries(cardsByCategory).map(([categoryString, cards]) => {
-        const category = categoryString as WalletCardCategory;
+      {categories.map(category => {
+        const iconName = walletCardCategoryIcons[category];
+        const label = I18n.t(`features.wallet.cards.categories.${category}`);
 
-        return (
-          <WalletCardsCategoryContainer
-            key={`cards_category_${category}`}
-            testID={`walletCardsCategoryTestID_${category}`}
-            iconName={walletCardCategoryIcons[category]}
-            label={I18n.t(`features.wallet.cards.categories.${category}`)}
-            cards={cards}
-          />
-        );
+        const cards = cardsByCategory[category];
+        const placeholders = placeholdersByCategory[category];
+
+        if (cards) {
+          return (
+            <WalletCardsCategoryContainer
+              key={`cards_category_${category}`}
+              testID={`walletCardsCategoryTestID_${category}`}
+              iconName={iconName}
+              label={label}
+              cards={cards}
+            />
+          );
+        }
+
+        if (placeholders) {
+          return (
+            <WalletCardsCategoryContainerSkeleton
+              key={`cards_category_skeleton_${category}`}
+              testID={`walletCardsCategorySkeletonTestID_${category}`}
+              iconName={iconName}
+              label={label}
+              cards={placeholders}
+            />
+          );
+        }
+
+        return null;
       })}
     </View>
   );

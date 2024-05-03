@@ -11,7 +11,7 @@ import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL =
-  "https://assets.cdn.io.italia.it" as NonEmptyString;
+  "https://assets.cdn.io.pagopa.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -58,8 +58,6 @@ export const mixpanelUrl = pipe(
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
-
-export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
@@ -194,7 +192,7 @@ export const unsupportedDeviceMoreInfoUrl: string = pipe(
 export const unsupportedDeviceLearnMoreUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
   NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
+  E.getOrElse(() => "https://io.italia.it/faq/#n1_15")
 );
 
 export const cieSpidMoreInfoUrl: string = pipe(
