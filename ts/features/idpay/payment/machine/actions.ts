@@ -1,15 +1,12 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { showToast } from "../../../../utils/showToast";
-import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayPaymentRoutes } from "../navigation/routes";
-import { Context } from "./context";
 
-const createActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
-) => {
+export const useActionsImplementation = () => {
+  const navigation = useIONavigation();
+  const toast = useIOToast();
+
   const navigateToAuthorizationScreen = () => {
     navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
       screen: IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
@@ -23,28 +20,17 @@ const createActionsImplementation = (
     });
 
   const showErrorToast = () =>
-    showToast(I18n.t("idpay.payment.authorization.error"), "danger", "top");
+    toast.error(I18n.t("idpay.payment.authorization.error"));
 
-  const exitAuthorization = (context: Context) => {
-    pipe(
-      context.transactionData,
-      O.map(({ initiativeId }) => {
-        navigation.popToTop();
-        navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
-          screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
-          params: { initiativeId }
-        });
-      }),
-      O.getOrElse(() => navigation.pop())
-    );
+  const closeAuthorization = () => {
+    navigation.pop();
+    navigation.pop();
   };
 
   return {
     navigateToAuthorizationScreen,
     navigateToResultScreen,
     showErrorToast,
-    exitAuthorization
+    closeAuthorization
   };
 };
-
-export { createActionsImplementation };

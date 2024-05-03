@@ -1,5 +1,6 @@
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { flow, pipe } from "fp-ts/lib/function";
 import { assertEvent, assign, fromPromise, setup } from "xstate";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import {
@@ -8,21 +9,17 @@ import {
   WAITING_USER_INPUT_TAG,
   notImplementedStub
 } from "../../../../xstate/utils";
-import { PaymentFailure } from "../types/PaymentFailure";
+import { IDPayTransactionCode } from "../common/types";
+import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
 import * as Context from "./context";
 import * as Events from "./events";
-import * as Input from "./input";
 
 export const idPayPaymentMachine = setup({
   types: {
-    input: {} as Input.Input,
     context: {} as Context.Context,
     events: {} as Events.Events
   },
   actors: {
-    onInit: fromPromise<Context.Context, Input.Input>(({ input }) =>
-      Input.Input(input)
-    ),
     preAuthorizePayment: fromPromise<AuthPaymentResponseDTO, string>(
       notImplementedStub
     ),
@@ -35,12 +32,20 @@ export const idPayPaymentMachine = setup({
     navigateToAuthorizationScreen: notImplementedStub,
     navigateToResultScreen: notImplementedStub,
     closeAuthorization: notImplementedStub,
-    setFailure: notImplementedStub,
-    showErrorToast: notImplementedStub
+    showErrorToast: notImplementedStub,
+    setFailure: (_ctx, _params: { data: any }) => notImplementedStub()
   },
   guards: {
-    isSessionExpired: () => false,
-    isBlockingFailure: () => false
+    isSessionExpired: ({ context }) =>
+      pipe(
+        context.failure,
+        O.map(failure => failure === PaymentFailureEnum.SESSION_EXPIRED),
+        O.getOrElse(() => false)
+      ),
+    asserTransactionCode: ({ event }) => {
+      assertEvent(event, "authorize-payment");
+      return pipe(event.trxCode, IDPayTransactionCode.decode, E.isRight);
+    }
   }
 }).createMachine({
   context: Context.Context,
@@ -51,13 +56,14 @@ export const idPayPaymentMachine = setup({
       tags: [LOADING_TAG],
       on: {
         "authorize-payment": {
-          target: "PreAuthorizing"
+          guard: "asserTransactionCode",
+          target: "PreAuthorizing",
+          actions: assign(({ event }) => ({ trxCode: event.trxCode }))
         }
       }
     },
     PreAuthorizing: {
-      tags: [LOADING_TAG],
-      entry: "navigateToAuthorizationScreen",
+      tags: [UPSERTING_TAG],
       invoke: {
         id: "preAuthorizePayment",
         src: "preAuthorizePayment",
@@ -73,7 +79,7 @@ export const idPayPaymentMachine = setup({
         },
         onError: {
           actions: assign(({ event }) => ({
-            failure: pipe(PaymentFailure.decode(event.error), O.fromEither)
+            failure: decodeFailure(event.error)
           })),
           target: "AuthorizationFailure"
         }
@@ -82,6 +88,7 @@ export const idPayPaymentMachine = setup({
 
     AwaitingConfirmation: {
       tags: [WAITING_USER_INPUT_TAG],
+      entry: "navigateToAuthorizationScreen",
       on: {
         next: {
           target: "Authorizing"
@@ -103,20 +110,16 @@ export const idPayPaymentMachine = setup({
         },
         onError: [
           {
+            guard: ({ event }) => isBlockingFalure(event.error),
             actions: assign(({ event }) => ({
-              failure: pipe(PaymentFailure.decode(event.error), O.fromEither)
-            }))
+              failure: decodeFailure(event.error)
+            })),
+            target: "AuthorizationFailure"
           },
-          [
-            {
-              guard: "isBlockingFailure",
-              target: "AuthorizationFailure"
-            },
-            {
-              actions: "showErrorToast",
-              target: "AwaitingConfirmation"
-            }
-          ]
+          {
+            actions: "showErrorToast",
+            target: "AwaitingConfirmation"
+          }
         ]
       }
     },
@@ -132,20 +135,16 @@ export const idPayPaymentMachine = setup({
         },
         onError: [
           {
+            guard: ({ event }) => isBlockingFalure(event.error),
             actions: assign(({ event }) => ({
-              failure: pipe(PaymentFailure.decode(event.error), O.fromEither)
-            }))
+              failure: decodeFailure(event.error)
+            })),
+            target: "AuthorizationFailure"
           },
-          [
-            {
-              guard: "isBlockingFailure",
-              target: "AuthorizationFailure"
-            },
-            {
-              actions: "showErrorToast",
-              target: "AwaitingConfirmation"
-            }
-          ]
+          {
+            actions: "showErrorToast",
+            target: "AwaitingConfirmation"
+          }
         ]
       }
     },
@@ -186,3 +185,11 @@ export const idPayPaymentMachine = setup({
     }
   }
 });
+
+const decodeFailure = flow(PaymentFailure.decode, O.fromEither);
+
+const isBlockingFalure = flow(
+  decodeFailure,
+  O.map(failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS),
+  O.getOrElse(() => false)
+);

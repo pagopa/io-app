@@ -85,7 +85,6 @@
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
-    "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\"",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -255,7 +254,6 @@
     "@types/xml2js": "^0.4.11",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
-    "@xstate/cli": "^0.3.3",
     "abortcontroller-polyfill": "1.7.3",
     "babel-jest": "^26.6.3",
     "babel-plugin-macros": "^3.1.0",

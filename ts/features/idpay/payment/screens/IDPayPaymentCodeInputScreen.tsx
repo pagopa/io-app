@@ -17,9 +17,9 @@ import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { isUpseringSelector } from "../../../../xstate/selectors";
 import { IDPayTransactionCode } from "../common/types";
 import { IdPayPaymentMachineContext } from "../machine/provider";
-import { isLoadingSelector } from "../../../../xstate/selectors";
 
 type InputState = {
   value?: string;
@@ -36,7 +36,7 @@ const IDPayPaymentCodeInputScreen = () => {
   });
 
   const isInputValid = pipe(inputState.code, O.map(E.isRight), O.toUndefined);
-  const isLoading = useSelector(isLoadingSelector);
+  const isUpserting = useSelector(isUpseringSelector);
 
   const navigateToPaymentAuthorization = () =>
     pipe(
@@ -89,9 +89,9 @@ const IDPayPaymentCodeInputScreen = () => {
             buttonProps: {
               label: I18n.t("idpay.payment.manualInput.button"),
               accessibilityLabel: I18n.t("idpay.payment.manualInput.button"),
-              disabled: !isInputValid,
+              disabled: !isInputValid || isUpserting,
               onPress: navigateToPaymentAuthorization,
-              loading: isLoading
+              loading: isUpserting
             }
           }}
         />
