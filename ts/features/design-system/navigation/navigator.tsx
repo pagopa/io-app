@@ -57,6 +57,7 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
+import { DSStepper } from "../core/DSStepper";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -349,6 +350,14 @@ const DesignSystemMainStack = () => {
         component={DSAlert}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.title
+        }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.COMPONENTS.STEPPER.route}
+        component={DSStepper}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.STEPPER.title
         }}
       />
 
