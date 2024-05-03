@@ -2175,7 +2175,7 @@ openMaps:
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version.."
 titleUpdateAppAlert: To continue, update IO
 messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To start using this new feature, please download the update.
 openStore: Open {{storeName}}
@@ -2991,18 +2991,19 @@ features:
         title: Start with your Digital Identity
         content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
     authentication:
-      title: Con quale metodo vuoi identificarti?
-      header: Metodi disponibili
-      method:
-        spid:
-          title: SPID
-          description: Usa credenziali e app (o SMS)
-        ciePin:
-          title: CIE + PIN
-          description: Usa Carta d’Identità Elettronica e PIN
-        cieId:
-          title: CieID
-          description: Usa credenziali e app CieID
+      mode:
+        title: Con quale metodo vuoi identificarti?
+        header: Metodi disponibili
+        method:
+          spid:
+            title: SPID
+            subtitle: Usa credenziali e app (o SMS)
+          ciePin:
+            title: CIE + PIN
+            subtitle: Usa Carta d’Identità Elettronica e PIN
+          cieId:
+            title: CieID
+            subtitle: Usa credenziali e app CieID
       nfc:
         title: Attiva l'NFC per continuare
         description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
@@ -3573,6 +3574,8 @@ unsupportedDevice:
   cta:
     faq: "Learn more"
 fastLogin:
+  loadingScreen:
+    title: "We are checking your identity"
   userInteraction:
     sessionExpired:
       noPin:

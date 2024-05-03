@@ -1,8 +1,23 @@
 import React from "react";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../i18n";
 import { WalletPaymentPspSortType } from "../types";
+import I18n from "../../../../i18n";
+
+const sortPspListOptions: Array<RadioItem<WalletPaymentPspSortType>> = [
+  {
+    id: "default",
+    value: I18n.t("wallet.payment.psp.sortBottomSheet.default")
+  },
+  {
+    id: "name",
+    value: I18n.t("wallet.payment.psp.sortBottomSheet.name")
+  },
+  {
+    id: "amount",
+    value: I18n.t("wallet.payment.psp.sortBottomSheet.amount")
+  }
+];
 
 type WalletPaymentSortPspBottomSheetProps = {
   onSortChange: (sortType: WalletPaymentPspSortType) => void;
@@ -10,37 +25,26 @@ type WalletPaymentSortPspBottomSheetProps = {
 
 /**
  * This custom hook, useSortPspBottomSheet, is designed to display a bottom sheet
- * containing detailed information about how the CIE (Carta d'Identità Elettronica) payment authorization works.
+ * with the sorting options for the PSPs.
  */
 const useSortPspBottomSheet = ({
   onSortChange
 }: WalletPaymentSortPspBottomSheetProps) => {
+  const [sortType, setSortType] =
+    React.useState<WalletPaymentPspSortType>("default");
+
+  const handleChangeSort = (sortType: WalletPaymentPspSortType) => {
+    setSortType(sortType);
+    onSortChange(sortType);
+  };
+
   const getModalContent = () => (
-    <>
-      <ListItemNav
-        hideChevron
-        accessibilityLabel={I18n.t(
-          "wallet.payment.psp.sortBottomSheet.default"
-        )}
-        value={I18n.t("wallet.payment.psp.sortBottomSheet.default")}
-        onPress={() => onSortChange("default")}
-      />
-      <Divider />
-      <ListItemNav
-        hideChevron
-        accessibilityLabel={I18n.t("wallet.payment.psp.sortBottomSheet.name")}
-        value={I18n.t("wallet.payment.psp.sortBottomSheet.name")}
-        onPress={() => onSortChange("name")}
-      />
-      <Divider />
-      <ListItemNav
-        hideChevron
-        accessibilityLabel={I18n.t("wallet.payment.psp.sortBottomSheet.amount")}
-        value={I18n.t("wallet.payment.psp.sortBottomSheet.amount")}
-        onPress={() => onSortChange("amount")}
-      />
-      <VSpacer size={24} />
-    </>
+    <RadioGroup<WalletPaymentPspSortType>
+      onPress={handleChangeSort}
+      type="radioListItem"
+      selectedItem={sortType}
+      items={sortPspListOptions}
+    />
   );
 
   const modal = useIOBottomSheetAutoresizableModal({
@@ -48,7 +52,7 @@ const useSortPspBottomSheet = ({
     title: ""
   });
 
-  return { ...modal };
+  return { sortType, ...modal };
 };
 
 export { useSortPspBottomSheet };

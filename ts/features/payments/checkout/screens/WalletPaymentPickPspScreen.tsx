@@ -36,8 +36,6 @@ const WalletPaymentPickPspScreen = () => {
   const navigation = useIONavigation();
 
   const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
-  const [sortType, setSortType] =
-    React.useState<WalletPaymentPspSortType>("default");
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
@@ -46,6 +44,20 @@ const WalletPaymentPickPspScreen = () => {
   const isError = pot.isError(pspListPot);
 
   const canContinue = O.isSome(selectedPspOption);
+
+  const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
+    setShowFeaturedPsp(sortType === "default");
+    dismiss();
+  };
+
+  const {
+    sortType,
+    bottomSheet: sortPspBottomSheet,
+    present,
+    dismiss
+  } = useSortPspBottomSheet({
+    onSortChange: handleChangePspSorting
+  });
 
   const sortedPspList = pipe(
     pot.toOption(pspListPot),
@@ -63,20 +75,6 @@ const WalletPaymentPickPspScreen = () => {
       });
     }
   }, [isError, navigation]);
-
-  const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
-    setShowFeaturedPsp(sortType === "default");
-    setSortType(sortType);
-    dismiss();
-  };
-
-  const {
-    bottomSheet: sortPspBottomSheet,
-    present,
-    dismiss
-  } = useSortPspBottomSheet({
-    onSortChange: handleChangePspSorting
-  });
 
   const handlePspSelection = React.useCallback(
     (bundleId: string) => {

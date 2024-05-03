@@ -624,7 +624,7 @@ authentication:
         placeholderLabel: PIN della Carta di identità elettronica
         label: Campo di inserimento per pin della Carta di Identità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
-      pinCardTitle: Inserisci il PIN della tua carta di identità
+      pinCardTitle: Inserisci il PIN della CIE
       pinCardHeader: Entra con CIE
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
@@ -2175,11 +2175,11 @@ openMaps:
 genericError: Si è verificato un errore
 titleUpdateApp: Aggiorna IO!
 msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
-messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
+messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare a usare l'app è necessario aggiornarla all'ultima versione."
 titleUpdateAppAlert: Per continuare, aggiorna IO
 messageUpdateAppAlert: È disponibile una nuova versione di IO su {{storeName}}, scaricala subito per utilizzare questa funzionalità.
 openStore: Apri {{storeName}}
-btnUpdateApp: Aggiorna l'app IO
+btnUpdateApp: Aggiorna l'app
 systemsOff:
   title: C'è un problema sui nostri sistemi
   closeApp: Chiudi l'app e riprova tra qualche minuto.
@@ -2991,18 +2991,19 @@ features:
         title: Inizia dalla tua Identità Digitale
         content: "Usa le credenziali SPID o CIE per aggiungere la tua Identità Digitale al Portafoglio. **È un passaggio necessario per aggiungere i tuoi documenti digitali** (ad esempio la patente di guida) in modo sicuro.\n### Utile da sapere \nIn futuro potrai usare l’Identità Digitale salvata nel Portafoglio per identificarti tramite la funzionalità IT Wallet. \n\nPer maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()"
     authentication:
-      title: Con quale metodo vuoi identificarti?
-      header: Metodi disponibili
-      method:
-        spid:
-          title: SPID
-          description: Usa credenziali e app (o SMS)
-        ciePin:
-          title: CIE + PIN
-          description: Usa Carta d’Identità Elettronica e PIN
-        cieId:
-          title: CieID
-          description: Usa credenziali e app CieID
+      mode:
+        title: Con quale metodo vuoi identificarti?
+        header: Metodi disponibili
+        method:
+          spid:
+            title: SPID
+            subtitle: Usa credenziali e app (o SMS)
+          ciePin:
+            title: CIE + PIN
+            subtitle: Usa Carta d’Identità Elettronica e PIN
+          cieId:
+            title: CieID
+            subtitle: Usa credenziali e app CieID
       nfc:
         title: Attiva l'NFC per continuare
         description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
@@ -3573,6 +3574,8 @@ unsupportedDevice:
   cta:
     faq: "Come mai?"
 fastLogin:
+  loadingScreen:
+    title: "Ti stiamo autenticando"
   userInteraction:
     sessionExpired:
       noPin:
