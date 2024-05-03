@@ -1,11 +1,10 @@
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import { GlobalEvents } from "../../../../xstate/types/events";
-import * as Input from "./input";
 
-export interface AutoInit {
-  readonly type: "xstate.init";
-  readonly input: Input.Input;
+export interface StartOnboarding {
+  readonly type: "start-onboarding";
+  readonly serviceId: string;
 }
 
 export interface ToggleBoolCriteria {
@@ -20,6 +19,6 @@ export interface SelectMultiConsent {
 
 export type Events =
   | GlobalEvents
-  | AutoInit
+  | StartOnboarding
   | SelectMultiConsent
   | ToggleBoolCriteria;

@@ -1,38 +1,19 @@
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { flow, pipe } from "fp-ts/lib/function";
 import { fromPromise } from "xstate";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { CodeEnum as TransactionErrorCodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
-import {
-  idPayApiBaseUrl,
-  idPayApiUatBaseUrl,
-  idPayTestToken
-} from "../../../../config";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { sessionInfoSelector } from "../../../../store/reducers/authentication";
-import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
-import { createIDPayClient } from "../../common/api/client";
+import { IDPayClient } from "../../common/api/client";
 import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
 
-export const useActorsImplementation = () => {
-  const dispatch = useIODispatch();
-  const sessionInfo = useIOSelector(sessionInfoSelector);
-  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-
-  if (O.isNone(sessionInfo)) {
-    throw new Error("Session info is undefined");
-  }
-
-  const { bpdToken } = sessionInfo.value;
-  const token = idPayTestToken ?? bpdToken;
-
-  const client = createIDPayClient(
-    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
-  );
-
+export const createActorsImplementation = (
+  client: IDPayClient,
+  token: string,
+  dispatch: ReturnType<typeof useIODispatch>
+) => {
   const handleSessionExpired = () => {
     dispatch(
       refreshSessionToken.request({

@@ -8,8 +8,14 @@ export const idPayLinkingOptions: PathConfigMap<AppParamsList> = {
   /**
    * IDPay initiative onboarding
    */
-  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR]: {
-    path: "idpay/onboarding/:serviceId"
+  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
+    path: "idpay/onboarding",
+    screens: {
+      /**
+       * Handles ioit://idpay/onboarding/{initiativeId}
+       */
+      [IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: "/:serviceId"
+    }
   },
   /**
    * IDPay initiative details

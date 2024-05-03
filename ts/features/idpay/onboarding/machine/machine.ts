@@ -12,7 +12,6 @@ import {
 import { OnboardingFailure } from "../types/OnboardingFailure";
 import * as Context from "./context";
 import * as Events from "./events";
-import * as Input from "./input";
 import {
   getBooleanSelfDeclarationListFromContext,
   getMultiSelfDeclarationListFromContext
@@ -20,7 +19,6 @@ import {
 
 export const idPayOnboardingMachine = setup({
   types: {
-    input: {} as Input.Input,
     context: {} as Context.Context,
     events: {} as Events.Events
   },
@@ -35,9 +33,6 @@ export const idPayOnboardingMachine = setup({
     closeOnboarding: notImplementedStub
   },
   actors: {
-    onInit: fromPromise<Context.Context, Input.Input>(({ input }) =>
-      Input.Input(input)
-    ),
     getInitiativeInfo: fromPromise<InitiativeDataDTO, string>(
       notImplementedStub
     ),
@@ -55,6 +50,10 @@ export const idPayOnboardingMachine = setup({
     )
   },
   guards: {
+    assertServiceId: ({ event }) => {
+      assertEvent(event, "start-onboarding");
+      return event.serviceId.length > 0;
+    },
     isSessionExpired: () => false,
     hasPdndCriteria: ({ context }) =>
       pipe(
@@ -79,23 +78,6 @@ export const idPayOnboardingMachine = setup({
 }).createMachine({
   id: "idpay-onboarding",
   context: Context.Context,
-  invoke: {
-    src: "onInit",
-    input: ({ event }) => {
-      assertEvent(event, "xstate.init");
-      return event.input;
-    },
-    onError: {
-      actions: assign(({ event }) => ({
-        failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
-      })),
-      target: ".OnboardingFailure"
-    },
-    onDone: {
-      actions: assign(event => ({ ...event.event.output })),
-      target: ".LoadingInitiative"
-    }
-  },
   initial: "LoadingInitiative",
   on: {
     close: {
@@ -103,6 +85,18 @@ export const idPayOnboardingMachine = setup({
     }
   },
   states: {
+    Idle: {
+      tags: [LOADING_TAG],
+      on: {
+        "start-onboarding": {
+          guard: "assertServiceId",
+          actions: assign(({ event }) => ({
+            serviceId: event.serviceId
+          })),
+          target: "LoadingInitiative"
+        }
+      }
+    },
     LoadingInitiative: {
       tags: [LOADING_TAG],
       entry: "navigateToInitiativeDetailsScreen",

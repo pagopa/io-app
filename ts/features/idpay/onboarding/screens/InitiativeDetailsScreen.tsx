@@ -1,5 +1,6 @@
 /* eslint-disable functional/immutable-data */
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -10,6 +11,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { isLoadingSelector } from "../../../../xstate/selectors";
 import {
   OnboardingDescriptionMarkdown,
   OnboardingDescriptionMarkdownSkeleton
@@ -18,9 +20,20 @@ import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
-import { isLoadingSelector } from "../../../../xstate/selectors";
+import { IdPayOnboardingParamsList } from "../navigation/params";
+
+export type InitiativeDetailsScreenParams = {
+  serviceId: string | undefined;
+};
+
+type InitiativeDetailsScreenParamsRouteProps = RouteProp<
+  IdPayOnboardingParamsList,
+  "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
+>;
 
 export const InitiativeDetailsScreen = () => {
+  const { params } = useRoute<InitiativeDetailsScreenParamsRouteProps>();
+
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -30,6 +43,15 @@ export const InitiativeDetailsScreen = () => {
 
   const handleGoBackPress = () => machine.send({ type: "close" });
   const handleContinuePress = () => machine.send({ type: "next" });
+
+  React.useEffect(() => {
+    if (params.serviceId) {
+      machine.send({
+        type: "start-onboarding",
+        serviceId: params.serviceId
+      });
+    }
+  }, [machine, params]);
 
   const onboardingPrivacyAdvice = pipe(
     initiative,

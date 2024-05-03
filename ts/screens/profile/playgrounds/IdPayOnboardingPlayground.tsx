@@ -27,8 +27,8 @@ const IdPayOnboardingPlayground = () => {
   const [serviceId, setServiceId] = React.useState<string | undefined>();
 
   const navigateToIDPayOnboarding = (serviceId: string) => {
-    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR,
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
       params: {
         serviceId
       }

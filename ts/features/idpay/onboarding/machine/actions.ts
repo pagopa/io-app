@@ -8,20 +8,24 @@ import * as Context from "./context";
 const createActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>
 ) => {
-  const navigateToInitiativeDetailsScreen = guardedNavigationAction(() =>
-    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
-    })
-  );
+  const navigateToInitiativeDetailsScreen =
+    guardedNavigationAction<Context.Context>(({ context }) =>
+      navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+        screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+        params: {
+          serviceId: context.serviceId
+        }
+      })
+    );
 
   const navigateToPdndCriteriaScreen = guardedNavigationAction(() =>
-    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
     })
   );
 
   const navigateToBoolSelfDeclarationListScreen = guardedNavigationAction(() =>
-    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     })
   );
@@ -29,7 +33,7 @@ const createActionsImplementation = (
   const navigateToMultiSelfDeclarationListScreen =
     guardedNavigationAction<Context.Context>(({ context }) =>
       navigation.navigate({
-        name: IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR,
+        name: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN,
         params: {
           screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
         },
@@ -38,12 +42,12 @@ const createActionsImplementation = (
     );
 
   const navigateToCompletionScreen = () =>
-    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
     });
 
   const navigateToFailureScreen = () =>
-    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR, {
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE
     });
 

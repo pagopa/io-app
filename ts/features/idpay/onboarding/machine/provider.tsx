@@ -19,21 +19,19 @@ import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
-import * as Input from "./input";
 import { idPayOnboardingMachine } from "./machine";
 
 type Props = {
   children: React.ReactNode;
-  input: Input.Input;
 };
 
 export const IdPayOnboardingMachineContext = createActorContext(
   idPayOnboardingMachine
 );
 
-export const IdPayOnboardingMachineProvider = ({ children, input }: Props) => {
+export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
   const dispatch = useIODispatch();
-  const rootNavigation = useIONavigation();
+  const navigation = useIONavigation();
 
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const preferredLanguageOption = useIOSelector(preferredLanguageSelector);
@@ -58,7 +56,7 @@ export const IdPayOnboardingMachineProvider = ({ children, input }: Props) => {
   );
 
   const actors = createActorsImplementation(client, token, language, dispatch);
-  const actions = createActionsImplementation(rootNavigation);
+  const actions = createActionsImplementation(navigation);
 
   const machine = idPayOnboardingMachine.provide({
     actors,
@@ -66,7 +64,7 @@ export const IdPayOnboardingMachineProvider = ({ children, input }: Props) => {
   });
 
   return (
-    <IdPayOnboardingMachineContext.Provider logic={machine} options={{ input }}>
+    <IdPayOnboardingMachineContext.Provider logic={machine}>
       {children}
     </IdPayOnboardingMachineContext.Provider>
   );

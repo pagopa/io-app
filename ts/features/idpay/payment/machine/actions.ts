@@ -1,12 +1,11 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IdPayPaymentRoutes } from "../navigation/routes";
 
-export const useActionsImplementation = () => {
-  const navigation = useIONavigation();
-  const toast = useIOToast();
-
+export const createActionsImplementation = (
+  navigation: ReturnType<typeof useIONavigation>
+) => {
   const navigateToAuthorizationScreen = () => {
     navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
       screen: IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
@@ -20,7 +19,7 @@ export const useActionsImplementation = () => {
     });
 
   const showErrorToast = () =>
-    toast.error(I18n.t("idpay.payment.authorization.error"));
+    IOToast.error(I18n.t("idpay.payment.authorization.error"));
 
   const closeAuthorization = () => {
     navigation.pop();

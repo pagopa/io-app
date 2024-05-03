@@ -93,7 +93,7 @@ export type AppParamsList = {
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
-  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_NAVIGATOR]: NavigatorScreenParams<IdPayOnboardingParamsList>;
+  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IdPayOnboardingParamsList>;
   [IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR]: NavigatorScreenParams<IdPayConfigurationParamsList>;
   [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: NavigatorScreenParams<IDPayDetailsParamsList>;
   [IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]: NavigatorScreenParams<IdPayUnsubscriptionParamsList>;
