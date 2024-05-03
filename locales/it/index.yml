@@ -880,7 +880,7 @@ onboarding:
       first: ripetizioni di numeri (000000)
       second: numeri in sequenza (654321)
     success:
-      message: Cambio pin avvenuto correttamente
+      message: Hai modificato il codice!
   pinConfirmation:
     title: Conferma il codice di sblocco
     errors:
