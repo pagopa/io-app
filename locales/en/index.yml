@@ -852,7 +852,7 @@ onboarding:
   tos:
     headerTitle: Configure IO
     accept: Accept and continue
-    error: Loading error
+    error: We could not load the Privacy Policy and Terms and Conditions
     alert:
       title: Attention
       message: Please, read the full content of the Terms of Service and Privacy Policy to continue
@@ -877,6 +877,9 @@ onboarding:
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
+  exitAlert: 
+    title: Do you want to quit IO?
+    description: You will have to log in again with SPID or CIE to use the app.
   biometric:
     headerTitle: Configure IO
     available:
@@ -1224,6 +1227,7 @@ wallet:
         title: "Payment method added successfully!"
         subtitle: ""
         primaryAction: "Vedi dettagli"
+        secondaryAction: "Continue"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
@@ -1684,8 +1688,8 @@ wallet:
       cancel: No, torna indietro
     methodSelection:
       header: Seleziona un metodo
-      yourMethods: I tuoi metodi
-      otherMethods: Altri metodi
+      yourMethods: Saved
+      otherMethods: All methods
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
@@ -1770,6 +1774,10 @@ wallet:
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
+      PAYMENT_METHODS_NOT_AVAILABLE:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        primaryAction: Aggiungi metodo
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2175,7 +2183,7 @@ openMaps:
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version.."
 titleUpdateAppAlert: To continue, update IO
 messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To start using this new feature, please download the update.
 openStore: Open {{storeName}}
@@ -2797,6 +2805,7 @@ features:
       cancelledMessage:
         body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
+        unpaidPaymentsNew: "Per l'eventuale rimborso di pagamenti, rivolgiti all'ente."
         payments: "Pagamenti"
       paymentSection:
         title: Avvisi pagoPA
@@ -2985,6 +2994,11 @@ features:
       status:
         failure: FALLITA
         success: ""
+  itWallet:
+    discovery:
+      info:
+        title: Start with your Digital Identity
+        content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3545,6 +3559,8 @@ unsupportedDevice:
   cta:
     faq: "Learn more"
 fastLogin:
+  loadingScreen:
+    title: "We are checking your identity"
   userInteraction:
     sessionExpired:
       noPin:

@@ -1,16 +1,16 @@
-import { pipe } from "fp-ts/lib/function";
+import { Icon } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React, { FC } from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
 import { PspData } from "../../../../definitions/pagopa/PspData";
 import { useImageResize } from "../../../features/wallet/onboarding/bancomat/hooks/useImageResize";
 import customVariables from "../../../theme/variables";
 import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { Body } from "../../core/typography/Body";
 import { H4 } from "../../core/typography/H4";
-import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 
 const ICON_SIZE = 24;
 const IMAGE_WIDTH = 100;
@@ -64,6 +64,7 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
       <View style={styles.line1}>
         {imageStyle ? (
           <Image
+            accessibilityIgnoresInvertColors
             source={{ uri: pspLogoUrl }}
             style={imageStyle}
             testID="logoPSP"

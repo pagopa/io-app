@@ -1,11 +1,12 @@
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import doubtImage from "../../../../../img/features/euCovidCert/certificate_not_found.png";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
+import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { H4 } from "../../../../components/core/typography/H4";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
@@ -15,7 +16,6 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { euCovidCertificateUrl } from "../../../../urls";
 import { openWebUrl } from "../../../../utils/url";
-import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
@@ -60,6 +60,7 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
     <InfoScreenComponent
       image={
         <Image
+          accessibilityIgnoresInvertColors
           source={doubtImage}
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}

@@ -1,14 +1,14 @@
 // component that represents the item in the radio list
+import {
+  ButtonSolid,
+  ContentWrapper,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import {
-  ButtonSolid,
-  Icon,
-  VSpacer,
-  ContentWrapper
-} from "@pagopa/io-app-design-system";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { H4 } from "../../../../../components/core/typography/H4";
 import I18n from "../../../../../i18n";
@@ -111,6 +111,7 @@ export const PspRadioItem = (
           ),
           imgDim => (
             <Image
+              accessibilityIgnoresInvertColors
               testID={"pspNameLogoID"}
               source={{ uri: psp.logoUrl }}
               style={[styles.pspLogo, { width: imgDim[0], height: imgDim[1] }]}
