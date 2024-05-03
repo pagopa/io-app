@@ -647,7 +647,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       onError={[Function]}
                                       source={
                                         Object {
-                                          "uri": "https://assets.cdn.io.italia.it/logos/services/service_one.png",
+                                          "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
                                         }
                                       }
                                       style={
