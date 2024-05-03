@@ -1,7 +1,7 @@
 ---
 accessibility:
   doubleTapToActivateHint: "Double tap to activate"
-  doubleTapToOpenKeyboardHint: Tocca due volte per aprire la tastiera.
+  doubleTapToOpenKeyboardHint: Tocca due volte lo schermo per aprire la tastiera
   buttons:
     torch:
       turnOn: "Accendi la torcia"
