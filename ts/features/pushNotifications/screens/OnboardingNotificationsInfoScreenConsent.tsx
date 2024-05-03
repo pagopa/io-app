@@ -1,11 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import {
-  AppState,
-  FlatList,
-  View,
-  Platform,
-  ListRenderItemInfo
-} from "react-native";
+import { AppState, FlatList, View, Platform, StyleSheet } from "react-native";
 import {
   Body,
   Divider,
@@ -18,7 +12,7 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { openAppSettings } from "../../../utils/appSettings";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -34,9 +28,23 @@ import {
   trackNotificationsOptInSkipSystemPermissions
 } from "../analytics";
 
+const styles = StyleSheet.create({
+  footer: { paddingBottom: IOStyles.footer.paddingBottom },
+  header: {
+    alignSelf: "flex-end",
+    flexDirection: "row",
+    paddingBottom: 18,
+    paddingRight: IOVisualCostants.appMarginDefault,
+    paddingTop: 24
+  },
+  listContainer: {
+    marginHorizontal: IOVisualCostants.appMarginDefault
+  }
+});
+
 export const OnboardingNotificationsInfoScreenConsent = () => {
+  const navigation = useNavigation();
   const dispatch = useIODispatch();
-  const safeAreaInsets = useSafeAreaInsets();
   const remindersEnabled = useIOSelector(
     pushNotificationRemindersEnabledSelector
   );
@@ -117,6 +125,13 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
     []
   );
 
+  const closeModalAndScreen = useCallback(() => {
+    // Dismiss the modal
+    navigation.goBack();
+
+    dispatch(notificationsInfoScreenConsent());
+  }, [dispatch, navigation]);
+
   useEffect(() => {
     const subscription = AppState.addEventListener(
       "change",
@@ -125,7 +140,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
           const authorizationStatus = await checkNotificationPermissions();
 
           if (authorizationStatus) {
-            dispatch(notificationsInfoScreenConsent());
+            closeModalAndScreen();
           }
         }
       }
@@ -134,7 +149,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
     return () => {
       subscription.remove();
     };
-  }, [dispatch]);
+  }, [closeModalAndScreen]);
 
   const goNext = useCallback(() => {
     // When this code executes, we know for sure that system notifications permissions are disabled,
@@ -146,8 +161,8 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
       trackNotificationsOptInReminderOnPermissionsOff();
     }
 
-    dispatch(notificationsInfoScreenConsent());
-  }, [dispatch, previewEnabled, remindersEnabled]);
+    closeModalAndScreen();
+  }, [closeModalAndScreen, previewEnabled, remindersEnabled]);
 
   const openSettings = useCallback(() => {
     trackNotificationsOptInOpenSettings();
@@ -169,34 +184,24 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
 
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row-reverse",
-          paddingBottom: 18,
-          paddingTop: 24
-        }}
-      >
-        <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-          <IconButton
-            icon="closeLarge"
-            color="neutral"
-            onPress={goNext}
-            accessibilityLabel={I18n.t("accessibility.buttons.torch.turnOff")}
-          />
-        </View>
+      <View style={styles.header}>
+        <IconButton
+          icon="closeLarge"
+          color="neutral"
+          onPress={goNext}
+          accessibilityLabel={I18n.t("global.buttons.close")}
+        />
       </View>
       <FlatList
         data={instructions}
-        renderItem={({ item, index }: ListRenderItemInfo<ListItemInfo>) => (
+        renderItem={({ item, index }) => (
           <ListItemInfo {...item} label={`${item.label} ${index + 1}`} />
         )}
-        contentContainerStyle={{
-          marginHorizontal: IOVisualCostants.appMarginDefault
-        }}
+        contentContainerStyle={styles.listContainer}
         ItemSeparatorComponent={() => <Divider />}
         ListHeaderComponent={ListHeader}
       />
-      <View style={{ paddingBottom: IOStyles.footer.paddingBottom }}>
+      <View style={styles.footer}>
         <FooterWithButtons
           primary={{
             type: "Solid",

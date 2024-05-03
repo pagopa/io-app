@@ -2,12 +2,14 @@ import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { remindersOptInEnabled } from "../../../config";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { profileUpsert } from "../../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
-import { checkNotificationPermissions, requestNotificationPermissions } from "../utils";
+import {
+  checkNotificationPermissions,
+  requestNotificationPermissions
+} from "../utils";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus
@@ -18,11 +20,6 @@ import { notificationsInfoScreenConsent } from "../store/actions/notifications";
 export function* checkNotificationsPreferencesSaga(
   userProfile: InitializedProfile
 ) {
-  if (!remindersOptInEnabled) {
-    // the feature flag is disabled
-    return;
-  }
-
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
   // Check if the user has already set a preference for push notification opt-in
@@ -42,13 +39,12 @@ export function* checkNotificationsPreferencesSaga(
   }
 
   // show the opt-in screen
-  yield* call(() =>
-    NavigationService.dispatchNavigationAction(
-      CommonActions.navigate(ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
-        params: { isFirstOnboarding }
-      })
-    )
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+      params: { isFirstOnboarding }
+    })
   );
 
   // wait for the notifications preferences to be set
