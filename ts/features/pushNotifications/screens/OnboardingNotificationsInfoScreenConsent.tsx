@@ -126,8 +126,12 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
   );
 
   const closeModalAndScreen = useCallback(() => {
-    // Dismiss the modal
-    navigation.goBack();
+    // Dismiss the modal (the check on `canGoBack` avoids
+    // a logged error when running tests, since in that
+    // case there is no screen below on the navigation stack)
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
 
     dispatch(notificationsInfoScreenConsent());
   }, [dispatch, navigation]);
@@ -189,6 +193,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
           icon="closeLarge"
           color="neutral"
           onPress={goNext}
+          testID="continue-btn"
           accessibilityLabel={I18n.t("global.buttons.close")}
         />
       </View>
