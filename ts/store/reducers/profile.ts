@@ -199,6 +199,24 @@ export const profilePreferencesSelector = createSelector(
     }))
 );
 
+export const pushNotificationRemindersEnabledSelector = (state: GlobalState) =>
+pipe(
+    state.profile,
+    pot.toOption,
+    O.chainNullableK(profile => profile.reminder_status),
+    O.map(reminderStatus => reminderStatus === ReminderStatusEnum.ENABLED),
+    O.getOrElse(() => false)
+);
+
+export const pushNotificationPreviewEnabledSelector = (state: GlobalState) =>
+pipe(
+    state.profile,
+    pot.toOption,
+    O.chainNullableK(profile => profile.push_notifications_content_type),
+    O.map(pushNotificationContentType => pushNotificationContentType === PushNotificationsContentTypeEnum.FULL),
+    O.getOrElse(() => false)
+);
+
 // return the profile notification settings actual state or undefined if ProfileState pot is in an Error state
 export const profileNotificationSettingsSelector = createSelector(
   profileSelector,

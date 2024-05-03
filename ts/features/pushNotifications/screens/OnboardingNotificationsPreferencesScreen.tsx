@@ -33,6 +33,7 @@ import {
 } from "../../../screens/profile/analytics";
 import { NotificationsPreferencesPreview } from "../components/NotificationsPreferencesPreview";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -109,6 +110,8 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       })
     );
   };
+
+  useHardwareBackButton(() => true);
 
   useHeaderSecondLevel({
     canGoBack: false,
