@@ -1,61 +1,65 @@
 import {
   ContentWrapper,
   Divider,
-  LabelLink,
   ListItemHeader,
-  ListItemInfo,
-  VSpacer
+  ListItemInfo
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Alert } from "react-native";
+import { Linking } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { FooterStackButton } from "../../common/components/FooterStackButton";
 
 export const ItwAuthNfcInstructionsScreen = () => {
-  const handleOpenSettingsPress = () => {
-    Alert.alert("Not implemented");
+  const navigation = useIONavigation();
+
+  const handleOpenSettingsPress = async () => {
+    await Linking.openSettings();
   };
 
   const handleClosePress = () => {
-    Alert.alert("Not implemented");
+    navigation.pop();
   };
 
   return (
     <RNavScreenWithLargeHeader
-      title={{ label: "Attiva l’NFC per continuare" }}
-      description="La funzionalità NFC permette al dispositivo di leggere la tua CIE."
+      title={{ label: I18n.t("features.itWallet.authentication.nfc.title") }}
+      description={I18n.t("features.itWallet.authentication.nfc.description")}
       fixedBottomSlot={
         <FooterStackButton
           primaryActionProps={{
-            label: "Vai alle Impostazioni",
+            label: I18n.t("features.itWallet.authentication.nfc.primaryAction"),
             onPress: handleOpenSettingsPress
           }}
           secondaryActionProps={{
-            label: "Ho fatto",
+            label: I18n.t(
+              "features.itWallet.authentication.nfc.secondaryAction"
+            ),
             onPress: handleClosePress
           }}
         />
       }
     >
       <ContentWrapper>
-        <LabelLink>Scopri di più</LabelLink>
-        <VSpacer size={16} />
-        <ListItemHeader label="Ecco come attivarlo:" />
+        <ListItemHeader
+          label={I18n.t("features.itWallet.authentication.nfc.header")}
+        />
         <ListItemInfo
-          label={"1. Vai alle Impostazioni"}
-          value={"1. Vai alle Impostazioni"}
+          label={"Step 1"}
+          value={I18n.t("features.itWallet.authentication.nfc.steps.1")}
           icon="systemSettingsAndroid"
         />
         <Divider />
         <ListItemInfo
-          label={`2. Cerca "NFC"`}
-          value={`2. Cerca "NFC"`}
+          label={`Step 2`}
+          value={I18n.t("features.itWallet.authentication.nfc.steps.2")}
           icon="systemAppsAndroid"
         />
         <Divider />
         <ListItemInfo
-          label={"3. Attivalo"}
-          value={"3. Attivalo"}
+          label={"Step 3"}
+          value={I18n.t("features.itWallet.authentication.nfc.steps.3")}
           icon="systemToggleInstructions"
         />
       </ContentWrapper>
