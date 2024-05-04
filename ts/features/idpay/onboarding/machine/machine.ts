@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { and, assertEvent, assign, fromPromise, setup } from "xstate";
@@ -113,6 +114,15 @@ export const idPayOnboardingMachine = setup({
                 initiative: O.some(event.output)
               })),
               target: "LoadingOnboardingStatus"
+            },
+            onError: {
+              actions: assign(({ event }) => ({
+                failure: pipe(
+                  OnboardingFailure.decode(event.error),
+                  O.fromEither
+                )
+              })),
+              target: "#idpay-onboarding.OnboardingFailure"
             }
           }
         },
@@ -126,16 +136,20 @@ export const idPayOnboardingMachine = setup({
               actions: assign(({ event }) => ({
                 onboardingStatus: event.output
               }))
+            },
+            onError: {
+              actions: assign(({ event }) => ({
+                failure: pipe(
+                  OnboardingFailure.decode(event.error),
+                  O.fromEither
+                )
+              })),
+              target: "#idpay-onboarding.OnboardingFailure"
             }
           }
         }
       },
-      onError: {
-        actions: assign(({ event }) => ({
-          failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
-        })),
-        target: "OnboardingFailure"
-      },
+
       onDone: {
         target: "DisplayingInitiativeInfo"
       }
