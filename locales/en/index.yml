@@ -1953,6 +1953,11 @@ messageDetails:
   bottomSheet:
     title: "What's a dynamic message?"
     body: "It's a message that the sender can edit after you've received it. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in specific cases. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
+    bodyPt1: "It's a message that the sender can edit "
+    bodyPt2: "after you've received it"
+    bodyPt3: ". This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only " 
+    bodyPt4: "specific cases" 
+    bodyPt5: ". For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message." 
   footer:
     contacts: "Contact the sender"
     showMoreData: "Show more data"
@@ -2808,6 +2813,7 @@ features:
       cancelledMessage:
         body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
+        unpaidPaymentsNew: "Per l'eventuale rimborso di pagamenti, rivolgiti all'ente."
         payments: "Pagamenti"
       paymentSection:
         title: Avvisi pagoPA

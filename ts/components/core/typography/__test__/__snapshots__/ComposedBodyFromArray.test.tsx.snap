@@ -1,0 +1,1315 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ComposedBodyFromArray should match snapshot, empty body, auto text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "auto",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+/>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, empty body, center text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "center",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+/>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, empty body, default text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "center",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+/>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, empty body, justify text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "justify",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+/>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, empty body, left text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "left",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+/>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, empty body, right text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "right",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+/>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "auto",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Multiple 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+  >
+    styles
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "300",
+        },
+      ]
+    }
+    weight="Light"
+  >
+     text 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "500",
+        },
+      ]
+    }
+    weight="Medium"
+  >
+    just
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+     weights
+  </Text>
+</Text>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, multiple items body, center text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "center",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Multiple 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+  >
+    styles
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "300",
+        },
+      ]
+    }
+    weight="Light"
+  >
+     text 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "500",
+        },
+      ]
+    }
+    weight="Medium"
+  >
+    just
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+     weights
+  </Text>
+</Text>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, multiple items body, default text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "center",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Multiple 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+  >
+    styles
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "300",
+        },
+      ]
+    }
+    weight="Light"
+  >
+     text 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "500",
+        },
+      ]
+    }
+    weight="Medium"
+  >
+    just
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+     weights
+  </Text>
+</Text>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, multiple items body, justify text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "justify",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Multiple 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+  >
+    styles
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "300",
+        },
+      ]
+    }
+    weight="Light"
+  >
+     text 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "500",
+        },
+      ]
+    }
+    weight="Medium"
+  >
+    just
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+     weights
+  </Text>
+</Text>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, multiple items body, left text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "left",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Multiple 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+  >
+    styles
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "300",
+        },
+      ]
+    }
+    weight="Light"
+  >
+     text 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "500",
+        },
+      ]
+    }
+    weight="Medium"
+  >
+    just
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+     weights
+  </Text>
+</Text>
+`;
+
+exports[`ComposedBodyFromArray should match snapshot, multiple items body, right text align 1`] = `
+<Text
+  allowFontScaling={false}
+  color="bluegrey"
+  defaultColor="bluegrey"
+  defaultWeight="Regular"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 16,
+      "lineHeight": 24,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "textAlign": "right",
+      },
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      },
+      Object {
+        "color": "#475A6D",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    Multiple 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+  >
+    styles
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "300",
+        },
+      ]
+    }
+    weight="Light"
+  >
+     text 
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "500",
+        },
+      ]
+    }
+    weight="Medium"
+  >
+    just
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+     weights
+  </Text>
+</Text>
+`;
