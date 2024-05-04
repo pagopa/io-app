@@ -5,16 +5,14 @@ import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayOnboardingRoutes } from "../navigation/routes";
 import * as Context from "./context";
 
-const createActionsImplementation = (
+export const createActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>
 ) => {
   const navigateToInitiativeDetailsScreen =
-    guardedNavigationAction<Context.Context>(({ context }) =>
+    guardedNavigationAction<Context.Context>(() =>
       navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
         screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-        params: {
-          serviceId: context.serviceId
-        }
+        params: {}
       })
     );
 
@@ -30,16 +28,11 @@ const createActionsImplementation = (
     })
   );
 
-  const navigateToMultiSelfDeclarationListScreen =
-    guardedNavigationAction<Context.Context>(({ context }) =>
-      navigation.navigate({
-        name: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN,
-        params: {
-          screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
-        },
-        key: String(context.selfDeclarationsMultiPage)
-      })
-    );
+  const navigateToMultiSelfDeclarationListScreen = guardedNavigationAction(() =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
+    })
+  );
 
   const navigateToCompletionScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
@@ -83,5 +76,3 @@ const createActionsImplementation = (
     closeOnboarding
   };
 };
-
-export { createActionsImplementation };

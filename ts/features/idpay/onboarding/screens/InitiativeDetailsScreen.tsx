@@ -23,7 +23,7 @@ import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
 
 export type InitiativeDetailsScreenParams = {
-  serviceId: string | undefined;
+  serviceId?: string;
 };
 
 type InitiativeDetailsScreenParamsRouteProps = RouteProp<
@@ -37,15 +37,8 @@ export const InitiativeDetailsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
-  const initiative = useSelector(selectInitiative);
-  const isLoading = useSelector(isLoadingSelector);
-  const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
-
-  const handleGoBackPress = () => machine.send({ type: "close" });
-  const handleContinuePress = () => machine.send({ type: "next" });
-
   React.useEffect(() => {
-    if (params.serviceId) {
+    if (params.serviceId !== undefined) {
       machine.send({
         type: "start-onboarding",
         serviceId: params.serviceId
@@ -53,15 +46,23 @@ export const InitiativeDetailsScreen = () => {
     }
   }, [machine, params]);
 
+  const initiative = useSelector(selectInitiative);
+  const isLoading = useSelector(isLoadingSelector);
+  const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
+
+  const handleGoBackPress = () => machine.send({ type: "close" });
+  const handleContinuePress = () => machine.send({ type: "next" });
+
   const onboardingPrivacyAdvice = pipe(
     initiative,
-    O.map(initiative => ({
-      privacyUrl: initiative.privacyLink,
-      tosUrl: initiative.tcLink
-    })),
     O.fold(
       () => null,
-      props => <OnboardingPrivacyAdvice {...props} />
+      initiative => (
+        <OnboardingPrivacyAdvice
+          privacyUrl={initiative.privacyLink}
+          tosUrl={initiative.tcLink}
+        />
+      )
     )
   );
 

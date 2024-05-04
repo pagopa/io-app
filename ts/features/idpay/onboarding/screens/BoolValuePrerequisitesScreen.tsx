@@ -16,13 +16,13 @@ import I18n from "../../../../i18n";
 import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../utils/url";
+import { isLoadingSelector } from "../../../../xstate/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
-import { isLoadingSelector } from "../../../../xstate/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;

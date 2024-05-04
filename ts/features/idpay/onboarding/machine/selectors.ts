@@ -15,7 +15,7 @@ type MachineSnapshot = SnapshotFrom<typeof idPayOnboardingMachine>;
 export const selectOnboardingFailure = (snapshot: MachineSnapshot) =>
   snapshot.context.failure;
 
-const selectRequiredCriteria = (snapshot: MachineSnapshot) =>
+export const selectRequiredCriteria = (snapshot: MachineSnapshot) =>
   snapshot.context.requiredCriteria;
 
 export const selectSelfDeclarationBoolAnswers = (snapshot: MachineSnapshot) =>
@@ -24,8 +24,9 @@ export const selectSelfDeclarationBoolAnswers = (snapshot: MachineSnapshot) =>
 const selectMultiConsents = (snapshot: MachineSnapshot) =>
   snapshot.context.selfDeclarationsMultiAnwsers;
 
-const selectCurrentPage = (snapshot: MachineSnapshot) =>
-  snapshot.context.selfDeclarationsMultiPage;
+export const selectCurrentMultiSelfDeclarationPage = (
+  snapshot: MachineSnapshot
+) => snapshot.context.selfDeclarationsMultiPage;
 
 export const selectInitiative = (snapshot: MachineSnapshot) =>
   snapshot.context.initiative;
@@ -45,7 +46,7 @@ const filterCriteria = <T extends SelfDeclarationDTO>(
     )
   ) as Array<T>;
 
-const multiRequiredCriteriaSelector = createSelector(
+export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
     filterCriteria<SelfDeclarationMultiDTO>(
@@ -63,12 +64,6 @@ export const boolRequiredCriteriaSelector = createSelector(
     )
 );
 
-export const criteriaToDisplaySelector = createSelector(
-  multiRequiredCriteriaSelector,
-  selectCurrentPage,
-  (criteria, currentPage) => criteria[currentPage]
-);
-
 export const pdndCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
@@ -79,16 +74,6 @@ export const pdndCriteriaSelector = createSelector(
         some => some.pdndCriteria
       )
     )
-);
-
-export const prerequisiteAnswerIndexSelector = createSelector(
-  criteriaToDisplaySelector,
-  selectMultiConsents,
-  selectCurrentPage,
-  (currentCriteria, multiConsents, currentPage) =>
-    multiConsents[currentPage]?.value === undefined
-      ? undefined
-      : currentCriteria.value.indexOf(multiConsents[currentPage]?.value)
 );
 
 export const getMultiSelfDeclarationListFromContext = (

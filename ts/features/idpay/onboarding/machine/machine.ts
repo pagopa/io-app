@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { assertEvent, assign, fromPromise, setup } from "xstate";
+import { and, assertEvent, assign, fromPromise, setup } from "xstate";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
@@ -71,6 +71,8 @@ export const idPayOnboardingMachine = setup({
       getBooleanSelfDeclarationListFromContext(context).length > 0,
     hasMultiSelfDeclarationList: ({ context }) =>
       getMultiSelfDeclarationListFromContext(context).length > 0,
+    isFirstMultiConsentPage: ({ context }) =>
+      context.selfDeclarationsMultiPage === 0,
     isLastMultiConsent: ({ context }) =>
       context.selfDeclarationsMultiPage >=
       getMultiSelfDeclarationListFromContext(context).length - 1
@@ -78,7 +80,7 @@ export const idPayOnboardingMachine = setup({
 }).createMachine({
   id: "idpay-onboarding",
   context: Context.Context,
-  initial: "LoadingInitiative",
+  initial: "Idle",
   on: {
     close: {
       actions: "closeOnboarding"
@@ -116,6 +118,7 @@ export const idPayOnboardingMachine = setup({
         },
 
         LoadingOnboardingStatus: {
+          type: "final",
           invoke: {
             src: "getOnboardingStatus",
             input: ({ context }) => selectInitiativeId(context),
@@ -277,13 +280,36 @@ export const idPayOnboardingMachine = setup({
             DisplayingMultiSelfDeclarationItem: {
               entry: "navigateToMultiSelfDeclarationListScreen",
               on: {
-                "select-multi-consent": [
+                "select-multi-consent": {
+                  actions: assign(({ context, event }) => ({
+                    selfDeclarationsMultiAnwsers: {
+                      ...context.selfDeclarationsMultiAnwsers,
+                      [context.selfDeclarationsMultiPage]: event.data
+                    }
+                  })),
+                  target: "EvaluatingMultiSelfDeclarationList"
+                },
+                back: [
                   {
-                    actions: assign(({ context, event }) => ({
-                      selfDeclarationsMultiAnwsers: {
-                        ...context.selfDeclarationsMultiAnwsers,
-                        [context.selfDeclarationsMultiPage]: event.data
-                      }
+                    guard: and([
+                      "isFirstMultiConsentPage",
+                      "hasBooleanSelfDeclarationList"
+                    ]),
+                    target:
+                      "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList"
+                  },
+                  {
+                    guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
+                    target: "#idpay-onboarding.DisplayingPdndCriteria"
+                  },
+                  {
+                    guard: "isFirstMultiConsentPage",
+                    target: "#idpay-onboarding.DisplayingInitiativeInfo"
+                  },
+                  {
+                    actions: assign(({ context }) => ({
+                      selfDeclarationsMultiPage:
+                        +context.selfDeclarationsMultiPage - 1
                     }))
                   }
                 ]

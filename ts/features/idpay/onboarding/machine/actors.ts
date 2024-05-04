@@ -19,60 +19,7 @@ import {
 import * as Context from "./context";
 import { getBooleanSelfDeclarationListFromContext } from "./selectors";
 
-/**
- * Maps the status of the initiative to a possibile UI failure state
- * @param status The status of the initiative
- * @returns A failure state enum, if any
- */
-const mapOnboardingStatusToFailure = (
-  status: OnboardingStatusEnum
-): OnboardingFailure | undefined => {
-  switch (status) {
-    case OnboardingStatusEnum.ONBOARDING_OK:
-    case OnboardingStatusEnum.SUSPENDED:
-      return OnboardingFailureEnum.USER_ONBOARDED;
-    case OnboardingStatusEnum.ELIGIBLE_KO:
-      return OnboardingFailureEnum.NOT_ELIGIBLE;
-    case OnboardingStatusEnum.ON_EVALUATION:
-      return OnboardingFailureEnum.ON_EVALUATION;
-    case OnboardingStatusEnum.UNSUBSCRIBED:
-      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
-    case OnboardingStatusEnum.ONBOARDING_KO:
-      return OnboardingFailureEnum.GENERIC;
-    default:
-      return undefined;
-  }
-};
-
-/**
- * Maps the backed error codes to UI failure states
- * @param code Error code from backend
- * @returns The associated failure state
- */
-const mapErrorCodeToFailure = (
-  code: OnboardingErrorCodeEnum
-): OnboardingFailure => {
-  switch (code) {
-    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
-      return OnboardingFailureEnum.INITIATIVE_NOT_FOUND;
-    case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
-      return OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS;
-    case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
-      return OnboardingFailureEnum.USER_NOT_IN_WHITELIST;
-    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
-      return OnboardingFailureEnum.INITIATIVE_NOT_STARTED;
-    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED:
-      return OnboardingFailureEnum.INITIATIVE_ENDED;
-    case OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED:
-      return OnboardingFailureEnum.BUDGET_EXHAUSTED;
-    case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:
-      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
-    default:
-      return OnboardingFailureEnum.GENERIC;
-  }
-};
-
-const createActorsImplementation = (
+export const createActorsImplementation = (
   client: IDPayClient,
   token: string,
   language: PreferredLanguage,
@@ -304,4 +251,55 @@ const createActorsImplementation = (
   };
 };
 
-export { createActorsImplementation };
+/**
+ * Maps the status of the initiative to a possibile UI failure state
+ * @param status The status of the initiative
+ * @returns A failure state enum, if any
+ */
+const mapOnboardingStatusToFailure = (
+  status: OnboardingStatusEnum
+): OnboardingFailure | undefined => {
+  switch (status) {
+    case OnboardingStatusEnum.ONBOARDING_OK:
+    case OnboardingStatusEnum.SUSPENDED:
+      return OnboardingFailureEnum.USER_ONBOARDED;
+    case OnboardingStatusEnum.ELIGIBLE_KO:
+      return OnboardingFailureEnum.NOT_ELIGIBLE;
+    case OnboardingStatusEnum.ON_EVALUATION:
+      return OnboardingFailureEnum.ON_EVALUATION;
+    case OnboardingStatusEnum.UNSUBSCRIBED:
+      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+    case OnboardingStatusEnum.ONBOARDING_KO:
+      return OnboardingFailureEnum.GENERIC;
+    default:
+      return undefined;
+  }
+};
+
+/**
+ * Maps the backed error codes to UI failure states
+ * @param code Error code from backend
+ * @returns The associated failure state
+ */
+const mapErrorCodeToFailure = (
+  code: OnboardingErrorCodeEnum
+): OnboardingFailure => {
+  switch (code) {
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
+      return OnboardingFailureEnum.INITIATIVE_NOT_FOUND;
+    case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
+      return OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS;
+    case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
+      return OnboardingFailureEnum.USER_NOT_IN_WHITELIST;
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
+      return OnboardingFailureEnum.INITIATIVE_NOT_STARTED;
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED:
+      return OnboardingFailureEnum.INITIATIVE_ENDED;
+    case OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED:
+      return OnboardingFailureEnum.BUDGET_EXHAUSTED;
+    case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:
+      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+    default:
+      return OnboardingFailureEnum.GENERIC;
+  }
+};
