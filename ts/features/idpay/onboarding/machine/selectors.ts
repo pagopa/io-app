@@ -15,14 +15,11 @@ type MachineSnapshot = SnapshotFrom<typeof idPayOnboardingMachine>;
 export const selectOnboardingFailure = (snapshot: MachineSnapshot) =>
   snapshot.context.failure;
 
-export const selectRequiredCriteria = (snapshot: MachineSnapshot) =>
+const selectRequiredCriteria = (snapshot: MachineSnapshot) =>
   snapshot.context.requiredCriteria;
 
 export const selectSelfDeclarationBoolAnswers = (snapshot: MachineSnapshot) =>
   snapshot.context.selfDeclarationsBoolAnswers;
-
-const selectMultiConsents = (snapshot: MachineSnapshot) =>
-  snapshot.context.selfDeclarationsMultiAnwsers;
 
 export const selectCurrentMultiSelfDeclarationPage = (
   snapshot: MachineSnapshot
