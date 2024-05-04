@@ -1,5 +1,4 @@
 import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -24,32 +23,19 @@ export const IbanOnboardingScreen = () => {
   const machine = useActorRef();
 
   const customGoBack = () => machine.send({ type: "back" });
-  const [iban, setIban] = React.useState<string | undefined>(undefined);
-  const [ibanName, setIbanName] = React.useState<string | undefined>(undefined);
-  const isLoading = useSelector(isLoadingSelector);
-  const isIbanValid = () =>
-    pipe(
-      iban,
-      O.fromNullable,
-      O.fold(
-        () => undefined,
-        iban => E.isRight(Iban.decode(iban))
-      )
-    );
+  const [iban, setIban] = React.useState<{
+    text: string;
+    value: O.Option<string>;
+  }>({ text: "", value: O.none });
 
-  const isIbanNameValid = () =>
-    pipe(
-      ibanName,
-      O.fromNullable,
-      O.fold(
-        () => undefined,
-        ibanName => ibanName.length > 0
-      )
-    );
+  const [ibanName, setIbanName] = React.useState<string>("");
+  const isLoading = useSelector(isLoadingSelector);
 
   useNavigationSwipeBackListener(() => {
     machine.send({ type: "back", skipNavigation: true });
   });
+
+  const isInputValid = O.isSome(iban.value) && ibanName.length > 0;
 
   return (
     <BaseScreenComponent
@@ -65,7 +51,7 @@ export const IbanOnboardingScreen = () => {
         <Link>{I18n.t("idpay.configuration.iban.onboarding.bodyLink")}</Link>
         <VSpacer size={24} />
         <LabelledItem
-          isValid={isIbanValid()}
+          isValid={O.isSome(iban.value)}
           label="IBAN"
           inputMaskProps={{
             type: "custom",
@@ -73,14 +59,15 @@ export const IbanOnboardingScreen = () => {
               mask: "AA99A9999999999999999999999"
             },
             keyboardType: "default",
-            value: iban,
-            onChangeText: val => setIban(val)
+            value: iban.text,
+            onChangeText: text =>
+              setIban({ value: pipe(Iban.decode(text), O.fromEither), text })
           }}
         />
         <VSpacer size={16} />
         <LabelledItem
           label={I18n.t("idpay.configuration.iban.onboarding.nameAssignInput")}
-          isValid={isIbanNameValid()}
+          isValid={O.isSome(iban.value)}
           inputProps={{
             keyboardType: "default",
             returnKeyType: "done",
@@ -113,21 +100,18 @@ export const IbanOnboardingScreen = () => {
             title: isLoading ? "" : I18n.t("global.buttons.continue"),
             isLoading,
             onPress: () => {
-              const isDataSendable =
-                iban !== undefined &&
-                ibanName !== undefined &&
-                ibanName.length > 0;
-              if (isDataSendable) {
-                machine.send({
-                  type: "confirm-iban-onboarding",
-                  ibanBody: { iban, description: ibanName }
-                });
-              } else {
-                setIbanName(""); // force re-render to show error in the UI
-              }
+              pipe(
+                iban.value,
+                O.map(iban =>
+                  machine.send({
+                    type: "confirm-iban-onboarding",
+                    ibanBody: { iban, description: ibanName || "" }
+                  })
+                )
+              );
             },
 
-            disabled: isLoading || !isIbanValid()
+            disabled: isLoading || !isInputValid
           }}
         />
       </SafeAreaView>

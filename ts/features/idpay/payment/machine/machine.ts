@@ -32,8 +32,7 @@ export const idPayPaymentMachine = setup({
     navigateToAuthorizationScreen: notImplementedStub,
     navigateToResultScreen: notImplementedStub,
     closeAuthorization: notImplementedStub,
-    showErrorToast: notImplementedStub,
-    setFailure: (_ctx, _params: { data: any }) => notImplementedStub()
+    showErrorToast: notImplementedStub
   },
   guards: {
     isSessionExpired: ({ context }) =>

@@ -1,11 +1,12 @@
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
 import { GlobalEvents } from "../../../../xstate/types/events";
-import * as Input from "./input";
+import { ConfigurationMode } from "../types";
 
-export interface AutoInit {
-  readonly type: "xstate.init";
-  readonly input: Input.Input;
+export interface StartConfiguration {
+  readonly type: "start-configuration";
+  readonly initiativeId: string;
+  readonly mode: ConfigurationMode;
 }
 
 export interface ConfirmIbanOnboarding {
@@ -49,7 +50,7 @@ export interface SkipInstruments {
 }
 
 export type Events =
-  | AutoInit
+  | StartConfiguration
   | NewIbanOnboarding
   | ConfirmIbanOnboarding
   | EnrollIban

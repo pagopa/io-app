@@ -10,7 +10,10 @@ import {
   WAITING_USER_INPUT_TAG,
   notImplementedStub
 } from "../../../../xstate/utils";
-import { OnboardingFailure } from "../types/OnboardingFailure";
+import {
+  OnboardingFailure,
+  OnboardingFailureEnum
+} from "../types/OnboardingFailure";
 import * as Context from "./context";
 import * as Events from "./events";
 import {
@@ -55,7 +58,6 @@ export const idPayOnboardingMachine = setup({
       assertEvent(event, "start-onboarding");
       return event.serviceId.length > 0;
     },
-    isSessionExpired: () => false,
     hasPdndCriteria: ({ context }) =>
       pipe(
         context.requiredCriteria,
@@ -374,18 +376,19 @@ export const idPayOnboardingMachine = setup({
     OnboardingFailure: {
       entry: "navigateToFailureScreen",
       always: {
-        guard: "isSessionExpired",
-        target: "SessionExpired"
+        guard: ({ context }) =>
+          pipe(
+            context.failure,
+            O.map(f => f === OnboardingFailureEnum.SESSION_EXPIRED),
+            O.getOrElse(() => false)
+          ),
+        actions: "closeOnboarding"
       },
       on: {
         next: {
           actions: "navigateToInitiativeMonitoringScreen"
         }
       }
-    },
-
-    SessionExpired: {
-      entry: "closeOnboarding"
     }
   }
 });

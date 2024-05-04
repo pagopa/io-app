@@ -17,7 +17,8 @@ const createActionsImplementation = (
       navigation.navigate(
         IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
         {
-          screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO
+          screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
+          params: {}
         }
       );
     }
@@ -27,7 +28,8 @@ const createActionsImplementation = (
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+        params: {}
       }
     )
   );
@@ -55,7 +57,8 @@ const createActionsImplementation = (
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen:
-          IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
+          IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+        params: {}
       }
     )
   );
@@ -88,6 +91,7 @@ const createActionsImplementation = (
       args.context.failure,
       InitiativeFailure.decode,
       O.fromEither,
+      O.map(failure => I18n.t(`idpay.configuration.failureStates.${failure}`)),
       O.map(IOToast.error)
     );
   };

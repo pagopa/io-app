@@ -25,23 +25,18 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
-import { createServicesImplementation } from "./actors";
+import { createActorsImplementation } from "./actors";
 import { idPayConfigurationMachine } from "./machine";
-import * as Input from "./input";
 
 type Props = {
   children: React.ReactNode;
-  input: Input.Input;
 };
 
 export const IdPayConfigurationMachineContext = createActorContext(
   idPayConfigurationMachine
 );
 
-export const IDPayConfigurationMachineProvider = ({
-  children,
-  input
-}: Props) => {
+export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
   const dispatch = useIODispatch();
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
@@ -89,7 +84,7 @@ export const IDPayConfigurationMachineProvider = ({
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
   );
 
-  const actors = createServicesImplementation(
+  const actors = createActorsImplementation(
     idPayClient,
     paymentManagerClient,
     pmSessionManager,
@@ -105,10 +100,7 @@ export const IDPayConfigurationMachineProvider = ({
   });
 
   return (
-    <IdPayConfigurationMachineContext.Provider
-      logic={machine}
-      options={{ input }}
-    >
+    <IdPayConfigurationMachineContext.Provider logic={machine}>
       {children}
     </IdPayConfigurationMachineContext.Provider>
   );

@@ -1,4 +1,5 @@
 import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
@@ -22,8 +23,21 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../machine/selectors";
+import { IdPayConfigurationParamsList } from "../navigation/params";
+import { ConfigurationMode } from "../types";
+
+export type IdPayIbanEnrollmentScreenParams = {
+  initiativeId?: string;
+};
+
+type RouteProps = RouteProp<
+  IdPayConfigurationParamsList,
+  "IDPAY_CONFIGURATION_IBAN_ENROLLMENT"
+>;
 
 export const IbanEnrollmentScreen = () => {
+  const { params } = useRoute<RouteProps>();
+  const { initiativeId } = params;
   const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
 
@@ -33,6 +47,18 @@ export const IbanEnrollmentScreen = () => {
   const isUpsertingIban = useSelector(isUpseringSelector);
   const enrolledIban = useSelector(selectEnrolledIban);
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (initiativeId !== undefined) {
+        machine.send({
+          type: "start-configuration",
+          initiativeId,
+          mode: ConfigurationMode.IBAN
+        });
+      }
+    }, [machine, initiativeId])
+  );
 
   React.useEffect(() => {
     if (enrolledIban) {

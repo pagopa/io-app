@@ -4,6 +4,7 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -32,10 +33,24 @@ import {
   selectIsInstrumentsOnlyMode,
   selectWalletInstruments
 } from "../machine/selectors";
+import { IdPayConfigurationParamsList } from "../navigation/params";
 import { InitiativeFailureType } from "../types/failure";
+import { ConfigurationMode } from "../types";
+
+export type IdPayInstrumentsEnrollmentScreenParams = {
+  initiativeId?: string;
+};
+
+type RouteProps = RouteProp<
+  IdPayConfigurationParamsList,
+  "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
+>;
 
 export const InstrumentsEnrollmentScreen = () => {
   const navigation = useIONavigation();
+  const { params } = useRoute<RouteProps>();
+  const { initiativeId } = params;
+
   const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
 
@@ -56,6 +71,18 @@ export const InstrumentsEnrollmentScreen = () => {
 
   const hasSelectedInstruments =
     Object.keys(initiativeInstrumentsByIdWallet).length > 0;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (initiativeId) {
+        machine.send({
+          type: "start-configuration",
+          initiativeId,
+          mode: ConfigurationMode.INSTRUMENTS
+        });
+      }
+    }, [machine, initiativeId])
+  );
 
   React.useEffect(() => {
     pipe(

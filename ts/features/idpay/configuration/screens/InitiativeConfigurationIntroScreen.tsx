@@ -2,13 +2,19 @@ import {
   Body,
   H1,
   IOColors,
+  IOIcons,
   IOStyles,
   Icon,
   LabelSmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -21,34 +27,25 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../../../xstate/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
+import { ConfigurationMode } from "../types";
+import { IdPayConfigurationParamsList } from "../navigation/params";
 
-type RequiredDataItemProps = {
-  icon?: React.ReactNode;
-  title: string;
-  subTitle: string;
+export type IdPayInitiativeConfigurationIntroScreenParams = {
+  initiativeId?: string;
+  mode?: ConfigurationMode;
 };
 
-const RequiredDataItem = (props: RequiredDataItemProps) => (
-  <View style={[IOStyles.row, styles.listItem]}>
-    {!!props.icon && <View style={styles.icon}>{props.icon}</View>}
-    <View>
-      <H4 weight="SemiBold" color="bluegreyDark">
-        {props.title}
-      </H4>
-      <LabelSmall weight="Regular" color="bluegrey">
-        {props.subTitle}
-      </LabelSmall>
-    </View>
-  </View>
-);
+type RouteProps = RouteProp<
+  IdPayConfigurationParamsList,
+  "IDPAY_CONFIGURATION_INTRO"
+>;
 
 export const InitiativeConfigurationIntroScreen = () => {
+  const navigation = useNavigation();
+  const { params } = useRoute<RouteProps>();
+  const { initiativeId, mode } = params;
   const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
-
-  const navigation = useNavigation();
-
-  const theme = useIOTheme();
 
   const isLoading = useSelector(isLoadingSelector);
 
@@ -62,32 +59,17 @@ export const InitiativeConfigurationIntroScreen = () => {
     </TouchableDefaultOpacity>
   );
 
-  const requiredDataItems: ReadonlyArray<RequiredDataItemProps> = [
-    {
-      icon: (
-        <Icon
-          name="institution"
-          size={24}
-          color={theme["interactiveElem-default"]}
-        />
-      ),
-      title: I18n.t("idpay.configuration.intro.requiredData.ibanTitle"),
-      subTitle: I18n.t("idpay.configuration.intro.requiredData.ibanSubtitle")
-    },
-    {
-      icon: (
-        <Icon
-          name="creditCard"
-          size={24}
-          color={theme["interactiveElem-default"]}
-        />
-      ),
-      title: I18n.t("idpay.configuration.intro.requiredData.instrumentTitle"),
-      subTitle: I18n.t(
-        "idpay.configuration.intro.requiredData.instrumentSubtitle"
-      )
-    }
-  ];
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!!initiativeId && !!mode) {
+        machine.send({
+          type: "start-configuration",
+          initiativeId,
+          mode
+        });
+      }
+    }, [machine, initiativeId, mode])
+  );
 
   return (
     <BaseScreenComponent
@@ -109,9 +91,24 @@ export const InitiativeConfigurationIntroScreen = () => {
                 {I18n.t("idpay.configuration.intro.requiredData.title")}
               </H3>
               <VSpacer size={8} />
-              {requiredDataItems.map((item, index) => (
-                <RequiredDataItem key={index} {...item} />
-              ))}
+              <RequiredDataItem
+                icon="creditCard"
+                title={I18n.t(
+                  "idpay.configuration.intro.requiredData.ibanTitle"
+                )}
+                subTitle={I18n.t(
+                  "idpay.configuration.intro.requiredData.ibanSubtitle"
+                )}
+              />
+              <RequiredDataItem
+                icon="institution"
+                title={I18n.t(
+                  "idpay.configuration.intro.requiredData.instrumentTitle"
+                )}
+                subTitle={I18n.t(
+                  "idpay.configuration.intro.requiredData.instrumentSubtitle"
+                )}
+              />
             </View>
           </ScrollView>
           <FooterWithButtons
@@ -124,6 +121,37 @@ export const InitiativeConfigurationIntroScreen = () => {
         </SafeAreaView>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
+  );
+};
+
+type RequiredDataItemProps = {
+  icon?: IOIcons;
+  title: string;
+  subTitle: string;
+};
+
+const RequiredDataItem = (props: RequiredDataItemProps) => {
+  const theme = useIOTheme();
+  return (
+    <View style={[IOStyles.row, styles.listItem]}>
+      {!!props.icon && (
+        <View style={styles.icon}>
+          <Icon
+            name={props.icon}
+            size={24}
+            color={theme["interactiveElem-default"]}
+          />
+        </View>
+      )}
+      <View>
+        <H4 weight="SemiBold" color="bluegreyDark">
+          {props.title}
+        </H4>
+        <LabelSmall weight="Regular" color="bluegrey">
+          {props.subTitle}
+        </LabelSmall>
+      </View>
+    </View>
   );
 };
 

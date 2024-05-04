@@ -84,7 +84,7 @@ const IdPayInitiativeDetailsScreen = () => {
 
   const navigateToConfiguration = () => {
     navigation.push(IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR, {
-      screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
+      screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
       params: { initiativeId, mode: ConfigurationMode.COMPLETE }
     });
   };

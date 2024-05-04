@@ -20,7 +20,7 @@ import { IDPayClient } from "../../common/api/client";
 import { InitiativeFailureType } from "../types/failure";
 import * as Events from "./events";
 
-const createServicesImplementation = (
+export const createActorsImplementation = (
   idPayClient: IDPayClient,
   paymentManagerClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
@@ -339,5 +339,3 @@ const createServicesImplementation = (
     instrumentsEnrollmentLogic
   };
 };
-
-export { createServicesImplementation };
