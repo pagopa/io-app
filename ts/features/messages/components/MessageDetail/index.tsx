@@ -38,7 +38,7 @@ import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
 import CtaBar from "./CtaBar";
-import { RemoteContentBanner } from "./RemoteContentBanner";
+import { LegacyRemoteContentBanner } from "./LegacyRemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
 import MessageContent from "./Content";
 import { MessageMarkdown } from "./MessageMarkdown";
@@ -226,7 +226,7 @@ const MessageDetailsComponent = ({
 
         {hasRemoteContent && isContentLoadCompleted ? (
           <>
-            <RemoteContentBanner />
+            <LegacyRemoteContentBanner />
             <VSpacer size={24} />
           </>
         ) : null}
