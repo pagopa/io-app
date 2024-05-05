@@ -7,6 +7,8 @@ import {
   isProfileEmailValidatedSelector,
   isProfileFirstOnBoarding,
   profileEmailSelector,
+  profileHasErrorSelector,
+  profileIsUpdatingSelector,
   ProfileState,
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
@@ -606,5 +608,123 @@ describe("pushNotificationPreviewEnabledSelector", () => {
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(true);
+  });
+});
+
+describe("profileHasErrorSelector", () => {
+  it("should return false for a pot.none profile", () => {
+    const globalState = {
+      profile: pot.none
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(false);
+  });
+  it("should return false for a pot.noneLoading profile", () => {
+    const globalState = {
+      profile: pot.noneLoading
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(false);
+  });
+  it("should return false for a pot.noneUpdating profile", () => {
+    const globalState = {
+      profile: pot.noneUpdating({})
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(false);
+  });
+  it("should return true for a pot.error profile", () => {
+    const globalState = {
+      profile: pot.noneError(new ProfileError("test error"))
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(true);
+  });
+  it("should return false for a pot.some profile", () => {
+    const globalState = {
+      profile: pot.some({})
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(false);
+  });
+  it("should return false for a pot.someLoading profile", () => {
+    const globalState = {
+      profile: pot.someLoading({})
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(false);
+  });
+  it("should return false for a pot.someUpdating profile", () => {
+    const globalState = {
+      profile: pot.someUpdating({}, {})
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(false);
+  });
+  it("should return true for a pot.none profile", () => {
+    const globalState = {
+      profile: pot.someError({}, new ProfileError("test error"))
+    } as GlobalState;
+    const hasError = profileHasErrorSelector(globalState);
+    expect(hasError).toBe(true);
+  });
+});
+
+describe("profileIsUpdatingSelector", () => {
+  it("should return false for a pot.none profile", () => {
+    const globalState = {
+      profile: pot.none
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(false);
+  });
+  it("should return false for a pot.noneLoading profile", () => {
+    const globalState = {
+      profile: pot.noneLoading
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(false);
+  });
+  it("should return true for a pot.noneUpdating profile", () => {
+    const globalState = {
+      profile: pot.noneUpdating({})
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(true);
+  });
+  it("should return false for a pot.error profile", () => {
+    const globalState = {
+      profile: pot.noneError(new ProfileError("test error"))
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(false);
+  });
+  it("should return false for a pot.some profile", () => {
+    const globalState = {
+      profile: pot.some({})
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(false);
+  });
+  it("should return false for a pot.someLoading profile", () => {
+    const globalState = {
+      profile: pot.someLoading({})
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(false);
+  });
+  it("should return true for a pot.someUpdating profile", () => {
+    const globalState = {
+      profile: pot.someUpdating({}, {})
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(true);
+  });
+  it("should return false for a pot.none profile", () => {
+    const globalState = {
+      profile: pot.someError({}, new ProfileError("test error"))
+    } as GlobalState;
+    const isUpdating = profileIsUpdatingSelector(globalState);
+    expect(isUpdating).toBe(false);
   });
 });

@@ -1,14 +1,10 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import {
-  Divider,
   VSpacer,
   ContentWrapper,
   IOStyles,
   ButtonSolid,
-  ListItemSwitch,
-  FeatureInfo,
   useIOToast,
   H1,
   Body
@@ -21,8 +17,10 @@ import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParam
 import { OnboardingParamsList } from "../../../navigation/params/OnboardingParamsList";
 import { profileUpsert } from "../../../store/actions/profile";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { profilePreferencesSelector } from "../../../store/reducers/profile";
-import { usePreviewMoreInfo } from "../hooks/usePreviewMoreInfo";
+import {
+  profileHasErrorSelector,
+  profileIsUpdatingSelector
+} from "../../../store/reducers/profile";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../../utils/analytics";
 import {
@@ -31,9 +29,9 @@ import {
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
 } from "../../../screens/profile/analytics";
-import { NotificationsPreferencesPreview } from "../components/NotificationsPreferencesPreview";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { ProfileNotificationSettings } from "../components/ProfileNotificationsSettings";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -58,11 +56,8 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const [previewEnabled, setPreviewEnabled] = useState(true);
   const [remindersEnabled, setRemindersEnabled] = useState(true);
 
-  const preferences = useIOSelector(profilePreferencesSelector);
-  const { present, bottomSheet } = usePreviewMoreInfo();
-
-  const isError = pot.isError(preferences);
-  const isUpdating = pot.isUpdating(preferences);
+  const isError = useIOSelector(profileHasErrorSelector);
+  const isUpdating = useIOSelector(profileIsUpdatingSelector);
 
   const { isFirstOnboarding } = props.route.params;
 
@@ -126,45 +121,17 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           <H1>{I18n.t("profile.preferences.notifications.title")}</H1>
           <VSpacer size={16} />
           <Body>{I18n.t("profile.preferences.notifications.subtitle")}</Body>
-          <VSpacer size={24} />
-          <NotificationsPreferencesPreview
-            previewEnabled={previewEnabled}
-            remindersEnabled={remindersEnabled}
+          <ProfileNotificationSettings
+            disablePreviewSetting={isUpdating}
+            disableRemindersSetting={isUpdating}
+            isUpdatingPreviewSetting={isUpdating}
+            isUpdatingRemindersSetting={isUpdating}
+            onPreviewValueChanged={setPreviewEnabled}
+            onReminderValueChanged={setRemindersEnabled}
+            previewSwitchValue={previewEnabled}
+            remindersSwitchValue={remindersEnabled}
+            showSettingsPath
           />
-          <VSpacer size={24} />
-          <ListItemSwitch
-            label={I18n.t("profile.preferences.notifications.preview.title")}
-            description={I18n.t(
-              "profile.preferences.notifications.preview.description"
-            )}
-            action={{
-              label: I18n.t("profile.preferences.notifications.preview.link"),
-              onPress: present
-            }}
-            value={previewEnabled}
-            disabled={isUpdating}
-            onSwitchValueChange={setPreviewEnabled}
-            switchTestID={"previewsPreferenceSwitch"}
-          />
-          <Divider />
-          <ListItemSwitch
-            label={I18n.t("profile.preferences.notifications.reminders.title")}
-            description={I18n.t(
-              "profile.preferences.notifications.reminders.description"
-            )}
-            value={remindersEnabled}
-            disabled={isUpdating}
-            onSwitchValueChange={setRemindersEnabled}
-            switchTestID={"remindersPreferenceSwitch"}
-          />
-          <VSpacer size={40} />
-          <FeatureInfo
-            iconName="navProfile"
-            body={I18n.t(
-              "profile.main.privacy.shareData.screen.profileSettings"
-            )}
-          />
-          <VSpacer size={32} />
         </ContentWrapper>
       </ScrollView>
       <View
@@ -182,7 +149,6 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           onPress={upsertPreferences}
         />
       </View>
-      {bottomSheet}
     </>
   );
 };
