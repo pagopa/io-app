@@ -4,7 +4,8 @@
  */
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { IOStyles } from "@pagopa/io-app-design-system";
+import { H2, IOStyles } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
@@ -12,6 +13,7 @@ import { privacyUrl } from "../../config";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import I18n from "../../i18n";
 import { trackTosScreen } from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -48,6 +50,15 @@ const TosScreen = () => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
+        <View style={IOStyles.horizontalContentPadding}>
+          <H2
+            accessible={true}
+            accessibilityRole="header"
+            testID="screen-content-header-title"
+          >
+            {I18n.t("profile.main.privacy.privacyPolicy.title")}
+          </H2>
+        </View>
         <TosWebviewComponent
           flow={flow}
           handleLoadEnd={handleLoadEnd}
