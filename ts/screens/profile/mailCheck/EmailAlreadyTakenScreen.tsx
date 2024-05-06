@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from "react";
-import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
-import I18n from "../../../i18n";
+import * as O from "fp-ts/lib/Option";
+import React, { useCallback, useMemo } from "react";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
@@ -14,10 +14,9 @@ import {
   trackEmailAlreadyTaken,
   trackEmailDuplicateEditingConfirm
 } from "../../analytics/emailAnalytics";
-import {
-  BodyProps,
-  OperationResultScreenContent
-} from "../../../components/screens/OperationResultScreenContent";
+
+import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
