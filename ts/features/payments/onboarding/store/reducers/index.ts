@@ -6,20 +6,25 @@ import { NetworkError } from "../../../../../utils/errors";
 
 import {
   paymentsOnboardingGetMethodsAction,
-  paymentsStartOnboardingAction
+  paymentsInitOnboardingWithRptIdToResume,
+  paymentsStartOnboardingAction,
+  paymentsResetRptIdToResume
 } from "../actions";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
 export type PaymentsOnboardingState = {
   result: pot.Pot<WalletCreateResponse, NetworkError>;
   paymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   selectedPaymentMethodId?: string;
+  rptIdToResume?: RptId;
 };
 
 const INITIAL_STATE: PaymentsOnboardingState = {
   result: pot.none,
   paymentMethods: pot.noneLoading,
-  selectedPaymentMethodId: undefined
+  selectedPaymentMethodId: undefined,
+  rptIdToResume: undefined
 };
 
 const reducer = (
@@ -71,6 +76,19 @@ const reducer = (
         ...state,
         paymentMethods: pot.none
       };
+    // This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
+    case getType(paymentsInitOnboardingWithRptIdToResume): {
+      return {
+        ...state,
+        rptIdToResume: action.payload.rptId
+      };
+    }
+    case getType(paymentsResetRptIdToResume): {
+      return {
+        ...state,
+        rptIdToResume: undefined
+      };
+    }
   }
   return state;
 };

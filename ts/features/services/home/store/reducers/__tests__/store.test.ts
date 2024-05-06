@@ -1,20 +1,27 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action, createStore } from "redux";
-import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
-import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { NetworkError } from "../../../../../../utils/errors";
-import { paginatedInstitutionsGet } from "../../actions";
 import {
+  featuredItemsSelector,
+  isErrorFeaturedItemsSelector,
   isErrorPaginatedInstitutionsSelector,
+  isLoadingFeaturedItemsSelector,
   isLoadingPaginatedInstitutionsSelector,
+  isUpdatingFeaturedItemsSelector,
   isUpdatingPaginatedInstitutionsSelector,
   paginatedInstitutionsCurrentPageSelector,
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
 } from "..";
+import { FeaturedItems } from "../../../../../../../definitions/services/FeaturedItems";
+import { FeaturedService } from "../../../../../../../definitions/services/FeaturedService";
+import { Institution } from "../../../../../../../definitions/services/Institution";
+import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
+import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../../utils/errors";
+import { featuredItemsGet, paginatedInstitutionsGet } from "../../actions";
 
 const MOCK_INSTITUTIONS: InstitutionsResource["institutions"] = [
   {
@@ -32,6 +39,35 @@ const MOCK_INSTITUTIONS: InstitutionsResource["institutions"] = [
     id: "3",
     name: "Institution 3"
   }
+];
+
+const MOCK_FEATURED_ITEMS: FeaturedItems["items"] = [
+  {
+    id: "aServiceId1",
+    name: "Service Name 1",
+    version: 1
+  } as FeaturedService,
+  {
+    id: "anInstitutionId1",
+    name: "Institution Name 1",
+    fiscal_code: "12345678901" as OrganizationFiscalCode
+  } as Institution,
+  {
+    id: "aServiceId2",
+    name: "Service Name 2",
+    version: 1
+  } as FeaturedService,
+  {
+    id: "aServiceId3",
+    name: "Service Name 3",
+    version: 1,
+    organization_name: "Organization Name"
+  } as FeaturedService,
+  {
+    id: "aServiceId4",
+    name: "Service Name 4",
+    version: 1
+  } as FeaturedService
 ];
 
 const MOCK_NETWORK_ERROR: NetworkError = {
@@ -388,6 +424,180 @@ describe("Services home paginatedInstitutions selectors", () => {
 
         expect(lastPage).toStrictEqual(isLastPage);
       });
+    });
+  });
+});
+
+describe("Services home featuredItems reducer", () => {
+  it("should have initial state", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+
+    expect(state.features.services.home.featuredItems).toStrictEqual(pot.none);
+  });
+
+  it("should handle featuredItemsGet action", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, state as any);
+
+    store.dispatch(featuredItemsGet.request());
+    expect(store.getState().features.services.home.featuredItems).toStrictEqual(
+      pot.noneLoading
+    );
+
+    store.dispatch(
+      featuredItemsGet.success({
+        items: MOCK_FEATURED_ITEMS
+      })
+    );
+    expect(store.getState().features.services.home.featuredItems).toStrictEqual(
+      pot.some({
+        items: MOCK_FEATURED_ITEMS
+      })
+    );
+
+    store.dispatch(featuredItemsGet.failure(MOCK_NETWORK_ERROR));
+    expect(store.getState().features.services.home.featuredItems).toStrictEqual(
+      pot.someError(
+        {
+          items: MOCK_FEATURED_ITEMS
+        },
+        MOCK_NETWORK_ERROR
+      )
+    );
+  });
+});
+
+describe("Services home featuredItems selectors", () => {
+  describe("featuredItemsSelector", () => {
+    it("should return FeaturedItems when pot.some", () => {
+      const featuredItems = featuredItemsSelector(
+        appReducer(
+          {} as GlobalState,
+          featuredItemsGet.success({
+            items: MOCK_FEATURED_ITEMS
+          })
+        )
+      );
+      expect(featuredItems).toStrictEqual({
+        items: MOCK_FEATURED_ITEMS
+      });
+    });
+
+    it("should return undefined when not pot.some", () => {
+      expect(
+        featuredItemsSelector(appReducer(undefined, {} as Action))
+      ).toBeUndefined();
+
+      expect(
+        featuredItemsSelector(
+          appReducer({} as GlobalState, featuredItemsGet.request())
+        )
+      ).toBeUndefined();
+
+      expect(
+        featuredItemsSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredItemsGet.failure(MOCK_NETWORK_ERROR)
+          )
+        )
+      ).toBeUndefined();
+    });
+  });
+
+  describe("isLoadingFeaturedItemsSelector", () => {
+    it("should return true when pot.loading", () => {
+      const isLoading = isLoadingFeaturedItemsSelector(
+        appReducer({} as GlobalState, featuredItemsGet.request())
+      );
+      expect(isLoading).toStrictEqual(true);
+    });
+
+    it("should return false when not pot.loading", () => {
+      expect(
+        isLoadingFeaturedItemsSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual(false);
+
+      expect(
+        isLoadingFeaturedItemsSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredItemsGet.success({
+              items: MOCK_FEATURED_ITEMS
+            })
+          )
+        )
+      ).toStrictEqual(false);
+    });
+  });
+
+  describe("isUpdatingFeaturedItemsSelector", () => {
+    it("should return true when pot.updating", () => {
+      const state = appReducer(undefined, applicationChangeState("active"));
+      const store = createStore(appReducer, state as any);
+
+      store.dispatch(
+        featuredItemsGet.success({
+          items: MOCK_FEATURED_ITEMS
+        })
+      );
+      store.dispatch(featuredItemsGet.request());
+
+      const isUpdating = isUpdatingFeaturedItemsSelector(store.getState());
+
+      expect(isUpdating).toStrictEqual(true);
+    });
+
+    it("should return false when not pot.updating", () => {
+      expect(
+        isUpdatingFeaturedItemsSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual(false);
+
+      expect(
+        isUpdatingFeaturedItemsSelector(
+          appReducer({} as GlobalState, featuredItemsGet.request())
+        )
+      ).toStrictEqual(false);
+
+      expect(
+        isUpdatingFeaturedItemsSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredItemsGet.success({
+              items: MOCK_FEATURED_ITEMS
+            })
+          )
+        )
+      ).toStrictEqual(false);
+    });
+  });
+
+  describe("isErrorFeaturedItemsSelector", () => {
+    it("should return true when pot.error", () => {
+      const isError = isErrorFeaturedItemsSelector(
+        appReducer(
+          {} as GlobalState,
+          featuredItemsGet.failure(MOCK_NETWORK_ERROR)
+        )
+      );
+      expect(isError).toStrictEqual(true);
+    });
+
+    it("should return false when not pot.error", () => {
+      expect(
+        isErrorFeaturedItemsSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual(false);
+
+      expect(
+        isErrorFeaturedItemsSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredItemsGet.success({
+              items: MOCK_FEATURED_ITEMS
+            })
+          )
+        )
+      ).toStrictEqual(false);
     });
   });
 });
