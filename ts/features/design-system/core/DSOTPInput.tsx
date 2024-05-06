@@ -2,7 +2,6 @@ import * as React from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import {
-  H1,
   H5,
   IOStyles,
   VSpacer,
