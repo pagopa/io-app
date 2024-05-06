@@ -4,11 +4,11 @@ import { Action } from "../../../../../store/actions/types";
 import { itwNfcIsEnabled } from "../actions";
 
 export type ItwAuthenticationState = {
-  nfcEnabled: pot.Pot<boolean, Error>;
+  isNfcEnabled: pot.Pot<boolean, Error>;
 };
 
 const INITIAL_STATE: ItwAuthenticationState = {
-  nfcEnabled: pot.none
+  isNfcEnabled: pot.none
 };
 
 const reducer = (
@@ -19,17 +19,17 @@ const reducer = (
     case getType(itwNfcIsEnabled.request):
       return {
         ...state,
-        nfcEnabled: pot.toLoading(state.nfcEnabled)
+        isNfcEnabled: pot.toLoading(state.isNfcEnabled)
       };
     case getType(itwNfcIsEnabled.success):
       return {
         ...state,
-        nfcEnabled: pot.some(action.payload)
+        isNfcEnabled: pot.some(action.payload)
       };
     case getType(itwNfcIsEnabled.failure):
       return {
         ...state,
-        nfcEnabled: pot.toError(state.nfcEnabled, action.payload)
+        isNfcEnabled: pot.toError(state.isNfcEnabled, action.payload)
       };
   }
   return state;
