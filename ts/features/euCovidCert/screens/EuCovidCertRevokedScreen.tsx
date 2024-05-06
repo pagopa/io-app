@@ -1,61 +1,77 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  H3,
+  LabelSmall,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Image } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import revokedImage from "../../../../img/features/euCovidCert/certificate_revoked.png";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
-import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
+import { EuCovidCertLearnMoreLink } from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
+import { useIOSelector } from "../../../store/hooks";
+import { EUCovidContext } from "../components/EUCovidContext";
+import { getPaginatedMessageCreatedAt } from "../../messages/store/reducers/paginatedById";
+import { localeDateFormat } from "../../../utils/locale";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    revokeInfo?: string;
-  } & WithEUCovidCertificateHeaderData;
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center"
+  },
+  title: {
+    textAlign: "center"
+  }
+});
 
-const EuCovidCertRevokedContentComponent = (props: Props) => (
-  <>
-    <VSpacer size={40} />
-    <VSpacer size={40} />
-    <InfoScreenComponent
-      image={
-        <Image
-          accessibilityIgnoresInvertColors
-          source={revokedImage}
-          importantForAccessibility={"no"}
-          accessibilityElementsHidden={true}
-          style={{ width: 104, height: 104, resizeMode: "contain" }}
-        />
-      }
-      title={I18n.t("features.euCovidCertificate.revoked.title")}
-      body={<EuCovidCertLearnMoreLink />}
-    />
-    <VSpacer size={16} />
-    {props.revokeInfo && (
-      <MarkdownHandleCustomLink extraBodyHeight={60}>
-        {props.revokeInfo}
-      </MarkdownHandleCustomLink>
-    )}
-  </>
-);
+type Props = {
+  revokeInfo?: string;
+} & WithEUCovidCertificateHeaderData;
 
-const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => (
+const EuCovidCertRevokedContentComponent = (props: Props) => {
+  const currentCert = React.useContext(EUCovidContext);
+  const messageId = currentCert?.messageId ?? "";
+  const createdAt = useIOSelector(state =>
+    getPaginatedMessageCreatedAt(state, messageId)
+  );
+
+  return (
+    <>
+      <VSpacer size={8} />
+      {createdAt && (
+        <LabelSmall fontSize="regular" color="grey-700">
+          {localeDateFormat(
+            createdAt,
+            I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
+          )}
+        </LabelSmall>
+      )}
+      <VSpacer size={8} />
+      <Divider />
+      <VSpacer size={32} />
+      <View style={styles.container}>
+        <Pictogram name="accessDenied" />
+        <H3 style={styles.title}>
+          {I18n.t("features.euCovidCertificate.revoked.title")}
+        </H3>
+      </View>
+      <VSpacer size={16} />
+      {props.revokeInfo && (
+        <MarkdownHandleCustomLink>{props.revokeInfo}</MarkdownHandleCustomLink>
+      )}
+      <VSpacer size={32} />
+      <EuCovidCertLearnMoreLink />
+    </>
+  );
+};
+
+export const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertRevokedScreen"}
     header={<EuCovidCertHeader {...props} />}
     content={<EuCovidCertRevokedContentComponent {...props} />}
   />
 );
-
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertRevokedScreen);

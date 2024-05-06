@@ -11,9 +11,9 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as openWebUrl from "../../../../../utils/url";
 import EUCOVIDCERT_ROUTES from "../../../navigation/routes";
 import { EUCovidCertificateAuthCode } from "../../../types/EUCovidCertificate";
-import { EUCovidContext } from "../../EuCovidCertificateRouterScreen";
-import EuCovidCertNotFoundKoScreen from "../EuCovidCertNotFoundKoScreen";
-import EuCovidCertWrongFormatKoScreen from "../EuCovidCertWrongFormatKoScreen";
+import { EuCovidCertNotFoundKoScreen } from "../EuCovidCertNotFoundKoScreen";
+import { EuCovidCertWrongFormatKoScreen } from "../EuCovidCertWrongFormatKoScreen";
+import { EUCovidContext } from "../../../components/EUCovidContext";
 
 describe("Test EuCovidCertNotFoundKoScreen", () => {
   jest.useFakeTimers();
