@@ -10,28 +10,26 @@ import React from "react";
 import { Alert } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
-import { nfcIsEnabled } from "../../../../store/actions/cie";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isCieSupportedSelector,
-  isNfcEnabledSelector
-} from "../../../../store/reducers/cie";
-import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isCieSupportedSelector } from "../../../../store/reducers/cie";
+import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwNfcIsEnabled } from "../store/actions";
+import { itwIsNfcEnabledSelector } from "../store/selectors";
 
 export const ItwAuthModeSelectionScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
-  const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
+  const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
   const isLoading =
     pot.isLoading(isCieSupportedPot) || pot.isLoading(isNfcEnabledPot);
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(nfcIsEnabled.request());
+      dispatch(itwNfcIsEnabled.request());
     }, [dispatch])
   );
 
@@ -123,7 +121,7 @@ export const ItwAuthModeSelectionScreen = () => {
 
 const MethodListSkeleton = () => (
   <>
-    {Array.from({ length: 3 }).map(index => (
+    {Array.from({ length: 3 }).map((_, index) => (
       <React.Fragment key={`method_item_skeleton_${index}`}>
         {index !== 0 && <VSpacer size={8} />}
         <ModuleNavigation isLoading={true} />
