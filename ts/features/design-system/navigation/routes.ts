@@ -63,6 +63,10 @@ const DESIGN_SYSTEM_ROUTES = {
     NUMBERPAD: {
       route: "DS_NUMBERPAD",
       title: "NumberPad"
+    },
+    SEARCH: {
+      route: "DS_SEARCH",
+      title: "Search"
     }
   },
   DEBUG: {

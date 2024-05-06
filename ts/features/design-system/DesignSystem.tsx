@@ -122,6 +122,7 @@ export const DesignSystem = () => {
         renderSectionFooter={renderDSSectionFooter}
         renderItem={renderDSNavItem}
         ItemSeparatorComponent={() => <Divider />}
+        scrollIndicatorInsets={{ right: 1 }}
         sections={DESIGN_SYSTEM_SECTION_DATA}
       />
     </>

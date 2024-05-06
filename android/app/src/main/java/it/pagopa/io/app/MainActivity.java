@@ -1,8 +1,8 @@
 package it.pagopa.io.app;
 
+import android.os.Bundle;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
-import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -27,7 +27,7 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this, R.style.SplashScreenTheme);
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         // Fix the problem described here:
         // https://stackoverflow.com/questions/48072438/java-lang-illegalstateexception-only-fullscreen-opaque-activities-can-request-o
         if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {

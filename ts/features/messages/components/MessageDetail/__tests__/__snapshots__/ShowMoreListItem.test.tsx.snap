@@ -171,7 +171,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -517,8 +531,8 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -695,7 +709,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -703,11 +717,25 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1109,8 +1137,8 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1287,7 +1315,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1295,11 +1323,25 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1890,8 +1932,8 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2068,7 +2110,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2076,11 +2118,25 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2739,8 +2795,8 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2917,7 +2973,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2925,11 +2981,25 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3717,8 +3787,8 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3895,7 +3965,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -3903,11 +3973,25 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -4831,8 +4915,8 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -5009,7 +5093,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -5017,11 +5101,25 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -6851,8 +6949,8 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -7029,7 +7127,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -7037,11 +7135,25 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -8153,8 +8265,8 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

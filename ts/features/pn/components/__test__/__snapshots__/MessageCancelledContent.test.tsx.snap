@@ -171,7 +171,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -460,8 +474,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -638,7 +652,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -646,11 +660,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -927,8 +955,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1105,7 +1133,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1113,11 +1141,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1394,8 +1436,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1572,7 +1614,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1580,11 +1622,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1861,8 +1917,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2039,7 +2095,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2047,11 +2103,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2328,8 +2398,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2506,7 +2576,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2514,11 +2584,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2795,8 +2879,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2973,7 +3057,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2981,11 +3065,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3262,8 +3360,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3440,7 +3538,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -3448,11 +3546,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3729,8 +3841,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3907,7 +4019,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -3915,11 +4027,25 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -4196,8 +4322,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -4374,7 +4500,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -4382,11 +4508,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -4527,8 +4667,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -4705,7 +4845,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -4713,11 +4853,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -4858,8 +5012,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -5036,7 +5190,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -5044,11 +5198,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -5189,8 +5357,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -5367,7 +5535,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -5375,11 +5543,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -5520,8 +5702,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -5698,7 +5880,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -5706,11 +5888,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -5851,8 +6047,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -6029,7 +6225,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -6037,11 +6233,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -6182,8 +6392,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -6360,7 +6570,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -6368,11 +6578,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -6513,8 +6737,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -6691,7 +6915,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -6699,11 +6923,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -6844,8 +7082,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -7022,7 +7260,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -7030,11 +7268,25 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -7175,8 +7427,8 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -7353,7 +7605,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -7361,11 +7613,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -7506,8 +7772,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -7684,7 +7950,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -7692,11 +7958,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -7837,8 +8117,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -8015,7 +8295,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -8023,11 +8303,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -8168,8 +8462,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -8346,7 +8640,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -8354,11 +8648,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -8499,8 +8807,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -8677,7 +8985,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -8685,11 +8993,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -8830,8 +9152,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -9008,7 +9330,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -9016,11 +9338,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -9161,8 +9497,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -9339,7 +9675,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -9347,11 +9683,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -9492,8 +9842,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -9670,7 +10020,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -9678,11 +10028,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -9823,8 +10187,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -10001,7 +10365,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -10009,11 +10373,25 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -10154,8 +10532,8 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
