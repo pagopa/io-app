@@ -74,7 +74,7 @@ export const InstitutionServicesScreen = ({
           serviceId: service.id as ServiceId
         }
       }),
-    [institutionName, navigation]
+    [navigation]
   );
 
   const handleEndReached = useCallback(

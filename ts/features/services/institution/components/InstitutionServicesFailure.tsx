@@ -2,7 +2,6 @@ import React, { useLayoutEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
-import { trackServicesOrganizationDetailError } from "../analytics";
 
 export type InstitutionServicesFailureProps = {
   onRetry: () => void;
@@ -20,8 +19,6 @@ export const InstitutionServicesFailure = ({
   }, [navigation]);
 
   const handleBack = () => navigation.goBack();
-
-  trackServicesOrganizationDetailError();
 
   return (
     <OperationResultScreenContent
