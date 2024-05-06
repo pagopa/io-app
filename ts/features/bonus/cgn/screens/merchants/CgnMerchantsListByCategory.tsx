@@ -56,7 +56,7 @@ const CgnMerchantsListByCategory = () => {
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
     if (titleHeight === 0) {
-      setTitleHeight(height);
+      setTitleHeight(height - insets.top - IOVisualCostants.headerHeight);
     }
   };
 
