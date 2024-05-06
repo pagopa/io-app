@@ -375,7 +375,7 @@ profile:
         title: "Datenschutz und Nutzungsbedingungen"
         description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
         header: "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App"
-        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert"
+        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert."
         infobox: "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren"
         contextualHelpTitlePolicy: "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes"
         contextualHelpTitle: "Deine Datenschutzeinstellungen"
@@ -813,7 +813,6 @@ onboarding:
   tos:
     headerTitle: "IO einrichten"
     accept: "Akzeptieren"
-    error: "Ladefehler"
     alert:
       title: "Achtung"
       message: "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"
@@ -2115,7 +2114,6 @@ openMaps:
 genericError: "Ein Fehler ist aufgetreten"
 titleUpdateApp: "Aktualisiere IO!"
 msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
-messageUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, musst du sie auf die neueste Version aktualisieren."
 titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
 messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen."
 openStore: "Öffne {{storeName}}"
