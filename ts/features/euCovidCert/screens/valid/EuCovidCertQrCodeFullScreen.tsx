@@ -1,21 +1,13 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import {
-  Dimensions,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
-import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { Dimensions, Image, ScrollView, StyleSheet } from "react-native";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { withBase64Uri } from "../../../../utils/image";
 import { EUCovidCertParamsList } from "../../navigation/params";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { BaseSingleButtonFooter } from "../BaseEuCovidCertificateLayout";
 
 export type EuCovidCertQrCodeFullScreenNavigationParams = Readonly<{
   qrCodeContent: string;
@@ -37,37 +29,33 @@ export const EuCovidCertQrCodeFullScreen = (
   >
 ): React.ReactElement => {
   useMaxBrightness();
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true
+  });
   return (
-    <BaseScreenComponent goBack={true}>
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"EuCovidCertQrCodeFullScreen"}
-      >
-        <ScrollView>
-          <VSpacer size={40} />
-          <VSpacer size={40} />
-          <Image
-            accessibilityIgnoresInvertColors
-            testID="fullScreenQRCode"
-            accessible={true}
-            accessibilityRole={"image"}
-            accessibilityLabel={I18n.t(
-              "features.euCovidCertificate.valid.accessibility.qrCode"
-            )}
-            source={{
-              uri: withBase64Uri(props.route.params.qrCodeContent, "png")
-            }}
-            style={styles.qrCode}
-          />
-        </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(
-            () => props.navigation.goBack(),
-            I18n.t("global.buttons.close")
+    <>
+      <ScrollView>
+        <VSpacer size={40} />
+        <VSpacer size={40} />
+        <Image
+          accessibilityIgnoresInvertColors
+          testID="fullScreenQRCode"
+          accessible={true}
+          accessibilityRole={"image"}
+          accessibilityLabel={I18n.t(
+            "features.euCovidCertificate.valid.accessibility.qrCode"
           )}
+          source={{
+            uri: withBase64Uri(props.route.params.qrCodeContent, "png")
+          }}
+          style={styles.qrCode}
         />
-      </SafeAreaView>
-    </BaseScreenComponent>
+      </ScrollView>
+      <BaseSingleButtonFooter
+        onPress={() => props.navigation.goBack()}
+        title={I18n.t("global.buttons.close")}
+      />
+    </>
   );
 };
