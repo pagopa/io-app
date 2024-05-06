@@ -2525,11 +2525,16 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
+      screenTitle: Scopri le proposte
+      merchantsAll: Tutti gli operatori
       cta:
         filter: Filtra
       categoriesList:
         title: Seleziona una categoria e scopri agevolazioni e opportunità
+        bottomSheet:
+          cta: Come vengono ordinate le categorie?
+          title: Come vengono ordinate le categorie?
+          content: Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo.Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
