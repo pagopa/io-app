@@ -84,6 +84,7 @@ export const PinConfirmation = ({
         <VSpacer size={40} />
         <VSpacer size={40} />
         <CodeInput
+          testID="pin-confirmation-input"
           length={PIN_LENGTH_SIX}
           accessibilityLabel={`${I18n.t(
             "onboarding.pin.pinConfirmationLabel"

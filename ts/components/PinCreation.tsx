@@ -94,6 +94,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         </View>
         <VSpacer size={32} />
         <CodeInput
+          testID="pin-creation-input"
           accessibilityLabel={`${I18n.t("onboarding.pin.pinLabel")}, ${I18n.t(
             "accessibility.doubleTapToOpenKeyboardHint"
           )}`}

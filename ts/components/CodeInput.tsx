@@ -11,9 +11,11 @@ type CodeInputProps = Parameters<typeof IOCodeInput>[0];
 export const CodeInput = ({
   onChange,
   accessibilityLabel,
+  testID,
   ...props
 }: CodeInputProps & {
   onChange: (text: string) => void;
+  testID?: string;
   accessibilityLabel: string;
 }) => {
   const hiddenInputRef = React.useRef<TextInput>(null);
@@ -38,6 +40,7 @@ export const CodeInput = ({
       accessibilityElementsHidden
     >
       <TextInput
+        testID={testID}
         accessibilityLabel="Text input field"
         ref={hiddenInputRef}
         value={props.value}
