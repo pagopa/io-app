@@ -10,7 +10,7 @@ import {
 export type OrganizationHeaderProps = {
   organizationName: string;
   serviceName: string;
-  logoUri: ReadonlyArray<ImageURISource>;
+  logoUri?: ReadonlyArray<ImageURISource>;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;

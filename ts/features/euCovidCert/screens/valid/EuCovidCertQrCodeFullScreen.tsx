@@ -1,14 +1,7 @@
 import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import {
-  Dimensions,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { Dimensions, Image, ScrollView, StyleSheet } from "react-native";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
@@ -35,41 +28,41 @@ export const EuCovidCertQrCodeFullScreen = (
   >
 ): React.ReactElement => {
   useMaxBrightness();
+
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent goBack={true}>
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"EuCovidCertQrCodeFullScreen"}
-      >
-        <ScrollView>
-          <VSpacer size={40} />
-          <VSpacer size={40} />
-          <Image
-            accessibilityIgnoresInvertColors
-            testID="fullScreenQRCode"
-            accessible={true}
-            accessibilityRole={"image"}
-            accessibilityLabel={I18n.t(
-              "features.euCovidCertificate.valid.accessibility.qrCode"
-            )}
-            source={{
-              uri: withBase64Uri(props.route.params.qrCodeContent, "png")
-            }}
-            style={styles.qrCode}
-          />
-        </ScrollView>
-      </SafeAreaView>
+    <>
+      <ScrollView>
+        <VSpacer size={40} />
+        <VSpacer size={40} />
+        <Image
+          accessibilityIgnoresInvertColors
+          testID="fullScreenQRCode"
+          accessible={true}
+          accessibilityRole={"image"}
+          accessibilityLabel={I18n.t(
+            "features.euCovidCertificate.valid.accessibility.qrCode"
+          )}
+          source={{
+            uri: withBase64Uri(props.route.params.qrCodeContent, "png")
+          }}
+          style={styles.qrCode}
+        />
+      </ScrollView>
       <FooterWithButtons
         type="SingleButton"
         primary={{
           type: "Outline",
           buttonProps: {
             label: I18n.t("global.buttons.close"),
-            accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => props.navigation.goBack()
           }
         }}
       />
-    </BaseScreenComponent>
+    </>
   );
 };

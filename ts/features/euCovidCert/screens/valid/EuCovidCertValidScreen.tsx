@@ -18,17 +18,15 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
+import { EUCovidContext } from "../../components/EUCovidContext";
 import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 import {
   FlashAnimatedComponent,
@@ -45,9 +43,8 @@ import {
 } from "../../types/EUCovidCertificate";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 
-type OwnProps = {
+type Props = {
   validCertificate: ValidCertificate;
 } & WithEUCovidCertificateHeaderData;
 
@@ -76,10 +73,6 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
-
 type EuCovidCertValidComponentProps = Props & {
   markdownWebViewStyle?: StyleProp<ViewStyle>;
   messageId?: string;
@@ -102,9 +95,9 @@ const EuCovidCertValidComponent = (
             "features.euCovidCertificate.valid.accessibility.hint"
           )}
           onPress={() =>
-            props.navigateToQrCodeFullScreen(
-              props.validCertificate.qrCode.content
-            )
+            navigateToEuCovidCertificateQrCodeFullScreen({
+              qrCodeContent: props.validCertificate.qrCode.content
+            })
           }
         >
           <Image
@@ -219,7 +212,10 @@ const Footer = (props: FooterProps): React.ReactElement => {
           primary={{
             type: "Outline",
             buttonProps: {
-              onPress: () => props.navigateToMarkdown(markdownDetails),
+              onPress: () =>
+                navigateToEuCovidCertificateMarkdownDetailsScreen({
+                  markdownDetails
+                }),
               label: I18n.t("global.buttons.details")
             }
           }}
@@ -232,7 +228,7 @@ const Footer = (props: FooterProps): React.ReactElement => {
   );
 };
 
-const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
+export const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   const currentCert = useContext(EUCovidContext);
   const screenShotViewContainer = React.createRef<View>();
   const [flashAnimationState, setFlashAnimationState] =
@@ -312,16 +308,3 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     />
   );
 };
-
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToQrCodeFullScreen: (qrCodeContent: string) =>
-    navigateToEuCovidCertificateQrCodeFullScreen({ qrCodeContent }),
-  navigateToMarkdown: (markdownDetails: string) =>
-    navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
-});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertValidScreen);

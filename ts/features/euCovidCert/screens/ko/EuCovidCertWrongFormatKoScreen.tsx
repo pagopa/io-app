@@ -6,8 +6,6 @@ import {
 import * as React from "react";
 import { useContext } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import wrongFormatImage from "../../../../../img/features/euCovidCert/certificate_wrong_format.png";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -15,15 +13,11 @@ import WorkunitGenericFailure from "../../../../components/error/WorkunitGeneric
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { GlobalState } from "../../../../store/reducers/types";
 import { euCovidCertificateUrl } from "../../../../urls";
 import { openWebUrl } from "../../../../utils/url";
+import { EUCovidContext } from "../../components/EUCovidContext";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   row: {
@@ -90,7 +84,7 @@ const EuCovidCertWrongFormatKoComponent: React.FC<{
   </>
 );
 
-const EuCovidCertWrongFormatKoScreen = (_: Props): React.ReactElement => {
+export const EuCovidCertWrongFormatKoScreen = (): React.ReactElement => {
   const euCovidCertCurrent = useContext(EUCovidContext);
 
   // Handling unexpected error
@@ -115,9 +109,6 @@ const EuCovidCertWrongFormatKoScreen = (_: Props): React.ReactElement => {
             type: "Solid",
             buttonProps: {
               label: I18n.t("features.euCovidCertificate.ko.wrongFormat.cta"),
-              accessibilityLabel: I18n.t(
-                "features.euCovidCertificate.ko.wrongFormat.cta"
-              ),
               onPress: () => openWebUrl(euCovidCertificateUrl)
             }
           }}
@@ -126,10 +117,3 @@ const EuCovidCertWrongFormatKoScreen = (_: Props): React.ReactElement => {
     />
   );
 };
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertWrongFormatKoScreen);
