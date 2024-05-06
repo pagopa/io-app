@@ -22,7 +22,6 @@ const ServicesNavigator = () => {
       <Stack.Screen
         name={SERVICES_ROUTES.INSTITUTION_SERVICES}
         component={InstitutionServicesScreen}
-        options={{ headerShown: true }}
       />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICE_DETAIL}
