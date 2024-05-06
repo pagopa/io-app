@@ -26,6 +26,8 @@ export const ItwAuthModeSelectionScreen = () => {
 
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
+  const isLoading =
+    pot.isLoading(isCieSupportedPot) || pot.isLoading(isNfcEnabledPot);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -61,14 +63,9 @@ export const ItwAuthModeSelectionScreen = () => {
     Alert.alert("Not implemented");
   };
 
-  return (
-    <RNavScreenWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.authentication.mode.title") }}
-    >
-      <ContentWrapper>
-        <ListItemHeader
-          label={I18n.t("features.itWallet.authentication.mode.header")}
-        />
+  const methodList = React.useMemo(
+    () => (
+      <>
         <ModuleNavigation
           title={I18n.t(
             "features.itWallet.authentication.mode.method.spid.title"
@@ -105,7 +102,32 @@ export const ItwAuthModeSelectionScreen = () => {
           icon="device"
           onPress={handleCieIdPress}
         />
+      </>
+    ),
+    [isCieSupported]
+  );
+
+  return (
+    <RNavScreenWithLargeHeader
+      title={{ label: I18n.t("features.itWallet.authentication.mode.title") }}
+    >
+      <ContentWrapper>
+        <ListItemHeader
+          label={I18n.t("features.itWallet.authentication.mode.header")}
+        />
+        {isLoading ? <MethodListSkeleton /> : methodList}
       </ContentWrapper>
     </RNavScreenWithLargeHeader>
   );
 };
+
+const MethodListSkeleton = () => (
+  <>
+    {Array.from({ length: 3 }).map(index => (
+      <React.Fragment key={`method_item_skeleton_${index}`}>
+        {index !== 0 && <VSpacer size={8} />}
+        <ModuleNavigation isLoading={true} />
+      </React.Fragment>
+    ))}
+  </>
+);
