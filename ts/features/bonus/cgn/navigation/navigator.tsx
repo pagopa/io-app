@@ -16,7 +16,6 @@ import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScree
 import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
 import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerchantsCategoriesSelectionScreen";
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
-import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import {
@@ -93,10 +92,11 @@ const DetailStack = createStackNavigator<CgnDetailsParamsList>();
 export const CgnDetailsNavigator = () => (
   <DetailStack.Navigator
     initialRouteName={CGN_ROUTES.DETAILS.DETAILS}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.DETAILS}
+      options={{ headerShown: false }}
       component={CgnDetailScreen}
     />
     <DetailStack.Screen
@@ -104,23 +104,23 @@ export const CgnDetailsNavigator = () => (
       component={CgnMerchantsCategoriesSelectionScreen}
     />
     <DetailStack.Screen
-      name={CGN_ROUTES.DETAILS.MERCHANTS.LIST}
-      component={MerchantsListScreen}
-    />
-    <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY}
+      options={{ headerShown: false }}
       component={CgnMerchantsListByCategory}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.TABS}
+      options={{ headerShown: false }}
       component={CgnMerchantsTabsScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.DETAIL}
+      options={{ headerShown: false }}
       component={CgnMerchantDetailScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW}
+      options={{ headerShown: false }}
       component={CgnMerchantLandingWebview}
     />
   </DetailStack.Navigator>
