@@ -21,6 +21,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
+  isError,
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
@@ -108,32 +109,32 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
 
   return (
     <SafeAreaView style={IOStyles.flex}>
-      {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
-        <>
-          <ContentWrapper>
-            <ListItemHeader
-              label={I18n.t("bonus.cgn.merchantsList.merchantsAll")}
-            />
-            <TextInput
-              accessibilityLabel={I18n.t("global.buttons.search")}
-              icon="search"
-              value={searchValue}
-              onChangeText={setSearchValue}
-              placeholder={I18n.t("global.buttons.search")}
-              autoFocus={false}
-            />
-            <VSpacer />
-          </ContentWrapper>
-          <CgnMerchantsListView
-            refreshing={
-              isLoading(props.onlineMerchants) ||
-              isLoading(props.offlineMerchants)
-            }
-            onRefresh={initLoadingLists}
-            merchantList={merchantList}
-            onItemPress={onItemPress}
+      {!(isError(props.onlineMerchants) || isError(props.offlineMerchants)) && (
+        <ContentWrapper>
+          <ListItemHeader
+            label={I18n.t("bonus.cgn.merchantsList.merchantsAll")}
           />
-        </>
+          <TextInput
+            accessibilityLabel={I18n.t("global.buttons.search")}
+            icon="search"
+            value={searchValue}
+            onChangeText={setSearchValue}
+            placeholder={I18n.t("global.buttons.search")}
+            autoFocus={false}
+          />
+          <VSpacer />
+        </ContentWrapper>
+      )}
+      {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
+        <CgnMerchantsListView
+          refreshing={
+            isLoading(props.onlineMerchants) ||
+            isLoading(props.offlineMerchants)
+          }
+          onRefresh={initLoadingLists}
+          merchantList={merchantList}
+          onItemPress={onItemPress}
+        />
       ) : (
         <LoadingErrorComponent
           isLoading={
