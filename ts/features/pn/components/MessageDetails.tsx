@@ -32,6 +32,7 @@ import { MessagePayments } from "./MessagePayments";
 import { MessageInfo } from "./MessageInfo";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessageFooter } from "./MessageFooter";
+import { MessageCancelledContent } from "./MessageCancelledContent";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -95,6 +96,11 @@ export const MessageDetails = ({
             )}
             <VSpacer size={8} />
           </MessageDetailsHeader>
+          <MessageCancelledContent
+            isCancelled={isCancelled}
+            paidNoticeCodes={completedPaymentNoticeCodes}
+            payments={payments}
+          />
           <MessageDetailsContent abstract={message.abstract} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
@@ -122,8 +128,10 @@ export const MessageDetails = ({
         </ContentWrapper>
         <MessageBottomMenu
           history={message.notificationStatusHistory}
+          isCancelled={message.isCancelled}
           iun={message.iun}
           messageId={messageId}
+          paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
           serviceId={serviceId}
         />
