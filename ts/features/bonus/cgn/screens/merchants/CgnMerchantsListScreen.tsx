@@ -3,27 +3,30 @@ import { debounce } from "lodash";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 import {
-  View,
   Keyboard,
+  RefreshControl,
   SafeAreaView,
-  ScrollView,
-  RefreshControl
+  ScrollView
 } from "react-native";
 import { connect } from "react-redux";
+import {
+  ContentWrapper,
+  ListItemHeader,
+  TextInput,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../../../../components/LabelledItem";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
+  isError,
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
@@ -102,7 +105,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     requestOnlineMerchants();
   }, [requestOfflineMerchants, requestOnlineMerchants]);
 
-  React.useEffect(initLoadingLists, [initLoadingLists]);
+  useFocusEffect(initLoadingLists);
 
   const onItemPress = (id: Merchant["id"]) => {
     props.navigateToMerchantDetail(id);
@@ -110,58 +113,51 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   };
 
   return (
-    <BaseScreenComponent
-      goBack
-      headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
-          <>
-            <View style={IOStyles.horizontalContentPadding}>
-              <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
-              <View style={{ height: 50 }}>
-                <LabelledItem
-                  icon="search"
-                  iconPosition={"right"}
-                  inputProps={{
-                    value: searchValue,
-                    autoFocus: false,
-                    onChangeText: setSearchValue,
-                    placeholder: I18n.t("global.buttons.search")
-                  }}
-                />
-              </View>
-            </View>
-            <ScrollView
-              refreshControl={
-                <RefreshControl
-                  refreshing={
-                    isLoading(props.onlineMerchants) ||
-                    isLoading(props.offlineMerchants)
-                  }
-                  onRefresh={initLoadingLists}
-                />
-              }
-            >
-              <CgnMerchantsListView
-                merchantList={merchantList}
-                onItemPress={onItemPress}
-              />
-            </ScrollView>
-          </>
-        ) : (
-          <LoadingErrorComponent
-            isLoading={
-              isLoading(props.offlineMerchants) ||
-              isLoading(props.onlineMerchants)
-            }
-            loadingCaption={I18n.t("global.remoteStates.loading")}
-            onRetry={initLoadingLists}
+    <SafeAreaView style={IOStyles.flex}>
+      {!(isError(props.onlineMerchants) || isError(props.offlineMerchants)) && (
+        <ContentWrapper>
+          <ListItemHeader
+            label={I18n.t("bonus.cgn.merchantsList.merchantsAll")}
           />
-        )}
-      </SafeAreaView>
-    </BaseScreenComponent>
+          <TextInput
+            accessibilityLabel={I18n.t("global.buttons.search")}
+            icon="search"
+            value={searchValue}
+            onChangeText={setSearchValue}
+            placeholder={I18n.t("global.buttons.search")}
+            autoFocus={false}
+          />
+          <VSpacer />
+        </ContentWrapper>
+      )}
+      {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                isLoading(props.onlineMerchants) ||
+                isLoading(props.offlineMerchants)
+              }
+              onRefresh={initLoadingLists}
+            />
+          }
+        >
+          <CgnMerchantsListView
+            merchantList={merchantList}
+            onItemPress={onItemPress}
+          />
+        </ScrollView>
+      ) : (
+        <LoadingErrorComponent
+          isLoading={
+            isLoading(props.offlineMerchants) ||
+            isLoading(props.onlineMerchants)
+          }
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          onRetry={initLoadingLists}
+        />
+      )}
+    </SafeAreaView>
   );
 };
 

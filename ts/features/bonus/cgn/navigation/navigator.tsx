@@ -16,7 +16,6 @@ import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScree
 import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
 import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerchantsCategoriesSelectionScreen";
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
-import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import {
@@ -102,16 +101,12 @@ export const CgnDetailsNavigator = () => (
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES}
-      options={{ headerShown: false }}
+      options={{ headerShown: true }}
       component={CgnMerchantsCategoriesSelectionScreen}
     />
     <DetailStack.Screen
-      name={CGN_ROUTES.DETAILS.MERCHANTS.LIST}
-      options={{ headerShown: false }}
-      component={MerchantsListScreen}
-    />
-    <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY}
+      options={{ headerShown: true }}
       component={CgnMerchantsListByCategory}
     />
     <DetailStack.Screen

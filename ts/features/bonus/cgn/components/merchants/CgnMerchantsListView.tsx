@@ -1,10 +1,11 @@
 import * as React from "react";
 import { View } from "react-native";
+import { Badge, Divider, H6, ListItemNav } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import CgnMerchantListItem from "./CgnMerchantListItem";
+import I18n from "../../../../../i18n";
 
 type Props = {
   merchantList: ReadonlyArray<OfflineMerchant | OnlineMerchant>;
@@ -15,13 +16,28 @@ type Props = {
 const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => (
   <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
     {props.merchantList.map((merchant, index) => (
-      <CgnMerchantListItem
-        key={index}
-        categories={merchant.productCategories}
-        name={merchant.name}
-        onPress={() => props.onItemPress(merchant.id)}
-        isNew={merchant.newDiscounts}
-      />
+      <React.Fragment key={index}>
+        <ListItemNav
+          onPress={() => props.onItemPress(merchant.id)}
+          value={
+            merchant.newDiscounts ? (
+              <View style={IOStyles.rowSpaceBetween}>
+                <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{merchant.name}</H6>
+                <View style={{ alignSelf: "center" }}>
+                  <Badge
+                    variant="purple"
+                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                  />
+                </View>
+              </View>
+            ) : (
+              merchant.name
+            )
+          }
+          accessibilityLabel={merchant.name}
+        />
+        {props.merchantList.length - 1 !== index && <Divider />}
+      </React.Fragment>
     ))}
   </View>
 );
