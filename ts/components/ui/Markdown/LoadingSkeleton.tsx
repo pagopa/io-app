@@ -38,7 +38,7 @@ export const LoadingSkeleton = ({
       {[...Array(lines)].map((_, i) => (
         <React.Fragment key={`MD_SK_RF_${i}`}>
           <Placeholder.Box
-            width={skeletonLineWidths[i]}
+            width={skeletonLineWidths[i % skeletonLineWidths.length]}
             animate={"fade"}
             color={IOColors["grey-100"]}
             height={21}
