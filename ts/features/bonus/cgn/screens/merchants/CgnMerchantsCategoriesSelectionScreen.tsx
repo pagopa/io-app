@@ -53,7 +53,7 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
 
   return (
     <View>
-      <TabNavigation tabAlignment="start">
+      <TabNavigation tabAlignment="start" selectedIndex={state.index}>
         {state.routes.map((route, index) => {
           const onPress = () => {
             const event = navigation.emit({
@@ -75,7 +75,6 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
                 tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList]
                   .icon
               }
-              selected={isFocused(index)}
               label={label}
               accessibilityLabel={label}
               key={route.key}
