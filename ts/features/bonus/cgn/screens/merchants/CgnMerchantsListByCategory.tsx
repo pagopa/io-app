@@ -3,7 +3,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useMemo } from "react";
-import { View, LayoutChangeEvent, RefreshControl } from "react-native";
+import {
+  View,
+  LayoutChangeEvent,
+  RefreshControl,
+  Platform
+} from "react-native";
 import {
   H3,
   HSpacer,
@@ -151,14 +156,19 @@ const CgnMerchantsListByCategory = () => {
         <GenericErrorComponent onRetry={initLoadingLists} />
       ) : (
         <Animated.ScrollView
-          style={{ flexGrow: 1 }}
+          style={{ flexGrow: 1, backgroundColor: IOColors.white }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
           snapToOffsets={[0, titleHeight]}
           snapToEnd={false}
-          contentContainerStyle={{ paddingBottom: 48 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 48,
+            backgroundColor: IOColors.white
+          }}
           refreshControl={
             <RefreshControl
+              style={{ zIndex: 1 }}
               refreshing={
                 isLoading(onlineMerchants) || isLoading(offlineMerchants)
               }
@@ -166,6 +176,18 @@ const CgnMerchantsListByCategory = () => {
             />
           }
         >
+          {Platform.OS === "ios" && (
+            <View
+              style={{
+                position: "absolute",
+                height: 1000,
+                backgroundColor: categorySpecs?.colors,
+                top: -1000,
+                right: 0,
+                left: 0
+              }}
+            />
+          )}
           {categorySpecs && (
             <View
               onLayout={getTitleHeight}
@@ -199,9 +221,11 @@ const CgnMerchantsListByCategory = () => {
                   />
                 </View>
                 <HSpacer size={16} />
-                <H3 color={categorySpecs.textColor}>
-                  {I18n.t(categorySpecs.nameKey)}
-                </H3>
+                <View style={{ flex: 1 }}>
+                  <H3 color={categorySpecs.textColor}>
+                    {I18n.t(categorySpecs.nameKey)}
+                  </H3>
+                </View>
               </View>
             </View>
           )}
