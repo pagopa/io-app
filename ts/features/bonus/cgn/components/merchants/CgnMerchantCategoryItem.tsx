@@ -1,18 +1,15 @@
 import * as React from "react";
-import { ComponentProps } from "react";
-import LinearGradient from "react-native-linear-gradient";
 import { View, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../../../../theme/variables";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H2 } from "../../../../../components/core/typography/H2";
-import { CATEGORY_GRADIENT_ANGLE } from "../../utils/filters";
 
 type Props = {
   onPress?: () => void;
   title: string;
-  colors: ComponentProps<typeof LinearGradient>["colors"];
+  colors: string;
   child?: React.ReactElement;
 };
 
@@ -31,12 +28,7 @@ const styles = StyleSheet.create({
 });
 
 const CgnMerchantCategoryItem = (props: Props) => (
-  <LinearGradient
-    colors={props.colors}
-    useAngle={true}
-    angle={CATEGORY_GRADIENT_ANGLE}
-    style={styles.body}
-  >
+  <View style={[styles.body, { backgroundColor: props.colors }]}>
     <TouchableDefaultOpacity
       accessibilityRole={"button"}
       style={[IOStyles.flex, styles.container]}
@@ -47,7 +39,7 @@ const CgnMerchantCategoryItem = (props: Props) => (
       </View>
       {props.child}
     </TouchableDefaultOpacity>
-  </LinearGradient>
+  </View>
 );
 
 export default CgnMerchantCategoryItem;
