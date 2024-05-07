@@ -103,7 +103,7 @@ export type Action =
   | WhatsNewActions
   | PaymentsFeatureActions
   | NewWalletActions
-  | CieLoginConfigActions;
+  | CieLoginConfigActions
   | NewServicesActions;
 
 export type Dispatch = DispatchAPI<Action>;
