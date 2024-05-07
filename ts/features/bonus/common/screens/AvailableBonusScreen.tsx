@@ -54,7 +54,7 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
-import { ServiceDetailsScreenNavigationParams } from "../../../services/details/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenRouteParams } from "../../../services/details/screens/ServiceDetailsScreen";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 export type Props = ReturnType<typeof mapStateToProps> &
@@ -259,9 +259,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => navigateBack(),
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   startCgnActivation: () => dispatch(cgnActivationStart()),
-  navigateToServiceDetailsScreen: (
-    params: ServiceDetailsScreenNavigationParams
-  ) => navigateToServiceDetailsScreen(params),
+  navigateToServiceDetailsScreen: (params: ServiceDetailsScreenRouteParams) =>
+    navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (serviceId: ServiceId) => {
     dispatch(loadServiceDetail.request(serviceId));
   },

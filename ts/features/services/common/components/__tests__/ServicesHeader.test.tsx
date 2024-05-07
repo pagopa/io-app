@@ -1,14 +1,14 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import { ServiceDetailsHeader } from "../ServiceDetailsHeader";
+import { ServicesHeader } from "../ServicesHeader";
 
-describe("ServiceDetailsHeader component", () => {
+describe("ServicesHeader component", () => {
   it("should match the snapshot", () => {
     const component = render(
-      <ServiceDetailsHeader
+      <ServicesHeader
         logoUri={require("../../../../../../img/test/logo.png")}
-        organizationName={"#### organization_name ####"}
-        serviceName={"#### service name ####"}
+        title={"#### title ####"}
+        subTitle={"#### subTitle ####"}
       />
     );
     expect(component.toJSON()).toMatchSnapshot();

@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
-  IOVisualCostants,
+  IOStyles,
   ListItemAction,
   ListItemHeader,
   VSpacer
@@ -76,9 +76,7 @@ export const ServiceDetailsTosAndPrivacy = ({
           />
         }
         ItemSeparatorComponent={() => <Divider />}
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
+        contentContainerStyle={IOStyles.horizontalContentPadding}
         data={filteredTosAndPrivacyListItems}
         keyExtractor={item => item.label}
         renderItem={renderItem}
