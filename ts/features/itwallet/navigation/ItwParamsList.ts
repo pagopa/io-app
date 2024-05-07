@@ -4,5 +4,5 @@ export type ItwParamsList = {
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
   // AUTHENTICATION
-  [ITW_ROUTES.AUTH.MODE_SELECTION]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: undefined;
 };

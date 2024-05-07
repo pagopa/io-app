@@ -52,7 +52,7 @@ const ItwPlayground = () => {
 
   const navigateToAuthentication = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.AUTH.MODE_SELECTION
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
     });
   };
 

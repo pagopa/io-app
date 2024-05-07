@@ -18,7 +18,7 @@ import {
 } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 
-export const ItwAuthModeSelectionScreen = () => {
+export const ItwIdentificationModeSelectionScreen = () => {
   const dispatch = useIODispatch();
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
@@ -57,18 +57,18 @@ export const ItwAuthModeSelectionScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.authentication.mode.title") }}
+      title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
     >
       <ContentWrapper>
         <ListItemHeader
-          label={I18n.t("features.itWallet.authentication.mode.header")}
+          label={I18n.t("features.itWallet.identification.mode.header")}
         />
         <ModuleNavigation
           title={I18n.t(
-            "features.itWallet.authentication.mode.method.spid.title"
+            "features.itWallet.identification.mode.method.spid.title"
           )}
           subtitle={I18n.t(
-            "features.itWallet.authentication.mode.method.spid.subtitle"
+            "features.itWallet.identification.mode.method.spid.subtitle"
           )}
           icon="spid"
           onPress={handleSpidPress}
@@ -78,10 +78,10 @@ export const ItwAuthModeSelectionScreen = () => {
           <>
             <ModuleNavigation
               title={I18n.t(
-                "features.itWallet.authentication.mode.method.ciePin.title"
+                "features.itWallet.identification.mode.method.ciePin.title"
               )}
               subtitle={I18n.t(
-                "features.itWallet.authentication.mode.method.ciePin.subtitle"
+                "features.itWallet.identification.mode.method.ciePin.subtitle"
               )}
               icon="fiscalCodeIndividual"
               onPress={handleCiePinPress}
@@ -91,10 +91,10 @@ export const ItwAuthModeSelectionScreen = () => {
         )}
         <ModuleNavigation
           title={I18n.t(
-            "features.itWallet.authentication.mode.method.cieId.title"
+            "features.itWallet.identification.mode.method.cieId.title"
           )}
           subtitle={I18n.t(
-            "features.itWallet.authentication.mode.method.cieId.subtitle"
+            "features.itWallet.identification.mode.method.cieId.subtitle"
           )}
           icon="device"
           onPress={handleCieIdPress}
