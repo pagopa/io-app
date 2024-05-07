@@ -8,7 +8,7 @@ import {
   PaginatedServicesGetPayload,
   paginatedServicesGet
 } from "../../store/actions";
-import { handleFindServices } from "../handleFindServices";
+import { handleFindInstitutionServices } from "../handleFindInstitutionServices";
 
 const DEFAULT_REQUEST_PAYLOAD: PaginatedServicesGetPayload = {
   institutionId: "1",
@@ -39,13 +39,13 @@ const MOCK_RESPONSE_PAYLOAD: InstitutionServicesResource = {
   offset: 0
 };
 
-describe("handleFindServices", () => {
+describe("handleFindInstitutionServices", () => {
   describe("when the response is successful", () => {
     it(`should put ${getType(
       paginatedServicesGet.success
     )} with the parsed institutions and pagination data`, () => {
       testSaga(
-        handleFindServices,
+        handleFindInstitutionServices,
         ServicesClient.findInstutionServices,
         paginatedServicesGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
@@ -69,7 +69,7 @@ describe("handleFindServices", () => {
       paginatedServicesGet.failure
     )} with the error`, () => {
       testSaga(
-        handleFindServices,
+        handleFindInstitutionServices,
         ServicesClient.findInstutionServices,
         paginatedServicesGet.request(DEFAULT_REQUEST_PAYLOAD)
       )

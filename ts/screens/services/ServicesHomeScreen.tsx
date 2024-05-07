@@ -89,7 +89,7 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (
@@ -505,9 +505,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  navigateToServiceDetailsScreen: (
-    params: ServiceDetailsScreenNavigationParams
-  ) => navigateToServiceDetailsScreen(params),
+  navigateToServiceDetailsScreen: (params: ServiceDetailsScreenRouteParams) =>
+    navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (service: ServicePublic) =>
     dispatch(showServiceDetails(service))
 });
