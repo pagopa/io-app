@@ -27,32 +27,36 @@ const styles = StyleSheet.create({
   }
 });
 
-export type ServiceDetailsHeaderProps = {
+export type ServicesHeaderProps = {
   logoUri: ReadonlyArray<ImageURISource>;
-  organizationName: string;
-  serviceName: string;
+  title: string;
+  subTitle: string;
 };
 
-export const ServiceDetailsHeader = ({
+export const ServicesHeader = ({
   logoUri,
-  organizationName,
-  serviceName
-}: ServiceDetailsHeaderProps) => (
-  <View style={styles.container}>
+  title,
+  subTitle
+}: ServicesHeaderProps) => (
+  <View style={styles.container} testID="services-header">
     <View style={styles.itemAvatar}>
       <Avatar logoUri={logoUri} size="medium" />
     </View>
     <View style={IOStyles.flex}>
-      <H3>{serviceName}</H3>
+      <H3>{title}</H3>
       <LabelSmall fontSize="regular" color="grey-700">
-        {organizationName}
+        {subTitle}
       </LabelSmall>
     </View>
   </View>
 );
 
-export const ServiceDetailsHeaderSkeleton = () => (
-  <View style={styles.container} accessible={true}>
+export const ServicesHeaderSkeleton = () => (
+  <View
+    style={styles.container}
+    accessible={true}
+    testID="services-header-skeleton"
+  >
     <View style={styles.itemAvatar}>
       <Placeholder.Box
         width={IOVisualCostants.avatarSizeMedium}
