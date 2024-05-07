@@ -2,5 +2,8 @@ export const ITW_ROUTES = {
   MAIN: "ITW_MAIN" as const,
   DISCOVERY: {
     INFO: "ITW_DISCOVERY_INFO"
+  } as const,
+  IDENTIFICATION: {
+    MODE_SELECTION: "ITW_IDENTIFICATION_MODE_SELECTION"
   } as const
 };
