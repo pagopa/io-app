@@ -22,6 +22,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 import { useIODispatch } from "../../../../store/hooks";
 import { paginatedServicesGet } from "../store/actions";
+import { InstitutionServicesFailure } from "../components/InstitutionServicesFailure";
 
 export type InstitutionServicesScreenRouteParams = {
   institutionId: string;
@@ -55,10 +56,10 @@ export const InstitutionServicesScreen = ({
   useOnFirstRender(() => fetchServices(0));
 
   useEffect(() => {
-    if (!isFirstRender && isError) {
+    if (!!data && isError) {
       IOToast.error(I18n.t("global.genericError"));
     }
-  }, [isFirstRender, isError]);
+  }, [data, isError]);
 
   const goBack = useCallback(() => {
     dispatch(paginatedServicesGet.cancel());
@@ -126,6 +127,10 @@ export const InstitutionServicesScreen = ({
         />
       </InstitutionServicesScreenComponent>
     );
+  }
+
+  if (!data && isError) {
+    return <InstitutionServicesFailure onRetry={() => fetchServices(0)} />;
   }
 
   return (
