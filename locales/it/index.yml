@@ -606,6 +606,16 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+  cie_errors: 
+    error_22: 
+      title: Non hai dato il consenso all’invio dei dati
+      subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
+    error_1001:
+      title: Non hai l'età minima richiesta
+      subtitle: Per accedere, devi avere almeno 18 anni
+    generic: 
+      title: Non è stato possibile accedere
+      subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
   cie:
     genericTitle: Entra con CIE
     cie: CIE
