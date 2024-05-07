@@ -251,8 +251,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             props.cgnDetails?.status === StatusEnum.ACTIVATED && (
               <GradientBottomActions
                 primaryActionProps={{
-                  label: I18n.t("bonus.cgn.detail.cta.buyers"),
-                  accessibilityLabel: I18n.t("bonus.cgn.detail.cta.buyers"),
+                  label: canDisplayEycaDetails ? I18n.t("bonus.cgn.detail.cta.buyers") : I18n.t("bonus.cgn.detail.cta.discover"),
                   onPress: onPressShowCgnDiscounts
                 }}
                 secondaryActionProps={

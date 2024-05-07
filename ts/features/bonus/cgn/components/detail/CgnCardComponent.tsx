@@ -150,7 +150,7 @@ const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
       <View style={[styles.informationContainer, styles.paddedContentFull]}>
         <View style={[IOStyles.flex, styles.spaced]}>
           <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
-            <H6 color={"black"}>{I18n.t("bonus.cgn.name")}</H6>
+            <H6 color={"blueIO-850"}>{I18n.t("bonus.cgn.name")}</H6>
             {canCgnLogoBeShown && <Avatar logoUri={cgnLogo} size="small" />}
             {CardRevoked.is(cgnDetails) && (
               <Tag
@@ -168,14 +168,14 @@ const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
             )}
           </View>
           <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
-            <LabelSmall style={{ flex: 2 }} color="black">
+            <LabelSmall style={{ flex: 2 }} color="blueIO-850">
               {I18n.t("bonus.cgn.departmentName")}
             </LabelSmall>
             <View style={{ flex: 1 }} />
           </View>
           <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
             {CardActivated.is(cgnDetails) && (
-              <LabelSmall color={"black"} testID={"card-bottom-content"}>
+              <LabelSmall color={"blueIO-850"} style={IOStyles.flex} testID={"card-bottom-content"}>
                 {I18n.t("bonus.cgn.detail.status.date.valid_until", {
                   date: formatDateAsShortFormat(cgnDetails.expiration_date)
                 })}
