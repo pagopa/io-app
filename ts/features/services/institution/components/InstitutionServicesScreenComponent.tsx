@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useLayoutEffect, useMemo } from "react";
 import { RefreshControl, RefreshControlProps, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type InstitutionServicesScreenComponentProps = {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ export const InstitutionServicesScreenComponent = ({
   onRefresh,
   title = ""
 }: InstitutionServicesScreenComponentProps) => {
+  const navigation = useIONavigation();
   const headerHeight = useHeaderHeight();
 
   const safeAreaInsets = useSafeAreaInsets();
@@ -62,6 +64,12 @@ export const InstitutionServicesScreenComponent = ({
       contentOffsetY: scrollTranslationY
     }
   });
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true
+    });
+  }, [navigation]);
 
   const refreshControl = (
     <RefreshControl
