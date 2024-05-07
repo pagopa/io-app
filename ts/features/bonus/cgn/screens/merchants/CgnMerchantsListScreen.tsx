@@ -2,7 +2,12 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { debounce } from "lodash";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { Keyboard, SafeAreaView } from "react-native";
+import {
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView
+} from "react-native";
 import { connect } from "react-redux";
 import {
   ContentWrapper,
@@ -126,15 +131,22 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
         </ContentWrapper>
       )}
       {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
-        <CgnMerchantsListView
-          refreshing={
-            isLoading(props.onlineMerchants) ||
-            isLoading(props.offlineMerchants)
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                isLoading(props.onlineMerchants) ||
+                isLoading(props.offlineMerchants)
+              }
+              onRefresh={initLoadingLists}
+            />
           }
-          onRefresh={initLoadingLists}
-          merchantList={merchantList}
-          onItemPress={onItemPress}
-        />
+        >
+          <CgnMerchantsListView
+            merchantList={merchantList}
+            onItemPress={onItemPress}
+          />
+        </ScrollView>
       ) : (
         <LoadingErrorComponent
           isLoading={
