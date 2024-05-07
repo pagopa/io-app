@@ -11,7 +11,7 @@ import {
   revokedCertificate
 } from "../../types/__mock__/EUCovidCertificate.mock";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import EuCovidCertificateRouterScreen from "../EuCovidCertificateRouterScreen";
+import { EuCovidCertificateRouterScreen } from "../EuCovidCertificateRouterScreen";
 
 const authCode = "authCode" as EUCovidCertificateAuthCode;
 
