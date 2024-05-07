@@ -1,10 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { ComponentProps } from "react";
-import LinearGradient from "react-native-linear-gradient";
-import {
-  IOCategoryIcons,
-  getGradientColorValues
-} from "@pagopa/io-app-design-system";
+import { IOCategoryIcons } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../../../locales/locales";
 import {
   ProductCategory,
@@ -17,7 +12,8 @@ export type Category = {
   type: ProductCategory;
   icon: IOCategoryIcons;
   nameKey: TranslationKeys;
-  colors: ComponentProps<typeof LinearGradient>["colors"];
+  colors: string;
+  textColor: "white" | "black";
 };
 
 export const categories: Record<ProductCategory, Category> = {
@@ -25,61 +21,71 @@ export const categories: Record<ProductCategory, Category> = {
     type: ProductCategoryEnum.cultureAndEntertainment,
     icon: "categCulture",
     nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment",
-    colors: getGradientColorValues("cgnCulture")
+    colors: "#AA338B",
+    textColor: "white"
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
     icon: "categWellness",
     nameKey: "bonus.cgn.merchantDetail.categories.health",
-    colors: getGradientColorValues("cgnHealth")
+    colors: "#B5D666",
+    textColor: "black"
   },
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
     icon: "categLearning",
     nameKey: "bonus.cgn.merchantDetail.categories.learning",
-    colors: getGradientColorValues("cgnLearning")
+    colors: "#2A61AE",
+    textColor: "white"
   },
   [ProductCategoryEnum.sports]: {
     type: ProductCategoryEnum.sports,
     icon: "categSport",
     nameKey: "bonus.cgn.merchantDetail.categories.sport",
-    colors: getGradientColorValues("cgnSport")
+    colors: "#65BE72",
+    textColor: "black"
   },
   [ProductCategoryEnum.home]: {
     type: ProductCategoryEnum.home,
     icon: "categHome",
     nameKey: "bonus.cgn.merchantDetail.categories.home",
-    colors: getGradientColorValues("cgnHome")
+    colors: "#F8D547",
+    textColor: "black"
   },
   [ProductCategoryEnum.telephonyAndInternet]: {
     type: ProductCategoryEnum.telephonyAndInternet,
     icon: "categTelco",
     nameKey: "bonus.cgn.merchantDetail.categories.telco",
-    colors: getGradientColorValues("cgnTelco")
+    colors: "#0089C7",
+    textColor: "white"
   },
   [ProductCategoryEnum.bankingServices]: {
     type: ProductCategoryEnum.bankingServices,
     icon: "categFinance",
     nameKey: "bonus.cgn.merchantDetail.categories.finance",
-    colors: getGradientColorValues("cgnFinance")
+    colors: "#4F51A3",
+    textColor: "white"
   },
   [ProductCategoryEnum.travelling]: {
     type: ProductCategoryEnum.travelling,
     icon: "categTravel",
     nameKey: "bonus.cgn.merchantDetail.categories.travel",
-    colors: getGradientColorValues("cgnTravel")
+    colors: "#E02F6E",
+    textColor: "white"
   },
   [ProductCategoryEnum.sustainableMobility]: {
     type: ProductCategoryEnum.sustainableMobility,
     icon: "categMobility",
     nameKey: "bonus.cgn.merchantDetail.categories.mobility",
-    colors: getGradientColorValues("cgnMobility")
+    colors: "#00AEB1",
+    textColor: "black"
   },
   [ProductCategoryEnum.jobOffers]: {
     type: ProductCategoryEnum.jobOffers,
     icon: "categJobOffers",
     nameKey: "bonus.cgn.merchantDetail.categories.job",
-    colors: getGradientColorValues("cgnJobOffers")
+    colors: "#FAAE56",
+    textColor: "black"
   }
 };
 
