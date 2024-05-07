@@ -10,7 +10,20 @@ import ROUTES from "../../../navigation/routes";
 import { TestInnerNavigationContainer } from "../../../navigation/AppStackNavigator";
 import PinScreen from "../PinScreen";
 import PinConfirmationScreen from "../PinConfirmationScreen";
-import I18n from "../../../i18n";
+
+const spy = jest.spyOn(Alert, "alert");
+
+const mockedGoBack = jest.fn();
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      ...actualNav.useNavigation(),
+      goBack: mockedGoBack
+    })
+  };
+});
 
 describe("PinChangeScreens", () => {
   it("Should navigate to the Profile > PinConfirmation screen", () => {
@@ -21,10 +34,9 @@ describe("PinChangeScreens", () => {
 
     const title = getByTestId(/pin-confirmation-title/);
 
-    expect(title).toHaveTextContent(I18n.t("onboarding.pinConfirmation.title"));
+    expect(title).toHaveTextContent("Conferma il codice di sblocco");
   });
   it("Should display the native Alert", () => {
-    const spy = jest.spyOn(Alert, "alert");
     const { getByTestId } = render(renderComponent());
     const codeInput = getByTestId(/pin-creation-input/);
     expect(codeInput).not.toBeNull();
@@ -32,14 +44,37 @@ describe("PinChangeScreens", () => {
     fireEvent.changeText(codeInput, "111111");
 
     expect(spy).toHaveBeenCalledWith(
-      I18n.t("onboarding.pin.errors.invalid.title"),
-      I18n.t("onboarding.pin.errors.invalid.description"),
+      "Il codice non rispetta i criteri di sicurezza",
+      "Non deve contenere ripetizione di numeri (es. 000000) e numeri in sequenza (es. 123456 o 654321).",
+      [{ text: "Scegli un altro codice" }]
+    );
+    spy.mockReset();
+  });
+  it("Should display the alert on pin mismatch", () => {
+    const { getByTestId } = render(renderComponent());
+    const codeInput = getByTestId(/pin-creation-input/);
+    expect(codeInput).not.toBeNull();
+
+    fireEvent.changeText(codeInput, "162534");
+
+    /**
+     * Confirmation screen
+     */
+    const confirmationInput = getByTestId(/pin-confirmation-input/);
+    fireEvent.changeText(confirmationInput, "111111");
+
+    expect(spy).toHaveBeenCalledWith(
+      "I codici inseriti non corrispondono",
+      undefined,
       [
         {
-          text: I18n.t("onboarding.pin.errors.invalid.cta")
+          text: "Riprova",
+          onPress: mockedGoBack
         }
       ]
     );
+    mockedGoBack.mockReset();
+    spy.mockReset();
   });
 });
 
