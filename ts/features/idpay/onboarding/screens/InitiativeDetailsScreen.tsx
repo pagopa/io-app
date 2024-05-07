@@ -8,7 +8,6 @@ import { StyleSheet, View } from "react-native";
 import { ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -20,6 +19,7 @@ import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { isUpsertingSelector, selectInitiative } from "../xstate/selectors";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -78,41 +78,41 @@ const InitiativeDetailsScreen = () => {
     )
   );
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.onboarding.headerTitle"),
+    contextualHelp: emptyContextualHelp,
+    goBack: handleGoBackPress,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      goBack={handleGoBackPress}
-      headerTitle={I18n.t("idpay.onboarding.headerTitle")}
-      contextualHelp={emptyContextualHelp}
+    <ForceScrollDownView
+      threshold={150}
+      scrollEnabled={isDescriptionLoaded}
+      contentContainerStyle={styles.scrollContainer}
     >
-      <ForceScrollDownView
-        threshold={150}
-        scrollEnabled={isDescriptionLoaded}
-        contentContainerStyle={styles.scrollContainer}
-      >
-        <View style={styles.container}>
-          <VSpacer size={24} />
-          <OnboardingServiceHeader initiative={initiative} />
-          <VSpacer size={24} />
-          {descriptionComponent}
-          <VSpacer size={8} />
-          <ItemSeparatorComponent noPadded={true} />
-          <VSpacer size={16} />
-          {onboardingPrivacyAdvice}
-          <VSpacer size={32} />
-          <ButtonSolid
-            key={"continue"}
-            label={I18n.t("global.buttons.continue")}
-            accessibilityLabel={I18n.t("global.buttons.continue")}
-            onPress={handleContinuePress}
-            testID="IDPayOnboardingContinue"
-            loading={isUpserting}
-            disabled={isUpserting}
-            fullWidth
-          />
-          <VSpacer size={48} />
-        </View>
-      </ForceScrollDownView>
-    </BaseScreenComponent>
+      <View style={styles.container}>
+        <VSpacer size={24} />
+        <OnboardingServiceHeader initiative={initiative} />
+        <VSpacer size={24} />
+        {descriptionComponent}
+        <VSpacer size={8} />
+        <ItemSeparatorComponent noPadded={true} />
+        <VSpacer size={16} />
+        {onboardingPrivacyAdvice}
+        <VSpacer size={32} />
+        <ButtonSolid
+          testID="IDPayOnboardingContinue"
+          key={"continue"}
+          label={I18n.t("global.buttons.continue")}
+          onPress={handleContinuePress}
+          loading={isUpserting}
+          disabled={isUpserting}
+          fullWidth
+        />
+        <VSpacer size={48} />
+      </View>
+    </ForceScrollDownView>
   );
 };
 
