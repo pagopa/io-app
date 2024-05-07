@@ -26,7 +26,19 @@ const spy = jest.spyOn(Alert, "alert");
 
 describe("PinConfirmation", () => {
   it("Should call onSubmit", () => {
-    const { getByTestId } = renderComponent();
+    const { getByTestId } = render(<TestComponent />);
+
+    const codeInput = getByTestId("pin-confirmation-input");
+
+    expect(onSubmit).toHaveBeenCalledTimes(0);
+
+    fireEvent.changeText(codeInput, pin);
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(spy).not.toHaveBeenCalled();
+    onSubmit.mockReset();
+  });
+  it("Should call onSubmit", () => {
+    const { getByTestId } = render(<TestComponent isOnboarding />);
 
     const codeInput = getByTestId("pin-confirmation-input");
 
@@ -38,7 +50,31 @@ describe("PinConfirmation", () => {
     onSubmit.mockReset();
   });
   it("Should display the Alert on pin mismatch", () => {
-    const { getByTestId } = renderComponent();
+    const { getByTestId } = render(<TestComponent />);
+    const codeInput = getByTestId("pin-confirmation-input");
+
+    fireEvent.changeText(codeInput, "000000");
+
+    expect(onSubmit).toHaveBeenCalledTimes(0);
+
+    /**
+     * SpyOn seems to trigger mocked functions twice.
+     */
+    expect(spy).toHaveBeenCalledWith(
+      "I codici inseriti non corrispondono",
+      undefined,
+      [
+        {
+          text: "Riprova",
+          onPress: mockGoBack
+        }
+      ]
+    );
+
+    spy.mockRestore();
+  });
+  it("Should display the Alert on pin mismatch", () => {
+    const { getByTestId } = render(<TestComponent isOnboarding />);
     const codeInput = getByTestId("pin-confirmation-input");
 
     fireEvent.changeText(codeInput, "000000");
@@ -63,9 +99,7 @@ describe("PinConfirmation", () => {
   });
 });
 
-const Component = memo(() => <PinConfirmation pin={pin} onSubmit={onSubmit} />);
-
-const renderComponent = () => {
+const TestComponent = ({ isOnboarding }: { isOnboarding?: boolean }) => {
   const Stack = createStackNavigator();
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(
@@ -73,11 +107,34 @@ const renderComponent = () => {
     globalState as PreloadedState<ReturnType<typeof appReducer>>
   );
 
-  return render(
+  const Component = memo(() => (
+    <PinConfirmation
+      isOnboarding={isOnboarding}
+      pin={pin}
+      onSubmit={onSubmit}
+    />
+  ));
+
+  return (
     <Provider store={store}>
       <TestInnerNavigationContainer>
-        <Stack.Navigator initialRouteName={ROUTES.PIN_CONFIRMATION}>
-          <Stack.Screen name={ROUTES.PIN_CONFIRMATION} component={Component} />
+        <Stack.Navigator
+          initialRouteName={
+            ROUTES[
+              isOnboarding ? "ONBOARDING_CONFIRMATION_PIN" : "PIN_CONFIRMATION"
+            ]
+          }
+        >
+          <Stack.Screen
+            name={
+              ROUTES[
+                isOnboarding
+                  ? "ONBOARDING_CONFIRMATION_PIN"
+                  : "PIN_CONFIRMATION"
+              ]
+            }
+            component={Component}
+          />
         </Stack.Navigator>
       </TestInnerNavigationContainer>
     </Provider>
