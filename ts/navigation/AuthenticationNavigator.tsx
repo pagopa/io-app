@@ -30,7 +30,11 @@ const Stack = createStackNavigator<AuthenticationParamsList>();
 const AuthenticationStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.AUTHENTICATION_LANDING}
-    screenOptions={{ gestureEnabled: true, headerShown: false }}
+    screenOptions={{
+      gestureEnabled: true,
+      gestureDirection: "horizontal",
+      headerShown: false
+    }}
   >
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}
