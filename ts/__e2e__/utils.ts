@@ -10,7 +10,13 @@ import {
   e2eWaitRenderTimeout
 } from "./config";
 
-const onboardingPinTitleId = "pin-creation-form-title";
+const pin =
+  e2ePinChar1 +
+  e2ePinChar6 +
+  e2ePinChar2 +
+  e2ePinChar5 +
+  e2ePinChar3 +
+  e2ePinChar4;
 
 /**
  * Complete the login with SPID
@@ -40,11 +46,21 @@ export const loginWithSPID = async () => {
   const shareDataRightButtonId = "share-data-confirm-button";
   await element(by.id(shareDataRightButtonId)).tap();
 
-  await waitFor(element(by.id(onboardingPinTitleId)))
+  await waitFor(element(by.id("pin-creation-form-title")))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
 
   await createE2EPin();
+
+  await waitFor(element(by.id("pin-confirmation-title")))
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
+
+  await confirmE2EPin();
+
+  const confirmButton = element(by.id("not-enrolled-biometric-confirm"));
+  await waitFor(confirmButton).toBeVisible().withTimeout(e2eWaitRenderTimeout);
+  await confirmButton.tap();
 };
 
 /**
@@ -68,41 +84,12 @@ export const insertE2EPin = async () => {
  * trying to insert wrong data during the process.
  */
 export const createE2EPin = async () => {
-  const pin =
-    e2ePinChar1 +
-    e2ePinChar6 +
-    e2ePinChar2 +
-    e2ePinChar5 +
-    e2ePinChar3 +
-    e2ePinChar4;
-  const wrongPin = "123456";
-
-  const onboardingPinFieldInputId = "PinFieldInput";
+  const onboardingPinFieldInputId = "pin-creation-input";
   await element(by.id(onboardingPinFieldInputId)).typeText(pin);
-
-  const scrollView = element(by.id("pin-creation-form-scroll-view"));
-  await scrollView.scrollTo("bottom");
-
-  const onboardingPinConfirmationFieldId = "PinConfirmationFieldInput";
-  await element(by.id(onboardingPinConfirmationFieldId)).typeText(wrongPin);
-
-  const onboardingPinConfirmButtonId = "pin-creation-form-confirm";
-  await waitFor(element(by.id(onboardingPinConfirmButtonId)))
-    .toBeVisible()
-    .withTimeout(e2eWaitRenderTimeout);
-
-  await scrollView.tap();
-
-  await element(by.id(onboardingPinConfirmationFieldId)).clearText();
-  await element(by.id(onboardingPinConfirmationFieldId)).typeText(pin);
-
-  await element(by.id(onboardingPinConfirmButtonId)).tap();
-
-  const onboardingNotEnrolledConfirmButtonId = "not-enrolled-biometric-confirm";
-  await waitFor(element(by.id(onboardingNotEnrolledConfirmButtonId)))
-    .toBeVisible()
-    .withTimeout(e2eWaitRenderTimeout);
-  await element(by.id(onboardingNotEnrolledConfirmButtonId)).tap();
+};
+export const confirmE2EPin = async () => {
+  const onboardingPinFieldInputId = "pin-confirmation-input";
+  await element(by.id(onboardingPinFieldInputId)).typeText(pin);
 };
 
 /**
