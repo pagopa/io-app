@@ -17,7 +17,7 @@ import {
   validCertificateWithoutPreview
 } from "../../types/__mock__/EUCovidCertificate.mock";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
-import EuCovidCertValidScreen from "../valid/EuCovidCertValidScreen";
+import { EuCovidCertValidScreen } from "../valid/EuCovidCertValidScreen";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 describe("Test EUCovidCertificateValidScreen", () => {

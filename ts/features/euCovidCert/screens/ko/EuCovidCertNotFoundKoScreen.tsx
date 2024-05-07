@@ -2,26 +2,21 @@ import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import doubtImage from "../../../../../img/features/euCovidCert/certificate_not_found.png";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
-import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { H4 } from "../../../../components/core/typography/H4";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { GlobalState } from "../../../../store/reducers/types";
 import { euCovidCertificateUrl } from "../../../../urls";
 import { openWebUrl } from "../../../../utils/url";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+import {
+  BaseEuCovidCertificateLayout,
+  BaseSingleButtonFooter
+} from "../BaseEuCovidCertificateLayout";
+import { EUCovidContext } from "../../components/EUCovidContext";
 
 const styles = StyleSheet.create({
   row: {
@@ -88,7 +83,7 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
   </>
 );
 
-const EuCovidCertNotFoundKoScreen = (_: Props): React.ReactElement => {
+export const EuCovidCertNotFoundKoScreen = (): React.ReactElement => {
   const euCovidCertCurrent = useContext(EUCovidContext);
   // Handling unexpected error
   if (euCovidCertCurrent === null) {
@@ -106,21 +101,11 @@ const EuCovidCertNotFoundKoScreen = (_: Props): React.ReactElement => {
         />
       }
       footer={
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={confirmButtonProps(
-            () => openWebUrl(euCovidCertificateUrl),
-            I18n.t("features.euCovidCertificate.ko.notFound.cta")
-          )}
+        <BaseSingleButtonFooter
+          onPress={() => openWebUrl(euCovidCertificateUrl)}
+          title={I18n.t("features.euCovidCertificate.ko.notFound.cta")}
         />
       }
     />
   );
 };
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertNotFoundKoScreen);

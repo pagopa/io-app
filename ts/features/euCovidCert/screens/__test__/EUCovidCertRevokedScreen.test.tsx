@@ -9,7 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { revokedCertificate } from "../../types/__mock__/EUCovidCertificate.mock";
 import { RevokedCertificate } from "../../types/EUCovidCertificate";
-import EuCovidCertRevokedScreen from "../EuCovidCertRevokedScreen";
+import { EuCovidCertRevokedScreen } from "../EuCovidCertRevokedScreen";
 
 describe("Test EuCovidCertRevokedScreen", () => {
   jest.useFakeTimers();

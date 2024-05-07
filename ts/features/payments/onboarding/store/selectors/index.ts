@@ -34,3 +34,8 @@ export const selectPaymentOnboardingSelectedMethod = createSelector(
   walletOnboardingSelector,
   onboarding => onboarding.selectedPaymentMethodId
 );
+
+export const selectPaymentOnboardingRptIdToResume = createSelector(
+  walletOnboardingSelector,
+  onboarding => onboarding.rptIdToResume
+);
