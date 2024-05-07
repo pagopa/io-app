@@ -2089,6 +2089,14 @@ services:
   home:
     institutions:
       title: National
+  institution:
+    failure:
+      title: "There is a temporary problem. Please try again"
+      subtitle: "We are retrieving services"
+      back: "Back"
+      retry: "Retry"
+    header:
+      subtitle: "{{count}} available services"
   details:
     failure:
       title: "There is a temporary problem. Please try again"

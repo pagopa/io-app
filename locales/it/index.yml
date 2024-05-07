@@ -2089,6 +2089,14 @@ services:
   home:
     institutions:
       title: Nazionali
+  institution:
+    failure:
+      title: "C'è un problema temporaneo, riprova"
+      subtitle: "Stiamo recuperando i servizi"
+      back: "Indietro"
+      retry: "Riprova"
+    header:
+      subtitle: "{{count}} servizi disponibili"
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
