@@ -78,7 +78,9 @@ const IdpSelectionScreen = (): ReactElement => {
   const idps = useIOSelector(idpsRemoteValueSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
-  const isFastLoginFeatureFlagEnabled = useIOSelector(isFastLoginEnabledSelector);
+  const isFastLoginFeatureFlagEnabled = useIOSelector(
+    isFastLoginEnabledSelector
+  );
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
