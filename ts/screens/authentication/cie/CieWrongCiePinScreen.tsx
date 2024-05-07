@@ -1,94 +1,152 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import { Content } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
-import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { Route, useRoute } from "@react-navigation/native";
+import { IOPictograms } from "@pagopa/io-app-design-system";
+import { Linking } from "react-native";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
-type NavigationProps = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_WRONG_PIN_SCREEN"
->;
+const CieWrongCiePinScreen = () => {
+  const navigation = useIONavigation();
+  const route =
+    useRoute<
+      Route<
+        typeof ROUTES.CIE_WRONG_PIN_SCREEN,
+        CieWrongCiePinScreenNavigationParams
+      >
+    >();
+  const { remainingCount } = route.params;
 
-type Props = NavigationProps & ReturnType<typeof mapDispatchToProps>;
-
-class CieWrongCiePinScreen extends React.PureComponent<Props> {
-  // TODO: use redux to handle control?
-  private navigateToCiePinScreen = async () => {
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+  const navigateToCiePinScreen = React.useCallback(() => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.CIE_PIN_SCREEN
     });
-  };
+  }, [navigation]);
 
-  get ciePinRemainingCount() {
-    return this.props.route.params.remainingCount;
-  }
+  const navigateToAuthenticationScreen = React.useCallback(() => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: ROUTES.AUTHENTICATION }]
+    });
+  }, [navigation]);
 
-  private renderFooterButtons = () => {
-    const cancelButtonProps = {
-      bordered: true,
-      onPress: resetToAuthenticationRoute,
-      title: I18n.t("global.buttons.cancel")
+  const didYouForgetPin = React.useCallback(() => {
+    Linking.openURL(
+      "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
+    ).catch(constNull);
+  }, []);
+
+  const didYouForgetPuk = React.useCallback(() => {
+    Linking.openURL(
+      "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
+    ).catch(constNull);
+  }, []);
+
+  type Messages = {
+    [key: number]: {
+      pictogram: IOPictograms;
+      title: string;
+      subtitle: string;
+      actionLabel: string;
+      actionHandler: () => void;
+      secondaryActionLabel: string;
+      secondaryActionHandler: () => void;
     };
-    const retryButtonProps = {
-      primary: true,
-      onPress: this.navigateToCiePinScreen,
-      title: I18n.t("global.buttons.retry")
-    };
-    return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        rightButton={retryButtonProps}
-        leftButton={cancelButtonProps}
-      />
-    );
   };
+  const messages: Messages = React.useMemo(
+    () => ({
+      2: {
+        pictogram: "attention",
+        title: "Il PIN non è corretto",
+        subtitle: "Hai ancora 2 tentativi, controllalo e riprova.",
+        actionLabel: I18n.t("global.buttons.retry"),
+        actionHandler: navigateToCiePinScreen,
+        secondaryActionLabel: I18n.t("global.buttons.close"),
+        secondaryActionHandler: navigateToAuthenticationScreen
+      },
+      1: {
+        pictogram: "attention",
+        title: "Hai inserito un PIN errato per 2 volte",
+        subtitle:
+          "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+        actionLabel: I18n.t("global.buttons.retry"),
+        actionHandler: navigateToCiePinScreen,
+        secondaryActionLabel: "Hai dimenticato il PIN?",
+        secondaryActionHandler: didYouForgetPin
+      },
+      0: {
+        pictogram: "fatalError",
+        title: "Hai inserito un PIN errato per troppe volte",
+        subtitle:
+          "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+        actionLabel: I18n.t("global.buttons.close"),
+        actionHandler: navigateToAuthenticationScreen,
+        secondaryActionLabel: "Hai dimenticato il PUK?",
+        secondaryActionHandler: didYouForgetPuk
+      }
+    }),
+    [
+      didYouForgetPin,
+      didYouForgetPuk,
+      navigateToAuthenticationScreen,
+      navigateToCiePinScreen
+    ]
+  );
 
-  public render(): React.ReactNode {
-    const remainingCount = this.ciePinRemainingCount;
-    return (
-      <TopScreenComponent
-        goBack={false}
-        headerTitle={I18n.t(
-          "authentication.cie.pin.incorrectCiePinHeaderTitle"
-        )}
-      >
-        <ScreenContentHeader
-          title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
-            remainingCount
-          })}
-        />
-        <Content>
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
-          </Body>
-          <VSpacer size={16} />
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
-          </Body>
-          <VSpacer size={16} />
-        </Content>
+  const defaultMessage: (typeof messages)[0] = React.useMemo(
+    () => ({
+      pictogram: "attention",
+      title: "Il PIN non è corretto",
+      subtitle: "Controllalo e riprova.",
+      actionLabel: I18n.t("global.buttons.retry"),
+      actionHandler: navigateToCiePinScreen,
+      secondaryActionLabel: I18n.t("global.buttons.close"),
+      secondaryActionHandler: navigateToAuthenticationScreen
+    }),
+    [navigateToAuthenticationScreen, navigateToCiePinScreen]
+  );
 
-        {this.renderFooterButtons()}
-      </TopScreenComponent>
-    );
-  }
-}
-const mapDispatchToProps = (_: Dispatch) => ({});
+  const getMessage = React.useCallback(
+    (key: number) => messages[key] || defaultMessage,
+    [defaultMessage, messages]
+  );
 
-export default connect(undefined, mapDispatchToProps)(CieWrongCiePinScreen);
+  const {
+    pictogram,
+    actionLabel,
+    actionHandler,
+    secondaryActionLabel,
+    secondaryActionHandler,
+    title,
+    subtitle
+  } = getMessage(remainingCount);
+
+  return (
+    <OperationResultScreenContent
+      pictogram={pictogram}
+      title={title}
+      subtitle={subtitle}
+      action={{
+        label: actionLabel,
+        accessibilityLabel: actionLabel,
+        onPress: actionHandler
+      }}
+      secondaryAction={{
+        label: secondaryActionLabel,
+        accessibilityLabel: secondaryActionLabel,
+        onPress: secondaryActionHandler
+      }}
+    />
+  );
+};
+
+export default CieWrongCiePinScreen;
