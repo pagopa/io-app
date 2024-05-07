@@ -9,7 +9,7 @@ import { WalletEmptyScreenContent } from "../WalletEmptyScreenContent";
 
 describe("WalletEmptyScreenContent", () => {
   it("should match the snapshot", () => {
-    const { component } = renderComponent();
+    const component = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
@@ -20,13 +20,10 @@ const renderComponent = () => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
-  return {
-    component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <WalletEmptyScreenContent />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <WalletEmptyScreenContent />,
+    ROUTES.WALLET_HOME,
+    {},
     store
-  };
+  );
 };

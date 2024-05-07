@@ -11,6 +11,7 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { PnParamsList } from "../navigation/params";
+import { formatPaymentNoticeNumber } from "../../payments/common/utils";
 
 type LegacyPaidPaymentScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
@@ -25,9 +26,7 @@ export const LegacyPaidPaymentScreen = ({
   route
 }: LegacyPaidPaymentScreenProps) => {
   const { noticeCode, creditorTaxId } = route.params;
-  const formattedPaymentNoticeNumber = noticeCode
-    .replace(/(\d{4})/g, "$1  ")
-    .trim();
+  const formattedPaymentNoticeNumber = formatPaymentNoticeNumber(noticeCode);
 
   return (
     <BaseScreenComponent

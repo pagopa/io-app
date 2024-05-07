@@ -164,3 +164,21 @@ export const withTrailingPoliceCarLightEmojii = (
     return text;
   }
 };
+
+/**
+ * Format a number of bytes in a human readable format with the appropriate unit (B, KB, MB, GB, TB)
+ * rounded to the first decimal.
+ * @param bytes - number of bytes to format
+ * @returns formatted string in the form of "value unit"
+ */
+export const formatBytesWithUnit = (bytes: number) => {
+  if (!bytes || bytes < 0) {
+    return "0 B";
+  }
+  const units = ["B", "KB", "MB", "GB", "TB"];
+  // We are calculating log1000(bytes) to determine the unit by changing log base (Math.log10(1000) = 3)
+  const i = Math.floor(Math.log10(bytes) / 3);
+  const value = parseFloat((bytes / Math.pow(1000, i)).toFixed(1));
+  const unit = units[Math.min(i, units.length - 1)];
+  return `${value} ${unit}`;
+};

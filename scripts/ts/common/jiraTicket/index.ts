@@ -79,19 +79,16 @@ export const getJiraIdFromPrTitle = (
  * Try to retrieve Jira tickets from pr title
  * and transforms them into {@link GenericTicket}
  * @param title
+ * @returns a promise of {@link JiraTicketRetrievalResults} containing the jira tickets or an error. If no tickets are found, an empty array is returned
  */
-export const getTicketsFromTitle = async (
+export const getTicketsFromTitle = (
   title: string
-): Promise<JiraTicketRetrievalResults> => {
-  const maybeJiraId = await pipe(
-    getJiraIdFromPrTitle(title),
-    O.map(getJiraTickets),
-    O.toUndefined
+): Promise<JiraTicketRetrievalResults> =>
+  pipe(
+    title,
+    getJiraIdFromPrTitle,
+    O.fold(
+      () => Promise.resolve([]),
+      jiraIds => getJiraTickets(jiraIds)
+    )
   );
-
-  if (maybeJiraId) {
-    return maybeJiraId;
-  } else {
-    return [E.left(new Error("No Jira ticket found"))];
-  }
-};

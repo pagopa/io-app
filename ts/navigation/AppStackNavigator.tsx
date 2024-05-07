@@ -9,7 +9,7 @@ import React, { useRef } from "react";
 import { View } from "react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { fimsEnabled, myPortalEnabled } from "../config";
+import { fimsEnabled } from "../config";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { fimsLinkingOptions } from "../features/fims/navigation/navigator";
@@ -36,7 +36,7 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { SERVICES_ROUTES } from "../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -136,10 +136,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
               parse: {
                 activate: activate => activate === "true"
               }
-            },
-            ...(myPortalEnabled && {
-              [SERVICES_ROUTES.SERVICE_WEBVIEW]: "webview"
-            })
+            }
           }
         },
         ...fciLinkingOptions,

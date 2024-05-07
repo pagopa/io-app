@@ -16,7 +16,7 @@ import {
 } from "../../store/reducers/entities/services";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 
 const tabScrollOffset = new Animated.Value(0);
 

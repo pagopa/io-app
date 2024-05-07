@@ -4,35 +4,22 @@ import {
   ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
-  ExternalTypographyProps,
   H3,
-  IOColors,
-  IOFontWeight,
   IOPictograms,
   IOStyles,
-  IOTheme,
   IOVisualCostants,
   Pictogram,
-  TypographyProps,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-
-type PartialAllowedColors = Extract<
-  IOColors,
-  "bluegreyDark" | "white" | "blue" | "bluegrey" | "bluegreyLight"
->;
-type AllowedColors = PartialAllowedColors | IOTheme["textBody-default"];
-type AllowedWeight = IOFontWeight | "Regular" | "SemiBold";
-
-export type BodyProps = ExternalTypographyProps<
-  TypographyProps<AllowedWeight, AllowedColors> & {
-    text: string | React.ReactElement;
-  }
->;
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  BodyProps,
+  ComposedBodyFromArray
+} from "../core/typography/ComposedBodyFromArray";
 
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
@@ -46,25 +33,8 @@ type OperationResultScreenContentProps = WithTestID<{
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
+  isHeaderVisible?: boolean;
 }>;
-
-type PropsComposedBody = {
-  subtitle: Array<BodyProps>;
-  textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
-};
-
-export const ComposedBodyFromArray = ({
-  subtitle,
-  textAlign = "center"
-}: PropsComposedBody) => (
-  <Body style={{ textAlign }}>
-    {subtitle.map(({ text, key, ...props }) => (
-      <Body key={key} {...props}>
-        {text}
-      </Body>
-    ))}
-  </Body>
-);
 
 const OperationResultScreenContent = ({
   pictogram,
@@ -73,9 +43,14 @@ const OperationResultScreenContent = ({
   action,
   secondaryAction,
   children,
-  testID
+  testID,
+  isHeaderVisible
 }: React.PropsWithChildren<OperationResultScreenContentProps>) => (
-  <SafeAreaView style={styles.container} testID={testID}>
+  <SafeAreaView
+    edges={isHeaderVisible ? ["bottom"] : undefined}
+    style={styles.container}
+    testID={testID}
+  >
     <ScrollView
       centerContent={true}
       contentContainerStyle={[
@@ -97,7 +72,7 @@ const OperationResultScreenContent = ({
           {typeof subtitle === "string" ? (
             <Body style={styles.text}>{subtitle}</Body>
           ) : (
-            <ComposedBodyFromArray subtitle={subtitle} textAlign="center" />
+            <ComposedBodyFromArray body={subtitle} textAlign="center" />
           )}
         </>
       )}

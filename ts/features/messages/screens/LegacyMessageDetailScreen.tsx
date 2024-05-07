@@ -29,14 +29,14 @@ import {
   navigateBack,
   navigateToServiceDetailsScreen
 } from "../../../store/actions/navigation";
-import { loadServiceDetail } from "../../../store/actions/services";
+import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessageId } from "../types";
 import {
   serviceByIdPotSelector,
   serviceMetadataByIdSelector
-} from "../../services/store/reducers/servicesById";
+} from "../../services/details/store/reducers/servicesById";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";

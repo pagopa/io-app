@@ -1,20 +1,18 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
+import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import {
-  PaymentStartOrigin,
-  PaymentStartRoute,
-  WalletPaymentStepEnum
-} from "../../types";
+import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 
 export const walletPaymentSetCurrentStep = createStandardAction(
   "WALLET_PAYMENT_SET_CURRENT_STEP"
 )<WalletPaymentStepEnum>();
 
+export type OnPaymentSuccessAction = "showHome" | "showTransaction";
+
 export type PaymentInitStateParams = {
   startOrigin?: PaymentStartOrigin;
-  startRoute?: PaymentStartRoute;
-  showTransaction?: boolean;
+  onSuccess?: OnPaymentSuccessAction;
 };
 
 /**
@@ -27,19 +25,14 @@ export const initPaymentStateAction = createStandardAction(
 
 export const selectPaymentMethodAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_METHOD"
-)<WalletInfo>();
+)<{ userWallet?: WalletInfo; paymentMethod?: PaymentMethodResponse }>();
 
 export const selectPaymentPspAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_PSP"
 )<Bundle>();
 
-export const resetPaymentPspAction = createStandardAction(
-  "PAYMENTS_RESET_PAYMENT_PSP"
-)();
-
 export type PaymentsCheckoutOrchestrationActions =
   | ActionType<typeof walletPaymentSetCurrentStep>
   | ActionType<typeof initPaymentStateAction>
   | ActionType<typeof selectPaymentMethodAction>
-  | ActionType<typeof selectPaymentPspAction>
-  | ActionType<typeof resetPaymentPspAction>;
+  | ActionType<typeof selectPaymentPspAction>;

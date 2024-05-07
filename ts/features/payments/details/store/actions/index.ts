@@ -20,7 +20,7 @@ export const paymentsDeleteMethodAction = createAsyncAction(
   "PAYMENTS_DELETE_METHOD_SUCCESS",
   "PAYMENTS_DELETE_METHOD_FAILURE",
   "PAYMENTS_DELETE_METHOD_CANCEL"
-)<DeleteMethodPayload, void, NetworkError, void>();
+)<DeleteMethodPayload, string, NetworkError, void>();
 
 type TogglePagoPaCapabilityPayload = {
   walletId: string;

@@ -8,10 +8,8 @@ import { getType } from "typesafe-actions";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
-import {
-  loadServiceDetail,
-  removeServiceTuples
-} from "../../../actions/services";
+import { loadServiceDetail } from "../../../../features/services/details/store/actions/details";
+import { removeServiceTuples } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 /**

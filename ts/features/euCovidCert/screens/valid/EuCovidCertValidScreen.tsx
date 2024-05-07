@@ -1,33 +1,26 @@
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext, useState } from "react";
 import {
-  View,
   Dimensions,
   Image,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
+  View,
   ViewStyle
 } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
 import { showToast } from "../../../../utils/showToast";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../components/buttons/ButtonConfigurations";
+import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
@@ -42,11 +35,14 @@ import {
   WithEUCovidCertificateHeaderData
 } from "../../types/EUCovidCertificate";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
-import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
+import {
+  BaseDoubleButtonFooter,
+  BaseEuCovidCertificateLayout,
+  BaseSingleButtonFooter
+} from "../BaseEuCovidCertificateLayout";
+import { EUCovidContext } from "../../components/EUCovidContext";
 
-type OwnProps = {
+type Props = {
   validCertificate: ValidCertificate;
 } & WithEUCovidCertificateHeaderData;
 
@@ -75,10 +71,6 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
-
 type EuCovidCertValidComponentProps = Props & {
   markdownWebViewStyle?: StyleProp<ViewStyle>;
   messageId?: string;
@@ -101,12 +93,13 @@ const EuCovidCertValidComponent = (
             "features.euCovidCertificate.valid.accessibility.hint"
           )}
           onPress={() =>
-            props.navigateToQrCodeFullScreen(
-              props.validCertificate.qrCode.content
-            )
+            navigateToEuCovidCertificateQrCodeFullScreen({
+              qrCodeContent: props.validCertificate.qrCode.content
+            })
           }
         >
           <Image
+            accessibilityIgnoresInvertColors
             source={{
               uri: withBase64Uri(props.validCertificate.qrCode.content, "png")
             }}
@@ -197,32 +190,33 @@ const Footer = (props: FooterProps): React.ReactElement => {
     320
   );
 
-  const saveButton = confirmButtonProps(
-    presentBottomSheet,
-    I18n.t("global.genericSave")
-  );
   const markdownDetails = props.validCertificate.markdownDetails;
 
   return (
     <>
       {bottomSheet}
       {markdownDetails ? (
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(
-            () => props.navigateToMarkdown(markdownDetails),
-            I18n.t("global.buttons.details")
-          )}
-          rightButton={saveButton}
+        <BaseDoubleButtonFooter
+          onPressLeft={() =>
+            navigateToEuCovidCertificateMarkdownDetailsScreen({
+              markdownDetails
+            })
+          }
+          onPressRight={presentBottomSheet}
+          titleLeft={I18n.t("global.buttons.details")}
+          titleRight={I18n.t("global.genericSave")}
         />
       ) : (
-        <FooterWithButtons type={"SingleButton"} leftButton={saveButton} />
+        <BaseSingleButtonFooter
+          onPress={presentBottomSheet}
+          title={I18n.t("global.genericSave")}
+        />
       )}
     </>
   );
 };
 
-const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
+export const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   const currentCert = useContext(EUCovidContext);
   const screenShotViewContainer = React.createRef<View>();
   const [flashAnimationState, setFlashAnimationState] =
@@ -302,16 +296,3 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     />
   );
 };
-
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToQrCodeFullScreen: (qrCodeContent: string) =>
-    navigateToEuCovidCertificateQrCodeFullScreen({ qrCodeContent }),
-  navigateToMarkdown: (markdownDetails: string) =>
-    navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
-});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertValidScreen);

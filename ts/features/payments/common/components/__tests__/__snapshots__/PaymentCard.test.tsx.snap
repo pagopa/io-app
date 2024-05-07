@@ -7,8 +7,10 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       "aspectRatio": 1.6,
       "backgroundColor": "#E8EBF1",
       "borderColor": "#D2D6E3",
-      "borderRadius": 16,
+      "borderRadius": 8,
       "borderWidth": 1,
+      "padding": 16,
+      "paddingTop": 8,
     }
   }
 >
@@ -17,8 +19,6 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       Object {
         "flex": 1,
         "justifyContent": "space-between",
-        "padding": 16,
-        "paddingTop": 8,
       }
     }
   >
@@ -26,7 +26,9 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       style={
         Array [
           Object {
+            "alignItems": "center",
             "flexDirection": "row",
+            "height": 48,
             "justifyContent": "space-between",
           },
           Object {

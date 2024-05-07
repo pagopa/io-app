@@ -26,33 +26,39 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: ${customVariables.fontSizeBase * 2.5}px;
-  line-height: ${customVariables.lineHeightBase * 2}px;
+  font-size: 24px;
+  line-height: 1.1;
+  margin-bottom: 16px;
 }
 
 h2 {
-  font-size: ${customVariables.fontSizeBase * 2}px;
-  line-height: ${customVariables.lineHeightBase * 1.6666}px;
+  font-size: 20px;
+  line-height: 1.1;
 }
 
 h3 {
-  font-size: ${customVariables.fontSizeBase * 1.75}px;
-  line-height: ${customVariables.lineHeightBase * 1.3333}px;
+  font-size: 18px;
+  line-height: 1.2;
 }
 
 h4 {
-  font-size: ${customVariables.fontSizeBase * 1.5}px;
-  line-height: ${customVariables.lineHeightBase * 1.1666}px;
+  font-size: 16px;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
 }
 
 h5 {
-  font-size: ${customVariables.fontSizeBase * 1.25}px;
-  line-height: ${customVariables.lineHeightBase}px;
+  font-size: 14px;
+  line-height: 1.35;
 }
 
 h6 {
-  font-size: ${customVariables.fontSizeBase}px;
-  line-height: ${customVariables.lineHeightBase}px;
+  font-size: 12px;
+  line-height: 1.35;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 img {

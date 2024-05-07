@@ -8,7 +8,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
-import { mapWalletsToCards } from "../../common/utils/wallet";
+import { mapWalletsToCards } from "../../common/utils";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -45,16 +45,18 @@ export function* handleGetWalletDetails(
         );
         return;
       }
-      // not handled error codes
-      yield* put(
-        paymentsGetMethodDetailsAction.failure({
-          ...getGenericError(
-            new Error(
-              `response status code ${getWalletDetailsResult.right.status}`
+      // not handled error codes (401 is handled by withRefreshApiCall)
+      if (getWalletDetailsResult.right.status !== 401) {
+        yield* put(
+          paymentsGetMethodDetailsAction.failure({
+            ...getGenericError(
+              new Error(
+                `response status code ${getWalletDetailsResult.right.status}`
+              )
             )
-          )
-        })
-      );
+          })
+        );
+      }
     } else {
       // cannot decode response
       yield* put(

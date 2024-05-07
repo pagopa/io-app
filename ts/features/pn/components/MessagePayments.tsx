@@ -6,7 +6,6 @@ import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
   ButtonLink,
-  FeatureInfo,
   ListItemHeader,
   ModulePaymentNotice,
   VSpacer
@@ -23,11 +22,12 @@ import PN_ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { getRptIdStringFromPayment } from "../utils/rptId";
+import { canShowMorePaymentsLink } from "../utils";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
     flex: 1,
-    alignItems: "flex-start"
+    alignItems: "center"
   },
   morePaymentsLinkContainer: {
     alignSelf: "center"
@@ -49,7 +49,7 @@ const readonlyArrayHasNoData = <T,>(maybeArray: ReadonlyArray<T> | undefined) =>
 /*
  * Skip the payment section when the notification is not cancelled but there are no payments to show
  * or
- * Skip the payment section when the notification is cancelled and there are no payments nor completed payments to show
+ * Skip the payment section when the notification is cancelled and there are no completed payments to show
  */
 const paymentSectionShouldRenderNothing = (
   isCancelled: boolean,
@@ -57,9 +57,7 @@ const paymentSectionShouldRenderNothing = (
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined
 ) =>
   (!isCancelled && readonlyArrayHasNoData(payments)) ||
-  (isCancelled &&
-    readonlyArrayHasNoData(payments) &&
-    readonlyArrayHasNoData(completedPaymentNoticeCodes));
+  (isCancelled && readonlyArrayHasNoData(completedPaymentNoticeCodes));
 
 const generateNavigationToPaidPaymentScreenAction = (
   noticeCode: string,
@@ -100,7 +98,7 @@ export const MessagePayments = ({
   presentPaymentsBottomSheetRef
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
-  const morePaymentsLinkState = useIOSelector(state =>
+  const paymentsButtonStatus = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
       messageId,
@@ -121,17 +119,15 @@ export const MessagePayments = ({
     return (
       <>
         <ListItemHeader
-          label={I18n.t("features.pn.details.cancelledMessage.payments")}
-        />
-        <FeatureInfo
-          body={I18n.t("features.pn.details.cancelledMessage.unpaidPayments")}
-          iconName="info"
+          label={I18n.t("features.pn.details.paymentSection.title")}
+          iconName={"productPagoPA"}
+          iconColor={"blueIO-500"}
         />
         {completedPaymentNoticeCodes &&
           completedPaymentNoticeCodes.map(
             (completedPaymentNoticeCode, index) => (
               <View key={`MPN_${index}`}>
-                <VSpacer size={index > 0 ? 8 : 24} />
+                <VSpacer size={8} />
                 <ModulePaymentNotice
                   title={I18n.t("features.pn.details.noticeCode")}
                   subtitle={completedPaymentNoticeCode}
@@ -154,8 +150,6 @@ export const MessagePayments = ({
     );
   }
 
-  const showMorePaymentsLink =
-    payments && payments.length > maxVisiblePaymentCount;
   const morePaymentsLabel = payments
     ? `${I18n.t("features.pn.details.paymentSection.morePayments")} (${
         payments.length
@@ -184,10 +178,10 @@ export const MessagePayments = ({
               />
             );
           })}
-          {showMorePaymentsLink && (
+          {canShowMorePaymentsLink(isCancelled, payments) && (
             <>
               <VSpacer size={32} />
-              {morePaymentsLinkState === "visibleLoading" && (
+              {paymentsButtonStatus === "visibleLoading" && (
                 <View style={styles.morePaymentsSkeletonContainer}>
                   <Placeholder.Box
                     animate="fade"
@@ -197,7 +191,7 @@ export const MessagePayments = ({
                   />
                 </View>
               )}
-              {morePaymentsLinkState === "visibleEnabled" && (
+              {paymentsButtonStatus === "visibleEnabled" && (
                 <View style={styles.morePaymentsLinkContainer}>
                   <ButtonLink
                     accessibilityLabel={morePaymentsLabel}

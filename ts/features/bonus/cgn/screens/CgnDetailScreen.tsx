@@ -48,10 +48,7 @@ import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformatio
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
-import {
-  navigateToCgnMerchantsList,
-  navigateToCgnMerchantsTabs
-} from "../navigation/actions";
+import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
 import { cgnDetails } from "../store/actions/details";
@@ -305,7 +302,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   unsubscribe: () => dispatch(cgnUnsubscribe.request()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchantsList: () => navigateToCgnMerchantsList(),
   navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs()
 });
 

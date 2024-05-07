@@ -97,6 +97,8 @@ import { walletPaymentHandlersInitialized } from "../store/actions/wallet/paymen
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
+import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
+import { watchServicesSaga } from "../features/services/common/saga";
 import {
   clearKeychainError,
   keychainError
@@ -308,6 +310,9 @@ export function* initializeApplicationSaga(
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
 
+  // Start watching for services actions
+  yield* fork(watchServicesSaga, sessionToken);
+
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga, backendClient, sessionToken);
 
@@ -507,6 +512,9 @@ export function* initializeApplicationSaga(
   //
   // User is autenticated, session token is valid
   //
+
+  // Start wathing new wallet sagas
+  yield* fork(watchNewWalletSaga);
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);

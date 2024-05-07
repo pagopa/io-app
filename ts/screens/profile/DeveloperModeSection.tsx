@@ -31,6 +31,7 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
+  preferencesItWalletTestSetEnabled,
   preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -45,6 +46,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
   isIdPayTestEnabledSelector,
+  isItWalletTestEnabledSelector,
   isNewWalletSectionEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -333,19 +335,13 @@ const DesignSystemSection = () => {
 const PlaygroundsSection = () => {
   const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
       value: "Lollipop",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.LOLLIPOP_PLAYGROUND
-        })
-    },
-    {
-      value: "MyPortal Web",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.WEB_PLAYGROUND
         })
     },
     {
@@ -379,10 +375,11 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "Payments",
+      condition: isItWalletTestEnabled,
+      value: "IT Wallet",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.WALLET_PLAYGROUND
+          screen: ROUTES.ITW_PLAYGROUND
         })
     }
   ];
@@ -436,6 +433,7 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isItWalletTestEnabled = useIOSelector(isItWalletTestEnabledSelector);
   const onAddTestCard = () => {
     if (!isPagoPATestEnabled) {
       Alert.alert(
@@ -499,6 +497,12 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
+
+  const onItWalletTestToggle = (enabled: boolean) => {
+    dispatch(
+      preferencesItWalletTestSetEnabled({ isItWalletTestEnabled: enabled })
+    );
+  };
   return (
     <ContentWrapper>
       <ListItemHeader
@@ -529,6 +533,12 @@ const DeveloperTestEnvironmentSection = ({
         description={I18n.t("profile.main.idpay.idpayTestAlert")}
         value={isIdPayTestEnabled}
         onSwitchValueChange={onIdPayTestToggle}
+      />
+      <ListItemSwitch
+        label={I18n.t("profile.main.itWallet.itWalletTest")}
+        description={I18n.t("profile.main.itWallet.itWalletTestDescription")}
+        value={isItWalletTestEnabled}
+        onSwitchValueChange={onItWalletTestToggle}
       />
     </ContentWrapper>
   );

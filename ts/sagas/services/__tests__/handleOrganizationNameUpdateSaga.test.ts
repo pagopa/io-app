@@ -8,7 +8,7 @@ import {
   OrganizationNamesByFiscalCodeState
 } from "../../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { visibleServicesSelector } from "../../../store/reducers/entities/services/visibleServices";
-import { mockedService } from "../../startup/__tests__/loadServiceDetailRequestHandler.test";
+import { mockedService } from "../../../features/services/details/saga/__tests__/handleServiceDetails.test";
 import { handleOrganizationNameUpdateSaga } from "../handleOrganizationNameUpdateSaga";
 
 const mockedOrganizationsNameByFiscalCode: OrganizationNamesByFiscalCodeState =

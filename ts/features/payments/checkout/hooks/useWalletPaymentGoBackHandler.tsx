@@ -8,7 +8,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsDeleteTransactionAction } from "../store/actions/networking";
-import { walletPaymentTransactionSelector } from "../store/selectors";
+import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
@@ -30,7 +30,7 @@ const useWalletPaymentGoBackHandler = () => {
 
     const handleConfirmAbort = () => {
       dispatch(paymentsDeleteTransactionAction.request(transactionId));
-      navigation.push(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.CANCELED_BY_USER

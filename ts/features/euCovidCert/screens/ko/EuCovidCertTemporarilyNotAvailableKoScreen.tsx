@@ -1,16 +1,10 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { Image } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { GlobalState } from "../../../../store/reducers/types";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+import * as React from "react";
+import { Image } from "react-native";
 import unavailableImage from "../../../../../img/wallet/errors/payment-expired-icon.png";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 const EuCovidCertTemporarilyNotAvailableComponent = (): React.ReactElement => (
   <>
@@ -19,6 +13,7 @@ const EuCovidCertTemporarilyNotAvailableComponent = (): React.ReactElement => (
     <InfoScreenComponent
       image={
         <Image
+          accessibilityIgnoresInvertColors
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}
           source={unavailableImage}
@@ -35,19 +30,10 @@ const EuCovidCertTemporarilyNotAvailableComponent = (): React.ReactElement => (
   </>
 );
 
-const EuCovidCertTemporarilyNotAvailableKoScreen = (
-  _: Props
-): React.ReactElement => (
-  <BaseEuCovidCertificateLayout
-    testID={"EuCovidCertTemporarilyNotAvailableKoScreen"}
-    content={<EuCovidCertTemporarilyNotAvailableComponent />}
-  />
-);
-
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertTemporarilyNotAvailableKoScreen);
+export const EuCovidCertTemporarilyNotAvailableKoScreen =
+  (): React.ReactElement => (
+    <BaseEuCovidCertificateLayout
+      testID={"EuCovidCertTemporarilyNotAvailableKoScreen"}
+      content={<EuCovidCertTemporarilyNotAvailableComponent />}
+    />
+  );

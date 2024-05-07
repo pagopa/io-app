@@ -21,7 +21,7 @@ import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdPotSelector } from "../../../services/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getPDNDCriteriaDescription } from "../utils/strings";

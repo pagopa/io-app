@@ -12,15 +12,12 @@ import {
   ViewStyle
 } from "react-native";
 
-import { connect } from "react-redux";
 import {
   VSpacer,
   IOSpacingScale,
   ModuleIDP,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
-import { GlobalState } from "../store/reducers/types";
-import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
 
 type OwnProps = {
@@ -39,7 +36,7 @@ type OwnProps = {
   testID?: string;
 };
 
-type Props = OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = OwnProps;
 
 const GRID_GUTTER: IOSpacingScale = 8;
 
@@ -87,8 +84,4 @@ const IdpsGridRevamp: React.FunctionComponent<Props> = (props: Props) => (
   />
 );
 
-const mapStateToProps = (state: GlobalState) => ({
-  idpsState: idpsStateSelector(state)
-});
-
-export default connect(mapStateToProps)(IdpsGridRevamp);
+export default IdpsGridRevamp;

@@ -31,6 +31,7 @@ import {
 import { useIODispatch } from "../../../../store/hooks";
 import * as analytics from "../../../barcode/analytics";
 import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
+import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { PaymentNoticeListItem } from "../components/PaymentNoticeListItem";
 import { PaymentsBarcodeParamsList } from "../navigation/params";
 
@@ -46,6 +47,9 @@ const sortByAmount = pipe(
 const PaymentsBarcodeChoiceScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const { startPaymentFlowWithRptId, isNewWalletSectionEnabled } =
+    usePagoPaPayment();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -65,15 +69,19 @@ const PaymentsBarcodeChoiceScreen = () => {
         : "qrcode_scan";
     analytics.trackBarcodeMultipleCodesSelection();
 
-    dispatch(paymentInitializeState());
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-      params: {
-        initialAmount: barcode.amount,
-        rptId: barcode.rptId,
-        paymentStartOrigin
-      }
-    });
+    if (isNewWalletSectionEnabled) {
+      startPaymentFlowWithRptId(barcode.rptId);
+    } else {
+      dispatch(paymentInitializeState());
+      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+        params: {
+          initialAmount: barcode.amount,
+          rptId: barcode.rptId,
+          paymentStartOrigin
+        }
+      });
+    }
   };
 
   const renderBarcodeItem = (barcode: PagoPaBarcode) => {

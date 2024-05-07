@@ -1,14 +1,30 @@
 import React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 
 type LoadingSkeletonProps = {
+  lines?: number;
   testID?: string;
 };
 
-export const LoadingSkeleton = ({ testID }: LoadingSkeletonProps) => (
+const skeletonLineWidths = [
+  "98%",
+  "86%",
+  "92%",
+  "80%",
+  "90%",
+  "96%",
+  "84%",
+  "88%",
+  "94%"
+];
+
+export const LoadingSkeleton = ({
+  lines = skeletonLineWidths.length,
+  testID
+}: LoadingSkeletonProps) => (
   <View
     accessible={true}
     accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
@@ -19,23 +35,19 @@ export const LoadingSkeleton = ({ testID }: LoadingSkeletonProps) => (
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden={true}
     >
-      <Placeholder.Box width={"98%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"86%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"92%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"80%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"90%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"96%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"84%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"88%"} animate={"fade"} height={21} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box width={"94%"} animate={"fade"} height={21} radius={4} />
+      {[...Array(lines)].map((_, i) => (
+        <React.Fragment key={`MD_SK_RF_${i}`}>
+          <Placeholder.Box
+            width={skeletonLineWidths[i % skeletonLineWidths.length]}
+            animate={"fade"}
+            color={IOColors["grey-100"]}
+            height={21}
+            radius={4}
+            key={`MD_SK_PB_${i}`}
+          />
+          {i + 1 < lines && <VSpacer size={8} key={`MD_SK_VS_${i}`} />}
+        </React.Fragment>
+      ))}
     </View>
   </View>
 );

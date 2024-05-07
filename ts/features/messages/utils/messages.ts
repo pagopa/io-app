@@ -31,7 +31,6 @@ import {
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
-import { SERVICES_ROUTES } from "../../services/navigation/routes";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -66,22 +65,9 @@ export function messageNeedsCTABar(
   );
 }
 
-export const handleCtaAction = (
-  cta: CTA,
-  linkTo: (path: string) => void,
-  serviceId?: ServiceId
-) => {
+export const handleCtaAction = (cta: CTA, linkTo: (path: string) => void) => {
   if (isIoInternalLink(cta.action)) {
     const convertedLink = getInternalRoute(cta.action);
-    // the service ID is specifically required for MyPortal webview usage,
-    // not required for other internal screens
-    if (cta.action.indexOf(SERVICES_ROUTES.SERVICE_WEBVIEW) !== -1) {
-      handleInternalLink(
-        linkTo,
-        `${convertedLink}${serviceId ? "&serviceId=" + serviceId : ""}`
-      );
-      return;
-    }
     handleInternalLink(linkTo, `${convertedLink}`);
   } else if (isIoFIMSLink(cta.action)) {
     const url = removeFIMSPrefixFromUrl(cta.action);

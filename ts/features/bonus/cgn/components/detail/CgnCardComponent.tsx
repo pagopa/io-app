@@ -14,9 +14,8 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
-import eycaLogo from "../../../../../../img/bonus/cgn/eyca_logo.png";
 import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
-import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
+import eycaLogo from "../../../../../../img/bonus/cgn/eyca_logo.png";
 import { eycaDetailSelector } from "../../store/reducers/eyca/details";
 import { canEycaCardBeShown } from "../../utils/eyca";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -24,6 +23,7 @@ import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
 import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
+import { Point, generateRandomSvgMovement } from "../../utils/svgBackground";
 import { playSvg } from "./CardSvgPayload";
 
 type Props = {

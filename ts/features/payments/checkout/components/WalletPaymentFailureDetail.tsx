@@ -1,7 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
-import { ValidationFaultEnum } from "../../../../../definitions/pagopa/ecommerce/ValidationFault";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -50,25 +48,24 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const getPropsFromFailure = ({
-    faultCodeCategory,
-    faultCodeDetail
+    faultCodeCategory
   }: WalletPaymentFailure): OperationResultScreenContentProps => {
     switch (faultCodeCategory) {
-      case FaultCategoryEnum.PAYMENT_UNAVAILABLE:
+      case "PAYMENT_UNAVAILABLE":
         return {
           pictogram: "fatalError",
           title: I18n.t("wallet.payment.failure.PAYMENT_UNAVAILABLE.title"),
           action: contactSupportAction,
           secondaryAction: closeAction
         };
-      case FaultCategoryEnum.PAYMENT_UNKNOWN:
+      case "PAYMENT_DATA_ERROR":
         return {
           pictogram: "attention",
-          title: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.title"),
+          title: I18n.t("wallet.payment.failure.PAYMENT_DATA_ERROR.title"),
           action: closeAction,
           secondaryAction: contactSupportAction
         };
-      case FaultCategoryEnum.DOMAIN_UNKNOWN:
+      case "DOMAIN_UNKNOWN":
         return {
           pictogram: "comunicationProblem",
           title: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.title"),
@@ -76,7 +73,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           action: closeAction,
           secondaryAction: contactSupportAction
         };
-      case FaultCategoryEnum.PAYMENT_ONGOING:
+      case "PAYMENT_ONGOING":
         return {
           pictogram: "timing",
           title: I18n.t("wallet.payment.failure.PAYMENT_ONGOING.title"),
@@ -84,14 +81,14 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           action: closeAction,
           secondaryAction: contactSupportAction
         };
-      case FaultCategoryEnum.PAYMENT_EXPIRED:
+      case "PAYMENT_EXPIRED":
         return {
           pictogram: "time",
           title: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.title"),
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.subtitle"),
           action: closeAction
         };
-      case FaultCategoryEnum.PAYMENT_CANCELED:
+      case "PAYMENT_CANCELED":
         return {
           pictogram: "stopSecurity",
           title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
@@ -99,26 +96,20 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           action: closeAction,
           secondaryAction: contactSupportAction
         };
-      case FaultCategoryEnum.PAYMENT_DUPLICATED:
+      case "PAYMENT_DUPLICATED":
         return {
           pictogram: "moneyCheck",
           title: I18n.t("wallet.payment.failure.PAYMENT_DUPLICATED.title"),
           action: closeAction
         };
-      case FaultCategoryEnum.GENERIC_ERROR:
-        if (faultCodeDetail === ValidationFaultEnum.PAA_PAGAMENTO_SCONOSCIUTO) {
-          return {
-            pictogram: "searchLens",
-            title: I18n.t(
-              "wallet.payment.failure.PAA_PAGAMENTO_SCONOSCIUTO.title"
-            ),
-            subtitle: I18n.t(
-              "wallet.payment.failure.PAA_PAGAMENTO_SCONOSCIUTO.subtitle"
-            ),
-            action: closeAction
-          };
-        }
-        return genericErrorProps;
+      case "PAYMENT_UNKNOWN":
+        return {
+          pictogram: "searchLens",
+          title: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.title"),
+          subtitle: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.subtitle"),
+          action: closeAction
+        };
+
       default:
         return genericErrorProps;
     }

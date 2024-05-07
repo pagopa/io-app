@@ -10,11 +10,11 @@ import { ServicePublic } from "../../../../../definitions/backend/ServicePublic"
 import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
 import servicePreferenceReducer, {
   ServicePreferenceState
-} from "../../../../features/services/store/reducers/servicePreference";
+} from "../../../../features/services/details/store/reducers/servicePreference";
 import servicesByIdReducer, {
   servicesByIdSelector,
   ServicesByIdState
-} from "../../../../features/services/store/reducers/servicesById";
+} from "../../../../features/services/details/store/reducers/servicesById";
 import { isDefined } from "../../../../utils/guards";
 import { isVisibleService } from "../../../../utils/services";
 import { Action } from "../../../actions/types";

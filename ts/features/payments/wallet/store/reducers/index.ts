@@ -4,6 +4,7 @@ import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { getPaymentsWalletUserMethods } from "../actions";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
+import { paymentsDeleteMethodAction } from "../../../details/store/actions";
 
 export type PaymentsWalletState = {
   userMethods: pot.Pot<Wallets, NetworkError>;
@@ -32,6 +33,15 @@ const paymentsWalletReducer = (
       return {
         ...state,
         userMethods: pot.toError(state.userMethods, action.payload)
+      };
+
+    // If method removed with success, remove it from the current list
+    case getType(paymentsDeleteMethodAction.success):
+      return {
+        ...state,
+        userMethods: pot.map(state.userMethods, ({ wallets }) => ({
+          wallets: wallets?.filter(w => w.walletId !== action.payload)
+        }))
       };
   }
   return state;

@@ -269,8 +269,8 @@ startup:
   contextualHelp:
     title: Problemi di inizializzazione?
 login:
-  expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
-  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
+  expiration_info: Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.
+  expiration_info_FL: Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.
   biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto.
 inbox:
   enableButton: Abilita Inbox
@@ -379,7 +379,7 @@ profile:
         title: Informativa Privacy e Termini e condizioni d'uso
         description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
-        updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
+        updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d’uso.
         infobox: È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
@@ -455,6 +455,9 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    itWallet:
+      itWalletTest: IT Wallet
+      itWalletTestDescription: Abilita ambiente di test per IT Wallet
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -621,7 +624,7 @@ authentication:
         placeholderLabel: PIN della Carta di identità elettronica
         label: Campo di inserimento per pin della Carta di Identità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
-      pinCardTitle: Inserisci il PIN della tua carta di identità
+      pinCardTitle: Inserisci il PIN della CIE
       pinCardHeader: Entra con CIE
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
@@ -762,10 +765,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: Non hai confermato il tuo indirizzo email
-      subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
-      editButton: Modifica email
-      validateButton: Conferma email
+      title: È questa la tua email?
+      subtitle: Per continuare a usare l’app, devi confermare che la tua email è
+      editButton: No, modifica
+      validateButton: Sì, conferma
       header:
         title: Configura IO
       help:
@@ -773,7 +776,7 @@ email:
     emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
-      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      subtitleEnd: è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.
       editButton: Modifica email
       header:
         title: Configura IO
@@ -849,7 +852,7 @@ onboarding:
   tos:
     headerTitle: Configura IO
     accept: Accetta e continua
-    error: Errore nel caricamento
+    error: Non siamo riusciti a caricare l’Informativa privacy e i Termini e condizioni
     alert:
       title: Attenzione
       message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
@@ -874,6 +877,9 @@ onboarding:
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
+  exitAlert: 
+    title: Vuoi uscire da IO?
+    description: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
   biometric:
     headerTitle: Configura IO
     available:
@@ -939,18 +945,6 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
-  homeScreen:
-    title: Pagamenti
-    methodsSection:
-      header: Metodi di pagamento
-      headerCTA: Aggiungi
-    historySection:
-      header: Storico operazioni
-      headerCTA: Vedi tutte
-      transactionStatusBadges:
-        failure: "FALLITA"
-        success: ""
-    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
     message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
@@ -1233,6 +1227,7 @@ wallet:
         title: "Il metodo è stato aggiunto"
         subtitle: ""
         primaryAction: "Vedi dettagli"
+        secondaryAction: "Continua"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
@@ -1693,16 +1688,11 @@ wallet:
       cancel: No, torna indietro
     methodSelection:
       header: Seleziona un metodo
-      yourMethods: I tuoi metodi
-      otherMethods: Altri metodi
+      yourMethods: Salvati
+      otherMethods: Tutti i metodi
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
-      missingMethodsError:
-        title: Aggiungi un metodo per effettuare pagamenti in app
-        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        addMethod: Aggiungi metodo
-        notNow: Non ora
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -1720,7 +1710,7 @@ wallet:
     failure:
       PAYMENT_UNAVAILABLE:
         title: "C’è un problema tecnico con questo avviso"
-      PAYMENT_UNKNOWN:
+      PAYMENT_DATA_ERROR:
         title: "I dati dell’avviso non sono corretti"
       DOMAIN_UNKNOWN:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
@@ -1739,7 +1729,7 @@ wallet:
       GENERIC_ERROR:
         title: "Si è verificato un errore imprevisto"
         subtitle: "Riprova, oppure contatta l’assistenza."
-      PAA_PAGAMENTO_SCONOSCIUTO:
+      PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
     outcome:
@@ -1784,6 +1774,10 @@ wallet:
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
+      PAYMENT_METHODS_NOT_AVAILABLE:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        primaryAction: Aggiungi metodo
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1959,6 +1953,11 @@ messageDetails:
   bottomSheet:
     title: "Cos'è un messaggio dinamico?"
     body: "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
+    bodyPt1: "È un messaggio che l'ente può modificare "
+    bodyPt2: "dopo averlo inviato"
+    bodyPt3: ". In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo " 
+    bodyPt4: "in casi specifici" 
+    bodyPt5: ", per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio." 
   footer:
     contacts: "Contatta il mittente"
     showMoreData: "Mostra altri dati"
@@ -1966,6 +1965,11 @@ messageDetails:
     title: "Dati identificativi"
     messageId: "ID messaggio"
     messageIdAccessibility: "ID messaggio, copia"
+    pagoPAHeader: "Avviso pagoPA"
+    noticeCode: "Codice Avviso"
+    noticeCodeAccessibility: "Codice avviso, copia"
+    entityFiscalCode: "Codice Fiscale Ente"
+    entityFiscalCodeAccessibility: "Codice fiscale ente, copia"
   contactsBottomSheet:
     title: "Assistenza"
     body: "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato."
@@ -2082,6 +2086,9 @@ services:
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
+  home:
+    institutions:
+      title: Nazionali
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2093,6 +2100,21 @@ services:
       inbox: "Contattarti in app"
       pushNotifications: "Inviarti notifiche push"
       messageReadStatus: "Ricevere conferme di lettura"
+    metadata:
+      title: "Contatti ed informazioni"
+      website: "Visita il sito"
+      downloadApp: "Scarica l'app"
+      support: "Richiedi assistenza"
+      phone: "Contatta l'ente"
+      email: "Invia un'email"
+      pec: "Invia una PEC"
+      fiscalCode: "Codice fiscale ente"
+      address: "Indirizzo"
+      serviceId: "ID servizio"
+    tosAndPrivacy:
+      title: "Termini e Privacy"
+      tosLink: "Termini e condizioni d'uso"
+      privacyLink: "Informativa sulla privacy"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
@@ -2166,14 +2188,14 @@ openMaps:
 genericError: Si è verificato un errore
 titleUpdateApp: Aggiorna IO!
 msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
-messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
+messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare a usare l'app è necessario aggiornarla all'ultima versione."
 titleUpdateAppAlert: Per continuare, aggiorna IO
 messageUpdateAppAlert: È disponibile una nuova versione di IO su {{storeName}}, scaricala subito per utilizzare questa funzionalità.
 openStore: Apri {{storeName}}
-btnUpdateApp: Aggiorna l'app IO
+btnUpdateApp: Aggiorna l'app
 systemsOff:
-  title: Impossibile usare IO
-  closeApp: chiudi l'applicazione e riprova
+  title: C'è un problema sui nostri sistemi
+  closeApp: Chiudi l'app e riprova tra qualche minuto.
 contextualHelp:
   title: IO ti aiuto
   sendPersonalInfo:
@@ -2503,11 +2525,16 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
+      screenTitle: Scopri le proposte
+      merchantsAll: Tutti gli operatori
       cta:
         filter: Filtra
       categoriesList:
         title: Seleziona una categoria e scopri agevolazioni e opportunità
+        bottomSheet:
+          cta: Come vengono ordinate le categorie?
+          title: Come vengono ordinate le categorie?
+          content: Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo.Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2789,6 +2816,7 @@ features:
       cancelledMessage:
         body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
+        unpaidPaymentsNew: "Per l'eventuale rimborso di pagamenti, rivolgiti all'ente."
         payments: "Pagamenti"
       paymentSection:
         title: "Avvisi pagoPA"
@@ -2805,18 +2833,24 @@ features:
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN
+        iunAccessibility: Codice IUN, copia
+        iunSectionTitle: Notifica
       timeline:
+        goToSend: "Accedi a SEND"
+        menuTitle: Stato della notifica
+        newInfo: "Accedi alla versione web per vedere maggiori dettagli, le ricevute e le attestazioni opponibili a terzi."
         title: STATO DELLA NOTIFICA
         status:
+          ACCEPTED: Depositata
+          CANCELLED: Annullata
           DELIVERED: Consegnata
           DELIVERING: Invio in corso
-          UNREACHABLE: Destinatario irreperibile
-          PAID: Pagata
-          ACCEPTED: Depositata
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
+          UNREACHABLE: Destinatario irreperibile
           VIEWED: Avvenuto accesso
+          PAID: Pagata
           REFUSED: REFUSED
-          CANCELLED: Annullata
+          IN_VALIDATION: IN VALIDATION
         expand: mostra gli stati precedenti
         info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
         cta: Accedi alla versione web
@@ -2940,16 +2974,42 @@ features:
         close: Chiudi
     cards:
       categories:
+        all: Tutti
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Metodi di pagamento
-    onboarding: 
+    onboarding:
       title: Cosa vuoi aggiungere al portafoglio?
-      options: 
+      options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
         payments: Metodi di pagamento
+  payments:
+    title: Pagamenti
+    cta: Paga un avviso
+    methods:
+      title: Metodi di pagamento
+      button: Aggiungi
+      banner:
+        content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        action: Aggiungi un metodo
+      status:
+        expired: Scaduta
+    transactions:
+      title: Storico operazioni
+      button: Vedi tutte
+      empty:
+        title: Qui vedrai le tue ricevute pagoPA
+        content: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+      status:
+        failure: FALLITA
+        success: ""
+  itWallet:
+    discovery:
+      info:
+        title: Inizia dalla tua Identità Digitale
+        content: "Usa le credenziali SPID o CIE per aggiungere la tua Identità Digitale al Portafoglio. **È un passaggio necessario per aggiungere i tuoi documenti digitali** (ad esempio la patente di guida) in modo sicuro.\n### Utile da sapere \nIn futuro potrai usare l’Identità Digitale salvata nel Portafoglio per identificarti tramite la funzionalità IT Wallet. \n\nPer maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -2985,7 +3045,8 @@ support:
     navigationData: "Dati di navigazione in app IO"
     navigationDataValue: "Come ad esempio l’ultima schermata o messaggio visualizzato in app IO"
     devicePerformance: "Performance del dispositivo"
-    devicePerformanceData: "Livello di memoria e batteria"
+    devicePerformanceDataAndroid: "Livello di memoria e batteria"
+    devicePerformanceDataiOS: "Livello di memoria ({{storage}}) e batteria"
     stock: "Dati dell’avviso di pagamento"
     stockValue: "Incluso l’errore che hai appena ricevuto"
     card: "Dati del metodo di pagamento"
@@ -3505,10 +3566,12 @@ barcodeScan:
 unsupportedDevice:
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
-  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo."
+  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO devi accedere da un altro dispositivo."
   cta:
     faq: "Come mai?"
 fastLogin:
+  loadingScreen:
+    title: "Ti stiamo autenticando"
   userInteraction:
     sessionExpired:
       noPin:

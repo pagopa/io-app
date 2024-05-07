@@ -162,6 +162,7 @@ Object {
   "isDesignSystemEnabled": false,
   "isFingerprintEnabled": undefined,
   "isIdPayTestEnabled": false,
+  "isItWalletTestEnabled": false,
   "isMixpanelEnabled": null,
   "isNewWalletSectionEnabled": false,
   "isPagoPATestEnabled": false,

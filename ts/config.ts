@@ -11,7 +11,7 @@ import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL =
-  "https://assets.cdn.io.italia.it" as NonEmptyString;
+  "https://assets.cdn.io.pagopa.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -43,15 +43,21 @@ const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 // https://pagopa.atlassian.net/browse/IA-474
 const DEFAULT_PAGE_SIZE = 12;
 
+// Default mixpanel EU url
+const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
+
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
+export const mixpanelUrl = pipe(
+  Config.MIXPANEL_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => DEFAULT_MIXPANEL_URL)
+);
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
-
-export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
@@ -186,7 +192,7 @@ export const unsupportedDeviceMoreInfoUrl: string = pipe(
 export const unsupportedDeviceLearnMoreUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
   NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
+  E.getOrElse(() => "https://io.italia.it/faq/#n1_15")
 );
 
 export const cieSpidMoreInfoUrl: string = pipe(

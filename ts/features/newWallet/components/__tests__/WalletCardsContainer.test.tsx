@@ -1,6 +1,6 @@
+import * as React from "react";
 import { within } from "@testing-library/react-native";
 import _ from "lodash";
-import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
@@ -10,6 +10,15 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletCardsContainer } from "../WalletCardsContainer";
+import { WalletCardCategory, walletCardCategories } from "../../types";
+import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
+
+jest.mock("react-native-reanimated", () => ({
+  ...require("react-native-reanimated/mock"),
+  Layout: {
+    duration: jest.fn()
+  }
+}));
 
 const T_CARDS: WalletCardsState = {
   "1": {
@@ -39,10 +48,83 @@ const T_CARDS: WalletCardsState = {
 };
 
 describe("WalletCardsContainer", () => {
+  jest.useFakeTimers();
+  jest.runAllTimers();
+
+  it("should render the loading screen", async () => {
+    const { queryByTestId } = renderComponent(
+      {},
+      { items: {}, isLoading: true }
+    );
+
+    expect(queryByTestId("walletCardSkeletonTestID")).not.toBeNull();
+
+    walletCardCategories.forEach(category =>
+      expect(queryByTestId(`walletCardsCategoryTestID_${category}`)).toBeNull()
+    );
+  });
+
+  it("should render the placeholders", () => {
+    const { queryByTestId } = renderComponent(
+      {},
+      {
+        items: {
+          a: "payment",
+          b: "payment",
+          c: "payment",
+          d: "bonus"
+        },
+        isLoading: true
+      }
+    );
+
+    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
+
+    expect(
+      queryByTestId(`walletCardsCategorySkeletonTestID_payment`)
+    ).not.toBeNull();
+    expect(
+      queryByTestId(`walletCardsCategorySkeletonTestID_bonus`)
+    ).not.toBeNull();
+
+    expect(queryByTestId(`walletCardSkeletonTestID_a`)).not.toBeNull();
+    expect(queryByTestId(`walletCardSkeletonTestID_b`)).not.toBeNull();
+    expect(queryByTestId(`walletCardSkeletonTestID_c`)).not.toBeNull();
+    expect(queryByTestId(`walletCardSkeletonTestID_d`)).not.toBeNull();
+  });
+
+  it("should not render the placeholders for categories already in the wallet", () => {
+    const { queryByTestId } = renderComponent(
+      { 3: T_CARDS["3"] },
+      {
+        items: {
+          a: "payment",
+          b: "payment",
+          c: "payment",
+          d: "bonus"
+        },
+        isLoading: true
+      }
+    );
+
+    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
+
+    expect(
+      queryByTestId(`walletCardsCategorySkeletonTestID_payment`)
+    ).not.toBeNull();
+    expect(queryByTestId(`walletCardsCategorySkeletonTestID_bonus`)).toBeNull();
+
+    expect(queryByTestId(`walletCardSkeletonTestID_a`)).not.toBeNull();
+    expect(queryByTestId(`walletCardSkeletonTestID_b`)).not.toBeNull();
+    expect(queryByTestId(`walletCardSkeletonTestID_c`)).not.toBeNull();
+    expect(queryByTestId(`walletCardSkeletonTestID_d`)).toBeNull();
+  });
+
   it("should render the cards correctly", () => {
-    const {
-      component: { queryByText, queryByTestId }
-    } = renderComponent();
+    const { queryByText, queryByTestId } = renderComponent(T_CARDS, {
+      items: {},
+      isLoading: false
+    });
 
     expect(
       queryByText(I18n.t(`features.wallet.cards.categories.payment`))
@@ -77,30 +159,68 @@ describe("WalletCardsContainer", () => {
     expect(
       queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
     ).toBeNull();
+
+    jest.runOnlyPendingTimers();
+  });
+
+  it("should render only the selected category in the filter tabs", () => {
+    const { queryByText, queryByTestId } = renderComponent(
+      T_CARDS,
+      {
+        items: {},
+        isLoading: false
+      },
+      "payment"
+    );
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.payment`))
+    ).not.toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_payment`)).not.toBeNull();
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.bonus`))
+    ).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_bonus`)).toBeNull();
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
+    ).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_cgn`)).toBeNull();
+
+    jest.runOnlyPendingTimers();
   });
 });
 
-const renderComponent = () => {
+const renderComponent = (
+  cards: WalletCardsState,
+  placeholders: WalletPlaceholdersState,
+  categoryFilter?: WalletCardCategory
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
-    _.merge(globalState, {
+    _.merge(undefined, globalState, {
       features: {
         wallet: {
-          cards: T_CARDS
+          cards,
+          preferences: {
+            categoryFilter
+          },
+          placeholders
         }
       }
-    })
+    } as GlobalState)
   );
 
-  return {
-    component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <WalletCardsContainer />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <WalletCardsContainer />,
+    ROUTES.WALLET_HOME,
+    {},
     store
-  };
+  );
 };

@@ -24,8 +24,8 @@ import {
   BPayPaymentMethod,
   CreditCardPaymentMethod
 } from "../../types/pagopa";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
+import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 /**
  * @deprecated

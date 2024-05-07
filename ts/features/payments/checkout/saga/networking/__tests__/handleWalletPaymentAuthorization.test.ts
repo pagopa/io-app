@@ -16,6 +16,7 @@ import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 describe("Test handleWalletPaymentAuthorization saga", () => {
   const requestTransactionAuthorizationPayload: WalletPaymentAuthorizePayload =
     {
+      paymentMethodId: "",
       paymentAmount: 1234 as AmountEuroCents,
       paymentFees: 123 as AmountEuroCents,
       pspId: "",

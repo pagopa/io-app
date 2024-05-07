@@ -1,10 +1,11 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import Animated, { Layout } from "react-native-reanimated";
 
 // Wallet card base component props, which declares common props that wallet cards must have
 export type WalletCardComponentBaseProps<P> = WithTestID<{
-  isStacked: boolean;
+  isStacked?: boolean;
   cardProps: P;
 }>;
 
@@ -15,14 +16,15 @@ export const withWalletCardBaseComponent =
   >(
     CardContent: React.ComponentType<CardProps>
   ) =>
-  ({ cardProps, isStacked, testID }: ContentProps) =>
+  ({ cardProps, isStacked = false, testID }: ContentProps) =>
     (
-      <View
+      <Animated.View
         testID={testID}
         style={[styles.container, isStacked && styles.containerStacked]}
+        layout={Layout.duration(200)}
       >
         <CardContent {...cardProps} />
-      </View>
+      </Animated.View>
     );
 
 export type WalletCardBaseComponent<
