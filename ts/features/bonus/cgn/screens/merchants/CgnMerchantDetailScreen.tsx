@@ -70,6 +70,7 @@ const CgnMerchantDetailScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
+    canGoBack: true,
     supportRequest: true
   });
 
