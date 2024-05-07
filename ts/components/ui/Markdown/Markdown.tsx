@@ -30,6 +30,7 @@ export type MarkdownProps = {
   cssStyle?: string;
   extraBodyHeight?: number;
   letUserZoom?: boolean;
+  loadingLines?: number;
   onError?: (error: any) => void;
   onLinkClicked?: (url: string) => void;
   onLoadEnd?: () => void;
@@ -159,7 +160,9 @@ export const Markdown = (props: MarkdownProps) => {
 
   return (
     <>
-      {isLoading && <LoadingSkeleton testID={props.testID} />}
+      {isLoading && (
+        <LoadingSkeleton lines={props.loadingLines} testID={props.testID} />
+      )}
       {/* Hide the WebView until we have the htmlBodyHeight */}
       {html && (
         <ScrollView nestedScrollEnabled={false} style={containerStyle}>

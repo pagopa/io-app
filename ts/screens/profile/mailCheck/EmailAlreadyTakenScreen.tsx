@@ -15,11 +15,9 @@ import {
 
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
-import {
-  BodyProps,
-  OperationResultScreenContent
-} from "../../../components/screens/OperationResultScreenContent";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
