@@ -9,84 +9,84 @@ export type LocalIdpsFallback = SpidIdp & { localLogo?: ImageSourcePropType };
 export const idps: ReadonlyArray<LocalIdpsFallback> = [
   {
     id: "arubaid",
-    name: "Aruba",
+    name: "Aruba ID",
     localLogo: require("../../img/spid-idp-arubaid.png"),
     logo: "",
     profileUrl: "https://selfcarespid.aruba.it"
   },
   {
     id: "ehtid",
-    name: "EtnaHiTech",
+    name: "Etna ID",
     logo: "",
     localLogo: require("../../img/spid-idp-etnaid.png"),
     profileUrl: "https://etnaid.eht.eu/"
   },
   {
     id: "infocamereid",
-    name: "Infocamere",
+    name: "ID InfoCamere",
     logo: "",
     localLogo: require("../../img/spid-idp-infocamereid.png"),
     profileUrl: "https://selfcarespid.infocamere.it/spid-selfCare/#/login"
   },
   {
     id: "infocertid",
-    name: "Infocert",
+    name: "InfoCert ID",
     logo: "",
     localLogo: require("../../img/spid-idp-infocertid.png"),
     profileUrl: "https://my.infocert.it/selfcare"
   },
   {
     id: "intesiid",
-    name: "IntesiGroup",
+    name: "Intesi Group SPID",
     logo: "",
     localLogo: require("../../img/spid-idp-intesigroupspid.png"),
     profileUrl: "https://spid.intesigroup.com"
   },
   {
     id: "lepidaid",
-    name: "Lepida",
+    name: "Lepida ID",
     logo: "",
     localLogo: require("../../img/spid-idp-lepidaid.png"),
     profileUrl: "https://id.lepida.it/"
   },
   {
     id: "namirialid",
-    name: "Namirial",
+    name: "Namirial ID",
     logo: "",
     localLogo: require("../../img/spid-idp-namirialid.png"),
     profileUrl: "https://idp.namirialtsp.com/idp"
   },
   {
     id: "posteid",
-    name: "Poste",
+    name: "Poste ID",
     logo: "",
     localLogo: require("../../img/spid-idp-posteid.png"),
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   },
   {
     id: "sielteid",
-    name: "Sielte",
+    name: "Sielte ID",
     logo: "",
     localLogo: require("../../img/spid-idp-sielteid.png"),
     profileUrl: "https://myid.sieltecloud.it/profile/"
   },
   {
     id: "spiditalia",
-    name: "SPIDItalia Register.it",
+    name: "SpidItalia",
     logo: "",
     localLogo: require("../../img/spid-idp-spiditalia.png"),
     profileUrl: "https://spid.register.it"
   },
   {
     id: "timid",
-    name: "Telecom Italia",
+    name: "TIM id",
     logo: "",
     localLogo: require("../../img/spid-idp-timid.png"),
     profileUrl: "https://id.tim.it/identity/private/"
   },
   {
     id: "teamsystemid",
-    name: "TeamSystem",
+    name: "TeamSystem ID",
     logo: "",
     localLogo: require("../../img/spid-idp-teamsystemid.png"),
     profileUrl: "https://identity.teamsystem.com/"
