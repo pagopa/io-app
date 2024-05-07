@@ -18,7 +18,7 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.DISCOVERY.INFO}
       component={ItwDiscoveryInfoScreen}
     />
-    {/* AUTHENTICATION */}
+    {/* IDENTIFICATION */}
     <Stack.Screen
       name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
       component={ItwIdentificationModeSelectionScreen}
