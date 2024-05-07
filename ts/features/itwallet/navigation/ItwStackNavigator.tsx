@@ -2,6 +2,7 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { isGestureEnabled } from "../../../utils/navigation";
+import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -16,6 +17,11 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.DISCOVERY.INFO}
       component={ItwDiscoveryInfoScreen}
+    />
+    {/* IDENTIFICATION */}
+    <Stack.Screen
+      name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
+      component={ItwIdentificationModeSelectionScreen}
     />
   </Stack.Navigator>
 );
