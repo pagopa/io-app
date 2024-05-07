@@ -1,15 +1,20 @@
 import { SagaIterator } from "redux-saga";
-import { takeLatest } from "typed-redux-saga/macro";
+import { call, race, take, takeLatest } from "typed-redux-saga/macro";
 import { ServicesClient } from "../../common/api/client";
 import { paginatedServicesGet } from "../store/actions";
-import { handleFindServices } from "./handleFindServices";
+import { handleFindInstitutionServices } from "./handleFindInstitutionServices";
 
 export function* watchInstitutionSaga(
   servicesClient: ServicesClient
 ): SagaIterator {
-  yield* takeLatest(
-    paginatedServicesGet.request,
-    handleFindServices,
-    servicesClient.findInstutionServices
-  );
+  yield* takeLatest(paginatedServicesGet.request, function* (action) {
+    yield* race({
+      task: call(
+        handleFindInstitutionServices,
+        servicesClient.findInstutionServices,
+        action
+      ),
+      cancel: take(paginatedServicesGet.cancel)
+    });
+  });
 }
