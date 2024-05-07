@@ -94,7 +94,7 @@ import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../../utils/profile";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
@@ -511,9 +511,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  navigateToServiceDetailsScreen: (
-    params: ServiceDetailsScreenNavigationParams
-  ) => navigateToServiceDetailsScreen(params),
+  navigateToServiceDetailsScreen: (params: ServiceDetailsScreenRouteParams) =>
+    navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (service: ServicePublic) =>
     dispatch(showServiceDetails(service))
 });

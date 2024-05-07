@@ -40,7 +40,7 @@ import { getServiceCTA } from "../../features/messages/utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 import { useIOSelector } from "../../store/hooks";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -63,8 +63,7 @@ const LegacyServiceDetailsScreen = (props: Props) => {
   const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
   const navigation = useIONavigation();
   const { serviceId, activate } =
-    useRoute<Route<"SERVICE_DETAIL", ServiceDetailsScreenNavigationParams>>()
-      .params;
+    useRoute<Route<"SERVICE_DETAIL", ServiceDetailsScreenRouteParams>>().params;
 
   const service = useIOSelector(state =>
     pipe(serviceByIdPotSelector(state, serviceId), pot.toUndefined)

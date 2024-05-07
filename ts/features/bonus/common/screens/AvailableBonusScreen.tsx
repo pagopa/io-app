@@ -18,7 +18,6 @@ import { connect } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -37,7 +36,6 @@ import {
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { storeUrl } from "../../../../utils/appVersion";
-import { ServiceDetailsScreenNavigationParams } from "../../../services/details/screens/ServiceDetailsScreen";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
@@ -54,6 +52,8 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
+import { ServiceDetailsScreenRouteParams } from "../../../services/details/screens/ServiceDetailsScreen";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -238,9 +238,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => navigateBack(),
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   startCgnActivation: () => dispatch(cgnActivationStart()),
-  navigateToServiceDetailsScreen: (
-    params: ServiceDetailsScreenNavigationParams
-  ) => navigateToServiceDetailsScreen(params),
+  navigateToServiceDetailsScreen: (params: ServiceDetailsScreenRouteParams) =>
+    navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (serviceId: ServiceId) => {
     dispatch(loadServiceDetail.request(serviceId));
   },
