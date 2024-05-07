@@ -79,6 +79,11 @@ const gradientSafeArea: IOSpacingScale = 80;
 const contentEndMargin: IOSpacingScale = 32;
 const spaceBetweenActions: IOSpacer = 24;
 
+const getPrimaryactionLabel = (isEycaEnabled: boolean) =>
+  isEycaEnabled
+    ? I18n.t("bonus.cgn.detail.cta.buyers")
+    : I18n.t("bonus.cgn.detail.cta.discover");
+
 /**
  * Screen to display all the information about the active CGN
  */
@@ -133,7 +138,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   useHeaderSecondLevel({
     title: I18n.t("bonus.cgn.name"),
-    goBack: navigation.goBack,
+    canGoBack: true,
     transparent: true,
     scrollValues: {
       triggerOffset: headerHeight,
@@ -194,6 +199,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             contentContainerStyle={{
               paddingBottom: safeBottomAreaHeight
             }}
+            bounces={false}
+            overScrollMode={"never"}
             onScroll={scrollHandler}
             scrollEventThrottle={16}
             snapToOffsets={[0, headerHeight]}
@@ -251,7 +258,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             props.cgnDetails?.status === StatusEnum.ACTIVATED && (
               <GradientBottomActions
                 primaryActionProps={{
-                  label: canDisplayEycaDetails ? I18n.t("bonus.cgn.detail.cta.buyers") : I18n.t("bonus.cgn.detail.cta.discover"),
+                  label: getPrimaryactionLabel(canDisplayEycaDetails),
                   onPress: onPressShowCgnDiscounts
                 }}
                 secondaryActionProps={

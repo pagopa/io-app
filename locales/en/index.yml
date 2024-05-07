@@ -2596,6 +2596,7 @@ bonus:
     detail:
       cta:
         buyers: Discover the CGN benefits
+        discover: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
