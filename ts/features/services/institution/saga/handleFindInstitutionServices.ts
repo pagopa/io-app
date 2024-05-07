@@ -9,11 +9,11 @@ import { ServicesClient } from "../../common/api/client";
 import { paginatedServicesGet } from "../store/actions";
 
 /**
- * saga to handle the loading of services
+ * saga to handle the loading of institution's services
  * @param findInstutionServices
  * @param action
  */
-export function* handleFindServices(
+export function* handleFindInstitutionServices(
   findInstutionServices: ServicesClient["findInstutionServices"],
   action: ActionType<typeof paginatedServicesGet.request>
 ) {
