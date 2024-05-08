@@ -96,7 +96,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         <CodeInput
           testID="pin-creation-input"
           accessibilityLabel={`${I18n.t("onboarding.pin.pinLabel")}, ${I18n.t(
-            "accessibility.doubleTapToOpenKeyboardHint"
+            "accessibility.doubleTapToActivateHint"
           )}`}
           length={PIN_LENGTH_SIX}
           onValidate={handleOnValidate}

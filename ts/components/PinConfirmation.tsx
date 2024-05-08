@@ -88,7 +88,7 @@ export const PinConfirmation = ({
           length={PIN_LENGTH_SIX}
           accessibilityLabel={`${I18n.t(
             "onboarding.pin.pinConfirmationLabel"
-          )}, ${I18n.t("accessibility.doubleTapToOpenKeyboardHint")}`}
+          )}, ${I18n.t("accessibility.doubleTapToActivateHint")}`}
           onValidate={handleOnValidate}
           onValueChange={setPinConfirmation}
           onChange={setPinConfirmation}
