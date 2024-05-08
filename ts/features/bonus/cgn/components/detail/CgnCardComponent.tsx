@@ -143,6 +143,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
 
   const canDisplayEycaLogo = canEycaCardBeShown(props.eycaDetails);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => props.onCardLoadEnd(), []);
 
   return (
