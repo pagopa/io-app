@@ -110,7 +110,13 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     [bottomMargin]
   );
 
-    const gradientAreaHeight: number = React.useMemo(
+  // to display EYCA info component the CGN initiative needs to be enabled by remote
+  const canDisplayEycaDetails =
+    canEycaCardBeShown(props.eycaDetails) &&
+    props.isCgnEnabled &&
+    CardActivated.is(props.cgnDetails);
+
+  const gradientAreaHeight: number = React.useMemo(
     () =>
       bottomMargin +
       buttonSolidHeight +
@@ -164,12 +170,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     navigation.goBack();
     return true;
   });
-
-  // to display EYCA info component the CGN initiative needs to be enabled by remote
-  const canDisplayEycaDetails =
-    canEycaCardBeShown(props.eycaDetails) &&
-    props.isCgnEnabled &&
-    CardActivated.is(props.cgnDetails);
 
   const onPressShowCgnDiscounts = () => {
     if (props.isMerchantV2Enabled) {
