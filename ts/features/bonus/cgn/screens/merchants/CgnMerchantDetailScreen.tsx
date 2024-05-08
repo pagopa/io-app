@@ -1,16 +1,36 @@
 import {
+  ContentWrapper,
+  GradientBottomActions,
   GradientScrollView,
   H1,
+  IOSpacer,
+  IOSpacingScale,
   IOToast,
+  IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
-  VSpacer
+  VSpacer,
+  buttonSolidHeight
 } from "@pagopa/io-app-design-system";
 import Placeholder from "rn-placeholder";
 import { Route, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import { Image, SafeAreaView, StyleSheet } from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  Image,
+  LayoutChangeEvent,
+  SafeAreaView,
+  StyleSheet,
+  View
+} from "react-native";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
@@ -29,8 +49,21 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
 }>;
 
+const scrollTriggerOffsetValue: number = 88;
+
+const gradientSafeArea: IOSpacingScale = 80;
+const contentEndMargin: IOSpacingScale = 32;
+const spaceBetweenActions: IOSpacer = 24;
+
 const CgnMerchantDetailScreen = () => {
   // -------    hooks
+  const safeAreaInsets = useSafeAreaInsets();
+
+  const gradientOpacity = useSharedValue(1);
+  const scrollTranslationY = useSharedValue(0);
+
+  const [titleHeight, setTitleHeight] = React.useState(0);
+
   const dispatch = useIODispatch();
   const route =
     useRoute<
@@ -42,6 +75,24 @@ const CgnMerchantDetailScreen = () => {
   const loadMerchantDetail = useCallback(() => {
     dispatch(cgnSelectedMerchant.request(merchantID));
   }, [merchantID, dispatch]);
+
+  const bottomMargin: number = React.useMemo(
+    () =>
+      safeAreaInsets.bottom === 0
+        ? IOVisualCostants.appMarginDefault
+        : safeAreaInsets.bottom,
+    [safeAreaInsets]
+  );
+
+  const safeBottomAreaHeight: number = React.useMemo(
+    () => bottomMargin + buttonSolidHeight + contentEndMargin,
+    [bottomMargin]
+  );
+
+  const gradientAreaHeight: number = React.useMemo(
+    () => bottomMargin + buttonSolidHeight + gradientSafeArea,
+    [bottomMargin]
+  );
 
   useEffect(loadMerchantDetail, [loadMerchantDetail]);
   // -------    utils/logic
@@ -66,57 +117,115 @@ const CgnMerchantDetailScreen = () => {
       );
     }
   };
+
+  const scrollHandler = useAnimatedScrollHandler(
+    ({ contentOffset, layoutMeasurement, contentSize }) => {
+      // eslint-disable-next-line functional/immutable-data
+      scrollTranslationY.value = contentOffset.y;
+
+      const isEndReached =
+        Math.floor(layoutMeasurement.height + contentOffset.y) >=
+        Math.floor(contentSize.height);
+
+      // eslint-disable-next-line functional/immutable-data
+      gradientOpacity.value = isEndReached ? 0 : 1;
+    }
+  );
+  const getTitleHeight = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    if (titleHeight === 0) {
+      setTitleHeight(
+        height - safeAreaInsets.top - IOVisualCostants.headerHeight
+      );
+    }
+  };
   // -------    render
 
   useHeaderSecondLevel({
     title: isReady(merchantDetail) ? merchantDetail.value.name : "",
     canGoBack: true,
-    supportRequest: true
+    supportRequest: true,
+    scrollValues: {
+      triggerOffset: scrollTriggerOffsetValue,
+      contentOffsetY: scrollTranslationY
+    }
   });
+
+  const footerCta = (url: string) => ({
+    label: I18n.t("bonus.cgn.merchantDetail.cta.website"),
+    onPress: () => handlePressMerchantWebsite(url)
+  });
+
+  const footerGradientOpacityTransition = useAnimatedStyle(() => ({
+    opacity: withTiming(gradientOpacity.value, {
+      duration: 200,
+      easing: Easing.ease
+    })
+  }));
+
+  const footerComponent = isReady(merchantDetail) &&
+    merchantDetail.value.websiteUrl && (
+      <GradientBottomActions
+        primaryActionProps={footerCta(merchantDetail.value.websiteUrl)}
+        transitionAnimStyle={footerGradientOpacityTransition}
+        dimensions={{
+          bottomMargin,
+          extraBottomMargin: 0,
+          gradientAreaHeight,
+          spaceBetweenActions,
+          safeBackgroundHeight: bottomMargin
+        }}
+      />
+    );
 
   return (
     <>
       {isReady(merchantDetail) ? (
-        <GradientScrollView
-          primaryActionProps={
-            merchantDetail.value.websiteUrl
-              ? {
-                  label: I18n.t("bonus.cgn.merchantDetail.cta.website"),
-                  onPress: () =>
-                    handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
-                }
-              : undefined
-          }
-        >
-          {merchantDetail.value.imageUrl !== undefined && (
-            <>
-              <Image
-                accessibilityIgnoresInvertColors
-                source={{ uri: merchantDetail.value.imageUrl }}
-                style={styles.merchantImage}
+        <>
+          <Animated.ScrollView
+            style={{ flexGrow: 1 }}
+            onScroll={scrollHandler}
+            scrollEventThrottle={8}
+            snapToOffsets={[0]}
+            snapToEnd={false}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingBottom: safeBottomAreaHeight
+            }}
+          >
+            <ContentWrapper>
+              {merchantDetail.value.imageUrl !== undefined && (
+                <View onLayout={getTitleHeight}>
+                  <Image
+                    accessibilityIgnoresInvertColors
+                    source={{ uri: merchantDetail.value.imageUrl }}
+                    style={styles.merchantImage}
+                  />
+                  <VSpacer size={24} />
+                </View>
+              )}
+              <H1>{merchantDetail.value.name}</H1>
+              <VSpacer size={24} />
+              <ListItemHeader
+                label={I18n.t("bonus.cgn.merchantDetail.title.deals")}
+              />
+              {renderDiscountsList(merchantDetail.value.discounts)}
+              <VSpacer size={24} />
+              <ListItemInfo
+                numberOfLines={0}
+                label={I18n.t("bonus.cgn.merchantDetail.title.description")}
+                value={merchantDetail.value.description}
               />
               <VSpacer size={24} />
-            </>
-          )}
-          <H1>{merchantDetail.value.name}</H1>
-          <VSpacer size={24} />
-          <ListItemHeader
-            label={I18n.t("bonus.cgn.merchantDetail.title.deals")}
-          />
-          {renderDiscountsList(merchantDetail.value.discounts)}
-          <VSpacer size={24} />
-          <ListItemInfo
-            numberOfLines={0}
-            label={I18n.t("bonus.cgn.merchantDetail.title.description")}
-            value={merchantDetail.value.description}
-          />
-          <VSpacer size={24} />
-          {renderMerchantAddressesList(
-            merchantDetail.value.addresses,
-            merchantDetail.value.allNationalAddresses
-          )}
-          <VSpacer size={24} />
-        </GradientScrollView>
+              {renderMerchantAddressesList(
+                merchantDetail.value.addresses,
+                merchantDetail.value.allNationalAddresses
+              )}
+              <VSpacer size={24} />
+            </ContentWrapper>
+          </Animated.ScrollView>
+          {footerComponent}
+        </>
       ) : (
         <SafeAreaView style={IOStyles.flex}>
           <CgnMerchantDetailScreenSkeleton />
