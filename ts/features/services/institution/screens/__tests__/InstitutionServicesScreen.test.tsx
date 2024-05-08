@@ -33,6 +33,11 @@ const MOCK_INSTITUTION_SERVICES: InstitutionServicesResource = {
   ]
 };
 
+const MOCK_NETWORK_ERROR: NetworkError = {
+  kind: "generic",
+  value: new Error("response status code 500")
+};
+
 describe("InstitutionServicesScreen", () => {
   it("should render the skeleton with pot.noneLoading", () => {
     const { component } = renderComponent(pot.noneLoading);
@@ -53,6 +58,17 @@ describe("InstitutionServicesScreen", () => {
     expect(component).not.toBeNull();
     expect(component.queryByTestId("services-header")).not.toBeNull();
     expect(component.queryByTestId("intitution-services-list")).not.toBeNull();
+  });
+
+  it("should render the OperationResultScreenContent component if error occurs during the first request", () => {
+    jest.spyOn(hooks, "useFirstRender").mockReturnValue(false);
+
+    const { component } = renderComponent(pot.noneError(MOCK_NETWORK_ERROR));
+    expect(component).toBeTruthy();
+    expect(component).not.toBeNull();
+    expect(
+      component.queryByTestId("service-institution-failure")
+    ).not.toBeNull();
   });
 });
 
