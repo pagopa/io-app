@@ -10,6 +10,7 @@ import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { WithTestID } from "../../../types/WithTestID";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -51,50 +52,84 @@ const CieWrongCiePinScreen = () => {
     ).catch(constNull);
   }, []);
 
+  type MessageAction<T extends string> = {
+    label: T;
+    accessibilityLabel: T;
+    onPress: () => void;
+  };
+
   type Messages = {
     [key: number]: {
       pictogram: IOPictograms;
       title: string;
       subtitle: string;
-      actionLabel: string;
-      actionHandler: () => void;
-      secondaryActionLabel: string;
-      secondaryActionHandler: () => void;
+      action: MessageAction<string>;
+      secondaryAction: MessageAction<string>;
     };
   };
+
+  const createMessageAction = React.useCallback(
+    <T extends string>({
+      label,
+      onPress
+    }: {
+      label: T;
+      onPress: () => void;
+    }): WithTestID<MessageAction<T>> => ({
+      label,
+      accessibilityLabel: label,
+      onPress,
+      testID: `message-action-${label}`
+    }),
+    []
+  );
+
   const messages: Messages = React.useMemo(
     () => ({
       2: {
         pictogram: "attention",
         title: "Il PIN non è corretto",
         subtitle: "Hai ancora 2 tentativi, controllalo e riprova.",
-        actionLabel: I18n.t("global.buttons.retry"),
-        actionHandler: navigateToCiePinScreen,
-        secondaryActionLabel: I18n.t("global.buttons.close"),
-        secondaryActionHandler: navigateToAuthenticationScreen
+        action: createMessageAction({
+          label: I18n.t("global.buttons.retry"),
+          onPress: navigateToCiePinScreen
+        }),
+        secondaryAction: createMessageAction({
+          label: I18n.t("global.buttons.close"),
+          onPress: navigateToAuthenticationScreen
+        })
       },
       1: {
         pictogram: "attention",
         title: "Hai inserito un PIN errato per 2 volte",
         subtitle:
           "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
-        actionLabel: I18n.t("global.buttons.retry"),
-        actionHandler: navigateToCiePinScreen,
-        secondaryActionLabel: "Hai dimenticato il PIN?",
-        secondaryActionHandler: didYouForgetPin
+        action: createMessageAction({
+          label: I18n.t("global.buttons.retry"),
+          onPress: navigateToCiePinScreen
+        }),
+        secondaryAction: createMessageAction({
+          label: "Hai dimenticato il PIN?",
+          onPress: didYouForgetPin
+        })
       },
       0: {
         pictogram: "fatalError",
         title: "Hai inserito un PIN errato per troppe volte",
         subtitle:
           "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
-        actionLabel: I18n.t("global.buttons.close"),
-        actionHandler: navigateToAuthenticationScreen,
-        secondaryActionLabel: "Hai dimenticato il PUK?",
-        secondaryActionHandler: didYouForgetPuk
+        action: createMessageAction({
+          label: I18n.t("global.buttons.close"),
+          onPress: navigateToAuthenticationScreen
+        }),
+        secondaryAction: createMessageAction({
+          label: "Hai dimenticato il PUK?",
+          onPress: didYouForgetPuk
+        })
       }
     }),
     [
+      createMessageAction,
       didYouForgetPin,
       didYouForgetPuk,
       navigateToAuthenticationScreen,
@@ -107,44 +142,37 @@ const CieWrongCiePinScreen = () => {
       pictogram: "attention",
       title: "Il PIN non è corretto",
       subtitle: "Controllalo e riprova.",
-      actionLabel: I18n.t("global.buttons.retry"),
-      actionHandler: navigateToCiePinScreen,
-      secondaryActionLabel: I18n.t("global.buttons.close"),
-      secondaryActionHandler: navigateToAuthenticationScreen
+      action: createMessageAction({
+        label: I18n.t("global.buttons.retry"),
+        onPress: navigateToCiePinScreen
+      }),
+      secondaryAction: createMessageAction({
+        label: I18n.t("global.buttons.close"),
+        onPress: navigateToAuthenticationScreen
+      })
     }),
-    [navigateToAuthenticationScreen, navigateToCiePinScreen]
+    [
+      createMessageAction,
+      navigateToAuthenticationScreen,
+      navigateToCiePinScreen
+    ]
   );
 
   const getMessage = React.useCallback(
-    (key: number) => messages[key] || defaultMessage,
+    (key: number) => (key in messages ? messages[key] : defaultMessage),
     [defaultMessage, messages]
   );
 
-  const {
-    pictogram,
-    actionLabel,
-    actionHandler,
-    secondaryActionLabel,
-    secondaryActionHandler,
-    title,
-    subtitle
-  } = getMessage(remainingCount);
+  const { pictogram, title, subtitle, action, secondaryAction } =
+    getMessage(remainingCount);
 
   return (
     <OperationResultScreenContent
       pictogram={pictogram}
       title={title}
       subtitle={subtitle}
-      action={{
-        label: actionLabel,
-        accessibilityLabel: actionLabel,
-        onPress: actionHandler
-      }}
-      secondaryAction={{
-        label: secondaryActionLabel,
-        accessibilityLabel: secondaryActionLabel,
-        onPress: secondaryActionHandler
-      }}
+      action={action}
+      secondaryAction={secondaryAction}
     />
   );
 };
