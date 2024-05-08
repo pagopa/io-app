@@ -1,9 +1,15 @@
-import { CodeInput as IOCodeInput } from "@pagopa/io-app-design-system";
+import {
+  CodeInput as IOCodeInput,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 
-type CodeInputProps = Parameters<typeof IOCodeInput>[0];
+type CodeInputProps = WithTestID<Parameters<typeof IOCodeInput>[0]> & {
+  onChange: (text: string) => void;
+  accessibilityLabel: string;
+};
 
 /**
  * Temporary wrapper to DS CodeInput to allow keyboard opening on item focus.
@@ -13,18 +19,14 @@ export const CodeInput = ({
   accessibilityLabel,
   testID,
   ...props
-}: CodeInputProps & {
-  onChange: (text: string) => void;
-  testID?: string;
-  accessibilityLabel: string;
-}) => {
+}: CodeInputProps) => {
   const hiddenInputRef = React.useRef<TextInput>(null);
 
   useFocusEffect(
     React.useCallback(() => {
       const timeoutId = setTimeout(() => {
         hiddenInputRef.current?.focus();
-      }, 1000);
+      }, 500);
 
       return () => {
         clearTimeout(timeoutId);
