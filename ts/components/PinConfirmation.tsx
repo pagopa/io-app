@@ -37,6 +37,7 @@ export const PinConfirmation = ({
   pin
 }: Props) => {
   const [pinConfirmation, setPinConfirmation] = React.useState("");
+  const titleRef = React.useRef<View>(null);
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const navigator = useIONavigation();
@@ -77,18 +78,19 @@ export const PinConfirmation = ({
         <View style={{ alignItems: "center" }}>
           <Pictogram name="key" size={64} />
           <VSpacer size={8} />
-          <H4 testID="pin-confirmation-title">
-            {I18n.t("onboarding.pinConfirmation.title")}
-          </H4>
+          <View accessible ref={titleRef}>
+            <H4 accessible testID="pin-confirmation-title">
+              {I18n.t("onboarding.pinConfirmation.title")}
+            </H4>
+          </View>
         </View>
         <VSpacer size={40} />
         <VSpacer size={40} />
         <CodeInput
+          onFocusedA11yView={titleRef}
           testID="pin-confirmation-input"
           length={PIN_LENGTH_SIX}
-          accessibilityLabel={`${I18n.t(
-            "onboarding.pin.pinConfirmationLabel"
-          )}, ${I18n.t("accessibility.doubleTapToActivateHint")}`}
+          accessibilityLabel={I18n.t("onboarding.pin.pinConfirmationLabel")}
           onValidate={handleOnValidate}
           onValueChange={setPinConfirmation}
           onChange={setPinConfirmation}

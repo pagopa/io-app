@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
+import { AccessibilityInfo } from "react-native";
 import I18n from "../i18n";
 import { createPinSuccess } from "../store/actions/pinset";
 import { useIODispatch, useIOSelector } from "../store/hooks";
@@ -43,8 +44,12 @@ export const useCreatePin = (props = { isOnboarding: false }) => {
           dispatch(createPinSuccess(pin));
           trackCreatePinSuccess(getFlowType(isOnboarding, isFirstOnBoarding));
           if (!isOnboarding) {
-            // We need to ask the user to restart the app
-            toastSuccess(I18n.t("onboarding.pin.success.message"));
+            const successMessage = I18n.t("onboarding.pin.success.message");
+            toastSuccess(successMessage);
+            AccessibilityInfo.announceForAccessibilityWithOptions(
+              successMessage,
+              { queue: true }
+            );
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.PROFILE_SECURITY
             });

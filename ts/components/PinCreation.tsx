@@ -36,6 +36,7 @@ export type Props = {
  */
 export const PinCreation = ({ isOnboarding = false }: Props) => {
   const [pin, setPin] = React.useState("");
+  const titleRef = React.useRef<View>(null);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const navigation = useIONavigation();
 
@@ -85,19 +86,20 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         <View style={{ alignItems: "center" }}>
           <Pictogram name="key" size={64} />
           <VSpacer size={8} />
-          <H4 testID="pin-creation-form-title">
-            {I18n.t("onboarding.pin.title")}
-          </H4>
+          <View accessible ref={titleRef}>
+            <H4 accessible testID="pin-creation-form-title">
+              {I18n.t("onboarding.pin.title")}
+            </H4>
+          </View>
           <Body style={{ textAlign: "center" }}>
             {I18n.t("onboarding.pin.subTitle")}
           </Body>
         </View>
         <VSpacer size={32} />
         <CodeInput
+          onFocusedA11yView={titleRef}
           testID="pin-creation-input"
-          accessibilityLabel={`${I18n.t("onboarding.pin.pinLabel")}, ${I18n.t(
-            "accessibility.doubleTapToActivateHint"
-          )}`}
+          accessibilityLabel={I18n.t("onboarding.pin.pinLabel")}
           length={PIN_LENGTH_SIX}
           onValidate={handleOnValidate}
           onValueChange={setPin}
