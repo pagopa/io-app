@@ -1,13 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
-import { useHeaderHeight } from "@react-navigation/elements";
+import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
-import {
-  ContentWrapper,
-  IOColors,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -26,10 +20,6 @@ import {
   CardWithMarkdownContentSkeleton
 } from "../components/CardWithMarkdownContent";
 import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
-import {
-  ServiceDetailsHeader,
-  ServiceDetailsHeaderSkeleton
-} from "../components/ServiceDetailsHeader";
 import { ServiceDetailsMetadata } from "../components/ServiceDetailsMetadata";
 import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
 import {
@@ -47,29 +37,24 @@ import {
   serviceMetadataInfoSelector
 } from "../store/reducers/servicesById";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
+import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 
-export type ServiceDetailsScreenNavigationParams = Readonly<{
+export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;
   // if true the service should be activated automatically
   // as soon as the screen is shown (used for custom activation
   // flows like PN)
   activate?: boolean;
-}>;
+};
 
 type ServiceDetailsScreenProps = IOStackNavigationRouteProps<
   ServicesParamsList,
   "SERVICE_DETAIL"
 >;
 
-export const headerPaddingBottom = 138;
-
-const windowHeight = Dimensions.get("window").height;
+const headerPaddingBottom: number = 138;
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    backgroundColor: IOColors["grey-50"],
-    paddingBottom: headerPaddingBottom
-  },
   cardContainer: {
     marginTop: -headerPaddingBottom,
     minHeight: headerPaddingBottom,
@@ -82,7 +67,6 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
 
   const linkTo = useLinkTo();
   const dispatch = useIODispatch();
-  const headerHeight = useHeaderHeight();
   const isFirstRender = useFirstRender();
 
   const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
@@ -129,20 +113,10 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   if (isFirstRender || isLoadingService) {
     return (
       <ServiceDetailsScreenComponent>
-        <View
-          style={[
-            styles.headerContainer,
-            {
-              paddingTop: windowHeight + headerHeight,
-              marginTop: -windowHeight
-            }
-          ]}
-        >
-          <ContentWrapper>
-            <ServiceDetailsHeaderSkeleton />
-            <VSpacer size={16} />
-          </ContentWrapper>
-        </View>
+        <ServicesHeaderSection
+          extraBottomPadding={headerPaddingBottom}
+          isLoading={true}
+        />
         <View style={styles.cardContainer}>
           <CardWithMarkdownContentSkeleton />
         </View>
@@ -260,25 +234,12 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
       )}
       title={service_name}
     >
-      <View
-        style={[
-          styles.headerContainer,
-          {
-            paddingTop: windowHeight + headerHeight,
-            marginTop: -windowHeight
-          }
-        ]}
-      >
-        <ContentWrapper>
-          <ServiceDetailsHeader
-            logoUri={logosForService(service)}
-            organizationName={organization_name}
-            serviceName={service_name}
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
-      </View>
-
+      <ServicesHeaderSection
+        extraBottomPadding={headerPaddingBottom}
+        logoUri={logosForService(service)}
+        title={service_name}
+        subTitle={organization_name}
+      />
       {service_metadata?.description && (
         <View style={styles.cardContainer}>
           <CardWithMarkdownContent content={service_metadata.description} />

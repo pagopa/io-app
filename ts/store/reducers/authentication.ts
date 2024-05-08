@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
 import {
@@ -191,24 +190,6 @@ export const walletTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.walletToken
     : undefined;
-
-export const tokenFromNameSelector = (
-  tokenName?: TokenName
-): ((state: GlobalState) => O.Option<string>) =>
-  createSelector<GlobalState, O.Option<PublicSession>, O.Option<string>>(
-    sessionInfoSelector,
-    maybeSessionInfo =>
-      pipe(
-        tokenName,
-        O.fromNullable,
-        O.chain(tn =>
-          pipe(
-            maybeSessionInfo,
-            O.map(si => si[tn])
-          )
-        )
-      )
-  );
 
 export const loggedInIdpSelector = (state: GlobalState) =>
   isLoggedIn(state.authentication) ? state.authentication.idp : undefined;

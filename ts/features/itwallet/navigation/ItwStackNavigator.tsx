@@ -1,9 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { ItwAuthModeSelectionScreen } from "../authentication/screens/ItwAuthModeSelectionScreen";
-import { ItwAuthNfcInstructionsScreen } from "../authentication/screens/ItwAuthNfcInstructionsScreen";
+import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwAuthNfcInstructionsScreen } from "../authentication/screens/ItwAuthNfcInstructionsScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -19,13 +19,13 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.DISCOVERY.INFO}
       component={ItwDiscoveryInfoScreen}
     />
-    {/* AUTHENTICATION */}
+    {/* IDENTIFICATION */}
     <Stack.Screen
-      name={ITW_ROUTES.AUTH.MODE_SELECTION}
-      component={ItwAuthModeSelectionScreen}
+      name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
+      component={ItwIdentificationModeSelectionScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.AUTH.NFC_INSTRUCTIONS}
+      name={ITW_ROUTES.IDENTIFICATION.NFC_INSTRUCTIONS}
       component={ItwAuthNfcInstructionsScreen}
     />
   </Stack.Navigator>

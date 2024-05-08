@@ -1,5 +1,11 @@
 This file describes the reason for the patches applied.
 
+### detox+19.13.0
+Created on 03/05/2024
+
+- Apply [fix/ios-17-regression](https://github.com/wix/Detox/pull/4171).
+- Remove this patch once bumped `detox` to `v20`.
+
 ### native-base+2.15.2
 Created on **25/03/2024**
 
@@ -155,7 +161,7 @@ Created on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### react-native-webview+11.26.1
+### react-native-webview+13.8.1
 
 Updated on **13/07/2023**
 
