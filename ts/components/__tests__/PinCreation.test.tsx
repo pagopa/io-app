@@ -13,8 +13,7 @@ import ROUTES from "../../navigation/routes";
 import { PinCreation } from "../PinCreation";
 
 const mockedNavigate = jest.fn();
-const spy = jest.spyOn(Alert, "alert");
-
+jest.spyOn(Alert, "alert");
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
@@ -28,27 +27,29 @@ jest.mock("@react-navigation/native", () => {
 const pin = "162534" as PinString;
 
 describe("PinCreation", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("Shouldn't call any action", () => {
     const { getByTestId } = render(<TestComponent />);
     const codeInput = getByTestId(/pin-creation-input/);
 
     fireEvent.changeText(codeInput, "00000");
     expect(mockedNavigate).not.toHaveBeenCalled();
-    expect(spy).not.toHaveBeenCalled();
+    expect(Alert.alert).not.toHaveBeenCalled();
   });
   it("Should navigate to Profile > PIN_CONFIRMATION", () => {
     const { getByTestId } = render(<TestComponent />);
     const codeInput = getByTestId(/pin-creation-input/);
     fireEvent.changeText(codeInput, pin);
 
-    expect(spy).not.toHaveBeenCalled();
+    expect(Alert.alert).not.toHaveBeenCalled();
     expect(mockedNavigate).toHaveBeenCalledTimes(1);
     expect(mockedNavigate).toHaveBeenLastCalledWith(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PIN_CONFIRMATION,
       params: { pin }
     });
-
-    mockedNavigate.mockRestore();
   });
   it("Should display the Alert", () => {
     const { getByTestId } = render(<TestComponent />);
@@ -56,27 +57,23 @@ describe("PinCreation", () => {
     fireEvent.changeText(codeInput, "000000");
 
     expect(mockedNavigate).not.toHaveBeenCalled();
-    expect(spy).toHaveBeenLastCalledWith(
+    expect(Alert.alert).toHaveBeenLastCalledWith(
       "Il codice non rispetta i criteri di sicurezza",
       "Non deve contenere ripetizione di numeri (es. 000000) e numeri in sequenza (es. 123456 o 654321).",
       [{ text: "Scegli un altro codice" }]
     );
-
-    spy.mockRestore();
   });
   it("Should navigate to Onboarding > ONBOARDIN_CONFIRMATION_PIN", () => {
     const { getByTestId } = render(<TestComponent isOnboarding />);
     const codeInput = getByTestId(/pin-creation-input/);
     fireEvent.changeText(codeInput, pin);
 
-    expect(spy).not.toHaveBeenCalled();
+    expect(Alert.alert).not.toHaveBeenCalled();
     expect(mockedNavigate).toHaveBeenCalledTimes(1);
     expect(mockedNavigate).toHaveBeenLastCalledWith(ROUTES.ONBOARDING, {
       screen: ROUTES.ONBOARDING_CONFIRMATION_PIN,
       params: { pin }
     });
-
-    mockedNavigate.mockRestore();
   });
 });
 

@@ -22,9 +22,13 @@ jest.mock("@react-navigation/native", () => ({
 
 const pin = "162534" as PinString;
 const onSubmit = jest.fn();
-const spy = jest.spyOn(Alert, "alert");
+jest.spyOn(Alert, "alert");
 
 describe("PinConfirmation", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("Should call onSubmit", () => {
     const { getByTestId } = render(<TestComponent />);
 
@@ -34,8 +38,7 @@ describe("PinConfirmation", () => {
 
     fireEvent.changeText(codeInput, pin);
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(spy).not.toHaveBeenCalled();
-    onSubmit.mockReset();
+    expect(Alert.alert).not.toHaveBeenCalled();
   });
   it("Should call onSubmit", () => {
     const { getByTestId } = render(<TestComponent isOnboarding />);
@@ -46,8 +49,7 @@ describe("PinConfirmation", () => {
 
     fireEvent.changeText(codeInput, pin);
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(spy).not.toHaveBeenCalled();
-    onSubmit.mockReset();
+    expect(Alert.alert).not.toHaveBeenCalled();
   });
   it("Should display the Alert on pin mismatch", () => {
     const { getByTestId } = render(<TestComponent />);
@@ -56,11 +58,7 @@ describe("PinConfirmation", () => {
     fireEvent.changeText(codeInput, "000000");
 
     expect(onSubmit).toHaveBeenCalledTimes(0);
-
-    /**
-     * SpyOn seems to trigger mocked functions twice.
-     */
-    expect(spy).toHaveBeenCalledWith(
+    expect(Alert.alert).toHaveBeenCalledWith(
       "I codici inseriti non corrispondono",
       undefined,
       [
@@ -70,8 +68,6 @@ describe("PinConfirmation", () => {
         }
       ]
     );
-
-    spy.mockRestore();
   });
   it("Should display the Alert on pin mismatch", () => {
     const { getByTestId } = render(<TestComponent isOnboarding />);
@@ -80,11 +76,7 @@ describe("PinConfirmation", () => {
     fireEvent.changeText(codeInput, "000000");
 
     expect(onSubmit).toHaveBeenCalledTimes(0);
-
-    /**
-     * SpyOn seems to trigger mocked functions twice.
-     */
-    expect(spy).toHaveBeenCalledWith(
+    expect(Alert.alert).toHaveBeenCalledWith(
       "I codici inseriti non corrispondono",
       undefined,
       [
@@ -94,8 +86,6 @@ describe("PinConfirmation", () => {
         }
       ]
     );
-
-    spy.mockRestore();
   });
 });
 

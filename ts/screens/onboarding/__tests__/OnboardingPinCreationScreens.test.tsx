@@ -11,7 +11,7 @@ import { TestInnerNavigationContainer } from "../../../navigation/AppStackNaviga
 import OnboardingPinScreen from "../OnboardingPinScreen";
 import OnboardingPinConfirmationScreen from "../OnboardingPinConfirmationScreen";
 
-const spy = jest.spyOn(Alert, "alert");
+jest.spyOn(Alert, "alert");
 const mockedGoBack = jest.fn();
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -25,6 +25,10 @@ jest.mock("@react-navigation/native", () => {
 });
 
 describe("PinCreationScreens", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("Should navigate to the Profile > PinConfirmation screen", () => {
     const { getByTestId } = render(renderComponent());
     const codeInput = getByTestId(/pin-creation-input/);
@@ -47,7 +51,6 @@ describe("PinCreationScreens", () => {
       "Non deve contenere ripetizione di numeri (es. 000000) e numeri in sequenza (es. 123456 o 654321).",
       [{ text: "Scegli un altro codice" }]
     );
-    spy.mockReset();
   });
   it("Should display the alert on pin mismatch", () => {
     const { getByTestId } = render(renderComponent());
@@ -55,14 +58,10 @@ describe("PinCreationScreens", () => {
     expect(codeInput).not.toBeNull();
 
     fireEvent.changeText(codeInput, "162534");
-
-    /**
-     * Confirmation screen
-     */
     const confirmationInput = getByTestId(/pin-confirmation-input/);
     fireEvent.changeText(confirmationInput, "111111");
 
-    expect(spy).toHaveBeenCalledWith(
+    expect(Alert.alert).toHaveBeenCalledWith(
       "I codici inseriti non corrispondono",
       undefined,
       [
@@ -72,8 +71,6 @@ describe("PinCreationScreens", () => {
         }
       ]
     );
-    mockedGoBack.mockReset();
-    spy.mockReset();
   });
 });
 
