@@ -69,7 +69,7 @@ const CgnMerchantDetailScreen = () => {
   // -------    render
 
   useHeaderSecondLevel({
-    title: "",
+    title: isReady(merchantDetail) ? merchantDetail.value.name : "",
     canGoBack: true,
     supportRequest: true
   });
@@ -81,10 +81,7 @@ const CgnMerchantDetailScreen = () => {
           primaryActionProps={
             merchantDetail.value.websiteUrl
               ? {
-                  label: "Vali al sito dell'esercente",
-                  accessibilityLabel: I18n.t(
-                    "wallet.payment.psp.continueButton"
-                  ),
+                  label: I18n.t("bonus.cgn.merchantDetail.cta.website"),
                   onPress: () =>
                     handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
                 }

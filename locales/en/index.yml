@@ -2581,6 +2581,7 @@ bonus:
         label: Navigate to operator website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
+        website: Go to the website
       categories:
         all: All the operators
         counting: and other {{count}}

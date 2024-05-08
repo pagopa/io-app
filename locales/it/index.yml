@@ -2581,6 +2581,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
+        website: Vai al sito dell'esercente
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
