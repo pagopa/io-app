@@ -239,7 +239,8 @@ export const IOScrollView = ({
       navigation.setOptions({
         header: () => (
           <HeaderSecondLevel {...headerConfig} scrollValues={scrollValues} />
-        )
+        ),
+        headerTransparent: headerConfig.transparent
       });
     }
   }, [headerConfig, navigation, scrollValues]);
