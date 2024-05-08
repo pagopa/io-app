@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ServiceDetailsHeader component should match the snapshot 1`] = `
+exports[`ServicesHeader component should match the snapshot 1`] = `
 <View
   style={
     Object {
@@ -10,6 +10,7 @@ exports[`ServiceDetailsHeader component should match the snapshot 1`] = `
       "paddingVertical": 6,
     }
   }
+  testID="services-header"
 >
   <View
     style={
@@ -106,7 +107,7 @@ exports[`ServiceDetailsHeader component should match the snapshot 1`] = `
       }
       weight="SemiBold"
     >
-      #### service name ####
+      #### title ####
     </Text>
     <Text
       allowFontScaling={false}
@@ -137,7 +138,7 @@ exports[`ServiceDetailsHeader component should match the snapshot 1`] = `
       }
       weight="Bold"
     >
-      #### organization_name ####
+      #### subTitle ####
     </Text>
   </View>
 </View>
