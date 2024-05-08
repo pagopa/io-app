@@ -175,7 +175,11 @@ const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
           </View>
           <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
             {CardActivated.is(cgnDetails) && (
-              <LabelSmall color={"blueIO-850"} style={IOStyles.flex} testID={"card-bottom-content"}>
+              <LabelSmall
+                color={"blueIO-850"}
+                style={IOStyles.flex}
+                testID={"card-bottom-content"}
+              >
                 {I18n.t("bonus.cgn.detail.status.date.valid_until", {
                   date: formatDateAsShortFormat(cgnDetails.expiration_date)
                 })}
