@@ -2600,11 +2600,12 @@ bonus:
         allNational: Tutti i punti vendita sul territorio nazionale
     cta:
       activeBonus: Request your Card
-      deactivateBonus: Deactivate your Card
+      deactivateBonus: Deactivate Carta Giovani Nazionale
       goToDetail: View your Carta Giovani
     detail:
       cta:
         buyers: Discover the CGN benefits
+        discover: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
@@ -2614,8 +2615,8 @@ bonus:
       information:
         active: "Your card is active and can be used until {{date}}"
         warning: "Attention! "
-        revoked: "This card has been revoked cause {{reason}}"
-        expired: "This card expired on {{date}}"
+        revoked: "Attention! This card has been revoked cause {{reason}}"
+        expired: "Attention! This card expired on {{date}}"
       ownership: Who can use this card?
       status:
         title: Carta Giovani Nazionale (CGN)
@@ -2631,6 +2632,7 @@ bonus:
           revoked: Revoked
           expired: Expired
         date:
+          valid_until: "Available until {{date}}"
           activated: Activated on
           expired: Expired on
           revoked: Revoked on
