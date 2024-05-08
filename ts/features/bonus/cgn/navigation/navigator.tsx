@@ -118,12 +118,10 @@ export const CgnDetailsNavigator = () => (
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.TABS}
-      options={{ headerShown: false }}
       component={CgnMerchantsTabsScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.DETAIL}
-      options={{ headerShown: false }}
       component={CgnMerchantDetailScreen}
     />
     <DetailStack.Screen

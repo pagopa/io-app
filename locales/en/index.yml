@@ -2572,7 +2572,7 @@ bonus:
         deals: Benefits
         description: Description
         services: Services
-        addresses: Addresses
+        contactInfo: Addresses
         hours: Working Hours
         validity: Validity
         discountCode: Discount code
@@ -2581,6 +2581,7 @@ bonus:
         label: Navigate to operator website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
+        website: Go to the website
       categories:
         all: All the operators
         counting: and other {{count}}
@@ -2594,6 +2595,9 @@ bonus:
         travel: Travels and Transportation
         mobility: Sustainable Transport
         job: Jobs and Internships
+      information:
+        address: Indirizzo
+        allNational: Tutti i punti vendita sul territorio nazionale
     cta:
       activeBonus: Request your Card
       deactivateBonus: Deactivate Carta Giovani Nazionale
