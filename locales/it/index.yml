@@ -2090,6 +2090,11 @@ services:
     institutions:
       title: Nazionali
   institution:
+    failure:
+      title: "C'è un problema temporaneo, riprova"
+      subtitle: "Stiamo recuperando i servizi"
+      back: "Indietro"
+      retry: "Riprova"
     header:
       subtitle: "{{count}} servizi disponibili"
   details:
@@ -2564,10 +2569,10 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni e opportunità
+        deals: Proposte
         description: Descrizione
         services: Servizi
-        addresses: Indirizzi
+        contactInfo: Contatti e informazioni
         hours: Orari
         validity: Validità
         discountCode: Codice Sconto
@@ -2576,6 +2581,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
+        website: Vai al sito dell'esercente
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -2589,6 +2595,9 @@ bonus:
         travel: Viaggi e Trasporti
         mobility: Mobilità Sostenibile
         job: Lavoro e Tirocini
+      information:
+        address: Indirizzo
+        allNational: Tutti i punti vendita sul territorio nazionale
     cta:
       activeBonus: Richiedi la Carta
       deactivateBonus: Disattiva la Carta
