@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import React, { MutableRefObject } from "react";
 import { Dimensions, View } from "react-native";
 import I18n from "../../../i18n";
