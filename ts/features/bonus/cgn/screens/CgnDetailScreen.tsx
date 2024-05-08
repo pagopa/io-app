@@ -110,9 +110,13 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     [bottomMargin]
   );
 
-  const gradientAreaHeight: number = React.useMemo(
-    () => bottomMargin + buttonSolidHeight + gradientSafeArea,
-    [bottomMargin]
+    const gradientAreaHeight: number = React.useMemo(
+    () =>
+      bottomMargin +
+      buttonSolidHeight +
+      gradientSafeArea +
+      (canDisplayEycaDetails ? buttonSolidHeight : 0),
+    [bottomMargin, canDisplayEycaDetails]
   );
 
   const footerGradientOpacityTransition = useAnimatedStyle(() => ({
