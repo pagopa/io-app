@@ -502,6 +502,7 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(
       preferencesItWalletTestSetEnabled({ isItWalletTestEnabled: enabled })
     );
+    handleShowModal();
   };
   return (
     <ContentWrapper>
