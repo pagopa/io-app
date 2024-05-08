@@ -99,6 +99,7 @@ import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingS
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
 import { watchServicesSaga } from "../features/services/common/saga";
+import { watchItwSaga } from "../features/itwallet/common/saga";
 import {
   clearKeychainError,
   keychainError
@@ -549,6 +550,9 @@ export function* initializeApplicationSaga(
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
+
+  // Start watching for itw saga
+  yield* fork(watchItwSaga);
 
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, maybeSessionInformation.value.walletToken);
