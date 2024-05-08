@@ -16,10 +16,9 @@ import { Locales } from "../../../../locales/locales";
 import {
   deriveCustomHandledLink,
   isIoFIMSLink,
-  isIoInternalLink,
-  removeFIMSPrefixFromUrl
+  isIoInternalLink
 } from "../../../components/ui/Markdown/handlers/link";
-import FIMS_ROUTES from "../../fims/navigation/routes";
+import { FIMS_ROUTES } from "../../fims/navigation";
 import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
@@ -70,12 +69,9 @@ export const handleCtaAction = (cta: CTA, linkTo: (path: string) => void) => {
     const convertedLink = getInternalRoute(cta.action);
     handleInternalLink(linkTo, `${convertedLink}`);
   } else if (isIoFIMSLink(cta.action)) {
-    const url = removeFIMSPrefixFromUrl(cta.action);
+    // TODO::  const url = removeFIMSPrefixFromUrl(cta.action);
     NavigationService.navigate(FIMS_ROUTES.MAIN, {
-      screen: FIMS_ROUTES.WEBVIEW,
-      params: {
-        url
-      }
+      screen: FIMS_ROUTES.CONSENTS
     });
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
