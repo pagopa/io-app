@@ -3,18 +3,18 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { itwNfcIsEnabled } from "../actions";
 
-export type ItwAuthenticationState = {
+export type ItwIdentificationState = {
   isNfcEnabled: pot.Pot<boolean, Error>;
 };
 
-const INITIAL_STATE: ItwAuthenticationState = {
+const INITIAL_STATE: ItwIdentificationState = {
   isNfcEnabled: pot.none
 };
 
 const reducer = (
-  state: ItwAuthenticationState = INITIAL_STATE,
+  state: ItwIdentificationState = INITIAL_STATE,
   action: Action
-): ItwAuthenticationState => {
+): ItwIdentificationState => {
   switch (action.type) {
     case getType(itwNfcIsEnabled.request):
       return {

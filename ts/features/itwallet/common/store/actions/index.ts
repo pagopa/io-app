@@ -1,3 +1,3 @@
-import { ItwAuthenticationActions } from "../../../authentication/store/actions";
+import { ItwIdentificationActions } from "../../../identification/store/actions";
 
-export type ItwActions = ItwAuthenticationActions;
+export type ItwActions = ItwIdentificationActions;

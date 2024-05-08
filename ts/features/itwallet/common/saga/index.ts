@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 import { isItWalletTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { watchItwAuthenticationSaga } from "../../authentication/saga";
+import { watchItwIdentificationSaga } from "../../identification/saga";
 
 export function* watchItwSaga(): SagaIterator {
   const isItWalletTestEnabled: ReturnType<
@@ -13,5 +13,5 @@ export function* watchItwSaga(): SagaIterator {
     return;
   }
 
-  yield* fork(watchItwAuthenticationSaga);
+  yield* fork(watchItwIdentificationSaga);
 }

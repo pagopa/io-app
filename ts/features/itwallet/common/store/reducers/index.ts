@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
-import authenticationReducer, {
-  ItwAuthenticationState
-} from "../../../authentication/store/reducers";
+import identificationReducer, {
+  ItwIdentificationState
+} from "../../../identification/store/reducers";
 
 export type ItwState = {
-  authentication: ItwAuthenticationState;
+  identification: ItwIdentificationState;
 };
 
 const itwReducer = combineReducers({
-  authentication: authenticationReducer
+  identification: identificationReducer
 });
 
 export default itwReducer;

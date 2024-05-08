@@ -3,6 +3,6 @@ import { takeLatest } from "typed-redux-saga/macro";
 import { itwNfcIsEnabled } from "../store/actions";
 import { handleNfcEnabledSaga } from "./handleNfcEnabledSaga";
 
-export function* watchItwAuthenticationSaga(): SagaIterator {
+export function* watchItwIdentificationSaga(): SagaIterator {
   yield* takeLatest(itwNfcIsEnabled.request, handleNfcEnabledSaga);
 }
