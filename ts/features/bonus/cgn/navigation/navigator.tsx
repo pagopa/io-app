@@ -103,7 +103,7 @@ export const CgnDetailsNavigator = () => (
   >
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.DETAILS}
-      options={{ headerShown: false }}
+      options={{ headerShown: true }}
       component={CgnDetailScreen}
     />
     <DetailStack.Screen
