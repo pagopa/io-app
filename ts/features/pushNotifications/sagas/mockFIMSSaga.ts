@@ -8,8 +8,7 @@ import {
   mockSetNativeCookie
 } from "./mockFIMSCallbacks";
 
-export function* mockFIMSSaga(
-) {
+export function* mockFIMSSaga() {
   try {
     mockSetNativeCookie(FakeBaseUrl, "X-IO-Federation-Token", "asd");
     const config: HttpCallConfig = {
