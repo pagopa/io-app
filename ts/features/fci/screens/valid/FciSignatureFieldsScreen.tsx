@@ -85,11 +85,11 @@ const FciSignatureFieldsScreen = () => {
     RA.findFirst(doc => doc.document_id === docId)
   );
 
-  React.useEffect(() => {
-    // get required signatureFields for the current document
-    // that user should check to sign the document
-    const requiredFields = getRequiredSignatureFields(signatureFieldsSelector);
+  // get required signatureFields for the current document
+  // that user should check to sign the document
+  const requiredFields = getRequiredSignatureFields(signatureFieldsSelector);
 
+  React.useEffect(() => {
     // get the required signature fields for the current document,
     // which the user has previously checked to sign it
     const res = pipe(
@@ -107,12 +107,7 @@ const FciSignatureFieldsScreen = () => {
     );
 
     setIsClausesChecked(res.length >= requiredFields.length);
-  }, [
-    documentsSignaturesSelector,
-    docId,
-    signatureFieldsSelector,
-    docSignatures
-  ]);
+  }, [docSignatures]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
