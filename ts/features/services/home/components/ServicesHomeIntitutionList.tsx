@@ -8,17 +8,19 @@ import {
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import { Institution } from "../../../../../definitions/services/Institution";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
+import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { logoForInstitution } from "../utils";
 import { InstitutionListItemSkeleton } from "./InstitutionListItemSkeleton";
 
 export const ServicesHomeIntitutionList = () => {
   const isFirstRender = useFirstRender();
+  const navigation = useIONavigation();
 
   const {
     currentPage,
@@ -43,22 +45,34 @@ export const ServicesHomeIntitutionList = () => {
     [currentPage, fetchInstitutions]
   );
 
+  const navigateToInstitution = useCallback(
+    (institution: Institution) =>
+      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+        screen: SERVICES_ROUTES.INSTITUTION_SERVICES,
+        params: {
+          institutionId: institution.id,
+          institutionName: institution.name
+        }
+      }),
+    [navigation]
+  );
+
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Institution>) => (
       <ListItemNav
         value={item.name}
-        onPress={constNull}
+        onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
           logoUri: logoForInstitution(item)
         }}
       />
     ),
-    []
+    [navigateToInstitution]
   );
 
   const renderListFooterComponent = useCallback(() => {
-    if (isUpdating) {
+    if (isUpdating && currentPage > 0) {
       return (
         <>
           <InstitutionListItemSkeleton />
@@ -70,7 +84,7 @@ export const ServicesHomeIntitutionList = () => {
       );
     }
     return <VSpacer size={16} />;
-  }, [isUpdating]);
+  }, [currentPage, isUpdating]);
 
   const ListHeaderComponent = (
     <ListItemHeader label={I18n.t("services.home.institutions.title")} />

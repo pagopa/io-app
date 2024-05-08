@@ -25,7 +25,7 @@ import {
   CreditCardPaymentMethod
 } from "../../types/pagopa";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/details/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 /**
  * @deprecated
@@ -130,7 +130,7 @@ export const navigateToServiceHomeScreen = () =>
  * @deprecated
  */
 export const navigateToServiceDetailsScreen = (
-  params: ServiceDetailsScreenNavigationParams
+  params: ServiceDetailsScreenRouteParams
 ) =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
