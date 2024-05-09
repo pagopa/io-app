@@ -13,6 +13,7 @@ import {
   useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
+import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18n-js";
 import * as React from "react";
@@ -102,6 +103,10 @@ const DeveloperActionsSection = () => {
     );
   };
 
+  const sendSentryTestEvent = () => {
+    Sentry.captureException(new Error("First error"));
+  };
+
   const dumpAsyncStorage = () => {
     /* eslint-disable no-console */
     console.log("[DUMP START]");
@@ -144,6 +149,12 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.dumpAsyncStorage"),
       onPress: dumpAsyncStorage
+    },
+    {
+      condition: true,
+      color: "primary",
+      label: I18n.t("profile.main.sentryTestEvent"),
+      onPress: sendSentryTestEvent
     }
   ];
 

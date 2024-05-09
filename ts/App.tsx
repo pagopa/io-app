@@ -31,6 +31,8 @@ const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   return event;
 };
 
+Sentry.setUser(null);
+
 Sentry.init({
   dsn: sentryDsn,
   beforeSend(event) {
@@ -43,8 +45,6 @@ Sentry.init({
   enabled: !isLocalEnv,
   sampleRate: 0.3
 });
-
-Sentry.setUser(null);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;

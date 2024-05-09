@@ -312,6 +312,7 @@ profile:
     forgetCurrentSession: Dimentica sessione corrente
     clearAsyncStorage: Cancella contenuto di AsyncStorage
     dumpAsyncStorage: Scarica contenuto di AsyncStorage
+    sentryTestEvent: Invia Exception a Sentry
     contextualHelpTitle: Cosa puoi fare nel tuo Profilo
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Modalità sviluppatore attivata

@@ -312,6 +312,7 @@ profile:
     forgetCurrentSession: Forget current session
     clearAsyncStorage: Clear AsyncStorage
     dumpAsyncStorage: Dump AsyncStorage content to console
+    sentryTestEvent: Send Exception to Sentry
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
