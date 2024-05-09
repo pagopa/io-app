@@ -582,6 +582,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       "lineHeight": 21,
                                     }
                                   }
+                                  onPress={[Function]}
                                   style={
                                     Array [
                                       Object {
