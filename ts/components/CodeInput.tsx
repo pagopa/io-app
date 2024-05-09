@@ -4,16 +4,20 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, View, TextInput, Keyboard } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { setAccessibilityFocus } from "../utils/accessibility";
-import I18n from "../i18n";
 
 type CodeInputProps = WithTestID<Parameters<typeof IOCodeInput>[0]> & {
   onChange: (text: string) => void;
   accessibilityLabel: string;
   onFocusedA11yView?: React.RefObject<View>;
 };
+
+const FOCUS_TIMEOUT = 1000;
+const A11Y_FOCUS_TIMEOUT = FOCUS_TIMEOUT + 200;
+const FOCUS_TIMEOUT_MS = FOCUS_TIMEOUT as Millisecond;
+const A11Y_FOCUS_TIMEOUT_MS = A11Y_FOCUS_TIMEOUT as Millisecond;
 
 /**
  * Temporary wrapper to DS CodeInput to allow keyboard opening on item focus.
@@ -27,34 +31,14 @@ export const CodeInput = ({
 }: CodeInputProps) => {
   const hiddenInputRef = React.useRef<TextInput>(null);
 
-  const [a11yLabel, setA11yLabel] = React.useState(accessibilityLabel);
-
-  React.useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      setA11yLabel(accessibilityLabel);
-    });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      setA11yLabel(
-        `${accessibilityLabel}, ${I18n.t(
-          "accessibility.doubleTapToActivateHint"
-        )}`
-      );
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, [accessibilityLabel]);
-
   useFocusEffect(
     React.useCallback(() => {
       const timeoutId = setTimeout(() => {
         hiddenInputRef.current?.focus();
-      }, 500);
+      }, FOCUS_TIMEOUT_MS);
 
       if (onFocusedA11yView) {
-        setAccessibilityFocus(onFocusedA11yView, 600 as Millisecond);
+        setAccessibilityFocus(onFocusedA11yView, A11Y_FOCUS_TIMEOUT_MS);
       }
 
       return () => {
@@ -64,7 +48,11 @@ export const CodeInput = ({
   );
 
   return (
-    <View accessible accessibilityLabel={a11yLabel} accessibilityElementsHidden>
+    <View
+      accessible
+      accessibilityLabel={accessibilityLabel}
+      accessibilityElementsHidden
+    >
       <TextInput
         testID={testID}
         accessibilityLabel=""

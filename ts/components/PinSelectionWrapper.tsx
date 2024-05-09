@@ -62,7 +62,10 @@ const PinSelectionWrapper = ({
         style={IOStyles.flex}
         enabled
       >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
           {children}
         </ScrollView>
       </KeyboardAvoidingView>
