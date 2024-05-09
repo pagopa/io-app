@@ -88,8 +88,8 @@ const CieWrongCiePinScreen = () => {
     () => ({
       2: {
         pictogram: "attention",
-        title: "Il PIN non è corretto",
-        subtitle: "Hai ancora 2 tentativi, controllalo e riprova.",
+        title: I18n.t("authentication.cie.pin.incorrectCiePinTitle1"),
+        subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent1"),
         action: createMessageAction({
           label: I18n.t("global.buttons.retry"),
           onPress: navigateToCiePinScreen
@@ -101,29 +101,29 @@ const CieWrongCiePinScreen = () => {
       },
       1: {
         pictogram: "attention",
-        title: "Hai inserito un PIN errato per 2 volte",
-        subtitle:
-          "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+        title: I18n.t("authentication.cie.pin.incorrectCiePinTitle2"),
+        subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent2"),
         action: createMessageAction({
           label: I18n.t("global.buttons.retry"),
           onPress: navigateToCiePinScreen
         }),
         secondaryAction: createMessageAction({
-          label: "Hai dimenticato il PIN?",
+          label: I18n.t(
+            "authentication.cie.pin.incorrectCiePinSecondaryActionLabel2"
+          ),
           onPress: didYouForgetPin
         })
       },
       0: {
         pictogram: "fatalError",
-        title: "Hai inserito un PIN errato per troppe volte",
-        subtitle:
-          "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+        title: I18n.t("authentication.cie.pin.lockedCiePinTitle"),
+        subtitle: I18n.t("authentication.cie.pin.lockedCiePinContent"),
         action: createMessageAction({
           label: I18n.t("global.buttons.close"),
           onPress: navigateToAuthenticationScreen
         }),
         secondaryAction: createMessageAction({
-          label: "Hai dimenticato il PUK?",
+          label: I18n.t("authentication.cie.pin.lockedSecondaryActionLabel"),
           onPress: didYouForgetPuk
         })
       }
@@ -137,30 +137,9 @@ const CieWrongCiePinScreen = () => {
     ]
   );
 
-  const defaultMessage: (typeof messages)[0] = React.useMemo(
-    () => ({
-      pictogram: "attention",
-      title: "Il PIN non è corretto",
-      subtitle: "Controllalo e riprova.",
-      action: createMessageAction({
-        label: I18n.t("global.buttons.retry"),
-        onPress: navigateToCiePinScreen
-      }),
-      secondaryAction: createMessageAction({
-        label: I18n.t("global.buttons.close"),
-        onPress: navigateToAuthenticationScreen
-      })
-    }),
-    [
-      createMessageAction,
-      navigateToAuthenticationScreen,
-      navigateToCiePinScreen
-    ]
-  );
-
   const getMessage = React.useCallback(
-    (key: number) => (key in messages ? messages[key] : defaultMessage),
-    [defaultMessage, messages]
+    (key: number) => messages[Math.abs(key) % Object.keys(messages).length],
+    [messages]
   );
 
   const { pictogram, title, subtitle, action, secondaryAction } =

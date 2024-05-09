@@ -627,10 +627,14 @@ authentication:
       pinCardTitle: Enter the PIN of your ID Card
       pinCardHeader: Login with CIE
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
-      incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
-      incorrectCiePinHeaderTitle: Wrong PIN
-      incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
-      incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
+      incorrectCiePinTitle1: Il PIN non è corretto
+      incorrectCiePinTitle2: Hai inserito un PIN errato per 2 volte
+      lockedCiePinTitle: Hai inserito un PIN errato per troppe volte
+      incorrectCiePinContent1: Hai ancora 2 tentativi, controllalo e riprova.
+      incorrectCiePinContent2: Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.
+      incorrectCiePinSecondaryActionLabel2: Hai dimenticato il PIN?
+      lockedCiePinContent: Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.
+      lockedSecondaryActionLabel: Hai dimenticato il PUK?
       alert: Are you sure you want to go back?
       subtitleHelp: The PIN code consists of 8 digits.
       subtitleCTA: Where can I find it?
@@ -661,9 +665,9 @@ authentication:
         readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
         invalidCard: It seems that this card is not an Electronic Identity Card (CIE).
         tagLost: You removed the card too soon.
-        cardLocked: CIE card locked
-        wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
-        wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
+        cardLocked: Il PIN della CIE è stato bloccato
+        wrongPin1AttemptLeft: Hai inserito un PIN errato per due volte
+        wrongPin2AttemptLeft: Il PIN non è corretto
         genericError: Something went wrong! Please try again.
       error:
         readerCardLostTitle: Hold the card again for a few seconds
