@@ -2542,7 +2542,7 @@ bonus:
         bottomSheet:
           cta: Come vengono ordinate le categorie?
           title: Come vengono ordinate le categorie?
-          content: Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo.Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.
+          content: Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome

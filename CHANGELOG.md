@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.60.0-rc.0](https://github.com/pagopa/io-app/compare/2.59.0-rc.2...2.60.0-rc.0) (2024-05-08)
+
+
+### Features
+
+* [[IOCOM-1285](https://pagopa.atlassian.net/browse/IOCOM-1285)] Remote content banner, new DS ([#5721](https://github.com/pagopa/io-app/issues/5721)) ([6d01753](https://github.com/pagopa/io-app/commit/6d017538cde540ef11fe0ed21db1048e71258bf5))
+* [[IOCOM-880](https://pagopa.atlassian.net/browse/IOCOM-880)] SEND cancelled message, new DS ([#5711](https://github.com/pagopa/io-app/issues/5711)) ([5bb7d57](https://github.com/pagopa/io-app/commit/5bb7d574c0c786f15a03416bc68fe3ca7536c7da))
+* [[IOCOM-884](https://pagopa.atlassian.net/browse/IOCOM-884)] Green pass relevant screens, new DS ([#5727](https://github.com/pagopa/io-app/issues/5727)) ([d4eb1b6](https://github.com/pagopa/io-app/commit/d4eb1b6ffb60337a398d090915529317757b711d))
+* [[IOPID-1505](https://pagopa.atlassian.net/browse/IOPID-1505),[IOPID-1776](https://pagopa.atlassian.net/browse/IOPID-1776)] New DS on ToS screen and add MP events ([#5714](https://github.com/pagopa/io-app/issues/5714)) ([dece582](https://github.com/pagopa/io-app/commit/dece582dcbb9c49ad369e63cf23b3bf0491ea307))
+* [[IOPID-1505](https://pagopa.atlassian.net/browse/IOPID-1505)] Add title in profile ToS screen ([#5740](https://github.com/pagopa/io-app/issues/5740)) ([685d600](https://github.com/pagopa/io-app/commit/685d6002ccdaf8733ace55c1b3080e6811996a2d))
+* [[IOPID-1539](https://pagopa.atlassian.net/browse/IOPID-1539),[IOPID-1784](https://pagopa.atlassian.net/browse/IOPID-1784)] - Integrate new DS in UpdateAppModal ([#5710](https://github.com/pagopa/io-app/issues/5710)) ([960e6ce](https://github.com/pagopa/io-app/commit/960e6cec291865dff452475e794436f003316397))
+* [[IOPID-1812](https://pagopa.atlassian.net/browse/IOPID-1812)] Remove the CTA from `CiePinScreen` ([#5735](https://github.com/pagopa/io-app/issues/5735)) ([12ff9e2](https://github.com/pagopa/io-app/commit/12ff9e226ff1b6e89a2694b8481b1ff7378b88d5))
+* [[IOPLT-360](https://pagopa.atlassian.net/browse/IOPLT-360)] Upgrades react-native-webview to latest version ([#5538](https://github.com/pagopa/io-app/issues/5538)) ([4fd9378](https://github.com/pagopa/io-app/commit/4fd93786413d6963c36bee1fbeac2f85bc2c2cfb))
+* [[PE-549](https://pagopa.atlassian.net/browse/PE-549)] Adopt DS on CGN detail screen ([#5651](https://github.com/pagopa/io-app/issues/5651)) ([33fedf9](https://github.com/pagopa/io-app/commit/33fedf98c9edaac58b93b5a6ed07711a26b78ed5))
+* [[PE-550](https://pagopa.atlassian.net/browse/PE-550)] Revamp CGN Categories/All merchants screen with new DS ([#5668](https://github.com/pagopa/io-app/issues/5668)) ([bd745dd](https://github.com/pagopa/io-app/commit/bd745dd17bf67589adfb8872ef17e82f71848888))
+* [[PE-551](https://pagopa.atlassian.net/browse/PE-551)] Category detail screen ([#5693](https://github.com/pagopa/io-app/issues/5693)) ([789dbdc](https://github.com/pagopa/io-app/commit/789dbdc7e7038ced5dc43ef827d85124aaa7e3be))
+* [[PE-552](https://pagopa.atlassian.net/browse/PE-552)] Revamp CGN merchant details screen ([#5738](https://github.com/pagopa/io-app/issues/5738)) ([5caed8c](https://github.com/pagopa/io-app/commit/5caed8cdc2fe5d602c72953ade01c224f6633f13))
+* **IT Wallet:** [[SIW-979](https://pagopa.atlassian.net/browse/SIW-979)] Add issuing authentication mode selection screen ([#5729](https://github.com/pagopa/io-app/issues/5729)) ([53bf602](https://github.com/pagopa/io-app/commit/53bf602afe9fcdeb7dfc6d69ff2529f2ae3848b1))
+
+
+### Bug Fixes
+
+* [[IOPID-1834](https://pagopa.atlassian.net/browse/IOPID-1834)] Fix IdP selection scrolling on older Android devices. ([#5747](https://github.com/pagopa/io-app/issues/5747)) ([465b437](https://github.com/pagopa/io-app/commit/465b43731136f39ce2639ed25759576a0684ed2b))
+* **Cross:** [[IOAPPX-290](https://pagopa.atlassian.net/browse/IOAPPX-290)] Fix `detox` iOS 17 regression ([#5742](https://github.com/pagopa/io-app/issues/5742)) ([b5010ac](https://github.com/pagopa/io-app/commit/b5010ace1062441338fd39cef8df8bfe32570859))
+* [[IOBP-554](https://pagopa.atlassian.net/browse/IOBP-554)] Removed A11y override into transaction operation details ([#5730](https://github.com/pagopa/io-app/issues/5730)) ([dea6937](https://github.com/pagopa/io-app/commit/dea6937e651ee9b346451e6f50b4d4bd78acc134))
+* [[IOPID-1810](https://pagopa.atlassian.net/browse/IOPID-1810)] Email validation edge case on onboarding flow ([#5726](https://github.com/pagopa/io-app/issues/5726)) ([1f75cd9](https://github.com/pagopa/io-app/commit/1f75cd96f3f7f3fee68e47c29a8a464be5013f27))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1089](https://pagopa.atlassian.net/browse/SIW-1089)] Add NFC enable state check saga ([#5745](https://github.com/pagopa/io-app/issues/5745)) ([3ab6f47](https://github.com/pagopa/io-app/commit/3ab6f471e7b8b943932aad785d3d9684b9c1caba))
+* [[IOBP-629](https://pagopa.atlassian.net/browse/IOBP-629)] Add onboarding payment method when not found any ([#5722](https://github.com/pagopa/io-app/issues/5722)) ([f1274f7](https://github.com/pagopa/io-app/commit/f1274f7fa2240a310cfd1d1745714fbc72923be0)), closes [/github.com/pagopa/io-app/compare/master...IOBP-629-add-payment-method-when-not-found-any#diff-9856420745ec55e65f6a52dd2ffc690d46822ac462925108abc93f6a928c4874](https://github.com/pagopa//github.com/pagopa/io-app/compare/master...IOBP-629-add-payment-method-when-not-found-any/issues/diff-9856420745ec55e65f6a52dd2ffc690d46822ac462925108abc93f6a928c4874) [/github.com/pagopa/io-app/compare/master...IOBP-629-add-payment-method-when-not-found-any#diff-08aa31e861c2cc684eaec44fc714e461c252a9bb06f9d7971429bbdf756af92](https://github.com/pagopa//github.com/pagopa/io-app/compare/master...IOBP-629-add-payment-method-when-not-found-any/issues/diff-08aa31e861c2cc684eaec44fc714e461c252a9bb06f9d7971429bbdf756af92)
+* [[IOPAE-1104](https://pagopa.atlassian.net/browse/IOPAE-1104)] Featured Items: actions, reducer, selectors and saga ([#5736](https://github.com/pagopa/io-app/issues/5736)) ([63144e7](https://github.com/pagopa/io-app/commit/63144e744968c5e33a02d9af08216058ff1e648c))
+* [[IOPAE-1119](https://pagopa.atlassian.net/browse/IOPAE-1119)] Institution's services: actions, reducer, selectors and saga ([#5731](https://github.com/pagopa/io-app/issues/5731)) ([1844255](https://github.com/pagopa/io-app/commit/1844255ec7d6b9122ed2c2e52ffd3462775a2c48))
+* [[IOPAE-1120](https://pagopa.atlassian.net/browse/IOPAE-1120)] Add Institution Services screen ([#5739](https://github.com/pagopa/io-app/issues/5739)) ([e101c54](https://github.com/pagopa/io-app/commit/e101c54b2f9d81c401bb821a1f629d6c5fd1f661))
+* [[IOPAE-1126](https://pagopa.atlassian.net/browse/IOPAE-1126)] Add failure state to InstitutionServicesScreen ([#5744](https://github.com/pagopa/io-app/issues/5744)) ([2f24bba](https://github.com/pagopa/io-app/commit/2f24bbaaf22ecf6b86e5d9810cdd33f2d814e106))
+* [[IOPID-1743](https://pagopa.atlassian.net/browse/IOPID-1743)] Change CDN urls ([#5719](https://github.com/pagopa/io-app/issues/5719)) ([110d548](https://github.com/pagopa/io-app/commit/110d5489b381a746e22d4f9e7cb8b46f0bbef80b))
+* [[IOPID-1828](https://pagopa.atlassian.net/browse/IOPID-1828)] Update DS version and idp list fallback ([#5741](https://github.com/pagopa/io-app/issues/5741)) ([e92e650](https://github.com/pagopa/io-app/commit/e92e650407c82c5027e629a2a04ea4f975377d52))
+* [[PE-562](https://pagopa.atlassian.net/browse/PE-562)] Refactor bonus information screen to use new DS components ([#5617](https://github.com/pagopa/io-app/issues/5617)) ([8cbc9e1](https://github.com/pagopa/io-app/commit/8cbc9e10c73e98e1a6bf182f390d7184cb93a5d6)), closes [pagopa/io-services-metadata#771](https://github.com/pagopa/io-services-metadata/issues/771) [pagopa/io-dev-api-server#357](https://github.com/pagopa/io-dev-api-server/issues/357) [pagopa/io-dev-api-server#357](https://github.com/pagopa/io-dev-api-server/issues/357)
+
 ## [2.59.0-rc.2](https://github.com/pagopa/io-app/compare/2.59.0-rc.1...2.59.0-rc.2) (2024-04-30)
 
 
