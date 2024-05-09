@@ -2,9 +2,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Badge,
   Body,
+  Divider,
   H6,
+  IOListItemVisualParams,
   IOStyles,
   IOToast,
+  Icon,
   ListItemAction,
   ListItemNav
 } from "@pagopa/io-app-design-system";
@@ -76,29 +79,42 @@ export const CgnMerchantCategoriesListScreen = () => {
       O.fold(
         () => null,
         s => (
-          <ListItemNav
-            key={i}
-            value={
-              countAvailable ? (
+          <>
+            <ListItemNav
+              key={i}
+              value={
                 <View style={IOStyles.rowSpaceBetween}>
                   <H6>{I18n.t(s.nameKey)}</H6>
-                  <Badge text={`${category.newDiscounts}`} variant="purple" />
+                  <View style={IOStyles.rowSpaceBetween}>
+                    {countAvailable && (
+                      <Badge
+                        text={`${category.newDiscounts}`}
+                        variant="purple"
+                      />
+                    )}
+                    <Icon
+                      name="chevronRightListItem"
+                      color="blueIO-500"
+                      size={IOListItemVisualParams.chevronSize}
+                    />
+                  </View>
                 </View>
-              ) : (
-                I18n.t(s.nameKey)
-              )
-            }
-            accessibilityLabel={I18n.t(s.nameKey)}
-            onPress={() => {
-              navigation.navigate(
-                CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                {
-                  category: s.type
-                }
-              );
-            }}
-            icon={s.icon}
-          />
+              }
+              hideChevron
+              accessibilityLabel={I18n.t(s.nameKey)}
+              onPress={() => {
+                navigation.navigate(
+                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
+                  {
+                    category: s.type
+                  }
+                );
+              }}
+              iconColor="grey-300"
+              icon={s.icon}
+            />
+            {i !== categoriesToArray.length - 1 && <Divider />}
+          </>
         )
       )
     );
