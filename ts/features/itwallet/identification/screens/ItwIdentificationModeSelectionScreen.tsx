@@ -12,19 +12,17 @@ import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenW
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isCieSupportedSelector,
-  isNfcEnabledSelector
-} from "../../../../store/reducers/cie";
+import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwNfcIsEnabled } from "../store/actions";
+import { itwIsNfcEnabledSelector } from "../store/selectors";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
-  const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
+  const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
 
   useFocusEffect(
     React.useCallback(() => {
