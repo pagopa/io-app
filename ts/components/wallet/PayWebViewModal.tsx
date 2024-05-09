@@ -202,6 +202,7 @@ export const PayWebViewModal = (props: Props) => {
               crateAutoPostForm(props.formData, props.postUri) +
               injectedJSPostForm
           }}
+          nestedScrollEnabled={true}
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
