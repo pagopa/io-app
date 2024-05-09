@@ -18,14 +18,9 @@ import {
   setNativeExceptionHandler
 } from "react-native-exception-handler";
 
-import * as Sentry from "@sentry/react-native";
 import { App } from "./ts/App";
 import { mixpanel } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
-
-Sentry.init({
-  dsn: "https://43b87dcfc91f9cfdfaf71b254eb8f58e@o4507197393469440.ingest.de.sentry.io/4507221483585616"
-});
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {

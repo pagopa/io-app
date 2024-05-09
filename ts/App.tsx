@@ -11,10 +11,38 @@ import { MenuProvider } from "react-native-popup-menu";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import * as Sentry from "@sentry/react-native";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import theme from "./theme";
+import { sentryDsn } from "./config";
+import { isLocalEnv } from "./utils/environment";
+
+const removeUserFromEvent = (event: any) => {
+  // console.log(JSON.stringify(event));
+  // Modify or drop the event here
+  if (event.user) {
+    // Don't send user's email address
+    return { ...event, user: undefined };
+    // delete event.user;
+  }
+  return event;
+};
+Sentry.init({
+  dsn: sentryDsn,
+  beforeSend(event) {
+    return removeUserFromEvent(event);
+  },
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  beforeSendTransaction(event) {
+    return removeUserFromEvent(event);
+  },
+  enabled: !isLocalEnv,
+  sampleRate: 0.3
+});
+
+Sentry.setUser(null);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;
