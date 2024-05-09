@@ -46,19 +46,25 @@ export const ItwIdentificationNfcInstructionsScreen = () => {
           label={I18n.t("features.itWallet.identification.nfc.header")}
         />
         <ListItemInfo
-          label={"Step 1"}
+          label={I18n.t("features.itWallet.identification.nfc.steps.label", {
+            value: 1
+          })}
           value={I18n.t("features.itWallet.identification.nfc.steps.1")}
           icon="systemSettingsAndroid"
         />
         <Divider />
         <ListItemInfo
-          label={`Step 2`}
+          label={I18n.t("features.itWallet.identification.nfc.steps.label", {
+            value: 2
+          })}
           value={I18n.t("features.itWallet.identification.nfc.steps.2")}
           icon="systemAppsAndroid"
         />
         <Divider />
         <ListItemInfo
-          label={"Step 3"}
+          label={I18n.t("features.itWallet.identification.nfc.steps.label", {
+            value: 3
+          })}
           value={I18n.t("features.itWallet.identification.nfc.steps.3")}
           icon="systemToggleInstructions"
         />

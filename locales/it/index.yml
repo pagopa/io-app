@@ -3042,6 +3042,7 @@ features:
         description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
         header: "Ecco come:"
         steps:
+          label: Step {{value}}
           1: Vai alle impostazioni
           2: Cerca "NFC"
           3: Attivalo
