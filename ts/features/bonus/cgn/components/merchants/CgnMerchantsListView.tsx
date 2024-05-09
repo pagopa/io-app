@@ -1,13 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import {
-  Badge,
-  Divider,
-  H6,
-  IOListItemVisualParams,
-  Icon,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
+import { Badge, Divider, H6, ListItemNav } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
@@ -26,25 +19,17 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => (
       <React.Fragment key={index}>
         <ListItemNav
           onPress={() => props.onItemPress(merchant.id)}
-          hideChevron
           value={
             <View style={IOStyles.rowSpaceBetween}>
               <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{merchant.name}</H6>
-              <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-                {merchant.newDiscounts && (
-                  <View>
-                    <Badge
-                      variant="purple"
-                      text={I18n.t("bonus.cgn.merchantsList.news")}
-                    />
-                  </View>
-                )}
-                <Icon
-                  name="chevronRightListItem"
-                  color="blueIO-500"
-                  size={IOListItemVisualParams.chevronSize}
-                />
-              </View>
+              {merchant.newDiscounts && (
+                <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+                  <Badge
+                    variant="purple"
+                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                  />
+                </View>
+              )}
             </View>
           }
           accessibilityLabel={merchant.name}

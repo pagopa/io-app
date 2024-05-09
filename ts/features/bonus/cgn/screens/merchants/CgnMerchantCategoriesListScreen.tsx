@@ -4,10 +4,8 @@ import {
   Body,
   Divider,
   H6,
-  IOListItemVisualParams,
   IOStyles,
   IOToast,
-  Icon,
   ListItemAction,
   ListItemNav
 } from "@pagopa/io-app-design-system";
@@ -83,24 +81,15 @@ export const CgnMerchantCategoriesListScreen = () => {
             <ListItemNav
               key={i}
               value={
-                <View style={IOStyles.rowSpaceBetween}>
-                  <H6>{I18n.t(s.nameKey)}</H6>
+                countAvailable ? (
                   <View style={IOStyles.rowSpaceBetween}>
-                    {countAvailable && (
-                      <Badge
-                        text={`${category.newDiscounts}`}
-                        variant="purple"
-                      />
-                    )}
-                    <Icon
-                      name="chevronRightListItem"
-                      color="blueIO-500"
-                      size={IOListItemVisualParams.chevronSize}
-                    />
+                    <H6>{I18n.t(s.nameKey)}</H6>
+                    <Badge text={`${category.newDiscounts}`} variant="purple" />
                   </View>
-                </View>
+                ) : (
+                  I18n.t(s.nameKey)
+                )
               }
-              hideChevron
               accessibilityLabel={I18n.t(s.nameKey)}
               onPress={() => {
                 navigation.navigate(
