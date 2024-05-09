@@ -12,6 +12,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import * as Sentry from "@sentry/react-native";
+import { ErrorEvent, TransactionEvent } from "@sentry/types";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
@@ -19,7 +20,7 @@ import theme from "./theme";
 import { sentryDsn } from "./config";
 import { isLocalEnv } from "./utils/environment";
 
-const removeUserFromEvent = (event: any) => {
+const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   // console.log(JSON.stringify(event));
   // Modify or drop the event here
   if (event.user) {
@@ -29,6 +30,7 @@ const removeUserFromEvent = (event: any) => {
   }
   return event;
 };
+
 Sentry.init({
   dsn: sentryDsn,
   beforeSend(event) {
