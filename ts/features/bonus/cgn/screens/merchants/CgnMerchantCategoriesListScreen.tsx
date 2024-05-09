@@ -77,33 +77,30 @@ export const CgnMerchantCategoriesListScreen = () => {
       O.fold(
         () => null,
         s => (
-          <>
-            <ListItemNav
-              key={i}
-              value={
-                countAvailable ? (
-                  <View style={IOStyles.rowSpaceBetween}>
-                    <H6>{I18n.t(s.nameKey)}</H6>
-                    <Badge text={`${category.newDiscounts}`} variant="purple" />
-                  </View>
-                ) : (
-                  I18n.t(s.nameKey)
-                )
-              }
-              accessibilityLabel={I18n.t(s.nameKey)}
-              onPress={() => {
-                navigation.navigate(
-                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                  {
-                    category: s.type
-                  }
-                );
-              }}
-              iconColor="grey-300"
-              icon={s.icon}
-            />
-            {i !== categoriesToArray.length - 1 && <Divider />}
-          </>
+          <ListItemNav
+            key={i}
+            value={
+              countAvailable ? (
+                <View style={IOStyles.rowSpaceBetween}>
+                  <H6>{I18n.t(s.nameKey)}</H6>
+                  <Badge text={`${category.newDiscounts}`} variant="purple" />
+                </View>
+              ) : (
+                I18n.t(s.nameKey)
+              )
+            }
+            accessibilityLabel={I18n.t(s.nameKey)}
+            onPress={() => {
+              navigation.navigate(
+                CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
+                {
+                  category: s.type
+                }
+              );
+            }}
+            iconColor="grey-300"
+            icon={s.icon}
+          />
         )
       )
     );
@@ -133,6 +130,7 @@ export const CgnMerchantCategoriesListScreen = () => {
             onRefresh={loadCategories}
           />
         }
+        ItemSeparatorComponent={() => <Divider />}
         ListFooterComponent={
           <ListItemAction
             onPress={present}
