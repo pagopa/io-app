@@ -27,7 +27,7 @@ type OperationResultScreenContentProps = WithTestID<{
   subtitle?: string | Array<BodyProps>;
   action?: Pick<
     ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    "label" | "accessibilityLabel" | "onPress" | "testID" | "fullWidth"
   >;
   secondaryAction?: Pick<
     ButtonLinkProps,
@@ -79,7 +79,7 @@ const OperationResultScreenContent = ({
       {action && (
         <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
-          <View>
+          <View style={action.fullWidth ? styles.fullWidth : undefined}>
             <ButtonSolid {...action} />
           </View>
         </View>
@@ -102,6 +102,9 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     marginHorizontal: IOVisualCostants.appMarginDefault
+  },
+  fullWidth: {
+    alignSelf: "stretch"
   },
   wrapper: {
     flex: 1,

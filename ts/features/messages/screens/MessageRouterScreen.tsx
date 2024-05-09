@@ -1,7 +1,13 @@
 import { StackActions } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
+import {
+  ContentWrapper,
+  H4,
+  LoadingSpinner,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -11,7 +17,6 @@ import { MessagesParamsList } from "../navigation/params";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../types";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { trackOpenMessage } from "../analytics";
 import {
   blockedFromPushNotificationSelector,
@@ -27,6 +32,22 @@ import {
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { MESSAGES_ROUTES } from "../navigation/routes";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+
+const styles = StyleSheet.create({
+  loaderContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1
+  },
+  loaderSpinner: {
+    alignSelf: "center"
+  },
+  loaderText: {
+    textAlign: "center"
+  }
+});
 
 export type MessageRouterScreenRouteParams = {
   messageId: UIMessageId;
@@ -46,7 +67,8 @@ export const MessageRouterScreen = (
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFirstRendering = useRef(true);
-  const showSpinner = useIOSelector(showSpinnerFromMessageGetStatusSelector);
+  const safeAreaInsets = useSafeAreaInsets();
+  const isLoading = useIOSelector(showSpinnerFromMessageGetStatusSelector);
   const thirdPartyMessageDetailsError = useIOSelector(
     thirdPartyMessageDetailsErrorSelector
   );
@@ -146,27 +168,55 @@ export const MessageRouterScreen = (
     shouldNavigateBackAfterPushNotificationInteraction
   ]);
 
+  useHeaderSecondLevel({
+    goBack: onCancelCallback,
+    supportRequest: true,
+    title: ""
+  });
+
+  if (isLoading) {
+    return (
+      <View
+        style={[
+          styles.loaderContainer,
+          { paddingBottom: safeAreaInsets.bottom }
+        ]}
+      >
+        <ContentWrapper>
+          <View style={styles.loaderSpinner}>
+            <LoadingSpinner size={48} />
+          </View>
+          <VSpacer size={16} />
+          <H4 style={styles.loaderText}>
+            {I18n.t("messageDetails.loadingText")}
+          </H4>
+        </ContentWrapper>
+      </View>
+    );
+  }
+
   return (
-    <BaseScreenComponent
-      goBack={onCancelCallback}
-      contextualHelp={emptyContextualHelp}
-    >
-      <LoadingErrorComponent
-        errorText={
-          thirdPartyMessageDetailsError
-            ? I18n.t("messageDetails.remoteContentError.title")
-            : I18n.t("global.genericError")
-        }
-        errorSubText={
-          thirdPartyMessageDetailsError
-            ? I18n.t("messageDetails.remoteContentError.body")
-            : undefined
-        }
-        isLoading={showSpinner}
-        loadingCaption={I18n.t("messageDetails.loadingText")}
-        onAbort={onCancelCallback}
-        onRetry={getMessageDataCallback}
-      />
-    </BaseScreenComponent>
+    <OperationResultScreenContent
+      action={{
+        fullWidth: true,
+        label: I18n.t("global.buttons.retry"),
+        onPress: getMessageDataCallback
+      }}
+      pictogram="umbrellaNew"
+      secondaryAction={{
+        label: I18n.t("global.buttons.cancel"),
+        onPress: onCancelCallback
+      }}
+      subtitle={
+        thirdPartyMessageDetailsError
+          ? I18n.t("messageDetails.remoteContentError.body")
+          : undefined
+      }
+      title={
+        thirdPartyMessageDetailsError
+          ? I18n.t("messageDetails.remoteContentError.title")
+          : I18n.t("global.genericError")
+      }
+    />
   );
 };

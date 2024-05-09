@@ -29,6 +29,16 @@ describe("OperationResultScreenContent", () => {
   it("should match the snapshot with default props", () => {
     expect(renderComponent(defaultProps)).toMatchSnapshot();
   });
+  it("should match the snapshot with default props but full width action", () => {
+    const fullWidthProps = {
+      ...defaultProps,
+      action: {
+        ...defaultProps.action,
+        fullWidth: true
+      }
+    } as OperationResultScreenContentProps;
+    expect(renderComponent(fullWidthProps)).toMatchSnapshot();
+  });
 });
 
 function renderComponent(
