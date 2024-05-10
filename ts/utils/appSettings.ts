@@ -3,7 +3,7 @@ import AndroidOpenSettings from "react-native-android-open-settings";
 
 export const openSettings = () => {
   if (Platform.OS === "ios") {
-    Linking.openURL("app-settings:").catch(_ => undefined);
+    Linking.openURL("App-prefs:root=General").catch(_ => undefined);
   } else {
     AndroidOpenSettings.generalSettings();
   }
