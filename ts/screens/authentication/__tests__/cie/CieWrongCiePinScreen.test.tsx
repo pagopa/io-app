@@ -6,12 +6,17 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import CieWrongCiePinScreen from "../../cie/CieWrongCiePinScreen";
 
+const closeLabel = I18n.t("global.buttons.close");
+const retryLabel = I18n.t("global.buttons.retry");
+
 type Test = {
   remainingCount: number;
   title: string;
   subtitle: string;
   actionLabel: string;
+  actionTestID: string;
   secondaryActionLabel: string;
+  secondaryActionTestID: string;
 };
 
 const tests = Array<Test>(
@@ -19,26 +24,36 @@ const tests = Array<Test>(
     remainingCount: 2,
     title: I18n.t("authentication.cie.pin.incorrectCiePinTitle1"),
     subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent1"),
-    actionLabel: I18n.t("global.buttons.retry"),
-    secondaryActionLabel: I18n.t("global.buttons.close")
+    actionLabel: retryLabel,
+    actionTestID: `message-action-${retryLabel}`,
+    secondaryActionLabel: closeLabel,
+    secondaryActionTestID: `message-action-${closeLabel}`
   },
   {
     remainingCount: 1,
     title: I18n.t("authentication.cie.pin.incorrectCiePinTitle2"),
     subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent2"),
-    actionLabel: I18n.t("global.buttons.retry"),
+    actionLabel: retryLabel,
+    actionTestID: `message-action-${retryLabel}`,
     secondaryActionLabel: I18n.t(
       "authentication.cie.pin.incorrectCiePinSecondaryActionLabel2"
-    )
+    ),
+    secondaryActionTestID: `message-action-${I18n.t(
+      "authentication.cie.pin.incorrectCiePinSecondaryActionLabel2"
+    )}`
   },
   {
     remainingCount: 0,
     title: I18n.t("authentication.cie.pin.lockedCiePinTitle"),
     subtitle: I18n.t("authentication.cie.pin.lockedCiePinContent"),
-    actionLabel: I18n.t("global.buttons.close"),
+    actionLabel: closeLabel,
+    actionTestID: `message-action-${closeLabel}`,
     secondaryActionLabel: I18n.t(
       "authentication.cie.pin.lockedSecondaryActionLabel"
-    )
+    ),
+    secondaryActionTestID: `message-action-${I18n.t(
+      "authentication.cie.pin.lockedSecondaryActionLabel"
+    )}`
   }
 );
 
@@ -46,8 +61,10 @@ const useCaseThatShouldNotHappen: Test = {
   remainingCount: -1,
   title: I18n.t("global.genericError"),
   subtitle: "-1",
-  actionLabel: I18n.t("global.buttons.retry"),
-  secondaryActionLabel: I18n.t("global.buttons.close")
+  actionLabel: retryLabel,
+  actionTestID: `message-action-${retryLabel}`,
+  secondaryActionLabel: closeLabel,
+  secondaryActionTestID: `message-action-${closeLabel}`
 };
 
 describe("CieWrongCiePinScreen", () => {
@@ -59,6 +76,8 @@ describe("CieWrongCiePinScreen", () => {
       expect(component.getByText(test.subtitle)).toBeDefined();
       expect(component.getByText(test.actionLabel)).toBeDefined();
       expect(component.getByText(test.secondaryActionLabel)).toBeDefined();
+      expect(component.getByTestId(test.actionTestID)).toBeDefined();
+      expect(component.getByTestId(test.secondaryActionTestID)).toBeDefined();
     });
   });
   it("it should render the default message, in case of unexpetect values", () => {
