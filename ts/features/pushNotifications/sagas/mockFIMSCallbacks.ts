@@ -99,9 +99,7 @@ const grantsResponse = () =>
   fakeAsyncHttpCall(() => ({
     type: "success",
     status: 200,
-    body: JSON.stringify({
-      grants: ["name", "surname", "email"]
-    }),
+    body: JSON.stringify({ grants: ["name", "surname", "email"] }),
     headers: {
       "confirm-url": ProviderAcceptFirstUrl,
       "deny-url": "TODO :)"

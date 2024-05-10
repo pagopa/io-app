@@ -65,5 +65,6 @@ function* handleFimsGetConsentsList() {
 function* handleFimsGetRedirectUrlAndOpenBrowser(
   action: ActionType<(typeof fimsGetRedirectUrlAndOpenBrowserAction)["request"]>
 ) {
+  console.log(action.payload);
   yield null;
 }
