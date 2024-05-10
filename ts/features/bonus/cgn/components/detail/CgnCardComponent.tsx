@@ -1,91 +1,72 @@
-import { HSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useEffect } from "react";
-import { Image, ImageBackground, StyleSheet, View } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import WebView from "react-native-webview";
-import { connect } from "react-redux";
-import { Card } from "../../../../../../definitions/cgn/Card";
-import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
-import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
-import eycaLogo from "../../../../../../img/bonus/cgn/eyca_logo.png";
-import { H3 } from "../../../../../components/core/typography/H3";
+import { View, ImageBackground, StyleSheet } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
+import {
+  Avatar,
+  H6,
+  LabelSmall,
+  Tag,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { Card } from "../../../../../../definitions/cgn/Card";
+import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
+import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
+import eycaLogo from "../../../../../../img/bonus/cgn/eyca_logo.png";
 import { eycaDetailSelector } from "../../store/reducers/eyca/details";
 import { canEycaCardBeShown } from "../../utils/eyca";
+import { useIOSelector } from "../../../../../store/hooks";
+import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
+import { formatDateAsShortFormat } from "../../../../../utils/dates";
+import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
+import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
 import { Point, generateRandomSvgMovement } from "../../utils/svgBackground";
 import { playSvg } from "./CardSvgPayload";
-import DepartmentLabel from "./DepartmentLabel";
 
 type Props = {
   cgnDetails: Card;
   onCardLoadEnd: () => void;
-} & ReturnType<typeof mapStateToProps>;
+};
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: "100%",
-    width: widthPercentageToDP(90),
-    maxWidth: 340
+    height: 215,
+    width: widthPercentageToDP(91.5)
   },
   cgnCard: {
     position: "absolute",
     alignSelf: "center",
-    width: widthPercentageToDP(90),
-    maxWidth: 340,
-    height: 192,
-    top: 2
+    height: 205,
+    top: 120
   },
   informationContainer: {
     width: widthPercentageToDP(90),
     maxWidth: 340,
     height: "100%",
-    top: -190,
-    zIndex: 9,
+    top: -205,
+    zIndex: 2,
     elevation: 9
   },
   spaced: {
     justifyContent: "space-between"
   },
-  flex1: {
-    flex: 1
-  },
-  flex2: {
-    flex: 2
-  },
   paddedContentFull: {
     paddingLeft: 16,
-    paddingTop: 24,
-    paddingRight: 20,
+    paddingTop: 8,
     paddingBottom: 16
-  },
-  column: {
-    flexDirection: "column"
-  },
-  fullLogo: {
-    resizeMode: "contain",
-    height: 56,
-    width: 56,
-    alignSelf: "flex-end"
-  },
-  eycaLogo: {
-    resizeMode: "contain",
-    height: 70,
-    width: 44,
-    alignSelf: "flex-end",
-    marginRight: 10
   },
   imageFull: {
     resizeMode: "stretch",
     height: 215,
     width: widthPercentageToDP(95),
     maxWidth: 360,
-    top: -5,
-    left: -10,
-    zIndex: 8
+    zIndex: 1
+  },
+  alignCenter: {
+    alignItems: "center"
   }
 });
 
@@ -118,7 +99,9 @@ const maxPointC: Point = {
 
 const MOVEMENT_STEPS = 12;
 
-const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
+const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
+  const eycaDetails = useIOSelector(eycaDetailSelector);
+
   const generatedTranslationA = generateRandomSvgMovement(
     MOVEMENT_STEPS,
     minPointA,
@@ -141,9 +124,11 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
     generatedTranslationC
   );
 
-  const canDisplayEycaLogo = canEycaCardBeShown(props.eycaDetails);
+  const canCgnLogoBeShown = CardActivated.is(cgnDetails);
+  const canDisplayEycaLogo =
+    canCgnLogoBeShown && canEycaCardBeShown(eycaDetails);
 
-  useEffect(() => () => props.onCardLoadEnd(), []);
+  useEffect(() => () => onCardLoadEnd(), [onCardLoadEnd]);
 
   return (
     <View style={styles.cgnCard} testID={"card-component"}>
@@ -156,56 +141,55 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           testID={"background-webview"}
-          onLoadEnd={props.onCardLoadEnd}
+          onLoadEnd={onCardLoadEnd}
           source={{
             html: generatedSvg
           }}
         />
       </ImageBackground>
       <View style={[styles.informationContainer, styles.paddedContentFull]}>
-        <View
-          style={[
-            IOStyles.row,
-            IOStyles.flex,
-            { justifyContent: "space-between" }
-          ]}
-        >
-          <View style={[styles.column, styles.flex2, styles.spaced]}>
-            <View>
-              <H3 weight={"Bold"} color={"black"}>
-                {I18n.t("bonus.cgn.name")}
-              </H3>
-              <DepartmentLabel>
-                {I18n.t("bonus.cgn.departmentName")}
-              </DepartmentLabel>
-            </View>
-            <View>
-              {props.currentProfile && (
-                <H3
-                  weight={"Bold"}
-                  color={"black"}
-                  testID={"profile-name-surname"}
-                >
-                  {props.currentProfile}
-                </H3>
-              )}
-            </View>
-          </View>
-          <View style={[styles.column, styles.flex1, styles.spaced]}>
-            {canDisplayEycaLogo ? (
-              <Image
-                accessibilityIgnoresInvertColors
-                source={eycaLogo}
-                style={styles.eycaLogo}
+        <View style={[IOStyles.flex, styles.spaced]}>
+          <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
+            <H6 color={"blueIO-850"}>{I18n.t("bonus.cgn.name")}</H6>
+            {canCgnLogoBeShown && <Avatar logoUri={cgnLogo} size="small" />}
+            {CardRevoked.is(cgnDetails) && (
+              <Tag
+                testID="card-status-revoked"
+                variant="error"
+                text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
               />
-            ) : (
-              <HSpacer size={16} />
             )}
-            <Image
-              accessibilityIgnoresInvertColors
-              source={cgnLogo}
-              style={styles.fullLogo}
-            />
+            {CardExpired.is(cgnDetails) && (
+              <Tag
+                testID="card-status-expired"
+                variant="error"
+                text={I18n.t("bonus.cgn.detail.status.badge.expired")}
+              />
+            )}
+          </View>
+          <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
+            <LabelSmall style={{ flex: 2 }} color="blueIO-850">
+              {I18n.t("bonus.cgn.departmentName")}
+            </LabelSmall>
+            <View style={{ flex: 1 }} />
+          </View>
+          <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
+            {CardActivated.is(cgnDetails) && (
+              <LabelSmall
+                color={"blueIO-850"}
+                style={IOStyles.flex}
+                testID={"card-bottom-content"}
+              >
+                {I18n.t("bonus.cgn.detail.status.date.valid_until", {
+                  date: formatDateAsShortFormat(cgnDetails.expiration_date)
+                })}
+              </LabelSmall>
+            )}
+            {canDisplayEycaLogo ? (
+              <Avatar logoUri={eycaLogo} size="small" />
+            ) : (
+              <VSpacer size={40} />
+            )}
           </View>
         </View>
       </View>
@@ -213,9 +197,4 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  currentProfile: profileNameSurnameSelector(state),
-  eycaDetails: eycaDetailSelector(state)
-});
-
-export default connect(mapStateToProps)(CgnCardComponent);
+export default CgnCardComponent;
