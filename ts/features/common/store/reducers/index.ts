@@ -39,6 +39,7 @@ import walletReducer, { WalletState } from "../../../newWallet/store/reducers";
 import servicesReducer, {
   ServicesState
 } from "../../../services/common/store/reducers";
+import fimsReducer, { FimsState } from "../../../fims/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -57,6 +58,7 @@ export type FeaturesState = {
   payments: PaymentsState;
   services: ServicesState;
   wallet: WalletState;
+  fims: FimsState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -75,7 +77,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginReducer
   }),
-  wallet: walletReducer
+  wallet: walletReducer,
+  fims: fimsReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

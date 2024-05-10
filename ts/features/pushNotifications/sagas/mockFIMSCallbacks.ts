@@ -57,12 +57,19 @@ type FakeCookie = {
   name: string;
   value: string;
 };
+const removeTrailingSlash = (str: string) =>
+  str.endsWith("/") ? str.slice(0, -1) : str;
 const fakeCookieStorage = new Map<string, FakeCookie>();
 export const mockSetNativeCookie = (
   domain: string,
   name: string,
   value: string
-) => fakeCookieStorage.set(`${domain}_${name}`, { domain, name, value });
+) =>
+  fakeCookieStorage.set(`${removeTrailingSlash(domain)}_${name}`, {
+    domain,
+    name,
+    value
+  });
 export const mockClearNativeCookie = (domain: string, name: string) =>
   fakeCookieStorage.delete(`${domain}_${name}`);
 export const mockClearAllCookies = () => fakeCookieStorage.clear();
