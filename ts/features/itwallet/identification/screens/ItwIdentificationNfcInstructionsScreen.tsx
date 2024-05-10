@@ -5,17 +5,17 @@ import {
   ListItemInfo
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Linking } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { openSettings } from "../../../../utils/appSettings";
 import { FooterStackButton } from "../../common/components/FooterStackButton";
 
 export const ItwIdentificationNfcInstructionsScreen = () => {
   const navigation = useIONavigation();
 
   const handleOpenSettingsPress = async () => {
-    await Linking.openSettings();
+    openSettings();
   };
 
   const handleClosePress = () => {
