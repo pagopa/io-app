@@ -3,6 +3,8 @@ import {
   ContentWrapper,
   FooterWithButtons,
   IOColors,
+  TextInputPassword,
+  TextInputValidation,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -14,7 +16,6 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
-import { LabelledItem } from "../../components/LabelledItem";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -100,10 +101,7 @@ const isConfirmButtonDisabled = (
 ) => password.length === 0 || !checkUsernameValid(username) || isLoading;
 
 const isUsernameFieldValid = (username: string) =>
-  username.length > 0 ? checkUsernameValid(username) : undefined;
-
-const isPasswordFieldValid = (password: string) =>
-  password.length > 0 ? true : undefined;
+  username.length > 0 ? checkUsernameValid(username) : false;
 
 const TestAuthenticationScreen = (props: Props) => {
   const [username, setUsername] = React.useState("");
@@ -123,33 +121,31 @@ const TestAuthenticationScreen = (props: Props) => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <ContentWrapper>
-            <LabelledItem
-              label={I18n.t("global.username")}
-              icon="profile"
-              isValid={isUsernameFieldValid(username)}
-              inputProps={{
-                disabled: isLoading,
-                value: username,
-                placeholder: I18n.t("global.username"),
-                returnKeyType: "done",
-                onChangeText: setUsername
-              }}
+            <TextInputValidation
+              placeholder={I18n.t("global.username")}
+              value={username}
+              onChangeText={setUsername}
               testID={"username"}
+              icon="profile"
+              onValidate={isUsernameFieldValid}
+              disabled={isLoading}
+              textInputProps={{
+                inputMode: "text",
+                returnKeyType: "done"
+              }}
             />
             <VSpacer size={16} />
-            <LabelledItem
-              label={I18n.t("global.password")}
-              icon="locked"
-              isValid={isPasswordFieldValid(password)}
-              inputProps={{
-                disabled: isLoading,
-                value: password,
-                placeholder: I18n.t("global.password"),
-                returnKeyType: "done",
-                secureTextEntry: true,
-                onChangeText: setPassword
-              }}
+            <TextInputPassword
+              placeholder={I18n.t("global.password")}
+              value={password}
+              onChangeText={setPassword}
               testID={"password"}
+              icon="locked"
+              disabled={isLoading}
+              textInputProps={{
+                inputMode: "password",
+                returnKeyType: "done"
+              }}
             />
             <VSpacer size={16} />
             <VersionView />
