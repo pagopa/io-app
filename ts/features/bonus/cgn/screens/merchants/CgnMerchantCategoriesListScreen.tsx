@@ -25,12 +25,16 @@ import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { cgnCategories } from "../../store/actions/categories";
 import CGN_ROUTES from "../../navigation/routes";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { isDesignSystemEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const insets = useSafeAreaInsets();
   const isFirstRender = React.useRef<boolean>(true);
   const dispatch = useIODispatch();
   const potCategories = useIOSelector(cgnCategoriesListSelector);
+
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
   const navigation =
     useNavigation<
       IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
@@ -132,16 +136,18 @@ export const CgnMerchantCategoriesListScreen = () => {
         }
         ItemSeparatorComponent={() => <Divider />}
         ListFooterComponent={
-          <ListItemAction
-            onPress={present}
-            accessibilityLabel={I18n.t(
-              "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-            )}
-            label={I18n.t(
-              "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-            )}
-            variant="primary"
-          />
+          isDesignSystemEnabled ? (
+            <ListItemAction
+              onPress={present}
+              accessibilityLabel={I18n.t(
+                "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+              )}
+              label={I18n.t(
+                "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+              )}
+              variant="primary"
+            />
+          ) : null
         }
       />
     </>
