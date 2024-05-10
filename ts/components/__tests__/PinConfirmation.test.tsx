@@ -10,8 +10,20 @@ import { TestInnerNavigationContainer } from "../../navigation/AppStackNavigator
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import ROUTES from "../../navigation/routes";
+import I18n from "../../i18n";
 
 const mockGoBack = jest.fn();
+
+const alertParams = [
+  I18n.t("onboarding.pinConfirmation.errors.match.title"),
+  undefined,
+  [
+    {
+      text: I18n.t("onboarding.pinConfirmation.errors.match.cta"),
+      onPress: mockGoBack
+    }
+  ]
+];
 
 jest.mock("@react-navigation/native", () => ({
   ...(jest.requireActual("@react-navigation/native") as object),
@@ -58,16 +70,7 @@ describe("PinConfirmation", () => {
     fireEvent.changeText(codeInput, "000000");
 
     expect(onSubmit).toHaveBeenCalledTimes(0);
-    expect(Alert.alert).toHaveBeenCalledWith(
-      "I codici inseriti non corrispondono",
-      undefined,
-      [
-        {
-          text: "Riprova",
-          onPress: mockGoBack
-        }
-      ]
-    );
+    expect(Alert.alert).toHaveBeenCalledWith(...alertParams);
   });
   it("Should display the Alert on pin mismatch", () => {
     const { getByTestId } = render(<TestComponent isOnboarding />);
@@ -76,16 +79,7 @@ describe("PinConfirmation", () => {
     fireEvent.changeText(codeInput, "000000");
 
     expect(onSubmit).toHaveBeenCalledTimes(0);
-    expect(Alert.alert).toHaveBeenCalledWith(
-      "I codici inseriti non corrispondono",
-      undefined,
-      [
-        {
-          text: "Riprova",
-          onPress: mockGoBack
-        }
-      ]
-    );
+    expect(Alert.alert).toHaveBeenCalledWith(...alertParams);
   });
 });
 

@@ -11,8 +11,10 @@ import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import ROUTES from "../../navigation/routes";
 import { PinCreation } from "../PinCreation";
+import I18n from "../../i18n";
 
 const mockedNavigate = jest.fn();
+
 jest.spyOn(Alert, "alert");
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -58,9 +60,13 @@ describe("PinCreation", () => {
 
     expect(mockedNavigate).not.toHaveBeenCalled();
     expect(Alert.alert).toHaveBeenLastCalledWith(
-      "Il codice non rispetta i criteri di sicurezza",
-      "Non deve contenere ripetizione di numeri (es. 000000) e numeri in sequenza (es. 123456 o 654321).",
-      [{ text: "Scegli un altro codice" }]
+      I18n.t("onboarding.pin.errors.invalid.title"),
+      I18n.t("onboarding.pin.errors.invalid.description"),
+      [
+        {
+          text: I18n.t("onboarding.pin.errors.invalid.cta")
+        }
+      ]
     );
   });
   it("Should navigate to Onboarding > ONBOARDIN_CONFIRMATION_PIN", () => {

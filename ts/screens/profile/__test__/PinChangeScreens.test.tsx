@@ -10,6 +10,7 @@ import ROUTES from "../../../navigation/routes";
 import { TestInnerNavigationContainer } from "../../../navigation/AppStackNavigator";
 import PinScreen from "../PinScreen";
 import PinConfirmationScreen from "../PinConfirmationScreen";
+import I18n from "../../../i18n";
 
 const mockedGoBack = jest.fn();
 jest.spyOn(Alert, "alert");
@@ -37,7 +38,7 @@ describe("PinChangeScreens", () => {
 
     const title = getByTestId(/pin-confirmation-title/);
 
-    expect(title).toHaveTextContent("Conferma il codice di sblocco");
+    expect(title).toHaveTextContent(I18n.t("onboarding.pinConfirmation.title"));
   });
   it("Should display the native Alert", () => {
     const { getByTestId } = render(renderComponent());
@@ -47,9 +48,13 @@ describe("PinChangeScreens", () => {
     fireEvent.changeText(codeInput, "111111");
 
     expect(Alert.alert).toHaveBeenCalledWith(
-      "Il codice non rispetta i criteri di sicurezza",
-      "Non deve contenere ripetizione di numeri (es. 000000) e numeri in sequenza (es. 123456 o 654321).",
-      [{ text: "Scegli un altro codice" }]
+      I18n.t("onboarding.pin.errors.invalid.title"),
+      I18n.t("onboarding.pin.errors.invalid.description"),
+      [
+        {
+          text: I18n.t("onboarding.pin.errors.invalid.cta")
+        }
+      ]
     );
   });
   it("Should display the alert on pin mismatch", () => {
@@ -66,11 +71,11 @@ describe("PinChangeScreens", () => {
     fireEvent.changeText(confirmationInput, "111111");
 
     expect(Alert.alert).toHaveBeenCalledWith(
-      "I codici inseriti non corrispondono",
+      I18n.t("onboarding.pinConfirmation.errors.match.title"),
       undefined,
       [
         {
-          text: "Riprova",
+          text: I18n.t("onboarding.pinConfirmation.errors.match.cta"),
           onPress: mockedGoBack
         }
       ]
