@@ -73,8 +73,7 @@ const WalletPaymentConfirmScreen = () => {
         const isAllCCP = pipe(
           transaction.payments[0],
           O.fromNullable,
-          O.map(payment => payment.isAllCCP),
-          O.chain(isAllCCP => pipe(isAllCCP, O.fromNullable)),
+          O.chainNullableK(payment => payment.isAllCCP),
           O.getOrElse(() => false)
         );
         startPaymentAuthorizaton({
