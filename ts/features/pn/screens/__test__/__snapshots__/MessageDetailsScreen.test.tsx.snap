@@ -1000,7 +1000,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   style={
                                     Object {
                                       "alignItems": "center",
-                                      "marginLeft": 16,
+                                      "marginLeft": 12,
                                     }
                                   }
                                 >
@@ -1228,7 +1228,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   style={
                                     Object {
                                       "alignItems": "center",
-                                      "marginLeft": 16,
+                                      "marginLeft": 12,
                                     }
                                   }
                                 >
@@ -1572,7 +1572,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <View
                                     style={
                                       Object {
-                                        "marginLeft": 16,
+                                        "marginLeft": 12,
                                       }
                                     }
                                   >
@@ -1705,7 +1705,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <View
                                     style={
                                       Object {
-                                        "marginRight": 16,
+                                        "marginRight": 12,
                                       }
                                     }
                                   >
@@ -1893,7 +1893,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <View
                                     style={
                                       Object {
-                                        "marginRight": 16,
+                                        "marginRight": 12,
                                       }
                                     }
                                   >
@@ -2147,7 +2147,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           <View
                                             style={
                                               Object {
-                                                "marginRight": 16,
+                                                "marginRight": 12,
                                               }
                                             }
                                           >
@@ -2284,7 +2284,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           <View
                                             style={
                                               Object {
-                                                "marginLeft": 16,
+                                                "marginLeft": 12,
                                               }
                                             }
                                           >
@@ -2471,7 +2471,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           <View
                                             style={
                                               Object {
-                                                "marginRight": 16,
+                                                "marginRight": 12,
                                               }
                                             }
                                           >
@@ -2608,7 +2608,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           <View
                                             style={
                                               Object {
-                                                "marginLeft": 16,
+                                                "marginLeft": 12,
                                               }
                                             }
                                           >

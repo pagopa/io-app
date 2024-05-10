@@ -411,7 +411,7 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento su Profilo > Preferenze"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze"
           cta:
             shareData: "Condividi"
             dontShareData: "Non condividere dati"

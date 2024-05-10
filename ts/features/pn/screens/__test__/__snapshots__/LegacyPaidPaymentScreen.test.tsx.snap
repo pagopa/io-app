@@ -939,7 +939,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1963,7 +1963,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2152,7 +2152,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >

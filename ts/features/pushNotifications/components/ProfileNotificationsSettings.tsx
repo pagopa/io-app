@@ -1,6 +1,6 @@
 import {
+  Banner,
   Divider,
-  FeatureInfo,
   ListItemSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -70,9 +70,13 @@ export const ProfileNotificationSettings = ({
       />
       {showSettingsPath && <VSpacer size={40} />}
       {showSettingsPath && (
-        <FeatureInfo
-          iconName="navProfile"
-          body={I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
+        <Banner
+          pictogramName="reactivate"
+          content={I18n.t(
+            "profile.main.privacy.shareData.screen.profileSettings"
+          )}
+          size="small"
+          color="neutral"
         />
       )}
       <VSpacer size={32} />
