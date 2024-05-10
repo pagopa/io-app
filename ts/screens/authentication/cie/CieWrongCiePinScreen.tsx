@@ -58,14 +58,16 @@ const CieWrongCiePinScreen = () => {
     onPress: () => void;
   };
 
+  type Message = {
+    pictogram: IOPictograms;
+    title: string;
+    subtitle: string;
+    action: MessageAction<string>;
+    secondaryAction: MessageAction<string>;
+  };
+
   type Messages = {
-    [key: number]: {
-      pictogram: IOPictograms;
-      title: string;
-      subtitle: string;
-      action: MessageAction<string>;
-      secondaryAction: MessageAction<string>;
-    };
+    [key: number]: Message;
   };
 
   const createMessageAction = React.useCallback(
@@ -137,9 +139,35 @@ const CieWrongCiePinScreen = () => {
     ]
   );
 
+  // This should never happen,
+  // but it's a good practice to have a default message
+  // in case of unexpected values of `remainingCount`.
+  const defaultMessageThatShouldNeverHappen: Message = React.useMemo(
+    () => ({
+      pictogram: "attention",
+      title: I18n.t("global.genericError"),
+      subtitle: `${remainingCount}`,
+      action: createMessageAction({
+        label: I18n.t("global.buttons.retry"),
+        onPress: navigateToCiePinScreen
+      }),
+      secondaryAction: createMessageAction({
+        label: I18n.t("global.buttons.close"),
+        onPress: navigateToAuthenticationScreen
+      })
+    }),
+    [
+      createMessageAction,
+      navigateToAuthenticationScreen,
+      navigateToCiePinScreen,
+      remainingCount
+    ]
+  );
+
   const getMessage = React.useCallback(
-    (key: number) => messages[Math.abs(key) % Object.keys(messages).length],
-    [messages]
+    (key: number) =>
+      key in messages ? messages[key] : defaultMessageThatShouldNeverHappen,
+    [defaultMessageThatShouldNeverHappen, messages]
   );
 
   const { pictogram, title, subtitle, action, secondaryAction } =
