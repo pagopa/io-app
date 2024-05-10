@@ -238,9 +238,9 @@ const SelectedPspModuleCheckout = () => {
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
   const pspList = pot.getOrElse(pspListPot, []);
-  const bundleName = pipe(
+  const pspBusinessName = pipe(
     selectedPspOption,
-    O.chainNullableK(({ bundleName }) => bundleName),
+    O.chainNullableK(({ pspBusinessName }) => pspBusinessName),
     O.getOrElse(() => "")
   );
 
@@ -256,7 +256,7 @@ const SelectedPspModuleCheckout = () => {
         pspList.length > 1 ? I18n.t("payment.confirm.editButton") : undefined
       }
       title={formatNumberCentsToAmount(taxFee, true, "right")}
-      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${bundleName}`}
+      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspBusinessName}`}
       onPress={() =>
         dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP))
       }
