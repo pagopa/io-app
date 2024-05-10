@@ -2533,7 +2533,7 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Scopri le proposte
+      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
       merchantsAll: Tutti gli operatori
       cta:
         filter: Filtra
@@ -2569,7 +2569,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Proposte
+        deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
         contactInfo: Contatti e informazioni
