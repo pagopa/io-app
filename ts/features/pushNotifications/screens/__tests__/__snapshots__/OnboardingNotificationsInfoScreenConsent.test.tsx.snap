@@ -655,7 +655,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 <View
                                   style={
                                     Object {
-                                      "marginRight": 16,
+                                      "marginRight": 12,
                                     }
                                   }
                                 >
@@ -937,7 +937,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 <View
                                   style={
                                     Object {
-                                      "marginRight": 16,
+                                      "marginRight": 12,
                                     }
                                   }
                                 >
@@ -1161,7 +1161,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 <View
                                   style={
                                     Object {
-                                      "marginRight": 16,
+                                      "marginRight": 12,
                                     }
                                   }
                                 >
