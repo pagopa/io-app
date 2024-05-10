@@ -49,6 +49,7 @@ const CieConsentDataUsageRenderComponent = ({
   } else {
     return (
       <WebView
+        testID="webview-cie-test"
         androidCameraAccessDisabled={true}
         androidMicrophoneAccessDisabled={true}
         textZoom={100}
