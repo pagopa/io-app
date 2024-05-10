@@ -70,11 +70,18 @@ const WalletPaymentConfirmScreen = () => {
       O.map(({ paymentDetail, paymentMethodId, selectedPsp, transaction }) => {
         // In case of guest payment walletId could be undefined
         const walletId = O.toUndefined(selectedWalletIdOption);
-
+        const isAllCCP = pipe(
+          transaction.payments[0],
+          O.fromNullable,
+          O.map(payment => payment.isAllCCP),
+          O.chain(isAllCCP => pipe(isAllCCP, O.fromNullable)),
+          O.getOrElse(() => false)
+        );
         startPaymentAuthorizaton({
           paymentAmount: paymentDetail.amount as AmountEuroCents,
           paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
           pspId: selectedPsp.idPsp ?? "",
+          isAllCCP,
           transactionId: transaction.transactionId,
           walletId,
           paymentMethodId
