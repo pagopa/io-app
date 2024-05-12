@@ -14,6 +14,7 @@ import {
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
+import { EIdCard } from "../../itwallet/common/components/EIdCard";
 
 const styles = StyleSheet.create({
   content: {
@@ -244,6 +245,10 @@ export const DSCards = () => (
       <DSComponentViewerBox name="Over 31">
         <CgnCard expireDate={new Date(2023, 11, 2)} />
       </DSComponentViewerBox>
+    </DesignSystemSection>
+
+    <DesignSystemSection title="eID">
+      <EIdCard />
     </DesignSystemSection>
   </DesignSystemScreen>
 );
