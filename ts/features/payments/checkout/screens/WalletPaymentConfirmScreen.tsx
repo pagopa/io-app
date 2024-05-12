@@ -70,11 +70,17 @@ const WalletPaymentConfirmScreen = () => {
       O.map(({ paymentDetail, paymentMethodId, selectedPsp, transaction }) => {
         // In case of guest payment walletId could be undefined
         const walletId = O.toUndefined(selectedWalletIdOption);
-
+        const isAllCCP = pipe(
+          transaction.payments[0],
+          O.fromNullable,
+          O.chainNullableK(payment => payment.isAllCCP),
+          O.getOrElse(() => false)
+        );
         startPaymentAuthorizaton({
           paymentAmount: paymentDetail.amount as AmountEuroCents,
           paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
           pspId: selectedPsp.idPsp ?? "",
+          isAllCCP,
           transactionId: transaction.transactionId,
           walletId,
           paymentMethodId
@@ -232,9 +238,9 @@ const SelectedPspModuleCheckout = () => {
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
   const pspList = pot.getOrElse(pspListPot, []);
-  const bundleName = pipe(
+  const pspBusinessName = pipe(
     selectedPspOption,
-    O.chainNullableK(({ bundleName }) => bundleName),
+    O.chainNullableK(({ pspBusinessName }) => pspBusinessName),
     O.getOrElse(() => "")
   );
 
@@ -250,7 +256,7 @@ const SelectedPspModuleCheckout = () => {
         pspList.length > 1 ? I18n.t("payment.confirm.editButton") : undefined
       }
       title={formatNumberCentsToAmount(taxFee, true, "right")}
-      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${bundleName}`}
+      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspBusinessName}`}
       onPress={() =>
         dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP))
       }

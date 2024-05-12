@@ -2533,7 +2533,7 @@ bonus:
       online: Online
       places: Places
       navigationTitle: Benefits
-      screenTitle: Find the benefits
+      screenTitle: Select an operator and discover benefits and opportunities
       merchantsAll: All the operators
       cta:
         filter: Filter
@@ -2569,7 +2569,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Benefits
+        deals: Deals and opportunities
         description: Description
         services: Services
         contactInfo: Addresses

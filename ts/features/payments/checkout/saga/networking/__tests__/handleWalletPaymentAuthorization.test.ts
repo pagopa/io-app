@@ -20,6 +20,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       paymentAmount: 1234 as AmountEuroCents,
       paymentFees: 123 as AmountEuroCents,
       pspId: "",
+      isAllCCP: false,
       transactionId: "",
       walletId: ""
     };
