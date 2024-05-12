@@ -16,6 +16,7 @@ import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
