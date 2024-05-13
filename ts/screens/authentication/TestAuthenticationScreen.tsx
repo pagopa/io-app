@@ -125,7 +125,7 @@ const TestAuthenticationScreen = (props: Props) => {
               placeholder={I18n.t("global.username")}
               value={username}
               onChangeText={setUsername}
-              testID={"username"}
+              testID={"usernameInput"}
               icon="profile"
               onValidate={isUsernameFieldValid}
               disabled={isLoading}
@@ -139,7 +139,7 @@ const TestAuthenticationScreen = (props: Props) => {
               placeholder={I18n.t("global.password")}
               value={password}
               onChangeText={setPassword}
-              testID={"password"}
+              testID={"passwordInput"}
               icon="locked"
               disabled={isLoading}
               textInputProps={{
