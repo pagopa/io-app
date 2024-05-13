@@ -170,18 +170,7 @@ const CieWrongCiePinScreen = () => {
     [defaultMessageThatShouldNeverHappen, messages]
   );
 
-  const { pictogram, title, subtitle, action, secondaryAction } =
-    getMessage(remainingCount);
-
-  return (
-    <OperationResultScreenContent
-      pictogram={pictogram}
-      title={title}
-      subtitle={subtitle}
-      action={action}
-      secondaryAction={secondaryAction}
-    />
-  );
+  return <OperationResultScreenContent {...getMessage(remainingCount)} />;
 };
 
 export default CieWrongCiePinScreen;
