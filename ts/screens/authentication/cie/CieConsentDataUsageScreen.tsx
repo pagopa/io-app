@@ -9,7 +9,6 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useRoute } from "@react-navigation/native";
 import { useIODispatch } from "../../../store/hooks";
 import {
@@ -166,21 +165,19 @@ const CieConsentDataUsageScreen = () => {
   });
 
   return (
-    <SafeAreaView edges={["bottom"]}>
-      <CieConsentDataUsageRenderComponent
-        isLoginSuccess={isLoginSuccess}
-        LoaderComponent={LoaderComponent}
-        hasError={hasError}
-        errorCode={errorCode}
-        cieConsentUri={cieConsentUri}
-        originSchemasWhiteList={originSchemasWhiteList}
-        handleShouldStartLoading={handleShouldStartLoading}
-        handleWebViewError={handleWebViewError}
-        handleHttpError={handleHttpError}
-        onRetry={navigateToCiePinScreen}
-        onCancel={navigateToLandingScreen}
-      />
-    </SafeAreaView>
+    <CieConsentDataUsageRenderComponent
+      isLoginSuccess={isLoginSuccess}
+      LoaderComponent={LoaderComponent}
+      hasError={hasError}
+      errorCode={errorCode}
+      cieConsentUri={cieConsentUri}
+      originSchemasWhiteList={originSchemasWhiteList}
+      handleShouldStartLoading={handleShouldStartLoading}
+      handleWebViewError={handleWebViewError}
+      handleHttpError={handleHttpError}
+      onRetry={navigateToCiePinScreen}
+      onCancel={navigateToLandingScreen}
+    />
   );
 };
 
