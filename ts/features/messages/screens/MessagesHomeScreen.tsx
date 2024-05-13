@@ -1,17 +1,16 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-export const MessagesHomeScreen = () => {
-  return (
-    <View
-      style={{
-        backgroundColor: "#FF0000",
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
-      }}
-    >
-      <Text>{"Wip!"}</Text>
-    </View>
-  );
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  }
+});
+
+export const MessagesHomeScreen = () => (
+  <View style={styles.container}>
+    <Text>{"Questa sezione è in fase di sviluppo"}</Text>
+  </View>
+);
