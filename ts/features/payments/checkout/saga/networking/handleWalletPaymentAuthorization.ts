@@ -48,7 +48,7 @@ export function* handleWalletPaymentAuthorization(
     const requestBody: RequestAuthorizationRequest = {
       amount: action.payload.paymentAmount,
       fee: action.payload.paymentFees,
-      isAllCCP: true,
+      isAllCCP: action.payload.isAllCCP,
       language: LanguageEnum.IT,
       pspId: action.payload.pspId,
       details
