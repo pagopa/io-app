@@ -75,6 +75,7 @@ export type WalletPaymentAuthorizePayload = {
   walletId?: string;
   paymentMethodId: string;
   pspId: string;
+  isAllCCP: boolean;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;
 };
