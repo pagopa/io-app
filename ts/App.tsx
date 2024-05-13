@@ -26,7 +26,6 @@ const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   if (event.user) {
     // Don't send user's email address
     return { ...event, user: undefined };
-    // delete event.user;
   }
   return event;
 };
