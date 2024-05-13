@@ -119,7 +119,7 @@ export const getSortedPspList = (
 ) => {
   switch (sortType) {
     case "name":
-      return _.orderBy(pspList, psp => psp.bundleName);
+      return _.orderBy(pspList, psp => psp.pspBusinessName);
     case "amount":
       return _.orderBy(pspList, psp => psp.taxPayerFee);
     case "default":

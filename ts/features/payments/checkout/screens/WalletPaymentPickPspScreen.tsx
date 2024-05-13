@@ -174,7 +174,7 @@ const getRadioItemsFromPspList = (
     O.map(list =>
       list.map((psp, index) => ({
         id: psp.idBundle ?? index.toString(),
-        label: psp.bundleName ?? I18n.t("wallet.payment.psp.defaultName"),
+        label: psp.pspBusinessName ?? I18n.t("wallet.payment.psp.defaultName"),
         isSuggested: psp.onUs && showFeaturedPsp,
         suggestReason: I18n.t("wallet.payment.psp.featuredReason"),
         formattedAmountString: formatNumberCentsToAmount(

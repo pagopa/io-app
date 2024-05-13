@@ -113,7 +113,7 @@ function getColorsByProps({
     };
   }
   return {
-    borderColor: hasFocus && isEmpty ? IOColors.milderGray : undefined,
+    borderColor: hasFocus && isEmpty ? IOColors.bluegrey : undefined,
     descriptionColor: isValid === false ? "red" : "bluegreyDark",
     iconColor: iconColor ?? "bluegrey",
     placeholderTextColor: brandGrayDarken,
