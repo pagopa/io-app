@@ -46,6 +46,7 @@ const DEFAULT_PAGE_SIZE = 12;
 // Default mixpanel EU url
 const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
 // Default sentry dsn url
+// This can be public as per docs https://docs.sentry.io/concepts/key-terms/dsn-explainer/#dsn-utilization
 const DEFAULT_SENTRY_DSN =
   "https://43b87dcfc91f9cfdfaf71b254eb8f58e@o4507197393469440.ingest.de.sentry.io/4507221483585616";
 
