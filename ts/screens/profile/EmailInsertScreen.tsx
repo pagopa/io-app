@@ -225,8 +225,7 @@ const EmailInsertScreen = () => {
       pipe(
         email,
         O.map(e => {
-          const newe = e;
-          updateEmail(newe as EmailString);
+          updateEmail(e as EmailString);
         })
       );
       if (isFirstOnboarding) {
