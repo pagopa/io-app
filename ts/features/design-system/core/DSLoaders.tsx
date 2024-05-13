@@ -1,7 +1,9 @@
 import * as React from "react";
 import {
+  H3,
   IOColors,
   LoadingSpinner,
+  ProgressLoader,
   VSpacer,
   hexToRgba,
   useIOTheme
@@ -10,7 +12,6 @@ import { View, StyleSheet } from "react-native";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import I18n from "../../../i18n";
-import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
@@ -59,19 +60,41 @@ const SpinnerViewerBox = ({
   </DSComponentViewerBox>
 );
 
+const ProgressLoaderViewerBox = () => {
+  const [progress, setProgress] = React.useState(0);
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      // console.log("progress", progress, (progress + 10) % 100);
+      setProgress(prev => (prev + 10) % 100);
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <View style={{ borderRadius: 8, overflow: "hidden" }}>
+      <View style={{ backgroundColor: IOColors.white, padding: 16 }}>
+        <ProgressLoader progress={progress} />
+      </View>
+      <View style={{ backgroundColor: IOColors["blueIO-500"], padding: 16 }}>
+        <ProgressLoader progress={90} />
+      </View>
+    </View>
+  );
+};
+
 export const DSLoaders = () => {
   const theme = useIOTheme();
 
   return (
     <DesignSystemScreen title={"Loaders"}>
       {/* Present in the main Messages screen */}
-      <H2
+      <H3
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
         style={styles.sectionTitle}
       >
         Activity Indicator
-      </H2>
+      </H3>
       <SpinnerViewerBox name="ActivityIndicator · Large size, primary legacy color">
         <ActivityIndicator
           animating={true}
@@ -91,13 +114,24 @@ export const DSLoaders = () => {
 
       <VSpacer />
 
-      <H2
+      <H3
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={styles.sectionTitle}
+      >
+        Loading Indicator
+      </H3>
+      <SpinnerViewerBox name="LoadingIndicator, with predefined visual attributes">
+        <LoadingIndicator />
+      </SpinnerViewerBox>
+
+      <H3
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
         style={styles.sectionTitle}
       >
         Loading Spinner
-      </H2>
+      </H3>
       <SpinnerViewerBox name="LoadingSpinner · Size 24, primary color">
         <LoadingSpinner color="blueIO-500" />
       </SpinnerViewerBox>
@@ -111,18 +145,10 @@ export const DSLoaders = () => {
         <LoadingSpinner size={48} />
       </SpinnerViewerBox>
 
-      <VSpacer />
+      <H3>ProgressLoader</H3>
+      <ProgressLoaderViewerBox />
 
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"SemiBold"}
-        style={styles.sectionTitle}
-      >
-        Loading Indicator
-      </H2>
-      <SpinnerViewerBox name="LoadingIndicator, with predefined visual attributes">
-        <LoadingIndicator />
-      </SpinnerViewerBox>
+      <VSpacer />
     </DesignSystemScreen>
   );
 };
