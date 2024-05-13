@@ -202,7 +202,7 @@ const EmailInsertScreen = () => {
             return false;
           },
           value => {
-            if (!validator.isEmail(value.trim())) {
+            if (!validator.isEmail(value)) {
               setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
               return false;
             }
@@ -225,7 +225,7 @@ const EmailInsertScreen = () => {
       pipe(
         email,
         O.map(e => {
-          const newe = e.trim();
+          const newe = e;
           updateEmail(newe as EmailString);
         })
       );
@@ -252,13 +252,11 @@ const EmailInsertScreen = () => {
       if (isFirstOnboarding) {
         setAreSameEmails(
           isProfileEmailAlreadyTaken
-            ? areStringsEqual(O.some(value.trim()), optionEmail, true)
+            ? areStringsEqual(O.some(value), optionEmail, true)
             : false
         );
       } else {
-        setAreSameEmails(
-          areStringsEqual(O.some(value.trim()), optionEmail, true)
-        );
+        setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
       }
     }
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
