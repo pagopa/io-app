@@ -4,11 +4,7 @@ import React, { FunctionComponent, memo, useCallback, useState } from "react";
 import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import {
-  ButtonSolid,
-  ContentWrapper,
-  IOStyles
-} from "@pagopa/io-app-design-system";
+import { FooterWithButtons, IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
@@ -86,14 +82,17 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
         />
       </View>
       {shouldRenderFooter && onAcceptTos && (
-        <ContentWrapper>
-          <ButtonSolid
-            fullWidth
-            onPress={onAcceptTos}
-            label={I18n.t("onboarding.tos.accept")}
-            testID="AcceptToSButton"
-          />
-        </ContentWrapper>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("onboarding.tos.accept"),
+              onPress: onAcceptTos,
+              testID: "AcceptToSButton"
+            }
+          }}
+        />
       )}
     </>
   );

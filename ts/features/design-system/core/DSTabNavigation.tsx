@@ -8,15 +8,15 @@ import {
   IOColors,
   HSpacer,
   VSpacer,
-  ContentWrapper
+  ContentWrapper,
+  TabItem,
+  BodyMonospace,
+  TabNavigation
 } from "@pagopa/io-app-design-system";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
-import { Monospace } from "../../../components/core/typography/Monospace";
-import { TabItem } from "../../../components/ui/TabItem";
-import { TabNavigation } from "../../../components/ui/TabNavigation";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -33,7 +33,7 @@ export const DSTabNavigation = () => {
         <VSpacer size={24} />
         <H3>Light</H3>
         <VSpacer size={16} />
-        <View style={[styles.default, { borderRadius: 16, padding: 16 }]}>
+        <View>
           <DSComponentViewerBox name="Light">
             <View style={{ flexDirection: "row" }}>
               <TabItem
@@ -46,13 +46,12 @@ export const DSTabNavigation = () => {
                 label="Label tab"
                 accessibilityLabel="Label tab"
                 icon={"starEmpty"}
-                iconSelected={"starFilled"}
                 onPress={handlePress}
               />
             </View>
           </DSComponentViewerBox>
 
-          <DSComponentViewerBox name="Light Selected" last={true}>
+          <DSComponentViewerBox name="Light Selected">
             <View style={{ flexDirection: "row" }}>
               <TabItem
                 label="Label tab"
@@ -65,8 +64,26 @@ export const DSTabNavigation = () => {
                 label="Label tab"
                 accessibilityLabel="Label tab"
                 icon={"starEmpty"}
-                iconSelected={"starFilled"}
                 selected={true}
+                onPress={handlePress}
+              />
+            </View>
+          </DSComponentViewerBox>
+
+          <DSComponentViewerBox name="Light Disabled" last={true}>
+            <View style={{ flexDirection: "row" }}>
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                disabled
+                onPress={handlePress}
+              />
+              <HSpacer size={8} />
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                disabled
+                icon={"starEmpty"}
                 onPress={handlePress}
               />
             </View>
@@ -89,18 +106,13 @@ export const DSTabNavigation = () => {
                 label="Label tab"
                 accessibilityLabel="Label tab"
                 icon={"starEmpty"}
-                iconSelected={"starFilled"}
                 color="dark"
                 onPress={handlePress}
               />
             </View>
           </DSComponentViewerBox>
 
-          <DSComponentViewerBox
-            name="Dark Selected"
-            colorMode="dark"
-            last={true}
-          >
+          <DSComponentViewerBox name="Dark Selected" colorMode="dark">
             <View style={{ flexDirection: "row" }}>
               <TabItem
                 label="Label tab"
@@ -114,9 +126,32 @@ export const DSTabNavigation = () => {
                 label="Label tab"
                 accessibilityLabel="Label tab"
                 icon={"starEmpty"}
-                iconSelected={"starFilled"}
                 color="dark"
                 selected={true}
+                onPress={handlePress}
+              />
+            </View>
+          </DSComponentViewerBox>
+          <DSComponentViewerBox
+            name="Dark Disabled"
+            colorMode="dark"
+            last={true}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                color="dark"
+                disabled={true}
+                onPress={handlePress}
+              />
+              <HSpacer size={8} />
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                icon={"starEmpty"}
+                color="dark"
+                disabled={true}
                 onPress={handlePress}
               />
             </View>
@@ -130,23 +165,23 @@ export const DSTabNavigation = () => {
         <H3>Light</H3>
         <VSpacer size={16} />
       </ContentWrapper>
-      <View style={[styles.default, { paddingVertical: 24 }]}>
-        <TabNavigation>
+      <View>
+        <TabNavigationWithState>
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigation>
+        </TabNavigationWithState>
 
         <VSpacer size={24} />
 
-        <TabNavigation>
+        <TabNavigationWithState>
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigation>
+        </TabNavigationWithState>
 
         <VSpacer size={24} />
 
-        <TabNavigation>
+        <TabNavigationWithState>
           <TabItem
             label="Label tab"
             accessibilityLabel="Label tab"
@@ -177,63 +212,58 @@ export const DSTabNavigation = () => {
             icon="starEmpty"
             iconSelected="starFilled"
           />
-        </TabNavigation>
+        </TabNavigationWithState>
       </View>
 
       <ContentWrapper>
-        <VSpacer size={24} />
+        <VSpacer size={32} />
         <H3>Dark</H3>
         <VSpacer size={16} />
       </ContentWrapper>
 
       <View style={[styles.dark, { paddingVertical: 24 }]}>
-        <TabNavigation color="dark">
+        <TabNavigationWithState color="dark">
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigation>
+        </TabNavigationWithState>
 
         <VSpacer size={24} />
 
-        <TabNavigation color="dark">
+        <TabNavigationWithState color="dark">
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigation>
+        </TabNavigationWithState>
 
         <VSpacer size={24} />
 
-        <TabNavigation color="dark">
+        <TabNavigationWithState color="dark">
           <TabItem
             label="Label tab"
             accessibilityLabel="Label tab"
             icon="starEmpty"
-            iconSelected="starFilled"
           />
           <TabItem
             label="Label tab"
             accessibilityLabel="Label tab"
             icon="starEmpty"
-            iconSelected="starFilled"
           />
           <TabItem
             label="Label tab"
             accessibilityLabel="Label tab"
             icon="starEmpty"
-            iconSelected="starFilled"
           />
           <TabItem
             label="Label tab"
             accessibilityLabel="Label tab"
             icon="starEmpty"
-            iconSelected="starFilled"
           />
           <TabItem
             label="Label tab"
             accessibilityLabel="Label tab"
             icon="starEmpty"
-            iconSelected="starFilled"
           />
-        </TabNavigation>
+        </TabNavigationWithState>
       </View>
 
       <ContentWrapper>
@@ -242,69 +272,77 @@ export const DSTabNavigation = () => {
         <VSpacer size={16} />
       </ContentWrapper>
 
-      <View style={[styles.default, { paddingVertical: 24 }]}>
+      <View>
         <ContentWrapper>
-          <Monospace>{`center (default)`}</Monospace>
+          <BodyMonospace>{`center (default)`}</BodyMonospace>
         </ContentWrapper>
 
         <VSpacer size={16} />
 
-        <TabNavigation>
+        <TabNavigationWithState>
           <TabItem label="Long label" accessibilityLabel="Long label" />
           <TabItem label="Label" accessibilityLabel="Label" />
           <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigation>
+        </TabNavigationWithState>
 
         <VSpacer size={24} />
 
         <ContentWrapper>
-          <Monospace>{`start`}</Monospace>
+          <BodyMonospace>{`start`}</BodyMonospace>
         </ContentWrapper>
 
         <VSpacer size={16} />
 
-        <TabNavigation tabAlignment="start">
+        <TabNavigationWithState tabAlignment="start">
           <TabItem label="Long label" accessibilityLabel="Long label" />
           <TabItem label="Label" accessibilityLabel="Label" />
           <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigation>
+        </TabNavigationWithState>
 
         <VSpacer size={24} />
 
         <ContentWrapper>
-          <Monospace>{`end`}</Monospace>
+          <BodyMonospace>{`end`}</BodyMonospace>
         </ContentWrapper>
 
         <VSpacer size={16} />
 
-        <TabNavigation tabAlignment="end">
+        <TabNavigationWithState tabAlignment="end">
           <TabItem label="Long label" accessibilityLabel="Long label" />
           <TabItem label="Label" accessibilityLabel="Label" />
           <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigation>
+        </TabNavigationWithState>
 
         <VSpacer size={24} />
 
         <ContentWrapper>
-          <Monospace>{`stretch`}</Monospace>
+          <BodyMonospace>{`stretch`}</BodyMonospace>
         </ContentWrapper>
 
         <VSpacer size={16} />
 
-        <TabNavigation tabAlignment="stretch">
+        <TabNavigationWithState tabAlignment="stretch">
           <TabItem label="Long label" accessibilityLabel="Long label" />
           <TabItem label="Label" accessibilityLabel="Label" />
           <TabItem label="Label" accessibilityLabel="Label" />
-        </TabNavigation>
+        </TabNavigationWithState>
       </View>
+      <VSpacer size={40} />
     </DesignSystemScreen>
   );
 };
 
+const TabNavigationWithState = (props: TabNavigation) => {
+  const [index, setIndex] = React.useState(0);
+
+  return (
+    <TabNavigation {...props} selectedIndex={index} onItemPress={setIndex}>
+      {props.children}
+    </TabNavigation>
+  );
+};
+
 const styles = StyleSheet.create({
-  default: {
-    backgroundColor: IOColors["blueIO-100"]
-  },
   dark: {
     backgroundColor: IOColors["blueIO-850"]
   }

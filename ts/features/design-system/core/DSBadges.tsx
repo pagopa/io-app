@@ -230,6 +230,16 @@ const renderTag = () => (
       <VSpacer size={8} />
       <Tag text={"No icon"} variant="noIcon" />
     </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag · Custom icon (with custom color)"}>
+      <Tag
+        text={"Custom icon"}
+        variant="customIcon"
+        customIconProps={{
+          iconName: "categTravel",
+          iconColor: "grey-700"
+        }}
+      />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Stress test"}>
       <View
         style={{
