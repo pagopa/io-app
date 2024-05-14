@@ -1,3 +1,4 @@
+import { constVoid } from "fp-ts/lib/function";
 import {
   IOStyles,
   ListItemHeader,
@@ -41,6 +42,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
           {transactionsPot.value.map(transaction => (
             <PaymentsBizEventsListItemTransaction
               key={`transaction_${transaction.transactionId}`}
+              onPress={() => constVoid}
               transaction={transaction}
             />
           ))}
@@ -73,6 +75,13 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       <ListItemHeader
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: I18n.t("features.payments.transactions.button"),
+            onPress: () => constVoid
+          }
+        }}
       />
       {renderItems()}
     </Animated.View>

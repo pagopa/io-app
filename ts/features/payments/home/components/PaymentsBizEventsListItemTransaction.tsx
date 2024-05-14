@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  Icon,
-  ListItemTransaction
-} from "@pagopa/io-app-design-system";
+import { Avatar, ListItemTransaction } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -13,9 +9,13 @@ import { getTransactionLogo } from "../../common/utils";
 
 type Props = {
   transaction: TransactionListItem;
+  onPress?: () => void;
 };
 
-const PaymentsBizEventsListItemTransaction = ({ transaction }: Props) => {
+const PaymentsBizEventsListItemTransaction = ({
+  transaction,
+  onPress
+}: Props) => {
   const recipient = pipe(
     transaction.payeeName,
     O.fromNullable,
@@ -58,6 +58,7 @@ const PaymentsBizEventsListItemTransaction = ({ transaction }: Props) => {
   return (
     <ListItemTransaction
       paymentLogoIcon={transactionLogo}
+      onPress={onPress}
       accessible={true}
       title={recipient}
       subtitle={datetime}
