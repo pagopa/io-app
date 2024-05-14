@@ -26,10 +26,10 @@ import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { isNewServicesEnabled } from "../config";
+import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
-import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
@@ -124,8 +124,6 @@ export const MainTabNavigator = () => {
                 iconNameFocused={"navMessagesFocused"}
                 color={color}
                 focused={focused}
-                // Badge is disabled with paginated messages.
-                // https://pagopa.atlassian.net/browse/IA-572
               />
             )
           }}

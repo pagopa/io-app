@@ -1,7 +1,10 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  FooterWithButtons,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Content } from "native-base";
 import * as React from "react";
 import {
   FlatList,
@@ -9,36 +12,31 @@ import {
   ListRenderItemInfo,
   Platform,
   SafeAreaView,
-  StyleSheet,
-  View
+  ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import {
   navigateBack,
   navigateToServiceDetailsScreen
 } from "../../../../store/actions/navigation";
 import { showServiceDetails } from "../../../../store/actions/services";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { Dispatch } from "../../../../store/actions/types";
 import {
   isCGNEnabledSelector,
   isCdcEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
-import { showToast } from "../../../../utils/showToast";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
   AvailableBonusItem,
@@ -59,17 +57,6 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-const styles = StyleSheet.create({
-  whiteContent: {
-    backgroundColor: IOColors.white,
-    flex: 1
-  },
-  paddedContent: {
-    padding: variables.contentPadding,
-    flex: 1
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "bonus.bonusList.contextualHelp.title",
@@ -102,7 +89,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   private openAppStore = () => {
     // storeUrl is not a webUrl, try to open it
     Linking.openURL(storeUrl).catch(() => {
-      showToast(I18n.t("msgErrorUpdateApp"));
+      IOToast.error(I18n.t("msgErrorUpdateApp"));
     });
   };
 
@@ -124,7 +111,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
           O.fold(
             () => {
               // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
-              showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
+              IOToast.show(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
             },
             s => () => {
               this.props.showServiceDetails(s);
@@ -196,13 +183,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 
   public render() {
     const { availableBonusesList, isError } = this.props;
-    const cancelButtonProps = {
-      block: true,
-      light: true,
-      bordered: true,
-      onPress: this.props.navigateBack,
-      title: I18n.t("global.buttons.cancel")
-    };
 
     return isError ? (
       <GenericErrorComponent
@@ -218,28 +198,27 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
         faqCategories={["bonus_available_list"]}
       >
         <SafeAreaView style={IOStyles.flex}>
-          <Content
-            noPadded={true}
-            scrollEnabled={false}
-            style={styles.whiteContent}
-          >
-            <View style={styles.paddedContent}>
-              <FlatList
-                scrollEnabled={false}
-                data={availableBonusesList.filter(experimentalAndVisibleBonus)}
-                renderItem={b => this.renderListItem(b)}
-                keyExtractor={item => item.id_type.toString()}
-                ItemSeparatorComponent={() => (
-                  <ItemSeparatorComponent noPadded={true} />
-                )}
-              />
-            </View>
-          </Content>
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={cancelButtonProps}
-          />
+          <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
+            <FlatList
+              scrollEnabled={false}
+              data={availableBonusesList.filter(experimentalAndVisibleBonus)}
+              renderItem={b => this.renderListItem(b)}
+              keyExtractor={item => item.id_type.toString()}
+              ItemSeparatorComponent={() => <Divider />}
+            />
+          </ScrollView>
         </SafeAreaView>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              onPress: this.props.navigateBack,
+              label: I18n.t("global.buttons.cancel"),
+              accessibilityLabel: I18n.t("global.buttons.cancel")
+            }
+          }}
+        />
       </BaseScreenComponent>
     );
   }
