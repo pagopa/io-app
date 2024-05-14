@@ -1,7 +1,6 @@
 import React from "react";
 import {
-  ButtonSolid,
-  ContentWrapper,
+  FooterWithButtons,
   H3,
   IOStyles,
   Pictogram,
@@ -33,14 +32,17 @@ const TosWebviewErrorComponent = ({
         {I18n.t("onboarding.tos.error")}
       </H3>
     </View>
-    <ContentWrapper>
-      <ButtonSolid
-        fullWidth
-        onPress={handleRetry}
-        label={I18n.t("global.buttons.retry")}
-        testID="RetryButtonTest"
-      />
-    </ContentWrapper>
+    <FooterWithButtons
+      type="SingleButton"
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          label: I18n.t("global.buttons.retry"),
+          onPress: handleRetry,
+          testID: "RetryButtonTest"
+        }
+      }}
+    />
   </>
 );
 export default TosWebviewErrorComponent;
