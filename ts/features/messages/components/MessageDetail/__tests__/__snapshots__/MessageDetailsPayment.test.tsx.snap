@@ -882,7 +882,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                           <View
                             style={
                               Object {
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >

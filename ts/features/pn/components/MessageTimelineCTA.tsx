@@ -1,8 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { Icon, HSpacer } from "@pagopa/io-app-design-system";
+import { Icon, HSpacer, ButtonOutline } from "@pagopa/io-app-design-system";
 import { H5 } from "../../../components/core/typography/H5";
-import BlockButtons from "../../../components/ui/BlockButtons";
 import i18n from "../../../i18n";
 import { handleItemOnPress } from "../../../utils/url";
 import { trackPNTimelineExternal } from "../analytics";
@@ -32,15 +31,13 @@ export const MessageTimelineCTA = (props: { url: string }) => (
         {i18n.t("features.pn.details.timeline.info")}
       </H5>
     </View>
-    <BlockButtons
-      type="SingleButton"
-      leftButton={{
-        bordered: true,
-        onPress: () => {
-          trackPNTimelineExternal();
-          handleItemOnPress(props.url)();
-        },
-        title: i18n.t("features.pn.details.timeline.cta")
+    <ButtonOutline
+      label={i18n.t("features.pn.details.timeline.cta")}
+      accessibilityLabel={i18n.t("features.pn.details.timeline.cta")}
+      fullWidth
+      onPress={() => {
+        trackPNTimelineExternal();
+        handleItemOnPress(props.url)();
       }}
     />
   </View>
