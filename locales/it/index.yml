@@ -2533,7 +2533,7 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Scopri le proposte
+      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
       merchantsAll: Tutti gli operatori
       cta:
         filter: Filtra
@@ -2542,7 +2542,7 @@ bonus:
         bottomSheet:
           cta: Come vengono ordinate le categorie?
           title: Come vengono ordinate le categorie?
-          content: Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo.Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.
+          content: Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2572,7 +2572,7 @@ bonus:
         deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
-        addresses: Indirizzi
+        contactInfo: Contatti e informazioni
         hours: Orari
         validity: Validità
         discountCode: Codice Sconto
@@ -2581,6 +2581,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
+        website: Vai al sito dell'esercente
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -2594,13 +2595,17 @@ bonus:
         travel: Viaggi e Trasporti
         mobility: Mobilità Sostenibile
         job: Lavoro e Tirocini
+      information:
+        address: Indirizzo
+        allNational: Tutti i punti vendita sul territorio nazionale
     cta:
       activeBonus: Richiedi la Carta
-      deactivateBonus: Disattiva la Carta
+      deactivateBonus: Disattiva Carta Giovani Nazionale
       goToDetail: Visualizza la Carta
     detail:
       cta:
         buyers: Vedi le opportunità CGN
+        discover: Scopri le opportunità
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
@@ -2610,8 +2615,8 @@ bonus:
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
         warning: "Attenzione! "
-        revoked: "Questa carta è stata revocata per {{reason}}"
-        expired: "Questa carta è scaduta il {{date}}"
+        revoked: "Attenzione! Questa carta è stata revocata per {{reason}}"
+        expired: "Attenzione! Questa carta è scaduta il {{date}}"
       ownership: Chi può usare la carta?
       status:
         title: Carta Giovani Nazionale (CGN)
@@ -2627,6 +2632,7 @@ bonus:
           revoked: Revocata
           expired: Scaduta
         date:
+          valid_until: "Valida fino al {{date}}"
           activated: Attivata il
           expired: Scaduta il
           revoked: Revocata il
@@ -3031,6 +3037,17 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+      nfc:
+        title: Attiva l'NFC per continuare
+        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
+        header: "Ecco come:"
+        steps:
+          label: Step {{value}}
+          1: Vai alle impostazioni
+          2: Cerca "NFC"
+          3: Attivalo
+        primaryAction: Vai alle impostazioni
+        secondaryAction: Ho fatto
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

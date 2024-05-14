@@ -91,7 +91,7 @@ const WalletPaymentPickMethodScreen = () => {
         }
       });
     }
-  }, [notHasValidPaymentMethods, navigation, dispatch]);
+  }, [notHasValidPaymentMethods, paymentDetailsPot, navigation, dispatch]);
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(

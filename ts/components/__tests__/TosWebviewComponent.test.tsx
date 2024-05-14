@@ -28,7 +28,22 @@ describe("TosWebviewComponent", () => {
     it("Should render correctly with bottom footer and a basic placeholding HTML", () => {
       const tree = renderer
         .create(
-          <SafeAreaProvider>
+          <SafeAreaProvider
+            initialMetrics={{
+              frame: {
+                width: 320,
+                height: 640,
+                x: 0,
+                y: 0
+              },
+              insets: {
+                left: 0,
+                right: 0,
+                bottom: 0,
+                top: 0
+              }
+            }}
+          >
             <TosWebviewComponent
               flow="firstOnboarding"
               shouldRenderFooter={true}

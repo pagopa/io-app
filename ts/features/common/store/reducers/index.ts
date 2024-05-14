@@ -1,45 +1,43 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers } from "redux";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
-
 import { Action } from "../../../../store/actions/types";
 import {
-  euCovidCertReducer,
-  EuCovidCertState
-} from "../../../euCovidCert/store/reducers";
-import { PnState, pnReducer } from "../../../pn/store/reducers";
-import fciReducer, { FciState } from "../../../fci/store/reducers";
-import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
-import {
-  testLoginReducer,
-  TestLoginState
+  TestLoginState,
+  testLoginReducer
 } from "../../../../store/reducers/testLogin";
 import {
-  nativeLoginReducer,
-  NativeLoginState
-} from "../../../nativeLogin/store/reducers";
-import {
-  whatsNewPersistor,
-  WhatsNewState
-} from "../../../whatsnew/store/reducers";
-
-import {
-  cieLoginReducer,
-  CieLoginState
+  CieLoginState,
+  cieLoginReducer
 } from "../../../cieLogin/store/reducers";
-
+import {
+  EuCovidCertState,
+  euCovidCertReducer
+} from "../../../euCovidCert/store/reducers";
+import {
+  FastLoginState,
+  fastLoginReducer
+} from "../../../fastLogin/store/reducers";
+import fciReducer, { FciState } from "../../../fci/store/reducers";
+import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
+import itwReducer, { ItwState } from "../../../itwallet/common/store/reducers";
+import {
+  NativeLoginState,
+  nativeLoginReducer
+} from "../../../nativeLogin/store/reducers";
+import walletReducer, { WalletState } from "../../../newWallet/store/reducers";
 import paymentsReducer, {
   PaymentsState
 } from "../../../payments/common/store/reducers";
-import {
-  fastLoginReducer,
-  FastLoginState
-} from "../../../fastLogin/store/reducers";
-import walletReducer, { WalletState } from "../../../newWallet/store/reducers";
+import { PnState, pnReducer } from "../../../pn/store/reducers";
 import servicesReducer, {
   ServicesState
 } from "../../../services/common/store/reducers";
 import fimsReducer, { FimsState } from "../../../fims/store/reducers";
+import {
+  WhatsNewState,
+  whatsNewPersistor
+} from "../../../whatsnew/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -59,6 +57,7 @@ export type FeaturesState = {
   services: ServicesState;
   wallet: WalletState;
   fims: FimsState;
+  itw: ItwState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -78,7 +77,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     cieLogin: cieLoginReducer
   }),
   wallet: walletReducer,
-  fims: fimsReducer
+  fims: fimsReducer,
+  itw: itwReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
