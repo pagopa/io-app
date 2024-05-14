@@ -3010,7 +3010,7 @@ features:
       status:
         expired: Scaduta
     transactions:
-      title: Storico operazioni
+      title: Ricevute pagoPA
       button: Vedi tutte
       empty:
         title: Qui vedrai le tue ricevute pagoPA

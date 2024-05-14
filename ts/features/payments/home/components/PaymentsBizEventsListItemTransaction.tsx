@@ -1,4 +1,8 @@
-import { ListItemTransaction } from "@pagopa/io-app-design-system";
+import {
+  Avatar,
+  Icon,
+  ListItemTransaction
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -21,6 +25,7 @@ const PaymentsBizEventsListItemTransaction = ({ transaction }: Props) => {
   const amountText = pipe(
     transaction.amount,
     O.fromNullable,
+    O.map(amount => `${amount} €`),
     O.getOrElse(() => "")
   );
   const datetime: string = pipe(
@@ -37,16 +42,22 @@ const PaymentsBizEventsListItemTransaction = ({ transaction }: Props) => {
     O.getOrElse(() => "")
   );
 
-  const paymentIcon = getTransactionLogo(transaction);
+  const transactionPayeeLogoUri = getTransactionLogo(transaction);
 
   const accessibleAmountText = getAccessibleAmountText(amountText);
   const accessibilityLabel = `${recipient}; ${accessibleDatetime}; ${accessibleAmountText}`;
 
+  const TransactionFallbackIcon = () => <Avatar size="small" />;
+
+  const transactionLogo = pipe(
+    transactionPayeeLogoUri,
+    O.map(uri => ({ uri })),
+    O.getOrElseW(() => <TransactionFallbackIcon />)
+  );
+
   return (
     <ListItemTransaction
-      paymentLogoIcon={{
-        uri: paymentIcon
-      }}
+      paymentLogoIcon={transactionLogo}
       accessible={true}
       title={recipient}
       subtitle={datetime}
