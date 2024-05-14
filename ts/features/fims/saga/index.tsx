@@ -36,7 +36,11 @@ function* handleFimsGetConsentsList() {
   const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
 
   // in paper it looks cleaner to use FP-TS for this, but it does not play well with generator functions
-  if (!fimsToken || !oIDCProviderUrl || !fimsCTAUrl) {
+  if (
+    fimsToken === undefined ||
+    oIDCProviderUrl === undefined ||
+    fimsCTAUrl === undefined
+  ) {
     yield* put(fimsGetConsentsListAction.failure(new Error()));
     return;
   }
