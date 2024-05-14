@@ -3,7 +3,6 @@
  * This screen is used as Privacy screen From Profile section.
  */
 import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { H2, IOStyles } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -49,24 +48,22 @@ const TosScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H2
-            accessible={true}
-            accessibilityRole="header"
-            testID="screen-content-header-title"
-          >
-            {I18n.t("profile.main.privacy.privacyPolicy.title")}
-          </H2>
-        </View>
-        <TosWebviewComponent
-          flow={flow}
-          handleLoadEnd={handleLoadEnd}
-          handleReload={handleReload}
-          webViewSource={{ uri: privacyUrl }}
-          shouldRenderFooter={false}
-        />
-      </SafeAreaView>
+      <View style={IOStyles.horizontalContentPadding}>
+        <H2
+          accessible={true}
+          accessibilityRole="header"
+          testID="screen-content-header-title"
+        >
+          {I18n.t("profile.main.privacy.privacyPolicy.title")}
+        </H2>
+      </View>
+      <TosWebviewComponent
+        flow={flow}
+        handleLoadEnd={handleLoadEnd}
+        handleReload={handleReload}
+        webViewSource={{ uri: privacyUrl }}
+        shouldRenderFooter={false}
+      />
     </LoadingSpinnerOverlay>
   );
 };
