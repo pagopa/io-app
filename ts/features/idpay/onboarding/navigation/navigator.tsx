@@ -47,18 +47,22 @@ export const IDPayOnboardingNavigator = () => (
     >
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
+        options={{ headerShown: true }}
         component={InitiativeDetailsScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
+        options={{ headerShown: true }}
         component={BoolValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
+        options={{ headerShown: true }}
         component={MultiValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
+        options={{ headerShown: true }}
         component={PDNDPrerequisitesScreen}
       />
       <Stack.Screen

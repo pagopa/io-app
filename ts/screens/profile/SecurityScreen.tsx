@@ -1,15 +1,24 @@
-import { Divider, ListItemNav } from "@pagopa/io-app-design-system";
-import { List } from "native-base";
-import React, { useCallback, useEffect, useState } from "react";
+import {
+  ContentWrapper,
+  Divider,
+  IOToast,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../config";
+import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
 import { isIdPayCodeOnboardedSelector } from "../../features/idpay/code/store/selectors";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
+import {
+  IOStackNavigationProp,
+  useIONavigation
+} from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { identificationRequest } from "../../store/actions/identification";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
@@ -24,16 +33,10 @@ import {
   isBiometricsValidType,
   mayUserActivateBiometric
 } from "../../utils/biometrics";
-import { showToast } from "../../utils/showToast";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
 } from "../onboarding/biometric&securityChecks/analytics";
-import {
-  IOStackNavigationProp,
-  useIONavigation
-} from "../../navigation/params/AppParamsList";
-import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -128,11 +131,10 @@ const SecurityScreen = (): React.ReactElement => {
         setFingerprintPreference(biometricPreference);
       },
       _ =>
-        showToast(
+        IOToast.error(
           I18n.t(
             "profile.security.list.biometric_recognition.needed_to_disable"
-          ),
-          "danger"
+          )
         )
     );
   };
@@ -147,7 +149,7 @@ const SecurityScreen = (): React.ReactElement => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
     >
-      <List withContentLateralPadding>
+      <ContentWrapper>
         {/* Ask for verification and reset unlock code */}
         <ListItemNav
           value={I18n.t("identification.unlockCode.reset.button_short")}
@@ -201,7 +203,7 @@ const SecurityScreen = (): React.ReactElement => {
             testID="biometric-recognition"
           />
         )}
-      </List>
+      </ContentWrapper>
     </RNavScreenWithLargeHeader>
   );
 };

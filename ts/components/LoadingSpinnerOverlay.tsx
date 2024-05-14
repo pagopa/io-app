@@ -1,15 +1,15 @@
-import * as React from "react";
-import { StyleSheet, View } from "react-native";
 import {
   ButtonOutline,
   IOColors,
   hexToRgba
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
 import I18n from "../i18n";
-import { Overlay } from "./ui/Overlay";
-import { IOStyles } from "./core/variables/IOStyles";
 import { Body } from "./core/typography/Body";
+import { IOStyles } from "./core/variables/IOStyles";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
+import { Overlay } from "./ui/Overlay";
 
 const styles = StyleSheet.create({
   textCaption: {

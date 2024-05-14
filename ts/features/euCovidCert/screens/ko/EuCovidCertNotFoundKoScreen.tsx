@@ -1,4 +1,8 @@
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext } from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -11,12 +15,9 @@ import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { euCovidCertificateUrl } from "../../../../urls";
 import { openWebUrl } from "../../../../utils/url";
-import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import {
-  BaseEuCovidCertificateLayout,
-  BaseSingleButtonFooter
-} from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../../components/EUCovidContext";
+import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 const styles = StyleSheet.create({
   row: {
@@ -101,9 +102,15 @@ export const EuCovidCertNotFoundKoScreen = (): React.ReactElement => {
         />
       }
       footer={
-        <BaseSingleButtonFooter
-          onPress={() => openWebUrl(euCovidCertificateUrl)}
-          title={I18n.t("features.euCovidCertificate.ko.notFound.cta")}
+        <FooterWithButtons
+          type={"SingleButton"}
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              onPress: () => openWebUrl(euCovidCertificateUrl),
+              label: I18n.t("features.euCovidCertificate.ko.notFound.cta")
+            }
+          }}
         />
       }
     />

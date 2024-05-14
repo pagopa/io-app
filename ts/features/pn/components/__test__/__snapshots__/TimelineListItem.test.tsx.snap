@@ -372,7 +372,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -2986,7 +2986,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -5600,7 +5600,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -6119,7 +6119,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
