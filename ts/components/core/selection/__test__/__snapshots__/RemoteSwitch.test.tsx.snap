@@ -141,7 +141,12 @@ exports[`RemoteSwitch tests Snapshot for pot.noneUpdating 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
 <RCTSwitch
   accessibilityRole="switch"
-  accessible={true}
+  accessibilityState={
+    Object {
+      "checked": true,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -153,13 +158,13 @@ exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
         "width": 51,
       },
       Object {
-        "marginBottom": -5,
-        "marginTop": -5,
+        "backgroundColor": "#F5F6F7",
+        "borderRadius": 16,
       },
     ]
   }
-  thumbTintColor="default"
-  tintColor="default"
+  thumbTintColor="#FFFFFF"
+  tintColor="#F5F6F7"
   value={true}
 />
 `;
@@ -167,7 +172,12 @@ exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.some 2`] = `
 <RCTSwitch
   accessibilityRole="switch"
-  accessible={true}
+  accessibilityState={
+    Object {
+      "checked": false,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -179,13 +189,13 @@ exports[`RemoteSwitch tests Snapshot for pot.some 2`] = `
         "width": 51,
       },
       Object {
-        "marginBottom": -5,
-        "marginTop": -5,
+        "backgroundColor": "#F5F6F7",
+        "borderRadius": 16,
       },
     ]
   }
-  thumbTintColor="default"
-  tintColor="default"
+  thumbTintColor="#FFFFFF"
+  tintColor="#F5F6F7"
   value={false}
 />
 `;
@@ -193,7 +203,12 @@ exports[`RemoteSwitch tests Snapshot for pot.some 2`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someError 1`] = `
 <RCTSwitch
   accessibilityRole="switch"
-  accessible={true}
+  accessibilityState={
+    Object {
+      "checked": true,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -205,13 +220,13 @@ exports[`RemoteSwitch tests Snapshot for pot.someError 1`] = `
         "width": 51,
       },
       Object {
-        "marginBottom": -5,
-        "marginTop": -5,
+        "backgroundColor": "#F5F6F7",
+        "borderRadius": 16,
       },
     ]
   }
-  thumbTintColor="default"
-  tintColor="default"
+  thumbTintColor="#FFFFFF"
+  tintColor="#F5F6F7"
   value={true}
 />
 `;
@@ -219,7 +234,12 @@ exports[`RemoteSwitch tests Snapshot for pot.someError 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someError 2`] = `
 <RCTSwitch
   accessibilityRole="switch"
-  accessible={true}
+  accessibilityState={
+    Object {
+      "checked": false,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -231,13 +251,13 @@ exports[`RemoteSwitch tests Snapshot for pot.someError 2`] = `
         "width": 51,
       },
       Object {
-        "marginBottom": -5,
-        "marginTop": -5,
+        "backgroundColor": "#F5F6F7",
+        "borderRadius": 16,
       },
     ]
   }
-  thumbTintColor="default"
-  tintColor="default"
+  thumbTintColor="#FFFFFF"
+  tintColor="#F5F6F7"
   value={false}
 />
 `;
@@ -275,7 +295,12 @@ exports[`RemoteSwitch tests Snapshot for pot.someLoading 2`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 <RCTSwitch
   accessibilityRole="switch"
-  accessible={true}
+  accessibilityState={
+    Object {
+      "checked": true,
+      "disabled": true,
+    }
+  }
   disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -288,13 +313,13 @@ exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
         "width": 51,
       },
       Object {
-        "marginBottom": -5,
-        "marginTop": -5,
+        "backgroundColor": "#F5F6F7",
+        "borderRadius": 16,
       },
     ]
   }
-  thumbTintColor="default"
-  tintColor="default"
+  thumbTintColor="#FFFFFF"
+  tintColor="#F5F6F7"
   value={true}
 />
 `;
@@ -302,7 +327,12 @@ exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 2`] = `
 <RCTSwitch
   accessibilityRole="switch"
-  accessible={true}
+  accessibilityState={
+    Object {
+      "checked": false,
+      "disabled": true,
+    }
+  }
   disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -315,13 +345,13 @@ exports[`RemoteSwitch tests Snapshot for pot.someUpdating 2`] = `
         "width": 51,
       },
       Object {
-        "marginBottom": -5,
-        "marginTop": -5,
+        "backgroundColor": "#F5F6F7",
+        "borderRadius": 16,
       },
     ]
   }
-  thumbTintColor="default"
-  tintColor="default"
+  thumbTintColor="#FFFFFF"
+  tintColor="#F5F6F7"
   value={false}
 />
 `;

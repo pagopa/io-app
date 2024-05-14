@@ -1,13 +1,17 @@
+import {
+  FooterWithButtons,
+  IOColors,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { showToast } from "../../../../utils/showToast";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
@@ -15,8 +19,6 @@ import {
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import { EUCovidCertParamsList } from "../../navigation/params";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { BaseDoubleButtonFooter } from "../BaseEuCovidCertificateLayout";
 
 export type EuCovidCertMarkdownDetailsScreenNavigationParams = Readonly<{
   markdownDetails: string;
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
 });
 
 const showToastError = (error: string = I18n.t("global.genericError")) =>
-  showToast(error);
+  IOToast.error(error);
 
 export const EuCovidCertMarkdownDetailsScreen = (
   props: IOStackNavigationRouteProps<
@@ -43,8 +45,6 @@ export const EuCovidCertMarkdownDetailsScreen = (
   const [flashAnimationState, setFlashAnimationState] =
     useState<FlashAnimationState>();
   const screenShotViewContainerRef = React.createRef<View>();
-
-  const safeAreaInsets = useSafeAreaInsets();
 
   React.useEffect(() => {
     if (isCapturingScreenShoot) {
@@ -63,10 +63,10 @@ export const EuCovidCertMarkdownDetailsScreen = (
     }
     captureScreenshot(screenShotViewContainerRef, screenshotOptions, {
       onSuccess: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
+        IOToast.success(I18n.t("features.euCovidCertificate.save.ok")),
       onNoPermissions: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => showToast(I18n.t("global.genericError")),
+        IOToast.info(I18n.t("features.euCovidCertificate.save.noPermission")),
+      onError: () => IOToast.error(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);
@@ -85,10 +85,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={{ paddingBottom: safeAreaInsets.bottom + 44 }}
-        style={IOStyles.horizontalContentPadding}
-      >
+      <ScrollView style={IOStyles.horizontalContentPadding}>
         {/* add an extra padding while capturing the screenshot */}
         <View
           collapsable={false}
@@ -112,16 +109,27 @@ export const EuCovidCertMarkdownDetailsScreen = (
         </View>
       </ScrollView>
       {canShowButton && (
-        <BaseDoubleButtonFooter
-          onPressLeft={() => {
-            void mixpanelTrack("EUCOVIDCERT_SAVE_MARKDOWN_DETAILS");
-            setIsCapturingScreenShoot(true);
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => props.navigation.goBack()
+            }
           }}
-          onPressRight={() => props.navigation.goBack()}
-          titleLeft={I18n.t(
-            "features.euCovidCertificate.valid.markdownDetails.save"
-          )}
-          titleRight={I18n.t("global.buttons.close")}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t(
+                "features.euCovidCertificate.valid.markdownDetails.save"
+              ),
+              onPress: () => {
+                void mixpanelTrack("EUCOVIDCERT_SAVE_MARKDOWN_DETAILS");
+                setIsCapturingScreenShoot(true);
+              }
+            }
+          }}
         />
       )}
       {/* this view must be the last one, since it must be drawn on top of all */}
