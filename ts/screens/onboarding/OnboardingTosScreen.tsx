@@ -4,10 +4,6 @@
  * has to accept the new version of ToS.
  * This screen is used also as Privacy screen From Profile section.
  */
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useEffect, useState, createRef, useCallback } from "react";
-import { Alert, View } from "react-native";
-import { useStore } from "react-redux";
 import {
   Alert as AlertDS,
   H2,
@@ -15,9 +11,15 @@ import {
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import React, { createRef, useCallback, useEffect, useState } from "react";
+import { Alert, View } from "react-native";
+import { useStore } from "react-redux";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
@@ -26,12 +28,10 @@ import {
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackTosUserExit } from "../authentication/analytics";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
-import { tosConfigSelector } from "../../features/tos/store/selectors";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
