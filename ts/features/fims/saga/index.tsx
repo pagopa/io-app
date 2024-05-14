@@ -28,12 +28,12 @@ function* handleFimsGetConsentsList() {
   // TODO:: maybe move navigation here from utils
 
   const fimsToken = yield* select(fimsTokenSelector);
-  const oIDCProviderUrl = yield* select(fimsDomainSelector);
+  const oidcProviderUrl = yield* select(fimsDomainSelector);
   const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
 
   if (
     fimsToken === undefined ||
-    oIDCProviderUrl === undefined ||
+    oidcProviderUrl === undefined ||
     fimsCTAUrl === undefined
   ) {
     // TODO:: proper error handling
@@ -43,7 +43,7 @@ function* handleFimsGetConsentsList() {
 
   yield* call(
     mockSetNativeCookie,
-    oIDCProviderUrl,
+    oidcProviderUrl,
     "X-IO-Federation-Token",
     fimsToken
   );
