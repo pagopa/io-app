@@ -4,5 +4,6 @@
 export const ServicesClient = {
   findInstitutions: jest.fn(),
   findInstutionServices: jest.fn(),
-  getFeaturedItems: jest.fn()
+  getFeaturedInstitutions: jest.fn(),
+  getFeaturedServices: jest.fn()
 };
