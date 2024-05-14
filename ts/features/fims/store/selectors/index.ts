@@ -1,6 +1,13 @@
+import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 
-export const fimsConsentsSelector = (state: GlobalState) =>
-  state.features.fims.consents;
-export const fimsCTAUrlSelector = (state: GlobalState) =>
-  state.features.fims.ctaUrl;
+const fimsFeatureSelector = (state: GlobalState) => state.features.fims;
+
+export const fimsConsentsSelector = createSelector(
+  fimsFeatureSelector,
+  state => state.consents
+);
+export const fimsCTAUrlSelector = createSelector(
+  fimsFeatureSelector,
+  state => state.ctaUrl
+);
