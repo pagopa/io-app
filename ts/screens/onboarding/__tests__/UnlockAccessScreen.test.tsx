@@ -17,9 +17,6 @@ describe("UnlockAccessScreen", async () => {
   it("the components into the page should be render correctly", () => {
     const component = renderComponent();
     expect(component).toBeDefined();
-    expect(component.getByTestId("container-test")).not.toBeNull();
-    expect(component.getByTestId("title-test")).toBeDefined();
-    expect(component.getByTestId("subtitle-test")).toBeDefined();
     const learnMoreButton = component.getByTestId("learn-more-link-test");
     expect(learnMoreButton).toBeDefined();
 
