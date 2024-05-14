@@ -760,7 +760,7 @@ authentication:
     subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO.
     subtitlel3: Per poter accedere all’app con tutte le tue identità SPID o CIE, sblocca l’accesso.
     learnmore: Scopri di più
-    loginIO: Chiudi
+    loginIO: Non ora, entra su IO
   unlockmodal:
     title: Cosa significa?
     description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo.

@@ -1,26 +1,18 @@
 import React from "react";
 import {
   Body,
-  ButtonLink,
-  ContentWrapper,
   FeatureInfo,
-  GradientScrollView,
-  H3,
   H6,
   IOColors,
-  IOStyles,
-  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View } from "react-native";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../utils/url";
 import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
-
+import { CustomWizardScreen } from "../../components/screens/CustomWizardScreen";
 type Props = {
   identifier: "SPID" | "CIE";
 };
@@ -84,66 +76,47 @@ const UnlockAccessScreen = (props: Props) => {
     100
   );
 
+  const onPressActionButton = () => {
+    if (identifier === "SPID") {
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_LANDING
+      });
+    } else {
+      // TODO -> Need to navigate on messages home screen
+    }
+  };
+
   return (
-    <BaseScreenComponent
-      goBack={false}
-      accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-    >
-      <GradientScrollView
-        testID="container-test"
-        primaryActionProps={{
+    <>
+      <CustomWizardScreen
+        pictogram="accessDenied"
+        title={I18n.t("authentication.unlock.title")}
+        description={
+          identifier === "SPID"
+            ? I18n.t("authentication.unlock.subtitlel2")
+            : I18n.t("authentication.unlock.subtitlel3")
+        }
+        buttonLink={{
+          label: I18n.t("authentication.unlock.learnmore"),
+          onPress: presentVeryLongAutoresizableBottomSheetWithFooter,
+          testID: "learn-more-link-test"
+        }}
+        primaryButton={{
           testID: "button-solid-test",
           label: I18n.t("authentication.unlock.title"),
-          accessibilityLabel: I18n.t("authentication.unlock.title"),
           onPress: () => openWebUrl("https://ioapp.it/")
         }}
-        secondaryActionProps={{
+        actionButton={{
           testID: "button-link-test",
-          label: I18n.t("authentication.unlock.loginIO"),
-          accessibilityLabel: I18n.t("authentication.unlock.loginIO"),
-          onPress: () =>
-            navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.AUTHENTICATION_LANDING
-            })
+          label:
+            identifier === "SPID"
+              ? I18n.t("global.buttons.close")
+              : I18n.t("authentication.unlock.loginIO"),
+          onPress: onPressActionButton
         }}
-      >
-        <SafeAreaView>
-          <ContentWrapper>
-            <View style={IOStyles.selfCenter}>
-              <Pictogram name="accessDenied" size={120} color="aqua" />
-            </View>
-            <VSpacer size={16} />
-            <View style={IOStyles.alignCenter}>
-              <H3 testID="title-test" weight="SemiBold">
-                {I18n.t("authentication.unlock.title")}
-              </H3>
-            </View>
-            <VSpacer size={16} />
-            <View>
-              <Body
-                weight="Regular"
-                style={{ textAlign: "center" }}
-                testID="subtitle-test"
-                color="grey-650"
-              >
-                {identifier === "SPID"
-                  ? I18n.t("authentication.unlock.subtitlel2")
-                  : I18n.t("authentication.unlock.subtitlel3")}
-              </Body>
-            </View>
-            <VSpacer size={16} />
-            <View style={IOStyles.selfCenter}>
-              <ButtonLink
-                label={I18n.t("authentication.unlock.learnmore")}
-                onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
-                testID="learn-more-link-test"
-              />
-            </View>
-          </ContentWrapper>
-          {veryLongAutoResizableBottomSheetWithFooter}
-        </SafeAreaView>
-      </GradientScrollView>
-    </BaseScreenComponent>
+      />
+      {veryLongAutoResizableBottomSheetWithFooter}
+    </>
   );
 };
 
