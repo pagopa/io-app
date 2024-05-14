@@ -46,15 +46,13 @@ export const SearchScreen = () => {
     if (isError) {
       IOToast.error(I18n.t("global.genericError"));
     }
+
+    return () => {
+      dispatch(searchPaginatedInstitutionsGet.cancel());
+    };
   }, [isError]);
 
-  const goBack = useCallback(() => {
-    dispatch(searchPaginatedInstitutionsGet.cancel());
-    navigation.goBack();
-  }, [dispatch, navigation]);
-
   useHeaderSecondLevel({
-    goBack,
     title: "",
     supportRequest: true
   });
@@ -122,7 +120,7 @@ export const SearchScreen = () => {
       return <InstitutionListSkeleton />;
     }
 
-    return null;
+    return <VSpacer size={16} />;
   }, [isLoading, query]);
 
   return (
@@ -150,6 +148,7 @@ export const SearchScreen = () => {
         keyExtractor={(item, index) => `institution-${item.id}-${index}`}
         renderItem={renderItem}
         onEndReached={handleEndReached}
+        onEndReachedThreshold={0.001}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         keyboardShouldPersistTaps="handled"
