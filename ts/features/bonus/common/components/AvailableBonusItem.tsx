@@ -1,7 +1,6 @@
 import { HSpacer } from "@pagopa/io-app-design-system";
-import { ListItem } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
@@ -22,8 +21,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   listItem: {
-    marginLeft: 0,
-    paddingRight: 0,
+    alignItems: "center",
     flexDirection: "row"
   },
   disabled: {
@@ -75,7 +73,8 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     bonusItem[getRemoteLocale()];
 
   return (
-    <ListItem
+    <Pressable
+      accessibilityRole="button"
       style={styles.listItem}
       onPress={props.onPress}
       testID={`AvailableBonusItem-${bonusItem.id_type}`}
@@ -104,6 +103,6 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
           />
         )}
       </View>
-    </ListItem>
+    </Pressable>
   );
 };

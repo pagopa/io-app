@@ -1,4 +1,5 @@
 import {
+  FooterWithButtons,
   Icon,
   PressableListItemBase,
   VSpacer
@@ -23,7 +24,6 @@ import { H4 } from "../../../../components/core/typography/H4";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -92,14 +92,6 @@ const getLocales = () => ({
   rightColumnTitle: I18n.t(
     "wallet.onboarding.paypal.updatePsp.rightColumnTitle"
   )
-});
-
-const backButtonProps = (onPress: () => void) => ({
-  testID: "backButtonID",
-  primary: false,
-  bordered: true,
-  onPress,
-  title: I18n.t("global.buttons.cancel")
 });
 
 const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
@@ -187,39 +179,49 @@ const PayPalPspUpdateScreen: React.FunctionComponent = () => {
       headerTitle={I18n.t("wallet.onboarding.paypal.updatePsp.headerTitle")}
     >
       {isReady(pspList) ? (
-        <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
-          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <VSpacer size={8} />
-            <H1>{locales.title}</H1>
-            <VSpacer size={8} />
-            <ScrollView>
-              <Body>{locales.body}</Body>
-              <VSpacer size={24} />
-              <PspListHeader
-                leftColumnTitle={locales.leftColumnTitle}
-                rightColumnTitle={locales.rightColumnTitle}
-              />
+        <>
+          <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
+            <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
               <VSpacer size={8} />
-              {pspList.value.map(psp => {
-                const paypalPsp = convertPspData(psp);
-                return (
-                  <PspItem
-                    psp={paypalPsp}
-                    key={`paypal_psp:${paypalPsp.id}`}
-                    onPress={() => {
-                      dispatch(pspSelectedForPaymentV2(psp));
-                      goBack();
-                    }}
-                  />
-                );
-              })}
-            </ScrollView>
-          </View>
+              <H1>{locales.title}</H1>
+              <VSpacer size={8} />
+              <ScrollView>
+                <Body>{locales.body}</Body>
+                <VSpacer size={24} />
+                <PspListHeader
+                  leftColumnTitle={locales.leftColumnTitle}
+                  rightColumnTitle={locales.rightColumnTitle}
+                />
+                <VSpacer size={8} />
+                {pspList.value.map(psp => {
+                  const paypalPsp = convertPspData(psp);
+                  return (
+                    <PspItem
+                      psp={paypalPsp}
+                      key={`paypal_psp:${paypalPsp.id}`}
+                      onPress={() => {
+                        dispatch(pspSelectedForPaymentV2(psp));
+                        goBack();
+                      }}
+                    />
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </SafeAreaView>
           <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={backButtonProps(goBack)}
+            type="SingleButton"
+            primary={{
+              type: "Outline",
+              buttonProps: {
+                label: I18n.t("global.buttons.cancel"),
+                accessibilityLabel: I18n.t("global.buttons.cancel"),
+                onPress: goBack,
+                testID: "backButtonID"
+              }
+            }}
           />
-        </SafeAreaView>
+        </>
       ) : (
         <LoadingErrorComponent
           testID={"PayPalPpsUpdateScreenLoadingError"}
