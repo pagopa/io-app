@@ -2,8 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { IOColors } from "@pagopa/io-app-design-system";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { UIMessage } from "../types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -144,19 +143,19 @@ export const useMessageOpening = () => {
       return (
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={{
-            bordered: true,
-            labelColor: IOColors.blue,
-            title: I18n.t("global.buttons.cancel"),
-            onPressWithGestureHandler: true,
-            onPress: () => modal.dismiss()
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.cancel"),
+              onPress: () => modal.dismiss()
+            }
           }}
-          rightButton={{
-            primary: true,
-            labelColor: IOColors.white,
-            title: I18n.t("global.buttons.updateIO"),
-            onPressWithGestureHandler: true,
-            onPress: openAppStore
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.updateIO"),
+              onPress: openAppStore
+            }
           }}
         />
       );

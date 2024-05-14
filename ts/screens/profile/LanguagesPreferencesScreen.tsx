@@ -1,8 +1,11 @@
-import { IOIconSizeScale } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  IOIconSizeScale,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { List } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
@@ -28,7 +31,6 @@ import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
-import { showToast } from "../../utils/showToast";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -113,7 +115,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<
 
     // update error
     if (pot.isUpdating(prevProps.profile) && pot.isError(this.props.profile)) {
-      showToast(I18n.t("errors.profileUpdateError"));
+      IOToast.error(I18n.t("errors.profileUpdateError"));
     }
   }
 
@@ -142,8 +144,8 @@ class LanguagesPreferencesScreen extends React.PureComponent<
         contextualHelpMarkdown={contextualHelpMarkdown}
         headerActionsProp={{ showHelp: true }}
       >
-        <View style={{ justifyContent: "space-between", flexGrow: 1 }}>
-          <List withContentLateralPadding={true}>
+        <View style={{ flexGrow: 1 }}>
+          <ContentWrapper>
             {availableTranslations.map((lang, index) => {
               const isSelectedLanguage = this.isAlreadyPreferred(lang);
               const languageTitle = I18n.t(`locales.${lang}`, {
@@ -167,7 +169,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<
                 />
               );
             })}
-          </List>
+          </ContentWrapper>
         </View>
       </RNavScreenWithLargeHeader>
     ));

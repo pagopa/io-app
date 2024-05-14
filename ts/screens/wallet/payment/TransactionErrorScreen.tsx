@@ -2,29 +2,31 @@
  * The screen to display to the user the various types of errors that occurred during the transaction.
  * Inside the cancel and retry buttons are conditionally returned.
  */
+import {
+  ButtonOutline,
+  ButtonSolid,
+  IOPictograms,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { Route, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { View, SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer, IOPictograms } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
@@ -65,7 +67,6 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
-import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
 
 export type TransactionErrorScreenNavigationParams = {
   error: O.Option<
@@ -126,7 +127,7 @@ type ScreenUIContents = {
   image: IOPictograms;
   title: string;
   subtitle?: React.ReactNode;
-  footerButtons?: ComponentProps<typeof FooterStackButton>["buttons"];
+  footerButtons?: ComponentProps<typeof FooterStackButton>;
 };
 
 const ErrorCodeCopyComponent = ({
@@ -176,38 +177,33 @@ export const errorTransactionUIElements = (
     }
   };
 
-  const sendReportButtonConfirm = [
-    confirmButtonProps(
-      requestAssistance,
-      I18n.t("wallet.errors.sendReport"),
-      undefined,
-      "sendReportButtonConfirm"
-    )
-  ];
-  const sendReportButtonCancel = [
-    cancelButtonProps(
-      requestAssistance,
-      I18n.t("wallet.errors.sendReport"),
-      undefined,
-      "sendReportButtonCancel"
-    )
-  ];
-  const closeButtonCancel = [
-    cancelButtonProps(
-      onCancel,
-      I18n.t("global.buttons.close"),
-      undefined,
-      "closeButtonCancel"
-    )
-  ];
-  const closeButtonConfirm = [
-    confirmButtonProps(
-      onCancel,
-      I18n.t("global.buttons.close"),
-      undefined,
-      "closeButtonConfirm"
-    )
-  ];
+  const sendReportButtonConfirm: ComponentProps<typeof ButtonSolid> = {
+    onPress: requestAssistance,
+    label: I18n.t("wallet.errors.sendReport"),
+    accessibilityLabel: I18n.t("wallet.errors.sendReport"),
+    testID: "sendReportButtonConfirm"
+  };
+
+  const closeButtonConfirm: ComponentProps<typeof ButtonSolid> = {
+    onPress: onCancel,
+    label: I18n.t("global.buttons.close"),
+    accessibilityLabel: I18n.t("global.buttons.close"),
+    testID: "closeButtonConfirm"
+  };
+
+  const sendReportButtonCancel: ComponentProps<typeof ButtonOutline> = {
+    onPress: requestAssistance,
+    label: I18n.t("wallet.errors.sendReport"),
+    accessibilityLabel: I18n.t("wallet.errors.sendReport"),
+    testID: "sendReportButtonCancel"
+  };
+
+  const closeButtonCancel: ComponentProps<typeof ButtonOutline> = {
+    onPress: onCancel,
+    label: I18n.t("global.buttons.close"),
+    accessibilityLabel: I18n.t("global.buttons.close"),
+    testID: "closeButtonCancel"
+  };
 
   const errorORUndefined = O.toUndefined(maybeError);
 
@@ -215,7 +211,7 @@ export const errorTransactionUIElements = (
     return {
       image: imageTimeout,
       title: I18n.t("wallet.errors.MISSING_PAYMENT_ID"),
-      footerButtons: [...closeButtonCancel]
+      footerButtons: { primaryActionProps: { ...closeButtonCancel } }
     };
   }
 
@@ -243,8 +239,11 @@ export const errorTransactionUIElements = (
         title: I18n.t("wallet.errors.TECHNICAL"),
         subtitle,
         footerButtons: canShowHelpButton
-          ? [...sendReportButtonConfirm, ...closeButtonCancel]
-          : [...closeButtonCancel]
+          ? {
+              primaryActionProps: { ...sendReportButtonConfirm },
+              secondaryActionProps: { ...closeButtonCancel }
+            }
+          : { primaryActionProps: { ...closeButtonCancel } }
       };
     case "DATA":
       return {
@@ -252,8 +251,11 @@ export const errorTransactionUIElements = (
         title: I18n.t("wallet.errors.DATA"),
         subtitle,
         footerButtons: canShowHelpButton
-          ? [...closeButtonConfirm, ...sendReportButtonCancel]
-          : [...closeButtonConfirm]
+          ? {
+              primaryActionProps: { ...closeButtonConfirm },
+              secondaryActionProps: { ...sendReportButtonCancel }
+            }
+          : { primaryActionProps: { ...closeButtonConfirm } }
       };
     case "EC":
       return {
@@ -261,14 +263,17 @@ export const errorTransactionUIElements = (
         title: I18n.t("wallet.errors.EC"),
         subtitle,
         footerButtons: canShowHelpButton
-          ? [...sendReportButtonConfirm, ...closeButtonCancel]
-          : [...closeButtonCancel]
+          ? {
+              primaryActionProps: { ...sendReportButtonConfirm },
+              secondaryActionProps: { ...closeButtonCancel }
+            }
+          : { primaryActionProps: { ...closeButtonCancel } }
       };
     case "DUPLICATED":
       return {
         image,
         title: I18n.t("wallet.errors.DUPLICATED"),
-        footerButtons: [...closeButtonCancel]
+        footerButtons: { primaryActionProps: { ...closeButtonCancel } }
       };
     case "ONGOING":
       return {
@@ -284,8 +289,13 @@ export const errorTransactionUIElements = (
           </H4>
         ),
         footerButtons: canShowHelpButton
-          ? [...closeButtonConfirm, ...sendReportButtonCancel]
-          : [...closeButtonConfirm]
+          ? {
+              primaryActionProps: { ...closeButtonConfirm },
+              secondaryActionProps: { ...sendReportButtonCancel }
+            }
+          : {
+              primaryActionProps: { ...closeButtonConfirm }
+            }
       };
     case "EXPIRED":
       return {
@@ -300,7 +310,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H4>
         ),
-        footerButtons: [...closeButtonCancel]
+        footerButtons: { primaryActionProps: { ...closeButtonCancel } }
       };
     case "REVOKED":
       return {
@@ -315,7 +325,9 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H4>
         ),
-        footerButtons: [...closeButtonCancel]
+        footerButtons: {
+          primaryActionProps: { ...closeButtonCancel }
+        }
       };
     case "NOT_FOUND":
       return {
@@ -330,7 +342,7 @@ export const errorTransactionUIElements = (
             {I18n.t("wallet.errors.NOT_FOUND_SUBTITLE")}
           </H4>
         ),
-        footerButtons: [...closeButtonConfirm]
+        footerButtons: { primaryActionProps: { ...closeButtonConfirm } }
       };
     case "UNCOVERED":
     default:
@@ -343,8 +355,13 @@ export const errorTransactionUIElements = (
           </H4>
         ),
         footerButtons: canShowHelpButton
-          ? [...closeButtonConfirm, ...sendReportButtonCancel]
-          : [...closeButtonConfirm]
+          ? {
+              primaryActionProps: { ...closeButtonConfirm },
+              secondaryActionProps: { ...sendReportButtonCancel }
+            }
+          : {
+              primaryActionProps: { ...closeButtonConfirm }
+            }
       };
   }
 };
@@ -390,7 +407,7 @@ const TransactionErrorScreen = (props: Props) => {
     <BaseScreenComponent>
       <SafeAreaView style={IOStyles.flex}>
         <InfoAltScreenComponent image={image} title={title} body={subtitle} />
-        {footerButtons && <FooterStackButton buttons={footerButtons} />}
+        {footerButtons && <FooterStackButton {...footerButtons} />}
       </SafeAreaView>
     </BaseScreenComponent>
   );

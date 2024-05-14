@@ -1,8 +1,7 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet, View } from "react-native";
+import { ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
@@ -65,7 +64,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
 
   public render() {
     return (
-      <Content style={styles.container}>
+      <View style={styles.container}>
         <React.Fragment>
           <Image
             accessibilityIgnoresInvertColors
@@ -80,17 +79,12 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
         <VSpacer size={16} />
         <Body>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Body>
         <VSpacer size={16} />
-
-        <Button
-          block={true}
-          primary={true}
-          disabled={false}
+        <ButtonSolid
+          label={I18n.t("wallet.alert.btnUpdateApp")}
+          fullWidth
+          accessibilityLabel={I18n.t("wallet.alert.btnUpdateApp")}
           onPress={this.openAppStore}
-        >
-          {/* ButtonText */}
-          <NBButtonText>{I18n.t("wallet.alert.btnUpdateApp")}</NBButtonText>
-        </Button>
-
+        />
         <VSpacer size={16} />
         {this.state.hasError && (
           <React.Fragment>
@@ -100,7 +94,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
             </View>
           </React.Fragment>
         )}
-      </Content>
+      </View>
     );
   }
 }
