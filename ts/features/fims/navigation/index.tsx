@@ -1,16 +1,10 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { isGestureEnabled } from "../../../utils/navigation";
 import {
-  fimsGetConsentsListAction,
-  fimsGetRedirectUrlAndOpenBrowserAction
-} from "../store/actions";
-import { fimsConsentsSelector } from "../store/selectors";
+  FimsFlowHandlerScreen,
+  FimsFlowHandlerScreenRouteParams
+} from "../screens/FimsFlowHandlerScreen";
 
 export const FIMS_ROUTES = {
   MAIN: "FIMS_MAIN",
@@ -19,7 +13,7 @@ export const FIMS_ROUTES = {
 
 export type FimsParamsList = {
   [FIMS_ROUTES.MAIN]: undefined;
-  [FIMS_ROUTES.CONSENTS]: { ctaUrl: string };
+  [FIMS_ROUTES.CONSENTS]: FimsFlowHandlerScreenRouteParams;
 };
 
 const Stack = createStackNavigator<FimsParamsList>();
@@ -27,46 +21,11 @@ const Stack = createStackNavigator<FimsParamsList>();
 export const FimsNavigator = () => (
   <Stack.Navigator
     initialRouteName={FIMS_ROUTES.MAIN}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: true }}
   >
-    <Stack.Screen name={FIMS_ROUTES.CONSENTS} component={TestingFimsScreen} />
+    <Stack.Screen
+      name={FIMS_ROUTES.CONSENTS}
+      component={FimsFlowHandlerScreen}
+    />
   </Stack.Navigator>
 );
-
-const TestingFimsScreen = () => {
-  const routeProps = useRoute<Route<"FIMS_CONSENTS", { ctaUrl: string }>>();
-  const { ctaUrl } = routeProps.params;
-  const dispatch = useDispatch();
-
-  const consents = pot.getOrElse(useSelector(fimsConsentsSelector), undefined);
-  const navigation = useNavigation();
-
-  React.useEffect(() => {
-    if (ctaUrl) {
-      dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
-    }
-  }, [ctaUrl, dispatch]);
-  if (consents === undefined) {
-    return <LoadingScreenContent contentTitle="loading..." />;
-  } else {
-    const parsedGrants: Array<string> = JSON.parse(consents.body).grants;
-    return (
-      <OperationResultScreenContent
-        title={`grant ${parsedGrants.join(",")} ?`}
-        action={{
-          label: "accept",
-          onPress: () =>
-            dispatch(
-              fimsGetRedirectUrlAndOpenBrowserAction.request({
-                acceptUrl: consents.headers["confirm-url"]
-              })
-            )
-        }}
-        secondaryAction={{
-          label: "deny",
-          onPress: () => navigation.goBack() // TODO::: clear store on back nav
-        }}
-      />
-    );
-  }
-};

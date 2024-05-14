@@ -1,18 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { Action } from "../../../../store/actions/types";
+import { HttpClientSuccessResponse } from "../../__mocks__/mockFIMSCallbacks";
 import {
   fimsGetConsentsListAction,
-  fimsGetRedirectUrlAndOpenBrowserAction
+  fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
-import { Action } from "../../../../store/actions/types";
 export type FimsState = {
   ctaUrl?: string;
-  consents: pot.Pot<any, Error>;
+  consentsData: pot.Pot<HttpClientSuccessResponse, Error>;
 };
 
 const INITIAL_STATE: FimsState = {
   ctaUrl: undefined,
-  consents: pot.none
+  consentsData: pot.none
 };
 
 const reducer = (
@@ -23,23 +24,18 @@ const reducer = (
     case getType(fimsGetConsentsListAction.request):
       return {
         ctaUrl: action.payload.ctaUrl,
-        consents: pot.noneLoading
+        consentsData: pot.noneLoading
       };
     case getType(fimsGetConsentsListAction.success):
       return {
         ...state,
-        consents: pot.some(action.payload)
+        consentsData: pot.some(action.payload)
       };
-    case getType(fimsGetConsentsListAction.failure):
-      return state;
-    case getType(fimsGetRedirectUrlAndOpenBrowserAction.request):
+    case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {
         ...state,
-        consents: pot.none
+        consentsData: pot.none
       };
-    case getType(fimsGetRedirectUrlAndOpenBrowserAction.success):
-    case getType(fimsGetRedirectUrlAndOpenBrowserAction.failure):
-      return state;
   }
   return state;
 };

@@ -6,10 +6,10 @@ import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
 import {
   mockHttpNativeCall,
   mockSetNativeCookie
-} from "../../pushNotifications/sagas/mockFIMSCallbacks";
+} from "../__mocks__/mockFIMSCallbacks";
 import {
   fimsGetConsentsListAction,
-  fimsGetRedirectUrlAndOpenBrowserAction
+  fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
 import { fimsCTAUrlSelector } from "../store/selectors";
 
@@ -19,33 +19,34 @@ export function* watchFimsSaga(): SagaIterator {
     handleFimsGetConsentsList
   );
   yield* takeLatest(
-    fimsGetRedirectUrlAndOpenBrowserAction.request,
-    handleFimsGetRedirectUrlAndOpenBrowser
+    fimsGetRedirectUrlAndOpenIABAction.request,
+    handleFimsGetRedirectUrlAndOpenIAB
   );
 }
 
 function* handleFimsGetConsentsList() {
-  // action: ActionType<(typeof fimsGetConsentsListAction)["request"]>
-  // ) {
-  //   NavigationService.navigate(FIMS_ROUTES.MAIN, {
-  //     screen: FIMS_ROUTES.CONSENTS
-  //   }); // TODO:: maybe move navigation in saga from utils
+  // TODO:: maybe move navigation here from utils
 
   const fimsToken = yield* select(fimsTokenSelector);
   const oIDCProviderUrl = yield* select(fimsDomainSelector);
   const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
 
-  // in paper it looks cleaner to use FP-TS for this, but it does not play well with generator functions
   if (
     fimsToken === undefined ||
     oIDCProviderUrl === undefined ||
     fimsCTAUrl === undefined
   ) {
-    yield* put(fimsGetConsentsListAction.failure(new Error()));
+    // TODO:: proper error handling
+    yield* put(fimsGetConsentsListAction.failure(new Error("missing data")));
     return;
   }
 
-  mockSetNativeCookie(oIDCProviderUrl, "X-IO-Federation-Token", fimsToken);
+  yield* call(
+    mockSetNativeCookie,
+    oIDCProviderUrl,
+    "X-IO-Federation-Token",
+    fimsToken
+  );
 
   const getConsentsResult = yield* call(mockHttpNativeCall, {
     verb: "get",
@@ -55,8 +56,10 @@ function* handleFimsGetConsentsList() {
 
   yield* put(fimsGetConsentsListAction.success(getConsentsResult));
 }
-function* handleFimsGetRedirectUrlAndOpenBrowser(
-  action: ActionType<(typeof fimsGetRedirectUrlAndOpenBrowserAction)["request"]>
+
+// note: IAB => InAppBrowser
+function* handleFimsGetRedirectUrlAndOpenIAB(
+  action: ActionType<(typeof fimsGetRedirectUrlAndOpenIABAction)["request"]>
 ) {
   // TODO:: get auth code and nonce, then sign with lollipop, HTTP GET and open IAB
   const rpUrl = yield* call(recurseUntilRPUrl, action.payload.acceptUrl);
