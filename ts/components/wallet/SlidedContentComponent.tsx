@@ -11,7 +11,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IOColors.milderGray
+    backgroundColor: IOColors.bluegrey
   },
   content: {
     borderRadius: 8,

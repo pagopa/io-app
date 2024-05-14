@@ -2533,7 +2533,7 @@ bonus:
       online: Online
       places: Places
       navigationTitle: Benefits
-      screenTitle: Find the benefits
+      screenTitle: Select an operator and discover benefits and opportunities
       merchantsAll: All the operators
       cta:
         filter: Filter
@@ -2569,7 +2569,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Benefits
+        deals: Deals and opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -3037,6 +3037,17 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+      nfc:
+        title: Attiva l'NFC per continuare
+        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
+        header: "Ecco come:"
+        steps:
+          label: Step {{value}}
+          1: Vai alle impostazioni
+          2: Cerca "NFC"
+          3: Attivalo
+        primaryAction: Vai alle impostazioni
+        secondaryAction: Ho fatto
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
