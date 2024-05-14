@@ -2,8 +2,8 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import React, { useCallback, useEffect, useState } from "react";
-import { Alert, BackHandler, NativeEventSubscription } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { BackHandler, NativeEventSubscription } from "react-native";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation
@@ -16,8 +16,6 @@ import {
   loginSuccess
 } from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
-import I18n from "../../../i18n";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { onLoginUriChanged } from "../../../utils/login";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { trackLoginCieDataSharingError } from "../analytics/cieAnalytics";
@@ -25,6 +23,7 @@ import { originSchemasWhiteList } from "../originSchemasWhiteList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import ROUTES from "../../../navigation/routes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import CieConsentDataUsageRenderComponent from "./components/CieConsentDataUsageRenderComponent";
 
 export type CieConsentDataUsageScreenNavigationParams = {
@@ -48,8 +47,8 @@ const CieConsentDataUsageScreen = () => {
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
   const [errorCode, setErrorCode] = useState<string | undefined>();
-  // eslint-disable-next-line functional/no-let
-  let subscription: NativeEventSubscription | undefined;
+  const { showAlert } = useOnboardingAbortAlert();
+  const subscription = useRef<NativeEventSubscription | undefined>();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
     (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
@@ -79,34 +78,20 @@ const CieConsentDataUsageScreen = () => {
       navigateToLandingScreen();
       return true;
     }
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: navigateToLandingScreen
-        }
-      ]
-    );
+    showAlert();
     return true;
-  }, [hasError, navigateToLandingScreen]);
+  }, [hasError, navigateToLandingScreen, showAlert]);
 
-  useOnFirstRender(() => {
-    subscription = BackHandler.addEventListener(
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    subscription.current = BackHandler.addEventListener(
       "hardwareBackPress",
       showAbortAlert
     );
-  });
+    return () => subscription.current?.remove();
+  }, [showAbortAlert]);
 
-  useEffect(() => () => subscription?.remove(), [subscription]);
-
-  const handleWebViewError = () => setHasError(true);
+  const handleWebViewError = useCallback(() => setHasError(true), []);
 
   const handleHttpError = useCallback(
     (event: WebViewHttpErrorEvent) => {
