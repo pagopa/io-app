@@ -2097,6 +2097,11 @@ services:
       retry: "Retry"
     header:
       subtitle: "{{count}} available services"
+  search:
+    input:
+      placeholder: "Cerca un ente nazionale o locale"
+    emptyState:
+      title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
