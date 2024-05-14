@@ -15,7 +15,6 @@ import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthor
 import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
-import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinLockedTemporarilyScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
@@ -115,15 +114,18 @@ const AuthenticationStackNavigator = () => (
       component={CieConsentDataUsageScreen}
     />
 
-    <Stack.Screen
-      name={ROUTES.CIE_WRONG_PIN_SCREEN}
-      component={CieWrongCiePinScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN}
-      component={CiePinLockedTemporarilyScreen}
-    />
+    <Stack.Group
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        ...TransitionPresets.ModalSlideFromBottomIOS
+      }}
+    >
+      <Stack.Screen
+        name={ROUTES.CIE_WRONG_PIN_SCREEN}
+        component={CieWrongCiePinScreen}
+      />
+    </Stack.Group>
 
     <Stack.Group
       screenOptions={{

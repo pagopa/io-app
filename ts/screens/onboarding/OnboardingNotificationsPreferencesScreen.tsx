@@ -1,31 +1,31 @@
+import {
+  ContentWrapper,
+  Divider,
+  FooterWithButtons,
+  IOColors,
+  IOToast,
+  IOVisualCostants,
+  NativeSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
+import { pipe } from "fp-ts/lib/function";
 import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useSelector, useStore } from "react-redux";
-import {
-  IOColors,
-  Divider,
-  VSpacer,
-  ContentWrapper,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { PreferencesListItem } from "../../components/PreferencesListItem";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOBadge } from "../../components/core/IOBadge";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { H5 } from "../../components/core/typography/H5";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { PreferencesListItem } from "../../components/PreferencesListItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
@@ -33,10 +33,9 @@ import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch } from "../../store/hooks";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
-import { showToast } from "../../utils/showToast";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import {
   trackNotificationPreferenceConfiguration,
   trackNotificationScreen,
@@ -71,26 +70,6 @@ type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
   "ONBOARDING_NOTIFICATIONS_PREFERENCES"
 >;
-
-const continueButtonProps = (
-  isLoading: boolean,
-  onPress: () => void
-): BlockButtonProps => ({
-  block: true,
-  onPress,
-  title: I18n.t("onboarding.notifications.continue"),
-  isLoading
-});
-
-const loadingButtonProps = (): BlockButtonProps => ({
-  block: true,
-  onPress: undefined,
-  title: "",
-  disabled: true,
-  style: { backgroundColor: IOColors.greyLight, width: "100%" },
-  isLoading: true,
-  iconColor: "bluegreyDark"
-});
 
 const CustomGoBack = memo(
   ({ isFirstOnboarding }: { isFirstOnboarding: boolean }) =>
@@ -171,7 +150,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   useEffect(() => {
     if (isError && !isUpdating) {
-      showToast(I18n.t("profile.preferences.notifications.error"));
+      IOToast.error(I18n.t("profile.preferences.notifications.error"));
     }
   }, [isError, isUpdating]);
 
@@ -241,7 +220,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 moreInfoTap: present
               }}
               rightElement={
-                <Switch
+                <NativeSwitch
                   value={previewEnabled}
                   onValueChange={setPreviewEnabled}
                   disabled={isUpdating}
@@ -258,7 +237,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 "profile.preferences.notifications.reminders.description"
               )}
               rightElement={
-                <Switch
+                <NativeSwitch
                   value={remindersEnabled}
                   onValueChange={setRemindersEnabled}
                   disabled={isUpdating}
@@ -291,15 +270,19 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
         </ScrollView>
 
         {bottomSheet}
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={
-            isUpdating
-              ? loadingButtonProps()
-              : continueButtonProps(isUpdating, upsertPreferences)
-          }
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("onboarding.notifications.continue"),
+            accessibilityLabel: I18n.t("onboarding.notifications.continue"),
+            onPress: upsertPreferences,
+            loading: isUpdating
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

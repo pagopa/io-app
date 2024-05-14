@@ -64,6 +64,7 @@ const delay = 100 as Millisecond;
  * When {@link Props.isLoading} is false, display a {@link GenericErrorComponent} displaying the reasons of the error
  * and two buttons to cancel the operation or retry.
  * @param props
+ * @deprecated Use `OperationResultScreen` instead
  * @constructor
  */
 export const LoadingErrorComponent: React.FunctionComponent<
@@ -73,11 +74,13 @@ export const LoadingErrorComponent: React.FunctionComponent<
     setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
   }, [props.isLoading]);
 
-  return (
+  return props.isLoading ? (
     <SafeAreaView style={IOStyles.flex} testID={props.testID}>
-      {props.isLoading
-        ? renderLoading(props.loadingCaption, props.loadingSubtitle)
-        : renderError(props)}
+      {renderLoading(props.loadingCaption, props.loadingSubtitle)}
     </SafeAreaView>
+  ) : (
+    <View style={IOStyles.flex} testID={props.testID}>
+      {renderError(props)}
+    </View>
   );
 };

@@ -10,11 +10,10 @@ import {
   NativeSyntheticEvent,
   RefreshControl,
   SectionList,
-  SectionListData,
-  StyleSheet
+  SectionListData
 } from "react-native";
+import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import {
   TabBarItemPressType,
@@ -43,13 +42,6 @@ type OwnProps = {
 };
 
 type Props = OwnProps & AnimatedProps & TabBarItemPressType;
-
-const styles = StyleSheet.create({
-  padded: {
-    marginLeft: customVariables.contentPadding,
-    marginRight: customVariables.contentPadding
-  }
-});
 
 class ServiceList extends React.Component<Props> {
   componentDidMount() {
@@ -94,7 +86,6 @@ class ServiceList extends React.Component<Props> {
   }): React.ReactNode => (
     <SectionHeaderComponent
       sectionHeader={info.section.organizationName}
-      style={styles.padded}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
       accessibilityRole={"header"}
     />
@@ -110,6 +101,9 @@ class ServiceList extends React.Component<Props> {
 
     return (
       <Animated.SectionList
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         ref={sectionListRef}
         scrollEnabled={true}
         scrollEventThrottle={

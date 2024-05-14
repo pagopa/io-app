@@ -1,16 +1,19 @@
+import {
+  Body,
+  FooterWithButtons,
+  H4,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { Body, H4, Pictogram, VSpacer } from "@pagopa/io-app-design-system";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import I18n from "../../../../i18n";
-import {
-  BaseEuCovidCertificateLayout,
-  BaseSingleButtonFooter
-} from "../BaseEuCovidCertificateLayout";
 import { useIODispatch } from "../../../../store/hooks";
-import { euCovidCertificateGet } from "../../store/actions";
 import { EUCovidContext } from "../../components/EUCovidContext";
+import { euCovidCertificateGet } from "../../store/actions";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 const styles = StyleSheet.create({
   container: {
@@ -52,9 +55,16 @@ export const EuCovidCertGenericErrorKoScreen = (): React.ReactElement => {
       testID={"EuCovidCertGenericErrorKoScreen"}
       content={<EuCovidCertGenericErrorKoComponent />}
       footer={
-        <BaseSingleButtonFooter
-          onPress={reloadCertificate}
-          title={I18n.t("global.buttons.retry")}
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.retry"),
+              accessibilityLabel: I18n.t("global.buttons.retry"),
+              onPress: reloadCertificate
+            }
+          }}
         />
       }
     />

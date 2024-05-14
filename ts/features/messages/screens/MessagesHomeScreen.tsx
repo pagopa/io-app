@@ -1,35 +1,20 @@
+import { IOColors, IOToast } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { useMessageOpening } from "../hooks/useMessageOpening";
-import MessageList from "../components/MessageList";
-import MessagesSearch from "../components/MessagesSearch";
+import SectionStatusComponent from "../../../components/SectionStatus";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
-import SectionStatusComponent from "../../../components/SectionStatus";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { useSecuritySuggestionsBottomSheet } from "../../../hooks/useSecuritySuggestionBottomSheet";
 import I18n from "../../../i18n";
-import MessagesHomeTabNavigator from "../navigation/MessagesHomeTabNavigator";
-import {
-  migrateToPaginatedMessages,
-  resetMigrationStatus
-} from "../store/actions";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
-import {
-  allInboxAndArchivedMessagesSelector,
-  allPaginatedSelector
-} from "../store/reducers/allPaginated";
-import {
-  MessagesStatus,
-  messagesStatusSelector
-} from "../store/reducers/messagesStatus";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
@@ -40,8 +25,22 @@ import {
   useScreenReaderEnabled
 } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../../utils/showToast";
-import { useSecuritySuggestionsBottomSheet } from "../../../hooks/useSecuritySuggestionBottomSheet";
+import MessageList from "../components/MessageList";
+import MessagesSearch from "../components/MessagesSearch";
+import { useMessageOpening } from "../hooks/useMessageOpening";
+import MessagesHomeTabNavigator from "../navigation/MessagesHomeTabNavigator";
+import {
+  migrateToPaginatedMessages,
+  resetMigrationStatus
+} from "../store/actions";
+import {
+  allInboxAndArchivedMessagesSelector,
+  allPaginatedSelector
+} from "../store/reducers/allPaginated";
+import {
+  MessagesStatus,
+  messagesStatusSelector
+} from "../store/reducers/messagesStatus";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -90,7 +89,7 @@ const MessagesHomeScreen = ({
           operation: l.operation,
           archive: I18n.t("messages.operations.archive.failure"),
           restore: I18n.t("messages.operations.restore.failure"),
-          type: "danger" as const
+          type: "error" as const
         }),
         r => ({
           operation: r,
@@ -99,7 +98,7 @@ const MessagesHomeScreen = ({
           type: "success" as const
         })
       ),
-      lmo => showToast(lmo[lmo.operation], lmo.type)
+      lmo => IOToast[lmo.type](lmo[lmo.operation])
     );
   }, [latestMessageOperation]);
 
@@ -122,6 +121,7 @@ const MessagesHomeScreen = ({
         disableAccessibilityFocus: messageSectionStatusActive
       }}
       hideBaseHeader={!isSearchEnabled}
+      hideSafeArea={isSearchEnabled}
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["messages"]}
