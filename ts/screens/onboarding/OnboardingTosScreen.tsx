@@ -14,7 +14,6 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { createRef, useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useStore } from "react-redux";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
@@ -128,43 +127,41 @@ const OnboardingTosScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
-      <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H2
-            accessible={true}
-            accessibilityRole="header"
-            testID="screen-content-header-title"
-          >
-            {I18n.t("profile.main.privacy.privacyPolicy.title")}
-          </H2>
-          <VSpacer size={16} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <H2
+          accessible={true}
+          accessibilityRole="header"
+          testID="screen-content-header-title"
+        >
+          {I18n.t("profile.main.privacy.privacyPolicy.title")}
+        </H2>
+        <VSpacer size={16} />
+      </View>
+      {!hasAcceptedCurrentTos && (
+        <View
+          style={IOStyles.horizontalContentPadding}
+          testID={"currentToSNotAcceptedView"}
+        >
+          <AlertDS
+            viewRef={viewRef}
+            testID="currentToSNotAcceptedText"
+            variant="info"
+            content={
+              hasAcceptedOldTosVersion
+                ? I18n.t("profile.main.privacy.privacyPolicy.updated")
+                : I18n.t("profile.main.privacy.privacyPolicy.infobox")
+            }
+          />
         </View>
-        {!hasAcceptedCurrentTos && (
-          <View
-            style={IOStyles.horizontalContentPadding}
-            testID={"currentToSNotAcceptedView"}
-          >
-            <AlertDS
-              viewRef={viewRef}
-              testID="currentToSNotAcceptedText"
-              variant="info"
-              content={
-                hasAcceptedOldTosVersion
-                  ? I18n.t("profile.main.privacy.privacyPolicy.updated")
-                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")
-              }
-            />
-          </View>
-        )}
-        <TosWebviewComponent
-          flow={flow}
-          handleLoadEnd={handleLoadEnd}
-          handleReload={handleReload}
-          webViewSource={{ uri: privacyUrl }}
-          shouldRenderFooter={!isLoading}
-          onAcceptTos={onAcceptTos}
-        />
-      </SafeAreaView>
+      )}
+      <TosWebviewComponent
+        flow={flow}
+        handleLoadEnd={handleLoadEnd}
+        handleReload={handleReload}
+        webViewSource={{ uri: privacyUrl }}
+        shouldRenderFooter={!isLoading}
+        onAcceptTos={onAcceptTos}
+      />
     </LoadingSpinnerOverlay>
   );
 };
