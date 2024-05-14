@@ -2,8 +2,7 @@ import * as React from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { IOColors } from "@pagopa/io-app-design-system";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { UIMessage } from "../../types";
 import { useIOSelector } from "../../../../store/hooks";
 import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
@@ -48,19 +47,19 @@ export const PreconditionFooter = ({
   return (
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
-      leftButton={{
-        bordered: true,
-        labelColor: IOColors.blue,
-        title: I18n.t("global.buttons.cancel"),
-        onPressWithGestureHandler: true,
-        onPress: handleCancelPress
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          label: I18n.t("global.buttons.cancel"),
+          onPress: handleCancelPress
+        }
       }}
-      rightButton={{
-        primary: true,
-        labelColor: IOColors.white,
-        title: I18n.t("global.buttons.continue"),
-        onPressWithGestureHandler: true,
-        onPress: handleContinuePress
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          label: I18n.t("global.buttons.continue"),
+          onPress: handleContinuePress
+        }
       }}
     />
   );
