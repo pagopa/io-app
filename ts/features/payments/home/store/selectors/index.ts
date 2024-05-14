@@ -2,12 +2,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { latestTransactionsSelector } from "../../../../../store/reducers/wallet/transactions";
 import { paymentsWalletUserMethodsSelector } from "../../../wallet/store/selectors";
+import { walletTransactionsListPotSelector } from "../../../transaction/store/selectors";
 
 export const isPaymentsSectionLoadingSelector = createSelector(
   paymentsWalletUserMethodsSelector,
-  latestTransactionsSelector,
+  walletTransactionsListPotSelector,
   (methodsPot, transactionsPot) =>
     pot.isLoading(methodsPot) || pot.isLoading(transactionsPot)
 );
@@ -22,13 +22,10 @@ export const isPaymentsMethodsEmptySelector = createSelector(
 );
 
 export const isPaymentsTransactionsEmptySelector = createSelector(
-  latestTransactionsSelector,
+  walletTransactionsListPotSelector,
   transactionsPot =>
     pot.getOrElse(
-      pot.map(
-        transactionsPot,
-        transactions => _.values(transactions).length === 0
-      ),
+      pot.map(transactionsPot, transactions => transactions.length === 0),
       false
     )
 );

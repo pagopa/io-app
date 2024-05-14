@@ -1,5 +1,6 @@
 import { createClient } from "../../../../../definitions/pagopa/walletv3/client";
 import { createClient as createECommerceClient } from "../../../../../definitions/pagopa/ecommerce/client";
+import { createClient as createBizEventsClient } from "../../../../../definitions/pagopa/biz-events/client";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 export const createWalletClient = (baseUrl: string, bearerAuth: string) =>
@@ -32,5 +33,21 @@ export const createPaymentClient = (baseUrl: string, token: string) =>
     }
   });
 
+export const createTransactionClient = (baseUrl: string, token: string) =>
+  createBizEventsClient<"walletId">({
+    baseUrl,
+    basePath: "/bizevents/bizevents/tx-service-jwt/v1",
+    fetchApi: defaultRetryingFetch(),
+    withDefaults: op => params => {
+      const paramsWithDefaults = {
+        ...params,
+        walletId: token
+      } as Parameters<typeof op>[0];
+
+      return op(paramsWithDefaults);
+    }
+  });
+
 export type PaymentClient = ReturnType<typeof createPaymentClient>;
 export type WalletClient = ReturnType<typeof createWalletClient>;
+export type TransactionClient = ReturnType<typeof createTransactionClient>;

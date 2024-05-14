@@ -9,12 +9,12 @@ import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import { default as I18n } from "../../../../i18n";
-import { fetchTransactionsRequestWithExpBackoff } from "../../../../store/actions/wallet/transactions";
+import { getPaymentsTransactionsAction } from "../../transaction/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { latestTransactionsSelector } from "../../../../store/reducers/wallet/transactions";
+import { walletTransactionsListPotSelector } from "../../transaction/store/selectors";
 import { isPaymentsTransactionsEmptySelector } from "../store/selectors";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
-import { PaymentsListItemTransaction } from "./PaymentsListItemTransaction";
+import { PaymentsBizEventsListItemTransaction } from "./PaymentsBizEventsListItemTransaction";
 
 type Props = {
   enforcedLoadingState?: boolean;
@@ -23,14 +23,14 @@ type Props = {
 const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
 
-  const transactionsPot = useIOSelector(latestTransactionsSelector);
+  const transactionsPot = useIOSelector(walletTransactionsListPotSelector);
 
   const isLoading = pot.isLoading(transactionsPot) || enforcedLoadingState;
   const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 }));
+      dispatch(getPaymentsTransactionsAction.request({}));
     }, [dispatch])
   );
 
@@ -39,8 +39,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
           {transactionsPot.value.map(transaction => (
-            <PaymentsListItemTransaction
-              key={`transaction_${transaction.id}`}
+            <PaymentsBizEventsListItemTransaction
+              key={`transaction_${transaction.transactionId}`}
               transaction={transaction}
             />
           ))}

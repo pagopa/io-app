@@ -5,3 +5,6 @@ const walletTransactionSelector = (state: GlobalState) =>
 
 export const walletTransactionDetailsPotSelector = (state: GlobalState) =>
   walletTransactionSelector(state).details;
+
+export const walletTransactionsListPotSelector = (state: GlobalState) =>
+  walletTransactionSelector(state).transactions;
