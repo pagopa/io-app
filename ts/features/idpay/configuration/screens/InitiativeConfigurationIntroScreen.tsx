@@ -1,5 +1,6 @@
 import {
   Body,
+  FooterWithButtons,
   H1,
   IOColors,
   IOStyles,
@@ -17,7 +18,6 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { LOADING_TAG } from "../../../../xstate/utils";
@@ -137,14 +137,20 @@ const InitiativeConfigurationIntroScreen = () => {
               ))}
             </View>
           </ScrollView>
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              title: I18n.t("idpay.configuration.intro.buttons.continue"),
-              onPress: handleContinuePress
-            }}
-          />
         </SafeAreaView>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("idpay.configuration.intro.buttons.continue"),
+              accessibilityLabel: I18n.t(
+                "idpay.configuration.intro.buttons.continue"
+              ),
+              onPress: handleContinuePress
+            }
+          }}
+        />
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
