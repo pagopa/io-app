@@ -1,34 +1,29 @@
-import * as React from "react";
-import { useState } from "react";
-import _ from "lodash";
-import { Body, Container, Left, Right } from "native-base";
 import {
-  View,
+  FooterWithButtons,
+  HeaderSecondLevel,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import _ from "lodash";
+import * as React from "react";
+import { useMemo, useState } from "react";
+import {
   FlatList,
   Keyboard,
   ListRenderItemInfo,
+  Platform,
   SafeAreaView,
   ScrollView,
-  Platform
+  View
 } from "react-native";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
-import AppHeader from "../../../../../components/ui/AppHeader";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { H5 } from "../../../../../components/core/typography/H5";
-import I18n from "../../../../../i18n";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { categories, Category, orders, OrderType } from "../../utils/filters";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../../components/buttons/ButtonConfigurations";
 import { LabelledItem } from "../../../../../components/LabelledItem";
+import { H2 } from "../../../../../components/core/typography/H2";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
+import { Category, OrderType, categories, orders } from "../../utils/filters";
 import CategoryCheckbox from "./search/CategoryCheckbox";
-import OrderOption from "./search/OrderOption";
 import { DistanceSlider } from "./search/DistanceSlider";
+import OrderOption from "./search/OrderOption";
 
 type Props = {
   onClose: () => void;
@@ -94,21 +89,32 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
   const selectedFilters =
     checkedCategories.length + (searchValue.length > 0 ? 1 : 0);
 
+  const confirmButtonLabel: string = useMemo(
+    () =>
+      I18n.t("bonus.cgn.merchantsList.filter.cta.confirm", {
+        defaultValue: I18n.t(
+          "bonus.cgn.merchantsList.filter.cta.confirm.other",
+          {
+            count: selectedFilters
+          }
+        ),
+        count: selectedFilters
+      }),
+    [selectedFilters]
+  );
+
   return (
-    <Container>
-      <AppHeader>
-        <Left />
-        <Body style={{ alignItems: "center" }}>
-          <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {I18n.t("bonus.cgn.merchantsList.filter.title")}
-          </H5>
-        </Body>
-        <Right>
-          <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="closeLarge" />
-          </ButtonDefaultOpacity>
-        </Right>
-      </AppHeader>
+    <>
+      <HeaderSecondLevel
+        title={I18n.t("bonus.cgn.merchantsList.filter.title")}
+        type="singleAction"
+        firstAction={{
+          icon: "closeLarge",
+          onPress: props.onClose,
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          testID: "contextualInfo_closeButton"
+        }}
+      />
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView
           style={IOStyles.flex}
@@ -182,27 +188,29 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
             )}
           </View>
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(
-            onRemoveButton,
-            I18n.t("bonus.cgn.merchantsList.filter.cta.cancel")
-          )}
-          rightButton={confirmButtonProps(
-            props.onConfirm,
-            I18n.t("bonus.cgn.merchantsList.filter.cta.confirm", {
-              defaultValue: I18n.t(
-                "bonus.cgn.merchantsList.filter.cta.confirm.other",
-                {
-                  count: selectedFilters
-                }
-              ),
-              count: selectedFilters
-            })
-          )}
-        />
       </SafeAreaView>
-    </Container>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("bonus.cgn.merchantsList.filter.cta.cancel"),
+            accessibilityLabel: I18n.t(
+              "bonus.cgn.merchantsList.filter.cta.cancel"
+            ),
+            onPress: onRemoveButton
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: confirmButtonLabel,
+            accessibilityLabel: confirmButtonLabel,
+            onPress: props.onConfirm
+          }
+        }}
+      />
+    </>
   );
 };
 

@@ -1,13 +1,12 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Dimensions, Image, ScrollView, StyleSheet } from "react-native";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { withBase64Uri } from "../../../../utils/image";
 import { EUCovidCertParamsList } from "../../navigation/params";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { BaseSingleButtonFooter } from "../BaseEuCovidCertificateLayout";
 
 export type EuCovidCertQrCodeFullScreenNavigationParams = Readonly<{
   qrCodeContent: string;
@@ -29,10 +28,12 @@ export const EuCovidCertQrCodeFullScreen = (
   >
 ): React.ReactElement => {
   useMaxBrightness();
+
   useHeaderSecondLevel({
     title: "",
     supportRequest: true
   });
+
   return (
     <>
       <ScrollView>
@@ -52,9 +53,15 @@ export const EuCovidCertQrCodeFullScreen = (
           style={styles.qrCode}
         />
       </ScrollView>
-      <BaseSingleButtonFooter
-        onPress={() => props.navigation.goBack()}
-        title={I18n.t("global.buttons.close")}
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.close"),
+            onPress: () => props.navigation.goBack()
+          }
+        }}
       />
     </>
   );

@@ -186,7 +186,6 @@ const MarkdownPlayground = () => {
           <View style={styles.row}>
             <ExtractedCtaButton
               cta={maybeCTA.value.cta_1}
-              xsmall={true}
               onCTAPress={handleCtaPress}
             />
           </View>
@@ -197,7 +196,6 @@ const MarkdownPlayground = () => {
             <View style={styles.row}>
               <ExtractedCtaButton
                 cta={maybeCTA.value.cta_2}
-                xsmall={true}
                 onCTAPress={handleCtaPress}
               />
             </View>
