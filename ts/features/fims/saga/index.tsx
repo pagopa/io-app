@@ -37,19 +37,9 @@ function* handleFimsGetConsentsList() {
 
   // in paper it looks cleaner to use FP-TS for this, but it does not play well with generator functions
   if (!fimsToken || !oIDCProviderUrl || !fimsCTAUrl) {
-    console.log(
-      "failure",
-      JSON.stringify({ fimsToken, oIDCProviderUrl, fimsCTAUrl })
-    );
     yield* put(fimsGetConsentsListAction.failure(new Error()));
     return;
   }
-
-  console.log(
-    "data is :",
-
-    JSON.stringify({ fimsToken, oIDCProviderUrl, fimsCTAUrl })
-  );
 
   mockSetNativeCookie(oIDCProviderUrl, "X-IO-Federation-Token", fimsToken);
 
@@ -58,13 +48,30 @@ function* handleFimsGetConsentsList() {
     followRedirects: true,
     url: fimsCTAUrl
   });
-  console.log("result-getConsents: ", getConsentsResult);
 
   yield* put(fimsGetConsentsListAction.success(getConsentsResult));
 }
 function* handleFimsGetRedirectUrlAndOpenBrowser(
   action: ActionType<(typeof fimsGetRedirectUrlAndOpenBrowserAction)["request"]>
 ) {
-  console.log(action.payload);
-  yield null;
+  // TODO:: get auth code and nonce, then sign with lollipop, HTTP GET and open IAB
+  const rpUrl = yield* call(recurseUntilRPUrl, action.payload.acceptUrl);
+
+  yield rpUrl;
 }
+
+const isRedirect = (statusCode: number) => statusCode === 302;
+const isOIDCProviderBaseUrl = (url: string) => url.includes("oidc-provider");
+const recurseUntilRPUrl = async (url: string) => {
+  const res = await mockHttpNativeCall({
+    followRedirects: false,
+    verb: "get",
+    url
+  });
+
+  if (!isRedirect(res.status) || !isOIDCProviderBaseUrl(res.headers.Location)) {
+    return res;
+  } else {
+    return; // TODO recursion
+  }
+};
