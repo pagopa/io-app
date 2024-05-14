@@ -1,7 +1,7 @@
-import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import * as React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { Body } from "../core/typography/Body";
@@ -40,6 +40,7 @@ const renderNode = (body: string | React.ReactNode) => {
 
 /**
  * A base screen that displays one image, text, and one bottom button
+ * @deprecated Use `OperationResultScreen` instead
  * @param props
  * @constructor
  */

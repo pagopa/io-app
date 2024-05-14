@@ -1,13 +1,13 @@
+import { IOColors, IOToast, hexToRgba } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { localServicesWebUrl } from "../../config";
@@ -17,7 +17,6 @@ import { loadServiceDetail } from "../../features/services/details/store/actions
 import { servicesByIdSelector } from "../../features/services/details/store/reducers/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { isStrictSome } from "../../utils/pot";
-import { showToast } from "../../utils/showToast";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
@@ -96,7 +95,7 @@ const LocalServicesWebView = (props: Props) => {
           return;
         }
         if (pot.isError(servicePot)) {
-          showToast(I18n.t("global.genericError"));
+          IOToast.error(I18n.t("global.genericError"));
         }
       })
     );

@@ -95,6 +95,7 @@ const CgnMerchantDetailScreen = () => {
   );
 
   useEffect(loadMerchantDetail, [loadMerchantDetail]);
+
   // -------    utils/logic
 
   const DiscountListItem = ({ item }: { item: Discount }) =>
@@ -131,6 +132,7 @@ const CgnMerchantDetailScreen = () => {
       gradientOpacity.value = isEndReached ? 0 : 1;
     }
   );
+
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
     if (titleHeight === 0) {
@@ -188,6 +190,7 @@ const CgnMerchantDetailScreen = () => {
             scrollEventThrottle={8}
             snapToOffsets={[0]}
             snapToEnd={false}
+            scrollIndicatorInsets={{ right: 1 }}
             contentContainerStyle={{
               flexGrow: 1,
               paddingBottom: safeBottomAreaHeight

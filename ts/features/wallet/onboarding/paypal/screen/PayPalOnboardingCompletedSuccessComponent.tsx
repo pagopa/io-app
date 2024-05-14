@@ -1,12 +1,11 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import React from "react";
+import successImage from "../../../../../../img/pictograms/payment-completed.png";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
-import successImage from "../../../../../../img/pictograms/payment-completed.png";
-import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../../../i18n";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { walletAddPaypalCompleted } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { walletAddPaypalCompleted } from "../store/actions";
 import { paypalOnboardingCompletedSelector } from "../store/reducers/onOboardingCompleted";
 
 const getLocales = (isPaymentOnGoing: boolean) => {
@@ -35,6 +34,7 @@ const getLocales = (isPaymentOnGoing: boolean) => {
 /**
  * this screen shows that the onboarding is completed successfully
  * footer button navigates to the PayPal method details
+ * @deprecated Replace the screen content with `OperationResultScreen` instead
  * @constructor
  */
 const PayPalOnboardingCompletedSuccessComponent = () => {
@@ -51,13 +51,16 @@ const PayPalOnboardingCompletedSuccessComponent = () => {
         body={locales.body}
       />
       <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={confirmButtonProps(
-          () => dispatch(walletAddPaypalCompleted()),
-          locales.ctaTitle,
-          undefined,
-          "primaryButtonId"
-        )}
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: locales.ctaTitle,
+            accessibilityLabel: locales.ctaTitle,
+            onPress: () => dispatch(walletAddPaypalCompleted()),
+            testID: "primaryButtonId"
+          }
+        }}
       />
     </>
   );

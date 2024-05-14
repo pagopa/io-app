@@ -1,23 +1,22 @@
+import {
+  FooterWithButtons,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
+import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../../../components/buttons/ButtonConfigurations";
-import { abiListSelector } from "../../../store/abi";
-import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import BPayCard from "../../../../bancomatpay/component/BPayCard";
+import { abiListSelector } from "../../../store/abi";
 
 type Props = {
   account: BPay;
@@ -43,8 +42,8 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => (
     headerTitle={I18n.t("wallet.onboarding.bPay.headerTitle")}
     contextualHelp={props.contextualHelp}
   >
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView style={IOStyles.flex}>
+    <ScrollView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex}>
         <VSpacer size={16} />
         <View
           style={[
@@ -67,19 +66,27 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => (
           <BPayCard phone={props.account.numberObfuscated} />
         </View>
         <VSpacer size={16} />
-      </ScrollView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={cancelButtonProps(
-          props.handleSkip,
-          I18n.t("global.buttons.skip")
-        )}
-        rightButton={confirmButtonProps(
-          props.handleContinue,
-          I18n.t("global.buttons.add")
-        )}
-      />
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScrollView>
+    <FooterWithButtons
+      type="TwoButtonsInlineThird"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          label: I18n.t("global.buttons.skip"),
+          accessibilityLabel: I18n.t("global.buttons.skip"),
+          onPress: props.handleSkip
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          label: I18n.t("global.buttons.add"),
+          accessibilityLabel: I18n.t("global.buttons.add"),
+          onPress: props.handleContinue
+        }
+      }}
+    />
   </BaseScreenComponent>
 );
 
