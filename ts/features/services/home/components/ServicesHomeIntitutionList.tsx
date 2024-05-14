@@ -16,7 +16,7 @@ import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { logoForInstitution } from "../utils";
-import { InstitutionListItemSkeleton } from "../../common/components/InstitutionListSkeleton";
+import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 
 export const ServicesHomeIntitutionList = () => {
   const isFirstRender = useFirstRender();
@@ -73,7 +73,7 @@ export const ServicesHomeIntitutionList = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating && currentPage > 0) {
-      return <InstitutionListItemSkeleton />;
+      return <InstitutionListSkeleton />;
     }
     return <VSpacer size={16} />;
   }, [currentPage, isUpdating]);
@@ -90,7 +90,7 @@ export const ServicesHomeIntitutionList = () => {
         contentContainerStyle={IOStyles.horizontalContentPadding}
         data={Array.from({ length: 5 })}
         keyExtractor={(_, index) => `institution-placeholder-${index}`}
-        renderItem={() => <InstitutionListItemSkeleton />}
+        renderItem={() => <InstitutionListSkeleton />}
       />
     );
   }
