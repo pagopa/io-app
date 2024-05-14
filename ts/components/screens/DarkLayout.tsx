@@ -1,14 +1,14 @@
 /**
  * A component to display a bluegrey background color on the screen using it
  */
-import { Content } from "native-base";
 import * as React from "react";
 import {
   View,
   ImageSourcePropType,
   StyleProp,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  ScrollView
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
@@ -24,7 +24,7 @@ import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "./BaseScreenComponent";
-import ScreenContent, { ScreenContentRoot } from "./ScreenContent";
+import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
@@ -49,9 +49,7 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
-  referenceToContentScreen?: (
-    c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<Content>;
+  referenceToContentScreen?: React.RefObject<ScrollView>;
 }>;
 
 const styles = StyleSheet.create({

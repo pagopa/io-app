@@ -26,7 +26,6 @@ const UnsupportedDeviceScreen = () => {
         subtitle={subtitle}
         secondaryAction={{
           label,
-          accessibilityLabel: label,
           onPress: handleLearnMorePress
         }}
       />

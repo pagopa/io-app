@@ -1,16 +1,16 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
   ButtonSolid,
-  VSpacer,
+  ContentWrapper,
+  FooterWithButtons,
   Pictogram,
-  ContentWrapper
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -89,15 +89,17 @@ const IbanConfigurationLanding = () => {
         </View>
       </View>
 
-      <SafeAreaView>
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={{
-            title: I18n.t("global.buttons.continue"),
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: () => configurationMachine.send({ type: "NEXT" })
-          }}
-        />
-      </SafeAreaView>
+          }
+        }}
+      />
       {bottomSheet}
     </BaseScreenComponent>
   );

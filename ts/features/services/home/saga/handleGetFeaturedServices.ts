@@ -4,35 +4,35 @@ import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { ServicesClient } from "../../common/api/client";
-import { featuredItemsGet } from "../store/actions";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { ServicesClient } from "../../common/api/client";
+import { featuredServicesGet } from "../store/actions";
 
 /**
- * saga to handle the loading of featured items (services and/or institutions)
- * @param getFeaturedItems
+ * saga to handle the loading of featured services
+ * @param getFeaturedServices
  * @param action
  */
-export function* handleGetFeaturedItems(
-  getFeaturedItems: ServicesClient["getFeaturedItems"],
-  action: ActionType<typeof featuredItemsGet.request>
+export function* handleGetFeaturedServices(
+  getFeaturedServices: ServicesClient["getFeaturedServices"],
+  action: ActionType<typeof featuredServicesGet.request>
 ) {
   try {
     const response = (yield* call(
       withRefreshApiCall,
-      getFeaturedItems({}),
+      getFeaturedServices({}),
       action
-    )) as unknown as SagaCallReturnType<typeof getFeaturedItems>;
+    )) as unknown as SagaCallReturnType<typeof getFeaturedServices>;
 
     if (E.isRight(response)) {
       if (response.right.status === 200) {
-        yield* put(featuredItemsGet.success(response.right.value));
+        yield* put(featuredServicesGet.success(response.right.value));
         return;
       }
 
       // not handled error codes
       yield* put(
-        featuredItemsGet.failure({
+        featuredServicesGet.failure({
           ...getGenericError(
             new Error(`response status code ${response.right.status}`)
           )
@@ -42,13 +42,13 @@ export function* handleGetFeaturedItems(
     }
     // cannot decode response
     yield* put(
-      featuredItemsGet.failure({
+      featuredServicesGet.failure({
         ...getGenericError(new Error(readablePrivacyReport(response.left)))
       })
     );
   } catch (e) {
     yield* put(
-      featuredItemsGet.failure({
+      featuredServicesGet.failure({
         ...getNetworkError(e)
       })
     );

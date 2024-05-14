@@ -1,5 +1,5 @@
+import { ContentWrapper, IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List } from "native-base";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
@@ -16,7 +16,6 @@ import { profilePreferencesSelector } from "../../store/reducers/profile";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
-import { showToast } from "../../utils/showToast";
 import {
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
@@ -46,7 +45,7 @@ export const NotificationsPreferencesScreen = () => {
 
   useEffect(() => {
     if (isError && isUpserting) {
-      showToast(I18n.t("profile.preferences.notifications.error"));
+      IOToast.error(I18n.t("profile.preferences.notifications.error"));
     }
     if (!isUpdating) {
       setIsUpserting(false);
@@ -67,7 +66,7 @@ export const NotificationsPreferencesScreen = () => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       headerActionsProp={{ showHelp: true }}
     >
-      <List withContentLateralPadding={true}>
+      <ContentWrapper>
         <PreferencesListItem
           title={I18n.t("profile.preferences.notifications.preview.title")}
           description={`${I18n.t(
@@ -134,7 +133,7 @@ export const NotificationsPreferencesScreen = () => {
           }
         />
         <ItemSeparatorComponent noPadded={true} />
-      </List>
+      </ContentWrapper>
       {bottomSheet}
     </RNavScreenWithLargeHeader>
   );

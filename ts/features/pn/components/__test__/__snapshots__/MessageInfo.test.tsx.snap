@@ -575,7 +575,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                             <View
                               style={
                                 Object {
-                                  "marginLeft": 16,
+                                  "marginLeft": 12,
                                 }
                               }
                             >
