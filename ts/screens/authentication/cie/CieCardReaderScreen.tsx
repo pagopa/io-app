@@ -278,16 +278,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       // The card is temporarily locked. Unlock is available by CieID app
       case "PIN Locked":
       case "ON_CARD_PIN_LOCKED":
-        this.setError({
-          eventReason: event.event,
-          navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
-            })
-        });
-        break;
-
-      // The inserted pin is incorrect
       case "ON_PIN_ERROR":
         this.setError({
           eventReason: event.event,
@@ -295,7 +285,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_WRONG_PIN_SCREEN,
               params: {
-                remainingCount: event.attemptsLeft
+                remainingCount:
+                  event.event === "ON_CARD_PIN_LOCKED" ? 0 : event.attemptsLeft
               }
             })
         });
