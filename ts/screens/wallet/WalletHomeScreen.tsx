@@ -1,18 +1,24 @@
-import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  IOColors,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBButtonText } from "native-base";
+import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
 import {
   BackHandler,
   Image,
   NativeEventSubscription,
+  ScrollView,
   StyleSheet,
   View
 } from "react-native";
 import { connect } from "react-redux";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import SectionStatusComponent from "../../components/SectionStatus";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
@@ -22,11 +28,9 @@ import {
   TabBarItemPressType,
   withUseTabItemPressWhenScreenActive
 } from "../../components/helpers/withUseTabItemPressWhenScreenActive";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
-import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -89,7 +93,6 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
-import { showToast } from "../../utils/showToast";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -136,7 +139,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private subscription: NativeEventSubscription | undefined;
   private focusUnsubscribe!: () => void;
   private blurUnsubscribe!: () => void;
-
+  private scrollViewContentRef: React.RefObject<ScrollView> = React.createRef();
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -208,6 +211,14 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // to add the co-badge card.
     // This cover the case in which a user update the app and don't refresh the wallet.
     this.props.runSendAddCobadgeMessageSaga();
+
+    this.props.setTabPressCallback(() => () => {
+      this.scrollViewContentRef.current?.scrollTo({
+        x: 0,
+        y: 0,
+        animated: true
+      });
+    });
   }
 
   public componentWillUnmount() {
@@ -231,7 +242,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       !pot.isError(prevProps.potWallets) &&
       pot.isError(this.props.potWallets)
     ) {
-      showToast(I18n.t("wallet.errors.loadingData"));
+      IOToast.error(I18n.t("wallet.errors.loadingData"));
     }
 
     // Dispatch the action associated to the saga responsible to remind a user
@@ -338,35 +349,28 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private transactionError() {
     return (
-      <Content
-        scrollEnabled={false}
-        style={[styles.noBottomPadding, styles.whiteBg, IOStyles.flex]}
-      >
+      <View style={[styles.noBottomPadding, styles.whiteBg, IOStyles.flex]}>
         <H3 weight="SemiBold" color="bluegreyDark">
           {I18n.t("wallet.latestTransactions")}
         </H3>
         <VSpacer size={16} />
-        <ButtonDefaultOpacity
-          block={true}
-          light={true}
-          bordered={true}
-          small={true}
+        <ButtonOutline
+          fullWidth
+          label={I18n.t("wallet.transactionsShow")}
+          accessibilityLabel={I18n.t("wallet.transactionsShow")}
           onPress={() =>
             this.props.loadTransactions(this.props.transactionsLoadedLength)
           }
-        >
-          {/* ButtonText */}
-          <Body color={"blue"}>{I18n.t("wallet.transactionsShow")}</Body>
-        </ButtonDefaultOpacity>
+        />
         <EdgeBorderComponent />
         <VSpacer size={16} />
-      </Content>
+      </View>
     );
   }
 
   private listEmptyComponent() {
     return (
-      <Content scrollEnabled={false} noPadded={true}>
+      <View>
         <View style={styles.emptyListWrapper}>
           <Body style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
@@ -377,7 +381,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           />
         </View>
         <EdgeBorderComponent />
-      </Content>
+      </View>
     );
   }
 
@@ -431,17 +435,15 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
-      <ButtonDefaultOpacity
-        block={true}
+      <ButtonSolid
+        fullWidth
+        icon="qrCode"
+        label={I18n.t("wallet.payNotice")}
+        accessibilityLabel={I18n.t("wallet.payNotice")}
         onPress={
-          pot.isSome(potWallets) ? this.navigateToPaymentScanQrCode : undefined
+          pot.isSome(potWallets) ? this.navigateToPaymentScanQrCode : constVoid
         }
-        activeOpacity={1}
-      >
-        <Icon name="qrCode" color="white" size={24} />
-        <HSpacer size={8} />
-        <NBButtonText>{I18n.t("wallet.payNotice")}</NBButtonText>
-      </ButtonDefaultOpacity>
+      />
     );
   }
 
@@ -463,14 +465,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <WalletLayout
-        referenceToContentScreen={(c: ScreenContentRoot) => {
-          this.props.setTabPressCallback(
-            // eslint-disable-next-line no-underscore-dangle
-            () => () => c._root.scrollToPosition(0, 0)
-          );
-
-          return c;
-        }}
+        referenceToContentScreen={this.scrollViewContentRef}
         accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
@@ -548,14 +543,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default withValidatedPagoPaVersion(
-  withValidatedEmail(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(
-      withUseTabItemPressWhenScreenActive(
-        withLightModalContext(WalletHomeScreen)
-      )
-    )
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(
+    withUseTabItemPressWhenScreenActive(withLightModalContext(WalletHomeScreen))
   )
 );

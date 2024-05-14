@@ -1,23 +1,23 @@
-import React, { useCallback, useMemo } from "react";
-import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
-import I18n from "../../../i18n";
+import * as O from "fp-ts/lib/Option";
+import React, { useCallback, useMemo } from "react";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { getFlowType } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   trackEmailAlreadyTaken,
   trackEmailDuplicateEditingConfirm
 } from "../../analytics/emailAnalytics";
 
-import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
-import { getFlowType } from "../../../utils/analytics";
+import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
