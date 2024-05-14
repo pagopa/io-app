@@ -406,7 +406,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                           <View
                             style={
                               Object {
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -896,7 +896,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -1460,7 +1460,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,

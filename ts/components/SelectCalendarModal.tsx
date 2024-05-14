@@ -1,14 +1,19 @@
-import { Container, Content } from "native-base";
 import React from "react";
 import {
   View,
   BackHandler,
   NativeEventSubscription,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from "react-native";
 import { Calendar } from "react-native-calendar-events";
 
 import { connect } from "react-redux";
+import {
+  FooterWithButtons,
+  IOColors,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { GlobalState } from "../store/reducers/types";
 import CalendarsListContainer from "./CalendarsListContainer";
@@ -16,7 +21,6 @@ import { Body } from "./core/typography/Body";
 import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { ScreenContentHeader } from "./screens/ScreenContentHeader";
-import FooterWithButtons from "./ui/FooterWithButtons";
 
 type Props = ReturnType<typeof mapStateToProps> & {
   onCancel: () => void;
@@ -58,8 +62,8 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
     const { isLoading } = this.state;
     return (
       <LoadingSpinnerOverlay isLoading={isLoading}>
-        <Container>
-          <Content noPadded={true} style={styles.content}>
+        <View style={{ ...IOStyles.flex, backgroundColor: IOColors.white }}>
+          <ScrollView style={styles.content}>
             <ScreenContentHeader
               title={I18n.t("messages.cta.reminderCalendarSelect")}
             />
@@ -75,19 +79,21 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                 )
               }
             />
-          </Content>
+          </ScrollView>
           {!isLoading && (
             <FooterWithButtons
               type="SingleButton"
-              leftButton={{
-                bordered: true,
-                onPress: this.props.onCancel,
-                title: I18n.t("global.buttons.cancel"),
-                block: true
+              primary={{
+                type: "Outline",
+                buttonProps: {
+                  onPress: this.props.onCancel,
+                  label: I18n.t("global.buttons.cancel"),
+                  accessibilityLabel: I18n.t("global.buttons.cancel")
+                }
               }}
             />
           )}
-        </Container>
+        </View>
       </LoadingSpinnerOverlay>
     );
   }

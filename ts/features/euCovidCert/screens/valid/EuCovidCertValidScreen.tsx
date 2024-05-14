@@ -1,16 +1,23 @@
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  BlockButtonProps,
+  FooterWithButtons,
+  IOColors,
+  IOToast,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext, useState } from "react";
 import {
   Dimensions,
   Image,
+  Pressable,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
   View,
   ViewStyle
 } from "react-native";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -19,7 +26,7 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import themeVariables from "../../../../theme/variables";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
-import { showToast } from "../../../../utils/showToast";
+import { EUCovidContext } from "../../components/EUCovidContext";
 import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 import {
   FlashAnimatedComponent,
@@ -35,12 +42,7 @@ import {
   WithEUCovidCertificateHeaderData
 } from "../../types/EUCovidCertificate";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
-import {
-  BaseDoubleButtonFooter,
-  BaseEuCovidCertificateLayout,
-  BaseSingleButtonFooter
-} from "../BaseEuCovidCertificateLayout";
-import { EUCovidContext } from "../../components/EUCovidContext";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 type Props = {
   validCertificate: ValidCertificate;
@@ -129,16 +131,17 @@ const EuCovidCertValidComponent = (
 );
 
 const showToastError = (error: string = I18n.t("global.genericError")) =>
-  showToast(error);
+  IOToast.error(error);
+
 const addBottomSheetItem = (config: {
   title: string;
   subTitle: string;
   onPress: () => void;
 }) => (
-  <ButtonDefaultOpacity
+  <Pressable
+    accessibilityRole="button"
     onPress={config.onPress}
     style={styles.container}
-    onPressWithGestureHandler={true}
   >
     <View style={styles.flexColumn}>
       <View style={styles.row}>
@@ -154,7 +157,7 @@ const addBottomSheetItem = (config: {
       </View>
     </View>
     <VSpacer size={40} />
-  </ButtonDefaultOpacity>
+  </Pressable>
 );
 
 type FooterProps = Props & { onSave: () => void };
@@ -190,27 +193,36 @@ const Footer = (props: FooterProps): React.ReactElement => {
     320
   );
 
+  const saveButton: BlockButtonProps = {
+    type: "Solid",
+    buttonProps: {
+      onPress: presentBottomSheet,
+      label: I18n.t("global.genericSave")
+    }
+  };
+
   const markdownDetails = props.validCertificate.markdownDetails;
 
   return (
     <>
       {bottomSheet}
       {markdownDetails ? (
-        <BaseDoubleButtonFooter
-          onPressLeft={() =>
-            navigateToEuCovidCertificateMarkdownDetailsScreen({
-              markdownDetails
-            })
-          }
-          onPressRight={presentBottomSheet}
-          titleLeft={I18n.t("global.buttons.details")}
-          titleRight={I18n.t("global.genericSave")}
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              onPress: () =>
+                navigateToEuCovidCertificateMarkdownDetailsScreen({
+                  markdownDetails
+                }),
+              label: I18n.t("global.buttons.details")
+            }
+          }}
+          secondary={saveButton}
         />
       ) : (
-        <BaseSingleButtonFooter
-          onPress={presentBottomSheet}
-          title={I18n.t("global.genericSave")}
-        />
+        <FooterWithButtons type="SingleButton" primary={saveButton} />
       )}
     </>
   );
@@ -238,10 +250,10 @@ export const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     }
     captureScreenshot(screenShotViewContainer, screenshotOptions, {
       onSuccess: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
+        IOToast.success(I18n.t("features.euCovidCertificate.save.ok")),
       onNoPermissions: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => showToast(I18n.t("global.genericError")),
+        IOToast.info(I18n.t("features.euCovidCertificate.save.noPermission")),
+      onError: () => IOToast.error(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);

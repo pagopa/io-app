@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
@@ -11,7 +12,6 @@ import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
-import { FooterTwoButtons } from "../../../../../../../components/markdown/FooterTwoButtons";
 import {
   searchUserCoBadge,
   walletAddCoBadgeCancel
@@ -54,12 +54,22 @@ const CoBadgeKoTimeout = (props: Props): React.ReactElement => {
           title={title}
           body={body}
         />
-        <FooterTwoButtons
-          type={"TwoButtonsInlineThird"}
-          onRight={() => props.retry(props.abiSelected)}
-          onCancel={props.cancel}
-          rightText={retry}
-          leftText={cancel}
+        <FooterWithButtons
+          type="TwoButtonsInlineThird"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: cancel,
+              onPress: props.cancel
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: retry,
+              onPress: () => props.retry(props.abiSelected)
+            }
+          }}
         />
       </SafeAreaView>
     </BaseScreenComponent>

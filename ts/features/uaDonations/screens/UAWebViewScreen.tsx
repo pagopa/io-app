@@ -1,3 +1,4 @@
+import { FooterWithButtons, IOToast } from "@pagopa/io-app-design-system";
 import {
   AmountInEuroCents,
   PaymentNoticeNumber,
@@ -9,11 +10,11 @@ import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import React, { useEffect, useState } from "react";
 import {
-  View,
   Linking,
   Platform,
   SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import WebView from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
@@ -21,11 +22,9 @@ import URLParse from "url-parse";
 import dataErrorImage from "../../../../img/pictograms/doubt.png";
 import genericErrorImage from "../../../../img/wallet/errors/generic-error-icon.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../../components/ui/BlockButtons";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -38,7 +37,6 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch } from "../../../store/hooks";
 import { checkoutUADonationsUrl } from "../../../urls";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { showToast } from "../../../utils/showToast";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import { isHttp, openWebUrl } from "../../../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
@@ -67,19 +65,21 @@ type ErrorComponentProps = {
   buttonTitle: string;
   image: React.ReactNode;
 };
-const ErrorComponent: React.FunctionComponent<ErrorComponentProps> = props => {
-  const buttonProps: BlockButtonProps = {
-    primary: true,
-    title: props.buttonTitle,
-    onPress: props.onRetry
-  };
-  return (
-    <>
-      <InfoScreenComponent image={props.image} title={props.errorText} />
-      <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
-    </>
-  );
-};
+const ErrorComponent: React.FunctionComponent<ErrorComponentProps> = props => (
+  <>
+    <InfoScreenComponent image={props.image} title={props.errorText} />
+    <FooterWithButtons
+      type={"SingleButton"}
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          label: props.buttonTitle,
+          onPress: props.onRetry
+        }
+      }}
+    />
+  </>
+);
 
 // a loading component rendered during the webview loading states
 const renderLoading = () => (
@@ -91,7 +91,7 @@ const renderLoading = () => (
 /**
  * show a toast to inform about the occurred error
  */
-const handleError = () => showToast(I18n.t("global.genericError"));
+const handleError = () => IOToast.error(I18n.t("global.genericError"));
 
 /**
  * parse the messages coming from the webview
@@ -195,7 +195,7 @@ export const UAWebViewScreen = () => {
   useEffect(() => {
     if (Platform.OS === "ios") {
       Linking.openURL(checkoutUADonationsUrl).catch(_ =>
-        showToast(I18n.t("genericError"))
+        IOToast.error(I18n.t("genericError"))
       );
       navigation.goBack();
     }
