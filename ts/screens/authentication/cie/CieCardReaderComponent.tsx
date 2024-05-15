@@ -51,10 +51,7 @@ import { ReduxProps } from "../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  isScreenReaderEnabled,
-  setAccessibilityFocus
-} from "../../../utils/accessibility";
+import { isScreenReaderEnabled } from "../../../utils/accessibility";
 import { isDevEnv } from "../../../utils/environment";
 import {
   assistanceToolRemoteConfig,
@@ -156,7 +153,6 @@ const analyticActions = new Map<CieAuthenticationErrorReason, string>([
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 const VIBRATION = 100 as Millisecond;
-const accessibityTimeout = 100 as Millisecond;
 
 type TextForState = {
   title: string;
@@ -479,11 +475,6 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
     const srEnabled = await isScreenReaderEnabled();
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
-
-  // focus on subtitle just after set the focus on navigation header title
-  private handleOnHeaderFocus = () => {
-    setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
-  };
 
   private handleCancel = () => resetToAuthenticationRoute();
 
