@@ -1,11 +1,10 @@
 This file describes the reason for the patches applied.
 
-### native-base+2.15.2
-Created on **25/03/2024**
+### detox+19.13.0
+Created on 03/05/2024
 
-#### Reason:
-- Fixes a crash occurring when reopening the app while in background on Android (possibly even iOS but currently we don't have evidence) due to the usage of removed `keyboardDidShow` and `keyboardDidHide` events. 
-Remove this patch after removing `native-base`.
+- Apply [fix/ios-17-regression](https://github.com/wix/Detox/pull/4171).
+- Remove this patch once bumped `detox` to `v20`.
 
 ### react-native-reanimated
 Created on **18/03/2024**
@@ -55,20 +54,6 @@ Created on **13/12/2019**
 
 #### Reason:
 - Change type export.
-
-
-### native-base+2.13.13
-Created on **30/07/2020**
-
-#### Reason:
-- Integrate the pr https://github.com/GeekyAnts/NativeBase/pull/3200 waiting the official release. (remove this patch after the release)
-- Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
-
-Updated on **03/02/2022**
-
-#### Reason:
-- Removed the StatusBar embedded in the Header component because it causes status bar 
-  glitches when using the component in a tabbed navigation ([PR](https://github.com/pagopa/io-app/pull/3717)).
 
 ### react-native-i18n+2.0.15
 Created on **05/08/2020**
@@ -155,7 +140,7 @@ Created on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### react-native-webview+11.26.1
+### react-native-webview+13.8.1
 
 Updated on **13/07/2023**
 

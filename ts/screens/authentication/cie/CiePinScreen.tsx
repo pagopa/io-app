@@ -1,4 +1,14 @@
+import {
+  Banner,
+  ContentWrapper,
+  H2,
+  IOStyles,
+  LabelLink,
+  OTPInput,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, {
   useCallback,
@@ -8,55 +18,44 @@ import React, {
   useState
 } from "react";
 import {
-  View,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
+  ScrollView,
+  View
 } from "react-native";
-import { useSelector } from "react-redux";
-import {
-  Banner,
-  ButtonSolid,
-  ContentWrapper,
-  H2,
-  IOStyles,
-  LabelLink,
-  OTPInput,
-  VSpacer
-} from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+import { IdpData } from "../../../../definitions/content/IdpData";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
+import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../components/ui/LightModal";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
+import { pinPukHelpUrl } from "../../../config";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
+import ROUTES from "../../../navigation/routes";
+import { loginSuccess } from "../../../store/actions/authentication";
 import { nfcIsEnabled } from "../../../store/actions/cie";
-import variables from "../../../theme/variables";
+import { useIODispatch } from "../../../store/hooks";
+import { SessionToken } from "../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../utils/url";
-import { pinPukHelpUrl } from "../../../config";
-import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
-import { loginSuccess } from "../../../store/actions/authentication";
-import { IdpData } from "../../../../definitions/content/IdpData";
-import { SessionToken } from "../../../types/SessionToken";
-import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import { openWebUrl } from "../../../utils/url";
 import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import ROUTES from "../../../navigation/routes";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import { useIODispatch } from "../../../store/hooks";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -94,17 +93,10 @@ const CiePinScreen = () => {
     >();
   const [pin, setPin] = useState("");
   const bannerRef = useRef<View>(null);
-  const continueButtonRef = useRef<View>(null);
   const pinPadViewRef = useRef<View>(null);
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
   );
-
-  useEffect(() => {
-    if (pin.length === CIE_PIN_LENGTH) {
-      setAccessibilityFocus(continueButtonRef, 100 as Millisecond);
-    }
-  }, [pin]);
 
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
     component: (
@@ -150,7 +142,7 @@ const CiePinScreen = () => {
     doLoginSuccess
   ]);
 
-  const showModal = () => {
+  const showModal = useCallback(() => {
     requestNfcEnabledCheck();
     Keyboard.dismiss();
     showAnimatedModal(
@@ -160,7 +152,17 @@ const CiePinScreen = () => {
       />,
       BottomTopAnimation
     );
-  };
+  }, [
+    handleAuthenticationOverlayOnClose,
+    requestNfcEnabledCheck,
+    showAnimatedModal
+  ]);
+
+  useEffect(() => {
+    if (pin.length === CIE_PIN_LENGTH) {
+      showModal();
+    }
+  }, [pin, showModal]);
 
   const a11yFocusRef = useRef<boolean>(false);
 
@@ -181,69 +183,63 @@ const CiePinScreen = () => {
     contextualHelpMarkdown: getContextualHelp()
   });
 
+  const headerHeight = useHeaderHeight();
+
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <ContentWrapper>
-          <H2>{I18n.t("authentication.cie.pin.pinCardTitle")}</H2>
-          <VSpacer size={8} />
-          <LabelLink
-            onPress={() => {
-              trackLoginCiePinInfo();
-              present();
-            }}
-          >
-            {I18n.t("authentication.cie.pin.subtitleCTA")}
-          </LabelLink>
-          <VSpacer size={24} />
-          <View style={IOStyles.flex}>
-            <OTPInput
-              ref={pinPadViewRef}
-              secret
-              value={pin}
-              accessibilityLabel={I18n.t(
-                "authentication.cie.pin.accessibility.label"
-              )}
-              accessibilityHint={I18n.t(
-                "authentication.cie.pin.accessibility.hint"
-              )}
-              onValueChange={setPin}
-              length={CIE_PIN_LENGTH}
-            />
-            <VSpacer size={24} />
-            <Banner
-              viewRef={bannerRef}
-              color="neutral"
-              size="small"
-              content={
-                isFastLoginFeatureFlagEnabled
-                  ? I18n.t("login.expiration_info_FL")
-                  : I18n.t("login.expiration_info")
-              }
-              pictogramName="passcode"
-            />
-          </View>
-        </ContentWrapper>
-      </ScrollView>
-      {pin.length === CIE_PIN_LENGTH && (
-        <ContentWrapper>
-          <ButtonSolid
-            ref={continueButtonRef}
-            label={I18n.t("global.buttons.continue")}
-            accessibilityLabel={I18n.t("global.buttons.continue")}
-            onPress={showModal}
-            fullWidth={true}
-          />
-          <VSpacer size={24} />
-        </ContentWrapper>
-      )}
       <KeyboardAvoidingView
-        behavior={Platform.OS === "android" ? "height" : "padding"}
-        keyboardVerticalOffset={Platform.select({
-          ios: 110 + 16,
-          android: variables.contentPadding
+        behavior={Platform.select({
+          ios: "padding",
+          android: undefined
         })}
-      />
+        contentContainerStyle={IOStyles.flex}
+        style={IOStyles.flex}
+        keyboardVerticalOffset={headerHeight}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ContentWrapper>
+            <H2>{I18n.t("authentication.cie.pin.pinCardTitle")}</H2>
+            <VSpacer size={8} />
+            <LabelLink
+              onPress={() => {
+                trackLoginCiePinInfo();
+                present();
+              }}
+            >
+              {I18n.t("authentication.cie.pin.subtitleCTA")}
+            </LabelLink>
+            <VSpacer size={24} />
+            <View style={IOStyles.flex}>
+              <OTPInput
+                ref={pinPadViewRef}
+                secret
+                value={pin}
+                accessibilityLabel={I18n.t(
+                  "authentication.cie.pin.accessibility.label"
+                )}
+                accessibilityHint={I18n.t(
+                  "authentication.cie.pin.accessibility.hint"
+                )}
+                onValueChange={setPin}
+                length={CIE_PIN_LENGTH}
+                autoFocus
+              />
+              <VSpacer size={24} />
+              <Banner
+                viewRef={bannerRef}
+                color="neutral"
+                size="small"
+                content={
+                  isFastLoginFeatureFlagEnabled
+                    ? I18n.t("login.expiration_info_FL")
+                    : I18n.t("login.expiration_info")
+                }
+                pictogramName="passcode"
+              />
+            </View>
+          </ContentWrapper>
+        </ScrollView>
+      </KeyboardAvoidingView>
       {bottomSheet}
     </SafeAreaView>
   );

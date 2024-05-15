@@ -1,25 +1,21 @@
+import { FooterWithButtons, IOStyles } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import React, { FunctionComponent, memo, useCallback, useState } from "react";
 import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import {
-  ButtonSolid,
-  ContentWrapper,
-  IOStyles
-} from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
-import { openWebUrl } from "../utils/url";
-import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
 import {
   trackToSWebViewError,
   trackToSWebViewErrorRetry
 } from "../screens/authentication/analytics";
 import { FlowType } from "../utils/analytics";
+import { openWebUrl } from "../utils/url";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
+import TosWebviewErrorComponent from "./TosWebviewErrorComponent";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
-import TosWebviewErrorComponent from "./TosWebviewErrorComponent";
 
 type Props = {
   webViewSource: WebViewSource;
@@ -86,14 +82,17 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
         />
       </View>
       {shouldRenderFooter && onAcceptTos && (
-        <ContentWrapper>
-          <ButtonSolid
-            fullWidth
-            onPress={onAcceptTos}
-            label={I18n.t("onboarding.tos.accept")}
-            testID="AcceptToSButton"
-          />
-        </ContentWrapper>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("onboarding.tos.accept"),
+              onPress: onAcceptTos,
+              testID: "AcceptToSButton"
+            }
+          }}
+        />
       )}
     </>
   );

@@ -627,10 +627,14 @@ authentication:
       pinCardTitle: Inserisci il PIN della CIE
       pinCardHeader: Entra con CIE
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
-      incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
-      incorrectCiePinHeaderTitle: PIN errato
-      incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
-      incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
+      incorrectCiePinTitle1: Il PIN non è corretto
+      incorrectCiePinTitle2: Hai inserito un PIN errato per 2 volte
+      lockedCiePinTitle: Hai inserito un PIN errato per troppe volte
+      incorrectCiePinContent1: Hai ancora 2 tentativi, controllalo e riprova.
+      incorrectCiePinContent2: Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.
+      incorrectCiePinSecondaryActionLabel2: Hai dimenticato il PIN?
+      lockedCiePinContent: Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.
+      lockedSecondaryActionLabel: Hai dimenticato il PUK?
       alert: Vuoi davvero tornare indietro?
       subtitleHelp: Il PIN è un codice di 8 cifre.
       subtitleCTA: Dove lo trovo?
@@ -661,9 +665,9 @@ authentication:
         readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
         invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         tagLost: Hai rimosso la carta troppo presto.
-        cardLocked: Carta CIE bloccata
-        wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
-        wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
+        cardLocked: Il PIN della CIE è stato bloccato
+        wrongPin1AttemptLeft: Hai inserito un PIN errato per due volte
+        wrongPin2AttemptLeft: Il PIN non è corretto
         genericError: Si è verificato un errore imprevisto. Riprova.
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
@@ -877,7 +881,7 @@ onboarding:
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
-  exitAlert: 
+  exitAlert:
     title: Vuoi uscire da IO?
     description: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
   biometric:
@@ -1955,9 +1959,9 @@ messageDetails:
     body: "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
     bodyPt1: "È un messaggio che l'ente può modificare "
     bodyPt2: "dopo averlo inviato"
-    bodyPt3: ". In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo " 
-    bodyPt4: "in casi specifici" 
-    bodyPt5: ", per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio." 
+    bodyPt3: ". In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo "
+    bodyPt4: "in casi specifici"
+    bodyPt5: ", per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
   footer:
     contacts: "Contatta il mittente"
     showMoreData: "Mostra altri dati"
@@ -2089,6 +2093,14 @@ services:
   home:
     institutions:
       title: Nazionali
+  institution:
+    failure:
+      title: "C'è un problema temporaneo, riprova"
+      subtitle: "Stiamo recuperando i servizi"
+      back: "Indietro"
+      retry: "Riprova"
+    header:
+      subtitle: "{{count}} servizi disponibili"
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2526,10 +2538,15 @@ bonus:
       places: Luoghi
       navigationTitle: Agevolazioni
       screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
+      merchantsAll: Tutti gli operatori
       cta:
         filter: Filtra
       categoriesList:
         title: Seleziona una categoria e scopri agevolazioni e opportunità
+        bottomSheet:
+          cta: Come vengono ordinate le categorie?
+          title: Come vengono ordinate le categorie?
+          content: Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2559,7 +2576,7 @@ bonus:
         deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
-        addresses: Indirizzi
+        contactInfo: Contatti e informazioni
         hours: Orari
         validity: Validità
         discountCode: Codice Sconto
@@ -2568,6 +2585,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
+        website: Vai al sito dell'esercente
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -2581,13 +2599,17 @@ bonus:
         travel: Viaggi e Trasporti
         mobility: Mobilità Sostenibile
         job: Lavoro e Tirocini
+      information:
+        address: Indirizzo
+        allNational: Tutti i punti vendita sul territorio nazionale
     cta:
       activeBonus: Richiedi la Carta
-      deactivateBonus: Disattiva la Carta
+      deactivateBonus: Disattiva Carta Giovani Nazionale
       goToDetail: Visualizza la Carta
     detail:
       cta:
         buyers: Vedi le opportunità CGN
+        discover: Scopri le opportunità
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
@@ -2597,8 +2619,8 @@ bonus:
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
         warning: "Attenzione! "
-        revoked: "Questa carta è stata revocata per {{reason}}"
-        expired: "Questa carta è scaduta il {{date}}"
+        revoked: "Attenzione! Questa carta è stata revocata per {{reason}}"
+        expired: "Attenzione! Questa carta è scaduta il {{date}}"
       ownership: Chi può usare la carta?
       status:
         title: Carta Giovani Nazionale (CGN)
@@ -2614,6 +2636,7 @@ bonus:
           revoked: Revocata
           expired: Scaduta
         date:
+          valid_until: "Valida fino al {{date}}"
           activated: Attivata il
           expired: Scaduta il
           revoked: Revocata il
@@ -3004,6 +3027,31 @@ features:
       info:
         title: Inizia dalla tua Identità Digitale
         content: "Usa le credenziali SPID o CIE per aggiungere la tua Identità Digitale al Portafoglio. **È un passaggio necessario per aggiungere i tuoi documenti digitali** (ad esempio la patente di guida) in modo sicuro.\n### Utile da sapere \nIn futuro potrai usare l’Identità Digitale salvata nel Portafoglio per identificarti tramite la funzionalità IT Wallet. \n\nPer maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()"
+    identification:
+      mode:
+        title: Con quale metodo vuoi identificarti?
+        header: Metodi disponibili
+        method:
+          spid:
+            title: SPID
+            subtitle: Usa credenziali e app (o SMS)
+          ciePin:
+            title: CIE + PIN
+            subtitle: Usa Carta d’Identità Elettronica e PIN
+          cieId:
+            title: CieID
+            subtitle: Usa credenziali e app CieID
+      nfc:
+        title: Attiva l'NFC per continuare
+        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
+        header: "Ecco come:"
+        steps:
+          label: Step {{value}}
+          1: Vai alle impostazioni
+          2: Cerca "NFC"
+          3: Attivalo
+        primaryAction: Vai alle impostazioni
+        secondaryAction: Ho fatto
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

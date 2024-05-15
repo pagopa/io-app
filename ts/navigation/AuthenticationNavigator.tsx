@@ -15,12 +15,12 @@ import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthor
 import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
-import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinLockedTemporarilyScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
 import CieNotSupported from "../components/cie/CieNotSupported";
 import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
+import { isGestureEnabled } from "../utils/navigation";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -30,7 +30,7 @@ const Stack = createStackNavigator<AuthenticationParamsList>();
 const AuthenticationStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.AUTHENTICATION_LANDING}
-    screenOptions={{ gestureEnabled: true, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}
@@ -114,15 +114,18 @@ const AuthenticationStackNavigator = () => (
       component={CieConsentDataUsageScreen}
     />
 
-    <Stack.Screen
-      name={ROUTES.CIE_WRONG_PIN_SCREEN}
-      component={CieWrongCiePinScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN}
-      component={CiePinLockedTemporarilyScreen}
-    />
+    <Stack.Group
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        ...TransitionPresets.ModalSlideFromBottomIOS
+      }}
+    >
+      <Stack.Screen
+        name={ROUTES.CIE_WRONG_PIN_SCREEN}
+        component={CieWrongCiePinScreen}
+      />
+    </Stack.Group>
 
     <Stack.Group
       screenOptions={{
