@@ -18,8 +18,6 @@ import {
   BodyProps,
   ComposedBodyFromArray
 } from "../core/typography/ComposedBodyFromArray";
-import TopScreenComponent from "./TopScreenComponent";
-
 export type CustomWizardScreenProps = {
   title: string;
   description?: string | Array<BodyProps>;
@@ -32,7 +30,6 @@ export type CustomWizardScreenProps = {
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
-  goBack?: () => void;
   buttonLink?: Pick<
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
@@ -48,18 +45,15 @@ const CustomWizardScreen = ({
   pictogram,
   primaryButton,
   actionButton,
-  buttonLink,
-  goBack
+  buttonLink
 }: CustomWizardScreenProps) => (
   <SafeAreaView style={IOStyles.flex}>
-    <TopScreenComponent goBack={goBack || true}>
-      <WizardBody
-        pictogram={pictogram}
-        title={title}
-        description={description}
-        buttonLink={buttonLink}
-      />
-    </TopScreenComponent>
+    <WizardBody
+      pictogram={pictogram}
+      title={title}
+      description={description}
+      buttonLink={buttonLink}
+    />
     <ContentWrapper>
       <ButtonSolid {...primaryButton} fullWidth={true} />
       {actionButton && (

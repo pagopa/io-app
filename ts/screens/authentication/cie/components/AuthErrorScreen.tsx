@@ -17,50 +17,49 @@ const AuthErrorScreen = ({
   onRetry,
   onCancel
 }: Props) => {
-  const renderError = (): OperationResultScreenContentProps => {
-    switch (errorCode) {
-      case "22":
-        return {
-          pictogram: "accessDenied",
-          title: I18n.t("authentication.cie_errors.error_22.title"),
-          subtitle: I18n.t("authentication.cie_errors.error_22.subtitle"),
-          action: {
-            onPress: onRetry,
-            label: I18n.t("global.buttons.retry")
-          },
-          secondaryAction: {
-            onPress: onCancel,
-            label: I18n.t("global.buttons.close")
-          }
-        };
-      case "1001":
-        return {
-          pictogram: "identityCheck",
-          title: I18n.t("authentication.cie_errors.error_1001.title"),
-          subtitle: I18n.t("authentication.cie_errors.error_1001.subtitle"),
-          action: {
-            onPress: onRetry,
-            label: I18n.t("global.buttons.retry")
-          }
-        };
-      default:
-        return {
-          pictogram: "umbrellaNew",
-          title: I18n.t("authentication.cie_errors.generic.title"),
-          subtitle: I18n.t("authentication.cie_errors.generic.subtitle"),
-          action: {
-            onPress: onRetry,
-            label: I18n.t("global.buttons.retry")
-          },
-          secondaryAction: {
-            onPress: onCancel,
-            label: I18n.t("global.buttons.close")
-          }
-        };
+  const errorsObject: {
+    [key: string]: OperationResultScreenContentProps;
+  } = {
+    "22": {
+      pictogram: "accessDenied",
+      title: I18n.t("authentication.cie_errors.error_22.title"),
+      subtitle: I18n.t("authentication.cie_errors.error_22.subtitle"),
+      action: {
+        onPress: onRetry,
+        label: I18n.t("global.buttons.retry")
+      },
+      secondaryAction: {
+        onPress: onCancel,
+        label: I18n.t("global.buttons.close")
+      }
+    },
+    "1001": {
+      pictogram: "identityCheck",
+      title: I18n.t("authentication.cie_errors.error_1001.title"),
+      subtitle: I18n.t("authentication.cie_errors.error_1001.subtitle"),
+      action: {
+        onPress: onRetry,
+        label: I18n.t("global.buttons.retry")
+      }
+    },
+    generic: {
+      pictogram: "umbrellaNew",
+      title: I18n.t("authentication.cie_errors.generic.title"),
+      subtitle: I18n.t("authentication.cie_errors.generic.subtitle"),
+      action: {
+        onPress: onRetry,
+        label: I18n.t("global.buttons.retry")
+      },
+      secondaryAction: {
+        onPress: onCancel,
+        label: I18n.t("global.buttons.close")
+      }
     }
   };
 
-  return <OperationResultScreenContent {...renderError()} />;
+  const errorDetails = errorsObject[errorCode] || errorsObject.generic;
+
+  return <OperationResultScreenContent {...errorDetails} />;
 };
 
 export default AuthErrorScreen;
