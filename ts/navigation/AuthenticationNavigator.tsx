@@ -5,7 +5,6 @@ import {
 import * as React from "react";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
-import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import { LandingScreen } from "../screens/authentication/LandingScreen";
@@ -61,11 +60,6 @@ const AuthenticationStackNavigator = () => (
       options={{ headerShown: true }}
       name={ROUTES.AUTHENTICATION_IDP_SELECTION}
       component={IdpSelectionScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.AUTHENTICATION_CIE}
-      component={CardSelectionScreen}
     />
 
     <Stack.Screen

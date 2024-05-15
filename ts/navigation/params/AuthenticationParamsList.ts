@@ -1,5 +1,5 @@
 import { ChosenIdentifier } from "../../screens/authentication/NewOptInScreen";
-import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
+import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderComponent";
 import { CieConsentDataUsageScreenNavigationParams } from "../../screens/authentication/cie/CieConsentDataUsageScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../../screens/authentication/cie/CieWrongCiePinScreen";
 import ROUTES from "../routes";
@@ -9,7 +9,6 @@ export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_ROOTED_DEVICE]: undefined;
   [ROUTES.AUTHENTICATION_OPT_IN]: ChosenIdentifier;
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: undefined;
-  [ROUTES.AUTHENTICATION_CIE]: undefined;
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: undefined;
   [ROUTES.AUTHENTICATION_AUTH_SESSION]: undefined;
   [ROUTES.AUTHENTICATION_IDP_TEST]: undefined;

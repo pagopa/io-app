@@ -1,17 +1,14 @@
 import React from "react";
 
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 import { useIOSelector } from "../../../store/hooks";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
-import CieCardReaderComponent, {
-  CieCardReaderNavigationProps
-} from "./CieCardReaderComponent";
+import CieCardReaderComponent from "./CieCardReaderComponent";
 
 export const CieCardReaderScreen = () => {
   const navigation =
@@ -19,9 +16,7 @@ export const CieCardReaderScreen = () => {
       IOStackNavigationProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">
     >();
   const route =
-    useRoute<
-      Route<typeof ROUTES.CIE_CARD_READER_SCREEN, CieCardReaderNavigationProps>
-    >();
+    useRoute<RouteProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">>();
 
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
