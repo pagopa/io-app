@@ -2,6 +2,7 @@ import { Badge, Body, IOColors, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import EidCardShape from "../../../../../img/features/itw/eid_card.svg";
+import I18n from "../../../../i18n";
 
 export type EIdStatus = "valid" | "pending" | "expired";
 
@@ -39,12 +40,17 @@ export const EIdCard = ({
 
   const tagComponent = React.useMemo(() => {
     if (status === "expired") {
-      return <Tag variant="error" text="non valida" />;
+      return (
+        <Tag
+          variant="error"
+          text={I18n.t("features.itWallet.card.eid.expired")}
+        />
+      );
     } else if (status === "pending") {
       return (
         <Tag
           variant="customIcon"
-          text="in lavorazione"
+          text={I18n.t("features.itWallet.card.eid.pending")}
           customIconProps={{ iconColor: "info-700", iconName: "infoFilled" }}
         />
       );
@@ -57,7 +63,11 @@ export const EIdCard = ({
 
   const digitalVersionBadge = (
     <View style={{ position: "absolute", bottom: 16, right: -10 }}>
-      <Badge text="versione digitale   " variant="default" />
+      <Badge
+        // The space at the end is an hack to have extra padding inside the badge text
+        text={`${I18n.t("features.itWallet.card.eid.digital")}   `}
+        variant="default"
+      />
     </View>
   );
 
@@ -68,7 +78,7 @@ export const EIdCard = ({
         <View style={styles.infoContainer}>
           <View style={styles.header}>
             <Body color={labelColor} weight="SemiBold">
-              {`Identità digitale`.toUpperCase()}
+              {I18n.t("features.itWallet.card.eid.label").toUpperCase()}
             </Body>
             {tagComponent}
           </View>
