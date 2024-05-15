@@ -13,11 +13,16 @@ import { openWebUrl } from "../../utils/url";
 import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { CustomWizardScreen } from "../../components/screens/CustomWizardScreen";
+
+// A future development will allow different actions to
+// be performed if the authentication level is L3.
+// At the moment, this screen is not shown with level L3.
+// future development story: https://pagopa.atlassian.net/browse/IOPID-1228
 type Props = {
-  identifier: "SPID" | "CIE";
+  authLevel: "L2" | "L3";
 };
 const UnlockAccessScreen = (props: Props) => {
-  const { identifier } = props;
+  const { authLevel } = props;
   const navigation = useIONavigation();
   const ModalContent = () => (
     <View testID="modal-view-test">
@@ -77,13 +82,13 @@ const UnlockAccessScreen = (props: Props) => {
   );
 
   const onPressActionButton = () => {
-    if (identifier === "SPID") {
+    if (authLevel === "L2") {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_LANDING
       });
-    } else {
-      // TODO -> Need to navigate on messages home screen
     }
+    // for the future developement: add here
+    // the navigation to continue the flow
   };
 
   return (
@@ -92,7 +97,7 @@ const UnlockAccessScreen = (props: Props) => {
         pictogram="accessDenied"
         title={I18n.t("authentication.unlock.title")}
         description={
-          identifier === "SPID"
+          authLevel === "L2"
             ? I18n.t("authentication.unlock.subtitlel2")
             : I18n.t("authentication.unlock.subtitlel3")
         }
@@ -109,7 +114,7 @@ const UnlockAccessScreen = (props: Props) => {
         actionButton={{
           testID: "button-link-test",
           label:
-            identifier === "SPID"
+            authLevel === "L2"
               ? I18n.t("global.buttons.close")
               : I18n.t("authentication.unlock.loginIO"),
           onPress: onPressActionButton

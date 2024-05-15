@@ -36,7 +36,7 @@ const CieConsentDataUsageRenderComponent = ({
   }
   if (hasError) {
     if (errorCode === "1002") {
-      return <UnlockAccessScreen identifier="CIE" />;
+      return <UnlockAccessScreen authLevel="L2" />;
     } else {
       return (
         <AuthErrorScreen
