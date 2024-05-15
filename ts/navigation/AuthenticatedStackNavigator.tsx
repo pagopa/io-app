@@ -16,8 +16,7 @@ import {
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import { FimsNavigator } from "../features/fims/navigation/navigator";
-import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { FimsLegacyNavigator } from "../features/fimsLegacy/navigation/navigator";
 import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navigator";
 import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
@@ -82,6 +81,8 @@ import {
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { FIMS_ROUTES, FimsNavigator } from "../features/fims/navigation";
+import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -231,11 +232,16 @@ const AuthenticatedStackNavigator = () => {
 
       {isFimsEnabled && (
         <Stack.Screen
-          name={FIMS_ROUTES.MAIN}
+          name={FIMS_LEGACY_ROUTES.MAIN}
           options={hideHeaderOptions}
-          component={FimsNavigator}
+          component={FimsLegacyNavigator}
         />
       )}
+      <Stack.Screen
+        name={FIMS_ROUTES.MAIN}
+        options={hideHeaderOptions}
+        component={FimsNavigator}
+      />
 
       {cdcEnabled && (
         <Stack.Screen
