@@ -136,7 +136,7 @@ export const InstitutionServicesScreen = ({
     [navigateToServiceDetails]
   );
 
-  const renderListEmptyComponent = () => {
+  const renderListEmptyComponent = useCallback(() => {
     if (isFirstRender || isLoading) {
       return (
         <>
@@ -146,7 +146,7 @@ export const InstitutionServicesScreen = ({
       );
     }
     return <></>;
-  };
+  }, [isFirstRender, isLoading]);
 
   const renderListHeaderComponent = useCallback(() => {
     if (isFirstRender || isLoading) {
