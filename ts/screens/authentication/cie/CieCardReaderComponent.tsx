@@ -90,7 +90,7 @@ type State = {
   // Get the current status of the card reading
   readingState: ReadingState;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   content?: string;
   errorMessage?: string;
   isScreenReaderEnabled: boolean;
@@ -156,7 +156,7 @@ const VIBRATION = 100 as Millisecond;
 
 type TextForState = {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   content: string;
 };
 
@@ -178,9 +178,13 @@ const getTextForState = (
       },
       [ReadingState.error]: {
         title: I18n.t("authentication.cie.card.error.readerCardLostTitleiOS"),
-        subtitle: I18n.t(
-          "authentication.cie.card.error.readerCardLostHeaderiOS"
-        ),
+        subtitle: "",
+        // the native alert hides the screen content and shows a message it self
+        content: ""
+      },
+      [ReadingState.reading]: {
+        title: I18n.t("authentication.cie.card.titleiOS"),
+        subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
         // the native alert hides the screen content and shows a message it self
         content: ""
       }
@@ -193,7 +197,7 @@ const getTextForState = (
       },
       [ReadingState.error]: {
         title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
+        subtitle: "",
         content: errorMessage
       }
     }
@@ -338,7 +342,7 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
         this.setState(
           {
             title: I18n.t("authentication.cie.card.readerCardTitle"),
-            subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
+            subtitle: "",
             content: I18n.t("authentication.cie.card.readerCardFooter")
           },
           this.announceUpdate
@@ -354,8 +358,7 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
       case ReadingState.completed:
         this.setState(
           state => ({
-            title: I18n.t("global.buttons.ok2"),
-            subtitle: I18n.t("authentication.cie.card.cieCardValid"),
+            title: I18n.t("authentication.cie.card.cieCardValid"),
             // duplicate message so screen reader can read the updated message
             content: state.isScreenReaderEnabled
               ? I18n.t("authentication.cie.card.cieCardValid")
@@ -460,6 +463,7 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
       .then(async () => {
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
+        this.updateContent();
       })
       .catch(() => {
         this.setState({ readingState: ReadingState.error });
@@ -531,11 +535,13 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
             <VSpacer size={24} />
             <H3 style={{ textAlign: "center" }}>{this.state.title}</H3>
             <VSpacer size={8} />
-            <Body style={{ textAlign: "center" }} ref={this.subTitleRef}>
-              {this.state.subtitle}
-            </Body>
+            {this.state.subtitle && (
+              <Body style={{ textAlign: "center" }} ref={this.subTitleRef}>
+                {this.state.subtitle}
+              </Body>
+            )}
             <VSpacer size={24} />
-            {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
+            {this.state.readingState !== ReadingState.completed &&
               this.getFooter()}
           </ContentWrapper>
         </ScrollView>
