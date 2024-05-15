@@ -4,7 +4,6 @@ import React from "react";
 import { Alert } from "react-native";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
-import IdpsGridRevamp from "../../../../components/IdpsGridRevamp";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import { randomOrderIdps } from "../../../../screens/authentication/IdpSelectionScreen";
 import { loadIdps } from "../../../../store/actions/content";
@@ -14,6 +13,7 @@ import {
   LocalIdpsFallback,
   idps as idpsFallback
 } from "../../../../utils/idps";
+import IdpsGrid from "../../../../components/IdpsGrid";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
@@ -35,7 +35,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader title={{ label: "" }}>
-      <IdpsGridRevamp
+      <IdpsGrid
         idps={randomIdps.current}
         onIdpSelected={onIdpSelected}
         headerComponent={undefined}
