@@ -29,6 +29,7 @@ import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
 import { FimsActions } from "../../features/fims/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
+import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -106,7 +107,8 @@ export type Action =
   | NewWalletActions
   | NewServicesActions
   | FimsActions
-  | ItwActions;
+  | ItwActions
+  | TrialSystemActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
