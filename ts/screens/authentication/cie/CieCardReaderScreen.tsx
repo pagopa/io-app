@@ -26,9 +26,6 @@ export const CieCardReaderScreen = () => {
 
   const headerHeight = useHeaderHeight();
 
-  // eslint-disable-next-line no-console
-  console.log("CieCardReaderScreen 🚀");
-
   return (
     <CieCardReaderComponent
       navigation={navigation}

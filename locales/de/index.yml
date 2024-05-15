@@ -605,15 +605,9 @@ authentication:
       header: "Anmeldung mit CIE"
       title: "Karte vorübergehend gesperrt"
       button: "Lade / Öffne CieID"
-    card:
-      title: "Berühre die Karte"
-      titleiOS: "Halte die Karte still"
-      headerTitle: "Anmeldung mit CIE"
-      layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden an die Rückseite deines Telefons."
-      layCardMessageHeaderiOS: "Der Sensor befindet sich im oberen Teil des Geräts."
+    card:            
       layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
-      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."
-      readerCardTitle: "Halte die Karte für ein paar Sekunden still"
+      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."      
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
