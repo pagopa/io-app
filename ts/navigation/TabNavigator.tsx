@@ -6,7 +6,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen";
+import LegacyMessagesHomeScreen from "../features/messages/screens/LegacyMessagesHomeScreen";
+import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import I18n from "../i18n";
@@ -17,6 +18,7 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isDesignSystemEnabledSelector,
+  isNewHomeSectionEnabledSelector,
   isNewWalletSectionEnabledSelector
 } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
@@ -60,6 +62,9 @@ export const MainTabNavigator = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
     isNewWalletSectionEnabledSelector
+  );
+  const isNewHomeSectionEnabled = useIOSelector(
+    isNewHomeSectionEnabledSelector
   );
   const showBarcodeScanSection = false; // Currently disabled
 
@@ -106,7 +111,11 @@ export const MainTabNavigator = () => {
       >
         <Tab.Screen
           name={MESSAGES_ROUTES.MESSAGES_HOME}
-          component={MessagesHomeScreen}
+          component={
+            isDesignSystemEnabled && isNewHomeSectionEnabled
+              ? MessagesHomeScreen
+              : LegacyMessagesHomeScreen
+          }
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
