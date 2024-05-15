@@ -1,9 +1,14 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
 import { ServicesClient } from "../../common/api/client";
-import { featuredItemsGet, paginatedInstitutionsGet } from "../store/actions";
+import {
+  featuredInstitutionsGet,
+  featuredServicesGet,
+  paginatedInstitutionsGet
+} from "../store/actions";
 import { handleFindInstitutions } from "./handleFindInstitutions";
-import { handleGetFeaturedItems } from "./handleGetFeaturedItems";
+import { handleGetFeaturedInstitutions } from "./handleGetFeaturedInstitutions";
+import { handleGetFeaturedServices } from "./handleGetFeaturedServices";
 
 export function* watchHomeSaga(servicesClient: ServicesClient): SagaIterator {
   yield* takeLatest(
@@ -12,8 +17,13 @@ export function* watchHomeSaga(servicesClient: ServicesClient): SagaIterator {
     servicesClient.findInstitutions
   );
   yield* takeLatest(
-    featuredItemsGet.request,
-    handleGetFeaturedItems,
-    servicesClient.getFeaturedItems
+    featuredInstitutionsGet.request,
+    handleGetFeaturedInstitutions,
+    servicesClient.getFeaturedInstitutions
+  );
+  yield* takeLatest(
+    featuredServicesGet.request,
+    handleGetFeaturedServices,
+    servicesClient.getFeaturedServices
   );
 }

@@ -45,35 +45,31 @@ class SearchButton extends React.Component<Props, State> {
 
   public render() {
     const { searchText } = this.state;
-    return (
-      <React.Fragment>
-        {O.isSome(searchText) ? (
-          <LabelledItem
-            hasNavigationEvents
-            inputProps={{
-              placeholder: I18n.t("global.actions.search"),
-              value: searchText.value,
-              onChangeText: this.onSearchTextChange,
-              autoFocus: true
-            }}
-            icon="closeLarge"
-            iconPosition="right"
-            onPress={this.onSearchDisable}
-            accessibilityLabelIcon={I18n.t("global.buttons.close")}
-            iconColor={this.props.color}
-          />
-        ) : (
-          <>
-            <IconButton
-              color="neutral"
-              icon="search"
-              onPress={this.handleSearchPress}
-              accessibilityLabel={I18n.t("global.buttons.search")}
-            />
-            <HSpacer size={ICON_BUTTON_MARGIN} />
-          </>
-        )}
-      </React.Fragment>
+    return O.isSome(searchText) ? (
+      <LabelledItem
+        hasNavigationEvents
+        inputProps={{
+          placeholder: I18n.t("global.actions.search"),
+          value: searchText.value,
+          onChangeText: this.onSearchTextChange,
+          autoFocus: true
+        }}
+        icon="closeLarge"
+        iconPosition="right"
+        onPress={this.onSearchDisable}
+        accessibilityLabelIcon={I18n.t("global.buttons.close")}
+        iconColor={this.props.color}
+      />
+    ) : (
+      <>
+        <IconButton
+          color="neutral"
+          icon="search"
+          onPress={this.handleSearchPress}
+          accessibilityLabel={I18n.t("global.buttons.search")}
+        />
+        <HSpacer size={ICON_BUTTON_MARGIN} />
+      </>
     );
   }
 

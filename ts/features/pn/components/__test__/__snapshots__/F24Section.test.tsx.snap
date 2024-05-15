@@ -781,7 +781,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1009,7 +1009,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2739,7 +2739,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >

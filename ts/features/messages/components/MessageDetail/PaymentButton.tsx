@@ -1,10 +1,10 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBButtonText } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { ButtonSolid } from "@pagopa/io-app-design-system";
 import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../../../definitions/backend/PaymentNoticeNumber";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
@@ -23,7 +23,6 @@ import {
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../../../../utils/payment";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 
 type OwnProps = {
   organizationFiscalCode: OrganizationFiscalCode;
@@ -39,8 +38,7 @@ type Props = OwnProps &
 const styles = StyleSheet.create({
   half: {
     flex: 1
-  },
-  marginTop1: { marginTop: 1 }
+  }
 });
 
 /**
@@ -84,15 +82,14 @@ const PaymentButton = ({
     }
   };
   return (
-    <ButtonDefaultOpacity
-      primary={true}
-      onPress={handleOnPress}
-      style={styles.half}
-    >
-      <NBButtonText style={styles.marginTop1}>
-        {I18n.t("messages.cta.seeNotice")}
-      </NBButtonText>
-    </ButtonDefaultOpacity>
+    <View style={styles.half}>
+      <ButtonSolid
+        fullWidth
+        onPress={handleOnPress}
+        label={I18n.t("messages.cta.seeNotice")}
+        accessibilityLabel={I18n.t("messages.cta.seeNotice")}
+      />
+    </View>
   );
 };
 

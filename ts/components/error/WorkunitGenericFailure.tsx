@@ -1,16 +1,15 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../img/servicesStatus/error-detail-icon.png";
-import { cancelButtonProps } from "../buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { IOStyles } from "../core/variables/IOStyles";
-import { renderInfoRasterImage } from "../infoScreen/imageRendering";
 import { InfoScreenComponent } from "../infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../infoScreen/imageRendering";
 import BaseScreenComponent from "../screens/BaseScreenComponent";
-import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -22,6 +21,7 @@ const loadLocales = () => ({
 
 /**
  * This screen is displayed when an unexpected failure occurs in a work unit
+ * @deprecated Use `OperationResultScreen` instead
  * @constructor
  * @param props
  */
@@ -34,12 +34,18 @@ const WorkunitGenericFailure = (props: Props): React.ReactElement => {
           image={renderInfoRasterImage(image)}
           title={title}
         />
-
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(props.cancel, close)}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: close,
+            accessibilityLabel: close,
+            onPress: props.cancel
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

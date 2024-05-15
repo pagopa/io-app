@@ -2,7 +2,6 @@
  * A component to show the fiscal code fac-simile in Landscape
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Body, Button, Container, Right } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -11,14 +10,17 @@ import {
   StatusBar,
   StyleSheet
 } from "react-native";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  HeaderFirstLevel,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { useMaxBrightness } from "../utils/brightness";
 import FiscalCodeComponent from "./FiscalCodeComponent";
-import AppHeader from "./ui/AppHeader";
 
 export type Props = Readonly<{
   onCancel: () => void;
@@ -81,30 +83,24 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
   useMaxBrightness();
 
   return (
-    <Container style={{ backgroundColor: IOColors.bluegrey }}>
-      <AppHeader noLeft={true} dark={true}>
-        <Body />
-        <Right>
-          <Button
-            transparent={true}
-            onPress={props.onCancel}
-            accessible={true}
-            accessibilityRole={"button"}
-            accessibilityLabel={I18n.t("global.buttons.close")}
-          >
-            <Icon name="closeLarge" color="white" />
-          </Button>
-        </Right>
-      </AppHeader>
+    <View style={styles.content}>
       <StatusBar
         backgroundColor={IOColors.bluegrey}
         barStyle={"light-content"}
       />
-      <ScrollView
-        onLayout={scrollToEnd}
-        ref={ScrollViewRef}
-        style={styles.content}
-      >
+      {/* TO BE REMOVED during screen refactoring */}
+      <HeaderFirstLevel
+        backgroundColor="dark"
+        title=""
+        type="singleAction"
+        firstAction={{
+          icon: "closeLarge",
+          onPress: props.onCancel,
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          testID: "fiscalCodeLandscapeOverlay_closeButton"
+        }}
+      />
+      <ScrollView onLayout={scrollToEnd} ref={ScrollViewRef}>
         <VSpacer size={16} />
         <View>
           <FiscalCodeComponent
@@ -126,7 +122,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
 
         <VSpacer size={48} />
       </ScrollView>
-    </Container>
+    </View>
   );
 };
 
