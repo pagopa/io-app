@@ -21,6 +21,8 @@ export const EIdCard = ({
   fiscalCode
 }: EIdCardProps) => {
   const isValid = status === "valid";
+  const isExpired = status === "expired";
+  const isPending = status === "pending";
 
   const shouldDisplayPersonalInfo = !(!isValid || isMasked || isPreview);
 
@@ -62,9 +64,7 @@ export const EIdCard = ({
   return (
     <View style={isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <EidCardShape />
-        </View>
+        <View style={styles.card}>{isValid && <EidCardShape />}</View>
         <View style={styles.infoContainer}>
           <View style={styles.header}>
             <Body color={labelColor} weight="SemiBold">
@@ -76,9 +76,18 @@ export const EIdCard = ({
         </View>
         {!isValid && digitalVersionBadge}
       </View>
+      <View
+        style={[
+          styles.border,
+          isExpired && styles.expiredBorder,
+          isPending && styles.pendingBorder
+        ]}
+      />
     </View>
   );
 };
+
+const transparentBorderColor = "transparent";
 
 const styles = StyleSheet.create({
   previewContainer: {
@@ -95,7 +104,25 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    bottom: 0
+    bottom: 0,
+    backgroundColor: IOColors["grey-100"]
+  },
+  border: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderLeftWidth: 9,
+    borderColor: transparentBorderColor
+  },
+  expiredBorder: {
+    borderColor: IOColors["error-600"]
+  },
+  pendingBorder: {
+    borderColor: IOColors["info-700"]
   },
   infoContainer: {
     paddingHorizontal: 16,

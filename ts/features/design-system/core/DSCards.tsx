@@ -258,6 +258,13 @@ export const DSCards = () => (
       <DSComponentViewerBox name="Valid">
         <EIdCard name="Anna Verdi" fiscalCode="RSGMRT80A41H501X" />
       </DSComponentViewerBox>
+      <DSComponentViewerBox name="Masked">
+        <EIdCard
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+          isMasked={true}
+        />
+      </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
         <EIdCard
           name="Anna Verdi"
@@ -270,13 +277,6 @@ export const DSCards = () => (
           name="Anna Verdi"
           fiscalCode="RSGMRT80A41H501X"
           status="pending"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Masked">
-        <EIdCard
-          name="Anna Verdi"
-          fiscalCode="RSGMRT80A41H501X"
-          isMasked={true}
         />
       </DSComponentViewerBox>
     </DesignSystemSection>
