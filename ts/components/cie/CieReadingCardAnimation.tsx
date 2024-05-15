@@ -1,7 +1,7 @@
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, Pictogram } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
-import { Animated, Easing, Image, StyleSheet, View } from "react-native";
+import { Animated, Easing, Platform, StyleSheet, View } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     height: imgDimension - 3,
     width: imgDimension - 3,
-    borderRadius: imgDimension / 2
+    borderRadius: imgDimension / 2,
+    justifyContent: "center",
+    alignItems: "center"
   },
   rings: {
     height: boxDimension,
@@ -208,11 +210,14 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             shadowColor={IOColors.greyLight}
             bgColor={IOColors.greyLight}
           >
-            <Image
-              accessibilityIgnoresInvertColors
-              source={require("../../../img/cie/place-card-illustration.png")}
-              style={styles.img}
-            />
+            <View style={styles.img}>
+              <Pictogram
+                name={Platform.select({
+                  ios: "nfcScaniOS",
+                  default: "nfcScanAndroid"
+                })}
+              />
+            </View>
           </ProgressCircle>
           {this.props.readingState === ReadingState.completed && (
             <View style={styles.successIcon}>

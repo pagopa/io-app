@@ -12,7 +12,7 @@ import { LandingScreen } from "../screens/authentication/LandingScreen";
 import NewOptInScreen from "../screens/authentication/NewOptInScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
-import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
+import { CieCardReaderScreen } from "../screens/authentication/cie/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
@@ -107,6 +107,7 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CIE_CARD_READER_SCREEN}
       component={CieCardReaderScreen}
+      options={{ headerShown: true }}
     />
 
     <Stack.Screen

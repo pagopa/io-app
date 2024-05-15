@@ -39,7 +39,6 @@ import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
-import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
@@ -480,13 +479,6 @@ const DesignSystemMainStack = () => {
         component={DSLegacyPictograms}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
-        }}
-      />
-      <Stack.Screen
-        name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}
-        component={DSLegacyIllustrations}
-        options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.title
         }}
       />
     </Stack.Navigator>
