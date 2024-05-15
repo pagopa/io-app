@@ -17,7 +17,6 @@ export type EIdCardProps = {
 export const EIdCard = ({
   status = "valid",
   isMasked = false,
-  isPreview = false,
   name,
   fiscalCode
 }: EIdCardProps) => {
@@ -25,7 +24,7 @@ export const EIdCard = ({
   const isExpired = status === "expired";
   const isPending = status === "pending";
 
-  const shouldDisplayPersonalInfo = !(!isValid || isMasked || isPreview);
+  const shouldDisplayPersonalInfo = !(!isValid || isMasked);
 
   const personalInfoComponent = (
     <View style={styles.personalInfo}>
@@ -72,20 +71,18 @@ export const EIdCard = ({
   );
 
   return (
-    <View style={isPreview && styles.previewContainer}>
-      <View style={styles.cardContainer}>
-        <View style={styles.card}>{isValid && <EidCardShape />}</View>
-        <View style={styles.infoContainer}>
-          <View style={styles.header}>
-            <Body color={labelColor} weight="SemiBold">
-              {I18n.t("features.itWallet.card.eid.label").toUpperCase()}
-            </Body>
-            {tagComponent}
-          </View>
-          {shouldDisplayPersonalInfo && personalInfoComponent}
+    <View style={styles.cardContainer}>
+      <View style={styles.card}>{isValid && <EidCardShape />}</View>
+      <View style={styles.infoContainer}>
+        <View style={styles.header}>
+          <Body color={labelColor} weight="SemiBold">
+            {I18n.t("features.itWallet.card.eid.label").toUpperCase()}
+          </Body>
+          {tagComponent}
         </View>
-        {!isValid && digitalVersionBadge}
+        {shouldDisplayPersonalInfo && personalInfoComponent}
       </View>
+      {!isValid && digitalVersionBadge}
       <View
         style={[
           styles.border,
@@ -100,10 +97,6 @@ export const EIdCard = ({
 const transparentBorderColor = "transparent";
 
 const styles = StyleSheet.create({
-  previewContainer: {
-    aspectRatio: 9 / 2,
-    overflow: "hidden"
-  },
   cardContainer: {
     aspectRatio: 16 / 10,
     borderRadius: 8,

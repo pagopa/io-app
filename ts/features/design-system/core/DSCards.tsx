@@ -15,6 +15,7 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
 import { EIdCard } from "../../itwallet/common/components/EIdCard";
+import { EIdCardPreview } from "../../itwallet/common/components/EIdCardPreview";
 
 const styles = StyleSheet.create({
   content: {
@@ -249,11 +250,7 @@ export const DSCards = () => (
 
     <DesignSystemSection title="eID">
       <DSComponentViewerBox name="Preview">
-        <EIdCard
-          isPreview={true}
-          name="Anna Verdi"
-          fiscalCode="RSGMRT80A41H501X"
-        />
+        <EIdCardPreview />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
         <EIdCard name="Anna Verdi" fiscalCode="RSGMRT80A41H501X" />
