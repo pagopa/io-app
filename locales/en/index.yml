@@ -602,9 +602,9 @@ authentication:
     card5-title: Welcome to IO!
     card5-content: What can you do?
     card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
-    expiredCardTitle: Card expired or no longer valid
+    expiredCardTitle: La verifica della CIE non è andata a buon fine
     expiredCardHeaderTitle: Login with CIE
-    expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
+    expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
     genericTitle: Login with CIE
