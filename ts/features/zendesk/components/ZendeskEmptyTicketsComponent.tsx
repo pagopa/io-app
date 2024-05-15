@@ -1,17 +1,18 @@
+import { ButtonSolidProps } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import image from "../../../../img/pictograms/doubt.png";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import { zendeskConfigSelector } from "../store/reducers";
 import { handleContactSupport } from "../utils";
 
@@ -47,18 +48,19 @@ const ZendeskEmptyTicketsComponent = ({
     ]
   );
 
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
+  const continueButtonProps: ButtonSolidProps = {
+    label: I18n.t("support.helpCenter.cta.contactSupport"),
+    accessibilityLabel: I18n.t("support.helpCenter.cta.contactSupport"),
     onPress: handleContactSupportPress,
-    title: I18n.t("support.helpCenter.cta.contactSupport")
+    testID: "continueButtonId"
   };
 
-  const cancelButtonProps = {
-    testID: "cancelButtonId",
-    bordered: true,
+  // It should be `ButtonOutlineProps`
+  const cancelButtonProps: ButtonSolidProps = {
+    label: I18n.t("global.buttons.back"),
+    accessibilityLabel: I18n.t("global.buttons.back"),
     onPress: () => navigation.goBack(),
-    title: I18n.t("global.buttons.back")
+    testID: "cancelButtonId"
   };
 
   return (
@@ -68,7 +70,10 @@ const ZendeskEmptyTicketsComponent = ({
         title={I18n.t("support.ticketList.noTicket.title")}
         body={I18n.t("support.ticketList.noTicket.body")}
       />
-      <FooterStackButton buttons={[continueButtonProps, cancelButtonProps]} />
+      <FooterStackButton
+        primaryActionProps={continueButtonProps}
+        secondaryActionProps={cancelButtonProps}
+      />
     </SafeAreaView>
   );
 };

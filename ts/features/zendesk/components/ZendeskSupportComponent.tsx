@@ -1,11 +1,15 @@
+import {
+  ButtonOutline,
+  ButtonSolid,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { InfoBox } from "../../../components/box/InfoBox";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
@@ -19,7 +23,6 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { profileSelector } from "../../../store/reducers/profile";
-import { showToast } from "../../../utils/showToast";
 import { openWebUrl } from "../../../utils/url";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { zendeskConfigSelector } from "../store/reducers";
@@ -76,7 +79,7 @@ const ZendeskSupportComponent = ({
         <Link
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>
-              showToast(I18n.t("global.jserror.title"))
+              IOToast.error(I18n.t("global.jserror.title"))
             );
           }}
         >
@@ -91,7 +94,8 @@ const ZendeskSupportComponent = ({
       </InfoBox>
       <VSpacer size={16} />
 
-      <ButtonDefaultOpacity
+      <ButtonOutline
+        fullWidth
         onPress={() => {
           void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
           if (O.isNone(maybeProfile)) {
@@ -114,29 +118,18 @@ const ZendeskSupportComponent = ({
             });
           }
         }}
-        style={{
-          alignSelf: "stretch"
-        }}
-        disabled={false}
-        bordered={true}
         testID={"showTicketsButton"}
-      >
-        <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
-      </ButtonDefaultOpacity>
+        label={I18n.t("support.helpCenter.cta.seeReports")}
+        accessibilityLabel={I18n.t("support.helpCenter.cta.seeReports")}
+      />
       <VSpacer size={16} />
-
-      <ButtonDefaultOpacity
-        style={{
-          alignSelf: "stretch"
-        }}
+      <ButtonSolid
+        fullWidth
+        label={I18n.t("support.helpCenter.cta.contactSupport")}
+        accessibilityLabel={I18n.t("support.helpCenter.cta.contactSupport")}
         onPress={handleContactSupportPress}
-        disabled={false}
         testID={"contactSupportButton"}
-      >
-        <Label color={"white"}>
-          {I18n.t("support.helpCenter.cta.contactSupport")}
-        </Label>
-      </ButtonDefaultOpacity>
+      />
     </>
   );
 };

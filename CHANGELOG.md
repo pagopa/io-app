@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.60.0-rc.1](https://github.com/pagopa/io-app/compare/2.60.0-rc.0...2.60.0-rc.1) (2024-05-14)
+
+
+### Features
+
+* [[IOPID-1723](https://pagopa.atlassian.net/browse/IOPID-1723)] Revamp EIC PIN Errors with the new DS ([#5748](https://github.com/pagopa/io-app/issues/5748)) ([9287ace](https://github.com/pagopa/io-app/commit/9287acee35d8fbdfc441c50d19728d2c931a5be5))
+* **IT Wallet:** [[SIW-1090](https://pagopa.atlassian.net/browse/SIW-1090)] Add NFC enable instructions screen ([#5733](https://github.com/pagopa/io-app/issues/5733)) ([4201c97](https://github.com/pagopa/io-app/commit/4201c9765c6d86c142c85f12ef475ec92d3c7ea5))
+
+
+### Bug Fixes
+
+* [[PE-590](https://pagopa.atlassian.net/browse/PE-590)] Added missing space in CGN bottom sheet ([#5753](https://github.com/pagopa/io-app/issues/5753)) ([a960307](https://github.com/pagopa/io-app/commit/a960307556d9b73c45bbfc4791286c2a7bd92091))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-296](https://pagopa.atlassian.net/browse/IOAPPX-296)] Remove `native-base` from dependencies ([#5558](https://github.com/pagopa/io-app/issues/5558)) ([027e1c4](https://github.com/pagopa/io-app/commit/027e1c494431fe8a896c7ddcf28146886dd8b757))
+* [[IOBP-630](https://pagopa.atlassian.net/browse/IOBP-630)] Changed `bundleName` to `pspBusinessName` from the new payment flow ([#5759](https://github.com/pagopa/io-app/issues/5759)) ([32253b0](https://github.com/pagopa/io-app/commit/32253b0b993b07166ac1e8589932ac2bb4634f73))
+* [[IOBP-640](https://pagopa.atlassian.net/browse/IOBP-640)] Map `isAllCCP` field into authentication transaction ([#5760](https://github.com/pagopa/io-app/issues/5760)) ([68ac204](https://github.com/pagopa/io-app/commit/68ac2048bd04009caccd3876818ebec87a3917e4))
+* [[IOPAE-1144](https://pagopa.atlassian.net/browse/IOPAE-1144)] Featured Institutions, Featured Services: actions, reducer, selectors and saga ([#5765](https://github.com/pagopa/io-app/issues/5765)) ([d6f80bd](https://github.com/pagopa/io-app/commit/d6f80bd0f3c624d92107e20a2f6c8ab38af79aa2))
+* [[IOPAE-1146](https://pagopa.atlassian.net/browse/IOPAE-1146)] Search institutions: actions, reducer, selectors and saga ([#5764](https://github.com/pagopa/io-app/issues/5764)) ([47b6b40](https://github.com/pagopa/io-app/commit/47b6b40b8accf7b886e29821dd1852065274c3da))
+* [[IOPID-1829](https://pagopa.atlassian.net/browse/IOPID-1829)] Change button on ToS screen  ([#5762](https://github.com/pagopa/io-app/issues/5762)) ([c9ddc8c](https://github.com/pagopa/io-app/commit/c9ddc8c3914fde18dd2214793a5056f7f0371fa9)), closes [/github.com/pagopa/io-app/blob/68ac2048bd04009caccd3876818ebec87a3917e4/ts/components/TosWebviewComponent.tsx#L68](https://github.com/pagopa//github.com/pagopa/io-app/blob/68ac2048bd04009caccd3876818ebec87a3917e4/ts/components/TosWebviewComponent.tsx/issues/L68)
+* [[PE-596](https://pagopa.atlassian.net/browse/PE-596)] Changed CGN locales from categories list and merchant details screen ([#5761](https://github.com/pagopa/io-app/issues/5761)) ([bdf4a19](https://github.com/pagopa/io-app/commit/bdf4a19240dac3b48d8629a1c61eb7b3beeb11ba))
+* **Cross:** [[IOAPPX-289](https://pagopa.atlassian.net/browse/IOAPPX-289)] Update DS with new components ([#5743](https://github.com/pagopa/io-app/issues/5743)) ([ba22fac](https://github.com/pagopa/io-app/commit/ba22fac062d994c62e3899263e53033e91b3d4f7))
+
 ## [2.60.0-rc.0](https://github.com/pagopa/io-app/compare/2.59.0-rc.2...2.60.0-rc.0) (2024-05-08)
 
 
