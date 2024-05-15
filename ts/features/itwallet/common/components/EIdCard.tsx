@@ -1,23 +1,94 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { Badge, Body, IOColors, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import EidCardShape from "../../../../../img/features/itw/eid_card.svg";
 
+export type EIdStatus = "valid" | "pending" | "expired";
+
 export type EIdCardProps = {
-  isExpired?: boolean;
+  isPreview?: boolean;
+  isMasked?: boolean;
+  status?: EIdStatus;
+  name?: string;
+  fiscalCode?: string;
 };
 
-export const EIdCard = ({ isExpired = false }: EIdCardProps) => (
-    <View style={[styles.container, isExpired && styles.expiredContainer]}>
-      <View style={styles.card}>
-        <EidCardShape />
-      </View>
+export const EIdCard = ({
+  status = "valid",
+  isMasked = false,
+  isPreview = false,
+  name,
+  fiscalCode
+}: EIdCardProps) => {
+  const isValid = status === "valid";
+
+  const shouldDisplayPersonalInfo = !(!isValid || isMasked || isPreview);
+
+  const personalInfoComponent = (
+    <View style={styles.personalInfo}>
+      <Body color="bluegreyDark" weight="SemiBold">
+        {name}
+      </Body>
+      <Body color="bluegreyDark" weight="SemiBold">
+        {fiscalCode}
+      </Body>
     </View>
   );
 
+  const tagComponent = React.useMemo(() => {
+    if (status === "expired") {
+      return <Tag variant="error" text="non valida" />;
+    } else if (status === "pending") {
+      return (
+        <Tag
+          variant="customIcon"
+          text="in lavorazione"
+          customIconProps={{ iconColor: "info-700", iconName: "infoFilled" }}
+        />
+      );
+    }
+
+    return null;
+  }, [status]);
+
+  const labelColor: IOColors = isValid ? "bluegreyDark" : "grey-700";
+
+  const digitalVersionBadge = (
+    <View style={{ position: "absolute", bottom: 16, right: -10 }}>
+      <Badge text="versione digitale   " variant="default" />
+    </View>
+  );
+
+  return (
+    <View style={isPreview && styles.previewContainer}>
+      <View style={styles.cardContainer}>
+        <View style={styles.card}>
+          <EidCardShape />
+        </View>
+        <View style={styles.infoContainer}>
+          <View style={styles.header}>
+            <Body color={labelColor} weight="SemiBold">
+              {`Identità digitale`.toUpperCase()}
+            </Body>
+            {tagComponent}
+          </View>
+          {shouldDisplayPersonalInfo && personalInfoComponent}
+        </View>
+        {!isValid && digitalVersionBadge}
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
-  container: {
-    aspectRatio: 16 / 10
+  previewContainer: {
+    aspectRatio: 9 / 2,
+    overflow: "hidden"
+  },
+  cardContainer: {
+    aspectRatio: 16 / 10,
+    borderRadius: 8,
+    overflow: "hidden"
   },
   card: {
     position: "absolute",
@@ -26,9 +97,16 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0
   },
-  expiredContainer: {
-    borderColor: IOColors["error-600"],
-    borderLeftWidth: 9,
-    paddingLeft: 7
+  infoContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 12
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  personalInfo: {
+    marginTop: 65
   }
 });

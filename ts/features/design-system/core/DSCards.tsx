@@ -248,7 +248,37 @@ export const DSCards = () => (
     </DesignSystemSection>
 
     <DesignSystemSection title="eID">
-      <EIdCard />
+      <DSComponentViewerBox name="Preview">
+        <EIdCard
+          isPreview={true}
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Valid">
+        <EIdCard name="Anna Verdi" fiscalCode="RSGMRT80A41H501X" />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expired">
+        <EIdCard
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+          status="expired"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Pending">
+        <EIdCard
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+          status="pending"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Masked">
+        <EIdCard
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+          isMasked={true}
+        />
+      </DSComponentViewerBox>
     </DesignSystemSection>
   </DesignSystemScreen>
 );
