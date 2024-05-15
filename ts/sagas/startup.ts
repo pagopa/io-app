@@ -94,6 +94,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
+import { watchFimsSaga } from "../features/fims/saga";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
@@ -316,6 +317,9 @@ export function* initializeApplicationSaga(
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga, backendClient, sessionToken);
+
+  // start watching for FIMS actions
+  yield* fork(watchFimsSaga);
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
