@@ -7,7 +7,7 @@ import {
   mockSetNativeCookie
 } from "../__mocks__/mockFIMSCallbacks";
 import { fimsGetConsentsListAction } from "../store/actions";
-import { fimsCTAUrlSelector } from "../store/selectors";
+import { fimsCTAUrlSelector } from "../store/reducers";
 
 export function* watchFimsSaga(): SagaIterator {
   yield* takeLatest(
@@ -23,11 +23,7 @@ function* handleFimsGetConsentsList() {
   const oidcProviderUrl = yield* select(fimsDomainSelector);
   const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
 
-  if (
-    fimsToken === undefined ||
-    oidcProviderUrl === undefined ||
-    fimsCTAUrl === undefined
-  ) {
+  if (!fimsToken || !oidcProviderUrl || !fimsCTAUrl) {
     // TODO:: proper error handling
     yield* put(fimsGetConsentsListAction.failure(new Error("missing data")));
     return;
@@ -39,7 +35,7 @@ function* handleFimsGetConsentsList() {
     "X-IO-Federation-Token",
     fimsToken
   );
-
+  // TODO:: failure backend response should report a fimsGetConsentsListAction.failure
   const getConsentsResult = yield* call(mockHttpNativeCall, {
     verb: "get",
     followRedirects: true,
