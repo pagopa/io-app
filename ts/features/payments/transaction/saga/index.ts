@@ -3,10 +3,12 @@ import { takeLatest } from "typed-redux-saga/macro";
 
 import { TransactionClient, WalletClient } from "../../common/api/client";
 import {
+  getPaymentsLatestTransactionsAction,
   getPaymentsTransactionDetailsAction,
   getPaymentsTransactionsAction
 } from "../store/actions";
 import { handleGetTransactionDetails } from "./handleGetTransactionDetails";
+import { handleGetLatestTransactions } from "./handleGetLatestTransactions";
 import { handleGetTransactions } from "./handleGetTransactions";
 
 /**
@@ -27,6 +29,12 @@ export function* watchPaymentsTransactionSaga(
   yield* takeLatest(
     getPaymentsTransactionsAction.request,
     handleGetTransactions,
+    transactionClient.getTransactionList
+  );
+
+  yield* takeLatest(
+    getPaymentsLatestTransactionsAction.request,
+    handleGetLatestTransactions,
     transactionClient.getTransactionList
   );
 }

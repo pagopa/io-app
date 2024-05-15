@@ -3,13 +3,16 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { paymentsWalletUserMethodsSelector } from "../../../wallet/store/selectors";
-import { walletTransactionsListPotSelector } from "../../../transaction/store/selectors";
+import {
+  walletLatestTransactionsListPotSelector,
+  walletTransactionsListPotSelector
+} from "../../../transaction/store/selectors";
 
 export const isPaymentsSectionLoadingSelector = createSelector(
   paymentsWalletUserMethodsSelector,
-  walletTransactionsListPotSelector,
-  (methodsPot, transactionsPot) =>
-    pot.isLoading(methodsPot) || pot.isLoading(transactionsPot)
+  walletLatestTransactionsListPotSelector,
+  (methodsPot, latestTransactionsPot) =>
+    pot.isLoading(methodsPot) || pot.isLoading(latestTransactionsPot)
 );
 
 export const isPaymentsMethodsEmptySelector = createSelector(
@@ -17,6 +20,15 @@ export const isPaymentsMethodsEmptySelector = createSelector(
   userWallets =>
     pot.getOrElse(
       pot.map(userWallets, wallets => wallets.length === 0),
+      false
+    )
+);
+
+export const isPaymentsLatestTransactionsEmptySelector = createSelector(
+  walletLatestTransactionsListPotSelector,
+  latestTransactionsPot =>
+    pot.getOrElse(
+      pot.map(latestTransactionsPot, transactions => transactions.length === 0),
       false
     )
 );

@@ -9,10 +9,10 @@ import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import { default as I18n } from "../../../../i18n";
-import { getPaymentsTransactionsAction } from "../../transaction/store/actions";
+import { getPaymentsLatestTransactionsAction } from "../../transaction/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletTransactionsListPotSelector } from "../../transaction/store/selectors";
-import { isPaymentsTransactionsEmptySelector } from "../store/selectors";
+import { walletLatestTransactionsListPotSelector } from "../../transaction/store/selectors";
+import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
@@ -27,14 +27,17 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const transactionsPot = useIOSelector(walletTransactionsListPotSelector);
+  const latestTransactionsPot = useIOSelector(
+    walletLatestTransactionsListPotSelector
+  );
 
-  const isLoading = pot.isLoading(transactionsPot) || enforcedLoadingState;
-  const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
+  const isLoading =
+    pot.isLoading(latestTransactionsPot) || enforcedLoadingState;
+  const isEmpty = useIOSelector(isPaymentsLatestTransactionsEmptySelector);
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(getPaymentsTransactionsAction.request({}));
+      dispatch(getPaymentsLatestTransactionsAction.request());
     }, [dispatch])
   );
 
@@ -62,14 +65,16 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   };
 
   const renderItems = () => {
-    if (!isLoading && pot.isSome(transactionsPot)) {
+    if (!isLoading && pot.isSome(latestTransactionsPot)) {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
-          {transactionsPot.value.map(transaction => (
+          {latestTransactionsPot.value.map(latestTransaction => (
             <PaymentsBizEventsListItemTransaction
-              key={`transaction_${transaction.transactionId}`}
-              onPress={() => handleNavigateToTransactionDetails(transaction)}
-              transaction={transaction}
+              key={`transaction_${latestTransaction.transactionId}`}
+              onPress={() =>
+                handleNavigateToTransactionDetails(latestTransaction)
+              }
+              transaction={latestTransaction}
             />
           ))}
         </View>

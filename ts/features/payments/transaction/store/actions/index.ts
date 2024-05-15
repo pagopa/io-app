@@ -4,8 +4,15 @@ import { Transaction } from "../../../../../types/pagopa";
 import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-events/TransactionListItem";
 
 export type PaymentsGetTransactionPayload = {
+  firstLoad?: boolean;
   size?: number;
   continuationToken?: string;
+  onSuccess?: (continuationToken?: string) => void;
+};
+
+export type PaymentsGetTransactionSuccessPayload = {
+  data: ReadonlyArray<TransactionListItem>;
+  appendElements?: boolean;
 };
 
 export const getPaymentsTransactionsAction = createAsyncAction(
@@ -15,10 +22,17 @@ export const getPaymentsTransactionsAction = createAsyncAction(
   "PAYMENTS_TRANSACTIONS_LIST_CANCEL"
 )<
   PaymentsGetTransactionPayload,
-  ReadonlyArray<TransactionListItem>,
+  PaymentsGetTransactionSuccessPayload,
   NetworkError,
   void
 >();
+
+export const getPaymentsLatestTransactionsAction = createAsyncAction(
+  "PAYMENTS_LATEST_TRANSACTIONS_LIST_REQUEST",
+  "PAYMENTS_LATEST_TRANSACTIONS_LIST_SUCCESS",
+  "PAYMENTS_LATEST_TRANSACTIONS_LIST_FAILURE",
+  "PAYMENTS_LATEST_TRANSACTIONS_LIST_CANCEL"
+)<void, ReadonlyArray<TransactionListItem>, NetworkError, void>();
 
 export const getPaymentsTransactionDetailsAction = createAsyncAction(
   "PAYMENTS_TRANSACTION_DETAILS_REQUEST",
@@ -29,4 +43,5 @@ export const getPaymentsTransactionDetailsAction = createAsyncAction(
 
 export type PaymentsTransactionActions =
   | ActionType<typeof getPaymentsTransactionDetailsAction>
-  | ActionType<typeof getPaymentsTransactionsAction>;
+  | ActionType<typeof getPaymentsTransactionsAction>
+  | ActionType<typeof getPaymentsLatestTransactionsAction>;

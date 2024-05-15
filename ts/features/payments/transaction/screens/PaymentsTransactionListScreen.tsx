@@ -30,6 +30,8 @@ import { PaymentsBizEventsListItemTransaction } from "../../home/components/Paym
 import { PaymentsHomeEmptyScreenContent } from "../../home/components/PaymentsHomeEmptyScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { groupTransactionsByMonth } from "../utils";
+import I18n from "../../../../i18n";
 
 export type PaymentsTransactionListScreenProps = RouteProp<
   PaymentsTransactionParamsList,
@@ -40,48 +42,15 @@ const AnimatedSectionList = Animated.createAnimatedComponent(
   SectionList as new () => SectionList<TransactionListItem>
 );
 
-/**
- * Function that groups the transactions by month and returns an array of objects with the month as title and the transactions as data
- * - The year is shown only if it's different from the current year
- */
-const groupByMonth = (
-  elements: ReadonlyArray<TransactionListItem>
-): Array<SectionListData<TransactionListItem>> => {
-  const groups: { [month: string]: Array<TransactionListItem> } = {};
-
-  elements.forEach(element => {
-    if (element.transactionDate !== undefined) {
-      const month = new Date(element.transactionDate).toLocaleString(
-        "default",
-        {
-          month: "long",
-          year:
-            new Date().getFullYear() ===
-            new Date(element.transactionDate).getFullYear()
-              ? undefined
-              : "numeric"
-        }
-      );
-
-      // eslint-disable-next-line functional/immutable-data
-      groups[month] = groups[month] || [];
-      // eslint-disable-next-line functional/immutable-data
-      groups[month].push(element);
-    }
-  });
-
-  return Object.keys(groups).map(month => ({
-    title: month,
-    data: groups[month]
-  }));
-};
-
 const PaymentsTransactionListScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const scrollTranslationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = React.useState(0);
+  const [continuationToken, setContinuationToken] = React.useState<
+    string | undefined
+  >();
   const [groupedTransactions, setGroupedTransactions] =
     React.useState<ReadonlyArray<SectionListData<TransactionListItem>>>();
   const insets = useSafeAreaInsets();
@@ -115,24 +84,31 @@ const PaymentsTransactionListScreen = () => {
     setTitleHeight(height);
   };
 
+  const handleOnSuccess = (continuationToken?: string) => {
+    setContinuationToken(continuationToken);
+  };
+
   useOnFirstRender(
     React.useCallback(() => {
-      if (pot.isNone(transactionsPot)) {
-        dispatch(getPaymentsTransactionsAction.request({}));
-      }
-    }, [dispatch, transactionsPot])
+      dispatch(
+        getPaymentsTransactionsAction.request({
+          firstLoad: true,
+          onSuccess: handleOnSuccess
+        })
+      );
+    }, [dispatch])
   );
 
   // creami un hook che quando cambia il valore di transactionPot, aggiorna uno stato creando un array di elementi raggruppati per mese e
   // l'array deve essere composto da {title: "mese", data: [transazioni]}
   React.useEffect(() => {
     if (pot.isSome(transactionsPot)) {
-      setGroupedTransactions(groupByMonth(transactionsPot.value));
+      setGroupedTransactions(groupTransactionsByMonth(transactionsPot.value));
     }
   }, [transactionsPot]);
 
   useHeaderSecondLevel({
-    title: "Ricevute pagoPA",
+    title: I18n.t("features.payments.transactions.title"),
     canGoBack: true,
     supportRequest: true,
     scrollValues: {
@@ -143,8 +119,11 @@ const PaymentsTransactionListScreen = () => {
 
   const SectionListHeaderTitle = (
     <View onLayout={getTitleHeight}>
-      <H2 accessibilityLabel={"Ricevute pagoPA"} accessibilityRole="header">
-        Ricevute pagoPA
+      <H2
+        accessibilityLabel={I18n.t("features.payments.transactions.title")}
+        accessibilityRole="header"
+      >
+        {I18n.t("features.payments.transactions.title")}
       </H2>
     </View>
   );
@@ -152,7 +131,7 @@ const PaymentsTransactionListScreen = () => {
   const renderLoadingFooter = () => (
     <>
       {isLoading &&
-        Array.from({ length: 10 }).map((_, index) => (
+        Array.from({ length: 5 }).map((_, index) => (
           <ListItemTransaction
             isLoading={true}
             key={index}
@@ -169,20 +148,33 @@ const PaymentsTransactionListScreen = () => {
     return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
   }
 
+  const fetchNextPage = () => {
+    if (!continuationToken || isLoading) {
+      return;
+    }
+    dispatch(
+      getPaymentsTransactionsAction.request({
+        continuationToken,
+        onSuccess: handleOnSuccess
+      })
+    );
+  };
+
   return (
     <AnimatedSectionList
-      snapToEnd={false}
+      // snapToEnd={false}
       scrollIndicatorInsets={{ right: 0 }}
       contentContainerStyle={{
-        flexGrow: 1,
         ...IOStyles.horizontalContentPadding,
-        paddingBottom: insets.bottom
+        paddingBottom: insets.bottom + 24
       }}
+      onEndReached={fetchNextPage}
+      onEndReachedThreshold={0.25}
       ListHeaderComponent={SectionListHeaderTitle}
       onScroll={scrollHandler}
       stickySectionHeadersEnabled={false}
       sections={
-        pot.isSome(transactionsPot) && !isLoading && groupedTransactions
+        pot.isSome(transactionsPot) && groupedTransactions
           ? groupedTransactions
           : []
       }

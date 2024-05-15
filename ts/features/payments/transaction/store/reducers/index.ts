@@ -5,6 +5,7 @@ import { NetworkError } from "../../../../../utils/errors";
 
 import { Transaction } from "../../../../../types/pagopa";
 import {
+  getPaymentsLatestTransactionsAction,
   getPaymentsTransactionDetailsAction,
   getPaymentsTransactionsAction
 } from "../actions";
@@ -13,11 +14,13 @@ import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-ev
 export type PaymentsTransactionState = {
   details: pot.Pot<Transaction, NetworkError>;
   transactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
+  latestTransactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
 };
 
 const INITIAL_STATE: PaymentsTransactionState = {
   details: pot.noneLoading,
-  transactions: pot.noneLoading
+  transactions: pot.noneLoading,
+  latestTransactions: pot.noneLoading
 };
 
 const reducer = (
@@ -46,6 +49,27 @@ const reducer = (
         ...state,
         details: pot.none
       };
+    // GET LATEST TRANSACTIONS LIST
+    case getType(getPaymentsLatestTransactionsAction.request):
+      return {
+        ...state,
+        latestTransactions: pot.toLoading(state.transactions)
+      };
+    case getType(getPaymentsLatestTransactionsAction.success):
+      return {
+        ...state,
+        latestTransactions: pot.some(action.payload)
+      };
+    case getType(getPaymentsLatestTransactionsAction.failure):
+      return {
+        ...state,
+        latestTransactions: pot.toError(state.transactions, action.payload)
+      };
+    case getType(getPaymentsLatestTransactionsAction.cancel):
+      return {
+        ...state,
+        latestTransactions: pot.none
+      };
     // GET TRANSACTIONS LIST
     case getType(getPaymentsTransactionsAction.request):
       return {
@@ -53,9 +77,12 @@ const reducer = (
         transactions: pot.toLoading(state.transactions)
       };
     case getType(getPaymentsTransactionsAction.success):
+      const previousTransactions = pot.getOrElse(state.transactions, []);
       return {
         ...state,
-        transactions: pot.some(action.payload)
+        transactions: !action.payload.appendElements
+          ? pot.some([...previousTransactions, ...action.payload.data])
+          : pot.some(action.payload.data)
       };
     case getType(getPaymentsTransactionsAction.failure):
       return {
