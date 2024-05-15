@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EIdCardPreview should match the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "aspectRatio": 4.5,
+      "overflow": "hidden",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "aspectRatio": 1.6,
+        "borderRadius": 8,
+        "overflow": "hidden",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#E8EBF1",
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <SvgMock />
+    </View>
+    <View
+      style={
+        Object {
+          "paddingHorizontal": 16,
+          "paddingTop": 12,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegreyDark"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          IDENTITÀ DIGITALE
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "borderColor": "transparent",
+            "borderLeftWidth": 9,
+            "borderRadius": 8,
+            "borderWidth": 1,
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+          false,
+        ]
+      }
+    />
+  </View>
+</View>
+`;
