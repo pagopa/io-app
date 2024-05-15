@@ -608,14 +608,14 @@ authentication:
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie_errors: 
     error_22: 
-      title: Non hai dato il consenso all’invio dei dati
-      subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
+      title: You haven't agreed to share your data
+      subtitle: To enter, you must agree to share some data
     error_1001:
-      title: Non hai l'età minima richiesta
-      subtitle: Per accedere, devi avere almeno 18 anni
+      title: Sorry, you don't meet the minimum age requirement
+      subtitle: You must be at least 18 years old
     generic: 
-      title: Non è stato possibile accedere
-      subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
+      title: Sorry, access was not available.
+      subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie:
     genericTitle: Login with CIE
     cie: CIE
