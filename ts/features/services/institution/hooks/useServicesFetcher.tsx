@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paginatedServicesGet } from "../store/actions";
 import {
@@ -9,7 +10,7 @@ import {
   paginatedServicesSelector
 } from "../store/reducers";
 
-const LIMIT: number = 10;
+const LIMIT: number = 20;
 
 export const useServicesFetcher = (institutionId: string) => {
   const dispatch = useIODispatch();
@@ -21,27 +22,44 @@ export const useServicesFetcher = (institutionId: string) => {
   const isUpdating = useIOSelector(isUpdatingPaginatedServicesSelector);
   const isError = useIOSelector(isErrorPaginatedServicesSelector);
 
-  const fetchPage = (page: number) => {
-    if (!isLoading && !isUpdating) {
-      dispatch(
-        paginatedServicesGet.request({
-          institutionId,
-          offset: page * LIMIT,
-          limit: LIMIT
-        })
-      );
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isRefreshing && !isUpdating) {
+      setIsRefreshing(false);
     }
-  };
+  }, [isRefreshing, isUpdating]);
 
-  const fetchServices = (page: number) => {
-    if (isLastPage) {
-      return;
-    }
+  const fetchPage = useCallback(
+    (page: number) => {
+      if (!isLoading && !isUpdating) {
+        dispatch(
+          paginatedServicesGet.request({
+            institutionId,
+            offset: page * LIMIT,
+            limit: LIMIT
+          })
+        );
+      }
+    },
+    [dispatch, institutionId, isLoading, isUpdating]
+  );
 
-    fetchPage(page);
-  };
+  const fetchServices = useCallback(
+    (page: number) => {
+      if (isLastPage) {
+        return;
+      }
 
-  const refreshServices = () => fetchPage(0);
+      fetchPage(page);
+    },
+    [isLastPage, fetchPage]
+  );
+
+  const refreshServices = useCallback(() => {
+    setIsRefreshing(true);
+    fetchPage(0);
+  }, [fetchPage]);
 
   return {
     currentPage,
@@ -49,6 +67,7 @@ export const useServicesFetcher = (institutionId: string) => {
     isError,
     isLoading,
     isUpdating,
+    isRefreshing,
     fetchServices,
     refreshServices
   };
