@@ -191,11 +191,29 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
         hideChevron: true,
         iconColor: "error-850",
         icon: "logout",
-        renderValue: v => <H6 color="error-850">{v}</H6>,
+        renderValue: v => (
+          <>
+            <VSpacer />
+            <H6 color="error-850">{v}</H6>
+            <VSpacer />
+          </>
+        ),
         onPress: onLogoutPress
       }
     ],
     [navigation, onLogoutPress]
+  );
+
+  const keyExtractor = useCallback(
+    (item: ProfileNavListItem, index: number) => `${item.value}-${index}`,
+    []
+  );
+
+  const contentContainerStyle = useMemo(
+    () => ({
+      paddingHorizontal: IOVisualCostants.appMarginDefault
+    }),
+    []
   );
 
   const renderProfileNavItem = useCallback(
@@ -244,12 +262,8 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
       <VSpacer size={16} />
       <FlatList
         scrollEnabled={false}
-        keyExtractor={(item: ProfileNavListItem, index: number) =>
-          `${item.value}-${index}`
-        }
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={contentContainerStyle}
         data={profileNavListItems}
         renderItem={renderProfileNavItem}
         ItemSeparatorComponent={Divider}
