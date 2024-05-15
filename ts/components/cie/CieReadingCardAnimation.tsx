@@ -1,10 +1,8 @@
 import { IOColors, Icon, Pictogram } from "@pagopa/io-app-design-system";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { Animated, Easing, Platform, StyleSheet, View } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import customVariables from "../../theme/variables";
-import AnimatedRing from "../animations/AnimatedRing";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -26,15 +24,6 @@ const imgDimension = 180;
 const boxDimension = 245;
 const progressThreshold = 60;
 
-// Setting for 'radar' animation
-const ringSettings = {
-  dimension: imgDimension,
-  // Three different animation start delays (one is 0), one for each ring
-  delayX1: 700 as Millisecond,
-  delayX2: 1400 as Millisecond,
-  duration: 2100 as Millisecond
-};
-
 const styles = StyleSheet.create({
   imgContainer: {
     justifyContent: "center",
@@ -47,14 +36,6 @@ const styles = StyleSheet.create({
     height: imgDimension - 3,
     width: imgDimension - 3,
     borderRadius: imgDimension / 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  rings: {
-    height: boxDimension,
-    width: boxDimension,
-    position: "absolute",
-    overflow: "hidden",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -170,29 +151,6 @@ export default class CieReadingCardAnimation extends React.PureComponent<
   public render() {
     return (
       <View style={styles.imgContainer} accessible={false}>
-        {this.props.readingState === ReadingState.waiting_card && (
-          <View style={styles.rings}>
-            <AnimatedRing
-              dimension={ringSettings.dimension}
-              startAnimationAfter={0 as Millisecond}
-              duration={ringSettings.duration}
-              boxDimension={boxDimension}
-            />
-            <AnimatedRing
-              dimension={ringSettings.dimension}
-              startAnimationAfter={ringSettings.delayX1}
-              duration={ringSettings.duration}
-              boxDimension={boxDimension}
-            />
-            <AnimatedRing
-              dimension={ringSettings.dimension}
-              startAnimationAfter={ringSettings.delayX2}
-              duration={ringSettings.duration}
-              boxDimension={boxDimension}
-            />
-          </View>
-        )}
-
         <View style={styles.flexStart}>
           <ProgressCircle
             percent={
