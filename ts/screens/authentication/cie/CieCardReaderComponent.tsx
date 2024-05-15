@@ -491,7 +491,9 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
               label={I18n.t("authentication.cie.nfc.retry")}
               onPress={() => this.startCieiOS(this.props.isCieUatEnabled)}
             />
-            <VSpacer size={24} />
+          </View>
+          <VSpacer size={24} />
+          <View>
             <ButtonLink
               label={I18n.t("global.buttons.close")}
               onPress={this.handleCancel}
@@ -516,9 +518,7 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
           }}
         >
           <ContentWrapper>
-            {!isIos && (
-              <CieReadingCardAnimation readingState={this.state.readingState} />
-            )}
+            <CieReadingCardAnimation readingState={this.state.readingState} />
             <VSpacer size={24} />
             <H3 style={{ textAlign: "center" }}>{this.state.title}</H3>
             <VSpacer size={8} />
