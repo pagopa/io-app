@@ -12,8 +12,8 @@ import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
-import { fimsConsentsDataSelector } from "../store/selectors";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { fimsConsentsDataSelector } from "../store/reducers";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 

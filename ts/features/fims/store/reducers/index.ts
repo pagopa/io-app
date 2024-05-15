@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import { HttpClientSuccessResponse } from "../../__mocks__/mockFIMSCallbacks";
 import {
   fimsGetConsentsListAction,
@@ -39,5 +40,11 @@ const reducer = (
   }
   return state;
 };
+
+export const fimsConsentsDataSelector = (state: GlobalState) =>
+  state.features.fims.consentsData;
+
+export const fimsCTAUrlSelector = (state: GlobalState) =>
+  state.features.fims.ctaUrl;
 
 export default reducer;

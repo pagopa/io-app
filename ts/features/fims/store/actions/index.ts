@@ -14,6 +14,7 @@ export const fimsGetConsentsListAction = createAsyncAction(
   "FIMS_GET_CONSENTS_LIST_SUCCESS",
   "FIMS_GET_CONSENTS_LIST_FAILURE"
 )<FimsGetConsentsListRequestType, HttpClientSuccessResponse, Error>();
+
 // note: IAB==InAppBrowser
 export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
   "FIMS_GET_REDIRECT_URL_REQUEST",

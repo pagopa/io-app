@@ -11,7 +11,7 @@ import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
-import { fimsCTAUrlSelector } from "../store/selectors";
+import { fimsCTAUrlSelector } from "../store/reducers";
 
 export function* watchFimsSaga(): SagaIterator {
   yield* takeLatest(
@@ -28,14 +28,10 @@ function* handleFimsGetConsentsList() {
   // TODO:: maybe move navigation here from utils
 
   const fimsToken = yield* select(fimsTokenSelector);
-  const oIDCProviderUrl = yield* select(fimsDomainSelector);
+  const oidcProviderUrl = yield* select(fimsDomainSelector);
   const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
 
-  if (
-    fimsToken === undefined ||
-    oIDCProviderUrl === undefined ||
-    fimsCTAUrl === undefined
-  ) {
+  if (!fimsToken || !oidcProviderUrl || !fimsCTAUrl) {
     // TODO:: proper error handling
     yield* put(fimsGetConsentsListAction.failure(new Error("missing data")));
     return;
@@ -43,11 +39,11 @@ function* handleFimsGetConsentsList() {
 
   yield* call(
     mockSetNativeCookie,
-    oIDCProviderUrl,
+    oidcProviderUrl,
     "X-IO-Federation-Token",
     fimsToken
   );
-
+  // TODO:: failure backend response should report a fimsGetConsentsListAction.failure
   const getConsentsResult = yield* call(mockHttpNativeCall, {
     verb: "get",
     followRedirects: true,
