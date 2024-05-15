@@ -473,7 +473,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -1143,7 +1143,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -1696,7 +1696,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -2256,7 +2256,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >

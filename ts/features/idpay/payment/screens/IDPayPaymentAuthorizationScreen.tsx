@@ -11,14 +11,14 @@ import {
   VSpacer,
   ContentWrapper,
   ListItemInfo,
-  H6
+  H6,
+  FooterWithButtons
 } from "@pagopa/io-app-design-system";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../common/components/Skeleton";
@@ -116,23 +116,27 @@ const IDPayPaymentAuthorizationScreen = () => {
             {renderContent()}
           </ContentWrapper>
         </View>
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={{
-            title: isCancelling ? "" : I18n.t("global.buttons.deny"),
-            bordered: true,
-            onPress: handleCancel,
-            isLoading: isCancelling,
-            disabled: isUpserting || isLoading
-          }}
-          rightButton={{
-            title: isAuthorizing ? "" : I18n.t("global.buttons.confirm"),
-            onPress: handleConfirm,
-            isLoading: isAuthorizing,
-            disabled: isUpserting || isLoading
-          }}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: isCancelling ? "" : I18n.t("global.buttons.deny"),
+            onPress: handleCancel,
+            disabled: isUpserting || isLoading
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.confirm"),
+            onPress: handleConfirm,
+            loading: isAuthorizing,
+            disabled: isUpserting || isLoading
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

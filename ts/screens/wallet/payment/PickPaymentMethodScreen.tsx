@@ -1,36 +1,36 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
  */
+import {
+  ContentWrapper,
+  Divider,
+  FooterWithButtons,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
+import {
+  isLoading as isLoadingRemote,
+  isLoading as isRemoteLoading
+} from "../../../common/model/RemoteValue";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../components/buttons/ButtonConfigurations";
-import {
-  isLoading as isLoadingRemote,
-  isLoading as isRemoteLoading
-} from "../../../common/model/RemoteValue";
 import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import I18n from "../../../i18n";
 import {
@@ -51,8 +51,8 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import {
-  bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
+  bancomatListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
   paypalListSelector
 } from "../../../store/reducers/wallet/wallets";
@@ -62,7 +62,6 @@ import {
   isDisabledToPay,
   isEnabledToPay
 } from "../../../utils/paymentMethodCapabilities";
-import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { dispatchPickPspOrConfirm } from "./common";
 
@@ -87,19 +86,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.payWith.contextualHelpContent"
 };
 
-const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
-  <FooterWithButtons
-    type={"TwoButtonsInlineThird"}
-    leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.back"))}
-    rightButton={confirmButtonProps(
-      onContinue,
-      I18n.t("wallet.newPaymentMethod.addButton"),
-      undefined,
-      "walletAddNewPaymentMethodTestId"
-    )}
-  />
-);
-
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
@@ -114,7 +100,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
-          <Content>
+          <ContentWrapper>
             <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
             <VSpacer size={16} />
             {methodsCanPay.length > 0 ? (
@@ -126,6 +112,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   testID={"availablePaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCanPay}
+                  ItemSeparatorComponent={() => <Divider />}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
@@ -165,6 +152,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   testID={"DisabledPaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCanPayButDisabled}
+                  ItemSeparatorComponent={() => <Divider />}
                   keyExtractor={item => `disabled_payment_${item.idWallet}`}
                   ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
@@ -194,6 +182,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   testID={"notPayablePaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCantPay}
+                  ItemSeparatorComponent={() => <Divider />}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
@@ -205,10 +194,29 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 />
               </>
             )}
-          </Content>
+          </ContentWrapper>
         </ScrollView>
-        {renderFooterButtons(props.goBack, props.navigateToAddPaymentMethod)}
       </SafeAreaView>
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            accessibilityLabel: I18n.t("global.buttons.back"),
+            onPress: props.goBack
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("wallet.newPaymentMethod.addButton"),
+            accessibilityLabel: I18n.t("wallet.newPaymentMethod.addButton"),
+            onPress: props.navigateToAddPaymentMethod,
+            testID: "walletAddNewPaymentMethodTestId"
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
@@ -265,12 +273,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
 
         if (failureReason === "FETCH_PSPS_FAILURE") {
           // fetching the PSPs for the payment has failed
-          showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
+          IOToast.warning(I18n.t("wallet.payWith.fetchPspFailure"));
         } else if (failureReason === "NO_PSPS_AVAILABLE") {
           // this wallet cannot be used for this payment
           // TODO: perhaps we can temporarily hide the selected wallet from
           //       the list of available wallets
-          showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+          IOToast.error(I18n.t("wallet.payWith.noPspsAvailable"));
         }
       }
     );
