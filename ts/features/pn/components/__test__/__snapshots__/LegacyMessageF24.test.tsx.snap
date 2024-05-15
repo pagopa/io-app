@@ -1101,7 +1101,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "flex-end",
-                                      "marginLeft": 16,
+                                      "marginLeft": 12,
                                     }
                                   }
                                 >

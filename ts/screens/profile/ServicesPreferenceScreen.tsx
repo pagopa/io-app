@@ -1,4 +1,4 @@
-import { ContentWrapper, VSpacer, IOToast } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";

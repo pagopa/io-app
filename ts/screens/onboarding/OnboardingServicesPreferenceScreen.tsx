@@ -10,6 +10,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import {
@@ -17,8 +18,10 @@ import {
   useIONavigation
 } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
+import ROUTES from "../../navigation/routes";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
   isServicesPreferenceModeSet,
   profileSelector,
@@ -27,16 +30,13 @@ import {
 import { getFlowType } from "../../utils/analytics";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
 } from "../profile/analytics";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { usePrevious } from "../../utils/hooks/usePrevious";
-import ROUTES from "../../navigation/routes";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;

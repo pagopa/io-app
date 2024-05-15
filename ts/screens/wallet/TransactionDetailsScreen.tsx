@@ -1,9 +1,8 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { ButtonOutline, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -13,7 +12,6 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { Body } from "../../components/core/typography/Body";
@@ -333,16 +331,12 @@ class TransactionDetailsScreen extends React.Component<
           </View>
 
           <VSpacer size={48} />
-          <ButtonDefaultOpacity
-            light={true}
-            bordered={true}
-            block={true}
+          <ButtonOutline
             onPress={this.handleBackPress}
-          >
-            {/* <ButtonText> */}
-            <NBButtonText>{I18n.t("global.buttons.close")}</NBButtonText>
-          </ButtonDefaultOpacity>
-          <VSpacer size={16} />
+            fullWidth
+            label={I18n.t("global.buttons.close")}
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          />
         </SlidedContentComponent>
       </BaseScreenComponent>
     );

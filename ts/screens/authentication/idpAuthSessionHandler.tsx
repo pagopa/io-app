@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import { pipe } from "fp-ts/lib/function";
-import I18n from "i18n-js";
+import I18n from "../../i18n";
 import * as React from "react";
 import {
   LoginUtilsError,
@@ -18,7 +18,6 @@ import {
 } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppState, SafeAreaView, View, StyleSheet } from "react-native";
-import { Text } from "native-base";
 import { H3 } from "../../components/core/typography/H3";
 import BaseScreenComponent, {
   ContextualHelpProps
@@ -53,8 +52,12 @@ import {
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { SessionToken } from "../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonSolid,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import themeVariables from "../../theme/variables";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
@@ -407,12 +410,15 @@ export const AuthSessionPage = () => {
                   {I18n.t("spid.pending_login.title")}
                 </H3>
                 <VSpacer size={16} />
-                <Text>{I18n.t("spid.pending_login.details")}</Text>
+                <Body>{I18n.t("spid.pending_login.details")}</Body>
               </View>
               <View style={styles.buttonContainer}>
-                <ButtonDefaultOpacity block={true} onPress={onBack}>
-                  <Text>{I18n.t("spid.pending_login.button")}</Text>
-                </ButtonDefaultOpacity>
+                <ButtonSolid
+                  fullWidth
+                  label={I18n.t("spid.pending_login.button")}
+                  accessibilityLabel={I18n.t("spid.pending_login.button")}
+                  onPress={onBack}
+                />
               </View>
             </SafeAreaView>
           )}

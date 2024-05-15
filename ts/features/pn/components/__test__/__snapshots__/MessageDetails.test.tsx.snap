@@ -983,7 +983,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   <View
                                     style={
                                       Object {
-                                        "marginLeft": 16,
+                                        "marginLeft": 12,
                                       }
                                     }
                                   >
@@ -1116,7 +1116,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   <View
                                     style={
                                       Object {
-                                        "marginRight": 16,
+                                        "marginRight": 12,
                                       }
                                     }
                                   >
@@ -1304,7 +1304,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   <View
                                     style={
                                       Object {
-                                        "marginRight": 16,
+                                        "marginRight": 12,
                                       }
                                     }
                                   >
@@ -1558,7 +1558,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           <View
                                             style={
                                               Object {
-                                                "marginRight": 16,
+                                                "marginRight": 12,
                                               }
                                             }
                                           >
@@ -1695,7 +1695,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           <View
                                             style={
                                               Object {
-                                                "marginLeft": 16,
+                                                "marginLeft": 12,
                                               }
                                             }
                                           >
@@ -1882,7 +1882,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           <View
                                             style={
                                               Object {
-                                                "marginRight": 16,
+                                                "marginRight": 12,
                                               }
                                             }
                                           >
@@ -2019,7 +2019,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           <View
                                             style={
                                               Object {
-                                                "marginLeft": 16,
+                                                "marginLeft": 12,
                                               }
                                             }
                                           >

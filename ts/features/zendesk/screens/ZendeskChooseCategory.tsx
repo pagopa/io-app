@@ -1,9 +1,9 @@
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { ListItem } from "native-base";
+import { Divider, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import {
   FlatList,
   ListRenderItemInfo,
+  Pressable,
   SafeAreaView,
   ScrollView,
   View
@@ -79,7 +79,8 @@ const ZendeskChooseCategory = (props: Props) => {
   const renderItem = (listItem: ListRenderItemInfo<ZendeskCategory>) => {
     const category = listItem.item;
     return (
-      <ListItem
+      <Pressable
+        accessibilityRole="button"
         onPress={() => {
           selectedCategory(category);
           // Set category as custom field
@@ -98,9 +99,11 @@ const ZendeskChooseCategory = (props: Props) => {
             });
           }
         }}
-        first={listItem.index === 0}
-        style={{ paddingRight: 0 }}
         testID={category.value}
+        // Hacky solution waiting for the replacement with `ListItem` from the DS
+        style={{
+          paddingVertical: 16
+        }}
       >
         <View
           style={{
@@ -124,7 +127,7 @@ const ZendeskChooseCategory = (props: Props) => {
             <Icon name="chevronRightListItem" size={24} color="blue" />
           </View>
         </View>
-      </ListItem>
+      </Pressable>
     );
   };
 
@@ -147,6 +150,7 @@ const ZendeskChooseCategory = (props: Props) => {
             data={categories}
             keyExtractor={c => c.value}
             renderItem={renderItem}
+            ItemSeparatorComponent={() => <Divider />}
           />
         </ScrollView>
       </SafeAreaView>

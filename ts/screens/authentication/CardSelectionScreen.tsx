@@ -1,7 +1,7 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { View, Image, StyleSheet, ScrollView } from "react-native";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import ScreenHeader from "../../components/ScreenHeader";
 import AnimatedRing from "../../components/animations/AnimatedRing";
 import { Body } from "../../components/core/typography/Body";
@@ -56,7 +56,7 @@ const ringSettings = {
 const CardSelectionScreen: React.SFC<Props> = props => (
   // With the following animation we can represent 3 circles that light up similar to a 'radar' effect
   <BaseScreenComponent goBack={true}>
-    <Content noPadded={true} bounces={false}>
+    <ScrollView bounces={false} style={IOStyles.flex}>
       <ScreenHeader
         heading={
           <H1 style={styles.titleHeader}>
@@ -96,12 +96,18 @@ const CardSelectionScreen: React.SFC<Props> = props => (
       <View style={[IOStyles.horizontalContentPadding, styles.messageFooter]}>
         <Body>{I18n.t("authentication.cie.card.layCardMessageFooter")}</Body>
       </View>
-    </Content>
-    <View style={IOStyles.footer}>
-      <Button onPress={props.navigation.goBack} cancel={true} block={true}>
-        <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
-      </Button>
-    </View>
+    </ScrollView>
+    <FooterWithButtons
+      type="SingleButton"
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          label: I18n.t("global.buttons.cancel"),
+          accessibilityLabel: I18n.t("global.buttons.cancel"),
+          onPress: props.navigation.goBack
+        }
+      }}
+    />
   </BaseScreenComponent>
 );
 

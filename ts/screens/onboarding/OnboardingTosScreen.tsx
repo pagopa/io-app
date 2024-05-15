@@ -4,9 +4,6 @@
  * has to accept the new version of ToS.
  * This screen is used also as Privacy screen From Profile section.
  */
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useEffect, useState, createRef, useCallback } from "react";
-import { Alert, View } from "react-native";
 import {
   Alert as AlertDS,
   H2,
@@ -14,10 +11,14 @@ import {
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import React, { createRef, useCallback, useEffect, useState } from "react";
+import { Alert, View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
@@ -26,12 +27,10 @@ import {
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackTosUserExit } from "../authentication/analytics";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
-import { tosConfigSelector } from "../../features/tos/store/selectors";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
@@ -127,43 +126,41 @@ const OnboardingTosScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
-      <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H2
-            accessible={true}
-            accessibilityRole="header"
-            testID="screen-content-header-title"
-          >
-            {I18n.t("profile.main.privacy.privacyPolicy.title")}
-          </H2>
-          <VSpacer size={16} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <H2
+          accessible={true}
+          accessibilityRole="header"
+          testID="screen-content-header-title"
+        >
+          {I18n.t("profile.main.privacy.privacyPolicy.title")}
+        </H2>
+        <VSpacer size={16} />
+      </View>
+      {!hasAcceptedCurrentTos && (
+        <View
+          style={IOStyles.horizontalContentPadding}
+          testID={"currentToSNotAcceptedView"}
+        >
+          <AlertDS
+            viewRef={viewRef}
+            testID="currentToSNotAcceptedText"
+            variant="info"
+            content={
+              hasAcceptedOldTosVersion
+                ? I18n.t("profile.main.privacy.privacyPolicy.updated")
+                : I18n.t("profile.main.privacy.privacyPolicy.infobox")
+            }
+          />
         </View>
-        {!hasAcceptedCurrentTos && (
-          <View
-            style={IOStyles.horizontalContentPadding}
-            testID={"currentToSNotAcceptedView"}
-          >
-            <AlertDS
-              viewRef={viewRef}
-              testID="currentToSNotAcceptedText"
-              variant="info"
-              content={
-                hasAcceptedOldTosVersion
-                  ? I18n.t("profile.main.privacy.privacyPolicy.updated")
-                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")
-              }
-            />
-          </View>
-        )}
-        <TosWebviewComponent
-          flow={flow}
-          handleLoadEnd={handleLoadEnd}
-          handleReload={handleReload}
-          webViewSource={{ uri: privacyUrl }}
-          shouldRenderFooter={!isLoading}
-          onAcceptTos={onAcceptTos}
-        />
-      </SafeAreaView>
+      )}
+      <TosWebviewComponent
+        flow={flow}
+        handleLoadEnd={handleLoadEnd}
+        handleReload={handleReload}
+        webViewSource={{ uri: privacyUrl }}
+        shouldRenderFooter={!isLoading}
+        onAcceptTos={onAcceptTos}
+      />
     </LoadingSpinnerOverlay>
   );
 };

@@ -1,19 +1,3 @@
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
-import {
-  View,
-  Keyboard,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform
-} from "react-native";
 import {
   Banner,
   ContentWrapper,
@@ -23,38 +7,54 @@ import {
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from "react";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { IdpData } from "../../../../definitions/content/IdpData";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
+import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../components/ui/LightModal";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
+import { pinPukHelpUrl } from "../../../config";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
+import ROUTES from "../../../navigation/routes";
+import { loginSuccess } from "../../../store/actions/authentication";
 import { nfcIsEnabled } from "../../../store/actions/cie";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { SessionToken } from "../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../utils/url";
-import { pinPukHelpUrl } from "../../../config";
-import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
-import { loginSuccess } from "../../../store/actions/authentication";
-import { IdpData } from "../../../../definitions/content/IdpData";
-import { SessionToken } from "../../../types/SessionToken";
-import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import { openWebUrl } from "../../../utils/url";
 import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import ROUTES from "../../../navigation/routes";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
 
 const CIE_PIN_LENGTH = 8;
 

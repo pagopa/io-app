@@ -1,12 +1,14 @@
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Body } from "../../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
@@ -26,7 +28,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * the instruction to enable the fingerprint/faceID usage
  */
 const MissingDevicePinScreen = () => {
-  const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
@@ -91,24 +92,22 @@ const MissingDevicePinScreen = () => {
           </Body>
         </View>
       </ScrollView>
-      {/* Waiting for a component that makes this wrapper
-      useless. FooterWithButtons currently uses
-      NativeBase buttons, instead of new ones */}
-      <View style={{ paddingBottom: insets.bottom }}>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            title: I18n.t("global.buttons.continue"),
-            primary: true,
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: () =>
               dispatch(
                 preferenceFingerprintIsEnabledSaveSuccess({
                   isFingerprintEnabled: false
                 })
               )
-          }}
-        />
-      </View>
+          }
+        }}
+      />
     </TopScreenComponent>
   );
 };

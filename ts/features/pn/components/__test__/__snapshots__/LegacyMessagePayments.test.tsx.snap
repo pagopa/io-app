@@ -962,7 +962,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         "alignItems": "center",
                                         "flexDirection": "row",
                                         "justifyContent": "flex-end",
-                                        "marginLeft": 16,
+                                        "marginLeft": 12,
                                       },
                                       Object {
                                         "flexShrink": 1,
@@ -1208,7 +1208,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         "alignItems": "center",
                                         "flexDirection": "row",
                                         "justifyContent": "flex-end",
-                                        "marginLeft": 16,
+                                        "marginLeft": 12,
                                       },
                                       Object {
                                         "flexShrink": 1,
@@ -1454,7 +1454,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         "alignItems": "center",
                                         "flexDirection": "row",
                                         "justifyContent": "flex-end",
-                                        "marginLeft": 16,
+                                        "marginLeft": 12,
                                       },
                                       Object {
                                         "flexShrink": 1,
@@ -2111,7 +2111,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -2681,7 +2681,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -2797,7 +2797,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -2913,7 +2913,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3029,7 +3029,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3145,7 +3145,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3715,7 +3715,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3831,7 +3831,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3947,7 +3947,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4063,7 +4063,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4179,7 +4179,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4749,7 +4749,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4865,7 +4865,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4981,7 +4981,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5097,7 +5097,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5213,7 +5213,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5783,7 +5783,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5899,7 +5899,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -6015,7 +6015,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -6131,7 +6131,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -6247,7 +6247,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >

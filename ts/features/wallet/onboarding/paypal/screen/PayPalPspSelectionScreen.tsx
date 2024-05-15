@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
@@ -19,7 +19,6 @@ import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
@@ -124,32 +123,6 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
     setSelectedPsp(pspList.length === 1 ? pspList[0] : undefined);
   }, [pspList]);
 
-  const buttonsProps = {
-    cancelButtonProps: {
-      testID: "cancelButtonId",
-      primary: false,
-      bordered: true,
-      onPress: props.cancel,
-      title: I18n.t("global.buttons.cancel")
-    },
-    continueButtonProps: {
-      testID: "continueButtonId",
-      bordered: false,
-      onPress: () => {
-        if (selectedPsp) {
-          props.setPspSelected(selectedPsp);
-          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-            screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
-            params: {
-              screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT
-            }
-          });
-        }
-      },
-      title: I18n.t("global.buttons.continue")
-    }
-  };
-
   return (
     <BaseScreenComponent
       goBack={props.goBack}
@@ -157,45 +130,75 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
       {isReady(props.pspList) ? (
-        <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
-          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <VSpacer size={8} />
-            <H1>{locales.title}</H1>
-            <VSpacer size={8} />
-            <ScrollView>
-              <Body>{locales.body}</Body>
-              <Link
-                onPress={presentWhatIsPspBottomSheet}
-                testID={"whatIsPSPTestID"}
-              >
-                {locales.link}
-              </Link>
-              <VSpacer size={24} />
-              <RadioListHeader
-                leftColumnTitle={locales.leftColumnTitle}
-                rightColumnTitle={locales.rightColumnTitle}
-              />
+        <>
+          <SafeAreaView
+            style={IOStyles.flex}
+            testID={"PayPalPpsSelectionScreen"}
+          >
+            <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
               <VSpacer size={8} />
-              <RadioButtonList<IOPayPalPsp["id"]>
-                key="paypal_psp_selection"
-                items={getPspListRadioItems(pspList)}
-                selectedItem={selectedPsp?.id}
-                onPress={(idPsp: string) => {
-                  setSelectedPsp(pspList.find(p => p.id === idPsp));
-                }}
-              />
-            </ScrollView>
-          </View>
+              <H1>{locales.title}</H1>
+              <VSpacer size={8} />
+              <ScrollView>
+                <Body>{locales.body}</Body>
+                <Link
+                  onPress={presentWhatIsPspBottomSheet}
+                  testID={"whatIsPSPTestID"}
+                >
+                  {locales.link}
+                </Link>
+                <VSpacer size={24} />
+                <RadioListHeader
+                  leftColumnTitle={locales.leftColumnTitle}
+                  rightColumnTitle={locales.rightColumnTitle}
+                />
+                <VSpacer size={8} />
+                <RadioButtonList<IOPayPalPsp["id"]>
+                  key="paypal_psp_selection"
+                  items={getPspListRadioItems(pspList)}
+                  selectedItem={selectedPsp?.id}
+                  onPress={(idPsp: string) => {
+                    setSelectedPsp(pspList.find(p => p.id === idPsp));
+                  }}
+                />
+              </ScrollView>
+            </View>
+
+            {bottomSheet}
+          </SafeAreaView>
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
-            leftButton={buttonsProps.cancelButtonProps}
-            rightButton={{
-              ...buttonsProps.continueButtonProps,
-              disabled: selectedPsp === undefined
+            primary={{
+              type: "Outline",
+              buttonProps: {
+                label: I18n.t("global.buttons.cancel"),
+                accessibilityLabel: I18n.t("global.buttons.cancel"),
+                onPress: props.cancel,
+                testID: "cancelButtonId"
+              }
+            }}
+            secondary={{
+              type: "Solid",
+              buttonProps: {
+                label: I18n.t("global.buttons.continue"),
+                accessibilityLabel: I18n.t("global.buttons.continue"),
+                onPress: () => {
+                  if (selectedPsp) {
+                    props.setPspSelected(selectedPsp);
+                    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+                      screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
+                      params: {
+                        screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT
+                      }
+                    });
+                  }
+                },
+                disabled: selectedPsp === undefined,
+                testID: "continueButtonId"
+              }
             }}
           />
-          {bottomSheet}
-        </SafeAreaView>
+        </>
       ) : (
         <LoadingErrorComponent
           testID={"PayPalPpsSelectionScreenLoadingError"}

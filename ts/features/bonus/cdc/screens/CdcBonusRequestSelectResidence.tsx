@@ -1,11 +1,12 @@
-import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  HSpacer,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../components/buttons/ButtonConfigurations";
 import {
   RadioButtonList,
   RadioItem
@@ -15,7 +16,6 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -97,13 +97,25 @@ const CdcBonusRequestSelectResidence = () => {
             </>
           ))}
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(() => {
-            navigation.getParent()?.goBack();
-          })}
-          rightButton={confirmButtonProps(
-            () => {
+      </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: () => {
+              navigation.getParent()?.goBack();
+            }
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: () => {
               dispatch(
                 cdcSelectedBonusAction(
                   cdcSelectedBonus?.map(b => ({
@@ -114,13 +126,10 @@ const CdcBonusRequestSelectResidence = () => {
               );
               navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
             },
-            I18n.t("global.buttons.continue"),
-            undefined,
-            undefined,
-            cdcSelectedBonus.some(b => !isResidentInItaly[b.year])
-          )}
-        />
-      </SafeAreaView>
+            disabled: cdcSelectedBonus.some(b => !isResidentInItaly[b.year])
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

@@ -21,7 +21,7 @@
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
  */
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -88,7 +88,6 @@ import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../../utils/profile";
-import { showToast } from "../../utils/showToast";
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type ReduxMergedProps = Readonly<{
@@ -230,10 +229,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       !pot.isError(prevProps.profile) &&
       this.props.profile.error.type !== "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR"
     ) {
-      showToast(
-        I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
-        "danger"
-      );
+      IOToast.error(I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"));
     }
 
     const enableServices = this.areAllServicesInboxChannelDisabled();
@@ -250,7 +246,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           pot.isLoading(prevProps.potUserMetadata))
       ) {
         // A toast is displayed if upsert userMetadata load fails
-        showToast(this.state.toastErrorMessage, "danger");
+        IOToast.error(this.state.toastErrorMessage);
       }
 
       if (
@@ -258,7 +254,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         pot.isError(this.props.visibleServicesContentLoadState)
       ) {
         // A toast is displayed if refresh visible services fails (on content or metadata load)
-        showToast(this.state.toastErrorMessage, "danger");
+        IOToast.error(this.state.toastErrorMessage);
       }
     }
   }
