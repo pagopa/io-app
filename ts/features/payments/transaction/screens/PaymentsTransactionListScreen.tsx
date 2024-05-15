@@ -117,8 +117,10 @@ const PaymentsTransactionListScreen = () => {
 
   useOnFirstRender(
     React.useCallback(() => {
-      dispatch(getPaymentsTransactionsAction.request({}));
-    }, [dispatch])
+      if (pot.isNone(transactionsPot)) {
+        dispatch(getPaymentsTransactionsAction.request({}));
+      }
+    }, [dispatch, transactionsPot])
   );
 
   // creami un hook che quando cambia il valore di transactionPot, aggiorna uno stato creando un array di elementi raggruppati per mese e

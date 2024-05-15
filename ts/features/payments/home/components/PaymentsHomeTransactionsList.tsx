@@ -101,13 +101,17 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       <ListItemHeader
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            label: I18n.t("features.payments.transactions.button"),
-            onPress: handleNavigateToTransactionList
-          }
-        }}
+        endElement={
+          !isLoading
+            ? {
+                type: "buttonLink",
+                componentProps: {
+                  label: I18n.t("features.payments.transactions.button"),
+                  onPress: handleNavigateToTransactionList
+                }
+              }
+            : undefined
+        }
       />
       {renderItems()}
     </Animated.View>
