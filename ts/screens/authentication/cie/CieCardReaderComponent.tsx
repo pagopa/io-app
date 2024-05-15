@@ -5,8 +5,8 @@
  */
 import {
   ButtonLink,
+  ButtonSolid,
   ContentWrapper,
-  FooterWithButtons,
   H3,
   IOColors,
   IOStyles,
@@ -478,32 +478,26 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
         <View style={IOStyles.alignCenter}>
           <View>
             <ButtonLink
-              label={I18n.t("global.buttons.cancel")}
+              label={I18n.t("global.buttons.close")}
               onPress={this.handleCancel}
             />
           </View>
         </View>
       ),
       ios: (
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          primary={{
-            type: "Outline",
-            buttonProps: {
-              label: I18n.t("global.buttons.cancel"),
-              accessibilityLabel: I18n.t("global.buttons.cancel"),
-              onPress: this.handleCancel
-            }
-          }}
-          secondary={{
-            type: "Solid",
-            buttonProps: {
-              label: I18n.t("authentication.cie.nfc.retry"),
-              accessibilityLabel: I18n.t("authentication.cie.nfc.retry"),
-              onPress: () => this.startCieiOS(this.props.isCieUatEnabled)
-            }
-          }}
-        />
+        <View style={IOStyles.alignCenter}>
+          <View>
+            <ButtonSolid
+              label={I18n.t("authentication.cie.nfc.retry")}
+              onPress={() => this.startCieiOS(this.props.isCieUatEnabled)}
+            />
+            <VSpacer size={24} />
+            <ButtonLink
+              label={I18n.t("global.buttons.close")}
+              onPress={this.handleCancel}
+            />
+          </View>
+        </View>
       )
     });
 
