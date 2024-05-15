@@ -188,9 +188,9 @@ const CgnMerchantDetailScreen = () => {
             style={{ flexGrow: 1 }}
             onScroll={scrollHandler}
             scrollEventThrottle={8}
+            scrollIndicatorInsets={{ right: 1 }}
             snapToOffsets={[0]}
             snapToEnd={false}
-            scrollIndicatorInsets={{ right: 1 }}
             contentContainerStyle={{
               flexGrow: 1,
               paddingBottom: safeBottomAreaHeight
