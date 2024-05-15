@@ -50,7 +50,7 @@ export const SearchScreen = () => {
     return () => {
       dispatch(searchPaginatedInstitutionsGet.cancel());
     };
-  }, [isError]);
+  }, [dispatch, isError]);
 
   useHeaderSecondLevel({
     title: "",
