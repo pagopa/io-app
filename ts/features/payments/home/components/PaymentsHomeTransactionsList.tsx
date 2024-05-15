@@ -1,4 +1,3 @@
-import { constVoid } from "fp-ts/lib/function";
 import {
   IOStyles,
   ListItemHeader,
@@ -14,6 +13,9 @@ import { getPaymentsTransactionsAction } from "../../transaction/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletTransactionsListPotSelector } from "../../transaction/store/selectors";
 import { isPaymentsTransactionsEmptySelector } from "../store/selectors";
+import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
 import { PaymentsBizEventsListItemTransaction } from "./PaymentsBizEventsListItemTransaction";
 
@@ -23,6 +25,7 @@ type Props = {
 
 const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   const transactionsPot = useIOSelector(walletTransactionsListPotSelector);
 
@@ -35,6 +38,29 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }, [dispatch])
   );
 
+  const handleNavigateToTransactionDetails = (
+    transaction: TransactionListItem
+  ) => {
+    navigation.navigate(
+      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      {
+        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS,
+        params: {
+          transactionId: 2
+        }
+      }
+    );
+  };
+
+  const handleNavigateToTransactionList = () => {
+    navigation.navigate(
+      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      {
+        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_LIST_SCREEN
+      }
+    );
+  };
+
   const renderItems = () => {
     if (!isLoading && pot.isSome(transactionsPot)) {
       return (
@@ -42,7 +68,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
           {transactionsPot.value.map(transaction => (
             <PaymentsBizEventsListItemTransaction
               key={`transaction_${transaction.transactionId}`}
-              onPress={() => constVoid}
+              onPress={() => handleNavigateToTransactionDetails(transaction)}
               transaction={transaction}
             />
           ))}
@@ -79,7 +105,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
           type: "buttonLink",
           componentProps: {
             label: I18n.t("features.payments.transactions.button"),
-            onPress: () => constVoid
+            onPress: handleNavigateToTransactionList
           }
         }}
       />

@@ -6,6 +6,7 @@ import {
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { PaymentsTransactionDetailsScreen } from "../screens/PaymentsTransactionDetailsScreen";
+import { PaymentsTransactionListScreen } from "../screens/PaymentsTransactionListScreen";
 import WalletTransactionOperationDetailsScreen from "../screens/PaymentsTransactionOperationDetails";
 import { PaymentsTransactionParamsList } from "./params";
 import { PaymentsTransactionRoutes } from "./routes";
@@ -25,6 +26,11 @@ export const PaymentsTransactionNavigator = () => (
     <Stack.Screen
       name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_OPERATION_DETAILS}
       component={WalletTransactionOperationDetailsScreen}
+      options={{ gestureEnabled: isGestureEnabled }}
+    />
+    <Stack.Screen
+      name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_LIST_SCREEN}
+      component={PaymentsTransactionListScreen}
       options={{ gestureEnabled: isGestureEnabled }}
     />
   </Stack.Navigator>
