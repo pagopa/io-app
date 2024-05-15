@@ -9,6 +9,7 @@ import {
   ContentWrapper,
   H3,
   IOColors,
+  IOPictograms,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -55,7 +56,6 @@ import {
   setAccessibilityFocus
 } from "../../../utils/accessibility";
 import { isDevEnv } from "../../../utils/environment";
-import { isIos } from "../../../utils/platform";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -103,6 +103,21 @@ type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
   errorDescription?: string;
   navigation?: () => void;
+};
+
+const getPictogramName = (state: ReadingState): IOPictograms => {
+  switch (state) {
+    case ReadingState.reading:
+    case ReadingState.waiting_card:
+      return Platform.select({
+        ios: "nfcScaniOS",
+        default: "nfcScanAndroid"
+      });
+    case ReadingState.error:
+      return "empty";
+    case ReadingState.completed:
+      return "success";
+  }
 };
 
 // A subset of Cie Events (errors) which is of interest to analytics
@@ -518,7 +533,10 @@ class CieCardReaderComponent extends React.PureComponent<Props, State> {
           }}
         >
           <ContentWrapper>
-            <CieReadingCardAnimation readingState={this.state.readingState} />
+            <CieReadingCardAnimation
+              pictogramName={getPictogramName(this.state.readingState)}
+              readingState={this.state.readingState}
+            />
             <VSpacer size={24} />
             <H3 style={{ textAlign: "center" }}>{this.state.title}</H3>
             <VSpacer size={8} />

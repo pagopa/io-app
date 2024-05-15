@@ -1,6 +1,10 @@
-import { IOColors, Icon, Pictogram } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOPictograms,
+  Pictogram
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Animated, Easing, Platform, StyleSheet, View } from "react-native";
+import { Animated, Easing, StyleSheet, View } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import customVariables from "../../theme/variables";
 
@@ -13,6 +17,7 @@ export enum ReadingState {
 
 type Props = Readonly<{
   readingState: ReadingState;
+  pictogramName: IOPictograms;
 }>;
 
 type State = Readonly<{
@@ -38,10 +43,6 @@ const styles = StyleSheet.create({
     borderRadius: imgDimension / 2,
     justifyContent: "center",
     alignItems: "center"
-  },
-  successIcon: {
-    position: "absolute",
-    alignSelf: "flex-start"
   },
   flexStart: {
     justifyContent: "flex-start"
@@ -155,7 +156,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
           <ProgressCircle
             percent={
               this.props.readingState === ReadingState.completed
-                ? 0
+                ? 100
                 : this.state.progressBarValue
             }
             radius={imgDimension / 2}
@@ -169,19 +170,9 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             bgColor={IOColors.greyLight}
           >
             <View style={styles.img}>
-              <Pictogram
-                name={Platform.select({
-                  ios: "nfcScaniOS",
-                  default: "nfcScanAndroid"
-                })}
-              />
+              <Pictogram name={this.props.pictogramName} />
             </View>
           </ProgressCircle>
-          {this.props.readingState === ReadingState.completed && (
-            <View style={styles.successIcon}>
-              <Icon name="success" color="blue" size={48} />
-            </View>
-          )}
         </View>
       </View>
     );
