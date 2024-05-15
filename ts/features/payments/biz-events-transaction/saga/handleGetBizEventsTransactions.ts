@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { getPaymentsLatestTransactionsAction } from "../store/actions";
+import { getPaymentsBizEventsTransactionsAction } from "../store/actions";
 import { TransactionClient } from "../../common/api/client";
 import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/handleWalletPaymentNewSessionToken";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
@@ -11,23 +11,27 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 
 const DEFAULT_TRANSACTION_LIST_SIZE = 10;
 
-export function* handleGetLatestTransactions(
+// eslint-disable-next-line functional/no-let
+let count = 0;
+
+export function* handleGetBizEventsTransactions(
   getTransactionList: TransactionClient["getTransactionList"],
-  action: ActionType<(typeof getPaymentsLatestTransactionsAction)["request"]>
+  action: ActionType<(typeof getPaymentsBizEventsTransactionsAction)["request"]>
 ) {
   const sessionToken = yield* getOrFetchWalletSessionToken();
 
   if (sessionToken === undefined) {
     yield* put(
-      getPaymentsLatestTransactionsAction.failure({
+      getPaymentsBizEventsTransactionsAction.failure({
         ...getGenericError(new Error(`Missing session token`))
       })
     );
     return;
   }
   const getTransactionListRequest = getTransactionList({
-    size: DEFAULT_TRANSACTION_LIST_SIZE,
-    Authorization: sessionToken
+    size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
+    Authorization: sessionToken,
+    "x-continuation-token": action.payload.continuationToken
   });
 
   try {
@@ -39,7 +43,7 @@ export function* handleGetLatestTransactions(
 
     if (E.isLeft(getTransactionListResult)) {
       yield* put(
-        getPaymentsLatestTransactionsAction.failure({
+        getPaymentsBizEventsTransactionsAction.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(getTransactionListResult.left))
           )
@@ -47,14 +51,29 @@ export function* handleGetLatestTransactions(
       );
       return;
     }
+    if (action.payload.firstLoad) {
+      count = 0;
+    }
     if (getTransactionListResult.right.status === 200) {
-      yield* put(getPaymentsLatestTransactionsAction.success(paginatedData(0)));
+      // action.payload.onSuccess?.(getTransactionListResult.right.headers['x-continuation-token']);
+      yield* put(
+        getPaymentsBizEventsTransactionsAction.success({
+          data: paginatedData(count),
+          appendElements: action.payload.firstLoad
+        })
+      );
+      if (count < 2) {
+        action.payload.onSuccess?.(count.toString());
+        count++;
+      } else {
+        action.payload.onSuccess?.(undefined);
+      }
     } else if (getTransactionListResult.right.status === 404) {
-      yield* put(getPaymentsLatestTransactionsAction.success([]));
+      yield* put(getPaymentsBizEventsTransactionsAction.success({ data: [] }));
     } else if (getTransactionListResult.right.status !== 401) {
       // The 401 status is handled by the withRefreshApiCall
       yield* put(
-        getPaymentsLatestTransactionsAction.failure({
+        getPaymentsBizEventsTransactionsAction.failure({
           ...getGenericError(
             new Error(
               `response status code ${getTransactionListResult.right.status}`
@@ -65,7 +84,7 @@ export function* handleGetLatestTransactions(
     }
   } catch (e) {
     yield* put(
-      getPaymentsLatestTransactionsAction.failure({ ...getNetworkError(e) })
+      getPaymentsBizEventsTransactionsAction.failure({ ...getNetworkError(e) })
     );
   }
 }

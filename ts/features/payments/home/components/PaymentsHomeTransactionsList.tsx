@@ -9,13 +9,13 @@ import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import { default as I18n } from "../../../../i18n";
-import { getPaymentsLatestTransactionsAction } from "../../transaction/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletLatestTransactionsListPotSelector } from "../../transaction/store/selectors";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
+import { walletLatestTransactionsBizEventsListPotSelector } from "../../biz-events-transaction/store/selectors";
+import { getPaymentsLatestBizEventsTransactionsAction } from "../../biz-events-transaction/store/actions";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
+import { PaymentsTransactionBizEventsRoutes } from "../../biz-events-transaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
 import { PaymentsBizEventsListItemTransaction } from "./PaymentsBizEventsListItemTransaction";
 
@@ -28,7 +28,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const navigation = useIONavigation();
 
   const latestTransactionsPot = useIOSelector(
-    walletLatestTransactionsListPotSelector
+    walletLatestTransactionsBizEventsListPotSelector
   );
 
   const isLoading =
@@ -37,19 +37,23 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(getPaymentsLatestTransactionsAction.request());
+      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
     }, [dispatch])
   );
 
   const handleNavigateToTransactionDetails = (
     transaction: TransactionListItem
   ) => {
+    if (transaction.transactionId === undefined) {
+      return;
+    }
     navigation.navigate(
-      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
       {
-        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS,
+        screen:
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: 2
+          transactionId: transaction.transactionId
         }
       }
     );
@@ -57,9 +61,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
 
   const handleNavigateToTransactionList = () => {
     navigation.navigate(
-      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
       {
-        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_LIST_SCREEN
+        screen:
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LIST_SCREEN
       }
     );
   };

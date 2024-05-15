@@ -6,5 +6,4 @@ export type PaymentsTransactionParamsList = {
   [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR]: undefined;
   [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS]: PaymentsTransactionDetailsScreenParams;
   [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_OPERATION_DETAILS]: PaymentsTransactionOperationDetailsScreenParams;
-  [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_LIST_SCREEN]: undefined;
 };

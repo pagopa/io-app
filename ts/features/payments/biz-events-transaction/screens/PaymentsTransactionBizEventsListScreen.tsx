@@ -19,11 +19,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { PaymentsTransactionParamsList } from "../navigation/params";
-import { getPaymentsTransactionsAction } from "../store/actions";
-import { walletTransactionsListPotSelector } from "../store/selectors";
+import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
+import { getPaymentsBizEventsTransactionsAction } from "../store/actions";
+import { walletTransactionBizEventsListPotSelector } from "../store/selectors";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
-import { PaymentsTransactionRoutes } from "../navigation/routes";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
 import { PaymentsBizEventsListItemTransaction } from "../../home/components/PaymentsBizEventsListItemTransaction";
@@ -32,17 +31,18 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { groupTransactionsByMonth } from "../utils";
 import I18n from "../../../../i18n";
+import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 
-export type PaymentsTransactionListScreenProps = RouteProp<
-  PaymentsTransactionParamsList,
-  "PAYMENT_TRANSACTION_LIST_SCREEN"
+export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
+  PaymentsTransactionBizEventsParamsList,
+  "PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS"
 >;
 
 const AnimatedSectionList = Animated.createAnimatedComponent(
   SectionList as new () => SectionList<TransactionListItem>
 );
 
-const PaymentsTransactionListScreen = () => {
+const PaymentsTransactionBizEventsListScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
@@ -55,7 +55,9 @@ const PaymentsTransactionListScreen = () => {
     React.useState<ReadonlyArray<SectionListData<TransactionListItem>>>();
   const insets = useSafeAreaInsets();
 
-  const transactionsPot = useIOSelector(walletTransactionsListPotSelector);
+  const transactionsPot = useIOSelector(
+    walletTransactionBizEventsListPotSelector
+  );
   const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
 
   const isLoading = pot.isLoading(transactionsPot);
@@ -63,12 +65,16 @@ const PaymentsTransactionListScreen = () => {
   const handleNavigateToTransactionDetails = (
     transaction: TransactionListItem
   ) => {
+    if (transaction.transactionId === undefined) {
+      return;
+    }
     navigation.navigate(
-      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
       {
-        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS,
+        screen:
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
         params: {
-          transactionId: 2
+          transactionId: transaction.transactionId
         }
       }
     );
@@ -91,7 +97,7 @@ const PaymentsTransactionListScreen = () => {
   useOnFirstRender(
     React.useCallback(() => {
       dispatch(
-        getPaymentsTransactionsAction.request({
+        getPaymentsBizEventsTransactionsAction.request({
           firstLoad: true,
           onSuccess: handleOnSuccess
         })
@@ -153,7 +159,7 @@ const PaymentsTransactionListScreen = () => {
       return;
     }
     dispatch(
-      getPaymentsTransactionsAction.request({
+      getPaymentsBizEventsTransactionsAction.request({
         continuationToken,
         onSuccess: handleOnSuccess
       })
@@ -194,4 +200,4 @@ const PaymentsTransactionListScreen = () => {
   );
 };
 
-export { PaymentsTransactionListScreen };
+export { PaymentsTransactionBizEventsListScreen };

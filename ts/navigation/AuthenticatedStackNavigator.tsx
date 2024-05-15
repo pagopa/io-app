@@ -65,6 +65,8 @@ import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
+import { PaymentsTransactionBizEventsRoutes } from "../features/payments/biz-events-transaction/navigation/routes";
+import { PaymentsTransactionBizEventsNavigator } from "../features/payments/biz-events-transaction/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -331,6 +333,16 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR}
         component={PaymentsTransactionNavigator}
+        options={{
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
+      />
+      <Stack.Screen
+        name={
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR
+        }
+        component={PaymentsTransactionBizEventsNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
