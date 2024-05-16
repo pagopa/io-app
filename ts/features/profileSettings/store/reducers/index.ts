@@ -28,12 +28,12 @@ const profileSettingsReducer = (
   }
 };
 
-const CURRENT_REDUX_FEATURES_STORE_VERSION = -1;
+const CURRENT_REDUX_PROFILE_SETTINGS_STORE_VERSION = -1;
 
 const persistConfig: PersistConfig = {
   key: "profileSettings",
   storage: AsyncStorage,
-  version: CURRENT_REDUX_FEATURES_STORE_VERSION,
+  version: CURRENT_REDUX_PROFILE_SETTINGS_STORE_VERSION,
   whitelist: ["showProfileBanner"]
 };
 

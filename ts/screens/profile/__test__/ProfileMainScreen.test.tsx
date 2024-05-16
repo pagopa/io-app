@@ -37,8 +37,7 @@ const TestComponent = () => {
 
 describe(ProfileMainScreen, () => {
   it("Should display the alert on logout press", () => {
-    const { getByTestId, debug } = render(<TestComponent />);
-    debug();
+    const { getByTestId } = render(<TestComponent />);
     const logoutButton = getByTestId(/logoutButton/);
 
     fireEvent.press(logoutButton);
