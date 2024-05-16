@@ -3,6 +3,8 @@ import {
   Badge,
   H4,
   IOColors,
+  IOSpacingScale,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -16,24 +18,28 @@ import OrganizationNameLabel from "./OrganizationNameLabel";
 export type FeaturedServiceCardProps = WithTestID<{
   id: string;
   name: string;
-  organization_name?: string;
+  organizationName?: string;
   accessibilityLabel?: string;
   isNew?: boolean;
   onPress?: () => void;
 }>;
 
+export const CARD_WIDTH = 210;
+
+const cardPadding: IOSpacingScale = 16;
+const cardBorderRadius: number = 8;
+const cardTitleMargin: number = 8;
+
 const styles = StyleSheet.create({
-  cardBaseContainer: {
-    height: 210,
-    width: 210,
-    padding: 16,
-    borderRadius: 8,
+  cardContainer: {
+    width: CARD_WIDTH,
+    aspectRatio: 1,
+    padding: cardPadding,
+    borderRadius: cardBorderRadius,
+    borderCurve: "continuous",
     borderWidth: 1,
     borderColor: IOColors["grey-100"],
-    backgroundColor: IOColors["grey-50"]
-  },
-  cardContainer: {
-    flex: 1,
+    backgroundColor: IOColors["grey-50"],
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "space-between"
@@ -45,62 +51,56 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     width: "100%"
   },
-  cardHeaderRight: {
-    alignSelf: "flex-start"
-  },
   cardTitle: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "flex-end",
-    justifyContent: "flex-end"
+    width: "100%",
+    marginTop: cardTitleMargin
   }
 });
 
 const FeaturedServiceCard = (props: FeaturedServiceCardProps) => (
   <View
-    style={[
-      styles.cardBaseContainer,
-      styles.cardContainer,
-      props.isNew && styles.cardContainerNew
-    ]}
+    style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
     testID={props.testID}
   >
     <View style={styles.cardHeader}>
-      <View>
-        <Avatar logoUri={logoForService(props.id, "")} size="small" />
-      </View>
-      {props.isNew && (
-        <View style={styles.cardHeaderRight}>
-          <Badge variant="purple" text={I18n.t("services.new")} />
-        </View>
-      )}
+      <Avatar logoUri={logoForService(props.id, "")} size="small" />
+      {props.isNew && <Badge variant="purple" text={I18n.t("services.new")} />}
     </View>
     <View style={styles.cardTitle}>
-      <H4 lineBreakMode="head" numberOfLines={3} color="hanPurple-850">
+      <H4
+        lineBreakMode="head"
+        numberOfLines={3}
+        color={props.isNew ? "hanPurple-850" : "blueIO-850"}
+      >
         {props.name}
       </H4>
+      {props.organizationName && (
+        <>
+          <VSpacer size={4} />
+          <OrganizationNameLabel>
+            {props.organizationName}
+          </OrganizationNameLabel>
+        </>
+      )}
     </View>
-    <VSpacer size={4} />
-    {props.organization_name && (
-      <OrganizationNameLabel>{props.organization_name}</OrganizationNameLabel>
-    )}
   </View>
 );
 
 const FeaturedServiceCardSkeleton = ({ testID }: WithTestID<unknown>) => (
-  <View style={styles.cardBaseContainer} testID={`${testID}-skeleton`}>
-    <Placeholder.Box
-      color={IOColors["grey-200"]}
-      animate="fade"
-      radius={8}
-      width={56}
-      height={56}
-    />
-    <View style={{ marginTop: 62 }}>
+  <View style={styles.cardContainer} testID={`${testID}-skeleton`}>
+    <View style={styles.cardHeader}>
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={IOVisualCostants.avatarSizeSmall}
+        height={IOVisualCostants.avatarSizeSmall}
+      />
+    </View>
+    <View style={styles.cardTitle}>
       <Placeholder.Box
         color={IOColors["grey-200"]}
         animate="fade"
@@ -108,24 +108,24 @@ const FeaturedServiceCardSkeleton = ({ testID }: WithTestID<unknown>) => (
         width={"100%"}
         height={16}
       />
-    </View>
-    <View style={{ marginTop: 10 }}>
-      <Placeholder.Box
-        color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
-        width={"70%"}
-        height={16}
-      />
-    </View>
-    <View style={{ marginTop: 10 }}>
-      <Placeholder.Box
-        color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
-        width={"100%"}
-        height={8}
-      />
+      <View style={{ marginTop: 10 }}>
+        <Placeholder.Box
+          color={IOColors["grey-200"]}
+          animate="fade"
+          radius={8}
+          width={"70%"}
+          height={16}
+        />
+      </View>
+      <View style={{ marginTop: 10 }}>
+        <Placeholder.Box
+          color={IOColors["grey-200"]}
+          animate="fade"
+          radius={8}
+          width={"100%"}
+          height={8}
+        />
+      </View>
     </View>
   </View>
 );

@@ -8,6 +8,7 @@ import { FlatListProps, StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { WithTestID } from "../../../../types/WithTestID";
 import {
+  CARD_WIDTH,
   FeaturedServiceCard,
   FeaturedServiceCardProps,
   FeaturedServiceCardSkeleton
@@ -18,7 +19,6 @@ export type FeaturedServicesCarouselProps = WithTestID<{
 }>;
 
 const CARD_SPACING: IOSpacingScale = 8;
-const CARD_WIDTH: number = 100;
 const CARD_TOTAL_WIDTH = CARD_WIDTH + CARD_SPACING;
 
 const style = StyleSheet.create({
@@ -41,6 +41,7 @@ const FeaturedServicesCarouselBaseComponent = <T,>({
     ListFooterComponent={() => <HSpacer size={48} />}
     showsHorizontalScrollIndicator={false}
     keyExtractor={(_, index) => `featured_service_card_${index.toString()}`}
+    decelerationRate="fast"
     snapToInterval={CARD_TOTAL_WIDTH}
     snapToAlignment="start"
     getItemLayout={(_, index) => ({

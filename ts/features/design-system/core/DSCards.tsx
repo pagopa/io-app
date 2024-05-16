@@ -111,7 +111,7 @@ const featuredServicesDataForCarousel: FeaturedServicesCarouselProps = {
     {
       id: "aServiceId1b",
       name: "Service Name",
-      organization_name: "Organization Name",
+      organizationName: "Organization Name",
       isNew: true,
       onPress
     },
@@ -123,7 +123,7 @@ const featuredServicesDataForCarousel: FeaturedServicesCarouselProps = {
     {
       id: "aServiceId2b",
       name: "Service Name on two lines",
-      organization_name: "Organization Name",
+      organizationName: "Organization Name",
       isNew: true,
       onPress
     },
@@ -135,7 +135,7 @@ const featuredServicesDataForCarousel: FeaturedServicesCarouselProps = {
     {
       id: "aServiceId3b",
       name: "Verbose Service Name on three lines",
-      organization_name: "Verbose Organization Name",
+      organizationName: "Verbose Organization Name",
       isNew: true,
       onPress
     },
@@ -148,7 +148,7 @@ const featuredServicesDataForCarousel: FeaturedServicesCarouselProps = {
     {
       id: "aServiceId4b",
       name: "Very long Service Name that exceeds the space allowed",
-      organization_name: "Verbose Organization Name",
+      organizationName: "Verbose Organization Name",
       onPress
     }
   ]
