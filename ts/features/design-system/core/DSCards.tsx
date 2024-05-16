@@ -14,8 +14,8 @@ import {
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
+import { EidCardPreview } from "../../itwallet/common/components/EIdCardPreview";
 import { EidCard } from "../../itwallet/common/components/EidCard";
-import { EidCardPreview } from "../../itwallet/common/components/EidCardPreview";
 
 const styles = StyleSheet.create({
   content: {
