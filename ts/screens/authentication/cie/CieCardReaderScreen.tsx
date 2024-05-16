@@ -104,6 +104,7 @@ type setErrorParameter = {
 
 const getPictogramName = (state: ReadingState): IOPictograms => {
   switch (state) {
+    default:
     case ReadingState.reading:
     case ReadingState.waiting_card:
       return Platform.select({
@@ -285,13 +286,21 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           });
         }
         break;
-      case "Transmission Error":
-      case "ON_TAG_LOST":
       case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
       case "AUTHENTICATION_ERROR":
       case "ON_NO_INTERNET_CONNECTION":
       case "EXTENDED_APDU_NOT_SUPPORTED":
+        this.setError({
+          eventReason: event.event,
+          navigation: () =>
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.CIE_UNEXPECTED_ERROR
+            })
+        });
+        break;
+      case "Transmission Error":
+      case "ON_TAG_LOST":
         this.setError({ eventReason: event.event });
         break;
 
