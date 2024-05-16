@@ -7,7 +7,7 @@ import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { PaymentsTransactionBizEventsDetailsScreen } from "../screens/PaymentsTransactionBizEventsDetailsScreen";
 import { PaymentsTransactionBizEventsListScreen } from "../screens/PaymentsTransactionBizEventsListScreen";
-import WalletTransactionOperationDetailsScreen from "../screens/PaymentsTransactionBizEventsOperationDetails";
+import WalletTransactionCartItemDetailsScreen from "../screens/PaymentsTransactionBizEventsCartItemDetailsScreen";
 import { PaymentsTransactionBizEventsParamsList } from "./params";
 import { PaymentsTransactionBizEventsRoutes } from "./routes";
 
@@ -29,9 +29,9 @@ export const PaymentsTransactionBizEventsNavigator = () => (
     />
     <Stack.Screen
       name={
-        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_OPERATION_DETAILS
+        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_CART_ITEM_DETAILS
       }
-      component={WalletTransactionOperationDetailsScreen}
+      component={WalletTransactionCartItemDetailsScreen}
       options={{ gestureEnabled: isGestureEnabled }}
     />
     <Stack.Screen

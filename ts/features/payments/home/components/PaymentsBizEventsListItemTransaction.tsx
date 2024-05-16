@@ -6,6 +6,7 @@ import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { getTransactionLogo } from "../../common/utils";
+import { formatAmountText } from "../../biz-events-transaction/utils";
 
 type Props = {
   transaction: TransactionListItem;
@@ -25,7 +26,7 @@ const PaymentsBizEventsListItemTransaction = ({
   const amountText = pipe(
     transaction.amount,
     O.fromNullable,
-    O.map(amount => `${amount} €`),
+    O.map(amount => formatAmountText(amount)),
     O.getOrElse(() => "")
   );
   const datetime: string = pipe(

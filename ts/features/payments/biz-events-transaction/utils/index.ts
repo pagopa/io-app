@@ -36,3 +36,5 @@ export const groupTransactionsByMonth = (
     data: groups[month]
   }));
 };
+
+export const formatAmountText = (amount: string) => `${amount} €`;

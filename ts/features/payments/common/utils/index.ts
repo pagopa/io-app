@@ -20,7 +20,7 @@ import { WalletCard } from "../../../newWallet/types";
 import { contentRepoUrl } from "../../../../config";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 
-export const TRANSACTION_LOGO_CDN = `https://assets.cdn.io.pagopa.it/logos/organizations`;
+export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
 
 /**
  * A simple function to get the corresponding translated badge text,

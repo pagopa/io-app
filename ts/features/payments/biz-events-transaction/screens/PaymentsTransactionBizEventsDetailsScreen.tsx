@@ -14,6 +14,8 @@ import WalletTransactionInfoSection from "../components/WalletBizEventsTransacti
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
 import { getPaymentsBizEventsTransactionDetailsAction } from "../store/actions";
 import { walletTransactionBizEventsDetailsPotSelector } from "../store/selectors";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
@@ -44,6 +46,7 @@ const styles = StyleSheet.create({
 
 const PaymentsTransactionBizEventsDetailsScreen = () => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const route = useRoute<PaymentsTransactionBizEventsDetailsScreenProps>();
   const { transactionId } = route.params;
   const transactionDetailsPot = useIOSelector(
@@ -51,6 +54,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   );
 
   const isLoading = pot.isLoading(transactionDetailsPot);
+  const isError = pot.isError(transactionDetailsPot);
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
 
   useOnFirstRender(() => {
@@ -58,6 +62,32 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
       getPaymentsBizEventsTransactionDetailsAction.request({ transactionId })
     );
   });
+
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  const handleOnRetry = () => {
+    dispatch(
+      getPaymentsBizEventsTransactionDetailsAction.request({ transactionId })
+    );
+  };
+
+  if (isError) {
+    return (
+      <OperationResultScreenContent
+        pictogram="umbrellaNew"
+        title={I18n.t("transaction.details.error.title")}
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          accessibilityLabel: I18n.t("global.buttons.retry"),
+          onPress: handleOnRetry
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.back"),
+          accessibilityLabel: I18n.t("global.buttons.back"),
+          onPress: navigation.goBack
+        }}
+      />
+    );
+  }
 
   return (
     <RNavScreenWithLargeHeader
@@ -74,12 +104,10 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
         <View style={styles.bottomBackground} />
         <WalletBizEventsTransactionHeadingSection
           transaction={transactionDetails}
-          psp={transactionPsp}
           isLoading={isLoading}
         />
         <WalletTransactionInfoSection
           transaction={transactionDetails}
-          psp={transactionPsp}
           loading={isLoading}
         />
       </View>

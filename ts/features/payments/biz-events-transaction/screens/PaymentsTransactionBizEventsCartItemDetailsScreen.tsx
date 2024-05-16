@@ -1,0 +1,108 @@
+import * as React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import {
+  Divider,
+  H6,
+  IOStyles,
+  ListItemInfo
+} from "@pagopa/io-app-design-system";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
+import I18n from "../../../../i18n";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
+import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
+import { formatAmountText } from "../utils";
+
+const styles = StyleSheet.create({
+  scrollViewContainer: {
+    ...IOStyles.flex,
+    ...IOStyles.horizontalContentPadding
+  }
+});
+
+export type PaymentsTransactionBizEventsCartItemDetailsScreenParams = {
+  cartItem: CartItem;
+};
+
+export type PaymentsTransactionBizEventsCartItemDetailsScreenProps = RouteProp<
+  PaymentsTransactionBizEventsParamsList,
+  "PAYMENT_TRANSACTION_BIZ_EVENTS_CART_ITEM_DETAILS"
+>;
+
+const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
+  const route =
+    useRoute<PaymentsTransactionBizEventsCartItemDetailsScreenProps>();
+  const { cartItem } = route.params;
+
+  const getDebtorText = (debtor: UserDetail) => {
+    const debtorNameLabel = debtor.name ? <H6>{debtor.name}</H6> : <></>;
+    const debtorCodeLabel = debtor.taxCode ? (
+      <H6>({debtor.taxCode})</H6>
+    ) : (
+      <></>
+    );
+    return (
+      <>
+        {debtorNameLabel}
+        {debtorCodeLabel}
+      </>
+    );
+  };
+
+  return (
+    <RNavScreenWithLargeHeader
+      title={{
+        label: cartItem.subject ?? ""
+      }}
+    >
+      <ScrollView style={styles.scrollViewContainer}>
+        {cartItem.amount && (
+          <>
+            <ListItemInfo
+              label={I18n.t("transaction.details.operation.amount")}
+              value={formatAmountText(cartItem.amount)}
+            />
+            <Divider />
+          </>
+        )}
+        {cartItem.payee && (
+          <>
+            <ListItemInfo
+              label={I18n.t("transaction.details.operation.creditor")}
+              value={cartItem.payee.name}
+            />
+            <Divider />
+          </>
+        )}
+        {cartItem.debtor && (
+          <>
+            <ListItemInfo
+              label={I18n.t("transaction.details.operation.debtor")}
+              value={getDebtorText(cartItem.debtor)}
+            />
+            <Divider />
+          </>
+        )}
+        {cartItem.refNumberValue && (
+          <>
+            <ListItemInfo
+              label={I18n.t("transaction.details.operation.noticeCode")}
+              value={cartItem.refNumberValue}
+            />
+            <Divider />
+          </>
+        )}
+        {cartItem.payee && (
+          <ListItemInfo
+            numberOfLines={4}
+            label={I18n.t("transaction.details.operation.taxCode")}
+            value={cartItem.payee.taxCode}
+          />
+        )}
+      </ScrollView>
+    </RNavScreenWithLargeHeader>
+  );
+};
+
+export default PaymentsTransactionBizEventsCartItemDetailsScreen;

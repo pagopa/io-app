@@ -3,37 +3,37 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
+import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import I18n from "../../../../i18n";
-import { Psp, Transaction } from "../../../../types/pagopa";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
+import { Psp } from "../../../../types/pagopa";
+import { formatAmountText } from "../utils";
 import { PaymentsTransactionBizEventsStackNavigation } from "../navigation/navigator";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
-import { WalletBizEventsTransactionDetailsList } from "./WalletBizEventsTransactionDetailsList";
+import { WalletBizEventsTransactionCartList } from "./WalletBizEventsTransactionCartList";
 import { WalletBizEventsTransactionTotalAmount } from "./WalletBizEventsTransactionTotalAmount";
 
 type Props = {
-  transaction?: Transaction;
+  transaction?: TransactionDetailResponse;
   psp?: Psp;
   isLoading: boolean;
 };
 
 export const WalletBizEventsTransactionHeadingSection = ({
   transaction,
-  psp,
   isLoading
 }: Props) => {
   const navigation =
     useNavigation<PaymentsTransactionBizEventsStackNavigation>();
 
-  const handlePressTransactionDetails = (operationDetails: Dettaglio) => {
+  const transactionInfo = transaction?.infoTransaction;
+
+  const handlePressTransactionDetails = (cartItem: CartItem) => {
     if (transaction) {
       navigation.navigate(
-        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_OPERATION_DETAILS,
+        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_CART_ITEM_DETAILS,
         {
-          operationDetails,
-          operationSubject: transaction.description,
-          operationName: transaction.description
+          cartItem
         }
       );
     }
@@ -50,20 +50,16 @@ export const WalletBizEventsTransactionHeadingSection = ({
         </View>
       );
     }
-    if (transaction?.fee !== undefined) {
-      const formattedFee = formatNumberCentsToAmount(
-        transaction.fee.amount,
-        true,
-        "right"
-      );
+    if (transactionInfo?.fee !== undefined) {
+      const formattedFee = formatAmountText(transactionInfo.fee);
       return (
         <Body>
           {I18n.t("transaction.details.totalFee")}{" "}
           <Body weight="Medium">{formattedFee}</Body>{" "}
-          {psp?.businessName
+          {transactionInfo?.pspName
             ? // we want to make sure no empty string is passed either
               I18n.t("transaction.details.totalFeePsp", {
-                pspName: psp.businessName
+                pspName: transactionInfo.pspName
               })
             : I18n.t("transaction.details.totalFeeNoPsp")}
         </Body>
@@ -72,18 +68,27 @@ export const WalletBizEventsTransactionHeadingSection = ({
     return <></>;
   };
 
+  const calculateTotalAmount = () => {
+    if (transactionInfo?.amount && transactionInfo?.fee) {
+      return (
+        parseFloat(transactionInfo.amount) + parseFloat(transactionInfo.fee)
+      ).toString();
+    }
+    return transactionInfo?.amount;
+  };
+
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
       <VSpacer size={16} />
-      <WalletBizEventsTransactionDetailsList
-        transaction={transaction}
+      <WalletBizEventsTransactionCartList
+        carts={transaction?.carts}
         loading={isLoading}
         onPress={handlePressTransactionDetails}
       />
       <VSpacer size={8} />
       <WalletBizEventsTransactionTotalAmount
         loading={isLoading}
-        totalAmount={transaction?.grandTotal.amount}
+        totalAmount={calculateTotalAmount()}
       />
       <VSpacer size={8} />
       <FeeAmountSection />

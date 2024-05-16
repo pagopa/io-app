@@ -2,11 +2,11 @@ import React from "react";
 import Placeholder from "rn-placeholder";
 import { StyleSheet, View } from "react-native";
 import { H3, H6, IOStyles } from "@pagopa/io-app-design-system";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import I18n from "../../../../i18n";
+import { formatAmountText } from "../utils";
 
 type TotalAmountSectionProps = {
-  totalAmount?: number;
+  totalAmount?: string;
   loading?: boolean;
 };
 
@@ -29,8 +29,6 @@ export const WalletBizEventsTransactionTotalAmount = ({
         <Placeholder.Box width={72} height={34} animate="fade" radius={8} />
       </View>
     )}
-    {!loading && totalAmount && (
-      <H3>{formatNumberCentsToAmount(totalAmount, true, "right")}</H3>
-    )}
+    {!loading && totalAmount && <H3>{formatAmountText(totalAmount)}</H3>}
   </View>
 );

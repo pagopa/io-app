@@ -13,14 +13,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import { Psp, Transaction } from "../../../../types/pagopa";
 import { format } from "../../../../utils/dates";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
+import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 
 type WalletBizEventsTransactionInfoSectionProps = {
-  transaction?: Transaction;
-  psp?: Psp;
+  transaction?: TransactionDetailResponse;
   loading?: boolean;
 };
 
@@ -38,67 +37,137 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Component that shows a success message after the wallet onboarding process is completed
- * TODO: Define the desired design of this component
+ * Component that shows the biz-events transaction info
  */
 const WalletBizEventsTransactionInfoSection = ({
   transaction,
-  psp,
   loading
-}: WalletBizEventsTransactionInfoSectionProps) => (
-  <>
-    <TransactionReceiptDivider
-      height={24}
-      width={"100%"}
-      preserveAspectRatio="xMin slice" // Add this property to fit the width to the parent
-    />
-    <View style={styles.container}>
-      <View style={styles.contentCard}>
-        <ListItemHeader
-          label={I18n.t("transaction.details.info.title")}
-          accessibilityLabel={I18n.t("transaction.details.info.title")}
-        />
-        {loading && (
-          <>
-            <SkeletonItem />
-            <Divider />
-            <SkeletonItem />
-            <Divider />
-            <SkeletonItem />
-          </>
-        )}
-        {!loading && transaction && (
-          <>
-            {psp?.businessName && (
-              <>
-                <ListItemInfo
-                  label={I18n.t("transaction.details.info.pspName")}
-                  value={psp.businessName}
+}: WalletBizEventsTransactionInfoSectionProps) => {
+  const transactionInfo = transaction?.infoTransaction;
+  return (
+    <>
+      <TransactionReceiptDivider
+        height={24}
+        width={"100%"}
+        preserveAspectRatio="xMin slice" // Add this property to fit the width to the parent
+      />
+      <View style={styles.container}>
+        <View style={styles.contentCard}>
+          <ListItemHeader
+            label={I18n.t("transaction.details.info.title")}
+            accessibilityLabel={I18n.t("transaction.details.info.title")}
+          />
+          {loading && (
+            <>
+              <SkeletonItem />
+              <Divider />
+              <SkeletonItem />
+              <Divider />
+              <SkeletonItem />
+              <Divider />
+              <SkeletonItem />
+              <Divider />
+              <SkeletonItem />
+            </>
+          )}
+          {!loading && transactionInfo && (
+            <>
+              {transactionInfo.payer && (
+                <>
+                  <ListItemInfo
+                    label="Eseguito da"
+                    value={`${transactionInfo.payer.name}\n(${transactionInfo.payer.taxCode})`}
+                  />
+                  <Divider />
+                </>
+              )}
+              {/* {transactionInfo.paymentMethod && transactionInfo.walletInfo && renderPaymentMethod(transactionInfo.paymentMethod, transactionInfo.walletInfo)} */}
+              {transactionInfo.pspName && (
+                <>
+                  <ListItemInfo
+                    label={I18n.t("transaction.details.info.pspName")}
+                    value={transactionInfo.pspName}
+                  />
+                  <Divider />
+                </>
+              )}
+              {transactionInfo.transactionDate && (
+                <>
+                  <ListItemInfo
+                    label={I18n.t("transaction.details.info.dateAndHour")}
+                    value={format(
+                      new Date(transactionInfo.transactionDate),
+                      "DD MMMM YYYY, HH:mm:ss"
+                    )}
+                  />
+                  <Divider />
+                </>
+              )}
+              {transactionInfo.rrn && (
+                <>
+                  <ListItemInfoCopy
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(transactionInfo.rrn ?? "")
+                    }
+                    accessibilityLabel={`RRN: ${transactionInfo.rrn}`}
+                    label="RRN"
+                    value={transactionInfo.rrn}
+                  />
+                  <Divider />
+                </>
+              )}
+              {transactionInfo.authCode && (
+                <>
+                  <ListItemInfoCopy
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(
+                        transactionInfo.authCode ?? ""
+                      )
+                    }
+                    accessibilityLabel={`Codice autorizzativo: ${transactionInfo.authCode}`}
+                    label="Codice autorizzativo"
+                    value={transactionInfo.authCode}
+                  />
+                  <Divider />
+                </>
+              )}
+              {transactionInfo.transactionId && (
+                <ListItemInfoCopy
+                  onPress={() =>
+                    clipboardSetStringWithFeedback(
+                      transactionInfo.transactionId ?? ""
+                    )
+                  }
+                  accessibilityLabel={`${I18n.t(
+                    "transaction.details.info.transactionId"
+                  )}: ${transactionInfo.transactionId}`}
+                  label={I18n.t("transaction.details.info.transactionId")}
+                  value={transactionInfo.transactionId}
                 />
-                <Divider />
-              </>
-            )}
-            <ListItemInfo
-              label={I18n.t("transaction.details.info.dateAndHour")}
-              value={format(transaction.created, "DD MMMM YYYY, HH:mm:ss")}
-            />
-            <Divider />
-            <ListItemInfoCopy
-              onPress={() =>
-                clipboardSetStringWithFeedback(transaction.id.toString())
-              }
-              accessibilityLabel={`${I18n.t(
-                "transaction.details.info.transactionId"
-              )}: ${transaction.id.toString()}`}
-              label={I18n.t("transaction.details.info.transactionId")}
-              value={transaction.id.toString()}
-            />
-          </>
-        )}
+              )}
+            </>
+          )}
+        </View>
       </View>
-    </View>
-  </>
-);
+    </>
+  );
+};
+
+// const renderPaymentMethod = (paymentMethod: String, walletInfo: WalletInfo) => {
+//   switch (paymentMethod) {
+//     case "PPAL":
+//       return (
+//         <>
+//           <ListItemTransaction
+//           title="Metodo di pagamento"
+//           subtitle={walletInfo.}
+//             label={I18n.t("transaction.details.info.paymentMethod")}
+//             value={I18n.t("transaction.details.info.paymentMethodPayPal")}
+//           />
+//           <Divider />
+//         </>
+//       );
+// }
 
 const SkeletonItem = () => (
   <View style={[IOStyles.flex, { paddingVertical: 12 }]}>

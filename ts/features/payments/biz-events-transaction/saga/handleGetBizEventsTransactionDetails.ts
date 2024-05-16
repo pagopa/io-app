@@ -10,13 +10,12 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { SagaCallReturnType } from "../../../../types/utils";
 
 /**
- * Handle the remote call to get the transaction details
- * TODO: This is a temporary implementation to simulate the BIZ Event API, it will be replaced as soon as the BIZ Event API will be available (https://pagopa.atlassian.net/browse/IOBP-440)
- * @param getPaymentMethods
+ * Handle the remote call to get the transaction details from the biz events API
+ @param getPaymentMethods
  * @param action
  */
 export function* handleGetBizEventsTransactionDetails(
-  getTransactionDetails: TransactionClient["getTransactionDetails"], // TODO: Replace with the real type when the BIZ Event API will be available
+  getTransactionDetails: TransactionClient["getTransactionDetails"],
   action: ActionType<
     (typeof getPaymentsBizEventsTransactionDetailsAction)["request"]
   >
