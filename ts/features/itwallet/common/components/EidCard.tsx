@@ -1,7 +1,8 @@
 import { Badge, Body, IOColors, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import EidCardShape from "../../../../../img/features/itw/eid_card.svg";
+import EidCardShape from "../../../../../img/features/itWallet/eid_card.svg";
+import EidCardInvalidShape from "../../../../../img/features/itWallet/eid_card_invalid.svg";
 import I18n from "../../../../i18n";
 
 export type EidStatus = "valid" | "pending" | "expired";
@@ -72,7 +73,9 @@ export const EidCard = ({
 
   return (
     <View style={styles.cardContainer}>
-      <View style={styles.card}>{isValid && <EidCardShape />}</View>
+      <View style={styles.card}>
+        {isValid ? <EidCardShape /> : <EidCardInvalidShape />}
+      </View>
       <View style={styles.infoContainer}>
         <View style={styles.header}>
           <Body color={labelColor} weight="SemiBold">
