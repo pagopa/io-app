@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
-import { EidCardPreview } from "../EidCardPreview";
+import { EidCardPreview } from "../EIdCardPreview";
 
 describe("EidCardPreview", () => {
   it("should match the snapshot", () => {
