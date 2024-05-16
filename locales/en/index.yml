@@ -653,7 +653,7 @@ authentication:
       layCardMessageHeader: Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       layCardMessageHeaderiOS: Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
-      cieCardValid: Ok, your card is valid! You can remove it.
+      cieCardValid: Lettura completata!
       readerCardTitle: Tienila ferma per qualche secondo
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
@@ -661,7 +661,7 @@ authentication:
         readingInstructions: Keep your electronic ID card on the top of the iPhone.
         moreTags: More cards have been identified. Please bring one card at a time.
         readingInProgress: "READING IN PROGRESS\nHold the card still for a few seconds..."
-        readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
+        readingSuccess: "Lettura completata"
         invalidCard: It seems that this card is not an Electronic Identity Card (CIE).
         tagLost: You removed the card too soon.
         cardLocked: The CIE PIN is blocked.

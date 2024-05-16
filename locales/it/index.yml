@@ -653,7 +653,7 @@ authentication:
       layCardMessageHeader: Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       layCardMessageHeaderiOS: Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
-      cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
+      cieCardValid: Lettura completata!
       readerCardTitle: Tienila ferma per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
@@ -661,7 +661,7 @@ authentication:
         readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
         moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
         readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
-        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
+        readingSuccess: "Lettura completata"
         invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         tagLost: Hai rimosso la carta troppo presto.
         cardLocked: Il PIN della CIE è stato bloccato

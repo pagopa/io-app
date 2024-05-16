@@ -606,15 +606,13 @@ authentication:
       title: "Karte vorübergehend gesperrt"
       button: "Lade / Öffne CieID"
     card:            
-      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
-      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."      
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."      
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
         readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon."
         moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
-        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
-        readingSuccess: "Das Auslesen war erfolgreich.\nDu kannst die Karte entfernen während wir die Datenüberprüfung abschließen."
+        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."        
         invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
         tagLost: "Du hast die Karte zu früh entfernt."        
         genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
