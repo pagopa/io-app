@@ -7,7 +7,7 @@ import { pipe } from "fp-ts/lib/function";
 import { fciEnabled, fimsEnabled, uaDonationsEnabled } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import FIMS_ROUTES from "../features/fims/navigation/routes";
+import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -57,7 +57,7 @@ const uaDonationsRoutesToNavigationLink: Record<string, string> = {
 };
 
 const fimsRoutesToNavigationLink: Record<string, string> = {
-  [FIMS_ROUTES.WEBVIEW]: "/fims/webview"
+  [FIMS_LEGACY_ROUTES.WEBVIEW]: "/fims/webview"
 };
 
 const fciRoutesToNavigationLink: Record<string, string> = {
