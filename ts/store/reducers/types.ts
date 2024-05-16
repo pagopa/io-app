@@ -4,6 +4,7 @@ import { VersionInfoState } from "../../common/versionInfo/store/reducers/versio
 import { BonusState } from "../../features/bonus/common/store/reducers";
 import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { PersistedLollipopState } from "../../features/lollipop/store";
+import { TrialSystemState } from "../../features/trialSystem/store/reducers";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
@@ -60,6 +61,7 @@ export type GlobalState = Readonly<{
   assistanceTools: AssistanceToolsState;
   startup: StartupState;
   lollipop: PersistedLollipopState;
+  trialSystem: TrialSystemState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
