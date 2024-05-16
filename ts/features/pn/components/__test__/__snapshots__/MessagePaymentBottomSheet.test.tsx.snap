@@ -853,7 +853,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "flex-end",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         },
                                         Object {
                                           "flexShrink": 1,
@@ -1085,7 +1085,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "flex-end",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         },
                                         Object {
                                           "flexShrink": 1,
@@ -1330,7 +1330,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "flex-end",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         },
                                         Object {
                                           "flexShrink": 1,
@@ -1575,7 +1575,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "flex-end",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         },
                                         Object {
                                           "flexShrink": 1,
@@ -1820,7 +1820,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "flex-end",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         },
                                         Object {
                                           "flexShrink": 1,
@@ -2065,7 +2065,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "flex-end",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         },
                                         Object {
                                           "flexShrink": 1,
@@ -2310,7 +2310,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "alignItems": "center",
                                           "flexDirection": "row",
                                           "justifyContent": "flex-end",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         },
                                         Object {
                                           "flexShrink": 1,

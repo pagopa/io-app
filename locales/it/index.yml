@@ -445,6 +445,7 @@ profile:
       idpayTestAlert: La modifica richiede il riavvio dell'app
     designSystemEnvironment: Design System sperimentale
     newWalletSection: Nuova sezione portafoglio
+    newHomeSection: Nuova home messaggi
     appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
@@ -627,10 +628,14 @@ authentication:
       pinCardTitle: Inserisci il PIN della CIE
       pinCardHeader: Entra con CIE
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
-      incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
-      incorrectCiePinHeaderTitle: PIN errato
-      incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
-      incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
+      incorrectCiePinTitle1: Il PIN non è corretto
+      incorrectCiePinTitle2: Hai inserito un PIN errato per 2 volte
+      lockedCiePinTitle: Hai inserito un PIN errato per troppe volte
+      incorrectCiePinContent1: Hai ancora 2 tentativi, controllalo e riprova.
+      incorrectCiePinContent2: Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.
+      incorrectCiePinSecondaryActionLabel2: Hai dimenticato il PIN?
+      lockedCiePinContent: Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.
+      lockedSecondaryActionLabel: Hai dimenticato il PUK?
       alert: Vuoi davvero tornare indietro?
       subtitleHelp: Il PIN è un codice di 8 cifre.
       subtitleCTA: Dove lo trovo?
@@ -661,9 +666,9 @@ authentication:
         readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
         invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         tagLost: Hai rimosso la carta troppo presto.
-        cardLocked: Carta CIE bloccata
-        wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
-        wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
+        cardLocked: Il PIN della CIE è stato bloccato
+        wrongPin1AttemptLeft: Hai inserito un PIN errato per due volte
+        wrongPin2AttemptLeft: Il PIN non è corretto
         genericError: Si è verificato un errore imprevisto. Riprova.
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
@@ -2533,7 +2538,7 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Scopri le proposte
+      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
       merchantsAll: Tutti gli operatori
       cta:
         filter: Filtra
@@ -2569,7 +2574,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Proposte
+        deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
         contactInfo: Contatti e informazioni
@@ -3043,6 +3048,17 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+      nfc:
+        title: Attiva l'NFC per continuare
+        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
+        header: "Ecco come:"
+        steps:
+          label: Step {{value}}
+          1: Vai alle impostazioni
+          2: Cerca "NFC"
+          3: Attivalo
+        primaryAction: Vai alle impostazioni
+        secondaryAction: Ho fatto
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

@@ -1,13 +1,12 @@
-import * as React from "react";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import * as React from "react";
 import { SafeAreaView } from "react-native";
+import image from "../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
-import image from "../../../../../img/servicesStatus/error-detail-icon.png";
 import I18n from "../../../../i18n";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -20,26 +19,31 @@ const CdcRequirementsError = () => {
     navigation.getParent()?.goBack();
   };
   return (
-    <SafeAreaView style={IOStyles.flex} testID={"cdcRequirementsError"}>
-      <InfoScreenComponent
-        image={renderInfoRasterImage(image)}
-        title={I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.ko.requirementsError.title"
-        )}
-        body={I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.ko.requirementsError.body"
-        )}
-      />
+    <>
+      <SafeAreaView style={IOStyles.flex} testID={"cdcRequirementsError"}>
+        <InfoScreenComponent
+          image={renderInfoRasterImage(image)}
+          title={I18n.t(
+            "bonus.cdc.bonusRequest.bonusRequested.ko.requirementsError.title"
+          )}
+          body={I18n.t(
+            "bonus.cdc.bonusRequest.bonusRequested.ko.requirementsError.body"
+          )}
+        />
+      </SafeAreaView>
       <FooterWithButtons
         type="SingleButton"
-        leftButton={cancelButtonProps(
-          onExitPress,
-          I18n.t("global.buttons.close"),
-          undefined,
-          "closeButton"
-        )}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.close"),
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: onExitPress,
+            testID: "closeButton"
+          }
+        }}
       />
-    </SafeAreaView>
+    </>
   );
 };
 

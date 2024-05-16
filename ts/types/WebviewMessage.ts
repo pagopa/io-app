@@ -28,7 +28,7 @@ export const ToastContentR = t.interface({
 });
 export const ToastContentO = t.partial({
   type: t.union([
-    t.literal("danger"),
+    t.literal("error"),
     t.literal("success"),
     t.literal("warning")
   ])

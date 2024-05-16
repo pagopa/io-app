@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
-import Switch from "../../ui/Switch";
+import { Icon, NativeSwitch } from "@pagopa/io-app-design-system";
 import { H4 } from "../../core/typography/H4";
 import { IOStyles } from "../../core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
@@ -60,13 +59,11 @@ const PreferenceToggleRow = ({
         );
       case "ready":
         return (
-          <Switch
+          <NativeSwitch
             value={value}
             onValueChange={onPress}
             testID={testID}
             disabled={disabled}
-            accessibilityRole={"switch"}
-            accessibilityState={{ checked: value, disabled }}
             accessibilityLabel={label}
           />
         );

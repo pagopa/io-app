@@ -445,6 +445,7 @@ profile:
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
     newWalletSection: New wallet section
+    newHomeSection: New messages home
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -627,10 +628,14 @@ authentication:
       pinCardTitle: Enter the PIN of your ID Card
       pinCardHeader: Login with CIE
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
-      incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
-      incorrectCiePinHeaderTitle: Wrong PIN
-      incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
-      incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
+      incorrectCiePinTitle1: Wrong PIN
+      incorrectCiePinTitle2: You have entered a wrong PIN twice
+      lockedCiePinTitle: You have entered a wrong PIN too many times
+      incorrectCiePinContent1: You still have 2 attempts left, check it and try again.
+      incorrectCiePinContent2: After the third incorrect attempt, the PIN will be blocked. To unlock it and set a new one, you will need to enter the PUK code into the CieID app.
+      incorrectCiePinSecondaryActionLabel2: Lost your PIN?
+      lockedCiePinContent: The PIN of your CIE has been blocked. To unlock it and set a new one, you will need to enter the PUK code into the CieID app.
+      lockedSecondaryActionLabel: Lost your PUK?
       alert: Are you sure you want to go back?
       subtitleHelp: The PIN code consists of 8 digits.
       subtitleCTA: Where can I find it?
@@ -661,9 +666,9 @@ authentication:
         readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
         invalidCard: It seems that this card is not an Electronic Identity Card (CIE).
         tagLost: You removed the card too soon.
-        cardLocked: CIE card locked
-        wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
-        wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
+        cardLocked: The CIE PIN is blocked.
+        wrongPin1AttemptLeft: You have entered a wrong PIN twice
+        wrongPin2AttemptLeft: Wrong PIN
         genericError: Something went wrong! Please try again.
       error:
         readerCardLostTitle: Hold the card again for a few seconds
@@ -2533,7 +2538,7 @@ bonus:
       online: Online
       places: Places
       navigationTitle: Benefits
-      screenTitle: Find the benefits
+      screenTitle: Select an operator and discover benefits and opportunities
       merchantsAll: All the operators
       cta:
         filter: Filter
@@ -2569,7 +2574,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Benefits
+        deals: Deals and opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -3043,6 +3048,17 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
+      nfc:
+        title: Attiva l'NFC per continuare
+        description: La funzionalità NFC permette al dispositivo di leggere la tua CIE.
+        header: "Ecco come:"
+        steps:
+          label: Step {{value}}
+          1: Vai alle impostazioni
+          2: Cerca "NFC"
+          3: Attivalo
+        primaryAction: Vai alle impostazioni
+        secondaryAction: Ho fatto
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
