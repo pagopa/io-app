@@ -2,6 +2,7 @@ import {
   Avatar,
   H6,
   IOColors,
+  IOSpacingScale,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -23,21 +24,21 @@ export type FeaturedInstitutionCardProps = WithTestID<{
 export const CARD_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
 
+const cardPaddingHorizontal: IOSpacingScale = 12;
+const cardBorderRadius: number = 8;
+const cardAvatarMargin: IOSpacingScale = 8;
+
 const styles = StyleSheet.create({
-  cardBaseContainer: {
+  cardContainer: {
     height: 72,
     width: CARD_WIDTH,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    paddingHorizontal: cardPaddingHorizontal,
+    borderRadius: cardBorderRadius,
     borderWidth: 1,
     borderColor: IOColors["grey-100"],
-    backgroundColor: IOColors["grey-50"]
-  },
-  cardContainer: {
-    flex: 1,
+    backgroundColor: IOColors["grey-50"],
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
+    alignItems: "center"
   },
   cardContainerNew: {
     borderColor: IOColors["hanPurple-100"],
@@ -45,29 +46,24 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: "row",
-    alignItems: "center",
-    width: "100%"
+    alignItems: "center"
   },
-  cardContentRight: {
-    marginLeft: 8,
-    alignSelf: "center",
-    alignItems: "flex-start",
-    flexWrap: "wrap",
-    width: "80%"
+  cardAvatar: {
+    marginRight: cardAvatarMargin
+  },
+  cardLabel: {
+    flexGrow: 1,
+    flexShrink: 1
   }
 });
 
 const FeaturedInstitutionCard = (props: FeaturedInstitutionCardProps) => (
   <View
-    style={[
-      styles.cardBaseContainer,
-      styles.cardContainer,
-      props.isNew && styles.cardContainerNew
-    ]}
+    style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
     testID={props.testID}
   >
     <View style={styles.cardContent}>
-      <View>
+      <View style={styles.cardAvatar}>
         <Avatar
           logoUri={logoForInstitution({
             id: "",
@@ -77,7 +73,7 @@ const FeaturedInstitutionCard = (props: FeaturedInstitutionCardProps) => (
           size="small"
         />
       </View>
-      <View style={styles.cardContentRight}>
+      <View style={styles.cardLabel}>
         <H6 lineBreakMode="head" numberOfLines={2} color="hanPurple-850">
           {props.name}
         </H6>
@@ -87,12 +83,9 @@ const FeaturedInstitutionCard = (props: FeaturedInstitutionCardProps) => (
 );
 
 const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => (
-  <View
-    style={[styles.cardBaseContainer, styles.cardContainer]}
-    testID={`${testID}-skeleton`}
-  >
+  <View style={styles.cardContainer} testID={`${testID}-skeleton`}>
     <View style={styles.cardContent}>
-      <View>
+      <View style={styles.cardAvatar}>
         <Placeholder.Box
           color={IOColors["grey-200"]}
           animate="fade"
@@ -101,12 +94,12 @@ const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => (
           height={44}
         />
       </View>
-      <View style={styles.cardContentRight}>
+      <View style={styles.cardLabel}>
         <Placeholder.Box
           color={IOColors["grey-200"]}
           animate="fade"
           radius={8}
-          width={200}
+          width="70%"
           height={16}
         />
         <VSpacer size={8} />
@@ -114,7 +107,7 @@ const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => (
           color={IOColors["grey-200"]}
           animate="fade"
           radius={8}
-          width={150}
+          width="55%"
           height={16}
         />
       </View>

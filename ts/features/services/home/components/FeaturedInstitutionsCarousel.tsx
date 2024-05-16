@@ -41,6 +41,7 @@ const FeaturedInstitutionsCarouselBaseComponent = <T,>({
     ListFooterComponent={() => <HSpacer size={48} />}
     showsHorizontalScrollIndicator={false}
     keyExtractor={(_, index) => `featured_institution_card_${index.toString()}`}
+    decelerationRate="fast"
     snapToInterval={CARD_TOTAL_WIDTH}
     snapToAlignment="start"
     getItemLayout={(_, index) => ({
