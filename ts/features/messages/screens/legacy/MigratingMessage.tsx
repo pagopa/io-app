@@ -9,13 +9,13 @@ import {
   Text,
   View
 } from "react-native";
-import doubtImage from "../../../../img/pictograms/doubt.png";
-import paymentCompletedImage from "../../../../img/pictograms/payment-completed.png";
-import { H2 } from "../../../components/core/typography/H2";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import I18n from "../../../i18n";
-import customVariables from "../../../theme/variables";
-import { MigrationStatus } from "../store/reducers/allPaginated";
+import doubtImage from "../../../../../img/pictograms/doubt.png";
+import paymentCompletedImage from "../../../../../img/pictograms/payment-completed.png";
+import { H2 } from "../../../../components/core/typography/H2";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import I18n from "../../../../i18n";
+import customVariables from "../../../../theme/variables";
+import { MigrationStatus } from "../../store/reducers/allPaginated";
 
 const styles = StyleSheet.create({
   migrationMessageContainer: {
