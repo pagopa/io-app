@@ -1,4 +1,5 @@
 import {
+  Banner,
   ContentWrapper,
   Divider,
   H6,
@@ -15,7 +16,8 @@ import React, {
   useState,
   useRef,
   ComponentProps,
-  useMemo
+  useMemo,
+  memo
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
@@ -33,10 +35,11 @@ import {
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import { navigateToLogout } from "../../store/actions/navigation";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
+import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
@@ -54,6 +57,8 @@ type ProfileNavListItem = {
   "description" | "testID" | "onPress" | "hideChevron" | "iconColor" | "icon"
 >;
 
+const ListItem = memo(ListItemNav);
+
 /**
  * A screen to show all the options related to the user profile
  */
@@ -63,6 +68,7 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
   const theme = useIOTheme();
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const showProfileBanner = useIOSelector(showProfileBannerSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const scrollViewContentRef = useRef<ScrollView>(null);
   const idResetTap = useRef<number>();
@@ -96,12 +102,15 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
         },
         {
           text: I18n.t("profile.logout.exit"),
-          onPress: navigateToLogout
+          onPress: () =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.PROFILE_LOGOUT
+            })
         }
       ],
       { cancelable: true }
     );
-  }, []);
+  }, [navigation]);
 
   const resetAppTapCounter = useCallback(() => {
     setTapsOnAppVersion(0);
@@ -138,16 +147,21 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
     tapsOnAppVersion
   ]);
 
+  const navigateToProfile = useCallback(
+    () =>
+      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.PROFILE_DATA
+      }),
+    [navigation]
+  );
+
   const profileNavListItems = useMemo<ReadonlyArray<ProfileNavListItem>>(
     () => [
       {
         // Data
         value: I18n.t("profile.main.data.title"),
         description: I18n.t("profile.main.data.description"),
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_DATA
-          })
+        onPress: navigateToProfile
       },
       {
         // Preferences
@@ -190,6 +204,7 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
         value: I18n.t("profile.logout.menulabel"),
         hideChevron: true,
         iconColor: "error-850",
+        testID: "logoutButton",
         icon: "logout",
         renderValue: v => (
           <>
@@ -201,8 +216,12 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
         onPress: onLogoutPress
       }
     ],
-    [navigation, onLogoutPress]
+    [navigation, onLogoutPress, navigateToProfile]
   );
+
+  const handleCloseBanner = useCallback(() => {
+    dispatch(setShowProfileBanner(false));
+  }, [dispatch]);
 
   const keyExtractor = useCallback(
     (item: ProfileNavListItem, index: number) => `${item.value}-${index}`,
@@ -231,7 +250,7 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
 
       if (icon) {
         return (
-          <ListItemNav
+          <ListItem
             testID={testID}
             accessibilityLabel={value}
             value={renderValue?.(value) ?? value}
@@ -244,7 +263,7 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
         );
       }
       return (
-        <ListItemNav
+        <ListItem
           testID={testID}
           accessibilityLabel={value}
           value={value}
@@ -259,6 +278,20 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
 
   return (
     <ScrollView style={{ backgroundColor: theme["appBackground-primary"] }}>
+      {showProfileBanner && (
+        <ContentWrapper>
+          <Banner
+            title={I18n.t("profile.main.banner.title")}
+            action={I18n.t("profile.main.banner.action")}
+            pictogramName="help"
+            color="neutral"
+            size="big"
+            onPress={navigateToProfile}
+            onClose={handleCloseBanner}
+            labelClose="Close"
+          />
+        </ContentWrapper>
+      )}
       <VSpacer size={16} />
       <FlatList
         scrollEnabled={false}
@@ -268,14 +301,11 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
         renderItem={renderProfileNavItem}
         ItemSeparatorComponent={Divider}
       />
-
       <ContentWrapper>
         <AppVersion onPress={onTapAppVersion} />
       </ContentWrapper>
-
       {/* Developer Section */}
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
-
       {/* End Page */}
       <VSpacer size={24} />
     </ScrollView>

@@ -458,6 +458,9 @@ profile:
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Abilita ambiente di test per IT Wallet
+    banner:
+      title: Vuoi visualizzare il tuo Codice Fiscale?
+      action: Vai alla sezione “I tuoi dati”
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
