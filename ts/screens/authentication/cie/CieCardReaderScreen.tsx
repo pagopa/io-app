@@ -178,7 +178,7 @@ const getTextForState = (
         content: ""
       },
       [ReadingState.error]: {
-        title: I18n.t("authentication.cie.card.error.readerCardLostTitleiOS"),
+        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
         subtitle: "",
         // the native alert hides the screen content and shows a message it self
         content: ""
@@ -198,7 +198,7 @@ const getTextForState = (
       },
       [ReadingState.error]: {
         title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: "",
+        subtitle: I18n.t("authentication.cie.card.error.onTagLost"),
         content: errorMessage
       }
     }

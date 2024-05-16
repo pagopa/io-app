@@ -669,11 +669,8 @@ authentication:
         wrongPin2AttemptLeft: Il PIN non è corretto
         genericError: Si è verificato un errore imprevisto. Riprova.
       error:
-        readerCardLostTitle: Avvicina nuovamente la carta
-        readerCardLostTitleiOS: Hai rimosso la carta troppo presto
-        readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
-        readerCardLostHeaderiOS: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta. Riprova di nuovo.
-        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+        readerCardLostTitle: Hai rimosso la carta troppo presto                
+        onTagLost: Appoggia di nuovo la carta sul retro del dispositivo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
         generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta

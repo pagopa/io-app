@@ -669,11 +669,8 @@ authentication:
         wrongPin2AttemptLeft: Wrong PIN
         genericError: Something went wrong! Please try again.
       error:
-        readerCardLostTitle: Hold the card again for a few seconds
-        readerCardLostTitleiOS: You removed the card too soon.
-        readerCardLostHeader: We have not yet finished reading the card data.
-        readerCardLostHeaderiOS: We have not yet finished reading the card data. Please try again.
-        onTagLost: You removed the card too soon. Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+        readerCardLostTitle: Hai rimosso la carta troppo presto                
+        onTagLost: Appoggia di nuovo la carta sul retro del dispositivo.
         tryAgain: Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!
         generic: Something did not work as expected while we read your CIE.
         unknownCardTitle: Unknown card

@@ -616,12 +616,7 @@ authentication:
         invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
         tagLost: "Du hast die Karte zu früh entfernt."        
         genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
-      error:
-        readerCardLostTitle: "Karte neu lesen"
-        readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
-        readerCardLostHeader: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen."
-        readerCardLostHeaderiOS: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen. Versuche es erneut."
-        onTagLost: "Du hast die Karte zu früh entfernt. Halte die Karte an die Rückseite des Smartphones bis eine Bestätigung auf dem Bildschirm erscheint. Es dauert nur ein paar Sekunden."
+      error:       
         tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
         generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
         unknownCardTitle: "Unbekannte Karte"
