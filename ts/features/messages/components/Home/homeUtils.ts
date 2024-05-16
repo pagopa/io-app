@@ -7,17 +7,16 @@ import { MessageListCategory } from "../../types/messageListCategory";
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
 ): ActionType<typeof reloadAllMessages.request> | undefined => {
-  const shownMessagesCategory =
-    state.entities.messages.allPaginated.shownCategory;
-  const areArchivedMessages = shownMessagesCategory === "ARCHIVE";
-  const messagesCollection = state.entities.messages.allPaginated;
-  const messagesCategoryPot = areArchivedMessages
-    ? messagesCollection.archive.data
-    : messagesCollection.inbox.data;
+  const allPaginatedState = state.entities.messages.allPaginated;
+  const shownMessagesCategory = allPaginatedState.shownCategory;
+  const isShowingArchivedMessages = shownMessagesCategory === "ARCHIVE";
+  const messagesCategoryPot = isShowingArchivedMessages
+    ? allPaginatedState.archive.data
+    : allPaginatedState.inbox.data;
   if (messagesCategoryPot.kind === "PotNone") {
     return reloadAllMessages.request({
       pageSize,
-      filter: { getArchived: areArchivedMessages }
+      filter: { getArchived: isShowingArchivedMessages }
     });
   }
 
@@ -27,7 +26,7 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
 export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) => {
   const shownMessageCategory =
     state.entities.messages.allPaginated.shownCategory;
-  return shownMessageCategory === "ARCHIVE" ? 1 : 0;
+  return messageListCategoryToViewPageIndex(shownMessageCategory);
 };
 
 export const messageListCategoryToViewPageIndex = (

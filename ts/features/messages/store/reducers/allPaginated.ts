@@ -22,14 +22,13 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
 
-export type MessagePagePot = pot.Pot<
-  {
-    page: ReadonlyArray<UIMessage>;
-    previous?: string;
-    next?: string;
-  },
-  string
->;
+export type MessagePage = {
+  page: ReadonlyArray<UIMessage>;
+  previous?: string;
+  next?: string;
+};
+
+export type MessagePagePot = pot.Pot<MessagePage, string>;
 
 type Collection = {
   data: MessagePagePot;

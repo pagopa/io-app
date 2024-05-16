@@ -34,7 +34,7 @@ export const TabNavigationContainer = ({
   const shownPageIndex =
     messageListCategoryToViewPageIndex(shownMessageCategory);
   const onTabNavigationItemPressed = useCallback(
-    selectedTabIndex => {
+    (selectedTabIndex: number) => {
       if (shownPageIndex !== selectedTabIndex) {
         const selectedShownCategory =
           messageViewPageIndexToListCategory(selectedTabIndex);
@@ -63,18 +63,20 @@ export const TabNavigationContainer = ({
         selectedIndex={shownPageIndex}
       >
         <TabItem
-          key={`messages_home_tab_inbox`}
-          label={I18n.t(`messages.tab.inbox`)}
           accessibilityLabel={I18n.t(`messages.tab.inbox`)}
           icon={"inbox"}
           iconSelected={"inboxFilled"}
+          key={`messages_home_tab_inbox`}
+          label={I18n.t(`messages.tab.inbox`)}
+          testID={"home_tab_item_inbox"}
         />
         <TabItem
-          key={`messages_home_tab_archived`}
-          label={I18n.t(`messages.tab.archive`)}
           accessibilityLabel={I18n.t(`messages.tab.archive`)}
           icon={"archive"}
           iconSelected={"archiveFilled"}
+          key={`messages_home_tab_archived`}
+          label={I18n.t(`messages.tab.archive`)}
+          testID={"home_tab_item_archive"}
         />
       </TabNavigation>
     </View>
