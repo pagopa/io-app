@@ -8,14 +8,14 @@ import React from "react";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { openNFCSettings } from "../../../../utils/cie";
 import { FooterStackButton } from "../../common/components/FooterStackButton";
+import { itwOpenNFCSettings } from "../../common/utils/itwCieUtils";
 
 export const ItwIdentificationNfcInstructionsScreen = () => {
   const navigation = useIONavigation();
 
   const handleOpenSettingsPress = async () => {
-    await openNFCSettings();
+    await itwOpenNFCSettings();
   };
 
   const handleClosePress = () => {
