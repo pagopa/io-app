@@ -136,7 +136,8 @@ export const SearchScreen = () => {
           placeholder={I18n.t("services.search.input.placeholder")}
           textInputProps={{
             autoCorrect: false,
-            inputMode: "search"
+            inputMode: "text",
+            returnKeyType: "search"
           }}
           autoFocus={true}
         />
