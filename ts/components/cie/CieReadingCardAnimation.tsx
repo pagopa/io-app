@@ -25,24 +25,30 @@ type State = Readonly<{
 }>;
 
 // Image dimension
-const imgDimension = 180;
-const boxDimension = 245;
+const imgDimension = 188;
 const progressThreshold = 60;
+const circleBorderWidth = 3;
 
 const styles = StyleSheet.create({
   imgContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: boxDimension
+    height: imgDimension
   },
   img: {
     overflow: "hidden",
     backgroundColor: IOColors.white,
-    height: imgDimension - 3,
-    width: imgDimension - 3,
+    height: imgDimension,
+    width: imgDimension,
     borderRadius: imgDimension / 2,
     justifyContent: "center",
     alignItems: "center"
+  },
+  imgWrapper: {
+    height: imgDimension + 30,
+    width: imgDimension + 30,
+    paddingStart: 15,
+    paddingTop: 25
   },
   flexStart: {
     justifyContent: "flex-start"
@@ -160,7 +166,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
                 : this.state.progressBarValue
             }
             radius={imgDimension / 2}
-            borderWidth={3}
+            borderWidth={circleBorderWidth}
             color={
               this.props.readingState === ReadingState.error
                 ? customVariables.brandDanger
@@ -170,7 +176,9 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             bgColor={IOColors.greyLight}
           >
             <View style={styles.img}>
-              <Pictogram name={this.props.pictogramName} />
+              <View style={styles.imgWrapper}>
+                <Pictogram size={"100%"} name={this.props.pictogramName} />
+              </View>
             </View>
           </ProgressCircle>
         </View>

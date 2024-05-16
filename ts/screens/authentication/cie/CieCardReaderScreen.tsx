@@ -526,7 +526,13 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     return (
       <SafeAreaView
         edges={["bottom"]}
-        style={{ marginTop: -this.props.headerHeight, flex: 1 }}
+        style={{
+          marginTop: Platform.select({
+            ios: 0,
+            default: -this.props.headerHeight
+          }),
+          flex: 1
+        }}
       >
         <ScrollView
           centerContent={true}
@@ -541,7 +547,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
               pictogramName={getPictogramName(this.state.readingState)}
               readingState={this.state.readingState}
             />
-            <VSpacer size={24} />
+            <VSpacer size={32} />
             <H3 style={{ textAlign: "center" }}>{this.state.title}</H3>
             <VSpacer size={8} />
             {this.state.subtitle && (
