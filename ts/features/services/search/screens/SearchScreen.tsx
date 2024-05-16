@@ -45,13 +45,15 @@ export const SearchScreen = () => {
     if (isError) {
       IOToast.error(I18n.t("global.genericError"));
     }
+  }, [isError]);
 
-    return () => {
-      dispatch(searchPaginatedInstitutionsGet.cancel());
-    };
-  }, [dispatch, isError]);
+  const goBack = useCallback(() => {
+    navigation.goBack();
+    dispatch(searchPaginatedInstitutionsGet.cancel());
+  }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
+    goBack,
     title: "",
     supportRequest: true
   });
@@ -67,10 +69,10 @@ export const SearchScreen = () => {
   };
 
   const handleEndReached = useCallback(() => {
-    if (query.length >= MIN_QUERY_LENGTH) {
+    if (!!data && query.length >= MIN_QUERY_LENGTH) {
       fetchNextPage(currentPage + 1, query);
     }
-  }, [currentPage, fetchNextPage, query]);
+  }, [currentPage, data, fetchNextPage, query]);
 
   const navigateToInstitution = useCallback(
     (institution: Institution) =>
