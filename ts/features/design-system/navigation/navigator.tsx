@@ -46,19 +46,20 @@ import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
 import { DSNumberPad } from "../core/DSNumberPad";
+import { DSOTPInput } from "../core/DSOTPInput";
 import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSSelection } from "../core/DSSelection";
+import { DSStepper } from "../core/DSStepper";
+import { DSStickyMessageCTAs } from "../core/DSStickyMessageCTAs";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
-import { DSStepper } from "../core/DSStepper";
-import { DSOTPInput } from "../core/DSOTPInput";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -430,6 +431,11 @@ export const DesignSystemNavigator = () => {
           name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
           component={DSEdgeToEdgeArea}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_MESSAGE_CTAS.route}
+          component={DSStickyMessageCTAs}
+          options={{ headerShown: true }}
         />
         <Stack.Group
           screenOptions={
