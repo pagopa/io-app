@@ -19,7 +19,7 @@ import {
   isPnSupportedSelector,
   pnMinAppVersionSelector
 } from "../../../store/reducers/backendStatus";
-import { MessageFeedback } from "../components/MessageFeedback";
+import { MessageFeedback } from "../components/Home/legacy/MessageFeedback";
 import { openAppStoreUrl } from "../../../utils/url";
 import {
   PreconditionHeader,

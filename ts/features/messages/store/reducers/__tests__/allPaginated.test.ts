@@ -518,7 +518,8 @@ describe("allPaginated reducer", () => {
 const defaultState: AllPaginated = {
   inbox: { data: pot.none, lastRequest: O.none },
   archive: { data: pot.none, lastRequest: O.none },
-  migration: O.none
+  migration: O.none,
+  shownCategory: "INBOX"
 };
 
 function toGlobalState(localState: AllPaginated): GlobalState {
