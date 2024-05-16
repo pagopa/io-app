@@ -37,7 +37,7 @@ const HORIZONTAL_SPACING = 24;
  * @param claims - the list of the optional claims
  * @param onClaimSelected - the callback function to be called when a claim is selected
  */
-const ItwOptionalClaimsList = ({ claims, onClaimSelected }: Props) => {
+export const ItwOptionalClaimsList = ({ claims, onClaimSelected }: Props) => {
   const [selectedClaims, setSelectedClaims] = React.useState<Array<boolean>>(
     new Array(claims.length).fill(false)
   );
@@ -57,7 +57,10 @@ const ItwOptionalClaimsList = ({ claims, onClaimSelected }: Props) => {
         claims,
         RA.mapWithIndex((index, claim) => (
           <View key={`${index}-${claim.claim}`}>
-            <Pressable accessibilityRole="button" onPress={() => checkBoxOnPress(index)}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => checkBoxOnPress(index)}
+            >
               <View style={styles.innerContainer}>
                 <View
                   style={{
@@ -96,5 +99,3 @@ const styles = StyleSheet.create({
     paddingVertical: VERTICAL_SPACING
   }
 });
-
-export default ItwOptionalClaimsList;

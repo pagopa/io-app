@@ -139,6 +139,8 @@ PODS:
   - nanopb/decode (2.30909.1)
   - nanopb/encode (2.30909.1)
   - OpenSSL-Universal (1.1.1100)
+  - pagopa-io-react-native-cie-pid (0.1.3):
+    - React-Core
   - pagopa-io-react-native-crypto (0.3.0):
     - React-Core
   - pagopa-io-react-native-http-client (0.1.3):
@@ -621,6 +623,7 @@ DEPENDENCIES:
   - libevent (~> 2.1.12)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
+  - "pagopa-io-react-native-cie-pid (from `../node_modules/@pagopa/io-react-native-cie-pid`)"
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
@@ -759,6 +762,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/jail-monkey"
   MixpanelReactNative:
     :path: "../node_modules/mixpanel-react-native"
+  pagopa-io-react-native-cie-pid:
+    :path: "../node_modules/@pagopa/io-react-native-cie-pid"
   pagopa-io-react-native-crypto:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-http-client:
@@ -942,6 +947,7 @@ SPEC CHECKSUMS:
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  pagopa-io-react-native-cie-pid: a3f213959fb23b82822a0bf987610831eb01a5fd
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: 14b1ed3cd090108f9cb324f951811fe556b81e51
   pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21

@@ -3100,7 +3100,7 @@ features:
           3: Attivalo
         primaryAction: Vai alle impostazioni
         secondaryAction: Ho fatto
-    issuing:
+    issuance:
       credentialPreview:
         title: "Ecco un’anteprima della tua tessera"
         subtitle:

@@ -7,14 +7,14 @@ import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { parseClaims, sortClaims } from "../utils/itwClaimsUtils";
 import { CredentialType, mapAssuranceLevel } from "../utils/itwMocksUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
-import ItwCredentialClaim from "./ItwCredentialClaim";
+import { ItwCredentialClaim } from "./ItwCredentialClaim";
 
 /**
  * This component renders the list of claims for a credential.
  * It dinamically renders the list of claims passed as claims prop in the order they are passed.
  * @param data - the {@link StoredCredential} of the credential.
  */
-const ItwCredentialClaimsList = ({
+export const ItwCredentialClaimsList = ({
   data: {
     parsedCredential,
     displayData,
@@ -46,18 +46,18 @@ const ItwCredentialClaimsList = ({
       content: [
         {
           title: I18n.t(
-            "features.itWallet.issuing.credentialPreview.bottomSheet.about.title"
+            "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
           ),
           body: I18n.t(
-            "features.itWallet.issuing.credentialPreview.bottomSheet.about.subtitle"
+            "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
           )
         },
         {
           title: I18n.t(
-            "features.itWallet.issuing.credentialPreview.bottomSheet.data.title"
+            "features.itWallet.issuance.credentialPreview.bottomSheet.data.title"
           ),
           body: I18n.t(
-            "features.itWallet.issuing.credentialPreview.bottomSheet.data.subtitle"
+            "features.itWallet.issuance.credentialPreview.bottomSheet.data.subtitle"
           )
         }
       ]
@@ -133,5 +133,3 @@ const ItwCredentialClaimsList = ({
     </>
   );
 };
-
-export default ItwCredentialClaimsList;

@@ -96,18 +96,18 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
     content: [
       {
         title: I18n.t(
-          "features.itWallet.issuing.credentialPreview.bottomSheet.about.title"
+          "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
         ),
         body: I18n.t(
-          "features.itWallet.issuing.credentialPreview.bottomSheet.about.subtitle"
+          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
         )
       },
       {
         title: I18n.t(
-          "features.itWallet.issuing.credentialPreview.bottomSheet.data.title"
+          "features.itWallet.issuance.credentialPreview.bottomSheet.data.title"
         ),
         body: I18n.t(
-          "features.itWallet.issuing.credentialPreview.bottomSheet.data.subtitle"
+          "features.itWallet.issuance.credentialPreview.bottomSheet.data.subtitle"
         )
       }
     ]
@@ -239,7 +239,7 @@ const DrivingPrivilegesClaimItem = ({
  * It renders a different component based on the type of the claim.
  * @param claim - the claim to render
  */
-const ItwCredentialClaim = ({ claim }: { claim: ClaimDisplayFormat }) =>
+export const ItwCredentialClaim = ({ claim }: { claim: ClaimDisplayFormat }) =>
   pipe(
     claim.value,
     ClaimValue.decode,
@@ -270,5 +270,3 @@ const ItwCredentialClaim = ({ claim }: { claim: ClaimDisplayFormat }) =>
       }
     )
   );
-
-export default ItwCredentialClaim;

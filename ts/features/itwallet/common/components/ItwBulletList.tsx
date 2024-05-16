@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
  * A component to render a list of bullet items
  * @param data - the list of bullet items
  */
-const ItwBulletList = ({ data }: Props) => (
+export const ItwBulletList = ({ data }: Props) => (
   <View style={styles.container}>
     {pipe(
       data,
@@ -73,5 +73,3 @@ const ItwBulletList = ({ data }: Props) => (
     )}
   </View>
 );
-
-export default ItwBulletList;
