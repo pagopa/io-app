@@ -676,9 +676,8 @@ authentication:
         unknownCardTitle: Unknown card
         unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
         unknownCardHelpLink: What is the Electronic Identity Card?
-        genericErroriOSTitle: Non siamo riusciti a recuperare i dati dalla carta
-        genericErroriOSSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova. 
-        genericErrorTitle: Si è verificato un errore imprevisto
+        genericErrorTitle: Non siamo riusciti a recuperare i dati dalla carta
+        genericErrorSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova.
     dataUsageConsent:
       retryCTA: Enter
   spid: SPID
