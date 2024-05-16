@@ -8,6 +8,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 import { useIOSelector } from "../../../store/hooks";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { useInteractiveElementDefaultColorName } from "../../../utils/hooks/theme";
 import CieCardReaderScreen from "./CieCardReaderScreen";
 
 export const CieCardReaderScreenWrapper = () => {
@@ -26,8 +27,11 @@ export const CieCardReaderScreenWrapper = () => {
 
   const headerHeight = useHeaderHeight();
 
+  const blueColorName = useInteractiveElementDefaultColorName();
+
   return (
     <CieCardReaderScreen
+      blueColorName={blueColorName}
       navigation={navigation}
       route={route}
       headerHeight={headerHeight}

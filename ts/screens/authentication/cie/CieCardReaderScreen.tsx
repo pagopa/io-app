@@ -46,7 +46,6 @@ import {
   CieAuthenticationErrorReason,
   cieAuthenticationError
 } from "../../../store/actions/cie";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
@@ -77,6 +76,7 @@ type Props = CieCardReaderNavigationProps &
   ReduxProps &
   ReturnType<typeof mapStateToProps> & {
     headerHeight: number;
+    blueColorName: string;
   };
 
 const styles = StyleSheet.create({
@@ -489,7 +489,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
-  private handleCancel = () => resetToAuthenticationRoute();
+  private handleCancel = () =>
+    this.props.navigation.reset({
+      index: 0,
+      routes: [{ name: ROUTES.AUTHENTICATION }]
+    });
 
   private getFooter = () =>
     Platform.select({
@@ -546,6 +550,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             <CieReadingCardAnimation
               pictogramName={getPictogramName(this.state.readingState)}
               readingState={this.state.readingState}
+              circleColor={this.props.blueColorName}
             />
             <VSpacer size={32} />
             <H3 style={{ textAlign: "center" }}>{this.state.title}</H3>

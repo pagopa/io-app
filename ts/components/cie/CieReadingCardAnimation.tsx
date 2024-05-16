@@ -18,6 +18,7 @@ export enum ReadingState {
 type Props = Readonly<{
   readingState: ReadingState;
   pictogramName: IOPictograms;
+  circleColor: string;
 }>;
 
 type State = Readonly<{
@@ -169,7 +170,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             borderWidth={circleBorderWidth}
             color={
               this.props.readingState === ReadingState.error
-                ? customVariables.brandDanger
+                ? IOColors.greyLight
                 : customVariables.brandPrimary
             }
             shadowColor={IOColors.greyLight}
