@@ -26,6 +26,7 @@ import { ServicesActions as NewServicesActions } from "../../features/services/c
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
+import { FimsActions } from "../../features/fims/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { AnalyticsActions } from "./analytics";
@@ -104,6 +105,7 @@ export type Action =
   | PaymentsFeatureActions
   | NewWalletActions
   | NewServicesActions
+  | FimsActions
   | ItwActions
   | ProfileSettingsActions;
 
