@@ -559,7 +559,7 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const ReaderComponent = (props: Props) => (
+const ReaderScreen = (props: Props) => (
   <View style={styles.container}>
     {props.isNfcEnabled ? (
       <CieCardReaderScreen {...props} />
@@ -569,4 +569,4 @@ const ReaderComponent = (props: Props) => (
   </View>
 );
 
-export default connect(mapStateToProps)(ReaderComponent);
+export default connect(mapStateToProps)(ReaderScreen);
