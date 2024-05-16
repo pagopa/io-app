@@ -17,7 +17,7 @@ import {
 } from "../../../../store/reducers/__mock__/backendStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
-import MessagesHomeScreen from "../MessagesHomeScreen";
+import LegacyMessagesHomeScreen from "../LegacyMessagesHomeScreen";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 const mockNavigate = jest.fn();
@@ -166,7 +166,7 @@ const renderComponent = (
   } as GlobalState);
 
   const component = renderScreenWithNavigationStoreContext(
-    MessagesHomeScreen,
+    LegacyMessagesHomeScreen,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

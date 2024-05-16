@@ -164,6 +164,7 @@ Object {
   "isIdPayTestEnabled": false,
   "isItWalletTestEnabled": false,
   "isMixpanelEnabled": null,
+  "isNewHomeSectionEnabled": false,
   "isNewWalletSectionEnabled": false,
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,
