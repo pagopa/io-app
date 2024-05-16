@@ -2,7 +2,7 @@ import { CommonActions } from "@react-navigation/native";
 import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
-import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderComponent";
+import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
 import { AddCreditCardOutcomeCodeMessageNavigationParams } from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
