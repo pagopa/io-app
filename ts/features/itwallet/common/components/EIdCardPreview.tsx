@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { EIdCard } from "./EIdCard";
+import { EidCard } from "./EidCard";
 
-export const EIdCardPreview = () => (
+export const EidCardPreview = () => (
   <View style={styles.previewContainer}>
-    <EIdCard isMasked={true} />
+    <EidCard isMasked={true} />
   </View>
 );
 

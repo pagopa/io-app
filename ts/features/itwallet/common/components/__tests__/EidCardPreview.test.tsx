@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
-import { EIdCardPreview } from "../EIdCardPreview";
+import { EidCardPreview } from "../EidCardPreview";
 
-describe("EIdCardPreview", () => {
+describe("EidCardPreview", () => {
   it("should match the snapshot", () => {
-    const component = render(<EIdCardPreview />);
+    const component = render(<EidCardPreview />);
     expect(component).toMatchSnapshot();
   });
 });

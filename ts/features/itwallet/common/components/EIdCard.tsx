@@ -4,22 +4,22 @@ import { StyleSheet, View } from "react-native";
 import EidCardShape from "../../../../../img/features/itw/eid_card.svg";
 import I18n from "../../../../i18n";
 
-export type EIdStatus = "valid" | "pending" | "expired";
+export type EidStatus = "valid" | "pending" | "expired";
 
-export type EIdCardProps = {
+export type EidCardProps = {
   isPreview?: boolean;
   isMasked?: boolean;
-  status?: EIdStatus;
+  status?: EidStatus;
   name?: string;
   fiscalCode?: string;
 };
 
-export const EIdCard = ({
+export const EidCard = ({
   status = "valid",
   isMasked = false,
   name,
   fiscalCode
-}: EIdCardProps) => {
+}: EidCardProps) => {
   const isValid = status === "valid";
   const isExpired = status === "expired";
   const isPending = status === "pending";

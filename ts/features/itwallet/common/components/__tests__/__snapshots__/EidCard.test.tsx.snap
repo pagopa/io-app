@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EIdCard should match snapshot when status is "expired" 1`] = `
+exports[`EidCard should match snapshot when status is "expired" 1`] = `
 <View
   style={
     Object {
@@ -265,7 +265,7 @@ exports[`EIdCard should match snapshot when status is "expired" 1`] = `
 </View>
 `;
 
-exports[`EIdCard should match snapshot when status is "pending" 1`] = `
+exports[`EidCard should match snapshot when status is "pending" 1`] = `
 <View
   style={
     Object {
@@ -530,7 +530,7 @@ exports[`EIdCard should match snapshot when status is "pending" 1`] = `
 </View>
 `;
 
-exports[`EIdCard should match snapshot when status is "valid" 1`] = `
+exports[`EidCard should match snapshot when status is "valid" 1`] = `
 <View
   style={
     Object {

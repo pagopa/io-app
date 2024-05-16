@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EIdCardPreview should match the snapshot 1`] = `
+exports[`EidCardPreview should match the snapshot 1`] = `
 <View
   style={
     Object {

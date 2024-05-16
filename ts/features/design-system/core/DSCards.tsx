@@ -14,8 +14,8 @@ import {
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
-import { EIdCard } from "../../itwallet/common/components/EIdCard";
-import { EIdCardPreview } from "../../itwallet/common/components/EIdCardPreview";
+import { EidCard } from "../../itwallet/common/components/EidCard";
+import { EidCardPreview } from "../../itwallet/common/components/EidCardPreview";
 
 const styles = StyleSheet.create({
   content: {
@@ -250,27 +250,27 @@ export const DSCards = () => (
 
     <DesignSystemSection title="eID">
       <DSComponentViewerBox name="Preview">
-        <EIdCardPreview />
+        <EidCardPreview />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
-        <EIdCard name="Anna Verdi" fiscalCode="RSGMRT80A41H501X" />
+        <EidCard name="Anna Verdi" fiscalCode="RSGMRT80A41H501X" />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Masked">
-        <EIdCard
+        <EidCard
           name="Anna Verdi"
           fiscalCode="RSGMRT80A41H501X"
           isMasked={true}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
-        <EIdCard
+        <EidCard
           name="Anna Verdi"
           fiscalCode="RSGMRT80A41H501X"
           status="expired"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
-        <EIdCard
+        <EidCard
           name="Anna Verdi"
           fiscalCode="RSGMRT80A41H501X"
           status="pending"

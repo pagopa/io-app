@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
-import { EIdCard, EIdStatus } from "../EIdCard";
+import { EidCard, EidStatus } from "../EidCard";
 
-describe("EIdCard", () => {
-  it.each(["valid", "expired", "pending"] as ReadonlyArray<EIdStatus>)(
+describe("EidCard", () => {
+  it.each(["valid", "expired", "pending"] as ReadonlyArray<EidStatus>)(
     "should match snapshot when status is %p",
     status => {
       const component = render(
-        <EIdCard
+        <EidCard
           fiscalCode="AAAAAA99A99A999A"
           name="ABCDEFG ABCDEFG"
           status={status}
