@@ -2,13 +2,18 @@ import { combineReducers } from "redux";
 import identificationReducer, {
   ItwIdentificationState
 } from "../../../identification/store/reducers";
+import issuanceReducer, {
+  ItwIssuanceState
+} from "../../../issuance/store/reducers";
 
-export type ItwState = {
+export type ItWalletState = {
   identification: ItwIdentificationState;
+  issuance: ItwIssuanceState;
 };
 
-const itwReducer = combineReducers({
-  identification: identificationReducer
+const reducer = combineReducers({
+  identification: identificationReducer,
+  issuance: issuanceReducer
 });
 
-export default itwReducer;
+export default reducer;
