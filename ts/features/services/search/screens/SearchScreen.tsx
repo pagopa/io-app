@@ -3,7 +3,6 @@ import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
   ContentWrapper,
   Divider,
-  H6,
   IOStyles,
   IOToast,
   ListItemNav,
@@ -88,7 +87,8 @@ export const SearchScreen = () => {
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Institution>) => (
       <ListItemNav
-        value={<H6 numberOfLines={2}>{item.name}</H6>}
+        value={item.name}
+        numberOfLines={2}
         onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
