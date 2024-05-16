@@ -5,20 +5,8 @@ import {
   Image,
   ImageSourcePropType,
   ImageStyle,
-  StyleSheet
+  Pressable
 } from "react-native";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-
-const styles = StyleSheet.create({
-  button: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-    alignSelf: "auto",
-    height: "auto"
-  }
-});
 
 type LabelledItemIconOrImageProps = {
   icon: IOIcons | ImageSourcePropType;
@@ -37,12 +25,13 @@ export const LabelledItemIconOrImage = ({
   onPress,
   accessibilityLabelIcon
 }: LabelledItemIconOrImageProps) => (
-  <ButtonDefaultOpacity
+  <Pressable
     testID="ButtonDefaultOpacity"
     onPress={onPress}
-    transparent
     accessible={accessible ?? true}
-    style={styles.button}
+    style={{
+      alignSelf: "center"
+    }}
   >
     {isString(icon) ? (
       <Icon
@@ -60,5 +49,5 @@ export const LabelledItemIconOrImage = ({
         testID="LabelledItem_Image"
       />
     )}
-  </ButtonDefaultOpacity>
+  </Pressable>
 );

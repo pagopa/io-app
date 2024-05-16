@@ -394,7 +394,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -896,7 +896,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -1398,7 +1398,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -1900,7 +1900,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -2402,7 +2402,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -2550,7 +2550,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3052,7 +3052,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3200,7 +3200,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3702,7 +3702,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3850,7 +3850,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -4352,7 +4352,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -4500,7 +4500,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
