@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.60.0-rc.2](https://github.com/pagopa/io-app/compare/2.60.0-rc.1...2.60.0-rc.2) (2024-05-15)
+
+
+### Bug Fixes
+
+* [[IOBP-638](https://pagopa.atlassian.net/browse/IOBP-638)] Add nested scroll enabled flag on the current payment webview modal ([#5758](https://github.com/pagopa/io-app/issues/5758)) ([f0d2477](https://github.com/pagopa/io-app/commit/f0d2477e78aee5bf4751e93e69de0ee1cadab58c))
+* [[PE-587](https://pagopa.atlassian.net/browse/PE-587),[PE-589](https://pagopa.atlassian.net/browse/PE-589),[PE-591](https://pagopa.atlassian.net/browse/PE-591)] CGN revamp fixes ([#5754](https://github.com/pagopa/io-app/issues/5754)) ([e0dcee1](https://github.com/pagopa/io-app/commit/e0dcee1143a950758d7238894aed42a6528032a4))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-265](https://pagopa.atlassian.net/browse/IOAPPX-265)] Add a new debug screen with the sticky behaviour of the action block ([#5623](https://github.com/pagopa/io-app/issues/5623)) ([2349078](https://github.com/pagopa/io-app/commit/23490781afc6bc3d30465e63b2595fca1238d976))
+* [[IOCOM-1357](https://pagopa.atlassian.net/browse/IOCOM-1357)] Entry point, structure and first half of saga for FIMS implementation ([#5767](https://github.com/pagopa/io-app/issues/5767)) ([2da9302](https://github.com/pagopa/io-app/commit/2da9302c51444fd746d924cfd5921947da18d17f))
+
 ## [2.60.0-rc.1](https://github.com/pagopa/io-app/compare/2.60.0-rc.0...2.60.0-rc.1) (2024-05-14)
 
 
