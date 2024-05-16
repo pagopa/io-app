@@ -21,7 +21,9 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
         "top": 0,
       }
     }
-  />
+  >
+    <SvgMock />
+  </View>
   <View
     style={
       Object {
@@ -286,7 +288,9 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
         "top": 0,
       }
     }
-  />
+  >
+    <SvgMock />
+  </View>
   <View
     style={
       Object {
