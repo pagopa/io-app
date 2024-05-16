@@ -3,8 +3,9 @@ import {
   IOVisualCostants,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import React, { useEffect } from "react";
-import { BackHandler, StyleSheet, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import themeVariables from "../../theme/variables";
 import { Body } from "../core/typography/Body";
 import { Overlay } from "./Overlay";
@@ -34,18 +35,7 @@ type AlertModalProps = Readonly<{
  * A custom alert to show a message
  */
 export const AlertModal = ({ message }: AlertModalProps) => {
-  useEffect(() => {
-    const onBackPressed = () => true;
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      onBackPressed
-    );
-
-    return () => {
-      backHandler?.remove();
-    };
-  }, []);
+  useHardwareBackButton(() => true);
 
   return (
     <Overlay
