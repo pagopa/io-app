@@ -6,41 +6,41 @@ import { pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import SectionStatusComponent from "../../../components/SectionStatus";
-import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButton";
-import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import { useSecuritySuggestionsBottomSheet } from "../../../hooks/useSecuritySuggestionBottomSheet";
-import I18n from "../../../i18n";
-import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
+import SectionStatusComponent from "../../../../components/SectionStatus";
+import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
+import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import { MIN_CHARACTER_SEARCH_TEXT } from "../../../../components/search/SearchButton";
+import { SearchNoResultMessage } from "../../../../components/search/SearchNoResultMessage";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { useSecuritySuggestionsBottomSheet } from "../../../../hooks/useSecuritySuggestionBottomSheet";
+import I18n from "../../../../i18n";
+import { sectionStatusSelector } from "../../../../store/reducers/backendStatus";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
-} from "../../../store/reducers/search";
-import { GlobalState } from "../../../store/reducers/types";
+} from "../../../../store/reducers/search";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
-} from "../../../utils/accessibility";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import MessageList from "../components/MessageList";
-import MessagesSearch from "../components/MessagesSearch";
-import { useMessageOpening } from "../hooks/useMessageOpening";
-import MessagesHomeTabNavigator from "../navigation/MessagesHomeTabNavigator";
+} from "../../../../utils/accessibility";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import MessageList from "../../components/Home/legacy";
+import MessagesSearch from "../../components/Home/legacy/MessagesSearch";
+import { useMessageOpening } from "../../hooks/useMessageOpening";
+import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus
-} from "../store/actions";
+} from "../../store/actions";
 import {
   allInboxAndArchivedMessagesSelector,
   allPaginatedSelector
-} from "../store/reducers/allPaginated";
+} from "../../store/reducers/allPaginated";
 import {
   MessagesStatus,
   messagesStatusSelector
-} from "../store/reducers/messagesStatus";
+} from "../../store/reducers/messagesStatus";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
