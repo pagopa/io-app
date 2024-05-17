@@ -6,6 +6,7 @@ import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { GlobalState } from "../../../store/reducers/types";
+import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
 
 describe("LoadingScreenContent", () => {
   it("should match the snapshot with title, no children, header hidden", () => {
@@ -44,7 +45,7 @@ function renderComponent(
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const designSystemEnabledState = appReducer(
     globalState,
-    applicationChangeState("active")
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
   );
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <LoadingScreenContent {...props} />,
