@@ -1,16 +1,41 @@
 import React from "react";
-import { render } from "@testing-library/react-native";
+import { createStore } from "redux";
 import { OrganizationHeader } from "../OrganizationHeader";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { appReducer } from "../../../../../store/reducers";
+import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
+import { applicationChangeState } from "../../../../../store/actions/application";
 
 describe("OrganizationHeader component", () => {
   it("should match the snapshot", () => {
-    const component = render(
+    const component = renderComponent();
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+});
+
+const renderComponent = () => {
+  const serviceId = "01HXEPR9JD8838JZDN3YD0EF0Z" as ServiceId;
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const designSystemState = appReducer(
+    initialState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const store = createStore(appReducer, designSystemState as any);
+
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => (
       <OrganizationHeader
         logoUri={require("../../../../../../img/test/logo.png")}
         organizationName={"#### organization_name ####"}
         serviceName={"#### service name ####"}
+        serviceId={serviceId}
       />
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-});
+    ),
+    MESSAGES_ROUTES.MESSAGE_DETAIL,
+    {},
+    store
+  );
+};
