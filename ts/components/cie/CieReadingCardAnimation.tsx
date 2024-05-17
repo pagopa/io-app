@@ -1,3 +1,7 @@
+/**
+ * TODO: refactor to a functional component.
+ * https://pagopa.atlassian.net/browse/IOPID-1857
+ */
 import {
   IOColors,
   IOPictograms,

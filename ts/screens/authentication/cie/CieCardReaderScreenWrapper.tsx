@@ -1,3 +1,10 @@
+/**
+ * This screen is needed to wrap the CieCardReaderScreen to leave
+ * this screen as a class component.
+ *
+ * TODO: remove this screen and refactor the CieCardReaderScreen to a functional component.
+ * https://pagopa.atlassian.net/browse/IOPID-1857
+ */
 import React from "react";
 
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
