@@ -603,9 +603,9 @@ authentication:
     card5-title: Welcome to IO!
     card5-content: What can you do?
     card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
-    expiredCardTitle: La verifica della CIE non è andata a buon fine
+    expiredCardTitle: The CIE verification failed
     expiredCardHeaderTitle: Login with CIE
-    expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
+    expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
     genericTitle: Login with CIE
