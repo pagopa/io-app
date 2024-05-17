@@ -119,6 +119,7 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.CIE_UNEXPECTED_ERROR}
         component={CieUnexpectedErrorScreen}
+      />
 
       <Stack.Screen
         name={ROUTES.CIE_EXPIRED_SCREEN}
