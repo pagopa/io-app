@@ -1,5 +1,5 @@
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import { ItwKoView } from "../components/ItwKoView";
 
 /**
  * Type for errors which might occur during the it-wallet flow.
@@ -24,7 +24,7 @@ export type ItWalletMappedError = {
  */
 export type ItwErrorMapping = (
   error?: ItWalletError
-) => React.ComponentProps<typeof ItwKoView>;
+) => React.ComponentProps<typeof OperationResultScreenContent>;
 
 /**
  * Requirements error codes
@@ -51,7 +51,7 @@ export enum ItWalletErrorTypes {
  */
 export const getItwGenericMappedError = (
   onPress: () => any
-): React.ComponentProps<typeof ItwKoView> => ({
+): React.ComponentProps<typeof OperationResultScreenContent> => ({
   title: I18n.t("features.itWallet.generic.error.title"),
   subtitle: I18n.t("features.itWallet.generic.error.body"),
   action: {
