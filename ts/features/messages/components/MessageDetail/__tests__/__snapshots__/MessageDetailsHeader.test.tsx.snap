@@ -150,7 +150,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                     }
                   }
                 >
-                  DUMMY_ROUTE
+                  MESSAGE_DETAIL
                 </Text>
               </View>
               <View
@@ -482,6 +482,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 "lineHeight": 21,
                               }
                             }
+                            onPress={[Function]}
                             style={
                               Array [
                                 Object {
