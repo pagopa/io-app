@@ -6,7 +6,7 @@ import {
 import * as React from "react";
 import { FlatListProps, StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { WithTestID } from "../../../../types/WithTestID";
+import { TestID, WithTestID } from "../../../../types/WithTestID";
 import {
   CARD_WIDTH,
   FeaturedInstitutionCard,
@@ -63,7 +63,7 @@ const FeaturedInstitutionsCarousel = ({
   />
 );
 
-const FeaturedInstitutionsCarouselSkeleton = ({ testID }: WithTestID<any>) => (
+const FeaturedInstitutionsCarouselSkeleton = ({ testID }: TestID) => (
   <FeaturedInstitutionsCarouselBaseComponent
     testID={testID}
     data={Array.from({ length: 3 })}
