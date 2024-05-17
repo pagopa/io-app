@@ -2,18 +2,18 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef } from "react";
-import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
+import I18n from "../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
-} from "../analytics";
-import { LegacyMessageAttachmentPreview } from "../components/MessageAttachment/LegacyMessageAttachmentPreview";
-import { MessagesParamsList } from "../navigation/params";
-import { getServiceByMessageId } from "../store/reducers/paginatedById";
-import { thirdPartyMessageAttachment } from "../store/reducers/thirdPartyById";
+} from "../../analytics";
+import { LegacyMessageAttachmentPreview } from "../../components/MessageAttachment/LegacyMessageAttachmentPreview";
+import { MessagesParamsList } from "../../navigation/params";
+import { getServiceByMessageId } from "../../store/reducers/paginatedById";
+import { thirdPartyMessageAttachment } from "../../store/reducers/thirdPartyById";
 
 export const LegacyMessageDetailAttachment = (
   props: IOStackNavigationRouteProps<

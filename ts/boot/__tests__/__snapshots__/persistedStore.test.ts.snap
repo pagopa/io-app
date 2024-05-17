@@ -64,6 +64,7 @@ Object {
       "migration": Object {
         "_tag": "None",
       },
+      "shownCategory": "INBOX",
     },
     "detailsById": Object {},
     "downloads": Object {},
