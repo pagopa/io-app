@@ -27,6 +27,7 @@ const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 const styles = StyleSheet.create({
   versionContainer: {
     ...StyleSheet.absoluteFillObject,
+    top: -8,
     justifyContent: "flex-start",
     alignItems: "center",
     zIndex: 1000
