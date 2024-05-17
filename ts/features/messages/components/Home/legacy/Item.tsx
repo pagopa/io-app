@@ -3,28 +3,28 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import PnMessage from "../../../../../img/features/messages/pn_message_badge.svg";
-import I18n from "../../../../i18n";
-import { UIMessage } from "../../types";
-import customVariables from "../../../../theme/variables";
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { TagEnum as TagEnumPN } from "../../../../../../definitions/backend/MessageCategoryPN";
+import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import PnMessage from "../../../../../../img/features/messages/pn_message_badge.svg";
+import I18n from "../../../../../i18n";
+import { UIMessage } from "../../../types";
+import customVariables from "../../../../../theme/variables";
 import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
-} from "../../utils/convertDateToWordDistance";
-import { IOBadge } from "../../../../components/core/IOBadge";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
-import { H5 } from "../../../../components/core/typography/H5";
-import { Label } from "../../../../components/core/typography/Label";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { BadgeComponent } from "../../../../components/screens/BadgeComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { useIOSelector } from "../../../../store/hooks";
-import { isNoticePaidSelector } from "../../../../store/reducers/entities/payments";
-import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
+} from "../../../utils/convertDateToWordDistance";
+import { IOBadge } from "../../../../../components/core/IOBadge";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H3 } from "../../../../../components/core/typography/H3";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { Label } from "../../../../../components/core/typography/Label";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { BadgeComponent } from "../../../../../components/screens/BadgeComponent";
+import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { useIOSelector } from "../../../../../store/hooks";
+import { isNoticePaidSelector } from "../../../../../store/reducers/entities/payments";
+import { isPnEnabledSelector } from "../../../../../store/reducers/backendStatus";
 
 const ICON_WIDTH = 24;
 
