@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 
 import I18n from "../../../../i18n";
-import ListSelectionBar from "../ListSelectionBar";
+import ListSelectionBar from "../Home/legacy/ListSelectionBar";
 
 jest.useFakeTimers();
 

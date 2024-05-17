@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
-import customVariables from "../../../theme/variables";
-import { Body } from "../../../components/core/typography/Body";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import customVariables from "../../../../../theme/variables";
+import { Body } from "../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   view: {
