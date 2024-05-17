@@ -30,6 +30,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
@@ -50,7 +51,10 @@ import { ReduxProps } from "../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
-import { isScreenReaderEnabled } from "../../../utils/accessibility";
+import {
+  isScreenReaderEnabled,
+  setAccessibilityFocus
+} from "../../../utils/accessibility";
 import { isDevEnv } from "../../../utils/environment";
 import {
   assistanceToolRemoteConfig,
@@ -154,6 +158,7 @@ const analyticActions = new Map<CieAuthenticationErrorReason, string>([
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 const VIBRATION = 100 as Millisecond;
+const accessibityTimeout = 100 as Millisecond;
 
 type TextForState = {
   title: string;
@@ -368,6 +373,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setState(
           state => ({
             title: I18n.t("authentication.cie.card.cieCardValid"),
+            subtitle: "",
             // duplicate message so screen reader can read the updated message
             content: state.isScreenReaderEnabled
               ? I18n.t("authentication.cie.card.cieCardValid")
@@ -528,16 +534,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   public render(): React.ReactNode {
     return (
-      <SafeAreaView
-        edges={["bottom"]}
-        style={{
-          marginTop: Platform.select({
-            ios: 0,
-            default: -this.props.headerHeight
-          }),
-          flex: 1
-        }}
-      >
+      <SafeAreaView style={IOStyles.flex}>
         <ScrollView
           centerContent={true}
           contentContainerStyle={{
@@ -553,7 +550,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
               circleColor={this.props.blueColorName}
             />
             <VSpacer size={32} />
-            <H3 style={{ textAlign: "center" }}>{this.state.title}</H3>
+            <Title
+              text={this.state.title}
+              accessibilityLabel={
+                this.state.subtitle
+                  ? `${this.state.title}. ${this.state.subtitle}`
+                  : this.state.title
+              }
+            />
             <VSpacer size={8} />
             {this.state.subtitle && (
               <Body style={{ textAlign: "center" }} ref={this.subTitleRef}>
@@ -588,5 +592,23 @@ const ReaderScreen = (props: Props) => (
     )}
   </View>
 );
+
+const Title = (props: { text: string; accessibilityLabel: string }) => {
+  const titleRef = React.useRef<View>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!titleRef.current && Platform.OS === "android") {
+        setAccessibilityFocus(titleRef, accessibityTimeout);
+      }
+    }, [])
+  );
+
+  return (
+    <View ref={titleRef}>
+      <H3 style={{ textAlign: "center" }}>{props.text}</H3>
+    </View>
+  );
+};
 
 export default connect(mapStateToProps)(ReaderScreen);

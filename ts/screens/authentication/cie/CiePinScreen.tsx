@@ -168,15 +168,11 @@ const CiePinScreen = () => {
     }
   }, [pin, showModal]);
 
-  const a11yFocusRef = useRef<boolean>(false);
-
-  useFocusEffect(() => {
-    if (!a11yFocusRef.current) {
+  useFocusEffect(
+    React.useCallback(() => {
       setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
-      // eslint-disable-next-line functional/immutable-data
-      a11yFocusRef.current = true;
-    }
-  });
+    }, [])
+  );
 
   const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
   const useCieUat = useSelector(isCieLoginUatEnabledSelector);

@@ -102,7 +102,6 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CIE_CARD_READER_SCREEN}
       component={CieCardReaderScreenWrapper}
-      options={{ headerShown: true }}
     />
 
     <Stack.Screen
