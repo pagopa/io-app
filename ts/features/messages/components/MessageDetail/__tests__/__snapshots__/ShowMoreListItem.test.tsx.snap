@@ -373,7 +373,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -897,7 +897,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -1489,7 +1489,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -1812,7 +1812,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2270,7 +2270,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -2524,7 +2524,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     <View
                                       style={
                                         Object {
-                                          "marginRight": 16,
+                                          "marginRight": 12,
                                         }
                                       }
                                     >
@@ -2661,7 +2661,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -3119,7 +3119,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -3442,7 +3442,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -3639,7 +3639,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -4097,7 +4097,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -4351,7 +4351,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     <View
                                       style={
                                         Object {
-                                          "marginRight": 16,
+                                          "marginRight": 12,
                                         }
                                       }
                                     >
@@ -4488,7 +4488,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -4616,7 +4616,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     <View
                                       style={
                                         Object {
-                                          "marginRight": 16,
+                                          "marginRight": 12,
                                         }
                                       }
                                     >
@@ -4753,7 +4753,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -5211,7 +5211,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -5534,7 +5534,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -5790,7 +5790,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -5918,7 +5918,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginRight": 16,
+                                          "marginRight": 12,
                                         }
                                       }
                                     >
@@ -6055,7 +6055,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -6311,7 +6311,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -6439,7 +6439,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginRight": 16,
+                                          "marginRight": 12,
                                         }
                                       }
                                     >
@@ -6576,7 +6576,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -6773,7 +6773,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -7231,7 +7231,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                             <View
                               style={
                                 Object {
-                                  "marginRight": 16,
+                                  "marginRight": 12,
                                 }
                               }
                             >
@@ -7554,7 +7554,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -7810,7 +7810,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -7938,7 +7938,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     <View
                                       style={
                                         Object {
-                                          "marginRight": 16,
+                                          "marginRight": 12,
                                         }
                                       }
                                     >
@@ -8075,7 +8075,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     <View
                                       style={
                                         Object {
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >

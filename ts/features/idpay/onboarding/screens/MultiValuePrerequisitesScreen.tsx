@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   Body,
+  FooterWithButtons,
   H1,
   IOColors,
   IOStyles,
@@ -12,8 +13,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../components/core/typography/H4";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
@@ -22,6 +21,7 @@ import {
   prerequisiteAnswerIndexSelector
 } from "../xstate/selectors";
 import { Link } from "../../../../components/core/typography/Link";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type ListItemProps = {
   text: string;
@@ -47,14 +47,6 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
     </PressableListItemBase>
   </View>
 );
-
-const buttonProps = {
-  leftButton: { title: I18n.t("global.buttons.back"), bordered: true },
-  rightButton: {
-    title: I18n.t("global.buttons.continue"),
-    bordered: false
-  }
-};
 
 const MultiValuePrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
@@ -89,44 +81,56 @@ const MultiValuePrerequisitesScreen = () => {
     machine.send({ type: "BACK", skipNavigation: true });
   });
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.onboarding.headerTitle"),
+    goBack,
+    supportRequest: false
+  });
+
   return (
-    <SafeAreaView style={IOStyles.flex}>
-      <BaseScreenComponent
-        goBack={goBack}
-        headerTitle={I18n.t("idpay.onboarding.headerTitle")}
+    <>
+      <ScrollView
+        contentContainerStyle={[
+          IOStyles.horizontalContentPadding,
+          { flexGrow: 1 }
+        ]}
       >
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
-          <VSpacer size={16} />
-          <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-          <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
-          <VSpacer size={24} />
-          <H4>{currentPrerequisite.description}</H4>
-          <ScrollView style={styles.maxheight}>
-            {currentPrerequisite.value.map((answer, index) => (
-              <CustomListItem
-                key={index}
-                text={answer}
-                checked={index === selectedIndex}
-                onPress={() => setSelectedIndex(index)}
-              />
-            ))}
-          </ScrollView>
-        </View>
-      </BaseScreenComponent>
+        <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
+        <VSpacer size={16} />
+        <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
+        <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
+        <VSpacer size={24} />
+        <H4>{currentPrerequisite.description}</H4>
+
+        {currentPrerequisite.value.map((answer, index) => (
+          <CustomListItem
+            key={index}
+            text={answer}
+            checked={index === selectedIndex}
+            onPress={() => setSelectedIndex(index)}
+          />
+        ))}
+      </ScrollView>
+
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={{
-          onPress: goBack,
-          ...buttonProps.leftButton
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            onPress: goBack
+          }
         }}
-        rightButton={{
-          onPress: continueOnPress,
-          disabled: selectedIndex === undefined,
-          ...buttonProps.rightButton
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: continueOnPress,
+            disabled: selectedIndex === undefined
+          }
         }}
       />
-    </SafeAreaView>
+    </>
   );
 };
 
@@ -137,9 +141,6 @@ const styles = StyleSheet.create({
   },
   innerListItem: {
     paddingVertical: 4
-  },
-  maxheight: {
-    height: "100%"
   }
 });
 

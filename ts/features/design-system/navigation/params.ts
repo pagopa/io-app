@@ -16,6 +16,8 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.route]: undefined;
+  [DESIGN_SYSTEM_ROUTES.COMPONENTS.STEPPER.route]: undefined;
+  [DESIGN_SYSTEM_ROUTES.COMPONENTS.OTP_INPUT.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.route]: undefined;
@@ -35,11 +37,8 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route]: undefined;
+  [DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route]: undefined;
+  [DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_MESSAGE_CTAS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route]: undefined;
-};
-
-export type DesignSystemModalParamsList = {
-  [DESIGN_SYSTEM_ROUTES.MAIN.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route]: undefined;
 };

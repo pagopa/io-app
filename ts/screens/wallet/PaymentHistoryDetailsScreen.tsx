@@ -1,16 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { Text as NBButtonText } from "native-base";
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer, ButtonOutline } from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, Route } from "@react-navigation/native";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import { Body } from "../../components/core/typography/Body";
 import { Label } from "../../components/core/typography/Label";
@@ -281,17 +279,13 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         <Body>{I18n.t("payment.details.info.help")}</Body>
       </View>
       <VSpacer size={16} />
-      <ButtonDefaultOpacity
+      <ButtonOutline
+        fullWidth
+        icon="chat"
         onPress={this.handleAskAssistance}
-        bordered={true}
-        block={true}
-      >
-        <Icon name="chat" color="blue" />
-        <HSpacer size={8} />
-        <NBButtonText>
-          {I18n.t("payment.details.info.buttons.help")}
-        </NBButtonText>
-      </ButtonDefaultOpacity>
+        label={I18n.t("payment.details.info.buttons.help")}
+        accessibilityLabel={I18n.t("payment.details.info.buttons.help")}
+      />
       <VSpacer size={16} />
     </View>
   );

@@ -1,68 +1,44 @@
-import React, { useEffect } from "react";
-import {
-  AppState,
-  FlatList,
-  SafeAreaView,
-  View,
-  Platform,
-  ListRenderItemInfo
-} from "react-native";
-import { useSelector } from "react-redux";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Divider,
   IOVisualCostants,
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import React, { useEffect } from "react";
+import {
+  AppState,
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  SafeAreaView,
+  View
+} from "react-native";
+import { useSelector } from "react-redux";
+import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
+import { Body } from "../../components/core/typography/Body";
+import { H1 } from "../../components/core/typography/H1";
+import { H2 } from "../../components/core/typography/H2";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { openAppSettings } from "../../utils/appSettings";
-import { useIODispatch } from "../../store/hooks";
 import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
-import { checkNotificationPermissions } from "../../utils/notification";
+import { useIODispatch } from "../../store/hooks";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
 } from "../../utils/analytics";
-import { H2 } from "../../components/core/typography/H2";
-import { H1 } from "../../components/core/typography/H1";
-import { Body } from "../../components/core/typography/Body";
+import { openAppSettings } from "../../utils/appSettings";
+import { checkNotificationPermissions } from "../../utils/notification";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.infoConsent.contextualHelpTitle",
   body: "onboarding.infoConsent.contextualHelpContent"
 };
-
-const settingsButtonProps = (
-  isLoading: boolean,
-  onPress: () => void
-): BlockButtonProps => ({
-  block: true,
-  onPress,
-  title: I18n.t("onboarding.infoConsent.openSettings"),
-  isLoading,
-  primary: true
-});
-
-const continueButtonProps = (
-  isLoading: boolean,
-  onPress: () => void
-): BlockButtonProps => ({
-  block: true,
-  onPress,
-  title: I18n.t("onboarding.infoConsent.continue"),
-  isLoading,
-  bordered: true,
-  testID: "continue-btn"
-});
 
 const instructions = Platform.select<ReadonlyArray<ListItemInfo>>({
   ios: [
@@ -220,10 +196,17 @@ const OnboardingNotificationsInfoScreenConsent = () => {
           ListHeaderComponent={headerComponent}
         />
         <FooterStackButton
-          buttons={[
-            settingsButtonProps(false, openSettings),
-            continueButtonProps(false, goNext)
-          ]}
+          primaryActionProps={{
+            onPress: openSettings,
+            label: I18n.t("onboarding.infoConsent.openSettings"),
+            accessibilityLabel: I18n.t("onboarding.infoConsent.openSettings")
+          }}
+          secondaryActionProps={{
+            onPress: goNext,
+            label: I18n.t("onboarding.infoConsent.continue"),
+            accessibilityLabel: I18n.t("onboarding.infoConsent.continue"),
+            testID: "continue-btn"
+          }}
         />
       </SafeAreaView>
     </BaseScreenComponent>

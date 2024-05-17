@@ -10,22 +10,23 @@ import React from "react";
 import { Alert } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
-import { nfcIsEnabled } from "../../../../store/actions/cie";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isCieSupportedSelector,
-  isNfcEnabledSelector
-} from "../../../../store/reducers/cie";
+import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
+import { itwNfcIsEnabled } from "../store/actions";
+import { itwIsNfcEnabledSelector } from "../store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIdentificationModeSelectionScreen = () => {
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
-  const isNfcEnabledPot = useIOSelector(isNfcEnabledSelector);
+  const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(nfcIsEnabled.request());
+      dispatch(itwNfcIsEnabled.request());
     }, [dispatch])
   );
 
@@ -40,14 +41,18 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    Alert.alert("Not implemented");
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
+    });
   };
 
   const handleCiePinPress = () => {
     if (isNfcEnabled) {
-      Alert.alert("NFC not enabled");
-    } else {
       Alert.alert("Not implemented");
+    } else {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.IDENTIFICATION.NFC_INSTRUCTIONS
+      });
     }
   };
 

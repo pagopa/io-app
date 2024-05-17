@@ -8,7 +8,6 @@
 /* eslint-disable no-invalid-this */
 
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { FontWeight, makeFontStyleObject } from "./fonts";
@@ -19,11 +18,8 @@ export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 
 // eslint-disable-next-line
-const customVariables = Object.assign(materialVariables, {
+const customVariables = {
   minTouchableAreaSize: 48,
-
-  // Android
-  buttonUppercaseAndroidText: false /* NB Theme variable, don't remove */,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
@@ -49,14 +45,18 @@ const customVariables = Object.assign(materialVariables, {
     return this.textColor;
   },
 
+  // Inputs (after removing `native-base` dependency)
+  // Source: https://docs-v2.nativebase.io/docs/ThemeVariables.html
+  inputHeightBase: 50,
+  inputFontSize: 16,
+
   /* ALIAS TOKENS */
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: IOColors.blue /* NB Theme variable, don't remove */,
+  brandPrimary: IOColors.blue,
+  brandDanger: IOColors.red,
   colorHighlight: IOColors.aqua,
-  brandSuccess: IOColors.green /* NB Theme variable, don't remove */,
-  brandDanger: IOColors.red /* NB Theme variable, don't remove */,
 
   btnLightBorderColor: IOColors.grey,
 
@@ -77,7 +77,6 @@ const customVariables = Object.assign(materialVariables, {
   lineHeightBase: 24,
 
   // Icon
-  iconFamily: "Entypo" /* NB Theme variable, don't remove */,
   iconSizeBase: 24,
 
   // Content
@@ -103,7 +102,6 @@ const customVariables = Object.assign(materialVariables, {
   gridGutter: 10,
 
   // Header
-  toolbarDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
   appHeaderHeight: 56,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
@@ -111,10 +109,7 @@ const customVariables = Object.assign(materialVariables, {
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,
-  get toolbarBtnColor(): ThemeSimpleValue {
-    /* NB Theme variable, don't remove */
-    return this.textColor;
-  },
+
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
@@ -158,9 +153,6 @@ const customVariables = Object.assign(materialVariables, {
   borderRadiusBase: 4,
 
   // Tabs
-  tabDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
-  topTabBarTextColor: IOColors.bluegrey /* NB Theme variable, don't remove */,
-  topTabBarActiveTextColor: IOColors.blue /* NB Theme variable, don't remove */,
   tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
 
@@ -169,6 +161,6 @@ const customVariables = Object.assign(materialVariables, {
 
   // Spacing
   spacingBase: 8
-});
+};
 
 export default customVariables;

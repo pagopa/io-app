@@ -15,8 +15,9 @@ import {
 import CGN_ROUTES from "../../features/bonus/cgn/navigation/routes";
 import { FciParamsList } from "../../features/fci/navigation/params";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
-import { FimsParamsList } from "../../features/fims/navigation/params";
-import FIMS_ROUTES from "../../features/fims/navigation/routes";
+import { FimsLegacyParamsList } from "../../features/fimsLegacy/navigation/params";
+import FIMS_LEGACY_ROUTES from "../../features/fimsLegacy/navigation/routes";
+import { FIMS_ROUTES, FimsParamsList } from "../../features/fims/navigation";
 import { IdPayBarcodeParamsList } from "../../features/idpay/barcode/navigation/params";
 import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/routes";
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
@@ -99,6 +100,7 @@ export type AppParamsList = {
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [UADONATION_ROUTES.WEBVIEW]: NavigatorScreenParams<UAWebviewScreenNavigationParams>;
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
+  [FIMS_LEGACY_ROUTES.MAIN]: NavigatorScreenParams<FimsLegacyParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 

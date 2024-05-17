@@ -10,6 +10,7 @@ import {
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
+  FooterWithButtons,
   Icon,
   PressableListItemBase,
   VSpacer
@@ -21,7 +22,6 @@ import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import {
   navigateBack as legacyNavigateBack,
@@ -29,7 +29,6 @@ import {
 } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { walletAddCoBadgeStart } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -151,11 +150,17 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
             renderItem={i => renderListItem(i)}
           />
         </View>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(props.back)}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type={"SingleButton"}
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: props.back
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

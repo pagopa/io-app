@@ -925,7 +925,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -1171,7 +1171,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -1417,7 +1417,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -1663,7 +1663,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -1909,7 +1909,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -2155,7 +2155,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -2401,7 +2401,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -3124,7 +3124,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -3370,7 +3370,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -3616,7 +3616,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -3862,7 +3862,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -4108,7 +4108,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -4354,7 +4354,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -4600,7 +4600,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -5646,7 +5646,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -5878,7 +5878,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -6123,7 +6123,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -6368,7 +6368,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -6613,7 +6613,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -7328,7 +7328,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -7560,7 +7560,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -7805,7 +7805,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -8050,7 +8050,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -8295,7 +8295,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -9010,7 +9010,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -9242,7 +9242,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -9487,7 +9487,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -9732,7 +9732,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -9977,7 +9977,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -10800,7 +10800,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -11032,7 +11032,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -11277,7 +11277,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -11522,7 +11522,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -11767,7 +11767,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -12590,7 +12590,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
@@ -13292,7 +13292,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "flex-end",
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   },
                                   Object {
                                     "flexShrink": 1,
