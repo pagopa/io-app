@@ -9,7 +9,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation
+} from "@react-navigation/native";
 import React, {
   useCallback,
   useContext,
@@ -184,6 +188,7 @@ const CiePinScreen = () => {
   });
 
   const headerHeight = useHeaderHeight();
+  const isFocused = useIsFocused();
 
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
@@ -223,6 +228,7 @@ const CiePinScreen = () => {
                 onValueChange={setPin}
                 length={CIE_PIN_LENGTH}
                 autoFocus
+                key={isFocused ? "focused" : "unfocused"}
               />
               <VSpacer size={24} />
               <Banner
