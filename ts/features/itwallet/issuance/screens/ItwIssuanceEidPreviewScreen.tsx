@@ -1,17 +1,51 @@
-import { H3 } from "@pagopa/io-app-design-system";
+import { H3, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
+import { StyleSheet, View } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import { useIODispatch } from "../../../../store/hooks";
+import { EidCardPreview } from "../../common/components/EidCardPreview";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { itwIssuanceEid } from "../store/actions/eid";
+import { ItwCredentialsMocks } from "../../__mocks__/credentials";
+import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const dispatch = useIODispatch();
+
+  const eid = ItwCredentialsMocks.eid;
 
   return (
     <RNavScreenWithLargeHeader
       title={{ label: "{Identità Digitale}: ecco l’anteprima" }}
     >
-      <H3>Hello</H3>
+      <View style={styles.preview}>
+        <EidCardPreview />
+      </View>
+      <View style={styles.dropShadow}>
+        <VSpacer size={24} />
+      </View>
+      <View style={styles.content}>
+        <ItwCredentialClaimsList data={eid} />
+      </View>
     </RNavScreenWithLargeHeader>
   );
 };
+
+const styles = StyleSheet.create({
+  preview: {
+    paddingHorizontal: 24
+  },
+  dropShadow: {
+    backgroundColor: IOColors.white,
+    shadowColor: IOColors.black,
+    shadowOffset: { width: 0, height: -4 },
+    shadowRadius: 20,
+    shadowOpacity: 0.15,
+    elevation: 5
+  },
+  content: {
+    flex: 1,
+    backgroundColor: IOColors.white, // Add background to cover shadow
+    paddingHorizontal: 24
+  }
+});
