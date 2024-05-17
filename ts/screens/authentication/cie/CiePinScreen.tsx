@@ -227,7 +227,7 @@ const CiePinScreen = () => {
                 )}
                 onValueChange={setPin}
                 length={CIE_PIN_LENGTH}
-                autoFocus
+                autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}
               />
               <VSpacer size={24} />
