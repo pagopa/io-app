@@ -2,7 +2,7 @@ import { render } from "@testing-library/react-native";
 import React from "react";
 
 import I18n from "../../../../i18n";
-import { EmptyListComponent } from "../EmptyListComponent";
+import { EmptyListComponent } from "../Home/legacy/EmptyListComponent";
 
 describe("EmptyListComponent", () => {
   it("matches the snapshot", () => {

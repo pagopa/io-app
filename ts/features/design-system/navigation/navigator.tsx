@@ -32,11 +32,13 @@ import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
-import { DSGradientScroll } from "../core/DSGradientScroll";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSIOScrollView } from "../core/DSIOScrollView";
+import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
+import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
@@ -384,10 +386,28 @@ export const DesignSystemNavigator = () => {
 
         {/* SCREENS */}
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.route}
-          component={DSGradientScroll}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.route}
+          component={DSIOScrollView}
           options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.title
+            headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.route}
+          component={DSIOScrollViewWithoutActions}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.route}
+          component={DSIOScrollViewScreenWithLargeHeader}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.title
           }}
         />
 
