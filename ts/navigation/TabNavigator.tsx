@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import LegacyMessagesHomeScreen from "../features/messages/screens/LegacyMessagesHomeScreen";
+import LegacyMessagesHomeScreen from "../features/messages/screens/legacy/LegacyMessagesHomeScreen";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";

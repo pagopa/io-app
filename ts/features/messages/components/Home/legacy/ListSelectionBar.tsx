@@ -5,7 +5,7 @@ import {
   ButtonSolid,
   IOColors
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import I18n from "../../../../../i18n";
 
 const styles = StyleSheet.create({
   buttonBar: {
