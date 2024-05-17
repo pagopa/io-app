@@ -19,7 +19,13 @@ import React, {
   useMemo,
   memo
 } from "react";
-import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 import AppVersion from "../../components/AppVersion";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
@@ -228,13 +234,6 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
     []
   );
 
-  const contentContainerStyle = useMemo(
-    () => ({
-      paddingHorizontal: IOVisualCostants.appMarginDefault
-    }),
-    []
-  );
-
   const renderProfileNavItem = useCallback(
     ({ item }: ListRenderItemInfo<ProfileNavListItem>) => {
       const {
@@ -296,7 +295,7 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
       <FlatList
         scrollEnabled={false}
         keyExtractor={keyExtractor}
-        contentContainerStyle={contentContainerStyle}
+        contentContainerStyle={styles.flatListContent}
         data={profileNavListItems}
         renderItem={renderProfileNavItem}
         ItemSeparatorComponent={Divider}
@@ -311,6 +310,12 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  flatListContent: {
+    paddingHorizontal: IOVisualCostants.appMarginDefault
+  }
+});
 
 export default withLightModalContext(
   withUseTabItemPressWhenScreenActive(ProfileMainScreen)
