@@ -2,14 +2,14 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { BackHandler, NativeEventSubscription } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
+import WebView from "react-native-webview";
 import { useIODispatch } from "../../../store/hooks";
 import {
   loginFailure,
@@ -24,7 +24,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import ROUTES from "../../../navigation/routes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
-import CieConsentDataUsageRenderComponent from "./components/CieConsentDataUsageRenderComponent";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -48,7 +48,6 @@ const CieConsentDataUsageScreen = () => {
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
   const [errorCode, setErrorCode] = useState<string | undefined>();
   const { showAlert } = useOnboardingAbortAlert();
-  const subscription = useRef<NativeEventSubscription | undefined>();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
     (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
@@ -59,12 +58,6 @@ const CieConsentDataUsageScreen = () => {
     (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
     [dispatch]
   );
-
-  const navigateToCiePinScreen = useCallback(() => {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_PIN_SCREEN
-    });
-  }, [navigation]);
 
   const navigateToLandingScreen = useCallback(() => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
@@ -82,14 +75,10 @@ const CieConsentDataUsageScreen = () => {
     return true;
   }, [hasError, navigateToLandingScreen, showAlert]);
 
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    subscription.current = BackHandler.addEventListener(
-      "hardwareBackPress",
-      showAbortAlert
-    );
-    return () => subscription.current?.remove();
-  }, [showAbortAlert]);
+  useHardwareBackButton(() => {
+    showAbortAlert();
+    return true;
+  });
 
   const handleWebViewError = useCallback(() => setHasError(true), []);
 
@@ -149,21 +138,43 @@ const CieConsentDataUsageScreen = () => {
     title: ""
   });
 
-  return (
-    <CieConsentDataUsageRenderComponent
-      isLoginSuccess={isLoginSuccess}
-      LoaderComponent={LoaderComponent}
-      hasError={hasError}
-      errorCode={errorCode}
-      cieConsentUri={cieConsentUri}
-      originSchemasWhiteList={originSchemasWhiteList}
-      handleShouldStartLoading={handleShouldStartLoading}
-      handleWebViewError={handleWebViewError}
-      handleHttpError={handleHttpError}
-      onRetry={navigateToCiePinScreen}
-      onCancel={navigateToLandingScreen}
-    />
-  );
+  useEffect(() => {
+    if (hasError) {
+      if (errorCode === "1002") {
+        navigation.navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.UNLOCK_ACCESS_SCREEN,
+          params: { authLevel: "L2" }
+        });
+        return;
+      }
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTH_ERROR_SCREEN,
+        params: { errorCode }
+      });
+    }
+  }, [errorCode, hasError, navigation]);
+
+  if (isLoginSuccess) {
+    return <LoaderComponent />;
+  }
+  if (!hasError) {
+    return (
+      <WebView
+        testID="webview-cie-test"
+        androidCameraAccessDisabled={true}
+        androidMicrophoneAccessDisabled={true}
+        textZoom={100}
+        originWhitelist={originSchemasWhiteList}
+        source={{ uri: decodeURIComponent(cieConsentUri) }}
+        javaScriptEnabled={true}
+        onShouldStartLoadWithRequest={handleShouldStartLoading}
+        renderLoading={() => <LoaderComponent />}
+        onError={handleWebViewError}
+        onHttpError={handleHttpError}
+      />
+    );
+  }
+  return null;
 };
 
 export default CieConsentDataUsageScreen;

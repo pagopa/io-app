@@ -50,7 +50,6 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
-import UnlockAccessScreen from "../onboarding/UnlockAccessScreen";
 import { apiUrlPrefix } from "../../config";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
@@ -228,7 +227,12 @@ const IdpLoginScreen = (props: Props) => {
       );
     } else if (pot.isError(requestState)) {
       if (errorCode === "1002") {
-        return <UnlockAccessScreen authLevel="L2" />;
+        // props.navigation.navigate(ROUTES.AUTHENTICATION, {
+        //   screen: ROUTES.UNLOCK_ACCESS_SCREEN,
+        //   params: { authLevel: "L2" }
+        // });
+        // return null;
+        // TODO -> find solution to navigate to UNLOCK_ACCESS_SCREEN
       } else {
         return (
           <IdpAuthErrorScreen

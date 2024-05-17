@@ -7,6 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Text, View } from "react-native";
+import { Route, useRoute } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../utils/url";
@@ -18,11 +19,13 @@ import { CustomWizardScreen } from "../../components/screens/CustomWizardScreen"
 // be performed if the authentication level is L3.
 // At the moment, this screen is not shown with level L3.
 // future development story: https://pagopa.atlassian.net/browse/IOPID-1228
-type Props = {
+export type UnlockAccessScreenProps = {
   authLevel: "L2" | "L3";
 };
-const UnlockAccessScreen = (props: Props) => {
-  const { authLevel } = props;
+const UnlockAccessScreen = () => {
+  const route =
+    useRoute<Route<"UNLOCK_ACCESS_SCREEN", UnlockAccessScreenProps>>();
+  const { authLevel } = route.params;
   const navigation = useIONavigation();
   const ModalContent = () => (
     <View testID="modal-view-test">

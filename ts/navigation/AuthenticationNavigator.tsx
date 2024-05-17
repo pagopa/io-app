@@ -21,6 +21,8 @@ import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler
 import CieNotSupported from "../components/cie/CieNotSupported";
 import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
 import { isGestureEnabled } from "../utils/navigation";
+import CieAuthErrorScreen from "../screens/authentication/cie/CieAuthErrorScreen";
+import UnlockAccessScreen from "../screens/onboarding/UnlockAccessScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -119,6 +121,16 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.CIE_WRONG_PIN_SCREEN}
         component={CieWrongCiePinScreen}
+      />
+
+      <Stack.Screen
+        name={ROUTES.AUTH_ERROR_SCREEN}
+        component={CieAuthErrorScreen}
+      />
+
+      <Stack.Screen
+        name={ROUTES.UNLOCK_ACCESS_SCREEN}
+        component={UnlockAccessScreen}
       />
 
       <Stack.Screen
