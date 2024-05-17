@@ -23,11 +23,11 @@ export const DSIOScrollView = () => {
           onPress: () => Alert.alert("Primary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
         },
         secondary: {
-          label: "Secondary",
+          label: "Secondary action",
           onPress: () => Alert.alert("Secondary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
         },
         tertiary: {
-          label: "Tertiary",
+          label: "Tertiary action",
           onPress: () => Alert.alert("Tertiary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
         }
       }}
