@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 
 /**
@@ -15,4 +16,4 @@ export const itwIssuanceEidSelector = (state: GlobalState) =>
  * @returns the pid value.
  */
 export const itwIssuanceEidValueSelector = (state: GlobalState) =>
-  pot.toOption(state.features.itWallet.issuance.eid);
+  pot.getOrElse(state.features.itWallet.issuance.eid, O.none);

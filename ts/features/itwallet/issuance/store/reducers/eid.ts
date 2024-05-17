@@ -1,11 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { ItWalletError } from "../../../common/utils/itwErrorsUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwIssuanceEid } from "../actions/eid";
 
-export type ItwIssuanceEidState = pot.Pot<StoredCredential, ItWalletError>;
+export type ItwIssuanceEidState = pot.Pot<
+  O.Option<StoredCredential>,
+  ItWalletError
+>;
 
 const INITIAL_STATE: ItwIssuanceEidState = pot.none;
 
