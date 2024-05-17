@@ -76,7 +76,7 @@ export const mockClearAllCookies = () => fakeCookieStorage.clear();
 
 const hasValidFIMSToken = () => {
   const fimsCookie = fakeCookieStorage.get(
-    `${FakeBaseUrl}_X-IO-Federation-Token`
+    `${FakeBaseUrl}/fims/provider_X-IO-Federation-Token`
   );
   return fimsCookie && fimsCookie.value.trim().length > 0;
 };
