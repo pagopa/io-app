@@ -48,9 +48,6 @@ export const TabNavigationContainer = ({
     const reloadAllMessagesActionOrUndefined =
       getInitialReloadAllMessagesActionIfNeeded(state);
     if (reloadAllMessagesActionOrUndefined) {
-      /* console.log(
-        `=== TabComponent dispatch reloadAll (${shownMessageCategory})`
-      ); */
       dispatch(reloadAllMessagesActionOrUndefined);
     }
   }, [dispatch, shownMessageCategory, store]);
