@@ -190,26 +190,6 @@ export const getPidCredentialCatalogItem = (): PidCredentialCatalogItem => ({
   ]
 });
 
-/**
- * Returns the mocked background image for the credential.
- * @param type - the credential type
- * @returns the mocked background image.
- */
-export const getImageFromCredentialType = (type: string) => {
-  switch (type) {
-    case CredentialType.EUROPEAN_DISABILITY_CARD:
-      return require("../assets/img/credentials/cards/europeanDisabilityCardFront.png");
-    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
-      return require("../assets/img/credentials/cards/europeanHealthInsuranceCardFront.png");
-    case CredentialType.PID:
-      return require("../assets/img/credentials/cards/pidFront.png");
-    case CredentialType.DRIVING_LICENSE:
-      return require("../assets/img/credentials/cards/drivingLicenseFront.png");
-    default:
-      return require("../assets/img/credentials/cards/default.png");
-  }
-};
-
 export const getRequestedClaims = (
   credentialSource: string
 ): ReadonlyArray<BulletItem> => [

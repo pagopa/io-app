@@ -1,17 +1,13 @@
-import { H3, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
-import { useIODispatch } from "../../../../store/hooks";
-import { EidCardPreview } from "../../common/components/EidCardPreview";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { itwIssuanceEid } from "../store/actions/eid";
 import { ItwCredentialsMocks } from "../../__mocks__/credentials";
+import { EidCardPreview } from "../../common/components/EidCardPreview";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
-  const dispatch = useIODispatch();
-
+  // Mock data
   const eid = ItwCredentialsMocks.eid;
 
   return (
