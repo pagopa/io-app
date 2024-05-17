@@ -86,7 +86,7 @@ const gradientSafeAreaHeight: IOSpacingScale = 96;
 /* End content margin before the actions */
 const contentEndMargin: IOSpacingScale = 32;
 /* Margin between ButtonSolid and ButtonOutline */
-const spaceBetweenActions: IOSpacer = 8;
+const spaceBetweenActions: IOSpacer = 16;
 /* Margin between ButtonSolid and ButtonLink */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because

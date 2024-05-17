@@ -17,19 +17,19 @@ export const DSIOScrollView = () => {
     <IOScrollView
       debugMode
       actions={{
-        type: "SingleButton",
+        type: "ThreeButtons",
         primary: {
           label: "Primary action",
           onPress: () => Alert.alert("Primary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
+        },
+        secondary: {
+          label: "Secondary",
+          onPress: () => Alert.alert("Secondary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
+        },
+        tertiary: {
+          label: "Tertiary",
+          onPress: () => Alert.alert("Tertiary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
         }
-        // secondary: {
-        //   label: "Secondary",
-        //   onPress: () => Alert.alert("Secondary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
-        // },
-        // tertiary: {
-        //   label: "Tertiary",
-        //   onPress: () => Alert.alert("Tertiary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
-        // }
       }}
     >
       <H2 color={theme["textHeading-default"]}>Start</H2>
