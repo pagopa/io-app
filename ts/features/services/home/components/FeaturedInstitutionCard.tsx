@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     paddingHorizontal: cardPaddingHorizontal,
     borderRadius: cardBorderRadius,
+    borderCurve: "continuous",
     borderWidth: 1,
     borderColor: IOColors["grey-100"],
     backgroundColor: IOColors["grey-50"],
