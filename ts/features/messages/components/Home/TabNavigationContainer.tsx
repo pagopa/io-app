@@ -27,7 +27,6 @@ export const TabNavigationContainer = ({
 }: {
   pagerViewRef: React.MutableRefObject<PagerView | null>;
 }) => {
-  // console.log(`=== TabNavigationContainer`);
   const dispatch = useIODispatch();
   const store = useIOStore();
   const shownMessageCategory = useIOSelector(shownMessageCategorySelector);

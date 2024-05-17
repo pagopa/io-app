@@ -16,7 +16,6 @@ type MessageListProps = {
 };
 
 export const MessageList = ({ category }: MessageListProps) => (
-  // console.log(`=== MessageList (${category})`);
   <View collapsable={false} style={styles.tempPagerViewContainer}>
     <Body>{`${category} in sviluppo`}</Body>
   </View>
