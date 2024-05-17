@@ -64,12 +64,16 @@ const ProfileDataScreen = () => {
     () => ({
       type: "buttonLink",
       componentProps: {
-        onPress: () => null,
+        onPress: () => {
+          navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_FISCAL_CODE
+          });
+        },
         label: I18n.t("global.buttons.show"),
         testID: "show-fiscal-code-cta"
       }
     }),
-    []
+    [navigate]
   );
 
   const editEmail = useMemo<EndElementProps>(
