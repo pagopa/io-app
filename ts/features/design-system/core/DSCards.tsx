@@ -14,6 +14,8 @@ import {
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
+import { EidCardPreview } from "../../itwallet/common/components/EidCardPreview";
+import { EidCard } from "../../itwallet/common/components/EidCard";
 
 const styles = StyleSheet.create({
   content: {
@@ -243,6 +245,36 @@ export const DSCards = () => (
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Over 31">
         <CgnCard expireDate={new Date(2023, 11, 2)} />
+      </DSComponentViewerBox>
+    </DesignSystemSection>
+
+    <DesignSystemSection title="eID">
+      <DSComponentViewerBox name="Preview">
+        <EidCardPreview />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Valid">
+        <EidCard name="Anna Verdi" fiscalCode="RSGMRT80A41H501X" />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Masked">
+        <EidCard
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+          isMasked={true}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expired">
+        <EidCard
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+          status="expired"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Pending">
+        <EidCard
+          name="Anna Verdi"
+          fiscalCode="RSGMRT80A41H501X"
+          status="pending"
+        />
       </DSComponentViewerBox>
     </DesignSystemSection>
   </DesignSystemScreen>
