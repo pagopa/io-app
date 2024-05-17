@@ -1,13 +1,7 @@
-import { StackActions } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
-import {
-  ContentWrapper,
-  H4,
-  LoadingSpinner,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View } from "react-native";
+import { StackActions } from "@react-navigation/native";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -34,20 +28,7 @@ import PN_ROUTES from "../../pn/navigation/routes";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-
-const styles = StyleSheet.create({
-  loaderContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1
-  },
-  loaderSpinner: {
-    alignSelf: "center"
-  },
-  loaderText: {
-    textAlign: "center"
-  }
-});
+import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 
 export type MessageRouterScreenRouteParams = {
   messageId: UIMessageId;
@@ -67,7 +48,6 @@ export const MessageRouterScreen = (
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFirstRendering = useRef(true);
-  const safeAreaInsets = useSafeAreaInsets();
   const isLoading = useIOSelector(showSpinnerFromMessageGetStatusSelector);
   const thirdPartyMessageDetailsError = useIOSelector(
     thirdPartyMessageDetailsErrorSelector
@@ -176,29 +156,21 @@ export const MessageRouterScreen = (
 
   if (isLoading) {
     return (
-      <View
-        style={[
-          styles.loaderContainer,
-          { paddingBottom: safeAreaInsets.bottom }
-        ]}
+      <LoadingScreenContent
+        contentTitle={I18n.t("messageDetails.loadingText")}
+        headerVisible
       >
-        <ContentWrapper>
-          <View style={styles.loaderSpinner}>
-            <LoadingSpinner size={48} />
-          </View>
-          <VSpacer size={16} />
-          <H4 style={styles.loaderText}>
-            {I18n.t("messageDetails.loadingText")}
-          </H4>
-        </ContentWrapper>
-      </View>
+        <View style={{ alignItems: "center" }}>
+          <VSpacer size={8} />
+          <Body>{I18n.t("messageDetails.pleaseWait")}</Body>
+        </View>
+      </LoadingScreenContent>
     );
   }
 
   return (
     <OperationResultScreenContent
       action={{
-        fullWidth: true,
         label: I18n.t("global.buttons.retry"),
         onPress: getMessageDataCallback
       }}

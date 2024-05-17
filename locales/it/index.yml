@@ -1921,7 +1921,8 @@ messageDetails:
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
-  loadingText: Caricamento dei dettagli del messaggio in corso...
+  loadingText: Stiamo caricando il messaggio
+  pleaseWait: Attendi qualche secondo
   errorText: Non siamo riusciti a caricare i dettagli del tuo messaggio
   retryText: Probabilmente è un errore temporaneo... riprova per piacere!
   submitBugText: Se il problema non si risolve segnalacelo con l'icona '?' in alto a destra, grazie!
