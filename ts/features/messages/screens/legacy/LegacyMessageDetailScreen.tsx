@@ -10,36 +10,36 @@ import {
 } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { Body } from "../../../components/core/typography/Body";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import MessageDetailComponent from "../components/MessageDetail";
-import ErrorState from "../components/MessageDetail/ErrorState";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { Body } from "../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
+import MessageDetailComponent from "../../components/MessageDetail";
+import ErrorState from "../../components/MessageDetail/ErrorState";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
-import { isNoticePaidSelector } from "../../../store/reducers/entities/payments";
+} from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
+import { isNoticePaidSelector } from "../../../../store/reducers/entities/payments";
 import {
   loadMessageDetails,
   resetGetMessageDataAction
-} from "../store/actions";
+} from "../../store/actions";
 import {
   navigateBack,
   navigateToServiceDetailsScreen
-} from "../../../store/actions/navigation";
-import { loadServiceDetail } from "../../services/details/store/actions/details";
-import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { getPaginatedMessageById } from "../store/reducers/paginatedById";
-import { UIMessageId } from "../types";
+} from "../../../../store/actions/navigation";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
+import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
+import { UIMessageId } from "../../types";
 import {
   serviceByIdPotSelector,
   serviceMetadataByIdSelector
-} from "../../services/details/store/reducers/servicesById";
-import { toUIService } from "../../../store/reducers/entities/services/transformers";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+} from "../../../services/details/store/reducers/servicesById";
+import { toUIService } from "../../../../store/reducers/entities/services/transformers";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
