@@ -469,6 +469,7 @@ profile:
       email: Email address
       need_validate: To be validated
       nameSurname: Name and surname
+      fiscalCode: Codice Fiscale
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_data_email_address.md
