@@ -13,3 +13,27 @@ export const isStrictNone = <T, E>(p: pot.Pot<T, E>): boolean =>
 // return true if pot is some and not someError and not someLoading
 export const isStrictSome = <T, E>(p: pot.Pot<T, E>): p is Some<T> =>
   p.kind === "PotSome";
+
+export const foldK =
+<A, E, O>(
+    foldNone: () => O,
+    foldNoneLoading: () => O,
+    foldNoneUpdating: (newValue: A) => O,
+    foldNoneError: (error: E) => O,
+    foldSome: (value: A) => O,
+    foldSomeLoading: (value: A) => O,
+    foldSomeUpdating: (value: A, newValue: A) => O,
+    foldSomeError: (value: A, error: E) => O
+  ) =>
+    (input: pot.Pot<A, E>) =>
+    pot.fold(
+      input,
+      foldNone,
+      foldNoneLoading,
+      foldNoneUpdating,
+      foldNoneError,
+      foldSome,
+      foldSomeLoading,
+      foldSomeUpdating,
+      foldSomeError
+    );
