@@ -1,191 +1,79 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { ReactElement, useEffect } from "react";
-import { View, ScrollView, StyleSheet, Platform } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { View, StyleSheet } from "react-native";
 import {
-  IconButton,
   IOColors,
-  HSpacer,
-  VSpacer
+  VSpacer,
+  ContentWrapper,
+  H3,
+  Label
 } from "@pagopa/io-app-design-system";
-import { Body } from "../../components/core/typography/Body";
-import { H2 } from "../../components/core/typography/H2";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import FiscalCodeComponent from "../../components/FiscalCodeComponent";
-import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
+import Barcode from "react-native-barcode-builder";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import DarkLayout from "../../components/screens/DarkLayout";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import {
-  BottomTopAnimation,
-  LightModalContextInterface
-} from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
-import { contentMunicipalityLoad } from "../../store/actions/content";
-import { municipalitySelector } from "../../store/reducers/content";
-import { profileSelector } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
-import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import {
+  profileFiscalCodeSelector,
+  profileNameSurnameSelector
+} from "../../store/reducers/profile";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
+import { FAQsCategoriesType } from "../../utils/faq";
+import { useIOSelector } from "../../store/hooks";
+import { useMaxBrightness } from "../../utils/brightness";
 
-type Props = ReturnType<typeof mapStateToProps> & {
-  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
-} & ReturnType<typeof mapDispatchToProps> &
-  LightModalContextInterface;
-
-const styles = StyleSheet.create({
-  darkBg: {
-    backgroundColor: IOColors.bluegrey
-  },
-  shadow: {
-    // iOS
-    paddingBottom: 20,
-    shadowColor: IOColors.bluegreyDark,
-    shadowOffset: {
-      width: 1,
-      height: 8
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    // Android
-    elevation: 8
-  }
-});
+const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = ["profile"];
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.fiscalCode.title",
   body: "profile.fiscalCode.help"
 };
 
-const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const handleBackPress = () => {
-    props.navigation.goBack();
-    return true;
-  };
+/**
+ * This screen displays the barcode of the user's tax code.
+ */
+const FiscalCodeScreen = () => {
+  useMaxBrightness();
 
-  const { profile, loadMunicipality } = props;
-
-  // Decode codice catastale effect manager
-  useEffect(() => {
-    if (profile !== undefined) {
-      const maybeCodiceCatastale = CodiceCatastale.decode(
-        profile.fiscal_code.substring(11, 15)
-      );
-      pipe(
-        maybeCodiceCatastale,
-        E.map(code => loadMunicipality(code))
-      );
-    }
-  }, [profile, loadMunicipality]);
-
-  const showModal = (showBackSide: boolean = false) => {
-    if (props.profile) {
-      const component = (
-        <FiscalCodeLandscapeOverlay
-          onCancel={props.hideModal}
-          profile={props.profile}
-          municipality={props.municipality.data}
-          showBackSide={showBackSide}
-        />
-      );
-      props.showAnimatedModal(component, BottomTopAnimation);
-    }
-  };
-
-  const customGoBack: ReactElement = (
-    <IconButton
-      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
-      color={"contrast"}
-      onPress={handleBackPress}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-    />
-  );
+  const nameSurname = useIOSelector(profileNameSurnameSelector);
+  const fiscalCode = useIOSelector(profileFiscalCodeSelector);
 
   return (
-    <React.Fragment>
-      <DarkLayout
-        allowGoBack={true}
-        customGoBack={customGoBack}
-        headerBody={
-          <TouchableDefaultOpacity onPress={() => props.navigation.goBack}>
-            <Body color="white">{I18n.t("profile.fiscalCode.title")}</Body>
-          </TouchableDefaultOpacity>
-        }
-        contentStyle={styles.darkBg}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["profile"]}
-        hideHeader={true}
-        topContent={
-          <React.Fragment>
-            <VSpacer size={16} />
-            <H2 color={"white"}>{I18n.t("profile.fiscalCode.fiscalCode")}</H2>
-            <VSpacer size={16} />
-          </React.Fragment>
-        }
-      >
-        {props.profile && (
-          <React.Fragment>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <HSpacer size={24} />
-              <TouchableDefaultOpacity
-                onPress={() => showModal()}
-                accessibilityRole={"button"}
-              >
-                <View style={styles.shadow}>
-                  <FiscalCodeComponent
-                    type={"Full"}
-                    profile={props.profile}
-                    getBackSide={false}
-                    municipality={props.municipality.data}
-                  />
-                </View>
-              </TouchableDefaultOpacity>
-              <HSpacer size={8} />
-              <TouchableDefaultOpacity
-                onPress={() => showModal(true)}
-                accessibilityRole={"button"}
-              >
-                <View style={styles.shadow}>
-                  <FiscalCodeComponent
-                    type={"Full"}
-                    profile={props.profile}
-                    getBackSide={true}
-                    municipality={props.municipality.data}
-                  />
-                </View>
-              </TouchableDefaultOpacity>
-              <HSpacer size={24} />
-            </ScrollView>
-            <View style={IOStyles.horizontalContentPadding}>
-              <Body color="white">{I18n.t("profile.fiscalCode.content")}</Body>
-            </View>
-          </React.Fragment>
-        )}
-      </DarkLayout>
-    </React.Fragment>
+    <RNavScreenWithLargeHeader
+      title={{
+        label: I18n.t("profile.fiscalCode.fiscalCode")
+      }}
+      description={I18n.t("profile.fiscalCode.description")}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={FAQ_CATEGORIES}
+    >
+      <VSpacer size={24} />
+      <ContentWrapper>
+        <View style={styles.box}>
+          <Label weight="Regular">{nameSurname}</Label>
+          <Barcode
+            value={fiscalCode || ""}
+            width={1.3}
+            height={80}
+            lineColor="#000"
+          />
+          <H3>{fiscalCode}</H3>
+        </View>
+      </ContentWrapper>
+    </RNavScreenWithLargeHeader>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  profile: pot.toUndefined(profileSelector(state)),
-  municipality: municipalitySelector(state)
+const styles = StyleSheet.create({
+  box: {
+    borderRadius: 8,
+    borderColor: IOColors.bluegreyLight,
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 16
+  }
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadMunicipality: (code: CodiceCatastale) =>
-    dispatch(contentMunicipalityLoad.request(code))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withLightModalContext(FiscalCodeScreen));
+export default withLightModalContext(FiscalCodeScreen);

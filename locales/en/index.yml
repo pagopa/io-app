@@ -291,8 +291,8 @@ profile:
         hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
+    description: Usa il codice a barre per comunicare il tuo Codice Fiscale in farmacia o all’ufficio postale.
     help: !include profile/profile_fiscal_code.md
-    content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
     facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFILE
