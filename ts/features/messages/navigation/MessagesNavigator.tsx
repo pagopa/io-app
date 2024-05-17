@@ -37,7 +37,7 @@ export const MessagesStackNavigator = () => {
           name={MESSAGES_ROUTES.MESSAGE_ROUTER}
           component={MessageRouterScreen}
           options={{
-            headerShown: false
+            headerShown: true
           }}
         />
 
