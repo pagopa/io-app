@@ -87,6 +87,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: IOColors.white
+  },
+  centerText: {
+    textAlign: "center"
+  },
+  contentContainer: {
+    flexGrow: 1,
+    alignContent: "center",
+    justifyContent: "center"
   }
 });
 
@@ -537,11 +545,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView
           centerContent={true}
-          contentContainerStyle={{
-            flexGrow: 1,
-            alignContent: "center",
-            justifyContent: "center"
-          }}
+          contentContainerStyle={styles.contentContainer}
         >
           <ContentWrapper>
             <CieReadingCardAnimation
@@ -560,7 +564,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             />
             <VSpacer size={8} />
             {this.state.subtitle && (
-              <Body style={{ textAlign: "center" }} ref={this.subTitleRef}>
+              <Body style={styles.centerText} ref={this.subTitleRef}>
                 {this.state.subtitle}
               </Body>
             )}
@@ -606,7 +610,7 @@ const Title = (props: { text: string; accessibilityLabel: string }) => {
 
   return (
     <View ref={titleRef}>
-      <H3 style={{ textAlign: "center" }}>{props.text}</H3>
+      <H3 style={styles.centerText}>{props.text}</H3>
     </View>
   );
 };
