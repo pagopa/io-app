@@ -15,7 +15,7 @@ export const isStrictSome = <T, E>(p: pot.Pot<T, E>): p is Some<T> =>
   p.kind === "PotSome";
 
 export const foldK =
-<A, E, O>(
+  <A, E, O>(
     foldNone: () => O,
     foldNoneLoading: () => O,
     foldNoneUpdating: (newValue: A) => O,
@@ -25,7 +25,7 @@ export const foldK =
     foldSomeUpdating: (value: A, newValue: A) => O,
     foldSomeError: (value: A, error: E) => O
   ) =>
-    (input: pot.Pot<A, E>) =>
+  (input: pot.Pot<A, E>) =>
     pot.fold(
       input,
       foldNone,

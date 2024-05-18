@@ -1,10 +1,17 @@
 import React, { useMemo } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, View } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 import {
+  Avatar,
   Body,
   Divider,
+  HSpacer,
   IOColors,
-  IOStyles
+  IOStyles,
+  Icon,
+  Label,
+  PressableListItemBase,
+  Tag
 } from "@pagopa/io-app-design-system";
 import {
   useSafeAreaFrame,
@@ -21,13 +28,17 @@ type MessageListProps = {
 };
 
 type MessageListItemProps = {
-  item: number | UIMessage;
+  loading: boolean;
+  selected: boolean;
 };
 
 const messageListItemHeight = () => 130;
 
-export const MessageListItem = ({ item }: MessageListItemProps) => {
-  if (typeof item === "number") {
+export const MessageListItem = ({
+  loading,
+  selected
+}: MessageListItemProps) => {
+  if (loading) {
     return (
       <View
         style={{
@@ -52,7 +63,7 @@ export const MessageListItem = ({ item }: MessageListItemProps) => {
               paddingTop: 3
             }}
           >
-            <View style={{ flex: 1 }}>
+            <View style={IOStyles.flex}>
               <Placeholder.Box
                 animate={"fade"}
                 color={IOColors["grey-100"]}
@@ -103,9 +114,90 @@ export const MessageListItem = ({ item }: MessageListItemProps) => {
     );
   }
   return (
-    <View>
-      <Body>{item.title}</Body>
-    </View>
+    <PressableListItemBase
+      onPress={undefined}
+      testID={undefined}
+      accessibilityLabel={undefined}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          paddingHorizontal: 16
+        }}
+      >
+        <View
+          style={{
+            justifyContent: "center"
+          }}
+        >
+          {selected && (
+            <View
+              style={{
+                alignItems: "center",
+                backgroundColor: IOColors["blueIO-500"],
+                borderRadius: 8,
+                justifyContent: "center",
+                height: 44,
+                width: 44
+              }}
+            >
+              <Icon name="checkTickBig" color="white" />
+            </View>
+          )}
+          {!selected && <Avatar size="small" />}
+        </View>
+        <View style={{ flex: 1, marginLeft: 8 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              marginRight: 8
+            }}
+          >
+            <Label
+              fontSize="small"
+              weight="SemiBold"
+              numberOfLines={1}
+              style={IOStyles.flex}
+            >
+              {"Organisation name that goes a long way until it co"}
+            </Label>
+            <Label fontSize="small" weight="Regular">
+              {"09:35"}
+            </Label>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Body numberOfLines={2} style={IOStyles.flex}>
+              <Label fontSize="small" weight="SemiBold">
+                {"Service name"}
+              </Label>
+              <Label>{" • "}</Label>
+              <Label fontSize="small" weight="Regular">
+                {
+                  "Message title that goes a long way before having and end and it spans multiple decades "
+                }
+              </Label>
+            </Body>
+            <Svg
+              width={14}
+              height={14}
+              style={{ marginLeft: 8, alignSelf: "center" }}
+            >
+              <Circle
+                cx={"50%"}
+                cy={"50%"}
+                r={14 / 2}
+                fill={IOColors["blueIO-500"]}
+              />
+            </Svg>
+          </View>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <Tag text={"VALORE LEGALE"} variant="legalMessage" />
+            <HSpacer size={8} />
+            <Tag variant="attachment" />
+          </View>
+        </View>
+      </View>
+    </PressableListItemBase>
   );
 };
 
@@ -139,7 +231,12 @@ export const MessageList = ({ category }: MessageListProps) => {
         </View>
       )}
       ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
-      renderItem={({ item, index }) => <MessageListItem item={item} />}
+      renderItem={({ item, index }) => (
+        <MessageListItem
+          loading={typeof item === "number"}
+          selected={index % 2 === 1}
+        />
+      )}
     />
   );
 };
