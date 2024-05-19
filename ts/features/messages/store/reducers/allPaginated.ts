@@ -22,6 +22,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
 import { foldK } from "../../../../utils/pot";
+import { emptyMessageArray } from "../../utils";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -726,7 +727,6 @@ export const getCursors = createSelector(
 export const shownMessageCategorySelector = (state: GlobalState) =>
   state.entities.messages.allPaginated.shownCategory;
 
-const emptyArray: Readonly<Array<UIMessage>> = [];
 export const messageListForCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
@@ -737,10 +737,10 @@ export const messageListForCategorySelector = (
       category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox,
     messageCollection => messageCollection.data,
     foldK(
-      () => emptyArray,
+      () => emptyMessageArray,
       () => undefined,
       _ => undefined,
-      _ => emptyArray,
+      _ => emptyMessageArray,
       messagePage => messagePage.page,
       messagePage => messagePage.page,
       (messagePage, _) => messagePage.page,

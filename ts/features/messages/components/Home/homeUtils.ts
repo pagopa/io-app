@@ -3,6 +3,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { reloadAllMessages } from "../../store/actions";
 import { pageSize } from "../../../../config";
 import { MessageListCategory } from "../../types/messageListCategory";
+import { UIMessage } from "../../types";
+import I18n from "../../../../i18n";
+import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
@@ -35,3 +38,17 @@ export const messageListCategoryToViewPageIndex = (
 export const messageViewPageIndexToListCategory = (
   pageIndex: number
 ): MessageListCategory => (pageIndex === 1 ? "ARCHIVE" : "INBOX");
+
+export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
+  I18n.t("messages.accessibility.message.description", {
+    newMessage: message.isRead
+      ? I18n.t("messages.accessibility.message.read")
+      : I18n.t("messages.accessibility.message.unread"),
+    organizationName: message.organizationName,
+    serviceName: message.serviceName,
+    subject: message.title,
+    receivedAt: convertReceivedDateToAccessible(message.createdAt),
+    state: ""
+  });
+
+export const messageListItemHeight = () => 130;
