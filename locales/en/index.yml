@@ -1921,7 +1921,8 @@ messageDetails:
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Message
   emptyMessage: No content
-  loadingText: Loading message details in progress...
+  loadingText: Loading message details
+  pleaseWait: Wait a few moments
   errorText: We were unable to load the details of your message
   retryText: It's probably a temporary error... please try again!
   submitBugText: If the problem is not resolved, report it with the '?' icon at the top right, thank you!
@@ -2091,6 +2092,7 @@ services:
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
+  new: New
   home:
     institutions:
       title: National
