@@ -21,6 +21,7 @@ import {
 } from "../../common/utils/itwErrorsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIssuanceEidValueSelector } from "../store/selectors/eid";
+import I18n from "../../../../i18n";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
@@ -39,7 +40,11 @@ export const ItwIssuanceEidPreviewScreen = () => {
 
     return (
       <IOScrollViewWithLargeHeader
-        title={{ label: "{Identità Digitale}: ecco l’anteprima" }}
+        title={{
+          label: I18n.t("features.itWallet.issuance.credentialPreview.title", {
+            credential: eid.displayData.title
+          })
+        }}
       >
         <View style={styles.preview}>
           <EidCardPreview />
@@ -53,7 +58,9 @@ export const ItwIssuanceEidPreviewScreen = () => {
         <ContentWrapper>
           <VSpacer size={32} />
           <ButtonSolid
-            label="Aggiungi al Portafoglio"
+            label={I18n.t(
+              "features.itWallet.issuance.credentialPreview.actions.primary"
+            )}
             icon="add"
             iconPosition="end"
             onPress={() => undefined}
@@ -61,7 +68,12 @@ export const ItwIssuanceEidPreviewScreen = () => {
           />
           <VSpacer size={24} />
           <View style={{ alignSelf: "center" }}>
-            <ButtonLink label="Annulla" onPress={() => undefined} />
+            <ButtonLink
+              label={I18n.t(
+                "features.itWallet.issuance.credentialPreview.actions.secondary"
+              )}
+              onPress={() => undefined}
+            />
           </View>
         </ContentWrapper>
       </IOScrollViewWithLargeHeader>
