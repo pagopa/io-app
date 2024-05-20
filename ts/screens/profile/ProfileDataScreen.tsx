@@ -7,7 +7,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useCallback, useMemo } from "react";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
@@ -60,8 +60,10 @@ const ProfileDataScreen = () => {
     [profileEmail]
   );
 
-  const showFiscalCode = useMemo<EndElementProps>(
-    () => ({
+  const showFiscalCode = useMemo<EndElementProps>(() => {
+    const label = I18n.t("global.buttons.show");
+
+    return {
       type: "buttonLink",
       componentProps: {
         onPress: () => {
@@ -69,27 +71,29 @@ const ProfileDataScreen = () => {
             screen: ROUTES.PROFILE_FISCAL_CODE
           });
         },
-        label: I18n.t("global.buttons.show"),
+        label,
+        accessibilityLabel: label,
         testID: "show-fiscal-code-cta"
       }
-    }),
-    [navigate]
-  );
+    };
+  }, [navigate]);
 
-  const editEmail = useMemo<EndElementProps>(
-    () => ({
+  const editEmail = useMemo<EndElementProps>(() => {
+    const label = I18n.t("global.buttons.edit");
+
+    return {
       type: "buttonLink",
       componentProps: {
         onPress: onPressEmail,
-        label: I18n.t("global.buttons.edit"),
+        label,
+        accessibilityLabel: label,
         testID: "insert-or-edit-email-cta"
       }
-    }),
-    [onPressEmail]
-  );
+    };
+  }, [onPressEmail]);
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("profile.data.title")
       }}
@@ -133,7 +137,7 @@ const ProfileDataScreen = () => {
           testID="insert-or-edit-email"
         />
       </ContentWrapper>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

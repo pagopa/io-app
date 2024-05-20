@@ -246,12 +246,15 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
         onPress,
         renderValue
       } = item;
+      const accessibilityLabel = description
+        ? `${value}; ${description}`
+        : value;
 
       if (icon) {
         return (
           <ListItem
             testID={testID}
-            accessibilityLabel={value}
+            accessibilityLabel={accessibilityLabel}
             value={renderValue?.(value) ?? value}
             icon={icon}
             iconColor={iconColor}
@@ -264,7 +267,7 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
       return (
         <ListItem
           testID={testID}
-          accessibilityLabel={value}
+          accessibilityLabel={accessibilityLabel}
           value={value}
           description={description}
           hideChevron={hideChevron}
@@ -287,7 +290,7 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
             size="big"
             onPress={navigateToProfile}
             onClose={handleCloseBanner}
-            labelClose="Close"
+            labelClose={I18n.t("profile.main.banner.close")}
           />
         </ContentWrapper>
       )}

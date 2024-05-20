@@ -462,6 +462,7 @@ profile:
     banner:
       title: Vuoi visualizzare il tuo Codice Fiscale?
       action: Vai alla sezione “I tuoi dati”
+      close: Chiudi il banner e non mostrarlo più
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
