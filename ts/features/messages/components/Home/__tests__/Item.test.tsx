@@ -6,7 +6,7 @@ import { MessageCategory } from "../../../../../../definitions/backend/MessageCa
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../../../definitions/backend/MessageCategoryPN";
 import { successReloadMessagesPayload } from "../../../__mocks__/messages";
-import Item from "../Item";
+import Item from "../legacy/Item";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
