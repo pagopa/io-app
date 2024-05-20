@@ -11,12 +11,15 @@ import { useIOSelector } from "../../../../store/hooks";
 import { messageListForCategorySelector } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
 import { messageListItemHeight } from "./homeUtils";
-import { MessageListItem } from "./MessageListItem";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
+import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
 
 type MessageListProps = {
   category: MessageListCategory;
 };
+
+const topBarHeight = 108;
+const bottomTabHeight = 54;
 
 export const MessageList = ({ category }: MessageListProps) => {
   const safeAreaFrame = useSafeAreaFrame();
@@ -24,36 +27,37 @@ export const MessageList = ({ category }: MessageListProps) => {
   const messageList = useIOSelector(state =>
     messageListForCategorySelector(state, category)
   );
-  /* console.log(
-    `=== MessageList (${category}) (${messageList?.length ?? "undefined"}) `
-  ); */
   const loadingList = useMemo(() => {
-    // console.log(`=== MessageList computing loading list`);
     const listHeight =
       safeAreaFrame.height -
       safeAreaInsets.top -
       safeAreaInsets.bottom -
-      108 -
-      54;
+      topBarHeight -
+      bottomTabHeight;
     const count = Math.floor(listHeight / messageListItemHeight());
     return [...Array(count).keys()];
   }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
   return (
     <FlatList
+      contentContainerStyle={{ flexGrow: 1 }}
       data={(messageList ?? loadingList) as Readonly<Array<number | UIMessage>>}
       ListEmptyComponent={() => (
-        <View style={IOStyles.flex}>
-          <Body>{`The list is empty`}</Body>
+        <View
+          style={[
+            IOStyles.flex,
+            { justifyContent: "center", alignItems: "center" }
+          ]}
+        >
+          <Body>{`Lista vuota in corso di sviluppo`}</Body>
         </View>
       )}
       ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
       renderItem={({ item }) => {
         if (typeof item === "number") {
           return (
-            <MessageListItem
+            <MessageListItemSkeleton
               accessibilityLabel={I18n.t("messages.loading")}
-              type={"loading"}
             />
           );
         } else {

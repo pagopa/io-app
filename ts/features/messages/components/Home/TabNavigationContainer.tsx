@@ -30,7 +30,6 @@ export const TabNavigationContainer = ({
   const dispatch = useIODispatch();
   const store = useIOStore();
   const shownMessageCategory = useIOSelector(shownMessageCategorySelector);
-  // console.log(`=== TabNavigationContainer (${shownMessageCategory})`);
   const shownPageIndex =
     messageListCategoryToViewPageIndex(shownMessageCategory);
   const onTabNavigationItemPressed = useCallback(
@@ -49,9 +48,6 @@ export const TabNavigationContainer = ({
     const reloadAllMessagesActionOrUndefined =
       getInitialReloadAllMessagesActionIfNeeded(state);
     if (reloadAllMessagesActionOrUndefined) {
-      /* console.log(
-        `=== TabNavigationContainer useEffect reload (${shownMessageCategory})`
-      ); */
       dispatch(reloadAllMessagesActionOrUndefined);
     }
   }, [dispatch, shownMessageCategory, store]);

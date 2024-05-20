@@ -6,6 +6,9 @@ import { MessageListCategory } from "../../types/messageListCategory";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers/servicesById";
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
@@ -52,3 +55,18 @@ export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
   });
 
 export const messageListItemHeight = () => 130;
+
+export const getLoadServiceDetailsActionIfNeeded = (
+  state: GlobalState,
+  serviceId: ServiceId,
+  organizationFiscalCode?: string
+): ActionType<typeof loadServiceDetail.request> | undefined => {
+  if (!organizationFiscalCode) {
+    const isLoading = isLoadingServiceByIdSelector(state, serviceId);
+    if (!isLoading) {
+      // console.log(`=== WrappedMessageListItem useEffect dispatch`);
+      return loadServiceDetail.request(serviceId);
+    }
+  }
+  return undefined;
+};

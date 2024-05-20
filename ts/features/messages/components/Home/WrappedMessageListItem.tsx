@@ -1,14 +1,20 @@
 import React, { useEffect, useMemo } from "react";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../services/details/store/reducers/servicesById";
 import { UIMessage } from "../../types";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { logosForService } from "../../../../utils/services";
 import I18n from "../../../../i18n";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { accessibilityLabelForMessageItem } from "./homeUtils";
-import { MessageListItem } from "./MessageListItem";
+import {
+  accessibilityLabelForMessageItem,
+  getLoadServiceDetailsActionIfNeeded
+} from "./homeUtils";
+import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
   message: UIMessage;
@@ -17,18 +23,23 @@ type WrappedMessageListItemProps = {
 export const WrappedMessageListItem = ({
   message
 }: WrappedMessageListItemProps) => {
-  // console.log(`=== WrappedMessageListItem (${message.id})`);
   const dispatch = useIODispatch();
+  const store = useIOStore();
   const serviceId = message.serviceId;
   const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
   const organizationFiscalCode = service?.organization_fiscal_code;
   useEffect(() => {
-    // TODO
-    if (!organizationFiscalCode) {
-      // console.log(`=== WrappedMessageListItem useEffect dispatch`);
-      dispatch(loadServiceDetail.request(serviceId));
+    const state = store.getState();
+    const loadServiceDetailsActionOrUndefined =
+      getLoadServiceDetailsActionIfNeeded(
+        state,
+        serviceId,
+        organizationFiscalCode
+      );
+    if (loadServiceDetailsActionOrUndefined) {
+      dispatch(loadServiceDetailsActionOrUndefined);
     }
-  }, [dispatch, organizationFiscalCode, serviceId]);
+  }, [dispatch, organizationFiscalCode, serviceId, store]);
 
   const serviceLogoUriSources = useMemo(
     () => (service ? logosForService(service) : undefined),
@@ -44,7 +55,10 @@ export const WrappedMessageListItem = ({
     I18n.t("messages.yesterday")
   );
   const isRead = message.isRead;
-  const isMessageFromSendService = message.category.tag === TagEnum.PN;
+  const badgeText =
+    message.category.tag === TagEnum.PN
+      ? I18n.t("features.pn.details.badge.legalValue")
+      : undefined;
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message),
     [message]
@@ -52,17 +66,16 @@ export const WrappedMessageListItem = ({
 
   return (
     <MessageListItem
-      type="loaded"
       accessibilityLabel={accessibilityLabel}
-      bodyPrequel={serviceName}
-      bodySequel={messageTitle}
-      onLongPress={undefined}
-      onPress={undefined}
+      serviceName={serviceName}
+      messageTitle={messageTitle}
+      onLongPress={() => undefined}
+      onPress={() => undefined}
       serviceLogos={serviceLogoUriSources}
-      showBadgeAndTag={isMessageFromSendService}
-      showCircle={isRead}
-      title={organizationName}
-      titleTime={messageDate}
+      badgeText={badgeText}
+      isRead={isRead}
+      organizationName={organizationName}
+      formattedDate={messageDate}
     />
   );
 };

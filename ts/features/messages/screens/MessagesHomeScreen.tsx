@@ -6,7 +6,6 @@ import { PagerViewContainer } from "../components/Home/PagerViewContainer";
 import { TabNavigationContainer } from "../components/Home/TabNavigationContainer";
 
 export const MessagesHomeScreen = () => {
-  // console.log(`=== MessagesHomeScreen`);
   const pagerViewRef = useRef<PagerView>(null);
   return (
     <View style={IOStyles.flex}>
