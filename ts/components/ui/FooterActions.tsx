@@ -8,7 +8,6 @@ import {
   IOVisualCostants,
   VSpacer,
   buttonSolidHeight,
-  hexToRgba,
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -21,13 +20,13 @@ import {
   useState
 } from "react";
 import {
-  View,
-  StyleSheet,
-  LayoutRectangle,
+  ColorValue,
   LayoutChangeEvent,
-  ColorValue
+  LayoutRectangle,
+  StyleSheet,
+  View
 } from "react-native";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { WithTestID } from "../../types/WithTestID";
 
@@ -52,6 +51,20 @@ type FooterThreeButtons = {
   tertiary: Omit<ComponentProps<typeof ButtonLink>, "color">;
 };
 
+export type FooterActionsMeasurements = {
+  // Height of the "Actions" block
+  actionBlockHeight: number;
+  /* Height of the safe bottom area. It includes:
+     - Margin between screen content
+       and actions (contentEndMargin)
+     - Actions block height
+     - Eventual safe area margin (bottomMargin)
+     This is the total bottom padding that needs
+     to be applied to the ScrollView.
+  */
+  safeBottomAreaHeight: number;
+};
+
 type FooterActions = FooterSingleButton | FooterTwoButtons | FooterThreeButtons;
 
 type FooterActionsProps = WithTestID<
@@ -62,6 +75,7 @@ type FooterActionsProps = WithTestID<
     excludeSafeAreaMargins?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
+    onMeasure: (measurements: FooterActionsMeasurements) => void;
   }>
 >;
 
@@ -87,6 +101,7 @@ export const FooterActions = ({
   actions,
   excludeSafeAreaMargins = false,
   // includeContentMargins = true,
+  onMeasure,
   testID
 }: FooterActionsProps) => {
   const theme = useIOTheme();
@@ -100,10 +115,6 @@ export const FooterActions = ({
   /* Total height of actions */
   const [actionBlockHeight, setActionBlockHeight] =
     useState<LayoutRectangle["height"]>(0);
-
-  const getActionBlockHeight = (event: LayoutChangeEvent) => {
-    setActionBlockHeight(event.nativeEvent.layout.height);
-  };
 
   /* Background color should be app main background
      (both light and dark themes) */
@@ -126,12 +137,6 @@ export const FooterActions = ({
     [needSafeAreaMargin, excludeSafeAreaMargins, safeAreaMargin]
   );
 
-  /* Total height of "Actions + Gradient" area */
-  const footerActionsHeight: number = useMemo(
-    () => bottomMargin + actionBlockHeight,
-    [actionBlockHeight, bottomMargin]
-  );
-
   /* When the secondary action is visible, add extra margin
      to avoid little space from iPhone bottom handle */
   const extraBottomMargin: number = useMemo(
@@ -146,12 +151,15 @@ export const FooterActions = ({
     [BUTTONSOLID_HEIGHT, actionBlockHeight, bottomMargin]
   );
 
-  /* Height of the safe bottom area, applied to the ScrollView:
-     Actions + Content end margin */
-  // const safeBottomAreaHeight: number = useMemo(
-  //   () => bottomMargin + actionBlockHeight + contentEndMargin,
-  //   [actionBlockHeight, bottomMargin]
-  // );
+  const getActionBlockMeasurements = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setActionBlockHeight(height);
+
+    /* Height of the safe bottom area, applied to the ScrollView:
+       Actions + Content end margin */
+    const safeBottomAreaHeight = bottomMargin + height + contentEndMargin;
+    onMeasure({ actionBlockHeight: height, safeBottomAreaHeight });
+  };
 
   // const opacityTransition = useAnimatedStyle(() => ({
   //   opacity: interpolate(
@@ -161,11 +169,6 @@ export const FooterActions = ({
   //     Extrapolate.CLAMP
   //   )
   // }));
-
-  // eslint-disable-next-line no-console
-  console.log("footerActionsHeight", footerActionsHeight);
-  // eslint-disable-next-line no-console
-  console.log("Bottom margin", bottomMargin);
 
   return (
     <View
@@ -193,7 +196,7 @@ export const FooterActions = ({
 
       <View
         style={styles.buttonContainer}
-        onLayout={getActionBlockHeight}
+        onLayout={getActionBlockMeasurements}
         pointerEvents="box-none"
       >
         {primaryAction && <ButtonSolid fullWidth {...primaryAction} />}

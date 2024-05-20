@@ -1,42 +1,35 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import React, { useState } from "react";
+import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
-  ButtonLink,
-  ButtonSolid,
-  IOColors,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { useHeaderHeight } from "@react-navigation/elements";
-import React, { useMemo, useState } from "react";
-import {
-  Alert,
-  Dimensions,
-  LayoutChangeEvent,
-  LayoutRectangle,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { FooterActions } from "../../../components/ui/FooterActions";
+  FooterActions,
+  FooterActionsMeasurements
+} from "../../../components/ui/FooterActions";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
 export const DSFooterActions = () => {
-  const scrollY = useSharedValue<number>(0);
-  const insets = useSafeAreaInsets();
+  const [footerActionsMeasurements, setfooterActionsMeasurements] =
+    useState<FooterActionsMeasurements>({
+      actionBlockHeight: 0,
+      safeBottomAreaHeight: 0
+    });
+
+  const handleFooterActionsMeasurements = (
+    values: FooterActionsMeasurements
+  ) => {
+    setfooterActionsMeasurements(values);
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+        }}
+      >
         {[...Array(9)].map((_el, i) => (
           <React.Fragment key={`view-${i}`}>
             <View style={styles.block}>
@@ -47,16 +40,17 @@ export const DSFooterActions = () => {
         ))}
       </ScrollView>
       <FooterActions
+        onMeasure={handleFooterActionsMeasurements}
         actions={{
-          type: "TwoButtons",
+          type: "SingleButton",
           primary: {
             label: "Pay button",
             onPress: onButtonPress
-          },
-          secondary: {
-            label: "Secondary link",
-            onPress: onButtonPress
           }
+          // secondary: {
+          //   label: "Secondary link",
+          //   onPress: onButtonPress
+          // },
           // tertiary: {
           //   label: "Tertiary link",
           //   onPress: onButtonPress
