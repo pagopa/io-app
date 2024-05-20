@@ -3036,6 +3036,12 @@ features:
         failure: FALLITA
         success: ""
   itWallet:
+    card:
+      eid:
+        label: Identità digitale
+        expired: Non valida
+        pending: In lavorazione
+        digital: Versione digitale
     discovery:
       info:
         title: Start with your Digital Identity
