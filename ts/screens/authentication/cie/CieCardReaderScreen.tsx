@@ -299,16 +299,35 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           });
         }
         break;
+      // "Function not supported" seems to be TAG_ERROR_NFC_NOT_SUPPORTED
+      // for the iOS SDK
+      case "Function not supported" as unknown:
       case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
+        this.setError({
+          eventReason: event.event,
+          navigation: () =>
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.CIE_WRONG_CARD_SCREEN
+            })
+        });
+        break;
       case "AUTHENTICATION_ERROR":
       case "ON_NO_INTERNET_CONNECTION":
-      case "EXTENDED_APDU_NOT_SUPPORTED":
         this.setError({
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_UNEXPECTED_ERROR
+            })
+        });
+        break;
+      case "EXTENDED_APDU_NOT_SUPPORTED":
+        this.setError({
+          eventReason: event.event,
+          navigation: () =>
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN
             })
         });
         break;

@@ -7,14 +7,8 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
-const CieUnexpectedErrorScreen = () => {
+const CieExtendedApduNotSupportedScreen = () => {
   const navigation = useIONavigation();
-
-  const navigateToCiePinScreen = React.useCallback(() => {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_PIN_SCREEN
-    });
-  }, [navigation]);
 
   const navigateToAuthenticationScreen = React.useCallback(() => {
     navigation.reset({
@@ -24,11 +18,6 @@ const CieUnexpectedErrorScreen = () => {
   }, [navigation]);
 
   const action = {
-    label: I18n.t("global.buttons.retry"),
-    onPress: navigateToCiePinScreen
-  };
-
-  const secondaryAction = {
     label: I18n.t("global.buttons.close"),
     onPress: navigateToAuthenticationScreen
   };
@@ -37,11 +26,10 @@ const CieUnexpectedErrorScreen = () => {
     <OperationResultScreenContent
       pictogram="umbrellaNew"
       title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
-      subtitle={I18n.t("authentication.cie.card.error.genericErrorSubtitle")}
+      subtitle={I18n.t("authentication.cie.nfc.apduNotSupported")}
       action={action}
-      secondaryAction={secondaryAction}
     />
   );
 };
 
-export default CieUnexpectedErrorScreen;
+export default CieExtendedApduNotSupportedScreen;

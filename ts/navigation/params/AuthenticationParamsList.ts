@@ -22,4 +22,6 @@ export type AuthenticationParamsList = {
   [ROUTES.CIE_CONSENT_DATA_USAGE]: CieConsentDataUsageScreenNavigationParams;
   [ROUTES.CIE_WRONG_PIN_SCREEN]: CieWrongCiePinScreenNavigationParams;
   [ROUTES.CIE_UNEXPECTED_ERROR]: undefined;
+  [ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN]: undefined;
+  [ROUTES.CIE_WRONG_CARD_SCREEN]: undefined;
 };

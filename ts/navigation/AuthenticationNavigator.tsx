@@ -21,6 +21,8 @@ import CieNotSupported from "../components/cie/CieNotSupported";
 import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
 import { isGestureEnabled } from "../utils/navigation";
 import CieUnexpectedErrorScreen from "../screens/authentication/cie/CieUnexpectedErrorScreen";
+import CieExtendedApduNotSupportedScreen from "../screens/authentication/cie/CieExtendedApduNotSupportedScreen";
+import CieWrongCardScreen from "../screens/authentication/cie/CieWrongCardScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -119,6 +121,16 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.CIE_UNEXPECTED_ERROR}
         component={CieUnexpectedErrorScreen}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN}
+        component={CieExtendedApduNotSupportedScreen}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CIE_WRONG_CARD_SCREEN}
+        component={CieWrongCardScreen}
       />
 
       <Stack.Screen
