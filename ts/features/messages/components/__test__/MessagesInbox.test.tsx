@@ -10,7 +10,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
 
-import MessagesInbox from "../MessagesInbox";
+import MessagesInbox from "../Home/legacy/MessagesInbox";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 jest.useFakeTimers();
