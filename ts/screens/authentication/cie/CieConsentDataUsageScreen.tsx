@@ -20,7 +20,6 @@ import { onLoginUriChanged } from "../../../utils/login";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { trackLoginCieDataSharingError } from "../analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../originSchemasWhiteList";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import ROUTES from "../../../navigation/routes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
@@ -131,12 +130,6 @@ const CieConsentDataUsageScreen = () => {
       trackLoginCieDataSharingError();
     }
   }, [errorCode, hasError]);
-
-  useHeaderSecondLevel({
-    canGoBack: hasError,
-    goBack: showAbortAlert,
-    title: ""
-  });
 
   useEffect(() => {
     if (hasError) {

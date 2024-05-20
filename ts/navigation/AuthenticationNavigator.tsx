@@ -22,7 +22,7 @@ import CieNotSupported from "../components/cie/CieNotSupported";
 import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
 import { isGestureEnabled } from "../utils/navigation";
 import CieAuthErrorScreen from "../screens/authentication/cie/CieAuthErrorScreen";
-import UnlockAccessScreen from "../screens/onboarding/UnlockAccessScreen";
+import UnlockAccessScreen from "../screens/authentication/UnlockAccessScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
