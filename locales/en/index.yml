@@ -3026,6 +3026,12 @@ features:
         failure: FALLITA
         success: ""
   itWallet:
+    card:
+      eid:
+        label: Identità Digitale
+        expired: Non valida
+        pending: In lavorazione
+        digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
