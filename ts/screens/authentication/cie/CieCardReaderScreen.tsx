@@ -628,7 +628,7 @@ const Title = (props: { text: string; accessibilityLabel: string }) => {
   );
 
   return (
-    <View ref={titleRef}>
+    <View accessible ref={titleRef}>
       <H3 style={styles.centerText}>{props.text}</H3>
     </View>
   );
