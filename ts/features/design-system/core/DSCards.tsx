@@ -376,6 +376,7 @@ export const DSCards = () => (
           fiscalCode="RSGMRT80A41H501X"
           status="pending"
         />
+      </DSComponentViewerBox>
     </DesignSystemSection>
   </DesignSystemScreen>
 );
