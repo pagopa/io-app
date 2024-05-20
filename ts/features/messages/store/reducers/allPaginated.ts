@@ -14,6 +14,7 @@ import {
   MigrationResult,
   reloadAllMessages,
   resetMigrationStatus,
+  setShownMessageCategoryAction,
   upsertMessageStatusAttributes
 } from "../actions";
 import { clearCache } from "../../../../store/actions/profile";
@@ -21,14 +22,13 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
 
-export type MessagePagePot = pot.Pot<
-  {
-    page: ReadonlyArray<UIMessage>;
-    previous?: string;
-    next?: string;
-  },
-  string
->;
+export type MessagePage = {
+  page: ReadonlyArray<UIMessage>;
+  previous?: string;
+  next?: string;
+};
+
+export type MessagePagePot = pot.Pot<MessagePage, string>;
 
 type Collection = {
   data: MessagePagePot;
@@ -44,27 +44,29 @@ export type MigrationStatus = O.Option<
 
 export type MessageOperation = "archive" | "restore";
 export type MessageOperationFailure = {
-  operation: MessageOperation;
   error: Error;
+  operation: MessageOperation;
 };
 
 /**
  * A list of messages and pagination inbox.
  */
 export type AllPaginated = {
-  inbox: Collection;
   archive: Collection;
-  migration: MigrationStatus;
+  inbox: Collection;
   latestMessageOperation?: Either.Either<
     MessageOperationFailure,
     MessageOperation
   >;
+  migration: MigrationStatus;
+  shownCategory: MessageListCategory;
 };
 
 const INITIAL_STATE: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: O.none },
   archive: { data: pot.none, lastRequest: O.none },
-  migration: O.none
+  inbox: { data: pot.none, lastRequest: O.none },
+  migration: O.none,
+  shownCategory: "INBOX"
 };
 
 /**
@@ -75,6 +77,11 @@ const reducer = (
   action: Action
 ): AllPaginated => {
   switch (action.type) {
+    case getType(setShownMessageCategoryAction):
+      return {
+        ...state,
+        shownCategory: action.payload
+      };
     case getType(reloadAllMessages.request):
     case getType(reloadAllMessages.success):
     case getType(reloadAllMessages.failure):
@@ -124,7 +131,10 @@ const reducer = (
     /* END Migration-related block */
 
     case getType(clearCache):
-      return INITIAL_STATE;
+      return {
+        ...INITIAL_STATE,
+        shownCategory: state.shownCategory
+      };
 
     default:
       return state;
@@ -711,5 +721,8 @@ export const getCursors = createSelector(
     inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
   })
 );
+
+export const shownMessageCategorySelector = (state: GlobalState) =>
+  state.entities.messages.allPaginated.shownCategory;
 
 export default reducer;

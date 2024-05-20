@@ -11,6 +11,16 @@ import {
   PaymentCardsCarouselProps,
   PaymentCardsCarouselSkeleton
 } from "../../payments/home/components/PaymentsCardsCarousel";
+import {
+  FeaturedInstitutionsCarousel,
+  FeaturedInstitutionsCarouselProps,
+  FeaturedInstitutionsCarouselSkeleton
+} from "../../services/home/components/FeaturedInstitutionsCarousel";
+import {
+  FeaturedServicesCarousel,
+  FeaturedServicesCarouselProps,
+  FeaturedServicesCarouselSkeleton
+} from "../../services/home/components/FeaturedServicesCarousel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
@@ -67,6 +77,80 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
       holderEmail: "test@test.it",
       expireDate: expiredDate,
       isExpired: true,
+      onPress
+    }
+  ]
+};
+
+const featuredInstitutionsDataForCarousel: FeaturedInstitutionsCarouselProps = {
+  institutions: [
+    {
+      id: "anInstitutionId1",
+      name: "Motorizzazione",
+      onPress
+    },
+    {
+      id: "anInstitutionId2",
+      name: "IO - L'app dei servizi pubblici",
+      isNew: true,
+      onPress
+    },
+    {
+      id: "anInstitutionId3",
+      name: "PCM - Dipartimento per le Politiche Giovanili e il Servizio Civile Universale",
+      onPress
+    }
+  ]
+};
+
+const featuredServicesDataForCarousel: FeaturedServicesCarouselProps = {
+  services: [
+    {
+      id: "aServiceId1a",
+      name: "Service Name",
+      onPress
+    },
+    {
+      id: "aServiceId1b",
+      name: "Service Name",
+      organizationName: "Organization Name",
+      isNew: true,
+      onPress
+    },
+    {
+      id: "aServiceId2a",
+      name: "Service Name without org. name",
+      onPress
+    },
+    {
+      id: "aServiceId2b",
+      name: "Service Name on two lines",
+      organizationName: "Organization Name",
+      isNew: true,
+      onPress
+    },
+    {
+      id: "aServiceId3a",
+      name: "Verbose Service Name on three lines",
+      onPress
+    },
+    {
+      id: "aServiceId3b",
+      name: "Verbose Service Name on three lines",
+      organizationName: "Verbose Organization Name",
+      isNew: true,
+      onPress
+    },
+    {
+      id: "aServiceId4a",
+      name: "Very long Service Name that exceeds the space allowed",
+      isNew: true,
+      onPress
+    },
+    {
+      id: "aServiceId4b",
+      name: "Very long Service Name that exceeds the space allowed",
+      organizationName: "Verbose Organization Name",
       onPress
     }
   ]
@@ -247,7 +331,24 @@ export const DSCards = () => (
         <CgnCard expireDate={new Date(2023, 11, 2)} />
       </DSComponentViewerBox>
     </DesignSystemSection>
-
+    <DesignSystemSection title="InstitutionCard">
+      <DSComponentViewerBox name="InstitutionCardsCarousel">
+        <FeaturedInstitutionsCarousel
+          {...featuredInstitutionsDataForCarousel}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="InstitutionCardsCarouselSkeleton">
+        <FeaturedInstitutionsCarouselSkeleton />
+      </DSComponentViewerBox>
+    </DesignSystemSection>
+    <DesignSystemSection title="ServiceCard">
+      <DSComponentViewerBox name="ServiceCardsCarousel">
+        <FeaturedServicesCarousel {...featuredServicesDataForCarousel} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="ServiceCardsCarouselSkeleton">
+        <FeaturedServicesCarouselSkeleton />
+      </DSComponentViewerBox>
+    </DesignSystemSection>
     <DesignSystemSection title="eID">
       <DSComponentViewerBox name="Preview">
         <EidCardPreview />
@@ -275,7 +376,6 @@ export const DSCards = () => (
           fiscalCode="RSGMRT80A41H501X"
           status="pending"
         />
-      </DSComponentViewerBox>
     </DesignSystemSection>
   </DesignSystemScreen>
 );
