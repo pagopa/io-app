@@ -15,7 +15,7 @@ import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { useIOSelector } from "../../store/hooks";
 import { useMaxBrightness } from "../../utils/brightness";
@@ -37,7 +37,7 @@ const FiscalCodeScreen = () => {
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("profile.fiscalCode.fiscalCode")
       }}
@@ -59,7 +59,7 @@ const FiscalCodeScreen = () => {
           <H3>{fiscalCode}</H3>
         </View>
       </ContentWrapper>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
