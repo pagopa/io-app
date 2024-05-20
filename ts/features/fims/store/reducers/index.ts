@@ -37,6 +37,11 @@ const reducer = (
         ...state,
         consentsData: pot.none
       };
+    case getType(fimsGetRedirectUrlAndOpenIABAction.success):
+      return {
+        consentsData: pot.none,
+        ctaUrl: undefined
+      };
   }
   return state;
 };

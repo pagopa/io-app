@@ -2,6 +2,7 @@ import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
+import NavigationService from "../../../navigation/NavigationService";
 import { fimsTokenSelector } from "../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
 import { LollipopConfig } from "../../lollipop";
@@ -134,8 +135,12 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   });
 
   // ----------------- end lolliPoP -----------------
-
-  // TODO:: navigate back and clear store before opening IAB
+  const navigateToMsgHome = () =>
+    NavigationService.navigate("MAIN", {
+      screen: "MESSAGES_HOME"
+    });
+  yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
+  yield* call(navigateToMsgHome);
   return openAuthenticationSession(inAppBrowserUrl.headers.Location, "");
 }
 

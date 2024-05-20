@@ -20,7 +20,7 @@ export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
   "FIMS_GET_REDIRECT_URL_REQUEST",
   "FIMS_GET_REDIRECT_URL_SUCCESS",
   "FIMS_GET_REDIRECT_URL_FAILURE"
-)<FimsGetRedirectUrlAndOpenIABRequestType, HttpClientSuccessResponse, Error>();
+)<FimsGetRedirectUrlAndOpenIABRequestType, undefined, Error>();
 
 export type FimsActions =
   | ActionType<typeof fimsGetConsentsListAction>
