@@ -4,17 +4,13 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
-import { isValidOnboardableMethod, isValidPaymentMethod } from "../../utils";
+import { isValidPaymentMethod } from "../../utils";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { selectPaymentsCheckoutState, walletPaymentDetailsSelector } from ".";
 
 export const walletPaymentUserWalletsSelector = createSelector(
   selectPaymentsCheckoutState,
-  state =>
-    pot.map(
-      state.userWallets,
-      ({ wallets }) => wallets?.filter(isValidOnboardableMethod) ?? []
-    )
+  state => pot.map(state.userWallets, _ => _.wallets ?? [])
 );
 
 export const walletPaymentAllMethodsSelector = createSelector(

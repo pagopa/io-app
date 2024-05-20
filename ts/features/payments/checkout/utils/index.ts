@@ -9,10 +9,3 @@ export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
   method.methodManagement === PaymentMethodManagementTypeEnum.NOT_ONBOARDABLE ||
   method.methodManagement ===
     PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT;
-
-export const isValidOnboardableMethod = (method: PaymentMethodResponse) =>
-  method.methodManagement === PaymentMethodManagementTypeEnum.ONBOARDABLE ||
-  method.methodManagement ===
-    PaymentMethodManagementTypeEnum.ONBOARDABLE_ONLY ||
-  method.methodManagement ===
-    PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT;
