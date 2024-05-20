@@ -1,3 +1,15 @@
+import {
+  ButtonLink,
+  ButtonOutline,
+  ButtonSolid,
+  IOColors,
+  IOSpacer,
+  IOSpacingScale,
+  IOStyles,
+  IOVisualCostants,
+  VSpacer,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 import React, { ComponentProps, useCallback, useMemo, useState } from "react";
 import {
   LayoutChangeEvent,
@@ -15,18 +27,6 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  ButtonLink,
-  ButtonOutline,
-  ButtonSolid,
-  IOColors,
-  IOSpacer,
-  IOSpacingScale,
-  IOStyles,
-  IOVisualCostants,
-  VSpacer,
-  hexToRgba
-} from "@pagopa/io-app-design-system";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ServiceSpecialAction } from "./ServiceSpecialAction";
 
@@ -52,15 +52,6 @@ const styles = StyleSheet.create({
   gradientContainer: {
     ...StyleSheet.absoluteFillObject
   }
-});
-
-const { colors, locations } = easeGradient({
-  colorStops: {
-    0: { color: hexToRgba(IOColors[HEADER_BG_COLOR], 0) },
-    1: { color: IOColors[HEADER_BG_COLOR] }
-  },
-  easing: Easing.ease,
-  extraColorStopsPerTransition: 20
 });
 
 /* Extended gradient area above the actions */
@@ -131,6 +122,17 @@ export const ServiceDetailsScreenComponent = ({
   const getActionBlockHeight = (event: LayoutChangeEvent) => {
     setActionBlockHeight(event.nativeEvent.layout.height);
   };
+
+  const { colors, locations } = easeGradient({
+    colorStops: {
+      0: { color: hexToRgba(IOColors[HEADER_BG_COLOR], 0) },
+      1: actionsProps
+        ? { color: IOColors[HEADER_BG_COLOR] }
+        : { color: hexToRgba(IOColors[HEADER_BG_COLOR], 0) }
+    },
+    easing: Easing.ease,
+    extraColorStopsPerTransition: 20
+  });
 
   const bottomMargin: number = useMemo(
     () =>
