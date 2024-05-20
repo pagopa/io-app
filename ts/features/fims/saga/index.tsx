@@ -13,6 +13,7 @@ import {
 } from "../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import {
+  HttpClientResponse,
   mockHttpNativeCall,
   mockSetNativeCookie
 } from "../__mocks__/mockFIMSCallbacks";
@@ -91,6 +92,11 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
 
   // --------------- lolliPoP -----------------
 
+  if (rpUrl.type === "failure") {
+    // TODO:: proper error handling
+    return;
+  }
+
   const lollipopUrl = rpUrl.headers.Location;
   const urlQueryParams = getQueryParamsFromUrlString(lollipopUrl); // new URLSearchParams(rpUrl.headers.Location);
 
@@ -160,7 +166,10 @@ const getQueryParamsFromUrlString = (url: string) => {
 const isRedirect = (statusCode: number) =>
   statusCode >= 300 && statusCode < 400;
 
-const recurseUntilRPUrl = async (url: string, lowerCaseOidcDomain: string) => {
+const recurseUntilRPUrl = async (
+  url: string,
+  lowerCaseOidcDomain: string
+): Promise<HttpClientResponse> => {
   const res = await mockHttpNativeCall({
     followRedirects: false,
     verb: "get",
