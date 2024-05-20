@@ -1695,6 +1695,7 @@ wallet:
       header: Seleziona un metodo
       yourMethods: Saved
       otherMethods: All methods
+      latestMethod: Latest used
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"

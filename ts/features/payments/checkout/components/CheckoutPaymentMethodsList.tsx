@@ -23,6 +23,7 @@ import {
   walletPaymentAllMethodsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
   walletPaymentSelectedWalletIdOptionSelector,
+  walletPaymentUserWalletLastUpdatedSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors/paymentMethods";
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
@@ -37,6 +38,9 @@ const CheckoutPaymentMethodsList = () => {
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);
   const userWallets = useIOSelector(walletPaymentUserWalletsSelector);
+  const latestPaymentUsed = useIOSelector(
+    walletPaymentUserWalletLastUpdatedSelector
+  );
 
   const selectedUserWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -51,6 +55,19 @@ const CheckoutPaymentMethodsList = () => {
     O.getOrElse(() => 0)
   );
 
+  const latestPaymentMethodListItem = useMemo(
+    () =>
+      pipe(
+        latestPaymentUsed,
+        O.map(mapUserWalletToRadioItem),
+        O.map(Array.of),
+        O.map(A.map(O.fromNullable)),
+        O.map(A.compact),
+        O.getOrElse(() => [] as Array<RadioItem<string>>)
+      ),
+    [latestPaymentUsed]
+  );
+
   const userPaymentMethodListItems = useMemo(
     () =>
       pipe(
@@ -59,9 +76,15 @@ const CheckoutPaymentMethodsList = () => {
         O.map(methods => methods.map(mapUserWalletToRadioItem)),
         O.map(A.map(O.fromNullable)),
         O.map(A.compact),
+        O.map(
+          A.filter(
+            method =>
+              !latestPaymentMethodListItem.some(item => item.id === method.id)
+          )
+        ),
         O.getOrElse(() => [] as Array<RadioItem<string>>)
       ),
-    [userWallets]
+    [userWallets, latestPaymentMethodListItem]
   );
 
   const allPaymentMethodListItems = useMemo(
@@ -79,11 +102,17 @@ const CheckoutPaymentMethodsList = () => {
 
   useEffect(() => {
     const hasDisabledMethods =
-      [...userPaymentMethodListItems, ...allPaymentMethodListItems].find(
-        item => item.disabled
-      ) !== undefined;
+      [
+        ...userPaymentMethodListItems,
+        ...allPaymentMethodListItems,
+        ...latestPaymentMethodListItem
+      ].find(item => item.disabled) !== undefined;
     setShouldShowWarningBanner(hasDisabledMethods);
-  }, [userPaymentMethodListItems, allPaymentMethodListItems]);
+  }, [
+    userPaymentMethodListItems,
+    allPaymentMethodListItems,
+    latestPaymentMethodListItem
+  ]);
 
   const handleSelectUserWallet = (walletId: string) =>
     pipe(
@@ -131,6 +160,17 @@ const CheckoutPaymentMethodsList = () => {
           action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
+      {!_.isEmpty(latestPaymentMethodListItem) && (
+        <ListItemHeader
+          label={I18n.t("wallet.payment.methodSelection.latestMethod")}
+        />
+      )}
+      <RadioGroup<string>
+        type="radioListItem"
+        selectedItem={selectedWalletId}
+        items={latestPaymentMethodListItem}
+        onPress={handleSelectUserWallet}
+      />
       {!_.isEmpty(userPaymentMethodListItems) && (
         <ListItemHeader
           label={I18n.t("wallet.payment.methodSelection.yourMethods")}
