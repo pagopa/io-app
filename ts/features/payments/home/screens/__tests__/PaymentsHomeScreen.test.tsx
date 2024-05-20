@@ -29,6 +29,7 @@ const MOCK_WALLET: WalletInfo = {
   paymentMethodAsset: "",
   paymentMethodId: "",
   status: WalletStatusEnum.CREATED,
+  clients: {},
   updateDate: new Date(),
   details: {
     type: "",
