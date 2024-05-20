@@ -76,7 +76,6 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     // TODO:: proper error handling
     return;
   }
-  const oidcProviderDomainLowercase = oidcProviderDomain?.toLowerCase();
 
   const providerAcceptRedirectRes = yield* call(mockHttpNativeCall, {
     followRedirects: false,
@@ -87,7 +86,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   const rpUrl = yield* call(
     recurseUntilRPUrl,
     providerAcceptRedirectRes.headers.Location,
-    oidcProviderDomainLowercase
+    oidcProviderDomain
   );
 
   // --------------- lolliPoP -----------------
@@ -98,12 +97,12 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   }
 
   const lollipopUrl = rpUrl.headers.Location;
-  const urlQueryParams = getQueryParamsFromUrlString(lollipopUrl); // new URLSearchParams(rpUrl.headers.Location);
+  const urlQueryParams = getQueryParamsFromUrlString(lollipopUrl);
 
-  const auth_code = urlQueryParams.authorization_code;
+  const authCode = urlQueryParams.authorization_code;
   const lollipopNonce = urlQueryParams.nonce;
 
-  if (!auth_code || !lollipopNonce) {
+  if (!authCode || !lollipopNonce) {
     // TODO:: proper error handling
     return;
   }
@@ -111,7 +110,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   const lollipopConfig: LollipopConfig = {
     nonce: lollipopNonce,
     customContentToSign: {
-      authorization_code: auth_code
+      authorization_code: authCode
     }
   };
 
@@ -120,6 +119,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   const keyTag = yield* select(lollipopKeyTagSelector);
   const publicKey = yield* select(lollipopPublicKeySelector);
   const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+
   const lollipopInit = yield* call(
     lollipopRequestInit,
     lollipopConfig,
@@ -168,19 +168,20 @@ const isRedirect = (statusCode: number) =>
 
 const recurseUntilRPUrl = async (
   url: string,
-  lowerCaseOidcDomain: string
+  oidcDomain: string
 ): Promise<HttpClientResponse> => {
   const res = await mockHttpNativeCall({
     followRedirects: false,
     verb: "get",
     url
   });
-  const isOIDCProviderBaseUrl =
-    res.headers.Location.toLowerCase().startsWith(lowerCaseOidcDomain);
+  const isOIDCProviderBaseUrl = res.headers.Location.toLowerCase().startsWith(
+    oidcDomain.toLowerCase()
+  );
 
   if (!isRedirect(res.status) || !isOIDCProviderBaseUrl) {
     return res;
   } else {
-    return await recurseUntilRPUrl(res.headers.Location, lowerCaseOidcDomain);
+    return await recurseUntilRPUrl(res.headers.Location, oidcDomain);
   }
 };
