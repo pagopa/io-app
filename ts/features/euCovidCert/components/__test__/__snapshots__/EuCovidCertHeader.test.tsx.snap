@@ -57,14 +57,14 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       fontStyle={
         Object {
           "fontSize": 22,
-          "lineHeight": 30,
+          "lineHeight": 24,
         }
       }
       style={
         Array [
           Object {
             "fontSize": 22,
-            "lineHeight": 30,
+            "lineHeight": 24,
           },
           Object {
             "color": "#17324D",
