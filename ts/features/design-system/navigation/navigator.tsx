@@ -62,6 +62,7 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
+import { DSFooterActions } from "../core/DSFooterActions";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -360,6 +361,14 @@ export const DesignSystemNavigator = () => {
           component={DSWallet}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.FOOTER_ACTIONS.route}
+          component={DSFooterActions}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.FOOTER_ACTIONS.title
           }}
         />
 

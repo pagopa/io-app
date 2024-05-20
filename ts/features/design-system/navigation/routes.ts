@@ -35,6 +35,10 @@ const DESIGN_SYSTEM_ROUTES = {
     WALLET: {
       route: "DESIGN_SYSTEM_WALLET",
       title: "Wallet"
+    },
+    FOOTER_ACTIONS: {
+      route: "DESIGN_SYSTEM_FOOTER_ACTIONS",
+      title: "Footer Actions"
     }
   },
   HEADERS: {
