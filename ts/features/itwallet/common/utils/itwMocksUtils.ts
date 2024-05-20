@@ -1,22 +1,13 @@
-import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { IOIcons } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import { BulletItem } from "../components/ItwBulletList";
-import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
 import {
   walletCredentialProviderUrl,
   walletPidProviderUrl
 } from "../../../../config";
+import I18n from "../../../../i18n";
+import { BulletItem } from "../components/ItwBulletList";
+import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
-
-export const pidDataMock: PidData = {
-  name: "Mario",
-  surname: "Rossi",
-  fiscalCode: "RSSMRA80L05F593A",
-  birthDate: "1980-01-10"
-};
-
 /**
  * Maps the assurance level string to a number, 3 for high, 0 for low.
  * @param level - the string representation of the assurance level.

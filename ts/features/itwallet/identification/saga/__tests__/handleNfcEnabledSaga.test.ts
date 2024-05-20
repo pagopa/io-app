@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
-import { itwIsNfcEnabled } from "../../../common/utils/itwCieUtils";
 import { itwNfcIsEnabled } from "../../store/actions";
+import * as cieUtils from "../../../../../utils/cie";
 import { handleNfcEnabledSaga } from "../handleNfcEnabledSaga";
 
 describe("handleNfcEnabledSaga", () => {
@@ -9,7 +9,7 @@ describe("handleNfcEnabledSaga", () => {
     arg => {
       testSaga(handleNfcEnabledSaga)
         .next()
-        .call(itwIsNfcEnabled)
+        .call(cieUtils.isNfcEnabled)
         .next(arg)
         .put(itwNfcIsEnabled.success(arg))
         .next()
