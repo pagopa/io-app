@@ -14,6 +14,11 @@ import {
   LocalIdpsFallback,
   idps as idpsFallback
 } from "../../../../utils/idps";
+import {
+  getPidCredentialCatalogItem,
+  pidDataMock
+} from "../../common/utils/itwMocksUtils";
+import { itwIssuanceEid } from "../../issuance/store/actions/eid";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
@@ -33,6 +38,21 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   );
 
   const onIdpSelected = (_idp: LocalIdpsFallback) => {
+    /** Mock request */
+    const pidCredentialCatalogItem = getPidCredentialCatalogItem();
+    dispatch(
+      itwIssuanceEid.request({
+        ...pidCredentialCatalogItem,
+        pidData: {
+          name: pidDataMock.name,
+          surname: pidDataMock.surname,
+          birthDate: pidDataMock.birthDate,
+          fiscalCode: pidDataMock.fiscalCode
+        }
+      })
+    );
+    /** ---  */
+
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
     });

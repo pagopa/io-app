@@ -38,6 +38,7 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
       component={ItwIssuanceEidPreviewScreen}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );
