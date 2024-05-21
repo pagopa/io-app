@@ -1,7 +1,7 @@
-import { StackActions } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
+import { View } from "react-native";
+import { StackActions } from "@react-navigation/native";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -11,7 +11,6 @@ import { MessagesParamsList } from "../navigation/params";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../types";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { trackOpenMessage } from "../analytics";
 import {
   blockedFromPushNotificationSelector,
@@ -27,6 +26,9 @@ import {
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { MESSAGES_ROUTES } from "../navigation/routes";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 
 export type MessageRouterScreenRouteParams = {
   messageId: UIMessageId;
@@ -46,7 +48,7 @@ export const MessageRouterScreen = (
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFirstRendering = useRef(true);
-  const showSpinner = useIOSelector(showSpinnerFromMessageGetStatusSelector);
+  const isLoading = useIOSelector(showSpinnerFromMessageGetStatusSelector);
   const thirdPartyMessageDetailsError = useIOSelector(
     thirdPartyMessageDetailsErrorSelector
   );
@@ -146,27 +148,47 @@ export const MessageRouterScreen = (
     shouldNavigateBackAfterPushNotificationInteraction
   ]);
 
+  useHeaderSecondLevel({
+    goBack: onCancelCallback,
+    supportRequest: true,
+    title: ""
+  });
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent
+        contentTitle={I18n.t("messageDetails.loadingText")}
+        headerVisible
+      >
+        <View style={{ alignItems: "center" }}>
+          <VSpacer size={8} />
+          <Body>{I18n.t("messageDetails.pleaseWait")}</Body>
+        </View>
+      </LoadingScreenContent>
+    );
+  }
+
   return (
-    <BaseScreenComponent
-      goBack={onCancelCallback}
-      contextualHelp={emptyContextualHelp}
-    >
-      <LoadingErrorComponent
-        errorText={
-          thirdPartyMessageDetailsError
-            ? I18n.t("messageDetails.remoteContentError.title")
-            : I18n.t("global.genericError")
-        }
-        errorSubText={
-          thirdPartyMessageDetailsError
-            ? I18n.t("messageDetails.remoteContentError.body")
-            : undefined
-        }
-        isLoading={showSpinner}
-        loadingCaption={I18n.t("messageDetails.loadingText")}
-        onAbort={onCancelCallback}
-        onRetry={getMessageDataCallback}
-      />
-    </BaseScreenComponent>
+    <OperationResultScreenContent
+      action={{
+        label: I18n.t("global.buttons.retry"),
+        onPress: getMessageDataCallback
+      }}
+      pictogram="umbrellaNew"
+      secondaryAction={{
+        label: I18n.t("global.buttons.cancel"),
+        onPress: onCancelCallback
+      }}
+      subtitle={
+        thirdPartyMessageDetailsError
+          ? I18n.t("messageDetails.remoteContentError.body")
+          : undefined
+      }
+      title={
+        thirdPartyMessageDetailsError
+          ? I18n.t("messageDetails.remoteContentError.title")
+          : I18n.t("global.genericError")
+      }
+    />
   );
 };
