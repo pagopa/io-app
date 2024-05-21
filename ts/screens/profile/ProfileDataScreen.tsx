@@ -108,7 +108,7 @@ const ProfileDataScreen = () => {
           <>
             <ListItemInfo
               label={I18n.t("profile.data.list.nameSurname")}
-              accessibilityLabel={I18n.t("profile.data.list.nameSurname")}
+              // accessibilityLabel={I18n.t("profile.data.list.nameSurname")}
               value={nameSurname}
               testID="name-surname"
             />
@@ -120,7 +120,7 @@ const ProfileDataScreen = () => {
           <>
             <ListItemInfo
               label={I18n.t("profile.data.list.fiscalCode")}
-              accessibilityLabel={I18n.t("profile.data.list.fiscalCode")}
+              // accessibilityLabel={I18n.t("profile.data.list.fiscalCode")}
               testID="show-fiscal-code"
               value={fiscalCode}
               endElement={showFiscalCode}
@@ -131,7 +131,7 @@ const ProfileDataScreen = () => {
         {/* Insert or edit email */}
         <ListItemInfo
           label={I18n.t("profile.data.list.email")}
-          accessibilityLabel={I18n.t("profile.data.list.email")}
+          // accessibilityLabel={I18n.t("profile.data.list.email")}
           value={email}
           endElement={editEmail}
           testID="insert-or-edit-email"

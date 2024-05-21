@@ -8,6 +8,8 @@ import {
   Label
 } from "@pagopa/io-app-design-system";
 import Barcode from "react-native-barcode-builder";
+import { useFocusEffect } from "@react-navigation/native";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -19,6 +21,7 @@ import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWit
 import { FAQsCategoriesType } from "../../utils/faq";
 import { useIOSelector } from "../../store/hooks";
 import { useMaxBrightness } from "../../utils/brightness";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = ["profile"];
 
@@ -33,11 +36,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const FiscalCodeScreen = () => {
   useMaxBrightness();
 
+  const titleRef = React.useRef<View>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setAccessibilityFocus(titleRef, 300 as Millisecond);
+    }, [])
+  );
+
   const nameSurname = useIOSelector(profileNameSurnameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
 
   return (
     <IOScrollViewWithLargeHeader
+      ref={titleRef}
       title={{
         label: I18n.t("profile.fiscalCode.fiscalCode")
       }}
@@ -48,7 +60,7 @@ const FiscalCodeScreen = () => {
     >
       <VSpacer size={24} />
       <ContentWrapper>
-        <View style={styles.box}>
+        <View accessible style={styles.box}>
           <Label weight="Regular">{nameSurname}</Label>
           <Barcode
             value={fiscalCode || ""}
