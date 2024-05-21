@@ -1,4 +1,5 @@
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import * as E from "fp-ts/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
@@ -13,6 +14,7 @@ import {
 } from "../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import {
+  HttpClientFailureResponse,
   HttpClientResponse,
   mockHttpNativeCall,
   mockSetNativeCookie
@@ -53,18 +55,17 @@ function* handleFimsGetConsentsList() {
     "X-IO-Federation-Token",
     fimsToken
   );
-  try {
-    const getConsentsResult = yield* call(mockHttpNativeCall, {
-      verb: "get",
-      followRedirects: true,
-      url: fimsCTAUrl
-    });
+  const getConsentsResult = yield* call(mockHttpNativeCall, {
+    verb: "get",
+    followRedirects: true,
+    url: fimsCTAUrl
+  });
 
-    yield* put(fimsGetConsentsListAction.success(getConsentsResult));
-  } catch {
-    // TODO:: failure backend response should report a fimsGetConsentsListAction.failure
+  if (getConsentsResult.type === "failure") {
     return;
   }
+  yield* put(fimsGetConsentsListAction.success(getConsentsResult));
+  // TODO:: failure backend response should report a fimsGetConsentsListAction.failure
 }
 
 // note: IAB => InAppBrowser
@@ -83,6 +84,11 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     url: action.payload.acceptUrl
   });
 
+  if (isRedirectInvalid(providerAcceptRedirectRes)) {
+    // TODO:: proper error handling
+    return;
+  }
+
   const rpUrl = yield* call(
     recurseUntilRPUrl,
     providerAcceptRedirectRes.headers.Location,
@@ -91,13 +97,13 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
 
   // --------------- lolliPoP -----------------
 
-  if (rpUrl.type === "failure") {
+  if (isRedirectInvalid(rpUrl)) {
     // TODO:: proper error handling
     return;
   }
 
-  const lollipopUrl = rpUrl.headers.Location;
-  const urlQueryParams = getQueryParamsFromUrlString(lollipopUrl);
+  const relyingPartyRedirectUrl = rpUrl.headers.Location;
+  const urlQueryParams = getQueryParamsFromUrlString(relyingPartyRedirectUrl);
 
   const authCode = urlQueryParams.authorization_code;
   const lollipopNonce = urlQueryParams.nonce;
@@ -119,38 +125,56 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   const keyTag = yield* select(lollipopKeyTagSelector);
   const publicKey = yield* select(lollipopPublicKeySelector);
   const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
-
-  const lollipopInit = yield* call(
-    lollipopRequestInit,
+  const lollipopEither = yield* call(
+    nonThrowingLollipopRequestInit,
     lollipopConfig,
     keyInfo,
-    lollipopUrl,
+    relyingPartyRedirectUrl,
     requestInit
   );
 
-  if (!lollipopInit.headers) {
+  if (E.isLeft(lollipopEither)) {
+    // TODO:: proper error handling
+    return;
+  }
+  const lollipopInit = lollipopEither.right;
+
+  const inAppBrowserUrl = yield* call(mockHttpNativeCall, {
+    verb: "get",
+    url: relyingPartyRedirectUrl,
+    headers: lollipopInit.headers as Record<string, string>,
+    followRedirects: false
+  });
+  if (isRedirectInvalid(inAppBrowserUrl)) {
     // TODO:: proper error handling
     return;
   }
 
-  const inAppBrowserUrl = yield* call(mockHttpNativeCall, {
-    verb: "get",
-    url: lollipopUrl,
-    headers: lollipopInit.headers as Record<string, string>,
-    followRedirects: false
-  });
-
   // ----------------- end lolliPoP -----------------
   const navigateToMsgHome = () =>
-    NavigationService.navigate("MAIN", {
-      screen: "MESSAGES_HOME"
-    });
+    NavigationService.getNavigator().current?.goBack();
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
   yield* call(navigateToMsgHome);
   return openAuthenticationSession(inAppBrowserUrl.headers.Location, "");
 }
 
 // -------------------- UTILS --------------------
+
+const nonThrowingLollipopRequestInit = async (
+  ...props: Parameters<typeof lollipopRequestInit>
+) => {
+  try {
+    const res = await lollipopRequestInit(...props);
+    return E.right(res);
+  } catch (error) {
+    return E.left(error);
+  }
+};
+
+const isRedirectInvalid = (
+  res: HttpClientResponse
+): res is HttpClientFailureResponse =>
+  res.type === "failure" || !res.headers.Location;
 
 const getQueryParamsFromUrlString = (url: string) => {
   const paramArr = url.slice(url.indexOf("?") + 1).split("&");
@@ -175,6 +199,12 @@ const recurseUntilRPUrl = async (
     verb: "get",
     url
   });
+
+  if (res.type === "failure") {
+    // TODO:: proper error handling
+    return res;
+  }
+
   const isOIDCProviderBaseUrl = res.headers.Location.toLowerCase().startsWith(
     oidcDomain.toLowerCase()
   );

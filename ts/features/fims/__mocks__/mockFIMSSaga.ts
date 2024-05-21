@@ -4,9 +4,15 @@ import {
   HttpCallConfig,
   RPInitialUrl,
   FakeBaseUrl,
-  mockHttpNativeCall,
-  mockSetNativeCookie
+  mockHttpNativeCall as nativeCall,
+  mockSetNativeCookie,
+  HttpClientSuccessResponse
 } from "./mockFIMSCallbacks";
+
+// since we are hardwiring mocks, we are sure that the response is always successful -- no need for error handling
+const mockHttpNativeCall = nativeCall as (
+  config: HttpCallConfig
+) => Promise<HttpClientSuccessResponse>;
 
 export function* mockFIMSSaga() {
   try {

@@ -141,8 +141,10 @@ const fastForwardToGrantResponse = () => {
   }
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export const mockHttpNativeCall = (config: HttpCallConfig) => {
+export const mockHttpNativeCall = (
+  config: HttpCallConfig
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+): Promise<HttpClientResponse> => {
   const verb = config.verb;
   const url = config.url;
 
