@@ -10,6 +10,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { service_1 } from "../../../__mocks__/messages";
 import { reproduceSequence } from "../../../../../utils/tests";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 const defaultProps: ComponentProps<typeof MessageDetailsHeader> = {
   createdAt: new Date("2021-10-18T16:00:30.541Z"),
@@ -52,7 +53,7 @@ const renderComponent = (
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageDetailsHeader {...props} />,
-      "DUMMY_ROUTE",
+      MESSAGES_ROUTES.MESSAGE_DETAIL,
       {},
       store
     ),
