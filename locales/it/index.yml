@@ -3028,7 +3028,7 @@ features:
   itWallet:
     card:
       eid:
-        label: Identità digitale
+        label: Identità Digitale
         expired: Non valida
         pending: In lavorazione
         digital: Versione digitale
