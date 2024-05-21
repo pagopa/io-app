@@ -29,6 +29,7 @@ export const ServicesHomeIntitutionList = () => {
     isError,
     isLoading,
     isUpdating,
+    isRefreshing,
     refreshInstitutions
   } = useInstitutionsFetcher();
 
@@ -72,11 +73,11 @@ export const ServicesHomeIntitutionList = () => {
   );
 
   const renderListFooterComponent = useCallback(() => {
-    if (isUpdating && currentPage > 0) {
+    if (isUpdating && !isRefreshing) {
       return <InstitutionListSkeleton />;
     }
     return <VSpacer size={16} />;
-  }, [currentPage, isUpdating]);
+  }, [isUpdating, isRefreshing]);
 
   const ListHeaderComponent = (
     <ListItemHeader label={I18n.t("services.home.institutions.title")} />
@@ -106,7 +107,7 @@ export const ServicesHomeIntitutionList = () => {
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.001}
       onRefresh={refreshInstitutions}
-      refreshing={isUpdating}
+      refreshing={isRefreshing}
       ListFooterComponent={renderListFooterComponent}
     />
   );
