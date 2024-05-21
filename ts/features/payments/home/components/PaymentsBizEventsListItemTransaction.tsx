@@ -7,6 +7,7 @@ import { format } from "../../../../utils/dates";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { getTransactionLogo } from "../../common/utils";
 import { formatAmountText } from "../../biz-events-transaction/utils";
+import I18n from "../../../../i18n";
 
 type Props = {
   transaction: TransactionListItem;
@@ -48,13 +49,28 @@ const PaymentsBizEventsListItemTransaction = ({
   const accessibleAmountText = getAccessibleAmountText(amountText);
   const accessibilityLabel = `${recipient}; ${accessibleDatetime}; ${accessibleAmountText}`;
 
-  const TransactionFallbackIcon = () => <Avatar size="small" />;
+  const TransactionEmptyIcon = () => <Avatar size="small" />;
 
   const transactionLogo = pipe(
     transactionPayeeLogoUri,
     O.map(uri => ({ uri })),
-    O.getOrElseW(() => <TransactionFallbackIcon />)
+    O.getOrElseW(() => <TransactionEmptyIcon />)
   );
+
+  if (transaction.isCart) {
+    return (
+      <ListItemTransaction
+        paymentLogoIcon={<TransactionEmptyIcon />}
+        onPress={onPress}
+        accessible={true}
+        title={I18n.t("features.payments.transactions.multiplePayment")}
+        subtitle={datetime}
+        transactionAmount={amountText}
+        accessibilityLabel={accessibilityLabel}
+        transactionStatus="success"
+      />
+    );
+  }
 
   return (
     <ListItemTransaction

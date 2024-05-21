@@ -3017,6 +3017,7 @@ features:
       status:
         expired: Scaduta
     transactions:
+      multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
       empty:
