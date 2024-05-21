@@ -31,15 +31,15 @@ export const DSFooterActionsNotFixed = () => {
         <FooterActions
           fixed={false}
           actions={{
-            type: "SingleButton",
+            type: "TwoButtons",
             primary: {
               label: "Pay button",
               onPress: onButtonPress
+            },
+            secondary: {
+              label: "Secondary link",
+              onPress: onButtonPress
             }
-            // secondary: {
-            //   label: "Secondary link",
-            //   onPress: onButtonPress
-            // },
             // tertiary: {
             //   label: "Tertiary link",
             //   onPress: onButtonPress
