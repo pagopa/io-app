@@ -3,7 +3,6 @@ import {
   openAuthenticationSession
 } from "@pagopa/io-react-native-login-utils";
 import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -14,28 +13,43 @@ import { getIdpLoginUri } from "../../../../utils/login";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { lollipopKeyTagSelector } from "../../../lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../lollipop/utils/login";
+import {
+  ItWalletError,
+  ItWalletErrorTypes
+} from "../../common/utils/itwErrorsUtils";
 
-export const useItwIdpIdentificationWebView = () => {
+const URL_LOGIN_SCHEME = "iologin";
+
+export type IdentificationResultCallbackFn = (resultUrl: string) => void;
+
+export const useItwIdpIdentification = (
+  onIdentificationResult: IdentificationResultCallbackFn
+) => {
   const dispatch = useIODispatch();
 
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isPending, setIsPending] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<ItWalletError>();
 
   const idpAuthSession = (
     loginUri: string
-  ): TE.TaskEither<LoginUtilsError, string> =>
-    pipe(loginUri, () =>
-      TE.tryCatch(
-        () => openAuthenticationSession(loginUri, "iologin"),
-        error => error as LoginUtilsError
-      )
+  ): TE.TaskEither<Error | LoginUtilsError, string> =>
+    TE.tryCatch(
+      () => {
+        setIsPending(true);
+        return openAuthenticationSession(loginUri, URL_LOGIN_SCHEME);
+      },
+      error => {
+        setError({ code: ItWalletErrorTypes.CREDENTIAL_ADD_ERROR });
+        return error as LoginUtilsError;
+      }
     );
 
   const startIdentification = async (idp: LocalIdpsFallback) => {
-    if (isLoading || O.isNone(maybeKeyTag)) {
+    if (isPending || O.isNone(maybeKeyTag)) {
       return;
     }
 
@@ -48,23 +62,14 @@ export const useItwIdpIdentificationWebView = () => {
           isFastLogin,
           dispatch
         ),
-      TE.fold(
-        () => TE.of(undefined),
-        url =>
-          pipe(
-            url,
-            () => idpAuthSession(url),
-            TE.fold(
-              error => T.of(undefined),
-              response => T.of(undefined)
-            )
-          )
-      )
+      TE.chain(idpAuthSession),
+      TE.map(onIdentificationResult)
     )();
   };
 
   return {
     startIdentification,
-    isLoading
+    isPending,
+    error
   };
 };
