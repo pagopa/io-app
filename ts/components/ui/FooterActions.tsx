@@ -118,6 +118,15 @@ const styles = StyleSheet.create({
     color: IOColors.black,
     fontSize: 9,
     opacity: 0.75
+  },
+  blockShadow: {
+    shadowColor: IOColors.black,
+    shadowOffset: {
+      width: 0,
+      height: -4
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 32
   }
 });
 
@@ -221,17 +230,18 @@ export const FooterActions = ({
           block, the content scrolls underneath. */}
       <Animated.View
         style={[
-          fixed
-            ? {
-                width: "100%",
-                height: safeBackgroundBlockHeight,
-                position: "absolute",
-                bottom: 0,
-                backgroundColor: transparent
-                  ? TRANSPARENT_BG_COLOR
-                  : HEADER_BG_COLOR
-              }
-            : null,
+          {
+            ...(fixed && {
+              width: "100%",
+              height: safeBackgroundBlockHeight,
+              position: "absolute",
+              bottom: 0,
+              backgroundColor: transparent
+                ? TRANSPARENT_BG_COLOR
+                : HEADER_BG_COLOR
+            }),
+            ...(fixed ? styles.blockShadow : null)
+          },
           animatedStyles?.background
         ]}
         pointerEvents="none"

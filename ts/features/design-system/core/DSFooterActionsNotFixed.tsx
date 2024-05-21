@@ -1,10 +1,7 @@
 import { IOColors, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
-import React, { useState } from "react";
+import React from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
-import {
-  FooterActions,
-  FooterActionsMeasurements
-} from "../../../components/ui/FooterActions";
+import { FooterActions } from "../../../components/ui/FooterActions";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
