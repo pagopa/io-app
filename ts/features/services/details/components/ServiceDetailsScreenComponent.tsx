@@ -54,6 +54,15 @@ const styles = StyleSheet.create({
   }
 });
 
+const { colors, locations } = easeGradient({
+  colorStops: {
+    0: { color: hexToRgba(IOColors[HEADER_BG_COLOR], 0) },
+    1: { color: IOColors[HEADER_BG_COLOR] }
+  },
+  easing: Easing.ease,
+  extraColorStopsPerTransition: 20
+});
+
 /* Extended gradient area above the actions */
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 /* End content margin before the actions */
@@ -122,17 +131,6 @@ export const ServiceDetailsScreenComponent = ({
   const getActionBlockHeight = (event: LayoutChangeEvent) => {
     setActionBlockHeight(event.nativeEvent.layout.height);
   };
-
-  const { colors, locations } = easeGradient({
-    colorStops: {
-      0: { color: hexToRgba(IOColors[HEADER_BG_COLOR], 0) },
-      1: actionsProps
-        ? { color: IOColors[HEADER_BG_COLOR] }
-        : { color: hexToRgba(IOColors[HEADER_BG_COLOR], 0) }
-    },
-    easing: Easing.ease,
-    extraColorStopsPerTransition: 20
-  });
 
   const bottomMargin: number = useMemo(
     () =>
@@ -242,51 +240,53 @@ export const ServiceDetailsScreenComponent = ({
       >
         {children}
       </Animated.ScrollView>
-      <View
-        style={[
-          styles.gradientBottomActions,
-          {
-            height: gradientAreaHeight,
-            paddingBottom: bottomMargin
-          }
-        ]}
-        pointerEvents="box-none"
-      >
-        <Animated.View
-          style={[
-            styles.gradientContainer,
-            debugMode && {
-              borderTopColor: IOColors["error-500"],
-              borderTopWidth: 1,
-              backgroundColor: hexToRgba(IOColors["error-500"], 0.5)
-            },
-            footerGradientOpacityTransition
-          ]}
-          pointerEvents="none"
-        >
-          <LinearGradient
-            style={{
-              height: gradientAreaHeight - safeBackgroundBlockHeight
-            }}
-            locations={locations}
-            colors={colors}
-          />
-          <View
-            style={{
-              bottom: 0,
-              height: safeBackgroundBlockHeight,
-              backgroundColor: HEADER_BG_COLOR
-            }}
-          />
-        </Animated.View>
+      {actionsProps && (
         <View
-          style={styles.buttonContainer}
+          style={[
+            styles.gradientBottomActions,
+            {
+              height: gradientAreaHeight,
+              paddingBottom: bottomMargin
+            }
+          ]}
           pointerEvents="box-none"
-          onLayout={getActionBlockHeight}
         >
-          {actionsProps && renderFooter(actionsProps)}
+          <Animated.View
+            style={[
+              styles.gradientContainer,
+              debugMode && {
+                borderTopColor: IOColors["error-500"],
+                borderTopWidth: 1,
+                backgroundColor: hexToRgba(IOColors["error-500"], 0.5)
+              },
+              footerGradientOpacityTransition
+            ]}
+            pointerEvents="none"
+          >
+            <LinearGradient
+              style={{
+                height: gradientAreaHeight - safeBackgroundBlockHeight
+              }}
+              locations={locations}
+              colors={colors}
+            />
+            <View
+              style={{
+                bottom: 0,
+                height: safeBackgroundBlockHeight,
+                backgroundColor: HEADER_BG_COLOR
+              }}
+            />
+          </Animated.View>
+          <View
+            style={styles.buttonContainer}
+            pointerEvents="box-none"
+            onLayout={getActionBlockHeight}
+          >
+            {renderFooter(actionsProps)}
+          </View>
         </View>
-      </View>
+      )}
     </>
   );
 };
