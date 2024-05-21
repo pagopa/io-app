@@ -2106,9 +2106,9 @@ services:
       subtitle: "{{count}} available services"
   search:
     input:
-      placeholder: "Cerca un ente nazionale o locale"
+      placeholder: "Search for a national or local institution"
     emptyState:
-      title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
+      title: "Enter at least three characters to search for the name of a national or local institution"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
