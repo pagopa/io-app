@@ -11,8 +11,9 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { ItwCredentialsMocks } from "../../__mocks__/credentials";
 import { EidCardPreview } from "../../common/components/EidCardPreview";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import {
@@ -20,12 +21,10 @@ import {
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwIssuanceEidValueSelector } from "../store/selectors/eid";
-import I18n from "../../../../i18n";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
-  const eidOption = useIOSelector(itwIssuanceEidValueSelector);
+  const eidOption = O.some(ItwCredentialsMocks.eid);
 
   /**
    * Renders the content of the screen if the PID is decoded.
