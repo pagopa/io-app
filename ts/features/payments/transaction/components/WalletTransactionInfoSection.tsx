@@ -81,6 +81,9 @@ const WalletTransactionInfoSection = ({
             <ListItemInfo
               label={I18n.t("transaction.details.info.dateAndHour")}
               value={format(transaction.created, "DD MMMM YYYY, HH:mm:ss")}
+              accessibilityLabel={`${I18n.t(
+                "transaction.details.info.dateAndHour"
+              )}: ${format(transaction.created, "DD MMMM YYYY, HH:mm")}`}
             />
             <Divider />
             <ListItemInfoCopy
