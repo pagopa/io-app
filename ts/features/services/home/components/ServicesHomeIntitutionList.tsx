@@ -15,7 +15,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
-import { logoForInstitution } from "../utils";
+import { getLogoForInstitution } from "../../common/utils";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 
 export const ServicesHomeIntitutionList = () => {
@@ -65,7 +65,7 @@ export const ServicesHomeIntitutionList = () => {
         onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
-          logoUri: logoForInstitution(item)
+          logoUri: getLogoForInstitution(item.fiscal_code)
         }}
       />
     ),

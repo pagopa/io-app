@@ -17,7 +17,7 @@ import { Institution } from "../../../../../definitions/services/Institution";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { logoForInstitution } from "../../home/utils";
+import { getLogoForInstitution } from "../../common/utils";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
@@ -94,7 +94,7 @@ export const SearchScreen = () => {
         onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
-          logoUri: logoForInstitution(item)
+          logoUri: getLogoForInstitution(item.fiscal_code)
         }}
       />
     ),

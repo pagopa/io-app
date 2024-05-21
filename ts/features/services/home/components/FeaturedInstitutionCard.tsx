@@ -6,12 +6,11 @@ import {
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { WithTestID } from "../../../../types/WithTestID";
-import { logoForInstitution } from "../utils";
+import { getLogoForInstitution } from "../../common/utils";
 
 export type FeaturedInstitutionCardProps = WithTestID<{
   id: string;
@@ -65,14 +64,7 @@ const FeaturedInstitutionCard = (props: FeaturedInstitutionCardProps) => (
   >
     <View style={styles.cardContent}>
       <View style={styles.cardAvatar}>
-        <Avatar
-          logoUri={logoForInstitution({
-            id: "",
-            name: "",
-            fiscal_code: props.id as OrganizationFiscalCode
-          })}
-          size="small"
-        />
+        <Avatar logoUri={getLogoForInstitution(props.id)} size="small" />
       </View>
       <View style={styles.cardLabel}>
         <H6 lineBreakMode="head" numberOfLines={2} color="hanPurple-850">
