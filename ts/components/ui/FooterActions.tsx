@@ -199,15 +199,6 @@ export const FooterActions = ({
     onMeasure?.({ actionBlockHeight: height, safeBottomAreaHeight });
   };
 
-  // const opacityTransition = useAnimatedStyle(() => ({
-  //   opacity: interpolate(
-  //     scrollPositionPercentage.value,
-  //     [0, gradientOpacityScrollTrigger, 1],
-  //     [1, 1, 0],
-  //     Extrapolate.CLAMP
-  //   )
-  // }));
-
   return (
     <Animated.View
       style={[
