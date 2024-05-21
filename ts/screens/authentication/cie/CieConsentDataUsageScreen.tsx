@@ -39,7 +39,10 @@ const LoaderComponent = () => (
 const CieConsentDataUsageScreen = () => {
   const route =
     useRoute<
-      Route<"CIE_CONSENT_DATA_USAGE", CieConsentDataUsageScreenNavigationParams>
+      Route<
+        typeof ROUTES.CIE_CONSENT_DATA_USAGE,
+        CieConsentDataUsageScreenNavigationParams
+      >
     >();
   const { cieConsentUri } = route.params;
   const dispatch = useIODispatch();

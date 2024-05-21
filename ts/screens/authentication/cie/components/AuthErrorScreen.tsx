@@ -38,8 +38,8 @@ const AuthErrorScreen = ({
       title: I18n.t("authentication.cie_errors.error_1001.title"),
       subtitle: I18n.t("authentication.cie_errors.error_1001.subtitle"),
       action: {
-        onPress: onRetry,
-        label: I18n.t("global.buttons.retry")
+        onPress: onCancel,
+        label: I18n.t("global.buttons.close")
       }
     },
     generic: {

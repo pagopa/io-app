@@ -9,7 +9,8 @@ export type AuthErrorScreenProps = {
 };
 
 const CieAuthErrorScreen = () => {
-  const route = useRoute<Route<"AUTH_ERROR_SCREEN", AuthErrorScreenProps>>();
+  const route =
+    useRoute<Route<typeof ROUTES.AUTH_ERROR_SCREEN, AuthErrorScreenProps>>();
   const { errorCode } = route.params;
 
   const navigation = useIONavigation();
