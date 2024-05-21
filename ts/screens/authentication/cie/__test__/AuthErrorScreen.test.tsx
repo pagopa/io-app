@@ -26,8 +26,8 @@ describe("AuthErrorScreen", () => {
       errorCode: "1001",
       expectedTitle: I18n.t("authentication.cie_errors.error_1001.title"),
       expectedSubtitle: I18n.t("authentication.cie_errors.error_1001.subtitle"),
-      expectRetryCalled: true,
-      expectCancelCalled: false
+      expectRetryCalled: false,
+      expectCancelCalled: true
     }
   ];
 
@@ -55,8 +55,8 @@ describe("AuthErrorScreen", () => {
         expect(getByText(expectedTitle)).toBeDefined();
         expect(getByText(expectedSubtitle)).toBeDefined();
 
-        fireEvent.press(getByText(I18n.t("global.buttons.retry")));
         if (expectRetryCalled) {
+          fireEvent.press(getByText(I18n.t("global.buttons.retry")));
           expect(onRetryMock).toHaveBeenCalled();
         }
 
