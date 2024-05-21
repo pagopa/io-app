@@ -9,7 +9,6 @@ import {
   TextInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
@@ -126,7 +125,7 @@ export const SearchScreen = () => {
   }, [isLoading, query]);
 
   return (
-    <SafeAreaView style={IOStyles.flex} edges={["bottom"]}>
+    <>
       <ContentWrapper>
         <TextInput
           accessibilityLabel={I18n.t("services.search.input.placeholder")}
@@ -156,6 +155,6 @@ export const SearchScreen = () => {
         ListFooterComponent={renderListFooterComponent}
         keyboardShouldPersistTaps="handled"
       />
-    </SafeAreaView>
+    </>
   );
 };
