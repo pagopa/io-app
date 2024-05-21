@@ -18,7 +18,7 @@ const ServicesNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={SERVICES_ROUTES.INSTITUTION_SERVICES}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen
         name={SERVICES_ROUTES.INSTITUTION_SERVICES}
