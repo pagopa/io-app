@@ -613,7 +613,7 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      apduNotSupported: "The operating system doesn't support the reading of your CIE. For further details, please contact your device manufacturer."
+      apduNotSupported: "Il sistema operativo non supporta la lettura della Carta di Identità Elettronica. Prova ad usare SPID per entrare in app."
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -675,7 +675,7 @@ authentication:
         tryAgain: Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!
         generic: Something did not work as expected while we read your CIE.
         unknownCardTitle: Unknown card
-        unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
+        unknownCardContent: The card used does not seem to be an Electronic Identity Card.
         unknownCardHelpLink: What is the Electronic Identity Card?
         genericErrorTitle: Non siamo riusciti a recuperare i dati dalla carta
         genericErrorSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova.

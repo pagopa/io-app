@@ -613,7 +613,7 @@ authentication:
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      apduNotSupported: "Il sistema operativo non supporta la lettura della tua carta di identità elettronica. Per maggiori informazioni, contatta il produttore del tuo dispositivo."
+      apduNotSupported: "Il sistema operativo non supporta la lettura della Carta di Identità Elettronica. Prova ad usare SPID per entrare in app."
       retry: Riprova
       noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -675,7 +675,7 @@ authentication:
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
         generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta
-        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica.
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
         genericErrorTitle: Non siamo riusciti a recuperare i dati dalla carta
         genericErrorSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova.

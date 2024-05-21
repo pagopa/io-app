@@ -578,8 +578,7 @@ authentication:
     genericTitle: "Anmeldung mit CIE"
     cie: "CIE"
     noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
-    nfc:
-      apduNotSupported: "Dein Betriebssystem unterstützt das Auslesen deiner elektronischen Identitätskarte nicht. Für weitere Informationen wende dich bitte an den Hersteller deines Geräts."
+    nfc:      
       retry: "Erneut versuchen"
       noNfcConnectionTitle: "Hast du die Karte berührt?"
       enableNfcTitle: "NFC aktivieren"
@@ -618,7 +617,7 @@ authentication:
         tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
         generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
         unknownCardTitle: "Unbekannte Karte"
-        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte zu sein."
         unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
     dataUsageConsent:
       retryCTA: "Weiter"

@@ -24,7 +24,7 @@ const CieWrongCardScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="cardQuestion"
       title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
       subtitle={I18n.t("authentication.cie.card.error.unknownCardContent")}
       action={action}

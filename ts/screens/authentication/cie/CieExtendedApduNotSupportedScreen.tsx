@@ -24,7 +24,7 @@ const CieExtendedApduNotSupportedScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="attention"
       title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
       subtitle={I18n.t("authentication.cie.nfc.apduNotSupported")}
       action={action}
