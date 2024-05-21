@@ -1,9 +1,4 @@
-import {
-  ButtonLink,
-  ButtonSolid,
-  IOColors,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import React, { useMemo, useState } from "react";
 import {
@@ -22,15 +17,19 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  FooterActions,
+  FooterActionsMeasurements
+} from "../../../components/ui/FooterActions";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
 export const DSStickyMessageCTAs = () => {
+  const theme = useIOTheme();
+
   const scrollY = useSharedValue<number>(0);
-  const insets = useSafeAreaInsets();
 
   /* We can't just use `screenHeight` from `Dimensions` because
   it doesn't count the fixed block used by `react-navigation`
@@ -44,8 +43,10 @@ export const DSStickyMessageCTAs = () => {
   actionBlockPlaceholder: Block element to which the fixed action block
                           needs to be attached
   */
+  type ActionBlockHeight = LayoutRectangle["height"];
+
   const [actionBlockHeight, setActionBlockHeight] =
-    useState<LayoutRectangle["height"]>(0);
+    useState<ActionBlockHeight>(0);
   const [actionBlockPlaceholderY, setActionBlockPlaceholderY] =
     useState<LayoutRectangle["y"]>(0);
 
@@ -54,9 +55,9 @@ export const DSStickyMessageCTAs = () => {
     scrollY.value = contentOffset.y;
   });
 
-  /* Get values from relative `onLayout` methods */
-  const getActionBlockHeight = (event: LayoutChangeEvent) => {
-    setActionBlockHeight(event.nativeEvent.layout.height);
+  /* Get `FooterActions` measurements from `onLayout` */
+  const handleFooterActionsHeight = (values: FooterActionsMeasurements) => {
+    setActionBlockHeight(values.safeBottomAreaHeight);
   };
 
   const getActionBlockY = (event: LayoutChangeEvent) => {
@@ -69,12 +70,6 @@ export const DSStickyMessageCTAs = () => {
   );
 
   const actionBlockAnimatedStyle = useAnimatedStyle(() => ({
-    /* Avoid solid background overlap with the
-    system scrollbar */
-    backgroundColor:
-      actionBlockPlaceholderTopEdge < scrollY.value
-        ? "transparent"
-        : IOColors.white,
     /* 
     We only start translating the action block
     when it reaches the top of the placeholder
@@ -93,13 +88,29 @@ export const DSStickyMessageCTAs = () => {
     ]
   }));
 
+  const actionBackgroundBlockAnimatedStyle = useAnimatedStyle(() => ({
+    /* Avoid solid background overlap with the
+       system scrollbar */
+    backgroundColor:
+      actionBlockPlaceholderTopEdge < scrollY.value
+        ? "transparent"
+        : IOColors[theme["appBackground-primary"]]
+  }));
+
   return (
     <View style={styles.container}>
       <Animated.ScrollView onScroll={handleScroll} scrollEventThrottle={8}>
         {[...Array(9)].map((_el, i) => (
           <React.Fragment key={`view-${i}`}>
-            <View style={styles.block}>
-              <Text>{`Block ${i}`}</Text>
+            <View
+              style={[
+                styles.block,
+                { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+              ]}
+            >
+              <Text style={{ color: IOColors[theme["textBody-tertiary"]] }}>
+                {`Block ${i}`}
+              </Text>
             </View>
             <VSpacer size={4} />
           </React.Fragment>
@@ -107,38 +118,34 @@ export const DSStickyMessageCTAs = () => {
         {/* Action Block Placeholder: START */}
         <View
           onLayout={getActionBlockY}
-          style={[{ height: actionBlockHeight }, styles.actionBlockBackground]}
+          style={{
+            height: actionBlockHeight,
+            backgroundColor: IOColors[theme["appBackground-primary"]]
+          }}
         />
         {/* Action Block Placeholder: END */}
         <View style={[styles.block, styles.footer]}>
           <Text>{`Footer`}</Text>
         </View>
       </Animated.ScrollView>
-      <Animated.View
-        onLayout={getActionBlockHeight}
-        style={[
-          styles.actionBlockBackground,
-          styles.actionBlockPosition,
-          { paddingBottom: insets.bottom },
-          actionBlockAnimatedStyle
-        ]}
-      >
-        <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
-        <ButtonSolid
-          fullWidth
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Pay button"}
-          onPress={onButtonPress}
-        />
-        <VSpacer />
-        <View style={{ alignSelf: "center" }}>
-          <ButtonLink
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Secondary link"}
-            onPress={onButtonPress}
-          />
-        </View>
-      </Animated.View>
+      <FooterActions
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: "Pay button",
+            onPress: onButtonPress
+          },
+          secondary: {
+            label: "Secondary link",
+            onPress: onButtonPress
+          }
+        }}
+        animatedStyles={{
+          mainBlock: actionBlockAnimatedStyle,
+          background: actionBackgroundBlockAnimatedStyle
+        }}
+        onMeasure={handleFooterActionsHeight}
+      />
     </View>
   );
 };
@@ -147,32 +154,12 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1
   },
-  debugText: {
-    position: "absolute",
-    right: 8,
-    top: -16,
-    color: IOColors.black,
-    fontSize: 9,
-    opacity: 0.75
-  },
   block: {
-    backgroundColor: IOColors["grey-100"],
     alignItems: "center",
     justifyContent: "center",
-    aspectRatio: 16 / 9
+    aspectRatio: 16 / 10
   },
   footer: {
     backgroundColor: IOColors["success-100"]
-  },
-  actionBlockBackground: {
-    backgroundColor: IOColors.white
-  },
-  actionBlockPosition: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    paddingHorizontal: 24,
-    paddingVertical: 16
   }
 });

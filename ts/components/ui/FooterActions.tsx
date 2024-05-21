@@ -8,6 +8,7 @@ import {
   IOVisualCostants,
   VSpacer,
   buttonSolidHeight,
+  hexToRgba,
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -24,7 +25,9 @@ import {
   LayoutChangeEvent,
   LayoutRectangle,
   StyleSheet,
-  View
+  Text,
+  View,
+  ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -67,15 +70,26 @@ export type FooterActionsMeasurements = {
 
 type FooterActions = FooterSingleButton | FooterTwoButtons | FooterThreeButtons;
 
+type FooterAnimatedStyles = {
+  /* Apply object returned by `useAnimatedStyle` to the main block */
+  mainBlock?: Animated.AnimateStyle<ViewStyle>;
+  /* Apply object returned by `useAnimatedStyle` to the background */
+  background?: Animated.AnimateStyle<ViewStyle>;
+};
+
 type FooterActionsProps = WithTestID<
   PropsWithChildren<{
     actions?: FooterActions;
-    debugMode?: boolean;
+    onMeasure: (measurements: FooterActionsMeasurements) => void;
+    animatedStyles?: FooterAnimatedStyles;
+    /* Make the background transparent */
+    transparent?: boolean;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
-    /* Include page margins */
-    includeContentMargins?: boolean;
-    onMeasure: (measurements: FooterActionsMeasurements) => void;
+    /* Show the following elements:
+       - Opaque red background to show the component boundaries
+       - Height of the component */
+    debugMode?: boolean;
   }>
 >;
 
@@ -94,15 +108,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flexShrink: 0
+  },
+  debugText: {
+    position: "absolute",
+    right: 8,
+    top: -16,
+    color: IOColors.black,
+    fontSize: 9,
+    opacity: 0.75
   }
 });
 
 export const FooterActions = ({
   actions,
   excludeSafeAreaMargins = false,
-  // includeContentMargins = true,
+  animatedStyles,
+  transparent = false,
   onMeasure,
-  testID
+  testID,
+  debugMode = false
 }: FooterActionsProps) => {
   const theme = useIOTheme();
   const { isExperimental } = useIOExperimentalDesign();
@@ -119,6 +143,7 @@ export const FooterActions = ({
   /* Background color should be app main background
      (both light and dark themes) */
   const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const TRANSPARENT_BG_COLOR: ColorValue = "transparent";
   const BUTTONSOLID_HEIGHT = isExperimental ? buttonSolidHeight : 40;
 
   const insets = useSafeAreaInsets();
@@ -144,8 +169,9 @@ export const FooterActions = ({
     [needSafeAreaMargin, secondaryAction]
   );
 
-  /* Safe background block. Cover at least 85% of the space
-     to avoid glitchy elements underneath */
+  /* Safe background block. Cover everything until it reaches
+     the half of the primary action button. It avoids
+     glitchy behavior underneath.  */
   const safeBackgroundBlockHeight: number = useMemo(
     () => bottomMargin + actionBlockHeight - BUTTONSOLID_HEIGHT / 2,
     [BUTTONSOLID_HEIGHT, actionBlockHeight, bottomMargin]
@@ -171,26 +197,37 @@ export const FooterActions = ({
   // }));
 
   return (
-    <View
-      style={{
-        position: "absolute",
-        bottom: 0,
-        width: "100%",
-        paddingBottom: bottomMargin
-      }}
+    <Animated.View
+      style={[
+        {
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          paddingBottom: bottomMargin
+        },
+        debugMode && {
+          backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
+        },
+        animatedStyles?.mainBlock
+      ]}
       testID={testID}
     >
       {/* Safe background block. It's added because when you swipe up
           quickly, the content below is visible for about 100ms. Without this
           block, the content scrolls underneath. */}
       <Animated.View
-        style={{
-          position: "absolute",
-          bottom: 0,
-          width: "100%",
-          height: safeBackgroundBlockHeight,
-          backgroundColor: HEADER_BG_COLOR
-        }}
+        style={[
+          {
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+            height: safeBackgroundBlockHeight,
+            backgroundColor: transparent
+              ? TRANSPARENT_BG_COLOR
+              : HEADER_BG_COLOR
+          },
+          animatedStyles?.background
+        ]}
         pointerEvents="none"
       />
 
@@ -199,6 +236,10 @@ export const FooterActions = ({
         onLayout={getActionBlockMeasurements}
         pointerEvents="box-none"
       >
+        {debugMode && (
+          <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
+        )}
+
         {primaryAction && <ButtonSolid fullWidth {...primaryAction} />}
 
         {type === "TwoButtons" && (
@@ -241,6 +282,6 @@ export const FooterActions = ({
           </Fragment>
         )}
       </View>
-    </View>
+    </Animated.View>
   );
 };
