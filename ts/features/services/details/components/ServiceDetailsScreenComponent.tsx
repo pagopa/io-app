@@ -1,3 +1,15 @@
+import {
+  ButtonLink,
+  ButtonOutline,
+  ButtonSolid,
+  IOColors,
+  IOSpacer,
+  IOSpacingScale,
+  IOStyles,
+  IOVisualCostants,
+  VSpacer,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 import React, { ComponentProps, useCallback, useMemo, useState } from "react";
 import {
   LayoutChangeEvent,
@@ -15,18 +27,6 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  ButtonLink,
-  ButtonOutline,
-  ButtonSolid,
-  IOColors,
-  IOSpacer,
-  IOSpacingScale,
-  IOStyles,
-  IOVisualCostants,
-  VSpacer,
-  hexToRgba
-} from "@pagopa/io-app-design-system";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ServiceSpecialAction } from "./ServiceSpecialAction";
 
@@ -240,51 +240,53 @@ export const ServiceDetailsScreenComponent = ({
       >
         {children}
       </Animated.ScrollView>
-      <View
-        style={[
-          styles.gradientBottomActions,
-          {
-            height: gradientAreaHeight,
-            paddingBottom: bottomMargin
-          }
-        ]}
-        pointerEvents="box-none"
-      >
-        <Animated.View
-          style={[
-            styles.gradientContainer,
-            debugMode && {
-              borderTopColor: IOColors["error-500"],
-              borderTopWidth: 1,
-              backgroundColor: hexToRgba(IOColors["error-500"], 0.5)
-            },
-            footerGradientOpacityTransition
-          ]}
-          pointerEvents="none"
-        >
-          <LinearGradient
-            style={{
-              height: gradientAreaHeight - safeBackgroundBlockHeight
-            }}
-            locations={locations}
-            colors={colors}
-          />
-          <View
-            style={{
-              bottom: 0,
-              height: safeBackgroundBlockHeight,
-              backgroundColor: HEADER_BG_COLOR
-            }}
-          />
-        </Animated.View>
+      {actionsProps && (
         <View
-          style={styles.buttonContainer}
+          style={[
+            styles.gradientBottomActions,
+            {
+              height: gradientAreaHeight,
+              paddingBottom: bottomMargin
+            }
+          ]}
           pointerEvents="box-none"
-          onLayout={getActionBlockHeight}
         >
-          {actionsProps && renderFooter(actionsProps)}
+          <Animated.View
+            style={[
+              styles.gradientContainer,
+              debugMode && {
+                borderTopColor: IOColors["error-500"],
+                borderTopWidth: 1,
+                backgroundColor: hexToRgba(IOColors["error-500"], 0.5)
+              },
+              footerGradientOpacityTransition
+            ]}
+            pointerEvents="none"
+          >
+            <LinearGradient
+              style={{
+                height: gradientAreaHeight - safeBackgroundBlockHeight
+              }}
+              locations={locations}
+              colors={colors}
+            />
+            <View
+              style={{
+                bottom: 0,
+                height: safeBackgroundBlockHeight,
+                backgroundColor: HEADER_BG_COLOR
+              }}
+            />
+          </Animated.View>
+          <View
+            style={styles.buttonContainer}
+            pointerEvents="box-none"
+            onLayout={getActionBlockHeight}
+          >
+            {renderFooter(actionsProps)}
+          </View>
         </View>
-      </View>
+      )}
     </>
   );
 };
