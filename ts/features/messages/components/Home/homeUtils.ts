@@ -64,7 +64,6 @@ export const getLoadServiceDetailsActionIfNeeded = (
   if (!organizationFiscalCode) {
     const isLoading = isLoadingServiceByIdSelector(state, serviceId);
     if (!isLoading) {
-      // console.log(`=== WrappedMessageListItem useEffect dispatch`);
       return loadServiceDetail.request(serviceId);
     }
   }
