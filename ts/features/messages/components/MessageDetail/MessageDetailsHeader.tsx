@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
   createdAt: Date;
-  subject: string;
   serviceId: ServiceId;
+  subject: string;
 }>;
 
 const MessageDetailsHeaderContent = ({
@@ -68,6 +68,7 @@ export const MessageDetailsHeader = ({
           <OrganizationHeader
             logoUri={logosForService(service)}
             organizationName={service.organization_name}
+            serviceId={serviceId}
             serviceName={service.service_name}
           />
           <Divider />
