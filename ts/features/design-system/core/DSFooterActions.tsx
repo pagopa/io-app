@@ -1,4 +1,4 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
 import React, { useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
@@ -11,6 +11,8 @@ const onButtonPress = () => {
 };
 
 export const DSFooterActions = () => {
+  const theme = useIOTheme();
+
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,
@@ -32,8 +34,15 @@ export const DSFooterActions = () => {
       >
         {[...Array(9)].map((_el, i) => (
           <React.Fragment key={`view-${i}`}>
-            <View style={styles.block}>
-              <Text>{`Block ${i}`}</Text>
+            <View
+              style={[
+                styles.block,
+                { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+              ]}
+            >
+              <Text style={{ color: IOColors[theme["textBody-tertiary"]] }}>
+                {`Block ${i}`}
+              </Text>
             </View>
             <VSpacer size={4} />
           </React.Fragment>
@@ -57,31 +66,6 @@ export const DSFooterActions = () => {
           // }
         }}
       />
-      {/* <Animated.View
-        onLayout={getActionBlockHeight}
-        style={[
-          styles.actionBlockBackground,
-          styles.actionBlockPosition,
-          { paddingBottom: insets.bottom },
-          actionBlockAnimatedStyle
-        ]}
-      >
-        <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
-        <ButtonSolid
-          fullWidth
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Pay button"}
-          onPress={onButtonPress}
-        />
-        <VSpacer />
-        <View style={{ alignSelf: "center" }}>
-          <ButtonLink
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Secondary link"}
-            onPress={onButtonPress}
-          />
-        </View>
-      </Animated.View> */}
     </View>
   );
 };
@@ -91,9 +75,8 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   block: {
-    backgroundColor: IOColors["grey-100"],
     alignItems: "center",
     justifyContent: "center",
-    aspectRatio: 16 / 9
+    aspectRatio: 16 / 10
   }
 });
