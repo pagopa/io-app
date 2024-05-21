@@ -13,13 +13,13 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ItwCredentialsMocks } from "../../__mocks__/credentials";
 import { EidCardPreview } from "../../common/components/EidCardPreview";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
+import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 export const ItwIssuanceEidPreviewScreen = () => {
