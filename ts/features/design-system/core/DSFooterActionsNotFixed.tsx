@@ -13,25 +13,9 @@ const onButtonPress = () => {
 export const DSFooterActionsNotFixed = () => {
   const theme = useIOTheme();
 
-  const [footerActionsMeasurements, setfooterActionsMeasurements] =
-    useState<FooterActionsMeasurements>({
-      actionBlockHeight: 0,
-      safeBottomAreaHeight: 0
-    });
-
-  const handleFooterActionsMeasurements = (
-    values: FooterActionsMeasurements
-  ) => {
-    setfooterActionsMeasurements(values);
-  };
-
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
-        }}
-      >
+      <ScrollView>
         {[...Array(9)].map((_el, i) => (
           <React.Fragment key={`view-${i}`}>
             <View
@@ -48,7 +32,7 @@ export const DSFooterActionsNotFixed = () => {
           </React.Fragment>
         ))}
         <FooterActions
-          onMeasure={handleFooterActionsMeasurements}
+          fixed={false}
           actions={{
             type: "SingleButton",
             primary: {

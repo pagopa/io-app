@@ -35,10 +35,6 @@ const DESIGN_SYSTEM_ROUTES = {
     WALLET: {
       route: "DESIGN_SYSTEM_WALLET",
       title: "Wallet"
-    },
-    FOOTER_ACTIONS: {
-      route: "DESIGN_SYSTEM_FOOTER_ACTIONS",
-      title: "Footer Actions"
     }
   },
   HEADERS: {
@@ -50,18 +46,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   SCREENS: {
-    IOSCROLLVIEW: {
-      route: "IOSCROLLVIEW",
-      title: "IOScrollView"
-    },
-    IOSCROLLVIEW_WO_ACTIONS: {
-      route: "IOSCROLLVIEW_WO_ACTIONS",
-      title: "IOScrollView w/o Actions"
-    },
-    IOSCROLLVIEW_LARGEHEADER: {
-      route: "IOSCROLLVIEW_LARGEHEADER",
-      title: "IOScrollView w/ Large header"
-    },
     OPERATION_RESULT: {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
@@ -92,6 +76,22 @@ const DESIGN_SYSTEM_ROUTES = {
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
+    },
+    IOSCROLLVIEW: {
+      route: "IOSCROLLVIEW",
+      title: "IOScrollView"
+    },
+    IOSCROLLVIEW_WO_ACTIONS: {
+      route: "IOSCROLLVIEW_WO_ACTIONS",
+      title: "IOScrollView w/o Actions"
+    },
+    IOSCROLLVIEW_LARGEHEADER: {
+      route: "IOSCROLLVIEW_LARGEHEADER",
+      title: "IOScrollView w/ Large header"
+    },
+    FOOTER_ACTIONS: {
+      route: "DESIGN_SYSTEM_FOOTER_ACTIONS",
+      title: "Footer Actions"
     },
     FOOTER_ACTIONS_STICKY: {
       route: "DS_FOOTER_ACTIONS_STICKY",

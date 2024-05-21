@@ -80,7 +80,7 @@ type FooterAnimatedStyles = {
 type FooterActionsProps = WithTestID<
   PropsWithChildren<{
     actions?: FooterActions;
-    onMeasure: (measurements: FooterActionsMeasurements) => void;
+    onMeasure?: (measurements: FooterActionsMeasurements) => void;
     animatedStyles?: FooterAnimatedStyles;
     /* Make the background transparent */
     transparent?: boolean;
@@ -187,7 +187,7 @@ export const FooterActions = ({
     /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Content end margin */
     const safeBottomAreaHeight = bottomMargin + height + contentEndMargin;
-    onMeasure({ actionBlockHeight: height, safeBottomAreaHeight });
+    onMeasure?.({ actionBlockHeight: height, safeBottomAreaHeight });
   };
 
   // const opacityTransition = useAnimatedStyle(() => ({
@@ -206,7 +206,9 @@ export const FooterActions = ({
           width: "100%",
           paddingBottom: bottomMargin
         },
-        fixed ? { position: "absolute", bottom: 0 } : null,
+        fixed
+          ? { position: "absolute", bottom: 0 }
+          : { marginTop: contentEndMargin },
         debugMode && {
           backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
         },
@@ -219,12 +221,10 @@ export const FooterActions = ({
           block, the content scrolls underneath. */}
       <Animated.View
         style={[
-          {
-            width: "100%",
-            height: safeBackgroundBlockHeight
-          },
           fixed
             ? {
+                width: "100%",
+                height: safeBackgroundBlockHeight,
                 position: "absolute",
                 bottom: 0,
                 backgroundColor: transparent

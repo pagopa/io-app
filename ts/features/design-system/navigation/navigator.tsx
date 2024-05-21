@@ -365,14 +365,6 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.FOOTER_ACTIONS.route}
-          component={DSFooterActions}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.FOOTER_ACTIONS.title
-          }}
-        />
-
         {/* HEADERS */}
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
@@ -396,32 +388,6 @@ export const DesignSystemNavigator = () => {
         />
 
         {/* SCREENS */}
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.route}
-          component={DSIOScrollView}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.route}
-          component={DSIOScrollViewWithoutActions}
-          options={{
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.route}
-          component={DSIOScrollViewScreenWithLargeHeader}
-          options={{
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.title
-          }}
-        />
-
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
           component={DSScreenOperationResult}
@@ -465,13 +431,54 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW.route}
+          component={DSIOScrollView}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_WO_ACTIONS.route}
+          component={DSIOScrollViewWithoutActions}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_WO_ACTIONS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_LARGEHEADER.route}
+          component={DSIOScrollViewScreenWithLargeHeader}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_LARGEHEADER.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS.route}
+          component={DSFooterActions}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS.title
+          }}
+        />
+
+        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_STICKY.route}
           component={DSFooterActionsSticky}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_STICKY.title
+          }}
         />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.route}
           component={DSFooterActionsNotFixed}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.title
+          }}
         />
 
         <Stack.Group
