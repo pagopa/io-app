@@ -3,14 +3,14 @@ import React, { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
-import I18n from "../../../i18n";
-import { UIMessage } from "../types";
+import I18n from "../../../../../i18n";
+import { UIMessage } from "../../../types";
 
-import { useItemsSelection } from "../hooks/useItemsSelection";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { useItemsSelection } from "../../../hooks/useItemsSelection";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ListSelectionBar from "./ListSelectionBar";
 import { EmptyListComponent } from "./EmptyListComponent";
-import MessageList from "./MessageList";
+import MessageList from ".";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -56,7 +56,7 @@ const MessagesArchive = ({
         navigateToMessageDetail(message);
       }
     },
-    [selectedItems]
+    [navigateToMessageDetail, selectedItems, toggleItem]
   );
 
   const onLongPressItem = (id: string) => {

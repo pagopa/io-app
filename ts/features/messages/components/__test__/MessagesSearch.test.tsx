@@ -7,7 +7,7 @@ import {
   service_2,
   successReloadMessagesPayload
 } from "../../__mocks__/messages";
-import MessagesSearch from "../MessagesSearch";
+import MessagesSearch from "../Home/legacy/MessagesSearch";
 
 const messages = successReloadMessagesPayload.messages;
 

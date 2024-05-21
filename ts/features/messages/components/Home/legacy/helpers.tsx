@@ -1,7 +1,6 @@
 import React from "react";
 import { Animated, FlatList } from "react-native";
-
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { ErrorLoadingComponent } from "./ErrorLoadingComponent";
 
 export const ITEM_HEIGHT = 114;
