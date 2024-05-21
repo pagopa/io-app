@@ -86,6 +86,8 @@ type FooterActionsProps = WithTestID<
     transparent?: boolean;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
+    /* Fixed at the bottom of the screen */
+    fixed?: boolean;
     /* Show the following elements:
        - Opaque red background to show the component boundaries
        - Height of the component */
@@ -123,6 +125,7 @@ export const FooterActions = ({
   actions,
   excludeSafeAreaMargins = false,
   animatedStyles,
+  fixed = true,
   transparent = false,
   onMeasure,
   testID,
@@ -200,11 +203,10 @@ export const FooterActions = ({
     <Animated.View
       style={[
         {
-          position: "absolute",
-          bottom: 0,
           width: "100%",
           paddingBottom: bottomMargin
         },
+        fixed ? { position: "absolute", bottom: 0 } : null,
         debugMode && {
           backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
         },
@@ -218,14 +220,18 @@ export const FooterActions = ({
       <Animated.View
         style={[
           {
-            position: "absolute",
-            bottom: 0,
             width: "100%",
-            height: safeBackgroundBlockHeight,
-            backgroundColor: transparent
-              ? TRANSPARENT_BG_COLOR
-              : HEADER_BG_COLOR
+            height: safeBackgroundBlockHeight
           },
+          fixed
+            ? {
+                position: "absolute",
+                bottom: 0,
+                backgroundColor: transparent
+                  ? TRANSPARENT_BG_COLOR
+                  : HEADER_BG_COLOR
+              }
+            : null,
           animatedStyles?.background
         ]}
         pointerEvents="none"

@@ -26,7 +26,7 @@ const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
-export const DSStickyMessageCTAs = () => {
+export const DSFooterActionsSticky = () => {
   const theme = useIOTheme();
 
   const scrollY = useSharedValue<number>(0);

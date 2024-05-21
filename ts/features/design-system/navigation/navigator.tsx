@@ -55,7 +55,7 @@ import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSSelection } from "../core/DSSelection";
 import { DSStepper } from "../core/DSStepper";
-import { DSStickyMessageCTAs } from "../core/DSStickyMessageCTAs";
+import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
@@ -63,6 +63,7 @@ import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DSFooterActions } from "../core/DSFooterActions";
+import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -436,7 +437,6 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
           component={DSBonusCardScreen}
-          options={{ headerShown: true }}
         />
 
         <Stack.Screen
@@ -451,21 +451,29 @@ export const DesignSystemNavigator = () => {
           component={DSSafeArea}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route}
           component={DSSafeAreaCentered}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
           component={DSEdgeToEdgeArea}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_MESSAGE_CTAS.route}
-          component={DSStickyMessageCTAs}
-          options={{ headerShown: true }}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_STICKY.route}
+          component={DSFooterActionsSticky}
         />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.route}
+          component={DSFooterActionsNotFixed}
+        />
+
         <Stack.Group
           screenOptions={
             Platform.OS === "ios"

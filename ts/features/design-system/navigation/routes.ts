@@ -93,9 +93,13 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
     },
-    STICKY_MESSAGE_CTAS: {
-      route: "DS_STICKY_MESS_CTAS",
-      title: "Sticky Message CTAs"
+    FOOTER_ACTIONS_STICKY: {
+      route: "DS_FOOTER_ACTIONS_STICKY",
+      title: "Footer Actions (sticky)"
+    },
+    FOOTER_ACTIONS_NOT_FIXED: {
+      route: "DS_FOOTER_ACTIONS_NOT_FIXED",
+      title: "Footer Actions (not fixed)"
     }
   },
   LEGACY: {
