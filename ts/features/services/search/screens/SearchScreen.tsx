@@ -46,13 +46,15 @@ export const SearchScreen = () => {
     }
   }, [isError]);
 
-  const goBack = useCallback(() => {
-    navigation.goBack();
-    dispatch(searchPaginatedInstitutionsGet.cancel());
-  }, [dispatch, navigation]);
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", _ =>
+        dispatch(searchPaginatedInstitutionsGet.cancel())
+      ),
+    [dispatch, navigation]
+  );
 
   useHeaderSecondLevel({
-    goBack,
     title: "",
     supportRequest: true
   });
