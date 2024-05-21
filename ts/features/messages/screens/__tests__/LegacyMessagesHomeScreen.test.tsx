@@ -17,7 +17,7 @@ import {
 } from "../../../../store/reducers/__mock__/backendStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
-import LegacyMessagesHomeScreen from "../LegacyMessagesHomeScreen";
+import LegacyMessagesHomeScreen from "../legacy/LegacyMessagesHomeScreen";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 const mockNavigate = jest.fn();
@@ -133,7 +133,8 @@ const renderComponent = (
       }),
       lastRequest: O.none
     },
-    migration: O.none
+    migration: O.none,
+    shownCategory: "INBOX"
   } as AllPaginated;
 
   const mockStore = configureMockStore<GlobalState>();

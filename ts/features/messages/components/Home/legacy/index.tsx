@@ -14,21 +14,21 @@ import {
   Vibration
 } from "react-native";
 import { connect } from "react-redux";
-import { maximumItemsFromAPI, pageSize } from "../../../../config";
-import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
-import I18n from "../../../../i18n";
-import { Dispatch } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
+import { maximumItemsFromAPI, pageSize } from "../../../../../config";
+import { useTabItemPressWhenScreenActive } from "../../../../../hooks/useTabItemPressWhenScreenActive";
+import I18n from "../../../../../i18n";
+import { Dispatch } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
-} from "../../../../theme/variables";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+} from "../../../../../theme/variables";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   Filter,
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages
-} from "../../store/actions";
+} from "../../../store/actions";
 import {
   allArchiveSelector,
   allInboxSelector,
@@ -38,8 +38,8 @@ import {
   isLoadingInboxPreviousPage,
   isReloadingArchive,
   isReloadingInbox
-} from "../../store/reducers/allPaginated";
-import { UIMessage } from "../../types";
+} from "../../../store/reducers/allPaginated";
+import { UIMessage } from "../../../types";
 import MessageListItem from "./Item";
 import {
   EmptyComponent,

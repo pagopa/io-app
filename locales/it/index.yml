@@ -603,9 +603,9 @@ authentication:
     card5-title: Ti diamo il benvenuto su IO!
     card5-content: Vediamo insieme cosa puoi fare
     card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
-    expiredCardTitle: Carta scaduta o non più valida
+    expiredCardTitle: La verifica della CIE non è andata a buon fine
     expiredCardHeaderTitle: Entra con CIE
-    expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
+    expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
   cie:
     genericTitle: Entra con CIE
@@ -1921,7 +1921,8 @@ messageDetails:
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
-  loadingText: Caricamento dei dettagli del messaggio in corso...
+  loadingText: Stiamo caricando il messaggio
+  pleaseWait: Attendi qualche secondo
   errorText: Non siamo riusciti a caricare i dettagli del tuo messaggio
   retryText: Probabilmente è un errore temporaneo... riprova per piacere!
   submitBugText: Se il problema non si risolve segnalacelo con l'icona '?' in alto a destra, grazie!
@@ -2091,6 +2092,7 @@ services:
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
+  new: Nuovo
   home:
     institutions:
       title: Nazionali
@@ -3029,6 +3031,12 @@ features:
         failure: FALLITA
         success: ""
   itWallet:
+    card:
+      eid:
+        label: Identità digitale
+        expired: Non valida
+        pending: In lavorazione
+        digital: Versione digitale
     discovery:
       info:
         title: Inizia dalla tua Identità Digitale

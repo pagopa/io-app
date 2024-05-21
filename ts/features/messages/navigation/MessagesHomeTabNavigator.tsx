@@ -6,7 +6,7 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import MessageListScreen, {
   MessagesHomeTabNavigationParams
-} from "../screens/MessageListScreen";
+} from "../screens/legacy/MessageListScreen";
 
 export const MessagesHomeTabRoutes = {
   MESSAGES_INBOX: "MESSAGES_INBOX",
