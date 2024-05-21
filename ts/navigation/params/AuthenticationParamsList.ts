@@ -14,6 +14,7 @@ export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_AUTH_SESSION]: undefined;
   [ROUTES.AUTHENTICATION_IDP_TEST]: undefined;
   [ROUTES.CIE_NOT_SUPPORTED]: undefined;
+  [ROUTES.CIE_ACTIVATE_NFC_SCREEN]: undefined;
   // For expired cie screen
   [ROUTES.CIE_EXPIRED_SCREEN]: undefined;
   [ROUTES.CIE_PIN_SCREEN]: undefined;

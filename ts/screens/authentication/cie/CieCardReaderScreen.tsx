@@ -544,11 +544,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const ReaderScreen = (props: Props) => (
   <View style={styles.container}>
-    {props.isNfcEnabled ? (
-      <CieCardReaderScreen {...props} />
-    ) : (
-      <CieNfcOverlay {...props} />
-    )}
+    {props.isNfcEnabled && <CieCardReaderScreen {...props} />}
   </View>
 );
 

@@ -620,6 +620,16 @@ authentication:
       enableNfcTitle: Enable NFC
       enableNfcHeader: Check NFC
       enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+      title: Attiva l’NFC per continuare
+      subtitle: Per permettere a IO di leggere la tua CIE devi attivare la funzionalità NFC nelle impostazioni di sistema del tuo dispositivo.
+      listItemTitle: "Ecco come:"
+      action: Apri impostazioni
+      listItemLabel1: Step 1
+      listItemValue1: Vai su “Impostazioni”
+      listItemLabel2: Step 2
+      listItemValue2: Cerca la funzionalità “NFC”
+      listItemLabel3: Step 3
+      listItemValue3: Attiva la funzionalità
     pin:
       accessibility:
         placeholderLabel: PIN of Electronic Identity Card

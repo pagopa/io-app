@@ -26,6 +26,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IdpData } from "../../../../definitions/content/IdpData";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
@@ -45,7 +46,7 @@ import { AuthenticationParamsList } from "../../../navigation/params/Authenticat
 import ROUTES from "../../../navigation/routes";
 import { loginSuccess } from "../../../store/actions/authentication";
 import { nfcIsEnabled } from "../../../store/actions/cie";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { SessionToken } from "../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
@@ -56,6 +57,7 @@ import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
+import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -97,7 +99,8 @@ const CiePinScreen = () => {
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
   );
-
+  const isEnabled = useIOSelector(isNfcEnabledSelector);
+  const isNfcEnabled = pot.getOrElse(isEnabled, false);
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
     component: (
       <View>
@@ -126,20 +129,24 @@ const CiePinScreen = () => {
         const token = /token=([\d\w]+)/.exec(authUrlGenerated)?.[1];
         doLoginSuccess(token as SessionToken, "cie");
       } else {
-        navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
-          ciePin: pin,
-          authorizationUri: authUrlGenerated
-        });
+        if (isNfcEnabled) {
+          navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
+            ciePin: pin,
+            authorizationUri: authUrlGenerated
+          });
+        } else {
+          navigation.navigate(ROUTES.CIE_ACTIVATE_NFC_SCREEN);
+        }
       }
       handleAuthenticationOverlayOnClose();
     }
   }, [
-    handleAuthenticationOverlayOnClose,
     authUrlGenerated,
-    hideModal,
+    doLoginSuccess,
+    handleAuthenticationOverlayOnClose,
+    isNfcEnabled,
     navigation,
-    pin,
-    doLoginSuccess
+    pin
   ]);
 
   const showModal = useCallback(() => {
