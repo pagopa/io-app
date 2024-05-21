@@ -59,18 +59,20 @@ const FiscalCodeScreen = () => {
       faqCategories={FAQ_CATEGORIES}
     >
       <VSpacer size={24} />
-      <ContentWrapper>
-        <View accessible style={styles.box}>
-          <Label weight="Regular">{nameSurname}</Label>
-          <Barcode
-            value={fiscalCode || ""}
-            width={1.3}
-            height={80}
-            lineColor="#000"
-          />
-          <H3>{fiscalCode}</H3>
-        </View>
-      </ContentWrapper>
+      {fiscalCode && (
+        <ContentWrapper>
+          <View accessible style={styles.box} testID="barcode-box">
+            <Label weight="Regular">{nameSurname}</Label>
+            <Barcode
+              value={fiscalCode}
+              width={1.3}
+              height={80}
+              lineColor="#000"
+            />
+            <H3 testID="fiscal-code">{fiscalCode}</H3>
+          </View>
+        </ContentWrapper>
+      )}
     </IOScrollViewWithLargeHeader>
   );
 };
