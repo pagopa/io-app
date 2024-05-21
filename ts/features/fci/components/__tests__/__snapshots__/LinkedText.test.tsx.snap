@@ -10,14 +10,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   fontStyle={
     Object {
       "fontSize": 22,
-      "lineHeight": 30,
+      "lineHeight": 24,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 22,
-        "lineHeight": 30,
+        "lineHeight": 24,
       },
       Object {
         "color": "#17324D",

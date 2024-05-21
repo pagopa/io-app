@@ -603,9 +603,9 @@ authentication:
     card5-title: Welcome to IO!
     card5-content: What can you do?
     card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
-    expiredCardTitle: Card expired or no longer valid
+    expiredCardTitle: The CIE verification failed
     expiredCardHeaderTitle: Login with CIE
-    expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
+    expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
     genericTitle: Login with CIE
@@ -1932,7 +1932,8 @@ messageDetails:
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Message
   emptyMessage: No content
-  loadingText: Loading message details in progress...
+  loadingText: Loading message details
+  pleaseWait: Wait a few moments
   errorText: We were unable to load the details of your message
   retryText: It's probably a temporary error... please try again!
   submitBugText: If the problem is not resolved, report it with the '?' icon at the top right, thank you!
@@ -2102,6 +2103,7 @@ services:
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
+  new: New
   home:
     institutions:
       title: National
@@ -3035,6 +3037,12 @@ features:
         failure: FALLITA
         success: ""
   itWallet:
+    card:
+      eid:
+        label: Identità digitale
+        expired: Non valida
+        pending: In lavorazione
+        digital: Versione digitale
     discovery:
       info:
         title: Start with your Digital Identity
