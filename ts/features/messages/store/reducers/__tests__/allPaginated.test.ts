@@ -27,13 +27,18 @@ import reducer, {
   AllPaginated,
   isLoadingInboxNextPage,
   isLoadingOrUpdatingInbox,
-  shownMessageCategorySelector
+  shownMessageCategorySelector,
+  MessagePagePot,
+  messageListForCategorySelector,
+  MessagePage
 } from "../allPaginated";
 import { pageSize } from "../../../../../config";
 import { UIMessage } from "../../../types";
 import { clearCache } from "../../../../../store/actions/profile";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { MessageListCategory } from "../../../types/messageListCategory";
+import { emptyMessageArray } from "../../../utils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -1365,3 +1370,94 @@ describe("shownMessageCategorySelector", () => {
     expect(shownCategory).toBe("ARCHIVE");
   });
 });
+
+describe("messageListForCategorySelector", () => {
+  const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  categories.forEach(category => {
+    it(`for ${category} category, data pot.none, should return emptyMessageArray reference`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.none
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(emptyMessageArray);
+    });
+    it(`for ${category} category, data pot.noneLoading, should return undefined`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneLoading
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBeUndefined();
+    });
+    it(`for ${category} category, data pot.noneUpdating, should return undefined`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneUpdating({} as MessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBeUndefined();
+    });
+    it(`for ${category} category, data pot.noneError, should return emptyMessageArray reference`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneError("")
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(emptyMessageArray);
+    });
+    it(`for ${category} category, data pot.some, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.some(messagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+    it(`for ${category} category, data pot.someLoading, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someLoading(messagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+    it(`for ${category} category, data pot.someUpdating, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someUpdating(messagePage, {} as MessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+    it(`for ${category} category, data pot.someError, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someError(messagePage, "")
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+  });
+});
+
+const generateAllPaginatedDataStateForCategory = (
+  category: MessageListCategory,
+  data: MessagePagePot
+): GlobalState =>
+  ({
+    entities: {
+      messages: {
+        allPaginated: {
+          inbox: category === "INBOX" ? { data } : { data: pot.none },
+          archive: category === "ARCHIVE" ? { data } : { data: pot.none }
+        }
+      }
+    }
+  } as GlobalState);
+
+const readonlyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
+
+const messagePage = {
+  page: readonlyMessageList
+} as MessagePage;
