@@ -25,6 +25,7 @@ import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal
 import { ServicesActions as NewServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
+import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
 import { GlobalState } from "../reducers/types";
 import { FimsActions } from "../../features/fims/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
@@ -41,7 +42,6 @@ import { DebugActions } from "./debug";
 import { IdentificationActions } from "./identification";
 import { InstallationActions } from "./installation";
 import { MixpanelActions } from "./mixpanel";
-import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
 import { OrganizationsActions } from "./organizations";
 import { PaymentsActions } from "./payments";
