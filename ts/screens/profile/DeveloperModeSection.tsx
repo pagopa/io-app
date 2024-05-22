@@ -45,7 +45,7 @@ import {
   walletTokenSelector
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
+import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
 import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
