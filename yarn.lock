@@ -17732,6 +17732,11 @@ xss@1.0.10:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
+"xstate5@npm:xstate@5":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
+  integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
+
 xstate@^4.29.0, xstate@^4.33.6:
   version "4.35.4"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.4.tgz#87b2a45b6c7e84d820f56378408c6531ca5c4662"
