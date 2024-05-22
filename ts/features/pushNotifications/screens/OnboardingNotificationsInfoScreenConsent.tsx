@@ -14,25 +14,25 @@ import {
   SafeAreaView,
   View
 } from "react-native";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { Body } from "../../components/core/typography/Body";
-import { H1 } from "../../components/core/typography/H1";
-import { H2 } from "../../components/core/typography/H2";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
+import { Body } from "../../../components/core/typography/Body";
+import { H1 } from "../../../components/core/typography/H1";
+import { H2 } from "../../../components/core/typography/H2";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
-import I18n from "../../i18n";
-import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { profilePreferencesSelector } from "../../store/reducers/profile";
+} from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
+import { notificationsInfoScreenConsent } from "../store/actions/notifications";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { profilePreferencesSelector } from "../../../store/reducers/profile";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
-} from "../../utils/analytics";
-import { openAppSettings } from "../../utils/appSettings";
-import { checkNotificationPermissions } from "../../utils/notification";
+} from "../analytics";
+import { openAppSettings } from "../../../utils/appSettings";
+import { checkNotificationPermissions } from "../utils";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.infoConsent.contextualHelpTitle",
@@ -110,7 +110,7 @@ const instructions = Platform.select<ReadonlyArray<ListItemInfo>>({
   ]
 });
 
-const OnboardingNotificationsInfoScreenConsent = () => {
+export const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
   const optInPreferencesPot = useIOSelector(profilePreferencesSelector);
 
@@ -211,5 +211,3 @@ const OnboardingNotificationsInfoScreenConsent = () => {
     </BaseScreenComponent>
   );
 };
-
-export default OnboardingNotificationsInfoScreenConsent;

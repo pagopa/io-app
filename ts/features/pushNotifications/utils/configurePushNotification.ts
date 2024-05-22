@@ -16,22 +16,22 @@ import {
   maximumItemsFromAPI,
   pageSize,
   remindersOptInEnabled
-} from "../config";
+} from "../../../config";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
-} from "../features/messages/store/actions";
+} from "../../messages/store/actions";
+import { getCursors } from "../../messages/store/reducers/allPaginated";
+import { isDevEnv } from "../../../utils/environment";
+import {
+  trackMessageNotificationParsingFailure,
+  trackMessageNotificationTap
+} from "../../messages/analytics";
+import { store } from "../../../boot/configureStoreAndPersistor";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
-import { getCursors } from "../features/messages/store/reducers/allPaginated";
-import { isDevEnv } from "../utils/environment";
-import {
-  trackMessageNotificationParsingFailure,
-  trackMessageNotificationTap
-} from "../features/messages/analytics";
-import { store } from "./configureStoreAndPersistor";
 
 /**
  * Helper type used to validate the notification payload.
