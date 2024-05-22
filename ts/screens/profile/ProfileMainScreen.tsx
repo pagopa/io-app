@@ -2,8 +2,8 @@ import {
   Banner,
   ContentWrapper,
   Divider,
-  H6,
   IOVisualCostants,
+  ListItemAction,
   ListItemNav,
   VSpacer,
   useIOTheme,
@@ -19,13 +19,7 @@ import React, {
   useMemo,
   memo
 } from "react";
-import {
-  Alert,
-  FlatList,
-  ListRenderItemInfo,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
@@ -57,10 +51,9 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
 
 type ProfileNavListItem = {
   value: string;
-  renderValue?: (v: string) => JSX.Element;
 } & Pick<
   ComponentProps<typeof ListItemNav>,
-  "description" | "testID" | "onPress" | "hideChevron" | "iconColor" | "icon"
+  "description" | "testID" | "onPress"
 >;
 
 const ListItem = memo(ListItemNav);
@@ -204,25 +197,9 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
           navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
             screen: ROUTES.PROFILE_ABOUT_APP
           })
-      },
-      {
-        // Logout/Exit
-        value: I18n.t("profile.logout.menulabel"),
-        hideChevron: true,
-        iconColor: "error-850",
-        testID: "logoutButton",
-        icon: "logout",
-        renderValue: v => (
-          <>
-            <VSpacer />
-            <H6 color="error-850">{v}</H6>
-            <VSpacer />
-          </>
-        ),
-        onPress: onLogoutPress
       }
     ],
-    [navigation, onLogoutPress, navigateToProfile]
+    [navigation, navigateToProfile]
   );
 
   const handleCloseBanner = useCallback(() => {
@@ -236,41 +213,17 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
 
   const renderProfileNavItem = useCallback(
     ({ item }: ListRenderItemInfo<ProfileNavListItem>) => {
-      const {
-        value,
-        description,
-        testID,
-        hideChevron,
-        icon,
-        iconColor,
-        onPress,
-        renderValue
-      } = item;
+      const { value, description, testID, onPress } = item;
       const accessibilityLabel = description
         ? `${value}; ${description}`
         : value;
 
-      if (icon) {
-        return (
-          <ListItem
-            testID={testID}
-            accessibilityLabel={accessibilityLabel}
-            value={renderValue?.(value) ?? value}
-            icon={icon}
-            iconColor={iconColor}
-            description={description}
-            hideChevron={hideChevron}
-            onPress={onPress}
-          />
-        );
-      }
       return (
         <ListItem
           testID={testID}
           accessibilityLabel={accessibilityLabel}
           value={value}
           description={description}
-          hideChevron={hideChevron}
           onPress={onPress}
         />
       );
@@ -278,10 +231,13 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
     []
   );
 
+  const logoutLabel = I18n.t("profile.logout.menulabel");
+
   return (
     <ScrollView style={{ backgroundColor: theme["appBackground-primary"] }}>
       {showProfileBanner && (
         <ContentWrapper>
+          <VSpacer size={16} />
           <Banner
             title={I18n.t("profile.main.banner.title")}
             action={I18n.t("profile.main.banner.action")}
@@ -298,12 +254,23 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
       <FlatList
         scrollEnabled={false}
         keyExtractor={keyExtractor}
-        contentContainerStyle={styles.flatListContent}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         data={profileNavListItems}
         renderItem={renderProfileNavItem}
         ItemSeparatorComponent={Divider}
       />
+      <VSpacer size={8} />
       <ContentWrapper>
+        <ListItemAction
+          label={logoutLabel}
+          icon="logout"
+          variant="danger"
+          testID="logoutButton"
+          onPress={onLogoutPress}
+          accessibilityLabel={logoutLabel}
+        />
         <AppVersion onPress={onTapAppVersion} />
       </ContentWrapper>
       {/* Developer Section */}
@@ -313,12 +280,6 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  flatListContent: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault
-  }
-});
 
 export default withLightModalContext(
   withUseTabItemPressWhenScreenActive(ProfileMainScreen)
