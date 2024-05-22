@@ -617,9 +617,6 @@ authentication:
       retry: Riprova
       noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      enableNfcTitle: Attiva NFC
-      enableNfcHeader: Verifica NFC
-      enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
       title: Attiva l’NFC per continuare
       subtitle: Per permettere a IO di leggere la tua CIE devi attivare la funzionalità NFC nelle impostazioni di sistema del tuo dispositivo.
       listItemTitle: "Ecco come:"

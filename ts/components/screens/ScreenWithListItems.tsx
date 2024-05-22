@@ -5,10 +5,7 @@ import {
   ButtonSolidProps,
   ContentWrapper,
   Divider,
-  FooterWithButtons,
   H2,
-  IOStyles,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   VSpacer
@@ -21,7 +18,7 @@ import {
   ComposedBodyFromArray
 } from "../core/typography/ComposedBodyFromArray";
 
-type PropsScreenWithListItems = {
+export type PropsScreenWithListItems = {
   title?: string;
   subtitle?: string | Array<BodyProps>;
   renderItems: Array<ListItemInfo>;
@@ -33,6 +30,7 @@ type PropsScreenWithListItems = {
 
   isHeaderVisible?: boolean;
 };
+
 const ScreenWithListItems = (props: PropsScreenWithListItems) => {
   const {
     title,

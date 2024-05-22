@@ -6,7 +6,6 @@
 import {
   ContentWrapper,
   FooterWithButtons,
-  IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
@@ -19,13 +18,10 @@ import {
   AccessibilityInfo,
   Platform,
   ScrollView,
-  StyleSheet,
   Text,
-  Vibration,
-  View
+  Vibration
 } from "react-native";
 import { connect } from "react-redux";
-import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
@@ -76,13 +72,6 @@ type NavigationProps = IOStackNavigationRouteProps<
 >;
 
 type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: IOColors.white
-  }
-});
 
 type State = {
   // Get the current status of the card reading
@@ -542,10 +531,4 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const ReaderScreen = (props: Props) => (
-  <View style={styles.container}>
-    {props.isNfcEnabled && <CieCardReaderScreen {...props} />}
-  </View>
-);
-
-export default connect(mapStateToProps)(ReaderScreen);
+export default connect(mapStateToProps)(CieCardReaderScreen);
