@@ -20,11 +20,7 @@ import {
 
 const URL_LOGIN_SCHEME = "iologin";
 
-export type IdentificationResultCallbackFn = (resultUrl: string) => void;
-
-export const useItwIdpIdentification = (
-  onIdentificationResult: IdentificationResultCallbackFn
-) => {
+export const useItwIdpIdentification = () => {
   const dispatch = useIODispatch();
 
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
@@ -32,6 +28,7 @@ export const useItwIdpIdentification = (
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
 
   const [isPending, setIsPending] = React.useState<boolean>(false);
+  const [result, setResult] = React.useState<string>();
   const [error, setError] = React.useState<ItWalletError>();
 
   const idpAuthSession = (
@@ -43,7 +40,7 @@ export const useItwIdpIdentification = (
         return openAuthenticationSession(loginUri, URL_LOGIN_SCHEME);
       },
       error => {
-        setError({ code: ItWalletErrorTypes.CREDENTIAL_ADD_ERROR });
+        setError({ code: ItWalletErrorTypes.IDENTIFICATION_ERROR });
         return error as LoginUtilsError;
       }
     );
@@ -63,13 +60,14 @@ export const useItwIdpIdentification = (
           dispatch
         ),
       TE.chain(idpAuthSession),
-      TE.map(onIdentificationResult)
+      TE.map(setResult)
     )();
   };
 
   return {
     startIdentification,
     isPending,
-    error
+    error,
+    result
   };
 };

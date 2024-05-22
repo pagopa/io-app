@@ -31,37 +31,28 @@ export const ItwIdentificationIdpSelectionScreen = () => {
     randomOrderIdps(idpValue)
   );
 
+  const { startIdentification, ...identification } = useItwIdpIdentification();
+
   useFocusEffect(
     React.useCallback(() => {
       dispatch(loadIdps.request());
     }, [dispatch])
   );
 
-  const handleIdpIdentificationOutcome = (outcome: string) => {
-    Alert.alert(outcome);
-    navigation.goBack();
-  };
+  React.useEffect(() => {
+    if (identification.result) {
+      Alert.alert("Identification", identification.result, [
+        { text: "Ok", onPress: navigation.goBack }
+      ]);
+    }
+  }, [identification.result, navigation]);
 
-  const { startIdentification, isPending, error } = useItwIdpIdentification(
-    handleIdpIdentificationOutcome
-  );
-
-  const LoadingView = () => {
-    React.useLayoutEffect(() => {
-      navigation.setOptions({
-        headerShown: false
-      });
-    });
-
-    return <LoadingComponent captionTitle={I18n.t("global.genericWaiting")} />;
-  };
-
-  if (error) {
+  if (identification.error) {
     const mappedError = getItwGenericMappedError(() => navigation.goBack());
     return <OperationResultScreenContent {...mappedError} />;
   }
 
-  if (isPending) {
+  if (identification.isPending) {
     return <LoadingView />;
   }
 
@@ -75,4 +66,16 @@ export const ItwIdentificationIdpSelectionScreen = () => {
       />
     </IOScrollViewWithLargeHeader>
   );
+};
+
+const LoadingView = () => {
+  const navigation = useIONavigation();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  });
+
+  return <LoadingComponent captionTitle={I18n.t("global.genericWaiting")} />;
 };
