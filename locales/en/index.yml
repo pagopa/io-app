@@ -612,6 +612,16 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
+  cie_errors: 
+    error_22: 
+      title: You haven't agreed to share your data
+      subtitle: To enter, you must agree to share some data
+    error_1001:
+      title: Sorry, you don't meet the minimum age requirement
+      subtitle: You must be at least 18 years old
+    generic: 
+      title: Sorry, access was not available.
+      subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie:
     genericTitle: Login with CIE
     cie: CIE
@@ -756,7 +766,7 @@ authentication:
     subtitlel2: In order to use the app, you must first unlock access to IO.
     subtitlel3: To be able to access the app with all your SPID or CIE identities, unlock access.
     learnmore: Learn more
-    loginIO: Close
+    loginIO: Not now
   unlockmodal:
     title: What does it mean?
     description1_1: If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.

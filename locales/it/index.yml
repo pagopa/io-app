@@ -612,6 +612,16 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+  cie_errors: 
+    error_22: 
+      title: Non hai dato il consenso all’invio dei dati
+      subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
+    error_1001:
+      title: Non hai l'età minima richiesta
+      subtitle: Per accedere, devi avere almeno 18 anni
+    generic: 
+      title: Non è stato possibile accedere
+      subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
   cie:
     genericTitle: Entra con CIE
     cie: CIE
@@ -756,7 +766,7 @@ authentication:
     subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO.
     subtitlel3: Per poter accedere all’app con tutte le tue identità SPID o CIE, sblocca l’accesso.
     learnmore: Scopri di più
-    loginIO: Chiudi
+    loginIO: Non ora, entra su IO
   unlockmodal:
     title: Cosa significa?
     description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo.
