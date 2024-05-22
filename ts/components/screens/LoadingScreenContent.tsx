@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { WithTestID } from "../../types/WithTestID";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,13 +30,14 @@ const styles = StyleSheet.create({
 
 const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
-type LoadingScreenContentProps = {
+type LoadingScreenContentProps = WithTestID<{
   contentTitle: string;
   children?: React.ReactNode;
-};
+  headerVisible?: boolean;
+}>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
-  const { contentTitle, children } = props;
+  const { contentTitle, children, headerVisible, testID } = props;
 
   useOnFirstRender(() => {
     // Since the screen is shown for a very short time,
@@ -50,7 +52,11 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={styles.container}
+      edges={headerVisible ? ["bottom"] : undefined}
+      testID={testID}
+    >
       <ContentWrapper>
         <View style={styles.content}>
           <View

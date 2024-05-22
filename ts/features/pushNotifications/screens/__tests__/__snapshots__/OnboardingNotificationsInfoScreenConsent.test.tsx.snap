@@ -445,23 +445,23 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                         ItemSeparatorComponent={[Function]}
                         ListHeaderComponent={
                           <View>
-                            <H2>
+                            <ForwardRef>
                               Enable push notifications not to miss important messages!
-                            </H2>
+                            </ForwardRef>
                             <VSpacer
                               size={16}
                             />
-                            <Body>
+                            <ForwardRef>
                               To do so, you'll have to edit the preferences in your device settings.
-                            </Body>
+                            </ForwardRef>
                             <VSpacer
                               size={16}
                             />
-                            <H6
+                            <ForwardRef
                               color="grey-700"
                             >
                               Here's how:
-                            </H6>
+                            </ForwardRef>
                             <VSpacer
                               size={8}
                             />

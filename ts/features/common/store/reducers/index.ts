@@ -33,6 +33,7 @@ import { PnState, pnReducer } from "../../../pn/store/reducers";
 import servicesReducer, {
   ServicesState
 } from "../../../services/common/store/reducers";
+import fimsReducer, { FimsState } from "../../../fims/store/reducers";
 import {
   WhatsNewState,
   whatsNewPersistor
@@ -55,6 +56,7 @@ export type FeaturesState = {
   payments: PaymentsState;
   services: ServicesState;
   wallet: WalletState;
+  fims: FimsState;
   itw: ItwState;
 };
 
@@ -75,6 +77,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     cieLogin: cieLoginReducer
   }),
   wallet: walletReducer,
+  fims: fimsReducer,
   itw: itwReducer
 });
 
