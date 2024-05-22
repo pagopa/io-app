@@ -49,7 +49,7 @@ export const useInstitutionsFetcher = () => {
         return;
       }
 
-      if (isLoading && isUpdating) {
+      if (isLoading || isUpdating) {
         return;
       }
 
