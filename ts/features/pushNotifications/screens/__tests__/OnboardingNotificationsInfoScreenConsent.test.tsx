@@ -1,14 +1,14 @@
 import configureMockStore from "redux-mock-store";
 import { AppState } from "react-native";
 import { fireEvent, waitFor } from "@testing-library/react-native";
-import ROUTES from "../../../navigation/routes";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import OnboardingNotificationsInfoScreenConsent from "../OnboardingNotificationsInfoScreenConsent";
-import * as notificationsActions from "../../../store/actions/notifications";
-import * as notification from "../../../utils/notification";
+import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
+import * as notificationsActions from "../../store/actions/notifications";
+import * as notification from "../../utils";
 
 const checkNotificationPermissions = jest.spyOn(
   notification,

@@ -1,22 +1,17 @@
-/**
- * Notifications installation reducer
- */
-
 import { getType } from "typesafe-actions";
-
-import { generateInstallationId } from "../../../utils/installation";
-import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationsInstallationToken
-} from "../../actions/notifications";
-import { Action } from "../../actions/types";
-import { GlobalState } from "../types";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   logoutRequest,
   sessionExpired,
   sessionInvalid
-} from "../../actions/authentication";
-import { clearCache } from "../../actions/profile";
+} from "../../../../store/actions/authentication";
+import { clearCache } from "../../../../store/actions/profile";
+import {
+  notificationsInstallationTokenRegistered,
+  updateNotificationsInstallationToken
+} from "../actions/notifications";
+import { generateInstallationId } from "../../utils";
 
 export type InstallationState = Readonly<{
   id: string;
@@ -34,7 +29,7 @@ export function getInitialState(): InstallationState {
   };
 }
 
-const reducer = (
+export const installationReducer = (
   state: InstallationState = getInitialState(),
   action: Action
 ): InstallationState => {
@@ -58,5 +53,3 @@ const reducer = (
 // Selectors
 export const notificationsInstallationSelector = (state: GlobalState) =>
   state.notifications.installation;
-
-export default reducer;
