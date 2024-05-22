@@ -104,7 +104,12 @@ export const SearchScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating) {
-      return <InstitutionListSkeleton />;
+      return (
+        <>
+          <InstitutionListSkeleton />
+          <VSpacer size={16} />
+        </>
+      );
     }
     return <VSpacer size={16} />;
   }, [isUpdating]);
