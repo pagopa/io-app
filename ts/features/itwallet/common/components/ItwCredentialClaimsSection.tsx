@@ -10,11 +10,7 @@ type Props = {
   canHideValues?: boolean;
 };
 
-export const ItwCredentialClaimsSection = ({
-  title,
-  claims,
-  canHideValues
-}: Props) => {
+export const ItwCredentialClaimsSection = ({ title, canHideValues }: Props) => {
   const [valuesHidden, setValuesHidden] = useState(false);
 
   const renderHideValuesToggle = () => (
