@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
-import configurePushNotifications from "./boot/configurePushNotification";
+import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
