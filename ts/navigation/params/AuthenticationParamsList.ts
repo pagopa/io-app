@@ -1,7 +1,9 @@
 import { ChosenIdentifier } from "../../screens/authentication/NewOptInScreen";
+import { AuthErrorScreenProps } from "../../screens/authentication/cie/CieAuthErrorScreen";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../screens/authentication/cie/CieConsentDataUsageScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../../screens/authentication/cie/CieWrongCiePinScreen";
+import { UnlockAccessProps } from "../../screens/authentication/UnlockAccessComponent";
 import ROUTES from "../routes";
 
 export type AuthenticationParamsList = {
@@ -15,6 +17,8 @@ export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_IDP_TEST]: undefined;
   [ROUTES.CIE_NOT_SUPPORTED]: undefined;
   [ROUTES.CIE_ACTIVATE_NFC_SCREEN]: undefined;
+  [ROUTES.AUTH_ERROR_SCREEN]: AuthErrorScreenProps;
+  [ROUTES.UNLOCK_ACCESS_SCREEN]: UnlockAccessProps;
   // For expired cie screen
   [ROUTES.CIE_EXPIRED_SCREEN]: undefined;
   [ROUTES.CIE_PIN_SCREEN]: undefined;
