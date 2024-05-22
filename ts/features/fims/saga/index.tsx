@@ -1,5 +1,7 @@
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/Either";
+import { URL } from "react-native-url-polyfill";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
@@ -14,8 +16,8 @@ import {
 } from "../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import {
-  HttpClientFailureResponse,
   HttpClientResponse,
+  HttpClientSuccessResponse,
   mockHttpNativeCall,
   mockSetNativeCookie
 } from "../__mocks__/mockFIMSCallbacks";
@@ -49,12 +51,7 @@ function* handleFimsGetConsentsList() {
     return;
   }
 
-  yield* call(
-    mockSetNativeCookie,
-    oidcProviderUrl,
-    "X-IO-Federation-Token",
-    fimsToken
-  );
+  yield* call(mockSetNativeCookie, oidcProviderUrl, "io_fims_token", fimsToken);
   const getConsentsResult = yield* call(mockHttpNativeCall, {
     verb: "get",
     followRedirects: true,
@@ -63,9 +60,9 @@ function* handleFimsGetConsentsList() {
 
   if (getConsentsResult.type === "failure") {
     return;
+    // TODO:: failure backend response should report a fimsGetConsentsListAction.failure
   }
   yield* put(fimsGetConsentsListAction.success(getConsentsResult));
-  // TODO:: failure backend response should report a fimsGetConsentsListAction.failure
 }
 
 // note: IAB => InAppBrowser
@@ -84,7 +81,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     url: action.payload.acceptUrl
   });
 
-  if (isRedirectInvalid(providerAcceptRedirectRes)) {
+  if (!hasValidRedirect(providerAcceptRedirectRes)) {
     // TODO:: proper error handling
     return;
   }
@@ -97,16 +94,15 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
 
   // --------------- lolliPoP -----------------
 
-  if (isRedirectInvalid(rpUrl)) {
+  if (!hasValidRedirect(rpUrl)) {
     // TODO:: proper error handling
     return;
   }
 
   const relyingPartyRedirectUrl = rpUrl.headers.Location;
-  const urlQueryParams = getQueryParamsFromUrlString(relyingPartyRedirectUrl);
-
-  const authCode = urlQueryParams.authorization_code;
-  const lollipopNonce = urlQueryParams.nonce;
+  const [authCode, lollipopNonce] = getQueryParamsFromUrlString(
+    relyingPartyRedirectUrl
+  );
 
   if (!authCode || !lollipopNonce) {
     // TODO:: proper error handling
@@ -145,16 +141,15 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     headers: lollipopInit.headers as Record<string, string>,
     followRedirects: false
   });
-  if (isRedirectInvalid(inAppBrowserUrl)) {
+  if (!hasValidRedirect(inAppBrowserUrl)) {
     // TODO:: proper error handling
     return;
   }
 
   // ----------------- end lolliPoP -----------------
-  const navigateToMsgHome = () =>
-    NavigationService.getNavigator().current?.goBack();
+
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
-  yield* call(navigateToMsgHome);
+  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop(1));
   return openAuthenticationSession(inAppBrowserUrl.headers.Location, "");
 }
 
@@ -171,20 +166,21 @@ const nonThrowingLollipopRequestInit = async (
   }
 };
 
-const isRedirectInvalid = (
+interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
+  headers: {
+    Location: string;
+  };
+}
+
+const hasValidRedirect = (
   res: HttpClientResponse
-): res is HttpClientFailureResponse =>
-  res.type === "failure" || !res.headers.Location;
+): res is SuccessResponseWithLocationHeader =>
+  res.type === "success" && res.headers.Location?.trim().length > 0;
 
 const getQueryParamsFromUrlString = (url: string) => {
-  const paramArr = url.slice(url.indexOf("?") + 1).split("&");
-  return Object.assign(
-    {},
-    ...paramArr.map(param => {
-      const [key, val] = param.split("=");
-      return { [key]: decodeURIComponent(val) };
-    })
-  );
+  const constructedUrl = new URL(url);
+  const params = constructedUrl.searchParams;
+  return [params.get("authorization_code"), params.get("nonce")];
 };
 
 const isRedirect = (statusCode: number) =>
@@ -200,7 +196,7 @@ const recurseUntilRPUrl = async (
     url
   });
 
-  if (res.type === "failure") {
+  if (!hasValidRedirect(res)) {
     // TODO:: proper error handling
     return res;
   }
