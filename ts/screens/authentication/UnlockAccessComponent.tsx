@@ -89,6 +89,8 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
     }
     // for the future developement: add here
     // the navigation to continue the flow
+    // future development jira task:
+    // https://pagopa.atlassian.net/browse/IOPID-1228
   };
 
   return (
