@@ -66,6 +66,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "WIZARD_SCREEN",
       title: "Wizard Screen"
     },
+    LIST_ITEM_SCREEN: {
+      route: "LIST_ITEM_SCREEN",
+      title: "List Item Screen"
+    },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
       title: "Bonus Card Screen"

@@ -618,11 +618,11 @@ authentication:
       noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       title: Attiva l’NFC per continuare
-      subtitle: Per permettere a IO di leggere la tua CIE devi attivare la funzionalità NFC nelle impostazioni di sistema del tuo dispositivo.
-      listItemTitle: "Ecco come:"
-      action: Apri impostazioni
+      subtitle: Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
+      listItemTitle: "Come fare:"
+      action: Apri Impostazioni
       listItemLabel1: Step 1
-      listItemValue1: Vai su “Impostazioni”
+      listItemValue1: Apri “Impostazioni” 
       listItemLabel2: Step 2
       listItemValue2: Cerca la funzionalità “NFC”
       listItemLabel3: Step 3
