@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   textRow1Container: {
     marginTop: 25
   },
-  textRow2Container: { marginTop: 13 },
+  textRow2Container: { marginTop: 13, marginBottom: 5 },
   textRow3Container: { marginTop: 13 },
   timeContainer: {
     marginLeft: 8,
