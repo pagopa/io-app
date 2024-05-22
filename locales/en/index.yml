@@ -279,6 +279,7 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: Codice a barre del tuo codice fiscale
       unavailable: Unavailable
       preview:
         label: Preview of your fiscal code document

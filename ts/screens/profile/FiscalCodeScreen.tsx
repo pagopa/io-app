@@ -61,7 +61,14 @@ const FiscalCodeScreen = () => {
       <VSpacer size={24} />
       {fiscalCode && (
         <ContentWrapper>
-          <View accessible style={styles.box} testID="barcode-box">
+          <View
+            accessible
+            accessibilityLabel={I18n.t(
+              "profile.fiscalCode.accessibility.fiscalCodeHint"
+            )}
+            style={styles.box}
+            testID="barcode-box"
+          >
             <LabelSmall weight="SemiBold" color="black">
               {nameSurname}
             </LabelSmall>
