@@ -15,7 +15,7 @@ import { useIODispatch } from "../../store/hooks";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
+import { usePreviewMoreInfo } from "../../features/pushNotifications/hooks/usePreviewMoreInfo";
 import {
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
