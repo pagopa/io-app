@@ -1,14 +1,14 @@
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import NavigationService from "../../navigation/NavigationService";
-import ROUTES from "../../navigation/routes";
-import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
-import { SagaCallReturnType } from "../../types/utils";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { SagaCallReturnType } from "../../../types/utils";
 import {
   checkNotificationPermissions,
   requestNotificationPermissions
-} from "../../utils/notification";
+} from "../utils";
+import { notificationsInfoScreenConsent } from "../store/actions/notifications";
 
 export function* checkNotificationsPermissionsSaga() {
   const authorizationStatus: SagaCallReturnType<

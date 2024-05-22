@@ -3,7 +3,7 @@
  */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { PendingMessageState } from "../reducers/notifications/pendingMessage";
+import { PendingMessageState } from "../reducers/pendingMessage";
 
 export const updateNotificationsInstallationToken = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
