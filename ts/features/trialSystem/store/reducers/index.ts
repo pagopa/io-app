@@ -52,7 +52,7 @@ export const trialSystemActivationStatusReducer = (
       return {
         ...state,
         [action.payload]: pot.toUpdating(
-          state[action.payload],
+          state[action.payload] ?? pot.none,
           isStateActive(state[action.payload])
             ? SubscriptionStateEnum.UNSUBSCRIBED
             : SubscriptionStateEnum.SUBSCRIBED
@@ -63,7 +63,8 @@ export const trialSystemActivationStatusReducer = (
   }
 };
 
-const isStateActive = (status: pot.Pot<SubscriptionState, Error>) =>
+const isStateActive = (status: pot.Pot<SubscriptionState, Error> | undefined) =>
+  status &&
   pot.isSome(status) &&
   (status.value === SubscriptionStateEnum.ACTIVE ||
     status.value === SubscriptionStateEnum.SUBSCRIBED);

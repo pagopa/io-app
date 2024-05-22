@@ -14,10 +14,10 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
@@ -57,6 +57,8 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
+import { trialSystemActivationStatusUpsert } from "../../features/trialSystem/store/actions";
+import { TrialId } from "../../../definitions/trial_systwem/TrialId";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -471,6 +473,10 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(walletAddCoBadgeStart(undefined));
   };
 
+  const onJoinTrial = () => {
+    dispatch(trialSystemActivationStatusUpsert.request("sample" as TrialId));
+  };
+
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
@@ -559,6 +565,13 @@ const DeveloperTestEnvironmentSection = ({
         description={I18n.t("profile.main.itWallet.itWalletTestDescription")}
         value={isItWalletTestEnabled}
         onSwitchValueChange={onItWalletTestToggle}
+      />
+      <Divider />
+      {/* Subscribe to a Trial */}
+      <ListItemNav
+        value={I18n.t("profile.main.trial.titleSection")}
+        accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
+        onPress={onJoinTrial}
       />
     </ContentWrapper>
   );

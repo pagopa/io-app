@@ -3,6 +3,7 @@ import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { SessionToken } from "../../../../types/SessionToken";
 import { TrialSystemClient, createTrialSystemClient } from "../../api/client";
 import { apiUrlPrefix } from "../../../../config";
@@ -11,6 +12,7 @@ import {
   trialSystemActivationStatusUpsert
 } from "../actions";
 import { getError } from "../../../../utils/errors";
+import I18n from "../../../../i18n";
 
 function* handleTrialSystemActivationStatusUpsert(
   upsertTrialSystemActivationStatus: TrialSystemClient["createSubscription"],
@@ -30,6 +32,7 @@ function* handleTrialSystemActivationStatusUpsert(
       );
     } else if (result.right.status === 201) {
       yield* put(trialSystemActivationStatusUpsert.success(result.right.value));
+      IOToast.success(I18n.t("features.trialSystem.toast.subscribed"));
     } else {
       yield* put(
         trialSystemActivationStatusUpsert.failure({
