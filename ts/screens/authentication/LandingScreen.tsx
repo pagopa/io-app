@@ -54,52 +54,6 @@ import {
 } from "./analytics";
 import { Carousel } from "./carousel/Carousel";
 
-const carouselCards: ReadonlyArray<
-  ComponentProps<typeof LandingCardComponent>
-> = [
-  {
-    id: 0,
-    pictogramName: "hello",
-    title: I18n.t("authentication.landing.card5-title"),
-    content: I18n.t("authentication.landing.card5-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.accessibility.carousel.label"
-    )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
-      "authentication.landing.card5-content-accessibility"
-    )}`,
-    accessibilityHint: I18n.t(
-      "authentication.landing.accessibility.carousel.hint"
-    )
-  },
-  {
-    id: 1,
-    pictogramName: "star",
-    title: I18n.t("authentication.landing.card1-title"),
-    content: I18n.t("authentication.landing.card1-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.card1-title"
-    )}. ${I18n.t("authentication.landing.card1-content")}`
-  },
-  {
-    id: 2,
-    pictogramName: "cardFavourite",
-    title: I18n.t("authentication.landing.card2-title"),
-    content: I18n.t("authentication.landing.card2-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.card2-title"
-    )}. ${I18n.t("authentication.landing.card2-content")}`
-  },
-  {
-    id: 3,
-    pictogramName: "doc",
-    title: I18n.t("authentication.landing.card3-title"),
-    content: I18n.t("authentication.landing.card3-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.card3-title"
-    )}. ${I18n.t("authentication.landing.card3-content")}`
-  }
-];
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
   body: "authentication.landing.contextualHelpContent"
@@ -256,6 +210,55 @@ export const LandingScreen = () => {
       {
         days: isFastLoginEnabled ? "365" : "30"
       }
+    );
+
+    const carouselCards: ReadonlyArray<
+      ComponentProps<typeof LandingCardComponent>
+    > = React.useMemo(
+      () => [
+        {
+          id: 0,
+          pictogramName: "hello",
+          title: I18n.t("authentication.landing.card5-title"),
+          content: I18n.t("authentication.landing.card5-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.accessibility.carousel.label"
+          )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
+            "authentication.landing.card5-content-accessibility"
+          )}`,
+          accessibilityHint: I18n.t(
+            "authentication.landing.accessibility.carousel.hint"
+          )
+        },
+        {
+          id: 1,
+          pictogramName: "star",
+          title: I18n.t("authentication.landing.card1-title"),
+          content: I18n.t("authentication.landing.card1-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.card1-title"
+          )}. ${I18n.t("authentication.landing.card1-content")}`
+        },
+        {
+          id: 2,
+          pictogramName: "cardFavourite",
+          title: I18n.t("authentication.landing.card2-title"),
+          content: I18n.t("authentication.landing.card2-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.card2-title"
+          )}. ${I18n.t("authentication.landing.card2-content")}`
+        },
+        {
+          id: 3,
+          pictogramName: "doc",
+          title: I18n.t("authentication.landing.card3-title"),
+          content: I18n.t("authentication.landing.card3-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.card3-title"
+          )}. ${I18n.t("authentication.landing.card3-content")}`
+        }
+      ],
+      []
     );
 
     return (
