@@ -14,9 +14,9 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
@@ -41,7 +41,9 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    Alert.alert("Not implemented");
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
+    });
   };
 
   const handleCiePinPress = () => {

@@ -1,7 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
-import cieManager from "@pagopa/react-native-cie";
-import { handleNfcEnabledSaga } from "../handleNfcEnabledSaga";
 import { itwNfcIsEnabled } from "../../store/actions";
+import * as cieUtils from "../../../../../utils/cie";
+import { handleNfcEnabledSaga } from "../handleNfcEnabledSaga";
 
 describe("handleNfcEnabledSaga", () => {
   test.each([true, false])(
@@ -9,7 +9,7 @@ describe("handleNfcEnabledSaga", () => {
     arg => {
       testSaga(handleNfcEnabledSaga)
         .next()
-        .call(cieManager.isNFCEnabled)
+        .call(cieUtils.isNfcEnabled)
         .next(arg)
         .put(itwNfcIsEnabled.success(arg))
         .next()
