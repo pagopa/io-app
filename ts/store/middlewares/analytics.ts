@@ -48,11 +48,6 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationInstallationFailure,
-  updateNotificationsInstallationToken
-} from "../actions/notifications";
-import {
   profileFirstLogin,
   profileLoadFailure,
   profileLoadRequest,
@@ -107,6 +102,11 @@ import {
   updatePaymentStatus
 } from "../actions/wallet/wallets";
 import { buildEventProperties } from "../../utils/analytics";
+import {
+  notificationsInstallationTokenRegistered,
+  updateNotificationInstallationFailure,
+  updateNotificationsInstallationToken
+} from "../../features/pushNotifications/store/actions/notifications";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 

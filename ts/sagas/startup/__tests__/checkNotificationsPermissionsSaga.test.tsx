@@ -2,12 +2,12 @@ import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { notificationsInfoScreenConsent } from "../../../store/actions/notifications";
 import {
   checkNotificationPermissions,
   requestNotificationPermissions
-} from "../../../utils/notification";
-import { checkNotificationsPermissionsSaga } from "../checkNotificationsPermissionsSaga";
+} from "../../../features/pushNotifications/utils";
+import { checkNotificationsPermissionsSaga } from "../../../features/pushNotifications/sagas/checkNotificationsPermissionsSaga";
+import { notificationsInfoScreenConsent } from "../../../features/pushNotifications/store/actions/notifications";
 
 describe("checkNotificationsPermissionsSaga", () => {
   it("upon saga startup, it should ask for push notifications permission", () => {

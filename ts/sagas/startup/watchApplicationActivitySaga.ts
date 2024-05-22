@@ -10,7 +10,7 @@ import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../store/reducers/startup";
-import { handlePendingMessageStateIfAllowedSaga } from "../notifications";
+import { handlePendingMessageStateIfAllowedSaga } from "../../features/pushNotifications/sagas/notifications";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
