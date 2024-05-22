@@ -3129,6 +3129,11 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+    presentation:
+      personalDataTitle: "Dati personali"
+      documentDataTitle: "Dati documento"
+      accessibility:
+        toggleClaimValues: "Mostra/nascondi gli attributi del documento"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

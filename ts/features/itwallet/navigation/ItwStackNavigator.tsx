@@ -6,6 +6,7 @@ import { ItwIdentificationModeSelectionScreen } from "../identification/screens/
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
+import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -39,6 +40,12 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
       component={ItwIssuanceEidPreviewScreen}
       options={{ headerShown: false }}
+    />
+
+    {/* CREDENTIAL PRESENTATION */}
+    <Stack.Screen
+      name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
+      component={ItwPresentationEidDetailScreen}
     />
   </Stack.Navigator>
 );

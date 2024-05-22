@@ -52,7 +52,7 @@ const ItwPlayground = () => {
 
   const navigateToIdentification = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
+      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL // Temp
     });
   };
 

@@ -3129,6 +3129,11 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+    presentation:
+      personalDataTitle: "Personal data"
+      documentDataTitle: "Document data"
+      accessibility:
+        toggleClaimValues: "Toggle claim values"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

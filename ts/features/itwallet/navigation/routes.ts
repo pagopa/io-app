@@ -10,5 +10,8 @@ export const ITW_ROUTES = {
   } as const,
   ISSUANCE: {
     EID_PREVIEW: "ITW_ISSUANCE_EID_PREVIEW"
+  } as const,
+  PRESENTATION: {
+    EID_DETAIL: "ITW_PRESENTATION_EID_DETAIL"
   } as const
 };
