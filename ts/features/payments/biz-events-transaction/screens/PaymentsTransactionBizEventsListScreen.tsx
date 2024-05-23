@@ -1,8 +1,10 @@
 import {
+  ButtonLink,
   H2,
   IOStyles,
   ListItemHeader,
-  ListItemTransaction
+  ListItemTransaction,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
@@ -32,6 +34,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { groupTransactionsByMonth } from "../utils";
 import I18n from "../../../../i18n";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
+import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -76,6 +79,15 @@ const PaymentsTransactionBizEventsListScreen = () => {
         params: {
           transactionId: transaction.transactionId
         }
+      }
+    );
+  };
+
+  const handleNavigateToLegacyTransactions = () => {
+    navigation.navigate(
+      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      {
+        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_LIST
       }
     );
   };
@@ -134,6 +146,17 @@ const PaymentsTransactionBizEventsListScreen = () => {
     </View>
   );
 
+  const ShowLegacyTransactionsButton = () => (
+    <View style={{ marginTop: 12 }}>
+      <VSpacer size={16} />
+      <ButtonLink
+        label="Mostra precedenti"
+        onPress={handleNavigateToLegacyTransactions}
+        icon="history"
+      />
+    </View>
+  );
+
   const renderLoadingFooter = () => (
     <>
       {isLoading &&
@@ -147,6 +170,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
             subtitle=""
           />
         ))}
+      {!isLoading && !continuationToken && <ShowLegacyTransactionsButton />}
     </>
   );
 
