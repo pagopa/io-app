@@ -1,119 +1,140 @@
+import React, { useCallback, useEffect, useMemo } from "react";
+import { AppState, FlatList, View, Platform, StyleSheet } from "react-native";
 import {
+  Body,
   Divider,
+  FooterWithButtons,
+  H2,
+  H6,
+  IOStyles,
   IOVisualCostants,
+  IconButton,
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useEffect } from "react";
-import {
-  AppState,
-  FlatList,
-  ListRenderItemInfo,
-  Platform,
-  SafeAreaView,
-  View
-} from "react-native";
-import { useSelector } from "react-redux";
-import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
-import { Body } from "../../../components/core/typography/Body";
-import { H1 } from "../../../components/core/typography/H1";
-import { H2 } from "../../../components/core/typography/H2";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../../components/screens/BaseScreenComponent";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
+import { openAppSettings } from "../../../utils/appSettings";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { checkNotificationPermissions } from "../utils";
+import {
+  pushNotificationPreviewEnabledSelector,
+  pushNotificationRemindersEnabledSelector
+} from "../../../store/reducers/profile";
 import { notificationsInfoScreenConsent } from "../store/actions/notifications";
-import { useIODispatch } from "../../../store/hooks";
-import { profilePreferencesSelector } from "../../../store/reducers/profile";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
 } from "../analytics";
-import { openAppSettings } from "../../../utils/appSettings";
-import { checkNotificationPermissions } from "../utils";
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.infoConsent.contextualHelpTitle",
-  body: "onboarding.infoConsent.contextualHelpContent"
-};
-
-const instructions = Platform.select<ReadonlyArray<ListItemInfo>>({
-  ios: [
-    {
-      icon: "systemSettingsiOS",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.ios.step1"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.ios.step1"
-      )
-    },
-    {
-      icon: "systemNotificationsInstructions",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.ios.step2"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.ios.step2"
-      )
-    },
-    {
-      icon: "systemToggleInstructions",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.ios.step3"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.ios.step3"
-      )
-    }
-  ],
-  android: [
-    {
-      icon: "systemSettingsAndroid",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.android.step1"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.android.step1"
-      )
-    },
-    {
-      icon: "systemAppsAndroid",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.android.step2"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.android.step2"
-      )
-    },
-    {
-      icon: "productIOAppBlueBg",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.android.step3"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.android.step3"
-      )
-    },
-    {
-      icon: "systemNotificationsInstructions",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.android.step4"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.android.step4"
-      )
-    },
-    {
-      icon: "systemToggleInstructions",
-      label: I18n.t("onboarding.infoConsent.instructions.label"),
-      value: I18n.t("onboarding.infoConsent.instructions.android.step5"),
-      accessibilityLabel: I18n.t(
-        "onboarding.infoConsent.instructions.android.step5"
-      )
-    }
-  ]
+const styles = StyleSheet.create({
+  footer: { paddingBottom: IOStyles.footer.paddingBottom },
+  header: {
+    alignSelf: "flex-end",
+    flexDirection: "row",
+    paddingBottom: 18,
+    paddingRight: IOVisualCostants.appMarginDefault,
+    paddingTop: 24
+  },
+  listContainer: {
+    marginHorizontal: IOVisualCostants.appMarginDefault
+  }
 });
 
 export const OnboardingNotificationsInfoScreenConsent = () => {
+  const navigation = useNavigation();
   const dispatch = useIODispatch();
-  const optInPreferencesPot = useSelector(profilePreferencesSelector);
+  const remindersEnabled = useIOSelector(
+    pushNotificationRemindersEnabledSelector
+  );
+  const previewEnabled = useIOSelector(pushNotificationPreviewEnabledSelector);
+
+  const instructions = useMemo(
+    () =>
+      Platform.select<ReadonlyArray<ListItemInfo>>({
+        ios: [
+          {
+            icon: "systemSettingsiOS",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.ios.step1"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.ios.step1"
+            )
+          },
+          {
+            icon: "systemNotificationsInstructions",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.ios.step2"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.ios.step2"
+            )
+          },
+          {
+            icon: "systemToggleInstructions",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.ios.step3"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.ios.step3"
+            )
+          }
+        ],
+        android: [
+          {
+            icon: "systemSettingsAndroid",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.android.step1"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.android.step1"
+            )
+          },
+          {
+            icon: "systemAppsAndroid",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.android.step2"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.android.step2"
+            )
+          },
+          {
+            icon: "productIOAppBlueBg",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.android.step3"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.android.step3"
+            )
+          },
+          {
+            icon: "systemNotificationsInstructions",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.android.step4"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.android.step4"
+            )
+          },
+          {
+            icon: "systemToggleInstructions",
+            label: I18n.t("onboarding.infoConsent.instructions.label"),
+            value: I18n.t("onboarding.infoConsent.instructions.android.step5"),
+            accessibilityLabel: I18n.t(
+              "onboarding.infoConsent.instructions.android.step5"
+            )
+          }
+        ]
+      }),
+    []
+  );
+
+  const closeModalAndScreen = useCallback(() => {
+    // Dismiss the modal (the check on `canGoBack` avoids
+    // a logged error when running tests, since in that
+    // case there is no screen below on the navigation stack)
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
+
+    dispatch(notificationsInfoScreenConsent());
+  }, [dispatch, navigation]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
@@ -123,7 +144,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
           const authorizationStatus = await checkNotificationPermissions();
 
           if (authorizationStatus) {
-            dispatch(notificationsInfoScreenConsent());
+            closeModalAndScreen();
           }
         }
       }
@@ -132,83 +153,71 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
     return () => {
       subscription.remove();
     };
-  }, [dispatch]);
+  }, [closeModalAndScreen]);
 
-  const goNext = () => {
+  const goNext = useCallback(() => {
     // When this code executes, we know for sure that system notifications permissions are disabled,
     // otherwise the component would either have been skipped by the saga or it would have automatically
     // handled the given permission using the AppState listener (registered on the useEffect)
     trackNotificationsOptInSkipSystemPermissions();
 
-    if (pot.isSome(optInPreferencesPot)) {
-      const optInPreferences = optInPreferencesPot.value;
-      if (optInPreferences.preview || optInPreferences.reminder) {
-        trackNotificationsOptInReminderOnPermissionsOff();
-      }
+    if (remindersEnabled || previewEnabled) {
+      trackNotificationsOptInReminderOnPermissionsOff();
     }
 
-    dispatch(notificationsInfoScreenConsent());
-  };
+    closeModalAndScreen();
+  }, [closeModalAndScreen, previewEnabled, remindersEnabled]);
 
-  const openSettings = () => {
+  const openSettings = useCallback(() => {
     trackNotificationsOptInOpenSettings();
     openAppSettings();
-  };
+  }, []);
 
-  const headerComponent = (
+  const ListHeader = (
     <View>
+      <H2>{I18n.t("onboarding.infoConsent.title")}</H2>
       <VSpacer size={16} />
-      <H1
-        accessible={true}
-        accessibilityRole="header"
-        weight="Bold"
-        color={"bluegreyDark"}
-      >
-        {I18n.t("onboarding.infoConsent.title")}
-      </H1>
       <Body>{I18n.t("onboarding.infoConsent.subTitle")}</Body>
-      <VSpacer size={24} />
-      <H2 color={"bluegrey"} weight={"SemiBold"}>
+      <VSpacer size={16} />
+      <H6 color="grey-700">
         {I18n.t("onboarding.infoConsent.instructions.title")}
-      </H2>
+      </H6>
+      <VSpacer size={8} />
     </View>
   );
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<ListItemInfo>) => (
-    <ListItemInfo {...item} label={`${item.label} ${index + 1}`} />
-  );
-
   return (
-    <BaseScreenComponent
-      headerTitle={I18n.t("onboarding.infoConsent.headerTitle")}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      goBack={false}
-      customGoBack={<View />}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <FlatList
-          data={instructions}
-          renderItem={renderItem}
-          contentContainerStyle={{
-            marginHorizontal: IOVisualCostants.appMarginDefault
-          }}
-          ItemSeparatorComponent={() => <Divider />}
-          ListHeaderComponent={headerComponent}
+    <>
+      <View style={styles.header}>
+        <IconButton
+          icon="closeLarge"
+          color="neutral"
+          onPress={goNext}
+          testID="continue-btn"
+          accessibilityLabel={I18n.t("global.buttons.close")}
         />
-        <FooterStackButton
-          primaryActionProps={{
-            onPress: openSettings,
-            label: I18n.t("onboarding.infoConsent.openSettings"),
-            accessibilityLabel: I18n.t("onboarding.infoConsent.openSettings")
+      </View>
+      <FlatList
+        data={instructions}
+        renderItem={({ item, index }) => (
+          <ListItemInfo {...item} label={`${item.label} ${index + 1}`} />
+        )}
+        contentContainerStyle={styles.listContainer}
+        ItemSeparatorComponent={() => <Divider />}
+        ListHeaderComponent={ListHeader}
+      />
+      <View style={styles.footer}>
+        <FooterWithButtons
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("onboarding.infoConsent.openSettings"),
+              onPress: openSettings
+            }
           }}
-          secondaryActionProps={{
-            onPress: goNext,
-            label: I18n.t("onboarding.infoConsent.continue"),
-            accessibilityLabel: I18n.t("onboarding.infoConsent.continue"),
-            testID: "continue-btn"
-          }}
+          type="SingleButton"
         />
-      </SafeAreaView>
-    </BaseScreenComponent>
+      </View>
+    </>
   );
 };

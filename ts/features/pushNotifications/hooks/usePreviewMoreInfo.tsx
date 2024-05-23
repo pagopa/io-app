@@ -1,6 +1,5 @@
-import { ButtonSolid, ContentWrapper } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Body } from "../../../components/core/typography/Body";
+import { Body } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import {
   IOBottomSheetModal,
@@ -13,10 +12,7 @@ import {
  * preferences views
  */
 export const usePreviewMoreInfo = (): IOBottomSheetModal => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
-    title: I18n.t(
-      "profile.preferences.notifications.preview.bottomSheet.title"
-    ),
+  const { bottomSheet, dismiss, present } = useIOBottomSheetModal({
     component: (
       <Body>
         {I18n.t(
@@ -24,24 +20,8 @@ export const usePreviewMoreInfo = (): IOBottomSheetModal => {
         )}
       </Body>
     ),
-    snapPoint: [400],
-    footer: (
-      <ContentWrapper>
-        <ButtonSolid
-          fullWidth
-          label={I18n.t(
-            "profile.preferences.notifications.preview.bottomSheet.cta"
-          )}
-          accessibilityLabel={I18n.t(
-            "profile.preferences.notifications.preview.bottomSheet.cta"
-          )}
-          onPress={() => {
-            dismiss();
-          }}
-        />
-      </ContentWrapper>
-    )
+    snapPoint: [340],
+    title: I18n.t("profile.preferences.notifications.preview.bottomSheet.title")
   });
-
-  return { present, bottomSheet, dismiss };
+  return { bottomSheet, dismiss, present };
 };
