@@ -9,27 +9,27 @@ import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { PlatformEnum } from "../../definitions/backend/Platform";
-import { BackendClient } from "../api/backend";
+import { PlatformEnum } from "../../../../definitions/backend/Platform";
+import { BackendClient } from "../../../api/backend";
+import { notificationsInstallationSelector } from "../store/reducers/installation";
+import { SagaCallReturnType } from "../../../types/utils";
+import { convertUnknownToError } from "../../../utils/errors";
+import {
+  PendingMessageState,
+  pendingMessageStateSelector
+} from "../store/reducers/pendingMessage";
+import { isPaymentOngoingSelector } from "../../../store/reducers/wallet/payment";
+import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
+import { navigateToMessageRouterAction } from "../../messages/store/actions/navigation";
+import NavigationService from "../../../navigation/NavigationService";
+import { UIMessageId } from "../../messages/types";
+import { trackMessageNotificationTap } from "../../messages/analytics";
+import { trackNotificationInstallationTokenNotChanged } from "../analytics";
 import {
   clearNotificationPendingMessage,
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure
 } from "../store/actions/notifications";
-import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
-import { SagaCallReturnType } from "../types/utils";
-import { convertUnknownToError } from "../utils/errors";
-import { trackNotificationInstallationTokenNotChanged } from "../utils/analytics";
-import {
-  PendingMessageState,
-  pendingMessageStateSelector
-} from "../store/reducers/notifications/pendingMessage";
-import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
-import { navigateToMainNavigatorAction } from "../store/actions/navigation";
-import { navigateToMessageRouterAction } from "../features/messages/store/actions/navigation";
-import NavigationService from "../navigation/NavigationService";
-import { UIMessageId } from "../features/messages/types";
-import { trackMessageNotificationTap } from "../features/messages/analytics";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
