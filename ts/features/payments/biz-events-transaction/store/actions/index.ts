@@ -1,7 +1,7 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
-import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { TransactionDetailResponse } from "../../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
+import { TransactionListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/TransactionListWrapResponse";
 
 export type PaymentsGetBizEventsTransactionPayload = {
   firstLoad?: boolean;
@@ -11,7 +11,7 @@ export type PaymentsGetBizEventsTransactionPayload = {
 };
 
 export type PaymentsGetBizEventsTransactionSuccessPayload = {
-  data: ReadonlyArray<TransactionListItem>;
+  data: TransactionListWrapResponse;
   appendElements?: boolean;
 };
 
@@ -32,7 +32,7 @@ export const getPaymentsLatestBizEventsTransactionsAction = createAsyncAction(
   "PAYMENTS_LATEST_TRANSACTIONS_LIST_SUCCESS",
   "PAYMENTS_LATEST_TRANSACTIONS_LIST_FAILURE",
   "PAYMENTS_LATEST_TRANSACTIONS_LIST_CANCEL"
-)<void, ReadonlyArray<TransactionListItem>, NetworkError, void>();
+)<void, TransactionListWrapResponse, NetworkError, void>();
 
 export const getPaymentsBizEventsTransactionDetailsAction = createAsyncAction(
   "PAYMENTS_BIZ_EVENTS_TRANSACTION_DETAILS_REQUEST",
