@@ -46,6 +46,7 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
       component={ItwPresentationEidDetailScreen}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );
