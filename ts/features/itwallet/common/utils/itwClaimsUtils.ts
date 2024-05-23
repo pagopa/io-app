@@ -10,7 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ParsedCredential } from "./itwTypesUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 import { CredentialCatalogDisplay } from "./itwMocksUtils";
 
 /**
@@ -52,6 +52,7 @@ export const getEvidenceOrganizationName = (credential: ParsedCredential) =>
  * Type for each claim to be displayed.
  */
 export type ClaimDisplayFormat = {
+  id: string;
   label: string;
   value: unknown;
 };
@@ -77,7 +78,7 @@ export const parseClaims = (
         ? attribute.name
         : attribute.name[getClaimsFullLocale()] || key;
 
-    return { label: attributeName, value: attribute.value };
+    return { label: attributeName, value: attribute.value, id: key };
   });
 
 /**
@@ -228,3 +229,56 @@ export const ClaimValue = t.union([
   // Otherwise fallback to string
   PlainTextClaim
 ]);
+
+type ClaimSection =
+  | "personalData"
+  | "documentData"
+  | "licenseData"
+  | "noSection";
+
+/**
+ * Hardcoded claims sections: currently it's not possible to determine how to group claims from the credential.
+ * The order of the claims doesn't matter here, the credential's `displayData` order wins.
+ * Claims that are present here but not in the credential are safely ignored.
+ */
+const sectionsByClaim: Record<string, ClaimSection> = {
+  // Personal data claims
+  given_name: "personalData",
+  family_name: "personalData",
+  birthdate: "personalData",
+  place_of_birth: "personalData",
+  tax_id_code: "personalData",
+  tax_id_number: "personalData",
+  portrait: "personalData",
+  sex: "personalData",
+
+  // Document data claims
+  issue_date: "documentData",
+  expiry_date: "documentData",
+  expiration_date: "documentData",
+  document_number: "documentData",
+
+  // Driving license claims
+  driving_privileges: "licenseData"
+};
+
+/**
+ * Groups claims in a credential according to {@link sectionsByClaim}.
+ * Claims are assigned to the designated section in the order specified by the credential's `displayData`.
+ * Claims without a section are assigned to the key `noSection` so they can be rendered separately.
+ * @param credential
+ * @returns
+ */
+export const groupCredentialClaims = (credential: StoredCredential) => {
+  const claims = parseClaims(
+    sortClaims(credential.displayData.order, credential.parsedCredential)
+  );
+
+  return claims.reduce((acc, claim) => {
+    const section = sectionsByClaim[claim.id] || "noSection";
+    return {
+      ...acc,
+      [section]: (acc[section] || []).concat(claim)
+    };
+  }, {} as Record<ClaimSection, ReadonlyArray<ClaimDisplayFormat>>);
+};

@@ -3,16 +3,14 @@ import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import {
   ContentWrapper,
-  VSpacer,
   Divider,
-  IOVisualCostants
+  IOVisualCostants,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { EidCard } from "../../common/components/EidCard";
-import { ItwCredentialClaimsSection } from "../../common/components/ItwCredentialClaimsSection";
 import { ItwPidAssuranceLevel } from "../../common/components/ItwPidAssuranceLevel";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
@@ -27,36 +25,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
-
-/* const ContentView = ({ eid }: { eid: StoredCredential }) => {
-  const { top } = useSafeAreaInsets();
-
-  return (
-    <SafeAreaView style={{ paddingTop: IOVisualCostants.headerHeight }}>
-      <View style={[styles.upperSection, { height: IOVisualCostants.headerHeight + top }]} />
-      <ContentWrapper>
-        <ScrollView>
-          <EidCard />
-          <VSpacer size={24} />
-          <ItwCredentialClaimsSection
-            title={I18n.t("features.itWallet.presentation.personalDataTitle")}
-            canHideValues
-            claims={[]}
-          />
-          <VSpacer size={24} />
-          <ItwCredentialClaimsSection
-            title={I18n.t("features.itWallet.presentation.documentDataTitle")}
-            claims={[]}
-          />
-          <Divider />
-          <ItwPidAssuranceLevel credential={eid} />
-          <Divider />
-          <ItwReleaserName credential={eid} />
-        </ScrollView>
-      </ContentWrapper>
-    </SafeAreaView>
-  )
-}; */
+import { ItwClaimsSections } from "../components/ItwClaimsSections";
 
 const ContentView = ({ eid }: { eid: StoredCredential }) => {
   const themeColor = getThemeColorByCredentialType(
@@ -73,30 +42,22 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
       contextualHelp={emptyContextualHelp}
     >
       <StatusBar backgroundColor={themeColor} barStyle="light-content" />
-      <ScrollView endFillColor={themeColor}>
+      <ScrollView>
         <View style={styles.cardContainer}>
           <EidCard />
           <View
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />
         </View>
-        <VSpacer size={24} />
+
         <ContentWrapper>
-          <ItwCredentialClaimsSection
-            title={I18n.t("features.itWallet.presentation.personalDataTitle")}
-            canHideValues
-            claims={[]}
-          />
-          <VSpacer size={24} />
-          <ItwCredentialClaimsSection
-            title={I18n.t("features.itWallet.presentation.documentDataTitle")}
-            claims={[]}
-          />
+          <ItwClaimsSections credential={eid} />
           <Divider />
           <ItwPidAssuranceLevel credential={eid} />
           <Divider />
           <ItwReleaserName credential={eid} />
         </ContentWrapper>
+        <VSpacer size={40} />
       </ScrollView>
     </BaseScreenComponent>
   );

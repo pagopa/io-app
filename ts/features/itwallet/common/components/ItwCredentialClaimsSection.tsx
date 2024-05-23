@@ -3,14 +3,19 @@ import { StyleSheet, View } from "react-native";
 import { IconButton, H6 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
+import { ItwCredentialClaim } from "./ItwCredentialClaim";
 
 type Props = {
   title: string;
-  claims: Array<ClaimDisplayFormat>;
+  claims: ReadonlyArray<ClaimDisplayFormat>;
   canHideValues?: boolean;
 };
 
-export const ItwCredentialClaimsSection = ({ title, canHideValues }: Props) => {
+export const ItwCredentialClaimsSection = ({
+  title,
+  canHideValues,
+  claims
+}: Props) => {
   const [valuesHidden, setValuesHidden] = useState(false);
 
   const renderHideValuesToggle = () => (
@@ -28,6 +33,11 @@ export const ItwCredentialClaimsSection = ({ title, canHideValues }: Props) => {
       <View style={styles.header}>
         <H6 color="grey-700">{title}</H6>
         {canHideValues && renderHideValuesToggle()}
+      </View>
+      <View>
+        {claims.map(c => (
+          <ItwCredentialClaim key={c.id} claim={c} />
+        ))}
       </View>
     </View>
   );
