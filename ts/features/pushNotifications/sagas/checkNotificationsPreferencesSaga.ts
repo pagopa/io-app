@@ -1,0 +1,99 @@
+import { CommonActions, StackActions } from "@react-navigation/native";
+import { call, take } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { profileUpsert } from "../../../store/actions/profile";
+import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
+import {
+  checkNotificationPermissions,
+  requestNotificationPermissions
+} from "../utils";
+import {
+  trackNotificationsOptInPreviewStatus,
+  trackNotificationsOptInReminderStatus
+} from "../analytics";
+import { SagaCallReturnType } from "../../../types/utils";
+import { notificationsInfoScreenConsent } from "../store/actions/notifications";
+
+export function* checkNotificationsPreferencesSaga(
+  userProfile: InitializedProfile
+) {
+  const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
+
+  // Check if the user has already set a preference for push notification opt-in
+  if (
+    userProfile.reminder_status !== undefined &&
+    userProfile.push_notifications_content_type !== undefined
+  ) {
+    // Make sure to ask for push notification permissions. This call is needed
+    // since an existing user that has already opted-in may be running the
+    // application on a new device. To enable the push receival, the system
+    // permission must be asked explicitly and this is the first entry point
+    // where it makes sense to do so. If the user denies the permission,
+    // the popup dialog does not appear anymore (on following application restarts).
+    yield* call(requestNotificationPermissions);
+
+    return;
+  }
+
+  // show the opt-in screen
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+      params: { isFirstOnboarding }
+    })
+  );
+
+  // wait for the notifications preferences to be set
+  while (true) {
+    const action = yield* take<ActionType<typeof profileUpsert.success>>(
+      profileUpsert.success
+    );
+
+    const contentType = action.payload.newValue.push_notifications_content_type;
+    const reminderStatus = action.payload.newValue.reminder_status;
+    if (reminderStatus !== undefined && contentType !== undefined) {
+      trackNotificationsOptInPreviewStatus(contentType);
+      trackNotificationsOptInReminderStatus(reminderStatus);
+      break;
+    }
+  }
+
+  // check if the user has given system notification permissions
+  const authorizationStatus: SagaCallReturnType<
+    typeof checkNotificationPermissions
+  > = yield* call(checkNotificationPermissions);
+
+  if (!authorizationStatus) {
+    const permissionStatus: SagaCallReturnType<
+      typeof requestNotificationPermissions
+    > = yield* call(requestNotificationPermissions);
+
+    if (permissionStatus) {
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        StackActions.popToTop()
+      );
+      return;
+    }
+
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.ONBOARDING, {
+        screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
+      })
+    );
+
+    yield* take<ActionType<typeof notificationsInfoScreenConsent>>(
+      notificationsInfoScreenConsent
+    );
+  }
+
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
+}

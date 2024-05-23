@@ -21,7 +21,6 @@ import {
   LightModalContextInterface
 } from "../../components/ui/LightModal";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
-import { remindersOptInEnabled } from "../../config";
 import I18n from "../../i18n";
 import {
   AppParamsList,
@@ -178,7 +177,6 @@ class PreferencesScreen extends React.Component<PreferencesScreenProps> {
     const preferencesNavListItems: ReadonlyArray<PreferencesNavListItem> = [
       {
         // Notifications
-        condition: remindersOptInEnabled,
         value: I18n.t("profile.preferences.list.notifications.title"),
         description: I18n.t("profile.preferences.list.notifications.subtitle"),
         onPress: () => {
