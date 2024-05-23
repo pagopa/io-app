@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import {
+  Divider,
   IOListItemStyles,
   IOListItemVisualParams,
   IOStyles,
@@ -23,5 +24,22 @@ export const InstitutionListItemSkeleton = () => (
         <Placeholder.Box animate="fade" radius={8} width={"60%"} height={16} />
       </View>
     </View>
+  </View>
+);
+
+type InstitutionListSkeletonProps = {
+  size?: number;
+};
+
+export const InstitutionListSkeleton = ({
+  size = 3
+}: InstitutionListSkeletonProps) => (
+  <View testID="institutions-skeleton">
+    {Array.from({ length: size }).map((_, index) => (
+      <React.Fragment key={index}>
+        <InstitutionListItemSkeleton />
+        {index < size - 1 ? <Divider /> : undefined}
+      </React.Fragment>
+    ))}
   </View>
 );
