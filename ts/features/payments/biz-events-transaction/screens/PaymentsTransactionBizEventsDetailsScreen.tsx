@@ -4,7 +4,6 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -16,6 +15,7 @@ import { getPaymentsBizEventsTransactionDetailsAction } from "../store/actions";
 import { walletTransactionBizEventsDetailsPotSelector } from "../store/selectors";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
@@ -90,7 +90,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   }
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("transaction.details.title")
       }}
@@ -111,7 +111,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
           loading={isLoading}
         />
       </View>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

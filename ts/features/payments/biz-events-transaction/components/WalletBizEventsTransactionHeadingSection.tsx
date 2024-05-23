@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
@@ -71,7 +72,7 @@ export const WalletBizEventsTransactionHeadingSection = ({
   const calculateTotalAmount = () => {
     if (transactionInfo?.amount && transactionInfo?.fee) {
       return (
-        parseFloat(transactionInfo.amount) + parseFloat(transactionInfo.fee)
+        _.toNumber(transactionInfo.amount) + _.toNumber(transactionInfo.fee)
       ).toString();
     }
     return transactionInfo?.amount;

@@ -9,10 +9,10 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
 import I18n from "../../../../i18n";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
 import { formatAmountText } from "../utils";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -51,7 +51,7 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
   };
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: cartItem.subject ?? ""
       }}
@@ -101,7 +101,7 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
           />
         )}
       </ScrollView>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
