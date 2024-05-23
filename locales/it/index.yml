@@ -2094,6 +2094,11 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
   new: Nuovo
   home:
+    featured:
+      services:
+        title: In primo piano
+      institutions:
+        title: Enti in evidenza
     institutions:
       title: Nazionali
   institution:
