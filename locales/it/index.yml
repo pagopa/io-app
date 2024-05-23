@@ -3027,6 +3027,7 @@ features:
       status:
         expired: Scaduta
     transactions:
+      showLegacyTransactions: Mostra precedenti
       legacy:
         empty:
           title: Nessuna ricevuta trovata

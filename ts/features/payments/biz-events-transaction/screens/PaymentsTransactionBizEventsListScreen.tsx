@@ -150,7 +150,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
     <View style={{ marginTop: 12 }}>
       <VSpacer size={16} />
       <ButtonLink
-        label="Mostra precedenti"
+        label={I18n.t("features.payments.transactions.showLegacyTransactions")}
         onPress={handleNavigateToLegacyTransactions}
         icon="history"
       />
