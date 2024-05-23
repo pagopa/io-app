@@ -1,15 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import I18n from "../../../../ts/i18n";
-import ROUTES from "../../../navigation/routes";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import { GlobalState } from "../../../store/reducers/types";
+import I18n from "../../../../i18n";
+import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
 
-import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import mockedProfile from "../../../__mocks__/initializedProfile";
-import OnboardingNotificationsPreferencesScreen from "../OnboardingNotificationsPreferencesScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
+import { OnboardingNotificationsPreferencesScreen } from "../OnboardingNotificationsPreferencesScreen";
 
 describe("OnboardingNotificationsPreferencesScreen", () => {
   describe("given an onboarded user", () => {

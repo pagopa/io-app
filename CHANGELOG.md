@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.61.0-rc.0](https://github.com/pagopa/io-app/compare/2.60.0-rc.2...2.61.0-rc.0) (2024-05-22)
+
+
+### Features
+
+* [[IOCOM-1391](https://pagopa.atlassian.net/browse/IOCOM-1391)] Flag to enable Messages Home with the new DS ([#5766](https://github.com/pagopa/io-app/issues/5766)) ([fdca533](https://github.com/pagopa/io-app/commit/fdca533b583000ecd4c066ba0ca17f8a74e3786e))
+* [[IOCOM-823](https://pagopa.atlassian.net/browse/IOCOM-823)] Chips for Inbox and Archived messages on new DS Messages' Home  ([#5770](https://github.com/pagopa/io-app/issues/5770)) ([cb333d9](https://github.com/pagopa/io-app/commit/cb333d920955eaf96124f1b054ca2d53f8ef072e))
+* [[IOPID-1548](https://pagopa.atlassian.net/browse/IOPID-1548)] DS add new cie errors ([#5750](https://github.com/pagopa/io-app/issues/5750)) ([26916b7](https://github.com/pagopa/io-app/commit/26916b76f9c867a354613d4d6b48543ace4bcb8f))
+* [[IOPID-1725](https://pagopa.atlassian.net/browse/IOPID-1725)] New DS on CIE certificates KO screen ([#5775](https://github.com/pagopa/io-app/issues/5775)) ([26db96b](https://github.com/pagopa/io-app/commit/26db96bf693acc46a4f14faab3f4040a9bb95969)), closes [/github.com/pagopa/io-app/blob/d5d5681817064085219e3854e4fef56431c4519b/ts/screens/authentication/cie/CieCardReaderScreen.tsx#L282](https://github.com/pagopa//github.com/pagopa/io-app/blob/d5d5681817064085219e3854e4fef56431c4519b/ts/screens/authentication/cie/CieCardReaderScreen.tsx/issues/L282) [/github.com/pagopa/io-app/blob/d5d5681817064085219e3854e4fef56431c4519b/ts/screens/authentication/cie/CieCardReaderScreen.tsx#L298](https://github.com/pagopa//github.com/pagopa/io-app/blob/d5d5681817064085219e3854e4fef56431c4519b/ts/screens/authentication/cie/CieCardReaderScreen.tsx/issues/L298)
+* **IT Wallet:** [[SIW-980](https://pagopa.atlassian.net/browse/SIW-980)] Add eID issuing IDP selection screen ([#5752](https://github.com/pagopa/io-app/issues/5752)) ([d5d5681](https://github.com/pagopa/io-app/commit/d5d5681817064085219e3854e4fef56431c4519b))
+
+
+### Bug Fixes
+
+* [[IOPAE-1129](https://pagopa.atlassian.net/browse/IOPAE-1129)] Service Details bottom gradient displayed only with CTAs ([#5781](https://github.com/pagopa/io-app/issues/5781)) ([8164a03](https://github.com/pagopa/io-app/commit/8164a036eec31c81b750dfd15aa5cc93f003d0da))
+* [[IOPAE-1164](https://pagopa.atlassian.net/browse/IOPAE-1164)] Fix infinite scroll in `InstitutionServicesScreen` ([#5774](https://github.com/pagopa/io-app/issues/5774)) ([8760edc](https://github.com/pagopa/io-app/commit/8760edc9242e945baf027dd4410fd3945a5a473b))
+* `LandingScreen`'s `Carousel` translations ([#5789](https://github.com/pagopa/io-app/issues/5789)) ([04c1105](https://github.com/pagopa/io-app/commit/04c11053cd55ce2b2ae394066c80f5cfa7b93877))
+
+
+### Chores
+
+* [[IOBP-575](https://pagopa.atlassian.net/browse/IOBP-575)] Removed seconds from a11y label transaction detail date ([#5786](https://github.com/pagopa/io-app/issues/5786)) ([a4e1f79](https://github.com/pagopa/io-app/commit/a4e1f7930f49aca62a31353ea5a9ff163577aa48))
+* **IT Wallet:** [[SIW-1127](https://pagopa.atlassian.net/browse/SIW-1127)] IT Wallet POC utils implementation ([#5779](https://github.com/pagopa/io-app/issues/5779)) ([6610236](https://github.com/pagopa/io-app/commit/6610236817163bea59b303ee056554223b9a7860))
+* **IT Wallet:** [[SIW-1128](https://pagopa.atlassian.net/browse/SIW-1128)] Add `EidCard` and `EidCardPreview` components ([#5772](https://github.com/pagopa/io-app/issues/5772)) ([8d55432](https://github.com/pagopa/io-app/commit/8d55432dcf081d617a89a6d42cc9ed4dd906f32b))
+* [[IOPAE-1145](https://pagopa.atlassian.net/browse/IOPAE-1145)] Add FeaturedInstitution and FeaturedService carousel/card layout ([#5771](https://github.com/pagopa/io-app/issues/5771)) ([2b85bf7](https://github.com/pagopa/io-app/commit/2b85bf750ba18defa8bc8409b66ab1d738f43604))
+* **Cross:** [[IOAPPX-283](https://pagopa.atlassian.net/browse/IOAPPX-283)] Add `IOScrollView` (next iteration of `GradientScroll`, now deprecated) + `IOScrollViewWithLargeHeader` ([#5704](https://github.com/pagopa/io-app/issues/5704)) ([b4f2762](https://github.com/pagopa/io-app/commit/b4f276279a0384e824221e2ba50651f7020f268a))
+* **Cross:** [[IOAPPX-295](https://pagopa.atlassian.net/browse/IOAPPX-295)] Remove nested navigator from DS section ([#5763](https://github.com/pagopa/io-app/issues/5763)) ([55fa198](https://github.com/pagopa/io-app/commit/55fa198da99e3fda5aaefd7a9e689eab8ab59370))
+
 ## [2.60.0-rc.2](https://github.com/pagopa/io-app/compare/2.60.0-rc.1...2.60.0-rc.2) (2024-05-15)
 
 

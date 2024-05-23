@@ -1,17 +1,17 @@
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { remindersOptInEnabled } from "../../config";
-import NavigationService from "../../navigation/NavigationService";
-import ROUTES from "../../navigation/routes";
-import { profileUpsert } from "../../store/actions/profile";
-import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { remindersOptInEnabled } from "../../../config";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { profileUpsert } from "../../../store/actions/profile";
+import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
+import { requestNotificationPermissions } from "../utils";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus
-} from "../../utils/analytics";
-import { requestNotificationPermissions } from "../../utils/notification";
+} from "../analytics";
 import { checkNotificationsPermissionsSaga } from "./checkNotificationsPermissionsSaga";
 
 export function* checkNotificationsPreferencesSaga(
