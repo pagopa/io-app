@@ -1,151 +1,212 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
-import configureMockStore from "redux-mock-store";
+import { createStore } from "redux";
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import mockedProfile from "../../../__mocks__/initializedProfile";
 import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
+import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 
 describe("NotificationsPreferencesScreen", () => {
-  describe("given an undefined 'reminder_status'", () => {
-    it("then the switch should be off", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore({
-        ...globalState,
-        profile: pot.some({
-          ..._.omit(mockedProfile, "reminder_status")
-        })
-      });
-      expect(screen).not.toBeNull();
+  it("given an undefined 'reminder_status' then the switch should be off", () => {
+    const screen = renderScreen();
+    expect(screen).not.toBeNull();
 
-      const toggle = screen.component.getByTestId("remindersPreferenceSwitch");
-      expect(toggle.props.value).toBeFalsy();
-    });
+    const toggle = screen.getByTestId("remindersPreferenceSwitch");
+    expect(toggle.props.value).toBeFalsy();
   });
 
-  describe("given an ENABLED 'reminder_status'", () => {
-    it("then the switch should be on", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore({
-        ...globalState,
-        profile: pot.some({
-          ...mockedProfile,
-          reminder_status: ReminderStatusEnum.ENABLED
-        })
-      });
-      expect(screen).not.toBeNull();
+  it("given an ENABLED 'reminder_status'then the switch should be on", () => {
+    const screen = renderScreen(undefined, ReminderStatusEnum.ENABLED);
+    expect(screen).not.toBeNull();
 
-      const toggle = screen.component.getByTestId("remindersPreferenceSwitch");
-      expect(toggle.props.value).toBeTruthy();
-    });
+    const toggle = screen.getByTestId("remindersPreferenceSwitch");
+    expect(toggle.props.value).toBeTruthy();
   });
 
-  describe("given a DISABLED 'reminder_status'", () => {
-    it("then the switch should be off", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore({
-        ...globalState,
-        profile: pot.some({
-          ...mockedProfile,
-          reminder_status: ReminderStatusEnum.DISABLED
-        })
-      });
-      expect(screen).not.toBeNull();
+  it("given a DISABLED 'reminder_status' then the switch should be off", () => {
+    const screen = renderScreen(undefined, ReminderStatusEnum.DISABLED);
+    expect(screen).not.toBeNull();
 
-      const toggle = screen.component.getByTestId("remindersPreferenceSwitch");
-      expect(toggle.props.value).toBeFalsy();
-    });
+    const toggle = screen.getByTestId("remindersPreferenceSwitch");
+    expect(toggle.props.value).toBeFalsy();
   });
 
-  describe("given an undefined 'push_notifications_content_type'", () => {
-    it("then the switch should be off", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore({
-        ...globalState,
-        profile: pot.some({
-          ..._.omit(mockedProfile, "push_notifications_content_type")
-        })
-      });
-      expect(screen).not.toBeNull();
+  it("given an undefined 'push_notifications_content_type' then the switch should be off", () => {
+    const screen = renderScreen();
+    expect(screen).not.toBeNull();
 
-      const toggle = screen.component.getByTestId("previewPreferenceSwitch");
-      expect(toggle.props.value).toBeFalsy();
-    });
+    const toggle = screen.getByTestId("previewsPreferenceSwitch");
+    expect(toggle.props.value).toBeFalsy();
   });
 
-  describe("given a FULL 'push_notifications_content_type'", () => {
-    it("then the switch should be on", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore({
-        ...globalState,
-        profile: pot.some({
-          ...mockedProfile,
-          push_notifications_content_type: PushNotificationsContentTypeEnum.FULL
-        })
-      });
-      expect(screen).not.toBeNull();
+  it("given a FULL 'push_notifications_content_type' then the switch should be on", () => {
+    const screen = renderScreen(PushNotificationsContentTypeEnum.FULL);
+    expect(screen).not.toBeNull();
 
-      const toggle = screen.component.getByTestId("previewPreferenceSwitch");
-      expect(toggle.props.value).toBeTruthy();
-    });
+    const toggle = screen.getByTestId("previewsPreferenceSwitch");
+    expect(toggle.props.value).toBeTruthy();
   });
 
-  describe("given an ANONYMOUS 'push_notifications_content_type'", () => {
-    it("then the switch should be off", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore({
-        ...globalState,
-        profile: pot.some({
-          ...mockedProfile,
-          push_notifications_content_type:
-            PushNotificationsContentTypeEnum.ANONYMOUS
-        })
-      });
-      expect(screen).not.toBeNull();
+  it("given an ANONYMOUS 'push_notifications_content_type' then the switch should be off", () => {
+    const screen = renderScreen(PushNotificationsContentTypeEnum.ANONYMOUS);
+    expect(screen).not.toBeNull();
 
-      const toggle = screen.component.getByTestId("previewPreferenceSwitch");
-      expect(toggle.props.value).toBeFalsy();
-    });
+    const toggle = screen.getByTestId("previewsPreferenceSwitch");
+    expect(toggle.props.value).toBeFalsy();
+  });
+
+  it("should match snapshot, undefined preview, undefined reminder, not updating", () => {
+    const screen = renderScreen(undefined, undefined, false);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, undefined preview, undefined reminder,     updating", () => {
+    const screen = renderScreen(undefined, undefined, true);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, undefined preview, disabled  reminder, not updating", () => {
+    const screen = renderScreen(undefined, ReminderStatusEnum.DISABLED, false);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, undefined preview, disabled  reminder,     updating", () => {
+    const screen = renderScreen(undefined, ReminderStatusEnum.DISABLED, true);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, undefined preview, enabled   reminder, not updating", () => {
+    const screen = renderScreen(undefined, ReminderStatusEnum.ENABLED, false);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, undefined preview, enabled   reminder,     updating", () => {
+    const screen = renderScreen(undefined, ReminderStatusEnum.ENABLED, true);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, disabled  preview, undefined reminder, not updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.ANONYMOUS,
+      undefined,
+      false
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, disabled  preview, undefined reminder,     updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.ANONYMOUS,
+      undefined,
+      true
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, disabled  preview, disabled  reminder, not updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.ANONYMOUS,
+      ReminderStatusEnum.DISABLED,
+      false
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, disabled  preview, disabled  reminder,     updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.ANONYMOUS,
+      ReminderStatusEnum.DISABLED,
+      true
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, disabled  preview, enabled   reminder, not updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.ANONYMOUS,
+      ReminderStatusEnum.ENABLED,
+      false
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, disabled  preview, enabled   reminder,     updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.ANONYMOUS,
+      ReminderStatusEnum.ENABLED,
+      true
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, enabled   preview, undefined reminder, not updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.FULL,
+      undefined,
+      false
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, enabled   preview, undefined reminder,     updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.FULL,
+      undefined,
+      true
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, enabled   preview, disabled  reminder, not updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.FULL,
+      ReminderStatusEnum.DISABLED,
+      false
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, enabled   preview, disabled  reminder,     updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.FULL,
+      ReminderStatusEnum.DISABLED,
+      true
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, enabled   preview, enabled   reminder, not updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.FULL,
+      ReminderStatusEnum.ENABLED,
+      false
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, enabled   preview, enabled   reminder,     updating", () => {
+    const screen = renderScreen(
+      PushNotificationsContentTypeEnum.FULL,
+      ReminderStatusEnum.ENABLED,
+      true
+    );
+    expect(screen.toJSON()).toMatchSnapshot();
   });
 });
 
-const renderComponentMockStore = (state: GlobalState) => {
-  const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore({
-    ...state
-  } as GlobalState);
+const renderScreen = (
+  previewValue?: PushNotificationsContentTypeEnum,
+  reminderValue?: ReminderStatusEnum,
+  isUpdatingProfile: boolean = false
+) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const dsEnabledState = appReducer(
+    globalState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const profile = {
+    push_notifications_content_type: previewValue,
+    reminder_status: reminderValue
+  } as InitializedProfile;
+  const finalState = {
+    ...dsEnabledState,
+    profile: isUpdatingProfile ? pot.noneUpdating(profile) : pot.some(profile)
+  } as GlobalState;
+  const store = createStore(appReducer, finalState as any);
 
-  return {
-    component: renderScreenWithNavigationStoreContext(
-      NotificationsPreferencesScreen,
-      ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext(
+    NotificationsPreferencesScreen,
+    ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
+    {},
     store
-  };
+  );
 };
