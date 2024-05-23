@@ -607,14 +607,14 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
-  cie_errors: 
-    error_22: 
+  cie_errors:
+    error_22:
       title: You haven't agreed to share your data
       subtitle: To enter, you must agree to share some data
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
-    generic: 
+    generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie:
@@ -3139,6 +3139,9 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+      success:
+        title: "Hai aggiunto\nIdentità Digitale!"
+        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

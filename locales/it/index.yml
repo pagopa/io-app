@@ -607,14 +607,14 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
-  cie_errors: 
-    error_22: 
+  cie_errors:
+    error_22:
       title: Non hai dato il consenso all’invio dei dati
       subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni
-    generic: 
+    generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
   cie:
@@ -3139,6 +3139,9 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+      success:
+        title: "Hai aggiunto\nIdentità Digitale!"
+        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
