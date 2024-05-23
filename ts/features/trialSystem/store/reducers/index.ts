@@ -79,13 +79,8 @@ export const trialStatusSelector = (id: TrialId) => (state: GlobalState) =>
   pipe(
     state,
     trialSystemActivationStatusSelector,
-    status => status[id],
-    potState => {
-      if (potState !== undefined && pot.isSome(potState)) {
-        return potState.value;
-      }
-      return undefined;
-    }
+    status => status[id] ?? pot.none,
+    pot.toUndefined
   );
 
 export const isLoadingTrialStatusSelector =
@@ -93,7 +88,7 @@ export const isLoadingTrialStatusSelector =
     pipe(
       state,
       trialSystemActivationStatusSelector,
-      status => status[id],
+      status => status[id] ?? pot.none,
       pot.isLoading
     );
 
@@ -102,6 +97,6 @@ export const isUpdatingTrialStatusSelector =
     pipe(
       state,
       trialSystemActivationStatusSelector,
-      status => status[id],
+      status => status[id] ?? pot.none,
       pot.isUpdating
     );
