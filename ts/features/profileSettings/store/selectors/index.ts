@@ -4,7 +4,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 const profileSettingsSelector = (state: GlobalState) =>
   state.features.profileSettings;
 
-export const showProfileBannerSelector = createSelector(
-  profileSettingsSelector,
-  ({ showProfileBanner }) => showProfileBanner
+export const showProfileBannerSelector = (state: GlobalState) =>
+  state.features.profileSettings.showProfileBanner;
 );
