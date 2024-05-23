@@ -133,6 +133,9 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.CIE_WRONG_CARD_SCREEN}
         component={CieWrongCardScreen}
+      />
+
+      <Stack.Screen
         name={ROUTES.AUTH_ERROR_SCREEN}
         component={CieAuthErrorScreen}
       />
