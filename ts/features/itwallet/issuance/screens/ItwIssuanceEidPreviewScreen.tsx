@@ -13,18 +13,45 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { identificationRequest } from "../../../../store/actions/identification";
+import { useIODispatch } from "../../../../store/hooks";
 import { EidCardPreview } from "../../common/components/EidCardPreview";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
 import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+  const dismissalDialog = useItwDismissalDialog();
+
   const eidOption = O.some(ItwCredentialsMocks.eid);
+
+  const handleSaveToWallet = () => {
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () =>
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.ISSUANCE.RESULT
+            })
+        }
+      )
+    );
+  };
 
   /**
    * Renders the content of the screen if the PID is decoded.
@@ -62,7 +89,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
             )}
             icon="add"
             iconPosition="end"
-            onPress={() => undefined}
+            onPress={handleSaveToWallet}
             fullWidth={true}
           />
           <VSpacer size={24} />
@@ -71,7 +98,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
               label={I18n.t(
                 "features.itWallet.issuance.credentialPreview.actions.secondary"
               )}
-              onPress={() => undefined}
+              onPress={dismissalDialog.show}
             />
           </View>
         </ContentWrapper>
