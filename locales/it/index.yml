@@ -3755,7 +3755,9 @@ transaction:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)
       dateAndHour: Data e ora
-      transactionId: ID transazione
+      transactionId: ID transazione,
+      alert:
+        content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
       amount: Importo
       creditor: Ente creditore

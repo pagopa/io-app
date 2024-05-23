@@ -106,7 +106,7 @@ const WalletTransactionInfoSection = ({
         </View>
         {isDesignSystemEnabled && (
           <Alert
-            content="Rivolgiti all’Ente Creditore se hai bisogno della ricevuta."
+            content={I18n.t("transaction.details.info.alert.content")}
             variant="info"
           />
         )}
