@@ -61,15 +61,15 @@ export const NotificationsPreferencesScreen = () => {
   ]);
 
   const onPreviewValueChanged = useCallback(
-    (newValue: boolean) => {
+    (isPreviewEnabled: boolean) => {
       trackNotificationsPreferencesPreviewStatus(
-        newValue,
+        isPreviewEnabled,
         getFlowType(false, false)
       );
       setIsUpsertingPreview(true);
       dispatch(
         profileUpsert.request({
-          push_notifications_content_type: newValue
+          push_notifications_content_type: isPreviewEnabled
             ? PushNotificationsContentTypeEnum.FULL
             : PushNotificationsContentTypeEnum.ANONYMOUS
         })
@@ -79,15 +79,15 @@ export const NotificationsPreferencesScreen = () => {
   );
 
   const onReminderValueChanged = useCallback(
-    (newValue: boolean) => {
+    (isReminderEnabled: boolean) => {
       trackNotificationsPreferencesReminderStatus(
-        newValue,
+        isReminderEnabled,
         getFlowType(false, false)
       );
       setIsUpsertingReminders(true);
       dispatch(
         profileUpsert.request({
-          reminder_status: newValue
+          reminder_status: isReminderEnabled
             ? ReminderStatusEnum.ENABLED
             : ReminderStatusEnum.DISABLED
         })
