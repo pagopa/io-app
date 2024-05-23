@@ -26,7 +26,7 @@ export function* mockFIMSSaga() {
     const consents = yield* call(mockHttpNativeCall, config);
     console.log(`=== ${JSON.stringify(consents)}`);
 
-    const confirmUrl = consents.headers["confirm-url"];
+    const confirmUrl = consents.headers["confirm-url"] as string;
     const config2: HttpCallConfig = {
       verb: "post",
       url: confirmUrl,
@@ -37,7 +37,7 @@ export function* mockFIMSSaga() {
     const output2 = yield* call(mockHttpNativeCall, config2);
     console.log(`=== ${JSON.stringify(output2)}`);
 
-    const nextUrl = output2.headers.Location;
+    const nextUrl = output2.headers.Location as string;
     const config3: HttpCallConfig = {
       verb: "get",
       url: nextUrl,
@@ -47,7 +47,7 @@ export function* mockFIMSSaga() {
     const output3 = yield* call(mockHttpNativeCall, config3);
     console.log(`=== ${JSON.stringify(output3)}`);
 
-    const nextUrl4 = output3.headers.Location;
+    const nextUrl4 = output3.headers.Location as string;
     const config4: HttpCallConfig = {
       verb: "get",
       url: nextUrl4,

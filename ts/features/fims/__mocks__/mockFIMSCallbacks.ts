@@ -15,7 +15,7 @@ export type HttpClientSuccessResponse = {
   type: "success";
   status: number;
   body: string;
-  headers: Record<string, string>;
+  headers: Record<string, string | undefined>;
 };
 export type HttpClientFailureResponse = {
   type: "failure";
@@ -76,7 +76,7 @@ export const mockClearAllCookies = () => fakeCookieStorage.clear();
 
 const hasValidFIMSToken = () => {
   const fimsCookie = fakeCookieStorage.get(
-    `${FakeBaseUrl}/fims/provider_io_fims_token`
+    `${FakeBaseUrl}/fims/provider__io_fims_token`
   );
   return fimsCookie && fimsCookie.value.trim().length > 0;
 };

@@ -53,7 +53,7 @@ export const FimsFlowHandlerScreen = (
         onPress: () =>
           dispatch(
             fimsGetRedirectUrlAndOpenIABAction.request({
-              acceptUrl: consents.headers["confirm-url"]
+              acceptUrl: consents.headers["confirm-url"] as string // TODO:: error handle this
             })
           )
       }}

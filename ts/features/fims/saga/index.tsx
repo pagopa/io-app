@@ -47,11 +47,18 @@ function* handleFimsGetConsentsList() {
 
   if (!fimsToken || !oidcProviderUrl || !fimsCTAUrl) {
     // TODO:: proper error handling
-    yield* put(fimsGetConsentsListAction.failure(new Error("missing data")));
+    yield* put(
+      fimsGetConsentsListAction.failure(new Error("missing FIMS data"))
+    );
     return;
   }
 
-  yield* call(mockSetNativeCookie, oidcProviderUrl, "io_fims_token", fimsToken);
+  yield* call(
+    mockSetNativeCookie,
+    oidcProviderUrl,
+    "_io_fims_token",
+    fimsToken
+  );
   const getConsentsResult = yield* call(mockHttpNativeCall, {
     verb: "get",
     followRedirects: true,
@@ -59,8 +66,10 @@ function* handleFimsGetConsentsList() {
   });
 
   if (getConsentsResult.type === "failure") {
+    yield* put(
+      fimsGetConsentsListAction.failure(new Error(" consent data fetch error"))
+    );
     return;
-    // TODO:: failure backend response should report a fimsGetConsentsListAction.failure
   }
   yield* put(fimsGetConsentsListAction.success(getConsentsResult));
 }
@@ -71,7 +80,11 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
 ) {
   const oidcProviderDomain = yield* select(fimsDomainSelector);
   if (!oidcProviderDomain) {
-    // TODO:: proper error handling
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        new Error("missing FIMS domain")
+      )
+    );
     return;
   }
 
@@ -81,31 +94,51 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     url: action.payload.acceptUrl
   });
 
-  if (!hasValidRedirect(providerAcceptRedirectRes)) {
-    // TODO:: proper error handling
+  const acceptRedirectUrl = extractValidRedirect(
+    providerAcceptRedirectRes,
+    action.payload.acceptUrl
+  );
+
+  if (!acceptRedirectUrl) {
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        new Error("could not get grant acceptance response")
+      )
+    );
     return;
   }
 
   const rpUrl = yield* call(
     recurseUntilRPUrl,
-    providerAcceptRedirectRes.headers.Location,
+    acceptRedirectUrl,
     oidcProviderDomain
   );
 
   // --------------- lolliPoP -----------------
+  const relyingPartyRedirectUrl = extractValidRedirect(
+    rpUrl,
+    oidcProviderDomain
+  );
 
-  if (!hasValidRedirect(rpUrl)) {
-    // TODO:: proper error handling
+  if (!relyingPartyRedirectUrl) {
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        new Error("could not get RelyingParty redirect URL")
+      )
+    );
     return;
   }
 
-  const relyingPartyRedirectUrl = rpUrl.headers.Location;
   const [authCode, lollipopNonce] = getQueryParamsFromUrlString(
     relyingPartyRedirectUrl
   );
 
   if (!authCode || !lollipopNonce) {
-    // TODO:: proper error handling
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        new Error("could not extract auth data from RelyingParty URL")
+      )
+    );
     return;
   }
 
@@ -130,7 +163,11 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   );
 
   if (E.isLeft(lollipopEither)) {
-    // TODO:: proper error handling
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        new Error("could not sign request with LolliPoP")
+      )
+    );
     return;
   }
   const lollipopInit = lollipopEither.right;
@@ -141,16 +178,26 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     headers: lollipopInit.headers as Record<string, string>,
     followRedirects: false
   });
-  if (!hasValidRedirect(inAppBrowserUrl)) {
-    // TODO:: proper error handling
+
+  const inAppBrowserRedirectUrl = extractValidRedirect(
+    inAppBrowserUrl,
+    relyingPartyRedirectUrl
+  );
+
+  if (!inAppBrowserRedirectUrl) {
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        new Error("IAB url call failed or without a valid redirect")
+      )
+    );
     return;
   }
 
   // ----------------- end lolliPoP -----------------
 
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
-  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop(1));
-  return openAuthenticationSession(inAppBrowserUrl.headers.Location, "");
+  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
+  return openAuthenticationSession(inAppBrowserRedirectUrl, "");
 }
 
 // -------------------- UTILS --------------------
@@ -175,12 +222,44 @@ interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
 const hasValidRedirect = (
   res: HttpClientResponse
 ): res is SuccessResponseWithLocationHeader =>
-  res.type === "success" && res.headers.Location?.trim().length > 0;
+  res.type === "success" &&
+  res.headers.Location !== undefined &&
+  res.headers.Location?.trim().length > 0;
+
+const extractValidRedirect = (
+  data: HttpClientResponse,
+  originalRequestUrl: string
+) => {
+  if (!hasValidRedirect(data)) {
+    return undefined;
+  }
+  const redirect = data.headers.Location;
+  try {
+    const redirectUrl = new URL(redirect);
+    return redirectUrl.href;
+  } catch (error) {
+    try {
+      const originalUrl = new URL(originalRequestUrl);
+      const origin = originalUrl.origin;
+      const composedUrlString = redirect.startsWith("/")
+        ? `${origin}${redirect}`
+        : `${origin}/${redirect}`;
+      const composedUrl = new URL(composedUrlString);
+      return composedUrl.href;
+    } catch {
+      return undefined;
+    }
+  }
+};
 
 const getQueryParamsFromUrlString = (url: string) => {
-  const constructedUrl = new URL(url);
-  const params = constructedUrl.searchParams;
-  return [params.get("authorization_code"), params.get("nonce")];
+  try {
+    const constructedUrl = new URL(url);
+    const params = constructedUrl.searchParams;
+    return [params.get("authorization_code"), params.get("nonce")];
+  } catch (error) {
+    return [undefined, undefined];
+  }
 };
 
 const isRedirect = (statusCode: number) =>
@@ -196,12 +275,13 @@ const recurseUntilRPUrl = async (
     url
   });
 
-  if (!hasValidRedirect(res)) {
-    // TODO:: proper error handling
+  const redirectUrl = extractValidRedirect(res, url);
+
+  if (!hasValidRedirect(res) || !redirectUrl) {
     return res;
   }
 
-  const isOIDCProviderBaseUrl = res.headers.Location.toLowerCase().startsWith(
+  const isOIDCProviderBaseUrl = redirectUrl.startsWith(
     oidcDomain.toLowerCase()
   );
 
