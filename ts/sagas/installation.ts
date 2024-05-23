@@ -1,5 +1,5 @@
 /**
- * A saga to manage notifications
+ * A saga to manage session invalidation
  */
 import { put, select } from "typed-redux-saga/macro";
 import { sessionInvalid } from "../store/actions/authentication";
