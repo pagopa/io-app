@@ -109,7 +109,7 @@ const PaymentsTransactionListScreen = () => {
         {I18n.t("features.payments.transactions.legacy.title")}
       </H2>
       <VSpacer size={16} />
-      {!isEmpty && !isLoading && (
+      {!isEmpty && (
         <>
           <Banner
             content={I18n.t(
