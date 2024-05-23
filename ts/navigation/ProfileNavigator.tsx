@@ -30,6 +30,7 @@ import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboa
 import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import { isGestureEnabled } from "../utils/navigation";
+import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -135,6 +136,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CGN_LANDING_PLAYGROUND}
       component={CgnLandingPlayground}
+    />
+    <Stack.Screen
+      name={ROUTES.TRIALS_SYSTEM_PLAYGROUND}
+      component={TrialSystemPlayground}
     />
     <Stack.Screen
       options={{

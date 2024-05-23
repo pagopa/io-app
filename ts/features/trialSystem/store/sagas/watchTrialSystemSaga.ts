@@ -40,6 +40,7 @@ function* handleTrialSystemActivationStatusUpsert(
           error: new Error(`response status ${result.right.status}`)
         })
       );
+      IOToast.error(I18n.t("global.genericError"));
     }
   } catch (e) {
     yield* put(
@@ -48,6 +49,7 @@ function* handleTrialSystemActivationStatusUpsert(
         error: getError(e)
       })
     );
+    IOToast.error(I18n.t("global.genericError"));
   }
 }
 

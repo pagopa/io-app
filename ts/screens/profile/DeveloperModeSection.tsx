@@ -57,8 +57,6 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
-import { trialSystemActivationStatusUpsert } from "../../features/trialSystem/store/actions";
-import { TrialId } from "../../../definitions/trial_systwem/TrialId";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -380,6 +378,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: I18n.t("profile.main.trial.titleSection"),
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.TRIALS_SYSTEM_PLAYGROUND
+        })
+    },
+    {
       condition: isIdPayTestEnabled,
       value: "IDPay Onboarding",
       onPress: () =>
@@ -473,10 +478,6 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(walletAddCoBadgeStart(undefined));
   };
 
-  const onJoinTrial = () => {
-    dispatch(trialSystemActivationStatusUpsert.request("sample" as TrialId));
-  };
-
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
@@ -567,12 +568,6 @@ const DeveloperTestEnvironmentSection = ({
         onSwitchValueChange={onItWalletTestToggle}
       />
       <Divider />
-      {/* Subscribe to a Trial */}
-      <ListItemNav
-        value={I18n.t("profile.main.trial.titleSection")}
-        accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
-        onPress={onJoinTrial}
-      />
     </ContentWrapper>
   );
 };
