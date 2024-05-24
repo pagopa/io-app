@@ -411,7 +411,7 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze"
           cta:
             shareData: "Condividi"
             dontShareData: "Non condividere dati"
@@ -522,19 +522,19 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
       title: Personalizza le notifiche
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria.
+      subtitle: Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
       titleExistingUser: Personalizza le notifiche
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
-        title: Consenti i promemoria
+        title: Consenti promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
-        title: Mostra un'anteprima
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio
-        link: Più info
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio.
+        link: Scopri di più
         bottomSheet:
-          title: Mostra un'anteprima
-          content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
+          title: Mostra anteprime
+          content: "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando."
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
 userMetadata:
@@ -607,6 +607,16 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+  cie_errors: 
+    error_22: 
+      title: Non hai dato il consenso all’invio dei dati
+      subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
+    error_1001:
+      title: Non hai l'età minima richiesta
+      subtitle: Per accedere, devi avere almeno 18 anni
+    generic: 
+      title: Non è stato possibile accedere
+      subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
   cie:
     genericTitle: Entra con CIE
     cie: CIE
@@ -751,7 +761,7 @@ authentication:
     subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO.
     subtitlel3: Per poter accedere all’app con tutte le tue identità SPID o CIE, sblocca l’accesso.
     learnmore: Scopri di più
-    loginIO: Chiudi
+    loginIO: Non ora, entra su IO
   unlockmodal:
     title: Cosa significa?
     description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo.
@@ -2094,6 +2104,11 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
   new: Nuovo
   home:
+    featured:
+      services:
+        title: In primo piano
+      institutions:
+        title: Enti in evidenza
     institutions:
       title: Nazionali
   institution:
