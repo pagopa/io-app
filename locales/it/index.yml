@@ -3742,6 +3742,11 @@ transaction:
       pspName: Gestore della transazione (PSP)
       dateAndHour: Data e ora
       transactionId: ID transazione
+      paymentMethod: Metodo di pagamento
+      authCode: Codice autorizzativo
+      rrn: RRN
+      executedBy: Eseguito da
+      headedTo: Intestato a
     operation:
       amount: Importo
       creditor: Ente creditore

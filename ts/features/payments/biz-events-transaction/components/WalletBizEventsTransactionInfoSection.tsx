@@ -1,4 +1,5 @@
 /* eslint-disable functional/immutable-data */
+import { capitalize } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
@@ -17,6 +18,7 @@ import { format } from "../../../../utils/dates";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
 import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
+import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 
 type WalletBizEventsTransactionInfoSectionProps = {
   transaction?: TransactionDetailResponse;
@@ -49,7 +51,7 @@ const WalletBizEventsTransactionInfoSection = ({
       <TransactionReceiptDivider
         height={24}
         width={"100%"}
-        preserveAspectRatio="xMin slice" // Add this property to fit the width to the parent
+        preserveAspectRatio="xMin slice"
       />
       <View style={styles.container}>
         <View style={styles.contentCard}>
@@ -75,13 +77,31 @@ const WalletBizEventsTransactionInfoSection = ({
               {transactionInfo.payer && (
                 <>
                   <ListItemInfo
-                    label="Eseguito da"
+                    label={I18n.t("transaction.details.info.executedBy")}
                     value={`${transactionInfo.payer.name}\n(${transactionInfo.payer.taxCode})`}
                   />
                   <Divider />
                 </>
               )}
-              {/* {transactionInfo.paymentMethod && transactionInfo.walletInfo && renderPaymentMethod(transactionInfo.paymentMethod, transactionInfo.walletInfo)} */}
+              {transactionInfo.paymentMethod && transactionInfo.walletInfo && (
+                <>
+                  {renderPaymentMethod(transactionInfo.walletInfo)}
+                  <Divider />
+                </>
+              )}
+              {(transactionInfo.walletInfo?.maskedEmail ||
+                transactionInfo.walletInfo?.accountHolder) && (
+                <>
+                  <ListItemInfo
+                    label={I18n.t("transaction.details.info.headedTo")}
+                    value={
+                      transactionInfo.walletInfo?.maskedEmail ??
+                      transactionInfo.walletInfo?.accountHolder
+                    }
+                  />
+                  <Divider />
+                </>
+              )}
               {transactionInfo.pspName && (
                 <>
                   <ListItemInfo
@@ -109,8 +129,10 @@ const WalletBizEventsTransactionInfoSection = ({
                     onPress={() =>
                       clipboardSetStringWithFeedback(transactionInfo.rrn ?? "")
                     }
-                    accessibilityLabel={`RRN: ${transactionInfo.rrn}`}
-                    label="RRN"
+                    accessibilityLabel={`${I18n.t(
+                      "transaction.details.info.rrn"
+                    )}: ${transactionInfo.rrn}`}
+                    label={I18n.t("transaction.details.info.rrn")}
                     value={transactionInfo.rrn}
                   />
                   <Divider />
@@ -124,8 +146,10 @@ const WalletBizEventsTransactionInfoSection = ({
                         transactionInfo.authCode ?? ""
                       )
                     }
-                    accessibilityLabel={`Codice autorizzativo: ${transactionInfo.authCode}`}
-                    label="Codice autorizzativo"
+                    accessibilityLabel={`${I18n.t(
+                      "transaction.details.info.authCode"
+                    )}: ${transactionInfo.authCode}`}
+                    label={I18n.t("transaction.details.info.authCode")}
                     value={transactionInfo.authCode}
                   />
                   <Divider />
@@ -153,21 +177,34 @@ const WalletBizEventsTransactionInfoSection = ({
   );
 };
 
-// const renderPaymentMethod = (paymentMethod: String, walletInfo: WalletInfo) => {
-//   switch (paymentMethod) {
-//     case "PPAL":
-//       return (
-//         <>
-//           <ListItemTransaction
-//           title="Metodo di pagamento"
-//           subtitle={walletInfo.}
-//             label={I18n.t("transaction.details.info.paymentMethod")}
-//             value={I18n.t("transaction.details.info.paymentMethodPayPal")}
-//           />
-//           <Divider />
-//         </>
-//       );
-// }
+const renderPaymentMethod = (walletInfo: WalletInfo) => {
+  if (walletInfo.blurredNumber) {
+    return (
+      <ListItemInfo
+        label={I18n.t("transaction.details.info.paymentMethod")}
+        value={`${capitalize(walletInfo.brand)} •••• ${
+          walletInfo.blurredNumber
+        }`}
+        accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
+          circuit: walletInfo.brand,
+          // we space the hpan to make the screen reader read it digit by digit
+          spacedHpan: walletInfo.blurredNumber.split("").join(" ")
+        })}
+        paymentLogoIcon={walletInfo.brand}
+      />
+    );
+  }
+  if (walletInfo.maskedEmail) {
+    return (
+      <ListItemInfo
+        label={I18n.t("transaction.details.info.paymentMethod")}
+        value="PayPal"
+        paymentLogoIcon={"payPal"}
+      />
+    );
+  }
+  return <></>;
+};
 
 const SkeletonItem = () => (
   <View style={[IOStyles.flex, { paddingVertical: 12 }]}>
