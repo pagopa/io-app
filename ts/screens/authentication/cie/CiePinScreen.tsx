@@ -141,7 +141,10 @@ const CiePinScreen = () => {
             authorizationUri: authUrlGenerated
           });
         } else {
-          navigation.navigate(ROUTES.CIE_ACTIVATE_NFC_SCREEN);
+          navigation.navigate(ROUTES.CIE_ACTIVATE_NFC_SCREEN, {
+            ciePin: pin,
+            authorizationUri: authUrlGenerated
+          });
         }
       }
       handleAuthenticationOverlayOnClose();

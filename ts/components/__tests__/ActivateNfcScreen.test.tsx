@@ -1,5 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Alert } from "react-native";
 import I18n from "../../i18n";
 import { openNFCSettings } from "../../utils/cie";
 import ActivateNfcScreen from "../cie/ActivateNfcScreen";
@@ -7,73 +9,145 @@ import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import ROUTES from "../../navigation/routes";
+import { useIOSelector } from "../../store/hooks";
 
 // Mock the openNFCSettings function
 jest.mock("../../utils/cie", () => ({
   openNFCSettings: jest.fn()
 }));
 
+// Mock the useIOSelector hook
+jest.mock("../../store/hooks", () => ({
+  useIOSelector: jest.fn(),
+  useIODispatch: jest.fn(),
+  useIOStore: jest.fn()
+}));
+
+const mockNavigate = jest.fn();
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: mockNavigate
+    }),
+    useRoute: () => ({
+      params: {
+        ciePin: "123456",
+        authorizationUri: "https://example.com"
+      }
+    })
+  };
+});
+
 describe("ActivateNfcScreen", () => {
+  beforeAll(() => {
+    jest.spyOn(Alert, "alert");
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test("renders the screen with header, title, subtitle, and list items", () => {
-    const { getByText, toJSON } = renderComponent();
+  describe("UI Rendering", () => {
+    test("renders the screen with header, title, subtitle, and list items", () => {
+      (useIOSelector as jest.Mock).mockReturnValue(pot.some(true));
 
-    // Check if header is visible
-    expect(getByText(I18n.t("authentication.cie.nfc.title"))).toBeTruthy();
+      const { getByText, toJSON } = renderComponent();
 
-    // Check if subtitle is visible
-    expect(getByText(I18n.t("authentication.cie.nfc.subtitle"))).toBeTruthy();
+      expect(getByText(I18n.t("authentication.cie.nfc.title"))).toBeTruthy();
+      expect(getByText(I18n.t("authentication.cie.nfc.subtitle"))).toBeTruthy();
+      expect(
+        getByText(I18n.t("authentication.cie.nfc.listItemTitle"))
+      ).toBeTruthy();
+      expect(
+        getByText(I18n.t("authentication.cie.nfc.listItemLabel1"))
+      ).toBeTruthy();
+      expect(
+        getByText(I18n.t("authentication.cie.nfc.listItemValue1"))
+      ).toBeTruthy();
+      expect(
+        getByText(I18n.t("authentication.cie.nfc.listItemLabel2"))
+      ).toBeTruthy();
+      expect(
+        getByText(I18n.t("authentication.cie.nfc.listItemValue2"))
+      ).toBeTruthy();
+      expect(
+        getByText(I18n.t("authentication.cie.nfc.listItemLabel3"))
+      ).toBeTruthy();
+      expect(
+        getByText(I18n.t("authentication.cie.nfc.listItemValue3"))
+      ).toBeTruthy();
 
-    // Check if list item headers are visible
-    expect(
-      getByText(I18n.t("authentication.cie.nfc.listItemTitle"))
-    ).toBeTruthy();
-
-    // Check if list items are rendered
-    expect(
-      getByText(I18n.t("authentication.cie.nfc.listItemLabel1"))
-    ).toBeTruthy();
-    expect(
-      getByText(I18n.t("authentication.cie.nfc.listItemValue1"))
-    ).toBeTruthy();
-    expect(
-      getByText(I18n.t("authentication.cie.nfc.listItemLabel2"))
-    ).toBeTruthy();
-    expect(
-      getByText(I18n.t("authentication.cie.nfc.listItemValue2"))
-    ).toBeTruthy();
-    expect(
-      getByText(I18n.t("authentication.cie.nfc.listItemLabel3"))
-    ).toBeTruthy();
-    expect(
-      getByText(I18n.t("authentication.cie.nfc.listItemValue3"))
-    ).toBeTruthy();
-
-    // Create snapshot
-    expect(toJSON()).toMatchSnapshot();
+      expect(toJSON()).toMatchSnapshot();
+    });
   });
 
-  test("calls openNFCSettings when action button is pressed", () => {
-    const { getByText } = renderComponent();
+  describe("Button Actions", () => {
+    test("calls openNFCSettings when primary action button is pressed", () => {
+      (useIOSelector as jest.Mock).mockReturnValue(pot.some(true));
 
-    // Check if the action button is rendered
-    const actionButton = getByText(I18n.t("authentication.cie.nfc.action"));
-    expect(actionButton).toBeTruthy();
+      const { getByText } = renderComponent();
 
-    // Simulate button press
-    fireEvent.press(actionButton);
+      const actionButton = getByText(I18n.t("authentication.cie.nfc.action"));
+      expect(actionButton).toBeTruthy();
 
-    // Check if openNFCSettings was called
-    expect(openNFCSettings).toHaveBeenCalled();
+      fireEvent.press(actionButton);
+
+      expect(openNFCSettings).toHaveBeenCalled();
+    });
+
+    test("navigates to CIE_CARD_READER_SCREEN when NFC is enabled and secondary action button is pressed", () => {
+      (useIOSelector as jest.Mock).mockReturnValue(pot.some(true));
+
+      const { getByText } = renderComponent();
+
+      const secondaryActionButton = getByText(
+        I18n.t("global.buttons.continue")
+      );
+      expect(secondaryActionButton).toBeTruthy();
+
+      fireEvent.press(secondaryActionButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith(ROUTES.CIE_CARD_READER_SCREEN, {
+        ciePin: "123456",
+        authorizationUri: "https://example.com"
+      });
+    });
+
+    test("shows alert when NFC is disabled and secondary action button is pressed", () => {
+      (useIOSelector as jest.Mock).mockReturnValue(pot.some(false));
+
+      const { getByText } = renderComponent();
+
+      const secondaryActionButton = getByText(
+        I18n.t("global.buttons.continue")
+      );
+      expect(secondaryActionButton).toBeTruthy();
+
+      fireEvent.press(secondaryActionButton);
+
+      expect(Alert.alert).toHaveBeenCalledWith(
+        I18n.t("authentication.cie.nfc.activeNfcAlert"),
+        "",
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("authentication.cie.nfc.activeNFCAlertButton"),
+            onPress: expect.any(Function)
+          }
+        ]
+      );
+    });
   });
 });
 
 const renderComponent = () => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const store = createStore(appReducer, globalState as any);
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
     ActivateNfcScreen,

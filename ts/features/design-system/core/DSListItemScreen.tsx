@@ -42,8 +42,12 @@ const DSListItemScreen = () => {
       subtitle={I18n.t("authentication.cie.nfc.subtitle")}
       listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
       renderItems={renderItems}
-      action={{
+      primaryActionProps={{
         label: I18n.t("authentication.cie.nfc.action"),
+        onPress: onButtonPress
+      }}
+      secondaryActionProps={{
+        label: I18n.t("global.buttons.continue"),
         onPress: onButtonPress
       }}
     />

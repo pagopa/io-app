@@ -637,6 +637,8 @@ authentication:
       listItemValue2: Cerca la funzionalità “NFC”
       listItemLabel3: Step 3
       listItemValue3: Attiva la funzionalità
+      activeNfcAlert: Attiva l’NFC per permettere a IO di leggere la tua CIE!
+      activeNFCAlertButton: Attiva NFC
     pin:
       accessibility:
         placeholderLabel: PIN della Carta di identità elettronica

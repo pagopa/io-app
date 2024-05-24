@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and list items 1`] = `
+exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, subtitle, and list items 1`] = `
 <View
   style={
     Object {
@@ -319,25 +319,19 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                         }
                       }
                     >
-                      <RNCSafeAreaView
-                        edges={
-                          Array [
-                            "bottom",
-                          ]
-                        }
-                        style={
+                      <RCTScrollView
+                        collapsable={false}
+                        contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
+                            "paddingBottom": 148,
+                            "paddingHorizontal": 24,
                           }
                         }
+                        onScroll={[Function]}
+                        scrollEventThrottle={16}
+                        style={Object {}}
                       >
-                        <View
-                          style={
-                            Object {
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        >
+                        <View>
                           <Text
                             allowFontScaling={false}
                             color="black"
@@ -403,7 +397,7 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                             }
                             weight="Regular"
                           >
-                            Per permettere a IO di leggere la tua CIE devi attivare la funzionalità NFC nelle impostazioni di sistema del tuo dispositivo.
+                            Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
                           </Text>
                           <View
                             style={
@@ -413,7 +407,7 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                             }
                           />
                           <View
-                            accessibilityLabel="Ecco come:"
+                            accessibilityLabel="Come fare:"
                             accessible={true}
                             style={
                               Object {
@@ -473,7 +467,7 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                                     }
                                     weight="Regular"
                                   >
-                                    Ecco come:
+                                    Come fare:
                                   </Text>
                                 </View>
                               </View>
@@ -487,7 +481,7 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                                 Object {
                                   "icon": "systemSettingsAndroid",
                                   "label": "Step 1",
-                                  "value": "Vai su “Impostazioni”",
+                                  "value": "Apri “Impostazioni”",
                                 },
                                 Object {
                                   "icon": "systemAppsAndroid",
@@ -539,7 +533,7 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Step 1; Vai su “Impostazioni”"
+                                  accessibilityLabel="Step 1; Apri “Impostazioni”"
                                   accessible={true}
                                   style={
                                     Object {
@@ -713,7 +707,7 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                                           }
                                           weight="SemiBold"
                                         >
-                                          Vai su “Impostazioni”
+                                          Apri “Impostazioni”
                                         </Text>
                                       </View>
                                     </View>
@@ -1137,119 +1131,354 @@ exports[`ActivateNfcScreen renders the screen with header, title, subtitle, and 
                             </View>
                           </RCTScrollView>
                         </View>
-                      </RNCSafeAreaView>
+                      </RCTScrollView>
                       <View
+                        pointerEvents="box-none"
                         style={
                           Object {
-                            "paddingHorizontal": 24,
+                            "bottom": 0,
+                            "height": 212,
+                            "paddingBottom": 24,
+                            "position": "absolute",
+                            "width": "100%",
                           }
                         }
                       >
                         <View
-                          accessibilityLabel="Apri impostazioni"
-                          accessibilityRole="button"
-                          accessibilityState={
-                            Object {
-                              "busy": false,
-                              "disabled": false,
-                            }
+                          pointerEvents="none"
+                          style={
+                            Array [
+                              Object {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                              Object {
+                                "opacity": 1,
+                              },
+                            ]
                           }
-                          accessible={true}
-                          collapsable={false}
-                          focusable={true}
-                          onBlur={[Function]}
-                          onClick={[Function]}
-                          onFocus={[Function]}
-                          onResponderGrant={[Function]}
-                          onResponderMove={[Function]}
-                          onResponderRelease={[Function]}
-                          onResponderTerminate={[Function]}
-                          onResponderTerminationRequest={[Function]}
-                          onStartShouldSetResponder={[Function]}
-                          style={Object {}}
                         >
-                          <View
-                            style={
+                          <BVLinearGradient
+                            colors={
                               Array [
-                                Object {
-                                  "alignItems": "center",
-                                  "borderRadius": 4,
-                                  "elevation": 0,
-                                  "flexDirection": "row",
-                                  "justifyContent": "center",
-                                  "paddingHorizontal": 16,
-                                  "textAlignVertical": "center",
-                                },
-                                Object {
-                                  "overflow": "hidden",
-                                },
-                                false,
-                                Object {
-                                  "height": 40,
-                                },
-                                Object {
-                                  "backgroundColor": "#0073E6",
-                                },
-                                Object {
-                                  "backgroundColor": undefined,
-                                  "transform": Array [
-                                    Object {
-                                      "scale": undefined,
-                                    },
-                                  ],
-                                },
+                                16777215,
+                                33554431,
+                                83886079,
+                                150994943,
+                                268435455,
+                                385875967,
+                                520093695,
+                                687865855,
+                                855638015,
+                                1056964607,
+                                1258291199,
+                                1476395007,
+                                1711276031,
+                                1946157055,
+                                2214592511,
+                                2466250751,
+                                2751463423,
+                                3036676095,
+                                3338665983,
+                                3640655871,
+                                3959422975,
+                                4294967295,
                               ]
                             }
+                            endPoint={
+                              Object {
+                                "x": 0.5,
+                                "y": 1,
+                              }
+                            }
+                            locations={
+                              Array [
+                                0,
+                                0.047619047619047616,
+                                0.09523809523809523,
+                                0.14285714285714285,
+                                0.19047619047619047,
+                                0.23809523809523808,
+                                0.2857142857142857,
+                                0.3333333333333333,
+                                0.38095238095238093,
+                                0.42857142857142855,
+                                0.47619047619047616,
+                                0.5238095238095237,
+                                0.5714285714285714,
+                                0.6190476190476191,
+                                0.6666666666666666,
+                                0.7142857142857142,
+                                0.7619047619047619,
+                                0.8095238095238095,
+                                0.8571428571428571,
+                                0.9047619047619047,
+                                0.9523809523809523,
+                                1,
+                              ]
+                            }
+                            startPoint={
+                              Object {
+                                "x": 0.5,
+                                "y": 0,
+                              }
+                            }
+                            style={
+                              Object {
+                                "height": 116.60000000000001,
+                              }
+                            }
+                          />
+                          <View
+                            style={
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 95.4,
+                              }
+                            }
+                          />
+                        </View>
+                        <View
+                          style={
+                            Array [
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                              },
+                              Object {
+                                "height": 68,
+                              },
+                            ]
+                          }
+                        />
+                        <View
+                          pointerEvents="box-none"
+                          style={
+                            Object {
+                              "flex": 1,
+                              "flexShrink": 0,
+                              "justifyContent": "flex-end",
+                              "paddingHorizontal": 24,
+                              "width": "100%",
+                            }
+                          }
+                        >
+                          <View
+                            accessibilityLabel="Apri Impostazioni"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              Object {
+                                "busy": false,
+                                "disabled": false,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={Object {}}
                           >
                             <View
                               style={
                                 Array [
                                   Object {
                                     "alignItems": "center",
+                                    "borderRadius": 4,
+                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
+                                    "paddingHorizontal": 16,
+                                    "textAlignVertical": "center",
+                                  },
+                                  Object {
+                                    "overflow": "hidden",
                                   },
                                   false,
+                                  Object {
+                                    "height": 40,
+                                  },
+                                  Object {
+                                    "backgroundColor": "#0073E6",
+                                  },
+                                  Object {
+                                    "backgroundColor": undefined,
+                                    "transform": Array [
+                                      Object {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
                                 ]
                               }
                             >
-                              <Text
-                                accessibilityElementsHidden={true}
-                                accessible={false}
-                                allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
-                                ellipsizeMode="tail"
-                                font="TitilliumWeb"
-                                fontStyle={
-                                  Object {
-                                    "fontSize": 16,
-                                  }
-                                }
-                                importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
-                                numberOfLines={1}
+                              <View
                                 style={
                                   Array [
                                     Object {
-                                      "alignSelf": "center",
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
                                     },
+                                    false,
+                                  ]
+                                }
+                              >
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={false}
+                                  color="white"
+                                  defaultColor="white"
+                                  defaultWeight="Bold"
+                                  ellipsizeMode="tail"
+                                  font="TitilliumWeb"
+                                  fontStyle={
                                     Object {
                                       "fontSize": 16,
-                                    },
+                                    }
+                                  }
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.3}
+                                  numberOfLines={1}
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignSelf": "center",
+                                      },
+                                      Object {
+                                        "fontSize": 16,
+                                      },
+                                      Object {
+                                        "color": "#FFFFFF",
+                                        "fontFamily": "Titillium Web",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "700",
+                                      },
+                                    ]
+                                  }
+                                  weight="Bold"
+                                >
+                                  Apri Impostazioni
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "alignSelf": "center",
+                                "marginBottom": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <View
+                              accessibilityLabel="Continue"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                Object {
+                                  "disabled": false,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              hitSlop={
+                                Object {
+                                  "bottom": 14,
+                                  "left": 24,
+                                  "right": 24,
+                                  "top": 14,
+                                }
+                              }
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
+                              style={
+                                Object {
+                                  "alignSelf": "flex-start",
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  Array [
                                     Object {
-                                      "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "alignItems": "center",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "textAlignVertical": "center",
+                                    },
+                                    false,
+                                    Object {},
+                                    Object {
+                                      "transform": Array [
+                                        Object {
+                                          "scale": undefined,
+                                        },
+                                      ],
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
-                                Apri impostazioni
-                              </Text>
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={false}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.3}
+                                  numberOfLines={1}
+                                  style={
+                                    Array [
+                                      Object {
+                                        "fontFamily": "Titillium Web",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "700",
+                                      },
+                                      Object {
+                                        "color": "#0073E6",
+                                      },
+                                      Object {
+                                        "color": undefined,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Continue
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
