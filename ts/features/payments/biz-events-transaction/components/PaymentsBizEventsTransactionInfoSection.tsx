@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
   Divider,
+  IOLogoPaymentType,
   IORadiusScale,
   IOVisualCostants,
   ListItemHeader,
@@ -178,7 +179,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
 };
 
 const renderPaymentMethod = (walletInfo: WalletInfo) => {
-  if (walletInfo.blurredNumber) {
+  if (walletInfo.blurredNumber && walletInfo.brand) {
     return (
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
@@ -190,7 +191,7 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
           // we space the hpan to make the screen reader read it digit by digit
           spacedHpan: walletInfo.blurredNumber.split("").join(" ")
         })}
-        paymentLogoIcon={walletInfo.brand}
+        paymentLogoIcon={walletInfo.brand as IOLogoPaymentType}
       />
     );
   }
