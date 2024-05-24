@@ -6,7 +6,7 @@ type FimsGetConsentsListRequestType = {
 };
 
 type FimsGetRedirectUrlAndOpenIABRequestType = {
-  acceptUrl: string;
+  acceptUrl?: string;
 };
 
 export const fimsGetConsentsListAction = createAsyncAction(

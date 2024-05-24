@@ -87,16 +87,25 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     return;
   }
+  const { acceptUrl } = action.payload;
+  if (!acceptUrl) {
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        new Error("unable to accept grants: invalid URL")
+      )
+    );
+    return;
+  }
 
   const providerAcceptRedirectRes = yield* call(mockHttpNativeCall, {
     followRedirects: false,
     verb: "post",
-    url: action.payload.acceptUrl
+    url: acceptUrl
   });
 
   const acceptRedirectUrl = extractValidRedirect(
     providerAcceptRedirectRes,
-    action.payload.acceptUrl
+    acceptUrl
   );
 
   if (!acceptRedirectUrl) {
