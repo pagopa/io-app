@@ -9,7 +9,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 
-const DEFAULT_TRANSACTION_LIST_SIZE = 10;
+const DEFAULT_LATEST_TRANSACTION_LIST_SIZE = 5;
 
 export function* handleGetLatestBizEventsTransactions(
   getTransactionList: TransactionClient["getTransactionList"],
@@ -28,7 +28,7 @@ export function* handleGetLatestBizEventsTransactions(
     return;
   }
   const getTransactionListRequest = getTransactionList({
-    size: DEFAULT_TRANSACTION_LIST_SIZE,
+    size: DEFAULT_LATEST_TRANSACTION_LIST_SIZE,
     Authorization: sessionToken
   });
 
