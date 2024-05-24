@@ -3,12 +3,13 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setShowProfileBanner } from "../actions";
 import { Action } from "../../../../store/actions/types";
+import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 
 export type ProfileSettingsState = {
   showProfileBanner: boolean;
 };
 
-const profileSettingsReducerInitialState = {
+export const profileSettingsReducerInitialState = {
   showProfileBanner: true
 };
 
@@ -22,6 +23,9 @@ const profileSettingsReducer = (
         ...state,
         showProfileBanner: action.payload
       };
+    }
+    case getType(differentProfileLoggedIn): {
+      return profileSettingsReducerInitialState;
     }
     default:
       return state;
