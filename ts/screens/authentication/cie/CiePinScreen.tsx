@@ -176,7 +176,7 @@ const CiePinScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
+      setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
     }, [])
   );
 

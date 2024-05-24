@@ -10,6 +10,12 @@ import { OperationResultScreenContent } from "../../../components/screens/Operat
 const CieWrongCardScreen = () => {
   const navigation = useIONavigation();
 
+  const navigateToCiePinScreen = React.useCallback(() => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.CIE_PIN_SCREEN
+    });
+  }, [navigation]);
+
   const navigateToAuthenticationScreen = React.useCallback(() => {
     navigation.reset({
       index: 0,
@@ -18,6 +24,11 @@ const CieWrongCardScreen = () => {
   }, [navigation]);
 
   const action = {
+    label: I18n.t("global.buttons.retry"),
+    onPress: navigateToCiePinScreen
+  };
+
+  const secondaryAction = {
     label: I18n.t("global.buttons.close"),
     onPress: navigateToAuthenticationScreen
   };
@@ -28,6 +39,7 @@ const CieWrongCardScreen = () => {
       title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
       subtitle={I18n.t("authentication.cie.card.error.unknownCardContent")}
       action={action}
+      secondaryAction={secondaryAction}
     />
   );
 };
