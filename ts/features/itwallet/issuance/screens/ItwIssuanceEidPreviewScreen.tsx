@@ -3,12 +3,13 @@ import {
   ButtonSolid,
   ContentWrapper,
   IOColors,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -31,6 +32,11 @@ export const ItwIssuanceEidPreviewScreen = () => {
    * @param eid - the decoded eID
    */
   const ContentView = ({ eid }: { eid: StoredCredential }) => {
+    const theme = useIOTheme();
+
+    const backgroundColor: ColorValue =
+      IOColors[theme["appBackground-primary"]];
+
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerShown: true
@@ -51,7 +57,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
         <View style={styles.dropShadow}>
           <VSpacer size={24} />
         </View>
-        <View style={styles.content}>
+        <View style={[styles.content, { backgroundColor }]}>
           <ItwCredentialClaimsList data={eid} />
         </View>
         <ContentWrapper>
@@ -111,7 +117,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: IOColors.white, // Add background to cover shadow
     paddingHorizontal: 24
   }
 });
