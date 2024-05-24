@@ -1,5 +1,6 @@
 import {
   ButtonLink,
+  Divider,
   H2,
   IOStyles,
   ListItemHeader,
@@ -209,6 +210,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
           : []
       }
       testID="PaymentsTransactionsListTestID"
+      ItemSeparatorComponent={Divider}
       renderSectionHeader={({ section }) => (
         <ListItemHeader label={section.title} />
       )}

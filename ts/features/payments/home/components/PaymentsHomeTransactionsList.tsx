@@ -1,4 +1,5 @@
 import {
+  Divider,
   IOStyles,
   ListItemHeader,
   ListItemTransaction
@@ -73,14 +74,19 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     if (!isLoading && pot.isSome(latestTransactionsPot)) {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
-          {latestTransactionsPot.value.map(latestTransaction => (
-            <PaymentsBizEventsListItemTransaction
+          {latestTransactionsPot.value.map((latestTransaction, index) => (
+            <React.Fragment
               key={`transaction_${latestTransaction.transactionId}`}
-              onPress={() =>
-                handleNavigateToTransactionDetails(latestTransaction)
-              }
-              transaction={latestTransaction}
-            />
+            >
+              <PaymentsBizEventsListItemTransaction
+                key={`transaction_${latestTransaction.transactionId}`}
+                onPress={() =>
+                  handleNavigateToTransactionDetails(latestTransaction)
+                }
+                transaction={latestTransaction}
+              />
+              {index < latestTransactionsPot.value.length - 1 && <Divider />}
+            </React.Fragment>
           ))}
         </View>
       );
