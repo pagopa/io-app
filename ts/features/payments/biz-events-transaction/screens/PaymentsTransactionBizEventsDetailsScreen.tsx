@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
@@ -11,11 +11,18 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { PaymentsBizEventsTransactionHeadingSection } from "../components/PaymentsBizEventsTransactionHeadingSection";
 import WalletTransactionInfoSection from "../components/PaymentsBizEventsTransactionInfoSection";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
-import { getPaymentsBizEventsTransactionDetailsAction } from "../store/actions";
-import { walletTransactionBizEventsDetailsPotSelector } from "../store/selectors";
+import {
+  getPaymentsBizEventsReceiptAction,
+  getPaymentsBizEventsTransactionDetailsAction
+} from "../store/actions";
+import {
+  walletTransactionBizEventsDetailsPotSelector,
+  walletTransactionsBizEventsReceiptPotSelector
+} from "../store/selectors";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
@@ -52,8 +59,12 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const transactionDetailsPot = useIOSelector(
     walletTransactionBizEventsDetailsPotSelector
   );
+  const transactionReceiptPot = useIOSelector(
+    walletTransactionsBizEventsReceiptPotSelector
+  );
 
   const isLoading = pot.isLoading(transactionDetailsPot);
+  const isLoadingReceipt = pot.isLoading(transactionReceiptPot);
   const isError = pot.isError(transactionDetailsPot);
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
 
@@ -67,6 +78,30 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const handleOnRetry = () => {
     dispatch(
       getPaymentsBizEventsTransactionDetailsAction.request({ transactionId })
+    );
+  };
+
+  const handleOnDownloadPdfReceiptError = () => {
+    IOToast.error("Impossibile scaricare la ricevuta, riprova più tardi.");
+  };
+
+  const handleOnDownloadPdfReceiptSuccess = () => {
+    navigation.navigate(
+      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
+      {
+        screen:
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_PREVIEW_SCREEN
+      }
+    );
+  };
+
+  const handleDownloadPdfReceipt = () => {
+    dispatch(
+      getPaymentsBizEventsReceiptAction.request({
+        transactionId,
+        onError: handleOnDownloadPdfReceiptError,
+        onSuccess: handleOnDownloadPdfReceiptSuccess
+      })
     );
   };
 
@@ -93,6 +128,15 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("transaction.details.title")
+      }}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: "Scarica ricevuta",
+          onPress: handleDownloadPdfReceipt,
+          loading: isLoadingReceipt,
+          disabled: isLoadingReceipt
+        }
       }}
       contextualHelp={emptyContextualHelp}
       faqCategories={["wallet_transaction"]}

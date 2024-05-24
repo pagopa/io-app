@@ -6,7 +6,8 @@ import { NetworkError } from "../../../../../utils/errors";
 import {
   getPaymentsBizEventsTransactionDetailsAction,
   getPaymentsLatestBizEventsTransactionsAction,
-  getPaymentsBizEventsTransactionsAction
+  getPaymentsBizEventsTransactionsAction,
+  getPaymentsBizEventsReceiptAction
 } from "../actions";
 import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { TransactionDetailResponse } from "../../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
@@ -15,12 +16,14 @@ export type PaymentsBizEventsTransactionState = {
   transactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
   details: pot.Pot<TransactionDetailResponse, NetworkError>;
+  receiptDocument: pot.Pot<Blob, NetworkError>;
 };
 
 const INITIAL_STATE: PaymentsBizEventsTransactionState = {
   transactions: pot.noneLoading,
   latestTransactions: pot.noneLoading,
-  details: pot.noneLoading
+  details: pot.noneLoading,
+  receiptDocument: pot.none
 };
 
 const reducer = (
@@ -97,6 +100,27 @@ const reducer = (
       return {
         ...state,
         details: pot.none
+      };
+    // GET BIZ-EVENTS TRANSACTION RECEIPT PDF
+    case getType(getPaymentsBizEventsReceiptAction.request):
+      return {
+        ...state,
+        receiptDocument: pot.noneLoading
+      };
+    case getType(getPaymentsBizEventsReceiptAction.success):
+      return {
+        ...state,
+        receiptDocument: pot.some(action.payload)
+      };
+    case getType(getPaymentsBizEventsReceiptAction.failure):
+      return {
+        ...state,
+        receiptDocument: pot.toError(state.receiptDocument, action.payload)
+      };
+    case getType(getPaymentsBizEventsReceiptAction.cancel):
+      return {
+        ...state,
+        receiptDocument: pot.none
       };
   }
   return state;
