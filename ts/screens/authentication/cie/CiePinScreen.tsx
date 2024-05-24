@@ -28,7 +28,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IdpData } from "../../../../definitions/content/IdpData";
-import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
+import {
+  CieEntityIds,
+  CieRequestAuthenticationOverlay
+} from "../../../components/cie/CieRequestAuthenticationOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
@@ -58,6 +61,7 @@ import {
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
+import { getIdpLoginUri } from "../../../utils/login";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -126,8 +130,10 @@ const CiePinScreen = () => {
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
       if (cieFlowForDevServerEnabled) {
-        const token = /token=([\d\w]+)/.exec(authUrlGenerated)?.[1];
-        doLoginSuccess(token as SessionToken, "cie");
+        const loginUri = getIdpLoginUri(CieEntityIds.PROD, 3);
+        navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+          cieConsentUri: loginUri
+        });
       } else {
         if (isNfcEnabled) {
           navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
