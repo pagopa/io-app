@@ -1,5 +1,6 @@
 import {
   Banner,
+  Divider,
   H2,
   IOStyles,
   ListItemTransaction,
@@ -172,6 +173,7 @@ const PaymentsTransactionListScreen = () => {
         data={pot.isSome(transactionsPot) ? transactionsPot.value : []}
         testID="PaymentsTransactionsListTestID"
         ListFooterComponent={renderLoadingFooter}
+        ItemSeparatorComponent={Divider}
         ListEmptyComponent={
           !isLoading ? (
             <PaymentsLegacyTransactionsEmptyContent withPictogram={true} />
