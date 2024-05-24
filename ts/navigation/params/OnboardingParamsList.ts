@@ -1,4 +1,3 @@
-import { PinConfirmationScreenParams } from "../../screens/onboarding/OnboardingPinConfirmationScreen";
 import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../features/pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { EmailInsertScreenNavigationParams } from "../../screens/profile/EmailInsertScreen";
@@ -11,7 +10,6 @@ export type OnboardingParamsList = {
   [ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE]: undefined;
   [ROUTES.ONBOARDING_TOS]: undefined;
   [ROUTES.ONBOARDING_PIN]: undefined;
-  [ROUTES.ONBOARDING_CONFIRMATION_PIN]: PinConfirmationScreenParams;
   [ROUTES.ONBOARDING_MISSING_DEVICE_PIN]: undefined;
   [ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC]: undefined;
   [ROUTES.ONBOARDING_FINGERPRINT]: undefined;

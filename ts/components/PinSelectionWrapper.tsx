@@ -1,7 +1,5 @@
 import * as React from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useHeaderHeight } from "@react-navigation/elements";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -35,7 +33,6 @@ const PinSelectionWrapper = ({
 }: React.PropsWithChildren<Props>) => {
   const onboardingAbortAlert = useOnboardingAbortAlert();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const headerHeight = useHeaderHeight();
 
   useOnFirstRender(() => {
     trackPinScreen(getFlowType(isOnboarding, isFirstOnBoarding));
@@ -56,19 +53,7 @@ const PinSelectionWrapper = ({
 
   return (
     <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={headerHeight}
-        behavior={Platform.select({ ios: "padding", android: undefined })}
-        style={IOStyles.flex}
-        enabled
-      >
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          contentContainerStyle={{ flexGrow: 1 }}
-        >
-          {children}
-        </ScrollView>
-      </KeyboardAvoidingView>
+      {children}
     </SafeAreaView>
   );
 };

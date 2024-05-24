@@ -9,7 +9,6 @@ import { applicationChangeState } from "../../../store/actions/application";
 import ROUTES from "../../../navigation/routes";
 import { TestInnerNavigationContainer } from "../../../navigation/AppStackNavigator";
 import PinScreen from "../PinScreen";
-import PinConfirmationScreen from "../PinConfirmationScreen";
 import I18n from "../../../i18n";
 
 const mockedGoBack = jest.fn();
@@ -94,10 +93,6 @@ function renderComponent() {
   const Screens = () => (
     <Stack.Navigator initialRouteName={ROUTES.PIN_SCREEN}>
       <Stack.Screen name={ROUTES.PIN_SCREEN} component={PinScreen} />
-      <Stack.Screen
-        name={ROUTES.PIN_CONFIRMATION}
-        component={PinConfirmationScreen}
-      />
     </Stack.Navigator>
   );
 

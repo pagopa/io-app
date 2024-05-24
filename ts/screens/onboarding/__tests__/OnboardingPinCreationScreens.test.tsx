@@ -9,7 +9,6 @@ import { applicationChangeState } from "../../../store/actions/application";
 import ROUTES from "../../../navigation/routes";
 import { TestInnerNavigationContainer } from "../../../navigation/AppStackNavigator";
 import OnboardingPinScreen from "../OnboardingPinScreen";
-import OnboardingPinConfirmationScreen from "../OnboardingPinConfirmationScreen";
 import I18n from "../../../i18n";
 
 jest.spyOn(Alert, "alert");
@@ -92,10 +91,6 @@ function renderComponent() {
       <Stack.Screen
         name={ROUTES.ONBOARDING_PIN}
         component={OnboardingPinScreen}
-      />
-      <Stack.Screen
-        name={ROUTES.ONBOARDING_CONFIRMATION_PIN}
-        component={OnboardingPinConfirmationScreen}
       />
     </Stack.Navigator>
   );

@@ -4,7 +4,7 @@ import {
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
 import PinSelectionWrapper from "../../components/PinSelectionWrapper";
-import { PinCreation } from "../../components/PinCreation";
+import { PinCreation } from "../../components/PinCreation/PinCreation";
 
 type Props = IOStackNavigationRouteProps<AppParamsList>;
 

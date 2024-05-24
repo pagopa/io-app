@@ -1,6 +1,5 @@
 import { EmailInsertScreenNavigationParams } from "../../screens/profile/EmailInsertScreen";
 import { SendEmailValidationScreenProp } from "../../screens/profile/EmailValidationSendEmailScreen";
-import { PinConfirmationScreenParams } from "../../screens/profile/PinConfirmationScreen";
 import ROUTES from "../routes";
 
 export type ProfileParamsList = {
@@ -20,7 +19,6 @@ export type ProfileParamsList = {
   [ROUTES.INSERT_EMAIL_SCREEN]: EmailInsertScreenNavigationParams;
   [ROUTES.EMAIL_VERIFICATION_SCREEN]: SendEmailValidationScreenProp;
   [ROUTES.PIN_SCREEN]: undefined;
-  [ROUTES.PIN_CONFIRMATION]: PinConfirmationScreenParams;
   [ROUTES.PROFILE_DOWNLOAD_DATA]: undefined;
   [ROUTES.MARKDOWN_PLAYGROUND]: undefined;
   [ROUTES.DESIGN_SYSTEM]: undefined;

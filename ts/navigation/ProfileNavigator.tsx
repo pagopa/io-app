@@ -29,7 +29,6 @@ import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboa
 import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import { isGestureEnabled } from "../utils/navigation";
-import PinConfirmationScreen from "../screens/profile/PinConfirmationScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -107,10 +106,6 @@ const ProfileStackNavigator = () => (
       component={EmailValidationSendEmailScreen}
     />
     <Stack.Screen name={ROUTES.PIN_SCREEN} component={PinScreen} />
-    <Stack.Screen
-      name={ROUTES.PIN_CONFIRMATION}
-      component={PinConfirmationScreen}
-    />
     <Stack.Screen
       name={ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}

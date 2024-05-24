@@ -890,9 +890,11 @@ onboarding:
         cta: Scegli un altro codice
       match: Il codice non coincide
     policy:
-      headerTitle: "Il codice non deve contenere:"
-      first: ripetizioni di numeri (000000)
-      second: numeri in sequenza (654321)
+      title: Come scegliere il codice?
+      description: Il codice di sblocco è composto da 6 cifre e ti servirà per accedere a IO e autorizzare alcune operazioni in app.
+      bulletListTitle: "Scegli un codice difficile da indovinare e che non contenga:"
+      firstItem: ripetizioni di numeri (es. 000000)
+      secondItem: numeri in sequenza (es. 123456 o 654321)
     success:
       message: Hai modificato il codice!
   pinConfirmation:
