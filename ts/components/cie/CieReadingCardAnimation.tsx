@@ -10,7 +10,6 @@ import {
 import * as React from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import customVariables from "../../theme/variables";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -175,7 +174,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             color={
               this.props.readingState === ReadingState.error
                 ? IOColors.greyLight
-                : customVariables.brandPrimary
+                : this.props.circleColor
             }
             shadowColor={IOColors.greyLight}
             bgColor={IOColors.greyLight}
