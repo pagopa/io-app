@@ -3,15 +3,15 @@ import React, { useCallback } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { Alert } from "react-native";
-import ScreenWithListItems from "../screens/ScreenWithListItems";
-import I18n from "../../i18n";
-import { useIOSelector } from "../../store/hooks";
-import { isNfcEnabledSelector } from "../../store/reducers/cie";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
-import ROUTES from "../../navigation/routes";
-import * as cieUtils from "../../utils/cie";
-import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
+import I18n from "../../../i18n";
+import { useIOSelector } from "../../../store/hooks";
+import { isNfcEnabledSelector } from "../../../store/reducers/cie";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
+import ROUTES from "../../../navigation/routes";
+import * as cieUtils from "../../../utils/cie";
+import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
+import { CieCardReaderScreenNavigationParams } from "./CieCardReaderScreen";
 
 const ActivateNfcScreen = () => {
   const isEnabled = useIOSelector(isNfcEnabledSelector);
