@@ -136,7 +136,7 @@ export const RNavScreenWithLargeHeader = ({
 
         {description && (
           <ContentWrapper>
-            <VSpacer size={4} />
+            <VSpacer size={16} />
             <Body color="grey-700">{description}</Body>
           </ContentWrapper>
         )}
