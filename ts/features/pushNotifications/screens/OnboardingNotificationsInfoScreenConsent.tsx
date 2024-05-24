@@ -12,7 +12,6 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { openAppSettings } from "../../../utils/appSettings";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
 });
 
 export const OnboardingNotificationsInfoScreenConsent = () => {
-  const navigation = useNavigation();
   const dispatch = useIODispatch();
   const remindersEnabled = useIOSelector(
     pushNotificationRemindersEnabledSelector
@@ -126,15 +124,8 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
   );
 
   const closeModalAndScreen = useCallback(() => {
-    // Dismiss the modal (the check on `canGoBack` avoids
-    // a logged error when running tests, since in that
-    // case there is no screen below on the navigation stack)
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    }
-
     dispatch(notificationsInfoScreenConsent());
-  }, [dispatch, navigation]);
+  }, [dispatch]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
