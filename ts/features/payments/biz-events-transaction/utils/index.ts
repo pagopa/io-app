@@ -37,4 +37,13 @@ export const groupTransactionsByMonth = (
   }));
 };
 
-export const formatAmountText = (amount: string) => `${amount} €`;
+// This function formats the text of the amount that is a string composed by "1000.00" in the format "1.000,00 €" allowing only two decimal digits
+export const formatAmountText = (amount: string): string => {
+  const amountNumber = parseFloat(amount);
+  return amountNumber.toLocaleString("it-IT", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+};
