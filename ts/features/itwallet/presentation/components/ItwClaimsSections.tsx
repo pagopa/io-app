@@ -29,7 +29,9 @@ export const ItwClaimsSections = ({ credential }: Props) => {
           <>
             <VSpacer size={24} />
             <ItwCredentialClaimsSection
-              title={I18n.t("features.itWallet.presentation.personalDataTitle")}
+              title={I18n.t(
+                "features.itWallet.presentation.credentialDetails.personalDataTitle"
+              )}
               canHideValues
               claims={claims}
             />
@@ -45,7 +47,9 @@ export const ItwClaimsSections = ({ credential }: Props) => {
           <>
             <VSpacer size={24} />
             <ItwCredentialClaimsSection
-              title={I18n.t("features.itWallet.presentation.documentDataTitle")}
+              title={I18n.t(
+                "features.itWallet.presentation.credentialDetails.documentDataTitle"
+              )}
               claims={claims}
             />
           </>

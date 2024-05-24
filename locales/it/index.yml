@@ -3130,10 +3130,14 @@ features:
           primary: Aggiungi al portafoglio
           secondary: Annulla
     presentation:
-      personalDataTitle: "Dati personali"
-      documentDataTitle: "Dati documento"
-      accessibility:
-        toggleClaimValues: "Mostra/nascondi gli attributi del documento"
+      credentialDetails:
+        personalDataTitle: "Dati personali"
+        documentDataTitle: "Dati documento"
+        lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        actions:
+          removeFromWallet: "Rimuovi dal Portafoglio"
+          requestAssistance: "Qualcosa non torna? Contatta AuthSource"
+          toggleClaimsVisibility: "Mostra/nascondi gli attributi del documento"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

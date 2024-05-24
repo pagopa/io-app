@@ -23,7 +23,7 @@ export const ItwCredentialClaimsSection = ({
       icon={valuesHidden ? "eyeHide" : "eyeShow"}
       onPress={() => setValuesHidden(x => !x)}
       accessibilityLabel={I18n.t(
-        "features.itWallet.presentation.accessibility.toggleClaimValues"
+        "features.itWallet.presentation.credentialDetails.actions.toggleClaimsVisibility"
       )}
     />
   );

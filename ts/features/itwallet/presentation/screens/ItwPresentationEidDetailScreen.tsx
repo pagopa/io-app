@@ -3,11 +3,12 @@ import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import {
   ContentWrapper,
-  Divider,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { format } from "date-fns";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { EidCard } from "../../common/components/EidCard";
@@ -26,8 +27,21 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { ItwClaimsSections } from "../components/ItwClaimsSections";
+import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
 
+// TODO: use the real credential update time
+const today = new Date();
+
+/**
+ * @deprecated `BaseScreenComponent`
+ *
+ * This component renders the entire credential detail.
+ * `BaseScreenComponent` is used because it offers the colored header with contrast icons out of the box.
+ *
+ * TODO: dismiss `BaseScreenComponent`
+ */
 const ContentView = ({ eid }: { eid: StoredCredential }) => {
+  const insets = useSafeAreaInsets();
   const themeColor = getThemeColorByCredentialType(
     eid.credentialType as CredentialType
   );
@@ -42,7 +56,11 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
       contextualHelp={emptyContextualHelp}
     >
       <StatusBar backgroundColor={themeColor} barStyle="light-content" />
-      <ScrollView>
+      <ScrollView
+        contentInset={{
+          bottom: IOVisualCostants.headerHeight + insets.top + insets.bottom // Compensate for the header
+        }}
+      >
         <View style={styles.cardContainer}>
           <EidCard />
           <View
@@ -52,12 +70,13 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
 
         <ContentWrapper>
           <ItwClaimsSections credential={eid} />
-          <Divider />
           <ItwPidAssuranceLevel credential={eid} />
-          <Divider />
           <ItwReleaserName credential={eid} />
+          <VSpacer size={40} />
+          <ItwPresentationDetailFooter
+            lastUpdateTime={format(today, "DD MMMM YYYY, HH:mm")}
+          />
         </ContentWrapper>
-        <VSpacer size={40} />
       </ScrollView>
     </BaseScreenComponent>
   );
