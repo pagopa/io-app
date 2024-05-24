@@ -2,26 +2,24 @@ import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { remindersOptInEnabled } from "../../../config";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { profileUpsert } from "../../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
-import { requestNotificationPermissions } from "../utils";
+import {
+  checkNotificationPermissions,
+  requestNotificationPermissions
+} from "../utils";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus
 } from "../analytics";
-import { checkNotificationsPermissionsSaga } from "./checkNotificationsPermissionsSaga";
+import { SagaCallReturnType } from "../../../types/utils";
+import { notificationsInfoScreenConsent } from "../store/actions/notifications";
 
 export function* checkNotificationsPreferencesSaga(
   userProfile: InitializedProfile
 ) {
-  if (!remindersOptInEnabled) {
-    // the feature flag is disabled
-    return;
-  }
-
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
   // Check if the user has already set a preference for push notification opt-in
@@ -41,13 +39,12 @@ export function* checkNotificationsPreferencesSaga(
   }
 
   // show the opt-in screen
-  yield* call(() =>
-    NavigationService.dispatchNavigationAction(
-      CommonActions.navigate(ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
-        params: { isFirstOnboarding }
-      })
-    )
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+      params: { isFirstOnboarding }
+    })
   );
 
   // wait for the notifications preferences to be set
@@ -65,11 +62,38 @@ export function* checkNotificationsPreferencesSaga(
     }
   }
 
+  // check if the user has given system notification permissions
+  const authorizationStatus: SagaCallReturnType<
+    typeof checkNotificationPermissions
+  > = yield* call(checkNotificationPermissions);
+
+  if (!authorizationStatus) {
+    const permissionStatus: SagaCallReturnType<
+      typeof requestNotificationPermissions
+    > = yield* call(requestNotificationPermissions);
+
+    if (permissionStatus) {
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        StackActions.popToTop()
+      );
+      return;
+    }
+
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.ONBOARDING, {
+        screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
+      })
+    );
+
+    yield* take<ActionType<typeof notificationsInfoScreenConsent>>(
+      notificationsInfoScreenConsent
+    );
+  }
+
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.popToTop()
   );
-
-  // check if the user has given system notification permissions
-  yield* call(checkNotificationsPermissionsSaga);
 }
