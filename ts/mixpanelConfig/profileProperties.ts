@@ -4,11 +4,14 @@ import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
+  NotificationPermissionType,
   NotificationPreferenceConfiguration,
-  ServiceConfigurationTrackingType
+  ServiceConfigurationTrackingType,
+  getNotificationPermissionType
 } from "../screens/profile/analytics";
 import { idpSelector } from "../store/reducers/authentication";
 import { tosVersionSelector } from "../store/reducers/profile";
+import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   Property,
   PropertyToUpdate,
@@ -23,6 +26,7 @@ type ProfileProperties = {
   TOS_ACCEPTED_VERSION: number | string;
   BIOMETRIC_TECHNOLOGY: BiometricsType;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
+  NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
 };
 
@@ -38,6 +42,7 @@ export const updateMixpanelProfileProperties = async (
   const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
   const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
   const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
+  const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
 
   const profilePropertiesObject: ProfileProperties = {
@@ -46,6 +51,8 @@ export const updateMixpanelProfileProperties = async (
     TOS_ACCEPTED_VERSION,
     BIOMETRIC_TECHNOLOGY,
     NOTIFICATION_CONFIGURATION,
+    NOTIFICATION_PERMISSION:
+      getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION
   };
 

@@ -13,16 +13,46 @@ import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/
 import { profileUpsert } from "../../../../store/actions/profile";
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
+import {
+  trackNotificationsOptInPreviewStatus,
+  trackNotificationsOptInReminderStatus
+} from "../../analytics";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 
-const userProfile = {
-  service_preferences_settings: {
-    mode: ServicesPreferencesModeEnum.LEGACY
+const generateUserProfile = (
+  hasDoneNotificationOptIn: boolean,
+  isFirstOnboarding: boolean
+) =>
+  ({
+    push_notifications_content_type: hasDoneNotificationOptIn
+      ? PushNotificationsContentTypeEnum.FULL
+      : undefined,
+    reminder_status: hasDoneNotificationOptIn
+      ? ReminderStatusEnum.ENABLED
+      : undefined,
+    service_preferences_settings: {
+      mode: isFirstOnboarding
+        ? ServicesPreferencesModeEnum.LEGACY
+        : ServicesPreferencesModeEnum.AUTO
+    }
+  } as InitializedProfile);
+
+const profileUpsertResult = () => ({
+  payload: {
+    newValue: {
+      push_notifications_content_type: PushNotificationsContentTypeEnum.FULL,
+      reminder_status: ReminderStatusEnum.ENABLED
+    }
   }
-} as InitializedProfile;
+});
 
 describe("checkNotificationsPreferencesSaga", () => {
-  it("upon saga startup, it should ask for push notifications permission", () => {
-    testSaga(checkNotificationsPreferencesSaga, userProfile)
+  it("profile without notification settings, missing service configuration, device has no notification permissions, gives  device notification permissions", () => {
+    const profile = generateUserProfile(false, true);
+    const profileUpsertOutput = profileUpsertResult();
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -33,104 +63,36 @@ describe("checkNotificationsPreferencesSaga", () => {
       )
       .next()
       .take(profileUpsert.success)
-      .next({
-        payload: {
-          newValue: {
-            push_notifications_content_type:
-              PushNotificationsContentTypeEnum.FULL,
-            reminder_status: ReminderStatusEnum.ENABLED
-          }
-        }
-      })
-      .call(checkNotificationPermissions);
-  });
-
-  it("if the push notifications permission was given, the saga will terminate ", () => {
-    testSaga(checkNotificationsPreferencesSaga, userProfile)
-      .next()
+      .next(profileUpsertOutput)
       .call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
-          params: { isFirstOnboarding: true }
-        })
+        trackNotificationsOptInPreviewStatus,
+        profileUpsertOutput.payload.newValue.push_notifications_content_type
       )
       .next()
-      .take(profileUpsert.success)
-      .next({
-        payload: {
-          newValue: {
-            push_notifications_content_type:
-              PushNotificationsContentTypeEnum.FULL,
-            reminder_status: ReminderStatusEnum.ENABLED
-          }
-        }
-      })
-      .call(checkNotificationPermissions)
-      .next(true)
-      .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
-      .next()
-      .isDone();
-  });
-
-  it("if the push notifications permission was not given and is first onboarding, the saga will request push notification permissions", () => {
-    testSaga(checkNotificationsPreferencesSaga, userProfile)
-      .next()
       .call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
-          params: { isFirstOnboarding: true }
-        })
+        trackNotificationsOptInReminderStatus,
+        profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .take(profileUpsert.success)
-      .next({
-        payload: {
-          newValue: {
-            push_notifications_content_type:
-              PushNotificationsContentTypeEnum.FULL,
-            reminder_status: ReminderStatusEnum.ENABLED
-          }
-        }
-      })
-      .call(checkNotificationPermissions)
-      .next(false)
-      .call(requestNotificationPermissions);
-  });
-
-  it("if the saga asks for push permissions and the user give them, the saga will terminate", () => {
-    testSaga(checkNotificationsPreferencesSaga, userProfile)
-      .next()
-      .call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
-          params: { isFirstOnboarding: true }
-        })
-      )
-      .next()
-      .take(profileUpsert.success)
-      .next({
-        payload: {
-          newValue: {
-            push_notifications_content_type:
-              PushNotificationsContentTypeEnum.FULL,
-            reminder_status: ReminderStatusEnum.ENABLED
-          }
-        }
-      })
       .call(checkNotificationPermissions)
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
       .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
       .next()
       .isDone();
   });
-
-  it("if the saga asks for push permissions and the user does not give them, the saga navigates to the Info Screen and waits for the notificationsInfoScreenConsent action", () => {
-    testSaga(checkNotificationsPreferencesSaga, userProfile)
+  it("profile without notification settings, missing service configuration, device has no notification permissions, denies device notification permissions", () => {
+    const profile = generateUserProfile(false, true);
+    const profileUpsertOutput = profileUpsertResult();
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
@@ -141,50 +103,17 @@ describe("checkNotificationsPreferencesSaga", () => {
       )
       .next()
       .take(profileUpsert.success)
-      .next({
-        payload: {
-          newValue: {
-            push_notifications_content_type:
-              PushNotificationsContentTypeEnum.FULL,
-            reminder_status: ReminderStatusEnum.ENABLED
-          }
-        }
-      })
-      .call(checkNotificationPermissions)
-      .next(false)
-      .call(requestNotificationPermissions)
-      .next(false)
+      .next(profileUpsertOutput)
       .call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
-        })
+        trackNotificationsOptInPreviewStatus,
+        profileUpsertOutput.payload.newValue.push_notifications_content_type
       )
       .next()
-      .take(notificationsInfoScreenConsent);
-  });
-
-  it("if the saga is waiting for the notificationsInfoScreenConsent action and the latter is received, the saga terminates", () => {
-    testSaga(checkNotificationsPreferencesSaga, userProfile)
-      .next()
       .call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
-          params: { isFirstOnboarding: true }
-        })
+        trackNotificationsOptInReminderStatus,
+        profileUpsertOutput.payload.newValue.reminder_status
       )
       .next()
-      .take(profileUpsert.success)
-      .next({
-        payload: {
-          newValue: {
-            push_notifications_content_type:
-              PushNotificationsContentTypeEnum.FULL,
-            reminder_status: ReminderStatusEnum.ENABLED
-          }
-        }
-      })
       .call(checkNotificationPermissions)
       .next(false)
       .call(requestNotificationPermissions)
@@ -198,7 +127,280 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next()
       .take(notificationsInfoScreenConsent)
       .next()
+      .call(NavigationService.dispatchNavigationAction, StackActions.pop())
+      .next()
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
       .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
+      .next()
+      .isDone();
+  });
+  it("profile without notification settings, missing service configuration, device has    notification permissions", () => {
+    const profile = generateUserProfile(false, true);
+    const profileUpsertOutput = profileUpsertResult();
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.ONBOARDING, {
+          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+          params: { isFirstOnboarding: true }
+        })
+      )
+      .next()
+      .take(profileUpsert.success)
+      .next(profileUpsertOutput)
+      .call(
+        trackNotificationsOptInPreviewStatus,
+        profileUpsertOutput.payload.newValue.push_notifications_content_type
+      )
+      .next()
+      .call(
+        trackNotificationsOptInReminderStatus,
+        profileUpsertOutput.payload.newValue.reminder_status
+      )
+      .next()
+      .call(checkNotificationPermissions)
+      .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
+      .next()
+      .isDone();
+  });
+  it("profile has     notification settings, missing service configuration, device has no notification permissions, gives  device notification permissions", () => {
+    const profile = generateUserProfile(true, true);
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(false)
+      .call(requestNotificationPermissions)
+      .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .isDone();
+  });
+  it("profile has     notification settings, missing service configuration, device has no notification permissions, denies device notification permissions", () => {
+    const profile = generateUserProfile(true, true);
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(false)
+      .call(requestNotificationPermissions)
+      .next(false)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .isDone();
+  });
+  it("profile has     notification settings, missing service configuration, device has    notification permissions", () => {
+    const profile = generateUserProfile(true, true);
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .isDone();
+  });
+  it("profile without notification settings, has     service configuration, device has no notification permissions, gives  device notification permissions", () => {
+    const profile = generateUserProfile(false, false);
+    const profileUpsertOutput = profileUpsertResult();
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.ONBOARDING, {
+          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+          params: { isFirstOnboarding: false }
+        })
+      )
+      .next()
+      .take(profileUpsert.success)
+      .next(profileUpsertOutput)
+      .call(
+        trackNotificationsOptInPreviewStatus,
+        profileUpsertOutput.payload.newValue.push_notifications_content_type
+      )
+      .next()
+      .call(
+        trackNotificationsOptInReminderStatus,
+        profileUpsertOutput.payload.newValue.reminder_status
+      )
+      .next()
+      .call(checkNotificationPermissions)
+      .next(false)
+      .call(requestNotificationPermissions)
+      .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
+      .next()
+      .isDone();
+  });
+  it("profile without notification settings, has     service configuration, device has no notification permissions, denies device notification permissions", () => {
+    const profile = generateUserProfile(false, false);
+    const profileUpsertOutput = profileUpsertResult();
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.ONBOARDING, {
+          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+          params: { isFirstOnboarding: false }
+        })
+      )
+      .next()
+      .take(profileUpsert.success)
+      .next(profileUpsertOutput)
+      .call(
+        trackNotificationsOptInPreviewStatus,
+        profileUpsertOutput.payload.newValue.push_notifications_content_type
+      )
+      .next()
+      .call(
+        trackNotificationsOptInReminderStatus,
+        profileUpsertOutput.payload.newValue.reminder_status
+      )
+      .next()
+      .call(checkNotificationPermissions)
+      .next(false)
+      .call(requestNotificationPermissions)
+      .next(false)
+      .call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.ONBOARDING, {
+          screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
+        })
+      )
+      .next()
+      .take(notificationsInfoScreenConsent)
+      .next()
+      .call(NavigationService.dispatchNavigationAction, StackActions.pop())
+      .next()
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
+      .next()
+      .isDone();
+  });
+  it("profile without notification settings, has     service configuration, device has    notification permissions", () => {
+    const profile = generateUserProfile(false, false);
+    const profileUpsertOutput = profileUpsertResult();
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.ONBOARDING, {
+          screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+          params: { isFirstOnboarding: false }
+        })
+      )
+      .next()
+      .take(profileUpsert.success)
+      .next(profileUpsertOutput)
+      .call(
+        trackNotificationsOptInPreviewStatus,
+        profileUpsertOutput.payload.newValue.push_notifications_content_type
+      )
+      .next()
+      .call(
+        trackNotificationsOptInReminderStatus,
+        profileUpsertOutput.payload.newValue.reminder_status
+      )
+      .next()
+      .call(checkNotificationPermissions)
+      .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
+      .next()
+      .isDone();
+  });
+  it("profile has     notification settings, has     service configuration, device has no notification permissions, gives  device notification permissions", () => {
+    const profile = generateUserProfile(true, false);
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(false)
+      .call(requestNotificationPermissions)
+      .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .isDone();
+  });
+  it("profile has     notification settings, has     service configuration, device has no notification permissions, denies device notification permissions", () => {
+    const profile = generateUserProfile(true, false);
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(false)
+      .call(requestNotificationPermissions)
+      .next(false)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
+      .next()
+      .isDone();
+  });
+  it("profile has     notification settings, has     service configuration, device has    notification permissions", () => {
+    const profile = generateUserProfile(true, false);
+    const globalState = {};
+    testSaga(checkNotificationsPreferencesSaga, profile)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(true)
+      .select()
+      .next(globalState)
+      .call(updateMixpanelSuperProperties, globalState)
+      .next()
+      .call(updateMixpanelProfileProperties, globalState)
       .next()
       .isDone();
   });
