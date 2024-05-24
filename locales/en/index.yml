@@ -623,7 +623,7 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      apduNotSupported: ""The operating system doesn't support the reading of the Electronic Identity Card. Try using SPID to enter the app
+      apduNotSupported: The operating system doesn't support the reading of the Electronic Identity Card. Try using SPID to enter the app.
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
