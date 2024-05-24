@@ -1,51 +1,13 @@
 import { assign, fromPromise, setup } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { identificationMachine } from "../identification/machine";
+import { Tags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { Events } from "./events";
-import { Tags } from "./tags";
 
 const notImplemented = () => {
   throw new Error();
 };
-
-const identificationMachine = setup({
-  types: {
-    output: {} as { token: string }
-  },
-  actions: {
-    navigateToIdentificationModeScreen: notImplemented
-  }
-}).createMachine({
-  initial: "ModeSelection",
-  states: {
-    ModeSelection: {
-      entry: "navigateToIdentificationModeScreen",
-      on: {
-        "select-identification-mode": [
-          {
-            guard: ({ event }) => event.mode === 0,
-            target: "Spid"
-          },
-          {
-            guard: ({ event }) => event.mode === 1,
-            target: "CiePin"
-          },
-          {
-            guard: ({ event }) => event.mode === 2,
-            target: "CieId"
-          }
-        ]
-      }
-    },
-    Spid: {
-      states: {
-        IdpSelection: {}
-      }
-    },
-    CiePin: {},
-    CieId: {}
-  }
-});
 
 export const itwIssuanceMachine = setup({
   types: {
@@ -58,7 +20,14 @@ export const itwIssuanceMachine = setup({
     navigateToEidPreviewScreen: notImplemented,
     storeEid: notImplemented,
     navigateToEidSuccessScreen: notImplemented,
-    closeIssuance: notImplemented
+    closeIssuance: notImplemented,
+    navigateToCredentialIdentificationScreen: notImplemented,
+    navigateToCredentialPreviewScreen: notImplemented,
+    storeCredential: notImplemented,
+    navigateToCredentialSuccessScreen: notImplemented,
+    navigateToWallet: notImplemented,
+    navigateToFailureScreen: notImplemented,
+    requestAssistance: notImplemented
   },
   actors: {
     checkUserOptIn: fromPromise<undefined>(notImplemented),
@@ -67,7 +36,8 @@ export const itwIssuanceMachine = setup({
     identificationMachine,
     requestEid: fromPromise<StoredCredential, string | undefined>(
       notImplemented
-    )
+    ),
+    requestCredential: fromPromise<StoredCredential>(notImplemented)
   },
   guards: {
     hasWalletAttestation: ({ context }) => !!context.walletAttestation,
@@ -80,12 +50,14 @@ export const itwIssuanceMachine = setup({
   states: {
     Idle: {
       on: {
-        start: {
-          target: "PreliminaryChecks",
-          actions: assign(({ event }) => ({
-            credentialType: event.credentialType
-          }))
-        }
+        start: [
+          {
+            target: "PreliminaryChecks",
+            actions: assign(({ event }) => ({
+              credentialType: event.credentialType
+            }))
+          }
+        ]
       }
     },
     PreliminaryChecks: {
@@ -123,11 +95,8 @@ export const itwIssuanceMachine = setup({
     TosAcceptance: {
       entry: "navigateToTosScreen",
       on: {
-        "accept-tos": "WalletActivation"
+        "accept-tos": "Identification"
       }
-    },
-    WalletActivation: {
-      tags: [Tags.Loading]
     },
     Identification: {
       description: "User identification flow, necessary for the eID issuance",
@@ -147,6 +116,7 @@ export const itwIssuanceMachine = setup({
     },
     EidIssuance: {
       entry: "navigateToEidPreviewScreen",
+      initial: "RequestingEid",
       states: {
         RequestingEid: {
           tags: [Tags.Loading],
@@ -167,6 +137,9 @@ export const itwIssuanceMachine = setup({
             "add-to-wallet": {
               actions: "storeEid",
               target: "DisplayingEidSuccess"
+            },
+            close: {
+              actions: "closeIssuance"
             }
           }
         },
@@ -184,9 +157,69 @@ export const itwIssuanceMachine = setup({
       }
     },
     CredentialIssuance: {
-      states: {}
+      initial: "IdentityCheck",
+      states: {
+        IdentityCheck: {
+          entry: "navigateToCredentialIdentificationScreen",
+          on: {
+            "confirm-identity": {
+              target: "RequestingCredential"
+            },
+            close: {
+              actions: "closeIssuance"
+            }
+          }
+        },
+        RequestingCredential: {
+          tags: [Tags.Loading],
+          invoke: {
+            src: "requestCredential",
+            onDone: {
+              actions: assign(({ event }) => ({
+                credential: event.output
+              })),
+              target: "DisplayingCredentialPreview"
+            },
+            onError: {
+              target: "#itwIssuanceMachine.Failure"
+            }
+          }
+        },
+        DisplayingCredentialPreview: {
+          entry: "navigateToCredentialPreviewScreen",
+          on: {
+            "add-to-wallet": {
+              actions: "storeCredential",
+              target: "DisplayingCredentialSuccess"
+            },
+            close: {
+              actions: "closeIssuance"
+            }
+          }
+        },
+        DisplayingCredentialSuccess: {
+          entry: "navigateToCredentialSuccessScreen",
+          on: {
+            "go-to-wallet": {
+              actions: "navigateToWallet"
+            },
+            next: {
+              actions: "closeIssuance"
+            }
+          }
+        }
+      }
     },
-    Failure: {},
-    Completed: {}
+    Failure: {
+      entry: "navigateToFailureScreen",
+      on: {
+        close: {
+          actions: "closeIssuance"
+        },
+        "request-assistance": {
+          actions: "requestAssistance"
+        }
+      }
+    }
   }
 });

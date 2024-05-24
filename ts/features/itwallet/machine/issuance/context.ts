@@ -6,11 +6,13 @@ export type Context = {
   walletAttestation: string | undefined;
   userToken: string | undefined;
   eid: StoredCredential | undefined;
+  credential: StoredCredential | undefined;
 };
 
 export const InitialContext: Context = {
   credentialType: undefined,
   walletAttestation: undefined,
   userToken: undefined,
-  eid: undefined
+  eid: undefined,
+  credential: undefined
 };
