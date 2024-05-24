@@ -57,8 +57,9 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
     >
       <StatusBar backgroundColor={themeColor} barStyle="light-content" />
       <ScrollView
-        contentInset={{
-          bottom: IOVisualCostants.headerHeight + insets.top + insets.bottom // Compensate for the header
+        style={{
+          marginBottom:
+            IOVisualCostants.headerHeight + insets.top + insets.bottom // Compensate for the header
         }}
       >
         <View style={styles.cardContainer}>

@@ -36,7 +36,7 @@ export const ItwCredentialClaimsSection = ({
       </View>
       <View>
         {claims.map(c => (
-          <ItwCredentialClaim key={c.id} claim={c} />
+          <ItwCredentialClaim key={c.id} claim={c} hidden={valuesHidden} />
         ))}
       </View>
     </View>

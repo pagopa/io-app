@@ -20,6 +20,8 @@ import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
+const HIDDEN_CLAIM = "******";
+
 /**
  * Component which renders a place of birth type claim.
  * @param label - the label of the claim
@@ -239,13 +241,20 @@ const DrivingPrivilegesClaimItem = ({
  * It renders a different component based on the type of the claim.
  * @param claim - the claim to render
  */
-export const ItwCredentialClaim = ({ claim }: { claim: ClaimDisplayFormat }) =>
+export const ItwCredentialClaim = ({
+  claim,
+  hidden
+}: {
+  claim: ClaimDisplayFormat;
+  hidden?: boolean;
+}) =>
   pipe(
     claim.value,
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
-      decoded => {
+      _decoded => {
+        const decoded = hidden ? HIDDEN_CLAIM : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (DateFromString.is(decoded)) {
