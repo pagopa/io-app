@@ -1,122 +1,113 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
-import configureMockStore from "redux-mock-store";
+import { act, fireEvent } from "@testing-library/react-native";
+import { createStore } from "redux";
 import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { OnboardingNotificationsPreferencesScreen } from "../OnboardingNotificationsPreferencesScreen";
+import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { GlobalState } from "../../../../store/reducers/types";
 
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import mockedProfile from "../../../../__mocks__/initializedProfile";
-import { OnboardingNotificationsPreferencesScreen } from "../OnboardingNotificationsPreferencesScreen";
-
 describe("OnboardingNotificationsPreferencesScreen", () => {
-  describe("given an onboarded user", () => {
-    it("then the title should match the 'profile.preferences.notifications.titleExistingUser' key and the subtitle should match 'profile.preferences.notifications.subtitleExistingUser'", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore(globalState, false);
-      expect(screen).not.toBeNull();
+  it("given an user that is doing the onboarding for the first time then the title should match the 'profile.preferences.notifications.title' key and the subtitle should match 'profile.preferences.notifications.subtitle'", () => {
+    const screen = renderScreen(true);
+    expect(screen).not.toBeNull();
 
-      const headerH1Title = screen.component.queryByText(
-        I18n.t("profile.preferences.notifications.titleExistingUser")
-      );
-      expect(headerH1Title).not.toBeNull();
+    const headerH1Title = screen.queryByText(
+      I18n.t("profile.preferences.notifications.title")
+    );
+    expect(headerH1Title).not.toBeNull();
 
-      const bodySubtitle = screen.component.queryByText(
-        I18n.t("profile.preferences.notifications.subtitleExistingUser")
-      );
-      expect(bodySubtitle).not.toBeNull();
-    });
+    const bodySubtitle = screen.queryByText(
+      I18n.t("profile.preferences.notifications.subtitle")
+    );
+    expect(bodySubtitle).not.toBeNull();
   });
 
-  describe("given an user that is doing the onboarding for the first time", () => {
-    it("then the title should match the 'profile.preferences.notifications.title' key and the subtitle should match 'profile.preferences.notifications.subtitle'", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore(globalState, true);
-      expect(screen).not.toBeNull();
+  it("given an onboarded user and an undefined 'reminder_status' then the reminders switch should be on", () => {
+    const screen = renderScreen(false);
+    expect(screen).not.toBeNull();
 
-      const headerH1Title = screen.component.queryByText(
-        I18n.t("profile.preferences.notifications.title")
-      );
-      expect(headerH1Title).not.toBeNull();
-
-      const bodySubtitle = screen.component.queryByText(
-        I18n.t("profile.preferences.notifications.subtitle")
-      );
-      expect(bodySubtitle).not.toBeNull();
-    });
+    const toggle = screen.getByTestId("remindersPreferenceSwitch");
+    expect(toggle.props.value).toBeTruthy();
   });
 
-  describe("given an onboarded user and an undefined 'reminder_status'", () => {
-    it("then the reminders switch should be on", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore(
-        {
-          ...globalState,
-          profile: pot.some({
-            ..._.omit(mockedProfile, "reminder_status")
-          })
-        },
-        false
-      );
-      expect(screen).not.toBeNull();
+  it("given an onboarded user and an undefined 'push_notifications_content_type' then the previews switch should be on", () => {
+    const screen = renderScreen(false);
+    expect(screen).not.toBeNull();
 
-      const toggle = screen.component.getByTestId("remindersPreferenceSwitch");
-      expect(toggle.props.value).toBeTruthy();
-    });
+    const toggle = screen.getByTestId("previewsPreferenceSwitch");
+    expect(toggle.props.value).toBeTruthy();
   });
 
-  describe("given an onboarded user and an undefined 'push_notifications_content_type'", () => {
-    it("then the previews switch should be on", () => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-      const screen = renderComponentMockStore(
-        {
-          ...globalState,
-          profile: pot.some({
-            ..._.omit(mockedProfile, "push_notifications_content_type")
-          })
-        },
-        false
-      );
-      expect(screen).not.toBeNull();
+  it("should match snapshot when updating the profile", () => {
+    const screen = renderScreen(true, true);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not updating the profile", () => {
+    const screen = renderScreen(false);
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not updating the profile, disabled previews switch", async () => {
+    const screen = renderScreen(false);
 
-      const toggle = screen.component.getByTestId("previewsPreferenceSwitch");
-      expect(toggle.props.value).toBeTruthy();
+    const previewSwitch = screen.getByTestId("previewsPreferenceSwitch");
+    await act(() => {
+      fireEvent(previewSwitch, "onValueChange", false);
     });
+
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when not updating the profile, disabled reminder switch", async () => {
+    const screen = renderScreen(false);
+
+    const reminderSwitch = screen.getByTestId("remindersPreferenceSwitch");
+    await act(() => {
+      fireEvent(reminderSwitch, "onValueChange", false);
+    });
+
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match snapshot when not updating the profile, disabled previews and reminder switches", async () => {
+    const screen = renderScreen(false);
+
+    const previewSwitch = screen.getByTestId("previewsPreferenceSwitch");
+
+    const reminderSwitch = screen.getByTestId("remindersPreferenceSwitch");
+    await act(() => {
+      fireEvent(previewSwitch, "onValueChange", false);
+      fireEvent(reminderSwitch, "onValueChange", false);
+    });
+
+    expect(screen.toJSON()).toMatchSnapshot();
   });
 });
 
-const renderComponentMockStore = (
-  state: GlobalState,
-  isFirstOnboarding: boolean
+const renderScreen = (
+  isFirstOnboarding: boolean,
+  isUpdatingProfile: boolean = false
 ) => {
-  const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore({
-    ...state
-  } as GlobalState);
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const dsEnabledState = appReducer(
+    globalState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const finalState = {
+    ...dsEnabledState,
+    profile: isUpdatingProfile ? pot.noneUpdating({}) : pot.some({})
+  } as GlobalState;
+  const store = createStore(appReducer, finalState as any);
 
-  return {
-    component: renderScreenWithNavigationStoreContext(
-      OnboardingNotificationsPreferencesScreen,
-      ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
-      {
-        isFirstOnboarding
-      },
-      store
-    ),
+  return renderScreenWithNavigationStoreContext(
+    OnboardingNotificationsPreferencesScreen,
+    ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+    {
+      isFirstOnboarding
+    },
     store
-  };
+  );
 };
