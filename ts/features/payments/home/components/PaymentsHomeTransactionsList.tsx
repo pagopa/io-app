@@ -13,11 +13,11 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
 import { walletLatestTransactionsBizEventsListPotSelector } from "../../biz-events-transaction/store/selectors";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../biz-events-transaction/store/actions";
+import { PaymentsBizEventsListItemTransaction } from "../../biz-events-transaction/components/PaymentsBizEventsListItemTransaction";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsTransactionBizEventsRoutes } from "../../biz-events-transaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
-import { PaymentsBizEventsListItemTransaction } from "./PaymentsBizEventsListItemTransaction";
 
 type Props = {
   enforcedLoadingState?: boolean;
