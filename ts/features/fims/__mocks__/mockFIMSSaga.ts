@@ -16,7 +16,7 @@ const mockHttpNativeCall = nativeCall as (
 
 export function* mockFIMSSaga() {
   try {
-    mockSetNativeCookie(FakeBaseUrl, "io_fims_token", "asd");
+    mockSetNativeCookie(FakeBaseUrl, "_io_fims_token", "asd");
     const config: HttpCallConfig = {
       verb: "get",
       url: RPInitialUrl,
