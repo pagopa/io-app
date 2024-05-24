@@ -8,7 +8,7 @@ export type ProfileSettingsState = {
   showProfileBanner: boolean;
 };
 
-export const profileSettingsReducerInitialState = {
+const profileSettingsReducerInitialState = {
   showProfileBanner: true
 };
 
