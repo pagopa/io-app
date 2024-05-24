@@ -19,7 +19,7 @@ type Props = {
 /**
  * This component renders a list of transaction cart details
  */
-export const WalletBizEventsTransactionCartList = ({
+export const PaymentsBizEventsTransactionCartList = ({
   carts,
   loading,
   onPress

@@ -20,7 +20,7 @@ import TransactionReceiptDivider from "../../../../../img/features/wallet/transa
 import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 
-type WalletBizEventsTransactionInfoSectionProps = {
+type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: TransactionDetailResponse;
   loading?: boolean;
 };
@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
 /**
  * Component that shows the biz-events transaction info
  */
-const WalletBizEventsTransactionInfoSection = ({
+const PaymentsBizEventsTransactionInfoSection = ({
   transaction,
   loading
-}: WalletBizEventsTransactionInfoSectionProps) => {
+}: PaymentsBizEventsTransactionInfoSectionProps) => {
   const transactionInfo = transaction?.infoTransaction;
   return (
     <>
@@ -214,4 +214,4 @@ const SkeletonItem = () => (
   </View>
 );
 
-export default WalletBizEventsTransactionInfoSection;
+export default PaymentsBizEventsTransactionInfoSection;

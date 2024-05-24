@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const WalletBizEventsTransactionTotalAmount = ({
+export const PaymentsBizEventsTransactionTotalAmount = ({
   totalAmount,
   loading
 }: TotalAmountSectionProps) => (

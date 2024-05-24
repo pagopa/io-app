@@ -8,8 +8,8 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { WalletBizEventsTransactionHeadingSection } from "../components/WalletBizEventsTransactionHeadingSection";
-import WalletTransactionInfoSection from "../components/WalletBizEventsTransactionInfoSection";
+import { PaymentsBizEventsTransactionHeadingSection } from "../components/PaymentsBizEventsTransactionHeadingSection";
+import WalletTransactionInfoSection from "../components/PaymentsBizEventsTransactionInfoSection";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
 import { getPaymentsBizEventsTransactionDetailsAction } from "../store/actions";
 import { walletTransactionBizEventsDetailsPotSelector } from "../store/selectors";
@@ -102,7 +102,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
       <View style={styles.wrapper}>
         {/* The following line is used to show the background color gray that overlay the basic one which is white */}
         <View style={styles.bottomBackground} />
-        <WalletBizEventsTransactionHeadingSection
+        <PaymentsBizEventsTransactionHeadingSection
           transaction={transactionDetails}
           isLoading={isLoading}
         />

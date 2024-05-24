@@ -11,8 +11,8 @@ import { Psp } from "../../../../types/pagopa";
 import { formatAmountText } from "../utils";
 import { PaymentsTransactionBizEventsStackNavigation } from "../navigation/navigator";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
-import { WalletBizEventsTransactionCartList } from "./WalletBizEventsTransactionCartList";
-import { WalletBizEventsTransactionTotalAmount } from "./WalletBizEventsTransactionTotalAmount";
+import { PaymentsBizEventsTransactionCartList } from "./PaymentsBizEventsTransactionCartList";
+import { PaymentsBizEventsTransactionTotalAmount } from "./PaymentsBizEventsTransactionTotalAmount";
 
 type Props = {
   transaction?: TransactionDetailResponse;
@@ -20,7 +20,7 @@ type Props = {
   isLoading: boolean;
 };
 
-export const WalletBizEventsTransactionHeadingSection = ({
+export const PaymentsBizEventsTransactionHeadingSection = ({
   transaction,
   isLoading
 }: Props) => {
@@ -81,13 +81,13 @@ export const WalletBizEventsTransactionHeadingSection = ({
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
       <VSpacer size={16} />
-      <WalletBizEventsTransactionCartList
+      <PaymentsBizEventsTransactionCartList
         carts={transaction?.carts}
         loading={isLoading}
         onPress={handlePressTransactionDetails}
       />
       <VSpacer size={8} />
-      <WalletBizEventsTransactionTotalAmount
+      <PaymentsBizEventsTransactionTotalAmount
         loading={isLoading}
         totalAmount={calculateTotalAmount()}
       />
