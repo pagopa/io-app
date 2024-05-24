@@ -3767,7 +3767,6 @@ transaction:
       rrn: RRN
       executedBy: Eseguito da
       headedTo: Intestato a
-      transactionId: ID transazione,
       alert:
         content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
