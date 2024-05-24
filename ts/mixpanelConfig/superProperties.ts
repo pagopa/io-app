@@ -7,14 +7,17 @@ import {
 } from "../utils/device";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
+  NotificationPermissionType,
   NotificationPreferenceConfiguration,
-  ServiceConfigurationTrackingType
+  ServiceConfigurationTrackingType,
+  getNotificationPermissionType
 } from "../screens/profile/analytics";
 
 import { GlobalState } from "../store/reducers/types";
 
 import { mixpanel } from "../mixpanel";
 import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
+import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   Property,
   PropertyToUpdate,
@@ -32,6 +35,7 @@ type SuperProperties = {
   isScreenLockSet: boolean;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
+  NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
 };
 
@@ -49,6 +53,7 @@ export const updateMixpanelSuperProperties = async (
   const isScreenLockSet = await isScreenLockSetFunc();
   const LOGIN_SESSION = loginSessionConfigHandler(state);
   const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
+  const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
 
   const superPropertiesObject: SuperProperties = {
@@ -60,6 +65,8 @@ export const updateMixpanelSuperProperties = async (
     isScreenLockSet,
     LOGIN_SESSION,
     NOTIFICATION_CONFIGURATION,
+    NOTIFICATION_PERMISSION:
+      getNotificationPermissionType(notificationsEnabled),
     SERVICE_CONFIGURATION
   };
 
