@@ -4,18 +4,18 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { WalletBizEventsTransactionHeadingSection } from "../components/WalletBizEventsTransactionHeadingSection";
-import WalletTransactionInfoSection from "../components/WalletBizEventsTransactionInfoSection";
+import { PaymentsBizEventsTransactionHeadingSection } from "../components/PaymentsBizEventsTransactionHeadingSection";
+import WalletTransactionInfoSection from "../components/PaymentsBizEventsTransactionInfoSection";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
 import { getPaymentsBizEventsTransactionDetailsAction } from "../store/actions";
 import { walletTransactionBizEventsDetailsPotSelector } from "../store/selectors";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
@@ -90,7 +90,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   }
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("transaction.details.title")
       }}
@@ -102,7 +102,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
       <View style={styles.wrapper}>
         {/* The following line is used to show the background color gray that overlay the basic one which is white */}
         <View style={styles.bottomBackground} />
-        <WalletBizEventsTransactionHeadingSection
+        <PaymentsBizEventsTransactionHeadingSection
           transaction={transactionDetails}
           isLoading={isLoading}
         />
@@ -111,7 +111,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
           loading={isLoading}
         />
       </View>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

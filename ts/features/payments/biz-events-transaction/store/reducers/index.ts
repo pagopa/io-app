@@ -37,7 +37,7 @@ const reducer = (
     case getType(getPaymentsLatestBizEventsTransactionsAction.success):
       return {
         ...state,
-        latestTransactions: pot.some(action.payload)
+        latestTransactions: pot.some(action.payload.transactions || [])
       };
     case getType(getPaymentsLatestBizEventsTransactionsAction.failure):
       return {
@@ -60,11 +60,12 @@ const reducer = (
       };
     case getType(getPaymentsBizEventsTransactionsAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);
+      const maybeTransactions = action.payload.data.transactions || [];
       return {
         ...state,
         transactions: !action.payload.appendElements
-          ? pot.some([...previousTransactions, ...action.payload.data])
-          : pot.some(action.payload.data)
+          ? pot.some([...previousTransactions, ...maybeTransactions])
+          : pot.some(maybeTransactions)
       };
     case getType(getPaymentsBizEventsTransactionsAction.failure):
       return {

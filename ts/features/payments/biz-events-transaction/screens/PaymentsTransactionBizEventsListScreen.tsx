@@ -27,7 +27,7 @@ import { walletTransactionBizEventsListPotSelector } from "../store/selectors";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
-import { PaymentsBizEventsListItemTransaction } from "../../home/components/PaymentsBizEventsListItemTransaction";
+import { PaymentsBizEventsListItemTransaction } from "../components/PaymentsBizEventsListItemTransaction";
 import { PaymentsHomeEmptyScreenContent } from "../../home/components/PaymentsHomeEmptyScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
