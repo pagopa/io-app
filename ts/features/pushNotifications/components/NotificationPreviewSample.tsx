@@ -5,18 +5,16 @@ import {
   Icon,
   HSpacer,
   IOSpacingScale,
-  IOVisualCostants
+  Label,
+  IOStyles,
+  H6
 } from "@pagopa/io-app-design-system";
-import { H4 } from "../../../components/core/typography/H4";
-import { H5 } from "../../../components/core/typography/H5";
-import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import { TranslationKeys } from "../../../../locales/locales";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const notificationMarginVertical: IOSpacingScale = 4;
 const notificationPaddingVertical: IOSpacingScale = 8;
-const notificationPaddingHorizontal: IOSpacingScale = 16;
+const notificationPaddingHorizontal: IOSpacingScale = 24;
 
 const styles = StyleSheet.create({
   notification: {
@@ -25,10 +23,9 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderWidth: 1,
     borderColor: IOColors.bluegreyLight,
-    borderRadius: customVariables.borderRadiusBase,
-    minHeight: 72,
+    borderRadius: 8,
+    minHeight: 90,
     marginVertical: notificationMarginVertical,
-    marginHorizontal: IOVisualCostants.appMarginDefault,
     paddingVertical: notificationPaddingVertical,
     paddingHorizontal: notificationPaddingHorizontal
   }
@@ -77,15 +74,13 @@ export const NotificationPreviewSample = ({
 
   return (
     <View style={styles.notification}>
-      <Icon name="productIOAppBlueBg" />
+      <Icon color="blueIO-450" name="productIOApp" />
       <HSpacer />
       <View style={IOStyles.flex}>
-        <H4 weight="SemiBold" color="bluegreyDark">
-          {I18n.t(titleKey)}
-        </H4>
-        <H5 weight="Regular" color="bluegrey">
+        <H6 weight="SemiBold">{I18n.t(titleKey)}</H6>
+        <Label fontSize="small" weight="Regular">
           {I18n.t(messageKey)}
-        </H5>
+        </Label>
       </View>
     </View>
   );
