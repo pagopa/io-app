@@ -411,7 +411,7 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze"
           cta:
             shareData: "Condividi"
             dontShareData: "Non condividere dati"
@@ -522,19 +522,19 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
       title: Personalizza le notifiche
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria.
+      subtitle: Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
       titleExistingUser: Personalizza le notifiche
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
-        title: Consenti i promemoria
+        title: Consenti promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
-        title: Mostra un'anteprima
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio
-        link: Più info
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio.
+        link: Scopri di più
         bottomSheet:
-          title: Mostra un'anteprima
-          content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
+          title: Mostra anteprime
+          content: "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando."
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
 userMetadata:
@@ -2116,6 +2116,11 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
   new: Nuovo
   home:
+    featured:
+      services:
+        title: In primo piano
+      institutions:
+        title: Enti in evidenza
     institutions:
       title: Nazionali
   institution:
