@@ -1,4 +1,4 @@
-import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../screens/onboarding/OnboardingNotificationsPreferencesScreen";
+import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../features/pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { EmailInsertScreenNavigationParams } from "../../screens/profile/EmailInsertScreen";
 import { SendEmailValidationScreenProp } from "../../screens/profile/EmailValidationSendEmailScreen";

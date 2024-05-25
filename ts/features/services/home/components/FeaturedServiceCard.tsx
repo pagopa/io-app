@@ -1,3 +1,6 @@
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
 import {
   Avatar,
   Badge,
@@ -5,13 +8,12 @@ import {
   IOColors,
   IOSpacingScale,
   IOVisualCostants,
+  TestID,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
+import { CardPressableBase } from "../../common/components/CardPressableBase";
 import { logoForService } from "../utils";
 import OrganizationNameLabel from "./OrganizationNameLabel";
 
@@ -61,35 +63,43 @@ const styles = StyleSheet.create({
 });
 
 const FeaturedServiceCard = (props: FeaturedServiceCardProps) => (
-  <View
-    style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
-    testID={props.testID}
+  <CardPressableBase
+    onPress={props.onPress}
+    testID={`${props.testID}-pressable`}
+    accessibilityLabel={props.accessibilityLabel}
   >
-    <View style={styles.cardHeader}>
-      <Avatar logoUri={logoForService(props.id, "")} size="small" />
-      {props.isNew && <Badge variant="purple" text={I18n.t("services.new")} />}
+    <View
+      style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
+      testID={props.testID}
+    >
+      <View style={styles.cardHeader}>
+        <Avatar logoUri={logoForService(props.id, "")} size="small" />
+        {props.isNew && (
+          <Badge variant="purple" text={I18n.t("services.new")} />
+        )}
+      </View>
+      <View style={styles.cardTitle}>
+        <H4
+          lineBreakMode="head"
+          numberOfLines={3}
+          color={props.isNew ? "hanPurple-850" : "blueIO-850"}
+        >
+          {props.name}
+        </H4>
+        {props.organizationName && (
+          <>
+            <VSpacer size={4} />
+            <OrganizationNameLabel>
+              {props.organizationName}
+            </OrganizationNameLabel>
+          </>
+        )}
+      </View>
     </View>
-    <View style={styles.cardTitle}>
-      <H4
-        lineBreakMode="head"
-        numberOfLines={3}
-        color={props.isNew ? "hanPurple-850" : "blueIO-850"}
-      >
-        {props.name}
-      </H4>
-      {props.organizationName && (
-        <>
-          <VSpacer size={4} />
-          <OrganizationNameLabel>
-            {props.organizationName}
-          </OrganizationNameLabel>
-        </>
-      )}
-    </View>
-  </View>
+  </CardPressableBase>
 );
 
-const FeaturedServiceCardSkeleton = ({ testID }: WithTestID<unknown>) => (
+const FeaturedServiceCardSkeleton = ({ testID }: TestID) => (
   <View style={styles.cardContainer} testID={`${testID}-skeleton`}>
     <View style={styles.cardHeader}>
       <Placeholder.Box
