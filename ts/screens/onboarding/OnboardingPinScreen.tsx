@@ -1,20 +1,15 @@
 import * as React from "react";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
-import PinSelectionWrapper from "../../components/PinSelectionWrapper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import { PinCreation } from "../../components/PinCreation/PinCreation";
-
-type Props = IOStackNavigationRouteProps<AppParamsList>;
 
 /**
  * A screen that allows the user to set the unlock code.
  */
-const OnboardingPinScreen = ({ navigation }: Props) => (
-  <PinSelectionWrapper navigation={navigation} isOnboarding>
+const OnboardingPinScreen = () => (
+  <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
     <PinCreation isOnboarding />
-  </PinSelectionWrapper>
+  </SafeAreaView>
 );
 
 export default OnboardingPinScreen;

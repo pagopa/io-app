@@ -1,20 +1,15 @@
-import * as React from "react";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
-import PinSelectionWrapper from "../../components/PinSelectionWrapper";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import { PinCreation } from "../../components/PinCreation/PinCreation";
 
-type Props = IOStackNavigationRouteProps<AppParamsList>;
-
 /**
- * A screen that allows the user to set the unlock code.
+ * A screen that allows the user to change the unlock code.
  */
-const PinScreen = ({ navigation }: Props) => (
-  <PinSelectionWrapper navigation={navigation}>
+const PinScreen = () => (
+  <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
     <PinCreation />
-  </PinSelectionWrapper>
+  </SafeAreaView>
 );
 
 export default PinScreen;

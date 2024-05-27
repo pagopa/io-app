@@ -13,7 +13,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { defaultPin } from "../../config";
 import { isValidPinNumber } from "../../features/fastLogin/utils/pinPolicy";
 import I18n from "../../i18n";
-import { trackPinError } from "../../screens/profile/analytics";
+import { trackPinError, trackPinScreen } from "../../screens/profile/analytics";
 import { useIOSelector } from "../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
 import { PinString } from "../../types/PinString";
@@ -21,11 +21,21 @@ import { getFlowType } from "../../utils/analytics";
 import { isDevEnv } from "../../utils/environment";
 import { useCreatePin } from "../../hooks/useCreatePin";
 import { Carousel } from "../Carousel";
-import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
+import { ContextualHelpPropsMarkdown } from "../screens/BaseScreenComponent";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
+import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 
 const CREATION_INDEX = 0;
 const CONFIRMATION_INDEX = 1;
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.unlockCode.contextualHelpTitle",
+  body: "onboarding.unlockCode.contextualHelpContent"
+};
 
 export type Props = {
   isOnboarding?: boolean;
@@ -39,6 +49,7 @@ type PinMode = "creation" | "confirmation";
  * This component will allow the user to create a new pin or change the existing one.
  */
 export const PinCreation = ({ isOnboarding = false }: Props) => {
+  const navigation = useIONavigation();
   const [pin, setPin] = useState("");
   const [pinConfirmation, setPinConfirmation] = useState("");
   const [pinMode, setPinMode] = useState<PinMode>("creation");
@@ -48,6 +59,48 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const isCreation = pinMode === "creation";
   const { present, bottomSheet } = usePinValidationBottomSheet();
+  const { showAlert } = useOnboardingAbortAlert();
+
+  useOnFirstRender(() => {
+    trackPinScreen(getFlowType(isOnboarding, isFirstOnBoarding));
+  });
+
+  const scrollToCreation = useCallback(() => {
+    setPin("");
+    setPinMode("creation");
+    carouselRef.current?.scrollToIndex({
+      animated: true,
+      index: CREATION_INDEX
+    });
+  }, []);
+  const scrollToConfirmation = useCallback(() => {
+    setPinConfirmation("");
+    setPinMode("confirmation");
+    carouselRef.current?.scrollToIndex({
+      animated: true,
+      index: CONFIRMATION_INDEX
+    });
+  }, []);
+
+  const goBack = useCallback(() => {
+    if (!isCreation) {
+      /**
+       * Scrolls back to pin creation section
+       */
+      scrollToCreation();
+    } else if (isOnboarding) {
+      showAlert();
+    } else {
+      navigation.goBack();
+    }
+  }, [navigation, isCreation, isOnboarding, showAlert, scrollToCreation]);
+
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    contextualHelpMarkdown,
+    goBack
+  });
 
   const insertValidPin = useCallback(() => {
     if (isCreation) {
@@ -67,11 +120,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
          */
         // eslint-disable-next-line functional/immutable-data
         pinRef.current = v;
-        setPinMode("confirmation");
-        carouselRef.current?.scrollToIndex({
-          animated: true,
-          index: CONFIRMATION_INDEX
-        });
+        scrollToConfirmation();
       } else {
         trackPinError("creation", getFlowType(isOnboarding, isFirstOnBoarding));
 
@@ -88,7 +137,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
 
       return isValid;
     },
-    [isFirstOnBoarding, isOnboarding]
+    [isFirstOnBoarding, isOnboarding, scrollToConfirmation]
   );
 
   const handlePinConfirmation = useCallback(
@@ -105,14 +154,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
           [
             {
               text: I18n.t("onboarding.pinConfirmation.errors.match.cta"),
-              onPress: () => {
-                setPin("");
-                setPinMode("creation");
-                carouselRef.current?.scrollToIndex({
-                  animated: true,
-                  index: CREATION_INDEX
-                });
-              }
+              onPress: scrollToCreation
             }
           ]
         );
@@ -120,7 +162,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
 
       return isValid;
     },
-    [isFirstOnBoarding, isOnboarding, handleSubmit]
+    [isFirstOnBoarding, isOnboarding, handleSubmit, scrollToCreation]
   );
 
   const data: Array<PinCaouselItemProps> = [
