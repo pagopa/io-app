@@ -236,6 +236,11 @@ type ClaimSection =
   | "licenseData"
   | "noSection";
 
+export type DateClaimConfig = Partial<{
+  showIcon: boolean;
+  showExpirationBadge: boolean;
+}>;
+
 /**
  * Hardcoded claims sections: currently it's not possible to determine how to group claims from the credential.
  * The order of the claims doesn't matter here, the credential's `displayData` order wins.
@@ -260,6 +265,12 @@ const sectionsByClaim: Record<string, ClaimSection> = {
 
   // Driving license claims
   driving_privileges: "licenseData"
+};
+
+export const dateClaimsConfig: Record<string, DateClaimConfig> = {
+  issue_date: { showIcon: true },
+  expiry_date: { showIcon: true, showExpirationBadge: true },
+  expiration_date: { showIcon: true, showExpirationBadge: true }
 };
 
 /**

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -7,18 +7,21 @@ import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import {
   ClaimDisplayFormat,
   ClaimValue,
+  DateClaimConfig,
   DrivingPrivilegesClaim,
   DrivingPrivilegesClaimType,
   EvidenceClaim,
   ImageClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  PlainTextClaim
+  PlainTextClaim,
+  dateClaimsConfig
 } from "../utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { getExpireStatus } from "../../../../utils/dates";
 
 const HIDDEN_CLAIM = "******";
 
@@ -70,17 +73,46 @@ const PlainTextClaimItem = ({
  * @param label - the label of the claim
  * @param claim - the value of the claim
  */
-const DateClaimItem = ({ label, claim }: { label: string; claim: Date }) => {
+const DateClaimItem = ({
+  label,
+  claim,
+  showIcon,
+  showExpirationBadge
+}: {
+  label: string;
+  claim: Date;
+} & DateClaimConfig) => {
   const value = localeDateFormat(
     claim,
     I18n.t("global.dateFormats.shortFormat")
   );
+
+  const endElement: ListItemInfo["endElement"] = useMemo(() => {
+    if (!showExpirationBadge) {
+      return;
+    }
+    const isExpired = getExpireStatus(claim) === "EXPIRED";
+    return {
+      type: "badge",
+      componentProps: {
+        variant: isExpired ? "error" : "success",
+        text: I18n.t(
+          `features.itWallet.presentation.credentialDetails.status.${
+            isExpired ? "expired" : "valid"
+          }`
+        )
+      }
+    };
+  }, [showExpirationBadge, claim]);
+
   return (
     <View key={`${label}-${value}`}>
       <ListItemInfo
         label={label}
         value={value}
+        icon={showIcon ? "calendar" : undefined}
         accessibilityLabel={`${label} ${value}`}
+        endElement={endElement}
       />
       <Divider />
     </View>
@@ -258,7 +290,14 @@ export const ItwCredentialClaim = ({
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (DateFromString.is(decoded)) {
-          return <DateClaimItem label={claim.label} claim={decoded} />;
+          const dateClaimProps = dateClaimsConfig[claim.id];
+          return (
+            <DateClaimItem
+              label={claim.label}
+              claim={decoded}
+              {...dateClaimProps}
+            />
+          );
         } else if (EvidenceClaim.is(decoded)) {
           return (
             <EvidenceClaimItem

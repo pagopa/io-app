@@ -3134,6 +3134,9 @@ features:
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        status:
+          valid: Valida
+          expired: Scaduta
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
           requestAssistance: "Qualcosa non torna? Contatta AuthSource"
