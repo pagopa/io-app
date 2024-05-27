@@ -627,18 +627,18 @@ authentication:
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      title: Attiva l’NFC per continuare
-      subtitle: Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
-      listItemTitle: "Come fare:"
-      action: Apri Impostazioni
+      title: Enable NFC to continue
+      subtitle: To enable IO to read your CIE, activate NFC from your device's settings.
+      listItemTitle: "How to do it::"
+      action: Open Settings
       listItemLabel1: Step 1
-      listItemValue1: Apri “Impostazioni” 
+      listItemValue1: Open 'Settings' 
       listItemLabel2: Step 2
-      listItemValue2: Cerca la funzionalità “NFC”
+      listItemValue2: Search for ‘NFC’ functionality
       listItemLabel3: Step 3
-      listItemValue3: Attiva la funzionalità
-      activeNfcAlert: Attiva l’NFC per permettere a IO di leggere la tua CIE!
-      activeNFCAlertButton: Attiva NFC
+      listItemValue3: Turn it on
+      activeNfcAlert: Activate NFC to enable IO to read your CIE!
+      activeNFCAlertButton: Enable NFC
     pin:
       accessibility:
         placeholderLabel: PIN of Electronic Identity Card
