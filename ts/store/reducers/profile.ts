@@ -185,19 +185,32 @@ export const isEmailValidatedSelector = createSelector(
   isEmailValidated => isEmailValidated
 );
 
-// return preferences
-export const profilePreferencesSelector = createSelector(
-  profileSelector,
-  (
-    profile: ProfileState
-  ): pot.Pot<{ reminder: boolean; preview: boolean }, Error> =>
-    pot.map(profile, p => ({
-      reminder: p.reminder_status === ReminderStatusEnum.ENABLED,
-      preview:
-        p.push_notifications_content_type ===
-        PushNotificationsContentTypeEnum.FULL
-    }))
-);
+export const profileHasErrorSelector = (state: GlobalState) =>
+  pipe(state.profile, pot.isError);
+
+export const profileIsUpdatingSelector = (state: GlobalState) =>
+  pipe(state.profile, pot.isUpdating);
+
+export const pushNotificationRemindersEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state.profile,
+    pot.toOption,
+    O.chainNullableK(profile => profile.reminder_status),
+    O.map(reminderStatus => reminderStatus === ReminderStatusEnum.ENABLED),
+    O.getOrElse(() => false)
+  );
+
+export const pushNotificationPreviewEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state.profile,
+    pot.toOption,
+    O.chainNullableK(profile => profile.push_notifications_content_type),
+    O.map(
+      pushNotificationContentType =>
+        pushNotificationContentType === PushNotificationsContentTypeEnum.FULL
+    ),
+    O.getOrElse(() => false)
+  );
 
 // return the profile notification settings actual state or undefined if ProfileState pot is in an Error state
 export const profileNotificationSettingsSelector = createSelector(

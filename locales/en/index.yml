@@ -2105,6 +2105,11 @@ services:
   emptyListMessage: There are no services available at this time, pull down to refresh
   new: New
   home:
+    featured:
+      services:
+        title: Featured
+      institutions:
+        title: Featured Institutions
     institutions:
       title: National
   institution:

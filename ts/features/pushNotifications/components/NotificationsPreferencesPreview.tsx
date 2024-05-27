@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, ImageBackground } from "react-native";
-import NotificationBlueBg from "../../../../img/onboarding/notification_blue.png";
 import NotificationWhiteBg from "../../../../img/onboarding/notification_white.png";
 import { NotificationPreviewSample } from "./NotificationPreviewSample";
 
@@ -14,16 +13,14 @@ const styles = StyleSheet.create({
 type Props = {
   previewEnabled: boolean;
   remindersEnabled: boolean;
-  isFirstOnboarding: boolean;
 };
 
 export const NotificationsPreferencesPreview = ({
   previewEnabled,
-  remindersEnabled,
-  isFirstOnboarding
+  remindersEnabled
 }: Props) => (
   <ImageBackground
-    source={isFirstOnboarding ? NotificationWhiteBg : NotificationBlueBg}
+    source={NotificationWhiteBg}
     resizeMode="contain"
     style={styles.container}
   >
