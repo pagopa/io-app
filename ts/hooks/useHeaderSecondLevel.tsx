@@ -19,6 +19,7 @@ type CommonProps = {
   backAccessibilityLabel?: string;
   goBack?: () => void;
   canGoBack?: boolean;
+  headerShown?: boolean;
   transparent?: boolean;
   scrollValues?: ScrollValues;
 };
@@ -66,6 +67,7 @@ export const useHeaderSecondLevel = ({
   contextualHelpMarkdown,
   faqCategories,
   goBack,
+  headerShown = true,
   canGoBack = true,
   supportRequest,
   secondAction,
@@ -151,7 +153,14 @@ export const useHeaderSecondLevel = ({
           {...headerComponentProps}
         />
       ),
+      headerShown,
       headerTransparent: transparent
     });
-  }, [headerComponentProps, navigation, transparent, scrollValues]);
+  }, [
+    headerComponentProps,
+    headerShown,
+    navigation,
+    transparent,
+    scrollValues
+  ]);
 };
