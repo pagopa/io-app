@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -10,11 +11,13 @@ import {
 export type FimsState = {
   ctaUrl?: string;
   consentsData: pot.Pot<HttpClientSuccessResponse, Error>;
+  errorState: O.Option<Error>;
 };
 
 const INITIAL_STATE: FimsState = {
   ctaUrl: undefined,
-  consentsData: pot.none
+  consentsData: pot.none,
+  errorState: O.none
 };
 
 const reducer = (
@@ -24,6 +27,7 @@ const reducer = (
   switch (action.type) {
     case getType(fimsGetConsentsListAction.request):
       return {
+        errorState: O.none,
         ctaUrl: action.payload.ctaUrl,
         consentsData: pot.noneLoading
       };
@@ -35,7 +39,21 @@ const reducer = (
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {
         ...state,
+        errorState: O.none,
         consentsData: pot.none
+      };
+    case getType(fimsGetRedirectUrlAndOpenIABAction.success):
+      return {
+        ...state,
+        consentsData: pot.none,
+        ctaUrl: undefined
+      };
+    case getType(fimsGetConsentsListAction.failure):
+    case getType(fimsGetRedirectUrlAndOpenIABAction.failure):
+      return {
+        ctaUrl: undefined,
+        consentsData: pot.none,
+        errorState: O.some(action.payload)
       };
   }
   return state;
@@ -46,5 +64,8 @@ export const fimsConsentsDataSelector = (state: GlobalState) =>
 
 export const fimsCTAUrlSelector = (state: GlobalState) =>
   state.features.fims.ctaUrl;
+
+export const fimsErrorStateSelector = (state: GlobalState) =>
+  state.features.fims.errorState;
 
 export default reducer;
