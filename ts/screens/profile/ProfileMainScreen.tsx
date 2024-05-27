@@ -22,10 +22,6 @@ import React, {
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import {
-  TabBarItemPressType,
-  withUseTabItemPressWhenScreenActive
-} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
@@ -40,14 +36,14 @@ import { isDevEnv } from "../../utils/environment";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
+import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
-  LightModalContextInterface &
-  TabBarItemPressType;
+  LightModalContextInterface;
 
 type ProfileNavListItem = {
   value: string;
@@ -61,7 +57,7 @@ const ListItem = memo(ListItemNav);
 /**
  * A screen to show all the options related to the user profile
  */
-const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
+const ProfileMainScreen = ({ hideModal }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const theme = useIOTheme();
@@ -72,24 +68,20 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
   const scrollViewContentRef = useRef<ScrollView>(null);
   const idResetTap = useRef<number>();
 
-  useEffect(() => {
-    setTabPressCallback(() => () => {
-      if (scrollViewContentRef.current) {
-        scrollViewContentRef.current.scrollTo({
-          x: 0,
-          y: 0,
-          animated: true
-        });
-      }
-    });
+  useTabItemPressWhenScreenActive(
+    () => scrollViewContentRef.current?.scrollTo({ y: 0, animated: true }),
+    false
+  );
 
-    return () => {
+  useEffect(
+    () => () => {
       hideModal();
       if (idResetTap.current) {
         clearInterval(idResetTap.current);
       }
-    };
-  }, [hideModal, setTabPressCallback]);
+    },
+    [hideModal]
+  );
 
   const onLogoutPress = useCallback(() => {
     Alert.alert(
@@ -234,7 +226,10 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
   const logoutLabel = I18n.t("profile.logout.menulabel");
 
   return (
-    <ScrollView style={{ backgroundColor: theme["appBackground-primary"] }}>
+    <ScrollView
+      ref={scrollViewContentRef}
+      style={{ backgroundColor: theme["appBackground-primary"] }}
+    >
       {showProfileBanner && (
         <ContentWrapper>
           <VSpacer size={16} />
@@ -281,6 +276,4 @@ const ProfileMainScreen = ({ setTabPressCallback, hideModal }: Props) => {
   );
 };
 
-export default withLightModalContext(
-  withUseTabItemPressWhenScreenActive(ProfileMainScreen)
-);
+export default withLightModalContext(ProfileMainScreen);
