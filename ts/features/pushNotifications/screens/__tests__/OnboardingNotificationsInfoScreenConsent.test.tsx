@@ -1,14 +1,14 @@
-import configureMockStore from "redux-mock-store";
+import { createStore } from "redux";
 import { AppState } from "react-native";
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
 import * as notificationsActions from "../../store/actions/notifications";
 import * as notification from "../../utils";
+import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 
 const checkNotificationPermissions = jest.spyOn(
   notification,
@@ -27,10 +27,9 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
   });
 
   it("Click on the button continue check that the NOTIFICATIONS_INFO_SCREEN_CONSENT action is triggered", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const { component } = renderComponentMockStore(globalState);
+    const screen = renderScreen();
 
-    const continueButton = component.queryByTestId("continue-btn");
+    const continueButton = screen.queryByTestId("continue-btn");
     expect(continueButton).not.toBeNull();
 
     if (continueButton) {
@@ -43,11 +42,10 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     checkNotificationPermissions.mockImplementation(() =>
       Promise.resolve(true)
     );
-    const globalState = appReducer(undefined, applicationChangeState("active"));
     const appStateSpy = jest.spyOn(AppState, "addEventListener");
 
-    const { component } = renderComponentMockStore(globalState);
-    expect(component).not.toBeNull();
+    const screen = renderScreen();
+    expect(screen).not.toBeNull();
 
     appStateSpy.mock.calls[0][1]("active");
 
@@ -61,11 +59,10 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     checkNotificationPermissions.mockImplementation(() =>
       Promise.resolve(false)
     );
-    const globalState = appReducer(undefined, applicationChangeState("active"));
     const appStateSpy = jest.spyOn(AppState, "addEventListener");
 
-    const { component } = renderComponentMockStore(globalState);
-    expect(component).not.toBeNull();
+    const screen = renderScreen();
+    expect(screen).not.toBeNull();
 
     appStateSpy.mock.calls[0][1]("active");
 
@@ -76,11 +73,10 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
   });
 
   it("If AppState is not active doesn't trigger NOTIFICATIONS_INFO_SCREEN_CONSENT action", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
     const appStateSpy = jest.spyOn(AppState, "addEventListener");
 
-    const { component } = renderComponentMockStore(globalState);
-    expect(component).not.toBeNull();
+    const screen = renderScreen();
+    expect(screen).not.toBeNull();
 
     appStateSpy.mock.calls[0][1]("background");
     expect(checkNotificationPermissions).not.toBeCalled();
@@ -98,21 +94,25 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     expect(checkNotificationPermissions).not.toBeCalled();
     expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
   });
+
+  it("should match snapshot", () => {
+    const screen = renderScreen();
+    expect(screen.toJSON()).toMatchSnapshot();
+  });
 });
 
-const renderComponentMockStore = (state: GlobalState) => {
-  const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore({
-    ...state
-  } as GlobalState);
+const renderScreen = () => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const dsEnabledState = appReducer(
+    globalState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const store = createStore(appReducer, dsEnabledState as any);
 
-  return {
-    component: renderScreenWithNavigationStoreContext(
-      OnboardingNotificationsInfoScreenConsent,
-      ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext(
+    OnboardingNotificationsInfoScreenConsent,
+    ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT,
+    {},
     store
-  };
+  );
 };
