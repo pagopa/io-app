@@ -116,10 +116,7 @@ export const itwIssuanceMachine = setup({
         }
       },
       on: {
-        "select-mode": {
-          actions: forwardTo("identificationMachine")
-        },
-        "select-spid-idp": {
+        "identification.*": {
           actions: forwardTo("identificationMachine")
         }
       }

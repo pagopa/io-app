@@ -31,7 +31,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   );
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
-    machine.send({ type: "select-spid-idp", idp });
+    machine.send({ type: "identification.select-spid-idp", idp });
   };
 
   return (

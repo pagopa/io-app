@@ -7,17 +7,17 @@ enum IdentificationMode {
 }
 
 export type SelectMode = {
-  type: "select-mode";
+  type: "identification.select-mode";
   mode: IdentificationMode;
 };
 
 export type SelectSpidIdp = {
-  type: "select-spid-idp";
+  type: "identification.select-spid-idp";
   idp: LocalIdpsFallback;
 };
 
 export type InputCiePin = {
-  type: "input-cie-pin";
+  type: "identification-input-cie-pin";
   pin: string;
 };
 

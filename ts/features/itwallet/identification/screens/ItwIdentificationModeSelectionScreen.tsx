@@ -44,7 +44,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    machine.send({ type: "select-mode", mode: 0 });
+    machine.send({ type: "identification.select-mode", mode: 0 });
   };
 
   const handleCiePinPress = () => {
