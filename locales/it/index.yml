@@ -885,8 +885,8 @@ onboarding:
     tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
     errors:
       invalid: 
-        title: Il codice non rispetta i criteri di sicurezza
-        description: Non deve contenere ripetizione di numeri (es. 000000) e numeri in sequenza (es. 123456 o 654321).
+        title: Troppo facile!
+        description: Scegli un codice difficile da indovinare, che non contenga ripetizioni di numeri (es. 000000) e numeri in sequenza (es. 123456 o 654321).
         cta: Scegli un altro codice
       match: Il codice non coincide
     policy:
@@ -901,7 +901,7 @@ onboarding:
     title: Conferma il codice di sblocco
     errors:
       match:
-        title: I codici inseriti non corrispondono
+        title: Il codice inserito è diverso dal primo
         cta: Riprova
   alert:
     title: Vuoi davvero uscire da IO?
