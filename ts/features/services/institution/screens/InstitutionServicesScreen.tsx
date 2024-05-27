@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -95,14 +95,9 @@ export const InstitutionServicesScreen = ({
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY
-    }
+    },
+    headerShown: !!data || !isError
   });
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true
-    });
-  }, [navigation]);
 
   const scrollHandler = useAnimatedScrollHandler(event => {
     // eslint-disable-next-line functional/immutable-data

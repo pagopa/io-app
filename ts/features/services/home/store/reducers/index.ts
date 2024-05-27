@@ -32,7 +32,7 @@ const homeReducer = (
   action: Action
 ): ServicesHomeState => {
   switch (action.type) {
-    // Fetch Institutions actions
+    // Get Institutions actions
     case getType(paginatedInstitutionsGet.request):
       if (pot.isNone(state.paginatedInstitutions)) {
         return {
@@ -159,7 +159,14 @@ export const featuredInstitutionsPotSelector = createSelector(
 
 export const featuredInstitutionsSelector = createSelector(
   featuredInstitutionsPotSelector,
-  pot.toUndefined
+  featuredInstitutionsPot =>
+    pot.getOrElse(
+      pot.map(
+        featuredInstitutionsPot,
+        featuredInstitutions => featuredInstitutions.institutions
+      ),
+      []
+    )
 );
 
 export const featuredServicesPotSelector = createSelector(
@@ -169,7 +176,14 @@ export const featuredServicesPotSelector = createSelector(
 
 export const featuredServicesSelector = createSelector(
   featuredServicesPotSelector,
-  pot.toUndefined
+  featuredServicesPot =>
+    pot.getOrElse(
+      pot.map(
+        featuredServicesPot,
+        featuredServices => featuredServices.services
+      ),
+      []
+    )
 );
 
 export const isLoadingPaginatedInstitutionsSelector = (state: GlobalState) =>
@@ -184,17 +198,11 @@ export const isErrorPaginatedInstitutionsSelector = (state: GlobalState) =>
 export const isLoadingFeaturedInstitutionsSelector = (state: GlobalState) =>
   pipe(state, featuredInstitutionsPotSelector, pot.isLoading);
 
-export const isUpdatingFeaturedInstitutionsSelector = (state: GlobalState) =>
-  pipe(state, featuredInstitutionsPotSelector, pot.isUpdating);
-
 export const isErrorFeaturedInstitutionsSelector = (state: GlobalState) =>
   pipe(state, featuredInstitutionsPotSelector, pot.isError);
 
 export const isLoadingFeaturedServicesSelector = (state: GlobalState) =>
   pipe(state, featuredServicesPotSelector, pot.isLoading);
-
-export const isUpdatingFeaturedServicesSelector = (state: GlobalState) =>
-  pipe(state, featuredServicesPotSelector, pot.isUpdating);
 
 export const isErrorFeaturedServicesSelector = (state: GlobalState) =>
   pipe(state, featuredServicesPotSelector, pot.isError);
