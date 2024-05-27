@@ -37,7 +37,7 @@ const ActivateNfcScreen = () => {
     await cieUtils.openNFCSettings();
   }, []);
 
-  const prosegui = useCallback(async () => {
+  const onContinue = useCallback(async () => {
     if (isNfcEnabled) {
       navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
         ciePin,
@@ -88,7 +88,7 @@ const ActivateNfcScreen = () => {
       }}
       secondaryActionProps={{
         label: I18n.t("global.buttons.continue"),
-        onPress: prosegui
+        onPress: onContinue
       }}
     />
   );
