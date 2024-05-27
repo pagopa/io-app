@@ -1,6 +1,7 @@
-import { assign, fromPromise, setup } from "xstate5";
+import { assign, forwardTo, fromPromise, setup } from "xstate5";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { identificationMachine } from "../identification/machine";
+import { Events as IdentificationEvents } from "../identification/events";
+import { itwIdentificationMachine } from "../identification/machine";
 import { Tags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { Events } from "./events";
@@ -12,7 +13,7 @@ const notImplemented = () => {
 export const itwIssuanceMachine = setup({
   types: {
     context: {} as Context,
-    events: {} as Events
+    events: {} as Events | IdentificationEvents
   },
   actions: {
     storeWalletAttestation: notImplemented,
@@ -33,7 +34,7 @@ export const itwIssuanceMachine = setup({
     checkUserOptIn: fromPromise<undefined>(notImplemented),
     issueWalletAttestation: fromPromise<string>(notImplemented),
     activateWalletAttestation: fromPromise<string>(notImplemented),
-    identificationMachine,
+    identificationMachine: itwIdentificationMachine,
     requestEid: fromPromise<StoredCredential, string | undefined>(
       notImplemented
     ),
@@ -105,12 +106,21 @@ export const itwIssuanceMachine = setup({
         target: "CredentialIssuance"
       },
       invoke: {
+        id: "identificationMachine",
         src: "identificationMachine",
         onDone: {
           actions: assign(({ event }) => ({
             userToken: event.output.token
           })),
           target: "#itwIssuanceMachine.EidIssuance"
+        }
+      },
+      on: {
+        "select-mode": {
+          actions: forwardTo("identificationMachine")
+        },
+        "select-spid-idp": {
+          actions: forwardTo("identificationMachine")
         }
       }
     },

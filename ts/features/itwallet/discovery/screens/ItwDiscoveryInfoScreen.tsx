@@ -6,6 +6,10 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import ItwMarkdown from "../components/ItwMarkdown";
 import { FooterStackButton } from "../../common/components/FooterStackButton";
+import { itwIssuanceMachine } from "../../machine/issuance/machine";
+import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -14,6 +18,12 @@ import { FooterStackButton } from "../../common/components/FooterStackButton";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
+  const machine = ItWalletIssuanceMachineContext.useActorRef();
+
+  useOnFirstRender(() => {
+    machine.send({ type: "start", credentialType: CredentialType.PID });
+  });
+
   useHeaderSecondLevel({
     title: I18n.t("features.itWallet.discovery.info.title"),
     contextualHelp: emptyContextualHelp,
@@ -28,7 +38,9 @@ const ItwDiscoveryInfoScreen = () => {
           primaryActionProps={{
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => undefined
+            onPress: () => {
+              machine.send({ type: "accept-tos" });
+            }
           }}
           secondaryActionProps={{
             label: I18n.t("global.buttons.cancel"),

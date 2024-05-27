@@ -8,7 +8,7 @@ const notImplemented = () => {
   throw new Error();
 };
 
-export const identificationMachine = setup({
+export const itwIdentificationMachine = setup({
   types: {
     output: {} as Output,
     context: {} as Context,
@@ -54,6 +54,7 @@ export const identificationMachine = setup({
       }
     },
     Spid: {
+      initial: "IdpSelection",
       states: {
         IdpSelection: {
           entry: "navigateToIdpSelectionScreen",
@@ -135,3 +136,5 @@ export const identificationMachine = setup({
   },
   output: ({ context }) => context
 });
+
+export type ItwIdentificationMachine = typeof itwIdentificationMachine;

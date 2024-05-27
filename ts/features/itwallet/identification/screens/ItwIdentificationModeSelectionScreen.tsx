@@ -17,10 +17,13 @@ import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItWalletIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const machine = ItWalletIssuanceMachineContext.useActorRef();
+
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
 
@@ -41,9 +44,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
-    });
+    machine.send({ type: "select-mode", mode: 0 });
   };
 
   const handleCiePinPress = () => {
