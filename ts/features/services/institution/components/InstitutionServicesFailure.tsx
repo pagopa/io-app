@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
@@ -11,12 +11,6 @@ export const InstitutionServicesFailure = ({
   onRetry
 }: InstitutionServicesFailureProps) => {
   const navigation = useIONavigation();
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false
-    });
-  }, [navigation]);
 
   const handleBack = () => navigation.goBack();
 
