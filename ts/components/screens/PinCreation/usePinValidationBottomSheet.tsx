@@ -1,9 +1,9 @@
 import { VSpacer, Body } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
 import { View } from "react-native";
-import I18n from "../../i18n";
-import { BulletList } from "../BulletList";
-import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
+import I18n from "../../../i18n";
+import { BulletList } from "../../BulletList";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
 const BottomSheetContent = memo(() => (
   <View>

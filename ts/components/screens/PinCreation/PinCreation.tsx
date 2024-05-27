@@ -10,22 +10,25 @@ import {
 import React, { useCallback, useRef, useState } from "react";
 import { View, Alert as NativeAlert } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { defaultPin } from "../../config";
-import { isValidPinNumber } from "../../features/fastLogin/utils/pinPolicy";
-import I18n from "../../i18n";
-import { trackPinError, trackPinScreen } from "../../screens/profile/analytics";
-import { useIOSelector } from "../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
-import { PinString } from "../../types/PinString";
-import { getFlowType } from "../../utils/analytics";
-import { isDevEnv } from "../../utils/environment";
-import { useCreatePin } from "../../hooks/useCreatePin";
-import { Carousel } from "../Carousel";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
-import { ContextualHelpPropsMarkdown } from "../screens/BaseScreenComponent";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { defaultPin } from "../../../config";
+import { isValidPinNumber } from "../../../features/fastLogin/utils/pinPolicy";
+import I18n from "../../../i18n";
+import {
+  trackPinError,
+  trackPinScreen
+} from "../../../screens/profile/analytics";
+import { useIOSelector } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { PinString } from "../../../types/PinString";
+import { getFlowType } from "../../../utils/analytics";
+import { isDevEnv } from "../../../utils/environment";
+import { useCreatePin } from "../../../hooks/useCreatePin";
+import { Carousel } from "../../Carousel";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 

@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
 import { Dimensions, View } from "react-native";
-import { PIN_LENGTH_SIX } from "../../utils/constants";
+import { PIN_LENGTH_SIX } from "../../../utils/constants";
 
 const { width } = Dimensions.get("screen");
 
