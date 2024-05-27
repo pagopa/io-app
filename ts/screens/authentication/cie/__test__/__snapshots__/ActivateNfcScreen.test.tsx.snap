@@ -360,7 +360,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             }
                             weight="SemiBold"
                           >
-                            Attiva l’NFC per continuare
+                            Enable NFC to continue
                           </Text>
                           <View
                             style={
@@ -397,7 +397,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             }
                             weight="Regular"
                           >
-                            Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
+                            To enable IO to read your CIE, activate NFC from your device's settings.
                           </Text>
                           <View
                             style={
@@ -407,7 +407,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             }
                           />
                           <View
-                            accessibilityLabel="Come fare:"
+                            accessibilityLabel="How to do it::"
                             accessible={true}
                             style={
                               Object {
@@ -467,7 +467,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     }
                                     weight="Regular"
                                   >
-                                    Come fare:
+                                    How to do it::
                                   </Text>
                                 </View>
                               </View>
@@ -481,17 +481,17 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 Object {
                                   "icon": "systemSettingsAndroid",
                                   "label": "Step 1",
-                                  "value": "Apri “Impostazioni”",
+                                  "value": "Open 'Settings'",
                                 },
                                 Object {
                                   "icon": "systemAppsAndroid",
                                   "label": "Step 2",
-                                  "value": "Cerca la funzionalità “NFC”",
+                                  "value": "Search for ‘NFC’ functionality",
                                 },
                                 Object {
                                   "icon": "systemToggleInstructions",
                                   "label": "Step 3",
-                                  "value": "Attiva la funzionalità",
+                                  "value": "Turn it on",
                                 },
                               ]
                             }
@@ -533,7 +533,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Step 1; Apri “Impostazioni”"
+                                  accessibilityLabel="Step 1; Open 'Settings'"
                                   accessible={true}
                                   style={
                                     Object {
@@ -707,7 +707,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           }
                                           weight="SemiBold"
                                         >
-                                          Apri “Impostazioni”
+                                          Open 'Settings'
                                         </Text>
                                       </View>
                                     </View>
@@ -727,7 +727,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Step 2; Cerca la funzionalità “NFC”"
+                                  accessibilityLabel="Step 2; Search for ‘NFC’ functionality"
                                   accessible={true}
                                   style={
                                     Object {
@@ -945,7 +945,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           }
                                           weight="SemiBold"
                                         >
-                                          Cerca la funzionalità “NFC”
+                                          Search for ‘NFC’ functionality
                                         </Text>
                                       </View>
                                     </View>
@@ -965,7 +965,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Step 3; Attiva la funzionalità"
+                                  accessibilityLabel="Step 3; Turn it on"
                                   accessible={true}
                                   style={
                                     Object {
@@ -1121,7 +1121,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           }
                                           weight="SemiBold"
                                         >
-                                          Attiva la funzionalità
+                                          Turn it on
                                         </Text>
                                       </View>
                                     </View>
@@ -1272,7 +1272,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           }
                         >
                           <View
-                            accessibilityLabel="Apri Impostazioni"
+                            accessibilityLabel="Open Settings"
                             accessibilityRole="button"
                             accessibilityState={
                               Object {
@@ -1374,7 +1374,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   }
                                   weight="Bold"
                                 >
-                                  Apri Impostazioni
+                                  Open Settings
                                 </Text>
                               </View>
                             </View>
