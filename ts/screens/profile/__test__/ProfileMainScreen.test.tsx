@@ -1,44 +1,38 @@
 import { PreloadedState, createStore } from "redux";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Provider } from "react-redux";
-import React from "react";
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import { appReducer } from "../../../store/reducers";
 import ProfileMainScreen from "../ProfileMainScreen";
 import { applicationChangeState } from "../../../store/actions/application";
-import { TestInnerNavigationContainer } from "../../../navigation/AppStackNavigator";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { GlobalState } from "../../../store/reducers/types";
 
 jest.spyOn(Alert, "alert");
 
-const TestComponent = () => {
-  const Stack = createStackNavigator();
+const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(
     appReducer,
     globalState as PreloadedState<ReturnType<typeof appReducer>>
   );
 
-  return (
-    <Provider store={store}>
-      <TestInnerNavigationContainer>
-        <Stack.Navigator initialRouteName={ROUTES.PROFILE_MAIN}>
-          <Stack.Screen
-            name={ROUTES.PROFILE_MAIN}
-            component={ProfileMainScreen}
-          />
-        </Stack.Navigator>
-      </TestInnerNavigationContainer>
-    </Provider>
-  );
+  return {
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
+      ProfileMainScreen,
+      ROUTES.PROFILE_MAIN,
+      {},
+      store
+    ),
+    store
+  };
 };
 
 describe(ProfileMainScreen, () => {
   it("Should display the alert on logout press", () => {
-    const { getByTestId } = render(<TestComponent />);
-    const logoutButton = getByTestId(/logoutButton/);
+    const { component } = renderComponent();
+    const logoutButton = component.getByTestId(/logoutButton/);
 
     fireEvent.press(logoutButton);
 
