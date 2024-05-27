@@ -16,6 +16,8 @@ import {
 } from "../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import {
+  HttpCallConfig,
+  HttpClientFailureResponse,
   HttpClientResponse,
   HttpClientSuccessResponse,
   mockHttpNativeCall,
@@ -39,8 +41,6 @@ export function* watchFimsSaga(): SagaIterator {
 }
 
 function* handleFimsGetConsentsList() {
-  // TODO:: maybe move navigation here from utils
-
   const fimsToken = yield* select(fimsTokenSelector);
   const oidcProviderUrl = yield* select(fimsDomainSelector);
   const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
@@ -59,6 +59,7 @@ function* handleFimsGetConsentsList() {
     "_io_fims_token",
     fimsToken
   );
+
   const getConsentsResult = yield* call(mockHttpNativeCall, {
     verb: "get",
     followRedirects: true,
@@ -67,7 +68,7 @@ function* handleFimsGetConsentsList() {
 
   if (getConsentsResult.type === "failure") {
     yield* put(
-      fimsGetConsentsListAction.failure(new Error(" consent data fetch error"))
+      fimsGetConsentsListAction.failure(new Error("consent data fetch error"))
     );
     return;
   }
@@ -97,39 +98,14 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     return;
   }
 
-  const providerAcceptRedirectRes = yield* call(mockHttpNativeCall, {
-    followRedirects: false,
-    verb: "post",
-    url: acceptUrl
-  });
-
-  const acceptRedirectUrl = extractValidRedirect(
-    providerAcceptRedirectRes,
-    acceptUrl
-  );
-
-  if (!acceptRedirectUrl) {
-    yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("could not get grant acceptance response")
-      )
-    );
-    return;
-  }
-
   const rpUrl = yield* call(
     recurseUntilRPUrl,
-    acceptRedirectUrl,
+    { url: acceptUrl, verb: "post" },
     oidcProviderDomain
   );
-
   // --------------- lolliPoP -----------------
-  const relyingPartyRedirectUrl = extractValidRedirect(
-    rpUrl,
-    oidcProviderDomain
-  );
 
-  if (!relyingPartyRedirectUrl) {
+  if (rpUrl.type === "failure") {
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
         new Error("could not get RelyingParty redirect URL")
@@ -137,6 +113,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     return;
   }
+  const relyingPartyRedirectUrl = rpUrl.headers.Location;
 
   const [authCode, lollipopNonce] = getQueryParamsFromUrlString(
     relyingPartyRedirectUrl
@@ -228,18 +205,19 @@ interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
   };
 }
 
-const hasValidRedirect = (
+const isValidRedirectResponse = (
   res: HttpClientResponse
 ): res is SuccessResponseWithLocationHeader =>
   res.type === "success" &&
-  res.headers.Location !== undefined &&
-  res.headers.Location?.trim().length > 0;
+  isRedirect(res.status) &&
+  !!res.headers.Location &&
+  res.headers.Location.trim().length > 0;
 
 const extractValidRedirect = (
   data: HttpClientResponse,
   originalRequestUrl: string
 ) => {
-  if (!hasValidRedirect(data)) {
+  if (!isValidRedirectResponse(data)) {
     return undefined;
   }
   const redirect = data.headers.Location;
@@ -275,28 +253,44 @@ const isRedirect = (statusCode: number) =>
   statusCode >= 300 && statusCode < 400;
 
 const recurseUntilRPUrl = async (
-  url: string,
+  httpClientConfig: HttpCallConfig,
   oidcDomain: string
-): Promise<HttpClientResponse> => {
+): Promise<SuccessResponseWithLocationHeader | HttpClientFailureResponse> => {
   const res = await mockHttpNativeCall({
-    followRedirects: false,
-    verb: "get",
-    url
+    ...httpClientConfig,
+    followRedirects: false
   });
 
-  const redirectUrl = extractValidRedirect(res, url);
+  const redirectUrl = extractValidRedirect(res, httpClientConfig.url);
 
-  if (!hasValidRedirect(res) || !redirectUrl) {
-    return res;
+  if (!redirectUrl) {
+    if (res.type === "failure") {
+      return res;
+    }
+    // error case
+    const response: HttpClientFailureResponse = {
+      code: res.status,
+      type: "failure",
+      message: `malformed HTTP redirect response, location header value: ${res.headers.Location}`
+    };
+    return response;
   }
 
-  const isOIDCProviderBaseUrl = redirectUrl.startsWith(
-    oidcDomain.toLowerCase()
-  );
+  const isOIDCProviderBaseUrl = redirectUrl
+    .toLowerCase()
+    .startsWith(oidcDomain.toLowerCase());
 
-  if (!isRedirect(res.status) || !isOIDCProviderBaseUrl) {
-    return res;
+  if (!isOIDCProviderBaseUrl) {
+    return res as SuccessResponseWithLocationHeader;
   } else {
-    return await recurseUntilRPUrl(res.headers.Location, oidcDomain);
+    return await recurseUntilRPUrl(
+      {
+        verb: "get",
+        url: redirectUrl,
+        followRedirects: false,
+        headers: httpClientConfig.headers
+      },
+      oidcDomain
+    );
   }
 };

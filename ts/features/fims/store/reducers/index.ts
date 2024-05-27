@@ -27,7 +27,7 @@ const reducer = (
   switch (action.type) {
     case getType(fimsGetConsentsListAction.request):
       return {
-        ...state,
+        errorState: O.none,
         ctaUrl: action.payload.ctaUrl,
         consentsData: pot.noneLoading
       };
@@ -39,6 +39,7 @@ const reducer = (
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {
         ...state,
+        errorState: O.none,
         consentsData: pot.none
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.success):
