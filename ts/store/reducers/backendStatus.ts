@@ -421,7 +421,7 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
     isNeWalletSectionEnabled ||
     pipe(
       backendStatus,
-      O.map(bs => bs.config.newPaymentSection.enabled),
+      O.map(bs => bs.config.newPaymentSection?.enabled),
       O.getOrElse(() => false)
     )
 );
