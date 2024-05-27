@@ -18,9 +18,9 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isDesignSystemEnabledSelector,
-  isNewHomeSectionEnabledSelector,
-  isNewWalletSectionEnabledSelector
+  isNewHomeSectionEnabledSelector
 } from "../store/reducers/persistedPreferences";
+import { isNewPaymentSectionEnabledSelector } from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -61,7 +61,7 @@ export const MainTabNavigator = () => {
   const startupLoaded = useIOSelector(isStartupLoaded);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
   const isNewHomeSectionEnabled = useIOSelector(
     isNewHomeSectionEnabledSelector
