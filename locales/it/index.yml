@@ -279,6 +279,7 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: Immagine del codice a barre del tuo codice fiscale
       unavailable: Non disponibile
       preview:
         label: Anteprima del tuo codice fiscale
@@ -291,8 +292,8 @@ profile:
         hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
+    description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
-    content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
     facSimile: FAC-SIMILE
   sections:
     spid: PROFILO SPID
@@ -459,6 +460,10 @@ profile:
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Abilita ambiente di test per IT Wallet
+    banner:
+      title: Vuoi visualizzare il tuo Codice Fiscale?
+      action: Vai alla sezione “I tuoi dati”
+      close: Chiudi il banner e non mostrarlo più
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -466,6 +471,7 @@ profile:
       email: Indirizzo email
       need_validate: Da validare
       nameSurname: Nome e cognome
+      fiscalCode: Codice Fiscale
     email:
       contextualHelpTitle: Come gestire la tua mail
       contextualHelpContent: !include profile/profile_data_email_address.md

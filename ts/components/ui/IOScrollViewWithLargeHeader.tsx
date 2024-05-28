@@ -39,72 +39,83 @@ type Props = {
  * the user scrolls. It also handles the contextual help and the FAQ.
  * Use of LargeHeader naming is due to similar behavior offered by the native iOS API.
  */
-export const IOScrollViewWithLargeHeader = ({
-  children,
-  title,
-  description,
-  actions,
-  goBack,
-  canGoback = true,
-  contextualHelp,
-  contextualHelpMarkdown,
-  faqCategories,
-  headerActionsProp = {}
-}: Props) => {
-  const [titleHeight, setTitleHeight] = useState(0);
+export const IOScrollViewWithLargeHeader = React.forwardRef<View, Props>(
+  (
+    {
+      children,
+      title,
+      description,
+      actions,
+      goBack,
+      canGoback = true,
+      contextualHelp,
+      contextualHelpMarkdown,
+      faqCategories,
+      headerActionsProp = {}
+    },
+    ref
+  ) => {
+    const [titleHeight, setTitleHeight] = useState(0);
 
-  const navigation = useNavigation();
+    const navigation = useNavigation();
 
-  const getTitleHeight = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
-    setTitleHeight(height);
-  };
+    const getTitleHeight = (event: LayoutChangeEvent) => {
+      const { height } = event.nativeEvent.layout;
+      setTitleHeight(height);
+    };
 
-  const headerPropsWithoutGoBack = {
-    title: title.label,
-    contextualHelp,
-    contextualHelpMarkdown,
-    faqCategories,
-    ...headerActionsProp
-  };
+    const headerPropsWithoutGoBack = {
+      title: title.label,
+      contextualHelp,
+      contextualHelpMarkdown,
+      faqCategories,
+      ...headerActionsProp
+    };
 
-  const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps(
-    canGoback
-      ? {
-          ...headerPropsWithoutGoBack,
-          backAccessibilityLabel: I18n.t("global.buttons.back"),
-          goBack: goBack ?? navigation.goBack
-        }
-      : headerPropsWithoutGoBack
-  );
+    const headerProps: ComponentProps<typeof HeaderSecondLevel> =
+      useHeaderProps(
+        canGoback
+          ? {
+              ...headerPropsWithoutGoBack,
+              backAccessibilityLabel: I18n.t("global.buttons.back"),
+              goBack: goBack ?? navigation.goBack
+            }
+          : headerPropsWithoutGoBack
+      );
 
-  return (
-    <IOScrollView
-      actions={actions}
-      headerConfig={headerProps}
-      snapOffset={titleHeight}
-      includeContentMargins={false}
-    >
-      <View style={IOStyles.horizontalContentPadding} onLayout={getTitleHeight}>
-        <H2
-          testID={title.testID}
-          accessibilityLabel={title.accessibilityLabel ?? title.label}
-          accessibilityRole="header"
+    return (
+      <IOScrollView
+        actions={actions}
+        headerConfig={headerProps}
+        snapOffset={titleHeight}
+        includeContentMargins={false}
+      >
+        <View
+          ref={ref}
+          accessible
+          style={IOStyles.horizontalContentPadding}
+          onLayout={getTitleHeight}
         >
-          {title.label}
-        </H2>
-      </View>
+          <H2
+            testID={title.testID}
+            accessibilityLabel={title.accessibilityLabel ?? title.label}
+            accessibilityRole="header"
+          >
+            {title.label}
+          </H2>
+        </View>
 
-      {description && (
-        <ContentWrapper>
-          <VSpacer size={4} />
-          <Body color="grey-700">{description}</Body>
-        </ContentWrapper>
-      )}
+        {description && (
+          <ContentWrapper>
+            <VSpacer size={4} />
+            <Body color="grey-700">{description}</Body>
+          </ContentWrapper>
+        )}
 
-      <VSpacer size={16} />
+        <VSpacer size={16} />
 
-      {children}
-    </IOScrollView>
-  );
-};
+        {children}
+      </IOScrollView>
+    );
+  }
+);
