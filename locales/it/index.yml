@@ -881,8 +881,6 @@ onboarding:
     subTitle: È il codice a 6 cifre per accedere a IO e autorizzare alcune operazioni in app.
     pinLabel: Crea codice di sblocco
     pinConfirmationLabel: Ripeti codice di sblocco
-
-    tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
     errors:
       invalid: 
         title: Troppo facile!

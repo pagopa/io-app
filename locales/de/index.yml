@@ -813,7 +813,6 @@ onboarding:
     headerTitle: "IO einrichten"
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
-    tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
     errors:
       match: "Der Code stimmt nicht überein"
   alert:

@@ -173,12 +173,14 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       title: I18n.t("onboarding.pin.title"),
       description: I18n.t("onboarding.pin.subTitle"),
       value: pin,
+      testID: "create-pin-carousel-item",
       handleOnValidate: handlePinCreation,
       onValueChange: setPin
     },
     {
       title: I18n.t("onboarding.pinConfirmation.title"),
       value: pinConfirmation,
+      testID: "confirm-pin-carousel-item",
       handleOnValidate: handlePinConfirmation,
       onValueChange: setPinConfirmation
     }
@@ -194,6 +196,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         <VSpacer size={8} />
         <Carousel
           ref={carouselRef}
+          testID="pin-creation-carousel"
           style={{ flexGrow: 0 }}
           data={data}
           Component={PinCarouselItem}
@@ -209,7 +212,11 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
           />
           <VSpacer />
           <View style={{ alignSelf: "center" }}>
-            <ButtonLink onPress={present} label="Come scegliere il codice?" />
+            <ButtonLink
+              testID="pin-creation-policy-cta"
+              onPress={present}
+              label={I18n.t("onboarding.pin.policy.title")}
+            />
           </View>
           {bottomSheet}
         </ContentWrapper>

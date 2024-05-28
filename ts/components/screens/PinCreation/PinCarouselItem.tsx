@@ -3,7 +3,8 @@ import {
   H4,
   VSpacer,
   CodeInput,
-  Body
+  Body,
+  WithTestID
 } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
 import { Dimensions, View } from "react-native";
@@ -11,19 +12,20 @@ import { PIN_LENGTH_SIX } from "../../../utils/constants";
 
 const { width } = Dimensions.get("screen");
 
-export type PinCaouselItemProps = {
+export type PinCaouselItemProps = WithTestID<{
   title: string;
   description?: string;
   value: string;
   handleOnValidate: (val: string) => boolean;
   onValueChange: (val: string) => void;
-};
+}>;
 
 export const PinCarouselItem = memo(
   ({
     title,
     description,
     value,
+    testID,
     handleOnValidate,
     onValueChange
   }: PinCaouselItemProps) => (
@@ -37,14 +39,21 @@ export const PinCarouselItem = memo(
           width
         }
       ]}
+      testID={testID}
     >
       <View>
-        <H4 accessible testID="pin-creation-form-title">
+        <H4 accessible testID={`${testID}_title`}>
           {title}
         </H4>
       </View>
       {description && (
-        <Body style={{ textAlign: "center" }}>{description}</Body>
+        <Body
+          accessible
+          testID={`${testID}_description`}
+          style={{ textAlign: "center" }}
+        >
+          {description}
+        </Body>
       )}
       <VSpacer size={32} />
       <CodeInput
