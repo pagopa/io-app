@@ -29,6 +29,7 @@ import { NotificationsActions } from "../../features/pushNotifications/store/act
 import { GlobalState } from "../reducers/types";
 import { FimsActions } from "../../features/fims/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
+import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -107,6 +108,7 @@ export type Action =
   | NewServicesActions
   | FimsActions
   | ItwActions
+  | TrialSystemActions
   | ProfileSettingsActions;
 
 export type Dispatch = DispatchAPI<Action>;
