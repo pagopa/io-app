@@ -22,7 +22,7 @@
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/openapi/generated/api_fast_login.yaml",
   "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/8b8a5b0c3ebc007d9b8f1a8dc4ae9b88b63b5794/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
   "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/8b8a5b0c3ebc007d9b8f1a8dc4ae9b88b63b5794/src/domains/ecommerce-app/api/ecommerce-io/v1/_openapi.json.tpl",
-  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-infra/40d9f49687be3b0106a01fa16485760ea067ccb8/src/domains/bizevents-app/api/transaction-service/v1/_openapi-jwt.json.tpl",
+  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-infra/fix-wallet-session-IO-list-trx/src/domains/bizevents-app/api/transaction-service/v1/_openapi-jwt.json.tpl",
   "private": true,
   "scripts": {
     "start": "react-native start",
