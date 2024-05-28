@@ -15,7 +15,7 @@ export type HttpClientSuccessResponse = {
   type: "success";
   status: number;
   body: string;
-  headers: Record<string, string>;
+  headers: Record<string, string | undefined>;
 };
 export type HttpClientFailureResponse = {
   type: "failure";
@@ -76,7 +76,7 @@ export const mockClearAllCookies = () => fakeCookieStorage.clear();
 
 const hasValidFIMSToken = () => {
   const fimsCookie = fakeCookieStorage.get(
-    `${FakeBaseUrl}_X-IO-Federation-Token`
+    `${FakeBaseUrl}/fims/provider__io_fims_token`
   );
   return fimsCookie && fimsCookie.value.trim().length > 0;
 };
@@ -141,8 +141,10 @@ const fastForwardToGrantResponse = () => {
   }
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export const mockHttpNativeCall = (config: HttpCallConfig) => {
+export const mockHttpNativeCall = (
+  config: HttpCallConfig
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+): Promise<HttpClientResponse> => {
   const verb = config.verb;
   const url = config.url;
 
