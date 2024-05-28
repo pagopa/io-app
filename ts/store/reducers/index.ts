@@ -31,6 +31,7 @@ import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reduc
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
+import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -243,6 +244,13 @@ export function createRootReducer(
                         .securityAdviceAcknowledged._persist
                   }
                 }
+              },
+              profileSettings: {
+                ...profileSettingsReducerInitialState,
+                showProfileBanner:
+                  state.features.profileSettings.showProfileBanner,
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.features.profileSettings._persist
               },
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist
