@@ -39,7 +39,7 @@ const ActivateNfcScreen = () => {
 
   const onContinue = useCallback(async () => {
     if (isNfcEnabled) {
-      navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
+      navigation.replace(ROUTES.CIE_CARD_READER_SCREEN, {
         ciePin,
         authorizationUri
       });
