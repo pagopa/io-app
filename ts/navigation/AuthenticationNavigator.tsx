@@ -4,6 +4,7 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { Platform } from "react-native";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
@@ -112,7 +113,10 @@ const AuthenticationStackNavigator = () => (
       screenOptions={{
         gestureEnabled: false,
         headerShown: false,
-        ...TransitionPresets.ModalSlideFromBottomIOS
+        ...Platform.select({
+          ios: TransitionPresets.ModalSlideFromBottomIOS,
+          default: undefined
+        })
       }}
     >
       <Stack.Screen
