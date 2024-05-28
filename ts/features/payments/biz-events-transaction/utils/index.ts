@@ -1,6 +1,8 @@
 import { SectionListData } from "react-native";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 
+export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
+
 /**
  * Function that groups the transactions by month and returns an array of objects with the month as title and the transactions as data
  * - The year is shown only if it's different from the current year

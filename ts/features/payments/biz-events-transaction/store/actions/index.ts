@@ -55,7 +55,7 @@ export const getPaymentsBizEventsReceiptAction = createAsyncAction(
   "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_SUCCESS",
   "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_FAILURE",
   "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_CANCEL"
-)<PaymentsTransactionReceiptPayload, Blob, NetworkError, void>();
+)<PaymentsTransactionReceiptPayload, string, NetworkError, void>();
 
 export type PaymentsTransactionBizEventsActions =
   | ActionType<typeof getPaymentsBizEventsTransactionsAction>

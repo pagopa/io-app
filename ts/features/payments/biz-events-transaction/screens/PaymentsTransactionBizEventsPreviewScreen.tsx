@@ -16,6 +16,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
 
 export type PaymentsTransactionBizEventsPreviewScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -38,7 +39,10 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
       <View style={{ ...IOStyles.flex, backgroundColor: IOColors["grey-100"] }}>
         <Pdf
           style={{ flex: 1 }}
-          source={{ uri: transactionReceiptPot.value, cache: true }}
+          source={{
+            uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`,
+            cache: true
+          }}
         />
         <FooterWithButtons
           type="SingleButton"
