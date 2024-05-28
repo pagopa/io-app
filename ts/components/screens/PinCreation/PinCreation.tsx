@@ -187,7 +187,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   ];
 
   return (
-    <View style={IOStyles.flex}>
+    <View testID="pin-creation-screen" style={IOStyles.flex}>
       <View style={[IOStyles.flex, IOStyles.centerJustified]}>
         <VSpacer size={8} />
         <View style={IOStyles.alignCenter}>

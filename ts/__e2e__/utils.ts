@@ -10,14 +10,6 @@ import {
   e2eWaitRenderTimeout
 } from "./config";
 
-const pin =
-  e2ePinChar1 +
-  e2ePinChar6 +
-  e2ePinChar2 +
-  e2ePinChar5 +
-  e2ePinChar3 +
-  e2ePinChar4;
-
 /**
  * Complete the login with SPID
  */
@@ -46,16 +38,11 @@ export const loginWithSPID = async () => {
   const shareDataRightButtonId = "share-data-confirm-button";
   await element(by.id(shareDataRightButtonId)).tap();
 
-  await waitFor(element(by.id("pin-creation-form-title")))
+  await waitFor(element(by.id("pin-creation-screen")))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
 
   await createE2EPin();
-
-  await waitFor(element(by.id("pin-confirmation-title")))
-    .toBeVisible()
-    .withTimeout(e2eWaitRenderTimeout);
-
   await confirmE2EPin();
 
   const confirmButton = element(by.id("not-enrolled-biometric-confirm"));
@@ -83,14 +70,8 @@ export const insertE2EPin = async () => {
  * It will fill the two inputs with a pin and submit the form also
  * trying to insert wrong data during the process.
  */
-export const createE2EPin = async () => {
-  const onboardingPinFieldInputId = "pin-creation-input";
-  await element(by.id(onboardingPinFieldInputId)).typeText(pin);
-};
-export const confirmE2EPin = async () => {
-  const onboardingPinFieldInputId = "pin-confirmation-input";
-  await element(by.id(onboardingPinFieldInputId)).typeText(pin);
-};
+export const createE2EPin = insertE2EPin;
+export const confirmE2EPin = insertE2EPin;
 
 /**
  * Ensures that the login with spid and the unlock code has been inserted
