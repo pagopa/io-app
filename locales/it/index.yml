@@ -3134,13 +3134,15 @@ features:
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        hiddenClaim: "Nascosto"
         status:
           valid: Valida
           expired: Scaduta
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
-          requestAssistance: "Qualcosa non torna? Contatta AuthSource"
-          toggleClaimsVisibility: "Mostra/nascondi gli attributi del documento"
+          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          showClaimValues: "Mostra gli attributi del documento"
+          hideClaimValues: "Nascondi gli attributi del documento"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

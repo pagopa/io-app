@@ -62,7 +62,13 @@ const PlainTextClaimItem = ({
     <ListItemInfo
       label={label}
       value={claim}
-      accessibilityLabel={`${label} ${claim}`}
+      accessibilityLabel={`${label} ${
+        claim === HIDDEN_CLAIM
+          ? I18n.t(
+              "features.itWallet.presentation.credentialDetails.hiddenClaim"
+            )
+          : claim
+      }`}
     />
     <Divider />
   </>
@@ -76,8 +82,8 @@ const PlainTextClaimItem = ({
 const DateClaimItem = ({
   label,
   claim,
-  showIcon,
-  showExpirationBadge
+  iconVisible,
+  expirationBadgeVisible
 }: {
   label: string;
   claim: Date;
@@ -88,7 +94,7 @@ const DateClaimItem = ({
   );
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (!showExpirationBadge) {
+    if (!expirationBadgeVisible) {
       return;
     }
     const isExpired = getExpireStatus(claim) === "EXPIRED";
@@ -103,14 +109,14 @@ const DateClaimItem = ({
         )
       }
     };
-  }, [showExpirationBadge, claim]);
+  }, [expirationBadgeVisible, claim]);
 
   return (
     <View key={`${label}-${value}`}>
       <ListItemInfo
         label={label}
         value={value}
-        icon={showIcon ? "calendar" : undefined}
+        icon={iconVisible ? "calendar" : undefined}
         accessibilityLabel={`${label} ${value}`}
         endElement={endElement}
       />

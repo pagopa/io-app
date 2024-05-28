@@ -237,8 +237,8 @@ type ClaimSection =
   | "noSection";
 
 export type DateClaimConfig = Partial<{
-  showIcon: boolean;
-  showExpirationBadge: boolean;
+  iconVisible: boolean;
+  expirationBadgeVisible: boolean;
 }>;
 
 /**
@@ -268,9 +268,9 @@ const sectionsByClaim: Record<string, ClaimSection> = {
 };
 
 export const dateClaimsConfig: Record<string, DateClaimConfig> = {
-  issue_date: { showIcon: true },
-  expiry_date: { showIcon: true, showExpirationBadge: true },
-  expiration_date: { showIcon: true, showExpirationBadge: true }
+  issue_date: { iconVisible: true },
+  expiry_date: { iconVisible: true, expirationBadgeVisible: true },
+  expiration_date: { iconVisible: true, expirationBadgeVisible: true }
 };
 
 /**

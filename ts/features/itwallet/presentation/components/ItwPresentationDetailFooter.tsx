@@ -6,10 +6,11 @@ import {
   Chip,
   IOStyles
 } from "@pagopa/io-app-design-system";
+import { format } from "../../../../utils/dates";
 import I18n from "../../../../i18n";
 
 type Props = {
-  lastUpdateTime: string;
+  lastUpdateTime: Date;
 };
 
 export const ItwPresentationDetailFooter = ({ lastUpdateTime }: Props) => (
@@ -18,10 +19,12 @@ export const ItwPresentationDetailFooter = ({ lastUpdateTime }: Props) => (
       variant="primary"
       icon="message"
       label={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+        "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
+        { authSource: "AuthSource" }
       )}
       accessibilityLabel={I18n.t(
-        "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+        "features.itWallet.presentation.credentialDetails.actions.requestAssistance",
+        { authSource: "AuthSource" }
       )}
       onPress={() => Alert.alert("Assistance")}
     />
@@ -34,13 +37,12 @@ export const ItwPresentationDetailFooter = ({ lastUpdateTime }: Props) => (
       accessibilityLabel={I18n.t(
         "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
       )}
-      onPress={() => Alert.alert("Assistance")}
+      onPress={() => Alert.alert("Remove")}
     />
-
     <VSpacer size={24} />
     <Chip color="grey-650" style={IOStyles.selfCenter}>
       {I18n.t("features.itWallet.presentation.credentialDetails.lastUpdated", {
-        lastUpdateTime
+        lastUpdateTime: format(lastUpdateTime, "DD MMMM YYYY, HH:mm")
       })}
     </Chip>
   </View>
