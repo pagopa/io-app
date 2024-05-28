@@ -52,7 +52,13 @@ const ItwPlayground = () => {
 
   const navigateToIdentification = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL // Temp
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
+    });
+  };
+
+  const navigateToCredentialDetail = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
     });
   };
 
@@ -89,6 +95,14 @@ const ItwPlayground = () => {
           accessibilityLabel={"Issuing (TS) Playground"}
           description="Start the issuing flow to get your health card"
           onPress={() => undefined}
+        />
+        <Divider />
+        {/* Credential detail playground */}
+        <ListItemNav
+          value="Credential detail (eID)"
+          accessibilityLabel={"Credential detail (eID) Playground"}
+          description="Open the eID credential detail screen"
+          onPress={navigateToCredentialDetail}
         />
         <Divider />
         <VSpacer />

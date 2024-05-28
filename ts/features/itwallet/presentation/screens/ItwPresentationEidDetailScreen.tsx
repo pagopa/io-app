@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
-import { format } from "date-fns";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { EidCard } from "../../common/components/EidCard";
@@ -33,12 +32,10 @@ import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetail
 const today = new Date();
 
 /**
- * @deprecated `BaseScreenComponent`
+ * @deprecated Still using `BaseScreenComponent`
  *
  * This component renders the entire credential detail.
  * `BaseScreenComponent` is used because it offers the colored header with contrast icons out of the box.
- *
- * TODO: dismiss `BaseScreenComponent`
  */
 const ContentView = ({ eid }: { eid: StoredCredential }) => {
   const insets = useSafeAreaInsets();
@@ -74,9 +71,7 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
           <ItwPidAssuranceLevel credential={eid} />
           <ItwReleaserName credential={eid} />
           <VSpacer size={40} />
-          <ItwPresentationDetailFooter
-            lastUpdateTime={format(today, "DD MMMM YYYY, HH:mm")}
-          />
+          <ItwPresentationDetailFooter lastUpdateTime={today} />
         </ContentWrapper>
       </ScrollView>
     </BaseScreenComponent>
@@ -84,19 +79,8 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
 };
 
 export const ItwPresentationEidDetailScreen = () => {
-  // const contentOffsetY = useSharedValue(0);
   const navigation = useIONavigation();
   const eidOption = O.some(ItwCredentialsMocks.eid);
-
-  /* useHeaderSecondLevel({
-    title: "",
-    supportRequest: true,
-    transparent: true,
-    scrollValues: {
-      contentOffsetY,
-      triggerOffset: 0
-    }
-  }); */
 
   /**
    * Error view component which currently displays a generic error.
