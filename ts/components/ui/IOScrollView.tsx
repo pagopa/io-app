@@ -51,14 +51,17 @@ type IOScrollViewActions =
   | {
       type: "TwoButtons";
       primary: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
-      secondary: ComponentProps<typeof ButtonLink>;
+      secondary: Omit<ComponentProps<typeof ButtonLink>, "color">;
       tertiary?: never;
     }
   | {
       type: "ThreeButtons";
       primary: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
-      secondary: Omit<ComponentProps<typeof ButtonOutline>, "fullWidth">;
-      tertiary: ComponentProps<typeof ButtonLink>;
+      secondary: Omit<
+        ComponentProps<typeof ButtonOutline>,
+        "fullWidth" | "color"
+      >;
+      tertiary: Omit<ComponentProps<typeof ButtonLink>, "color">;
     };
 
 type IOSCrollViewHeaderScrollValues = ComponentProps<
@@ -334,6 +337,7 @@ export const IOScrollView = ({
                 <VSpacer size={spaceBetweenActionAndLink} />
                 {secondaryAction && (
                   <ButtonLink
+                    color="primary"
                     {...(secondaryAction as ComponentProps<typeof ButtonLink>)}
                   />
                 )}
@@ -345,7 +349,11 @@ export const IOScrollView = ({
                 {secondaryAction && (
                   <Fragment>
                     <VSpacer size={spaceBetweenActions} />
-                    <ButtonOutline fullWidth {...secondaryAction} />
+                    <ButtonOutline
+                      fullWidth
+                      color="primary"
+                      {...secondaryAction}
+                    />
                   </Fragment>
                 )}
 
@@ -357,7 +365,7 @@ export const IOScrollView = ({
                     }}
                   >
                     <VSpacer size={spaceBetweenActionAndLink} />
-                    <ButtonLink {...tertiaryAction} />
+                    <ButtonLink color="primary" {...tertiaryAction} />
                   </View>
                 )}
               </Fragment>
