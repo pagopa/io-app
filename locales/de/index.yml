@@ -290,7 +290,6 @@ profile:
         hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
     title: "Deine persönlichen Dokumente"
     fiscalCode: "Steuernummer"
-    content: "Das Faksimile der Steuernummer ersetzt nicht das physische Dokument, sondern ermöglicht es, die Daten oder den Barcode auf der Rückseite zu lesen"
     facSimile: "Faksimile"
   sections:
     spid: "SPID PROFIL"
