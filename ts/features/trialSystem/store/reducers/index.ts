@@ -21,7 +21,7 @@ export type TrialSystemState = Record<
 const initialState: TrialSystemState = {};
 
 /**
- * Store the activation state of the PN service
+ * Store the activation state of the Trial System
  * @param state
  * @param action
  */
@@ -46,7 +46,7 @@ export const trialSystemActivationStatusReducer = (
       return {
         ...state,
         [action.payload.trialId]: pot.toError(
-          state[action.payload.trialId],
+          state[action.payload.trialId] ?? pot.none,
           action.payload.error
         )
       };

@@ -90,9 +90,6 @@ const ProfileStackNavigator = () => (
       component={LogoutScreen}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
       name={ROUTES.PROFILE_FISCAL_CODE}
       component={FiscalCodeScreen}
     />
