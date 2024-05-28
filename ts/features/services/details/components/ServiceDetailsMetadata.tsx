@@ -160,7 +160,8 @@ export const ServiceDetailsMetadata = ({
             />
           );
         case "ListItemInfo":
-          return <ListItemInfo {...rest} accessibilityLabel={rest.label} />;
+          const { paymentLogoIcon, ...restInfo } = rest;
+          return <ListItemInfo {...restInfo} accessibilityLabel={rest.label} />;
         case "ListItemInfoCopy":
           return <ListItemInfoCopy {...rest} accessibilityLabel={rest.label} />;
         default:
