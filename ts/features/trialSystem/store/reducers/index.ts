@@ -31,7 +31,7 @@ export const trialSystemActivationStatusReducer = (
     case getType(trialSystemActivationStatus.request):
       return {
         ...state,
-        [action.payload]: pot.toLoading(state[action.payload])
+        [action.payload]: pot.toLoading(state[action.payload] ?? pot.none)
       };
     case getType(trialSystemActivationStatusUpsert.success):
     case getType(trialSystemActivationStatus.success):
@@ -44,7 +44,7 @@ export const trialSystemActivationStatusReducer = (
       return {
         ...state,
         [action.payload.trialId]: pot.toError(
-          state[action.payload.trialId],
+          state[action.payload.trialId] ?? pot.none,
           action.payload.error
         )
       };
@@ -52,7 +52,7 @@ export const trialSystemActivationStatusReducer = (
       return {
         ...state,
         [action.payload]: pot.toUpdating(
-          state[action.payload],
+          state[action.payload] ?? pot.none,
           isStateActive(state[action.payload])
             ? SubscriptionStateEnum.UNSUBSCRIBED
             : SubscriptionStateEnum.SUBSCRIBED
