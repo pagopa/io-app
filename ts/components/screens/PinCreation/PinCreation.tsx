@@ -213,7 +213,6 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
           <VSpacer />
           <View style={{ alignSelf: "center" }}>
             <ButtonLink
-              testID="pin-creation-policy-cta"
               onPress={present}
               label={I18n.t("onboarding.pin.policy.title")}
             />

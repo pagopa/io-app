@@ -10,15 +10,24 @@ import { PinCreation } from "../PinCreation/PinCreation";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
 import { defaultPin } from "../../../config";
 
-const invalidPinCases: Array<Array<string>> = [
-  Array.from({ length: PIN_LENGTH_SIX }, () => "1"),
-  Array.from({ length: PIN_LENGTH_SIX }, (_, i) => String(i + 1)),
-  Array.from({ length: PIN_LENGTH_SIX }, (_, i) => String(PIN_LENGTH_SIX - i))
+const VALID_PIN = defaultPin.split("");
+const REPEATED_NUMBERS = Array.from({ length: PIN_LENGTH_SIX }, () => "1");
+const ASC_NUMBERS_SEQUENCE = Array.from({ length: PIN_LENGTH_SIX }, (_, i) =>
+  String(i + 1)
+);
+const DESC_NUMBER_SEQUENCE = Array.from({ length: PIN_LENGTH_SIX }, (_, i) =>
+  String(i + 1)
+);
+
+const invalidPinCases = [
+  REPEATED_NUMBERS,
+  ASC_NUMBERS_SEQUENCE,
+  DESC_NUMBER_SEQUENCE
 ];
-const validPin = defaultPin.split("");
 
 jest.spyOn(Alert, "alert");
-const mockedGoBack = jest.fn();
+const mockGoBack = jest.fn();
+const mockHandleSubmit = jest.fn();
 
 jest.mock("react-native-safe-area-context", () => {
   const useSafeAreaInsets = () => ({ top: 0 });
@@ -34,11 +43,16 @@ jest.mock("@react-navigation/native", () => {
       name: ""
     }),
     useNavigation: () => ({
-      goBack: mockedGoBack,
+      goBack: mockGoBack,
       setOptions: jest.fn
     })
   };
 });
+jest.mock("../../../hooks/useCreatePin", () => ({
+  useCreatePin: () => ({
+    handleSubmit: mockHandleSubmit
+  })
+}));
 
 describe(PinCreation, () => {
   afterEach(() => {
@@ -47,9 +61,9 @@ describe(PinCreation, () => {
   it("Should be not be null", () => {
     const component = render(renderComponent());
 
-    expect(component).not.toBe(null);
+    expect(component).not.toBeNull();
   });
-  it("Should properly render Carousel component", () => {
+  it("Should properly render Carousel components", () => {
     const { getByTestId } = render(renderComponent());
     const carousel = getByTestId("pin-creation-carousel");
     const firstItem = getByTestId("create-pin-carousel-item");
@@ -86,15 +100,15 @@ describe(PinCreation, () => {
       );
     });
   });
-  it("Should display the alerr when pin confirmation does not match", () => {
+  it("Should display the alert when pin confirmation does not match to the pin created in the previous step", () => {
     const { getByText } = render(renderComponent());
     // Creation
-    validPin.forEach(input => {
+    VALID_PIN.forEach(input => {
       fireEvent.press(getByText(input));
     });
     // Confirmation
-    Array.from({ length: PIN_LENGTH_SIX }).forEach(() => {
-      fireEvent.press(getByText("1"));
+    REPEATED_NUMBERS.forEach(input => {
+      fireEvent.press(getByText(input));
     });
 
     expect(Alert.alert).toHaveBeenCalledWith(
@@ -107,6 +121,20 @@ describe(PinCreation, () => {
         }
       ]
     );
+  });
+  it("Should submit the pin without triggering the alerts", () => {
+    const { getByText } = render(renderComponent());
+    // Creation
+    VALID_PIN.forEach(input => {
+      fireEvent.press(getByText(input));
+    });
+    expect(Alert.alert).not.toHaveBeenCalled();
+    // Confirmation
+    VALID_PIN.forEach(input => {
+      fireEvent.press(getByText(input));
+    });
+    expect(Alert.alert).not.toHaveBeenCalled();
+    expect(mockHandleSubmit).toHaveBeenCalledTimes(1);
   });
 });
 
