@@ -292,7 +292,7 @@ profile:
         hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
-    description: Use the barcode to communicate your fiscal code at the pharmacy or post office.
+    description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
   sections:

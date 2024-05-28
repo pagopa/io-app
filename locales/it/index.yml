@@ -292,7 +292,7 @@ profile:
         hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
-    description: Usa il codice a barre per comunicare il tuo Codice Fiscale in farmacia o all’ufficio postale.
+    description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
     facSimile: FAC-SIMILE
   sections:
