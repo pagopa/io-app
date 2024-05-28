@@ -8,6 +8,7 @@ import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/han
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { byteArrayToBase64 } from "../utils";
 
 /**
  * Handle the remote call to get the transaction receipt pdf from the biz events API
@@ -52,10 +53,11 @@ export function* handleGetBizEventsTransactionReceipt(
     }
 
     if (getTransactionReceiptResult.right.status === 200) {
+      const base64File = byteArrayToBase64(getTransactionReceiptResult.right.value);
       action.payload.onSuccess?.();
       yield* put(
         getPaymentsBizEventsReceiptAction.success(
-          getTransactionReceiptResult.right.value as any
+          base64File
         )
       );
     } else if (getTransactionReceiptResult.right.status !== 401) {

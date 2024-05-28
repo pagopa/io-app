@@ -1,13 +1,9 @@
 import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "react-native";
+import { Share, View } from "react-native";
 
-import {
-  FooterWithButtons,
-  IOColors,
-  IOStyles
-} from "@pagopa/io-app-design-system";
+import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
 import Pdf from "react-native-pdf";
 import { RouteProp } from "@react-navigation/native";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
@@ -17,11 +13,14 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 
 export type PaymentsTransactionBizEventsPreviewScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
   "PAYMENT_TRANSACTION_BIZ_EVENTS_PREVIEW_SCREEN"
 >;
+
+const PREVIEW_OVERRIDED_MARGIN_TOP = -56;
 
 const PaymentsTransactionBizEventsPreviewScreen = () => {
   const transactionReceiptPot = useIOSelector(
@@ -34,23 +33,38 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     supportRequest: true
   });
 
+  const handleOnShare = async () => {
+    try {
+      const result = await Share.share({
+        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (pot.isSome(transactionReceiptPot)) {
     return (
-      <View style={{ ...IOStyles.flex, backgroundColor: IOColors["grey-100"] }}>
+      <View style={{ ...IOStyles.flex }}>
         <Pdf
-          style={{ flex: 1 }}
+          enablePaging
+          fitPolicy={0}
+          style={{
+            flexGrow: 1,
+            backgroundColor: IOColors["grey-100"],
+            marginTop: PREVIEW_OVERRIDED_MARGIN_TOP
+          }}
           source={{
             uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`,
             cache: true
           }}
         />
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: "Salva o condividi",
-              onPress: () => constVoid
+              onPress: handleOnShare
             }
           }}
         />
