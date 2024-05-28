@@ -29,8 +29,8 @@ import { paymentsCurrentStateSelector } from "../store/reducers/payments/current
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { handlePendingMessageStateIfAllowedSaga } from "../features/pushNotifications/sagas/notifications";
 import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
-import { handlePendingMessageStateIfAllowedSaga } from "./notifications";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>

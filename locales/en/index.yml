@@ -609,6 +609,16 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
+  cie_errors: 
+    error_22: 
+      title: You haven't agreed to share your data
+      subtitle: To enter, you must agree to share some data
+    error_1001:
+      title: Sorry, you don't meet the minimum age requirement
+      subtitle: You must be at least 18 years old
+    generic: 
+      title: Sorry, access was not available.
+      subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie:
     genericTitle: Login with CIE
     cie: CIE
@@ -753,7 +763,7 @@ authentication:
     subtitlel2: In order to use the app, you must first unlock access to IO.
     subtitlel3: To be able to access the app with all your SPID or CIE identities, unlock access.
     learnmore: Learn more
-    loginIO: Close
+    loginIO: Not now
   unlockmodal:
     title: What does it mean?
     description1_1: If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.
@@ -2096,6 +2106,11 @@ services:
   emptyListMessage: There are no services available at this time, pull down to refresh
   new: New
   home:
+    featured:
+      services:
+        title: Featured
+      institutions:
+        title: Featured Institutions
     institutions:
       title: National
   institution:
@@ -3030,10 +3045,58 @@ features:
   itWallet:
     card:
       eid:
-        label: Identità digitale
+        label: Identità Digitale
         expired: Non valida
         pending: In lavorazione
         digital: Versione digitale
+    generic:
+      error:
+        title: "C'è un problema sui nostri sistemi"
+        body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
+      close: "Chiudi"
+      rp: "Relying Party"
+      trusted: "Trusted"
+      search: "Cerca"
+      alert:
+        title: "Vuoi interrompere l’operazione?"
+        confirm: "Sì, interrompi"
+        cancel: "No, vai indietro"
+      dataSource:
+        multi: "Forniti da {{credentialSource}}"
+        single: "Fornito da {{credentialSource}}"
+      credential: "Credenziale"
+      attribute: "Attributo"
+      placeholders:
+        claimNotAvailable: "Attributo non riconosciuto"
+        claimLabelNotAvailable: "Etichetta attributo non presente"
+        organizationName: "Nome ente non disponibile"
+    verifiableCredentials:
+      type:
+        digitalCredential: "Identità digitale"
+        disabilityCard: "Tessera Europa della disabilità"
+        healthCard: "Tessera Sanitaria"
+        drivingLicense: "Licenza di guida"
+      claims:
+        uniqueId: "ID univoco"
+        givenName: "Nome"
+        familyName: "Cognome"
+        taxIdCode: "Codice Fiscale"
+        birthdate: "Data di nascita"
+        placeOfBirth: "Luogo di nascita"
+        expirationDate: "Scadenza"
+        securityLevel: "Livello di sicurezza"
+        issuedBy: "Credenziale emessa da"
+        info: "Ulteriori info su questi dati"
+        issuedByNew: "Emessa da"
+        releasedBy: "Rilasciata da"
+        mdl:
+          category: "Licenza {{category}}"
+          issuedDate: "Valida dal"
+          expirationDate: "Valida fino"
+      unrecognizedData:
+        title: "Non riconosci alcuni dati?"
+        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
+        cta: "Chiedi informazioni o segnala errori"
     discovery:
       info:
         title: Start with your Digital Identity
@@ -3063,6 +3126,26 @@ features:
           3: Attivalo
         primaryAction: Vai alle impostazioni
         secondaryAction: Ho fatto
+    issuance:
+      credentialPreview:
+        title: "Ecco un’anteprima della tua tessera"
+        subtitle:
+          "Prima di aggiungerla, verifica che tutte le informazioni siano
+          corrette."
+        banner:
+          title: "Qualcosa non torna?"
+          content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
+          actionTitle: "Contatta l'assistenza"
+        bottomSheet:
+          about:
+            title: "Chi è?"
+            subtitle: "È la fonte che gestisce e protegge i tuoi dati. App IO ti consente di visualizzarli perché è in grado di verificare e proteggere la tua identità grazie a importanti procedure di sicurezza."
+          data:
+            title: "Protezione dei dati"
+            subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
+        toast:
+          success: "Tessera aggiunta!"
+          failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
   trialSystem:
     toast:
       subscribed: Done! You will receive a message when the trial period will begin.

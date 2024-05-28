@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.8.1)
+  - Alamofire (5.9.1)
   - boost (1.76.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -108,6 +108,7 @@ PODS:
   - hermes-engine (0.70.15)
   - jail-monkey (2.3.2):
     - React
+  - JOSESwift (2.4.0)
   - libevent (2.1.12)
   - Mixpanel-swift (4.2.0):
     - Mixpanel-swift/Complete (= 4.2.0)
@@ -141,8 +142,11 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.3.0):
     - React-Core
-  - pagopa-io-react-native-http-client (0.1.3):
-    - Alamofire
+  - pagopa-io-react-native-http-client (1.0.0):
+    - Alamofire (~> 5.9.1)
+    - React-Core
+  - pagopa-io-react-native-jwt (1.2.0):
+    - JOSESwift (~> 2.3)
     - React-Core
   - pagopa-io-react-native-login-utils (1.0.0):
     - React-Core
@@ -623,6 +627,7 @@ DEPENDENCIES:
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
+  - "pagopa-io-react-native-jwt (from `../node_modules/@pagopa/io-react-native-jwt`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
   - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -716,6 +721,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GoogleUtilitiesComponents
     - GTMSessionFetcher
+    - JOSESwift
     - libevent
     - Mixpanel-swift
     - MLImage
@@ -763,6 +769,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-http-client:
     :path: "../node_modules/@pagopa/io-react-native-http-client"
+  pagopa-io-react-native-jwt:
+    :path: "../node_modules/@pagopa/io-react-native-jwt"
   pagopa-io-react-native-login-utils:
     :path: "../node_modules/@pagopa/io-react-native-login-utils"
   pagopa-react-native-zendesk:
@@ -907,7 +915,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   boost: 9fa78656d705f55b1220151d997e57e2a3f2cde0
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
@@ -933,6 +941,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   hermes-engine: 2592781da1571e4375dfd897f9462638c2d0ceb9
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
+  JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
@@ -943,7 +952,8 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
-  pagopa-io-react-native-http-client: 14b1ed3cd090108f9cb324f951811fe556b81e51
+  pagopa-io-react-native-http-client: 973ebbdfc3d62c885a849b94c362148760ed61a7
+  pagopa-io-react-native-jwt: f89a378bbc5ebfd93c24ec5993e97545a4815157
   pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
   pagopa-react-native-zendesk: e4a63ee0745a567b641110f7ff78e457086ab7a3
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4

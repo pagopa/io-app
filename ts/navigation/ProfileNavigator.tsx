@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
-import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
@@ -170,12 +169,10 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS}
       component={RemoveAccountSuccess}
     />
-    {remindersOptInEnabled && (
-      <Stack.Screen
-        name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
-        component={NotificationsPreferencesScreen}
-      />
-    )}
+    <Stack.Screen
+      name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
+      component={NotificationsPreferencesScreen}
+    />
     <Stack.Screen name={ROUTES.ITW_PLAYGROUND} component={ItwPlayground} />
   </Stack.Navigator>
 );
