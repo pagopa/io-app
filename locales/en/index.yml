@@ -279,6 +279,7 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: Image of barcode and fiscal code
       unavailable: Unavailable
       preview:
         label: Preview of your fiscal code document
@@ -291,8 +292,8 @@ profile:
         hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
+    description: Use the barcode to communicate your fiscal code when asked.
     help: !include profile/profile_fiscal_code.md
-    content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
     facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFILE
@@ -459,6 +460,10 @@ profile:
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Enable the IT Wallet test environment
+    banner:
+      title: Do you want to display your fiscal code?
+      action: Go to "Your data" section
+      close: Close the banner and do not show it again
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -466,6 +471,7 @@ profile:
       email: Email address
       need_validate: To be validated
       nameSurname: Name and surname
+      fiscalCode: Fiscal code
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_data_email_address.md
