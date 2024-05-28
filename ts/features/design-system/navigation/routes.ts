@@ -46,18 +46,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   SCREENS: {
-    IOSCROLLVIEW: {
-      route: "IOSCROLLVIEW",
-      title: "IOScrollView"
-    },
-    IOSCROLLVIEW_WO_ACTIONS: {
-      route: "IOSCROLLVIEW_WO_ACTIONS",
-      title: "IOScrollView w/o Actions"
-    },
-    IOSCROLLVIEW_LARGEHEADER: {
-      route: "IOSCROLLVIEW_LARGEHEADER",
-      title: "IOScrollView w/ Large header"
-    },
     OPERATION_RESULT: {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
@@ -93,9 +81,29 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
     },
-    STICKY_MESSAGE_CTAS: {
-      route: "DS_STICKY_MESS_CTAS",
-      title: "Sticky Message CTAs"
+    IOSCROLLVIEW: {
+      route: "IOSCROLLVIEW",
+      title: "IOScrollView"
+    },
+    IOSCROLLVIEW_WO_ACTIONS: {
+      route: "IOSCROLLVIEW_WO_ACTIONS",
+      title: "IOScrollView w/o Actions"
+    },
+    IOSCROLLVIEW_LARGEHEADER: {
+      route: "IOSCROLLVIEW_LARGEHEADER",
+      title: "IOScrollView w/ Large header"
+    },
+    FOOTER_ACTIONS: {
+      route: "DESIGN_SYSTEM_FOOTER_ACTIONS",
+      title: "Footer Actions"
+    },
+    FOOTER_ACTIONS_STICKY: {
+      route: "DS_FOOTER_ACTIONS_STICKY",
+      title: "Footer Actions (sticky)"
+    },
+    FOOTER_ACTIONS_NOT_FIXED: {
+      route: "DS_FOOTER_ACTIONS_NOT_FIXED",
+      title: "Footer Actions (not fixed)"
     }
   },
   LEGACY: {

@@ -8,7 +8,6 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
-
 import { BonusActions } from "../../features/bonus/common/store/actions";
 import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
@@ -30,6 +29,8 @@ import { NotificationsActions } from "../../features/pushNotifications/store/act
 import { GlobalState } from "../reducers/types";
 import { FimsActions } from "../../features/fims/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
+import { TrialSystemActions } from "../../features/trialSystem/store/actions";
+import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -106,7 +107,9 @@ export type Action =
   | NewWalletActions
   | NewServicesActions
   | FimsActions
-  | ItwActions;
+  | ItwActions
+  | TrialSystemActions
+  | ProfileSettingsActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
