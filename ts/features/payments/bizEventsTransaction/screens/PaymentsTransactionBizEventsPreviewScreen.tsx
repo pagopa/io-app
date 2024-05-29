@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Share, View } from "react-native";
+import { View } from "react-native";
+import Share from "react-native-share";
 
 import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
 import Pdf from "react-native-pdf";
@@ -34,7 +35,22 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
 
   const handleOnShare = async () => {
     try {
-      await Share.share({
+      await Share.open({
+        activityItemSources: [
+          {
+            item: {
+              default: {
+                content: "Ricevuta PagoPA.pdf",
+                type: "url"
+              }
+            },
+            placeholderItem: {
+              content: "Ricevuta PagoPA.pdf",
+              type: "url"
+            }
+          }
+        ],
+        type: "application/pdf",
         url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`
       });
     } catch (err) {
