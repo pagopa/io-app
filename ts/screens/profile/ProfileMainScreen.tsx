@@ -1,107 +1,89 @@
 import {
+  Banner,
   ContentWrapper,
   Divider,
-  IOColors,
   IOVisualCostants,
-  IOToast,
+  ListItemAction,
   ListItemNav,
   VSpacer,
-  useIOTheme
+  useIOTheme,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as React from "react";
-import { ComponentProps } from "react";
-import {
-  Alert,
-  Dimensions,
-  FlatList,
-  ListRenderItemInfo,
-  ScrollView,
-  View
-} from "react-native";
-import { connect } from "react-redux";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+  ComponentProps,
+  useMemo,
+  memo
+} from "react";
+import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
-import FiscalCodeComponent from "../../components/FiscalCodeComponent";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import {
-  TabBarItemPressType,
-  withUseTabItemPressWhenScreenActive
-} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import DarkLayout from "../../components/screens/DarkLayout";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import { navigateToLogout } from "../../store/actions/navigation";
-import { Dispatch } from "../../store/actions/types";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { GlobalState } from "../../store/reducers/types";
 import { isDevEnv } from "../../utils/environment";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
+import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
+import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import DeveloperModeSection from "./DeveloperModeSection";
 
-type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
-  LightModalContextInterface &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  TabBarItemPressType;
+const consecutiveTapRequired = 4;
+const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
-type State = {
-  tapsOnAppVersion: number;
-};
+type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
+  LightModalContextInterface;
 
 type ProfileNavListItem = {
   value: string;
 } & Pick<
   ComponentProps<typeof ListItemNav>,
-  "description" | "testID" | "onPress" | "hideChevron"
+  "description" | "testID" | "onPress"
 >;
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.main.contextualHelpTitle",
-  body: "profile.main.contextualHelpContent"
-};
-
-const consecutiveTapRequired = 4;
-const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
+const ListItem = memo(ListItemNav);
 
 /**
  * A screen to show all the options related to the user profile
  */
-class ProfileMainScreen extends React.PureComponent<Props, State> {
-  private scrollViewContentRef = React.createRef<ScrollView>();
+const ProfileMainScreen = ({ hideModal }: Props) => {
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+  const theme = useIOTheme();
+  const { show } = useIOToast();
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const showProfileBanner = useIOSelector(showProfileBannerSelector);
+  const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
+  const scrollViewContentRef = useRef<ScrollView>(null);
+  const idResetTap = useRef<number>();
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      tapsOnAppVersion: 0
-    };
-  }
+  useTabItemPressWhenScreenActive(
+    () => scrollViewContentRef.current?.scrollTo({ y: 0, animated: true }),
+    false
+  );
 
-  public componentDidMount() {
-    this.props.setTabPressCallback(() => () => {
-      if (this.scrollViewContentRef.current) {
-        this.scrollViewContentRef.current.scrollTo({
-          x: 0,
-          y: 0,
-          animated: true
-        });
+  useEffect(
+    () => () => {
+      hideModal();
+      if (idResetTap.current) {
+        clearInterval(idResetTap.current);
       }
-    });
-  }
+    },
+    [hideModal]
+  );
 
-  public componentWillUnmount() {
-    // This ensures modals will be closed (if there are some opened)
-    this.props.hideModal();
-    if (this.idResetTap) {
-      clearInterval(this.idResetTap);
-    }
-  }
-
-  private onLogoutPress = () => {
+  const onLogoutPress = useCallback(() => {
     Alert.alert(
       I18n.t("profile.logout.alertTitle"),
       I18n.t("profile.logout.alertMessage"),
@@ -111,59 +93,66 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         },
         {
           text: I18n.t("profile.logout.exit"),
-          onPress: this.props.logout
+          onPress: () =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.PROFILE_LOGOUT
+            })
         }
       ],
       { cancelable: true }
     );
-  };
+  }, [navigation]);
 
-  private idResetTap?: number;
+  const resetAppTapCounter = useCallback(() => {
+    setTapsOnAppVersion(0);
+    clearInterval(idResetTap.current);
+  }, []);
 
   // When tapped 5 times activate the debug mode of the application.
   // If more than two seconds pass between taps, the counter is reset
-  private onTapAppVersion = () => {
-    if (this.idResetTap) {
-      clearInterval(this.idResetTap);
+  const onTapAppVersion = useCallback(() => {
+    if (idResetTap.current) {
+      clearInterval(idResetTap.current);
     }
     // do nothing
-    if (this.props.isDebugModeEnabled || isDevEnv) {
+    if (isDebugModeEnabled || isDevEnv) {
       return;
     }
-    if (this.state.tapsOnAppVersion === consecutiveTapRequired) {
-      this.props.setDebugModeEnabled(true);
-      this.setState({ tapsOnAppVersion: 0 });
-      IOToast.show(I18n.t("profile.main.developerModeOn"));
+    if (tapsOnAppVersion === consecutiveTapRequired) {
+      dispatch(setDebugModeEnabled(true));
+      setTapsOnAppVersion(0);
+      show(I18n.t("profile.main.developerModeOn"));
     } else {
       // eslint-disable-next-line functional/immutable-data
-      this.idResetTap = setInterval(
-        this.resetAppTapCounter,
+      idResetTap.current = setInterval(
+        resetAppTapCounter,
         RESET_COUNTER_TIMEOUT
       );
-      const tapsOnAppVersion = this.state.tapsOnAppVersion + 1;
-      this.setState({
-        tapsOnAppVersion
-      });
+      setTapsOnAppVersion(prevTaps => prevTaps + 1);
     }
-  };
+  }, [
+    isDebugModeEnabled,
+    resetAppTapCounter,
+    dispatch,
+    show,
+    tapsOnAppVersion
+  ]);
 
-  private resetAppTapCounter = () => {
-    this.setState({ tapsOnAppVersion: 0 });
-    clearInterval(this.idResetTap);
-  };
+  const navigateToProfile = useCallback(
+    () =>
+      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.PROFILE_DATA
+      }),
+    [navigation]
+  );
 
-  public render() {
-    const { navigation, isDebugModeEnabled } = this.props;
-
-    const profileNavListItems: ReadonlyArray<ProfileNavListItem> = [
+  const profileNavListItems = useMemo<ReadonlyArray<ProfileNavListItem>>(
+    () => [
       {
         // Data
         value: I18n.t("profile.main.data.title"),
         description: I18n.t("profile.main.data.description"),
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_DATA
-          })
+        onPress: navigateToProfile
       },
       {
         // Preferences
@@ -200,134 +189,91 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
             screen: ROUTES.PROFILE_ABOUT_APP
           })
-      },
-      {
-        // Logout/Exit
-        value: I18n.t("profile.main.logout"),
-        description: I18n.t("profile.logout.menulabel"),
-        onPress: this.onLogoutPress,
-        hideChevron: true
       }
-    ];
-
-    /* The dimensions of the screen that will be used
-    to hide the white background when inertial
-    scrolling is turned on. */
-    const { height: screenHeight, width: screenWidth } =
-      Dimensions.get("screen");
-
-    return (
-      <DarkLayout
-        referenceToContentScreen={this.scrollViewContentRef}
-        accessibilityLabel={I18n.t("profile.main.title")}
-        appLogo={true}
-        hideBaseHeader={true}
-        hideHeader={true}
-        topContent={
-          <>
-            {/* Add a fake View with a dark background to hide
-            the white block when the inertial scroll is enabled
-            (that means the user is using negative scroll values) */}
-            <View
-              style={{
-                position: "absolute",
-                top: -screenHeight,
-                height: screenHeight,
-                width: screenWidth,
-                backgroundColor: IOColors.bluegrey
-              }}
-            />
-            {/* End of the hacky solution */}
-            <TouchableDefaultOpacity
-              accessibilityRole={"button"}
-              onPress={() =>
-                this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                  screen: ROUTES.PROFILE_FISCAL_CODE
-                })
-              }
-            >
-              <FiscalCodeComponent type={"Preview"} />
-            </TouchableDefaultOpacity>
-          </>
-        }
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["profile"]}
-      >
-        <ScreenContent
-          onTapAppVersion={this.onTapAppVersion}
-          profileNavListItems={profileNavListItems}
-          isDebugModeEnabled={isDebugModeEnabled}
-        />
-      </DarkLayout>
-    );
-  }
-}
-type ScreenContentProps = {
-  isDebugModeEnabled: boolean;
-  onTapAppVersion: () => void;
-  profileNavListItems: ReadonlyArray<ProfileNavListItem>;
-};
-
-const ScreenContent = ({
-  profileNavListItems,
-  onTapAppVersion,
-  isDebugModeEnabled
-}: ScreenContentProps) => {
-  const theme = useIOTheme();
-  const renderProfileNavItem = ({
-    item: { value, description, onPress, testID, hideChevron }
-  }: ListRenderItemInfo<ProfileNavListItem>) => (
-    <ListItemNav
-      accessibilityLabel={value}
-      value={value}
-      description={description}
-      onPress={onPress}
-      testID={testID}
-      hideChevron={hideChevron}
-    />
+    ],
+    [navigation, navigateToProfile]
   );
+
+  const handleCloseBanner = useCallback(() => {
+    dispatch(setShowProfileBanner(false));
+  }, [dispatch]);
+
+  const keyExtractor = useCallback(
+    (item: ProfileNavListItem, index: number) => `${item.value}-${index}`,
+    []
+  );
+
+  const renderProfileNavItem = useCallback(
+    ({ item }: ListRenderItemInfo<ProfileNavListItem>) => {
+      const { value, description, testID, onPress } = item;
+      const accessibilityLabel = description
+        ? `${value}; ${description}`
+        : value;
+
+      return (
+        <ListItem
+          testID={testID}
+          accessibilityLabel={accessibilityLabel}
+          value={value}
+          description={description}
+          onPress={onPress}
+        />
+      );
+    },
+    []
+  );
+
+  const logoutLabel = I18n.t("profile.logout.menulabel");
+
   return (
-    <ScrollView style={{ backgroundColor: theme["appBackground-primary"] }}>
+    <ScrollView
+      ref={scrollViewContentRef}
+      style={{ backgroundColor: theme["appBackground-primary"] }}
+    >
+      {showProfileBanner && (
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <Banner
+            title={I18n.t("profile.main.banner.title")}
+            action={I18n.t("profile.main.banner.action")}
+            pictogramName="help"
+            color="neutral"
+            size="big"
+            onPress={navigateToProfile}
+            onClose={handleCloseBanner}
+            labelClose={I18n.t("profile.main.banner.close")}
+          />
+        </ContentWrapper>
+      )}
       <VSpacer size={16} />
       <FlatList
         scrollEnabled={false}
-        keyExtractor={(item: ProfileNavListItem, index: number) =>
-          `${item.value}-${index}`
-        }
+        keyExtractor={keyExtractor}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={profileNavListItems}
         renderItem={renderProfileNavItem}
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
       />
-
+      <VSpacer size={8} />
       <ContentWrapper>
+        <ListItemAction
+          label={logoutLabel}
+          icon="logout"
+          variant="danger"
+          testID="logoutButton"
+          onPress={onLogoutPress}
+          accessibilityLabel={logoutLabel}
+        />
         <AppVersion onPress={onTapAppVersion} />
       </ContentWrapper>
-
       {/* Developer Section */}
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
-
       {/* End Page */}
       <VSpacer size={24} />
     </ScrollView>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  isDebugModeEnabled: isDebugModeEnabledSelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => navigateToLogout(),
-  setDebugModeEnabled: (enabled: boolean) =>
-    dispatch(setDebugModeEnabled(enabled))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
-  withLightModalContext(withUseTabItemPressWhenScreenActive(ProfileMainScreen))
-);
+export default withLightModalContext(ProfileMainScreen);
