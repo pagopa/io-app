@@ -14,7 +14,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -23,15 +22,14 @@ import {
   AccessibilityInfo,
   Platform,
   ScrollView,
-  StyleSheet,
   Text,
   Vibration,
-  View
+  View,
+  StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
-import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
@@ -49,7 +47,6 @@ import {
 } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
-import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   isScreenReaderEnabled,
@@ -597,22 +594,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const isEnabled = isNfcEnabledSelector(state);
-  return {
-    isNfcEnabled: pot.getOrElse(isEnabled, false),
-    assistanceToolConfig: assistanceToolConfigSelector(state),
-    isCieUatEnabled: isCieLoginUatEnabledSelector(state)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  isCieUatEnabled: isCieLoginUatEnabledSelector(state)
+});
 
 const ReaderScreen = (props: Props) => (
   <View style={styles.container}>
-    {props.isNfcEnabled ? (
-      <CieCardReaderScreen {...props} />
-    ) : (
-      <CieNfcOverlay {...props} />
-    )}
+    <CieCardReaderScreen {...props} />
   </View>
 );
 
