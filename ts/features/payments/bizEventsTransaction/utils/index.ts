@@ -20,7 +20,7 @@ export const groupTransactionsByMonth = (
           month: "long",
           year:
             new Date().getFullYear() ===
-              new Date(element.transactionDate).getFullYear()
+            new Date(element.transactionDate).getFullYear()
               ? undefined
               : "numeric"
         }
@@ -50,11 +50,10 @@ export const formatAmountText = (amount: string): string => {
   });
 };
 
-
 export const byteArrayToBase64 = (byteArray: Uint8Array): string => {
   // Convert Uint8Array to Buffer
   const buffer = Buffer.from(byteArray);
 
   // Convert Buffer to Base64 string
-  return buffer.toString('base64');
+  return buffer.toString("base64");
 };

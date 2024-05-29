@@ -28,6 +28,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
           paymentMethodId: "paymentMethodId",
           paymentMethodAsset: "paymentMethodAsset",
           applications: [],
+          clients: {},
           status: WalletStatusEnum.CREATED,
           updateDate: new Date(),
           details: {

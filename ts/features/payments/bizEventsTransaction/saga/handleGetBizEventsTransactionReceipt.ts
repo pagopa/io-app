@@ -53,13 +53,11 @@ export function* handleGetBizEventsTransactionReceipt(
     }
 
     if (getTransactionReceiptResult.right.status === 200) {
-      const base64File = byteArrayToBase64(getTransactionReceiptResult.right.value);
-      action.payload.onSuccess?.();
-      yield* put(
-        getPaymentsBizEventsReceiptAction.success(
-          base64File
-        )
+      const base64File = byteArrayToBase64(
+        getTransactionReceiptResult.right.value
       );
+      action.payload.onSuccess?.();
+      yield* put(getPaymentsBizEventsReceiptAction.success(base64File));
     } else if (getTransactionReceiptResult.right.status !== 401) {
       // The 401 status is handled by the withRefreshApiCall
       action.payload.onError?.();

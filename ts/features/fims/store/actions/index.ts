@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { HttpClientSuccessResponse } from "../../__mocks__/mockFIMSCallbacks";
+import { ConsentData } from "../../types";
 
 type FimsGetConsentsListRequestType = {
   ctaUrl: string;
@@ -13,7 +13,7 @@ export const fimsGetConsentsListAction = createAsyncAction(
   "FIMS_GET_CONSENTS_LIST_REQUEST",
   "FIMS_GET_CONSENTS_LIST_SUCCESS",
   "FIMS_GET_CONSENTS_LIST_FAILURE"
-)<FimsGetConsentsListRequestType, HttpClientSuccessResponse, Error>();
+)<FimsGetConsentsListRequestType, ConsentData, Error>();
 
 // note: IAB==InAppBrowser
 export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(

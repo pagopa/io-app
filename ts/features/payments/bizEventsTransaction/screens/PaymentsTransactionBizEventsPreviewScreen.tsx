@@ -1,4 +1,3 @@
-import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Share, View } from "react-native";
@@ -35,11 +34,11 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
 
   const handleOnShare = async () => {
     try {
-      const result = await Share.share({
+      await Share.share({
         url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`
       });
     } catch (err) {
-      console.log(err);
+      // DO NOTHING
     }
   };
 

@@ -21,7 +21,7 @@ import paymentsWalletReducer, {
 } from "../../../wallet/store/reducers";
 import paymentsBizEventsTransactionReducer, {
   PaymentsBizEventsTransactionState
-} from "../../../biz-events-transaction/store/reducers";
+} from "../../../bizEventsTransaction/store/reducers";
 
 export type PaymentsState = {
   onboarding: PaymentsOnboardingState;
