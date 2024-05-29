@@ -9,7 +9,7 @@ import {
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/Either";
-import { pipe } from "fp-ts/lib/function";
+import { identity, pipe } from "fp-ts/lib/function";
 import { URL } from "react-native-url-polyfill";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga";
@@ -85,10 +85,8 @@ function* handleFimsGetConsentsList() {
   }
 
   yield pipe(
-    E.tryCatch(
-      () => JSON.parse(getConsentsResult.body),
-      error => error
-    ),
+    getConsentsResult.body,
+    E.tryCatchK(JSON.parse, identity),
     E.map(ConsentData.decode),
     E.flatten,
     E.foldW(
