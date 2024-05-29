@@ -5,7 +5,6 @@ import {
   Divider,
   IOStyles,
   IOToast,
-  ListItemNav,
   TextInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -20,6 +19,7 @@ import { getLogoForInstitution } from "../../common/utils";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
+import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
 
 const MIN_QUERY_LENGTH: number = 3;
 const LIST_ITEM_HEIGHT: number = 70;
@@ -89,13 +89,13 @@ export const SearchScreen = () => {
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Institution>) => (
-      <ListItemNav
+      <ListItemSearchInstitution
         value={item.name}
         numberOfLines={2}
         onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
-          logoUri: getLogoForInstitution(item.fiscal_code)
+          source: getLogoForInstitution(item.fiscal_code)
         }}
       />
     ),
@@ -157,7 +157,7 @@ export const SearchScreen = () => {
         keyExtractor={(item, index) => `institution-${item.id}-${index}`}
         renderItem={renderItem}
         onEndReached={handleEndReached}
-        onEndReachedThreshold={0.001}
+        onEndReachedThreshold={0.1}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         keyboardShouldPersistTaps="handled"
