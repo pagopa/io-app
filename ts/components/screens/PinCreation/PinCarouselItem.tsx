@@ -6,7 +6,7 @@ import {
   Body,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React, { memo } from "react";
+import React, { RefObject, memo } from "react";
 import { Dimensions, View } from "react-native";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
 
@@ -14,6 +14,7 @@ const { width } = Dimensions.get("screen");
 
 export type PinCaouselItemProps = WithTestID<{
   title: string;
+  titleRef?: RefObject<View>;
   description?: string;
   value: string;
   handleOnValidate: (val: string) => boolean;
@@ -26,6 +27,7 @@ export const PinCarouselItem = memo(
     description,
     value,
     testID,
+    titleRef,
     handleOnValidate,
     onValueChange
   }: PinCaouselItemProps) => (
@@ -42,7 +44,7 @@ export const PinCarouselItem = memo(
       testID={testID}
     >
       <View>
-        <H4 accessible testID={`${testID}_title`}>
+        <H4 ref={titleRef} accessible testID={`${testID}_title`}>
           {title}
         </H4>
       </View>

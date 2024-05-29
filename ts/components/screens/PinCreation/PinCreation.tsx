@@ -7,6 +7,7 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { useCallback, useRef, useState } from "react";
 import { View, Alert as NativeAlert } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -27,6 +28,7 @@ import { Carousel } from "../../Carousel";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
@@ -59,6 +61,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const { handleSubmit } = useCreatePin({ isOnboarding });
   const pinRef = useRef<string | null>(null);
   const carouselRef = useRef<FlatList>(null);
+  const titleCreationRef = useRef<View>(null);
+  const titleConfirmationRef = useRef<View>(null);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const isCreation = pinMode === "creation";
   const { present, bottomSheet } = usePinValidationBottomSheet();
@@ -75,6 +79,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       animated: true,
       index: CREATION_INDEX
     });
+    setAccessibilityFocus(titleCreationRef, 1000 as Millisecond);
   }, []);
   const scrollToConfirmation = useCallback(() => {
     setPinConfirmation("");
@@ -83,6 +88,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       animated: true,
       index: CONFIRMATION_INDEX
     });
+    setAccessibilityFocus(titleConfirmationRef, 1000 as Millisecond);
   }, []);
 
   const goBack = useCallback(() => {
@@ -171,6 +177,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const data: Array<PinCaouselItemProps> = [
     {
       title: I18n.t("onboarding.pin.title"),
+      titleRef: titleCreationRef,
       description: I18n.t("onboarding.pin.subTitle"),
       value: pin,
       testID: "create-pin-carousel-item",
@@ -179,6 +186,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
     },
     {
       title: I18n.t("onboarding.pinConfirmation.title"),
+      titleRef: titleConfirmationRef,
       value: pinConfirmation,
       testID: "confirm-pin-carousel-item",
       handleOnValidate: handlePinConfirmation,
