@@ -12,12 +12,12 @@ import Animated, { Layout } from "react-native-reanimated";
 import { default as I18n } from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
-import { walletLatestTransactionsBizEventsListPotSelector } from "../../biz-events-transaction/store/selectors";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../biz-events-transaction/store/actions";
-import { PaymentsBizEventsListItemTransaction } from "../../biz-events-transaction/components/PaymentsBizEventsListItemTransaction";
+import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
+import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { PaymentsBizEventsListItemTransaction } from "../../bizEventsTransaction/components/PaymentsBizEventsListItemTransaction";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { PaymentsTransactionBizEventsRoutes } from "../../biz-events-transaction/navigation/routes";
+import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
 
 type Props = {

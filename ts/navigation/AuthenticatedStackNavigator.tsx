@@ -64,8 +64,8 @@ import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
-import { PaymentsTransactionBizEventsRoutes } from "../features/payments/biz-events-transaction/navigation/routes";
-import { PaymentsTransactionBizEventsNavigator } from "../features/payments/biz-events-transaction/navigation/navigator";
+import { PaymentsTransactionBizEventsRoutes } from "../features/payments/bizEventsTransaction/navigation/routes";
+import { PaymentsTransactionBizEventsNavigator } from "../features/payments/bizEventsTransaction/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,

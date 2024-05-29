@@ -59,8 +59,8 @@ import { PaymentsTransactionParamsList } from "../../features/payments/transacti
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
-import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/biz-events-transaction/navigation/params";
-import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/biz-events-transaction/navigation/routes";
+import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
+import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/bizEventsTransaction/navigation/routes";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
