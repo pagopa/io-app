@@ -6,7 +6,7 @@ import { paymentsWalletUserMethodsSelector } from "../../../wallet/store/selecto
 import {
   walletLatestTransactionsBizEventsListPotSelector,
   walletTransactionBizEventsListPotSelector
-} from "../../../biz-events-transaction/store/selectors";
+} from "../../../bizEventsTransaction/store/selectors";
 
 export const isPaymentsSectionLoadingSelector = createSelector(
   paymentsWalletUserMethodsSelector,

@@ -5,7 +5,7 @@ import { PaymentsCheckoutActions } from "../../../checkout/store/actions";
 import { PaymentsTransactionActions } from "../../../transaction/store/actions";
 import { PaymentsHomeActions } from "../../../home/store/actions";
 import { PaymentsWalletActions } from "../../../wallet/store/actions";
-import { PaymentsTransactionBizEventsActions } from "../../../biz-events-transaction/store/actions";
+import { PaymentsTransactionBizEventsActions } from "../../../bizEventsTransaction/store/actions";
 
 export type PaymentsActions =
   | PaymentsOnboardingActions

@@ -12,7 +12,7 @@ import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { watchPaymentsMethodDetailsSaga } from "../../details/saga";
 import { watchPaymentsTransactionSaga } from "../../transaction/saga";
 import { watchPaymentsWalletSaga } from "../../wallet/saga";
-import { watchPaymentsBizEventsTransactionSaga } from "../../biz-events-transaction/saga";
+import { watchPaymentsBizEventsTransactionSaga } from "../../bizEventsTransaction/saga";
 
 export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
