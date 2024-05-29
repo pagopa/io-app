@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
+import { isValidPaymentMethod } from "../../utils";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { selectPaymentsCheckoutState, walletPaymentDetailsSelector } from ".";
 
@@ -29,7 +30,11 @@ export const walletPaymentUserWalletLastUpdatedSelector = createSelector(
 
 export const walletPaymentAllMethodsSelector = createSelector(
   selectPaymentsCheckoutState,
-  state => pot.map(state.allPaymentMethods, _ => _.paymentMethods ?? [])
+  state =>
+    pot.map(
+      state.allPaymentMethods,
+      ({ paymentMethods }) => paymentMethods?.filter(isValidPaymentMethod) ?? []
+    )
 );
 
 export const walletPaymentMethodByIdSelector = createSelector(
