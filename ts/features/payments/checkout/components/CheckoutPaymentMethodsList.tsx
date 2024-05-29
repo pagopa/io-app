@@ -38,7 +38,7 @@ const CheckoutPaymentMethodsList = () => {
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);
   const userWallets = useIOSelector(walletPaymentUserWalletsSelector);
-  const latestPaymentUsed = useIOSelector(
+  const latestPaymentMethodUsed = useIOSelector(
     walletPaymentUserWalletLastUpdatedSelector
   );
 
@@ -58,14 +58,12 @@ const CheckoutPaymentMethodsList = () => {
   const latestPaymentMethodListItem = useMemo(
     () =>
       pipe(
-        latestPaymentUsed,
-        O.map(mapUserWalletToRadioItem),
-        O.map(Array.of),
-        O.map(A.map(O.fromNullable)),
-        O.map(A.compact),
+        latestPaymentMethodUsed,
+        O.chainNullableK(mapUserWalletToRadioItem),
+        O.map(A.of),
         O.getOrElse(() => [] as Array<RadioItem<string>>)
       ),
-    [latestPaymentUsed]
+    [latestPaymentMethodUsed]
   );
 
   const userPaymentMethodListItems = useMemo(
