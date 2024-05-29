@@ -22,7 +22,8 @@
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/openapi/generated/api_fast_login.yaml",
   "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/8b8a5b0c3ebc007d9b8f1a8dc4ae9b88b63b5794/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
   "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/8b8a5b0c3ebc007d9b8f1a8dc4ae9b88b63b5794/src/domains/ecommerce-app/api/ecommerce-io/v1/_openapi.json.tpl",
-  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-infra/fix-wallet-session-IO-list-trx/src/domains/bizevents-app/api/transaction-service/v1/_openapi-jwt.json.tpl",
+  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-infra/0a6784276fd43aaff7709dd90e0d379e77326f28/src/domains/bizevents-app/api/transaction-service/v1/_openapi-jwt.json.tpl",
+  "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/features/add-openapi-trial-service/api_trial_system.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -79,6 +80,7 @@
     "generate:services": "npm-run-all generate:services-api",
     "generate:lollipop-api": "rimraf definitions/lollipop && mkdir -p definitions/lollipop && gen-api-models --api-spec $npm_package_lollipop_api --out-dir ./definitions/lollipop --no-strict --response-decoders --request-types --client",
     "generate:fast-login-api": "rimraf definitions/fast_login && mkdir -p definitions/fast_login && gen-api-models --api-spec $npm_package_fast_login_api --out-dir ./definitions/fast_login --no-strict --response-decoders --request-types --client",
+    "generate:trial-system-api": "rimraf definitions/trial_systwem && mkdir -p definitions/trial_systwem && gen-api-models --api-spec $npm_package_trial_system --out-dir ./definitions/trial_systwem --no-strict --response-decoders --request-types --client",
     "generate:pagopa-walletv3-api": "rimraf definitions/pagopa/walletv3 && mkdir -p definitions/pagopa/walletv3 && gen-api-models --api-spec $npm_package_pagopa_api_walletv3 --out-dir ./definitions/pagopa/walletv3 --no-strict --response-decoders --request-types --client",
     "generate:pagopa-ecommerce-api": "rimraf definitions/pagopa/ecommerce && mkdir -p definitions/pagopa/ecommerce && gen-api-models --api-spec $npm_package_pagopa_api_ecommerce --out-dir ./definitions/pagopa/ecommerce --no-strict --response-decoders --request-types --client",
     "generate:pagopa-biz-events-api": "rimraf definitions/pagopa/biz-events && mkdir -p definitions/pagopa/biz-events && gen-api-models --api-spec $npm_package_pagopa_api_biz_events --out-dir ./definitions/pagopa/biz-events --no-strict --response-decoders --request-types --client",
