@@ -85,15 +85,12 @@ function* handleFimsGetConsentsList() {
   }
 
   yield pipe(
-    getConsentsResult.body,
-    item => {
-      try {
-        return JSON.parse(item);
-      } catch {
-        return undefined;
-      }
-    },
-    ConsentData.decode,
+    E.tryCatch(
+      () => JSON.parse(getConsentsResult.body),
+      error => error
+    ),
+    E.map(ConsentData.decode),
+    E.flatten,
     E.foldW(
       () => {
         logToMixPanel(`could not decode: ${getConsentsResult.body}`);
@@ -155,7 +152,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     return;
   }
-  const relyingPartyRedirectUrl = rpRedirectResponse.headers.Location;
+  const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
 
   const [authCode, lollipopNonce] = getQueryParamsFromUrlString(
     relyingPartyRedirectUrl
@@ -255,7 +252,7 @@ const nonThrowingLollipopRequestInit = async (
 
 interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
   headers: {
-    Location: string;
+    location: string;
   };
 }
 
@@ -264,8 +261,8 @@ const isValidRedirectResponse = (
 ): res is SuccessResponseWithLocationHeader =>
   res.type === "success" &&
   isRedirect(res.status) &&
-  !!res.headers.Location &&
-  res.headers.Location.trim().length > 0;
+  !!res.headers.location &&
+  res.headers.location.trim().length > 0;
 
 const buildAbsoluteUrl = (redirect: string, originalRequestUrl: string) => {
   try {
@@ -291,7 +288,7 @@ const extractValidRedirect = (
   originalRequestUrl: string
 ) =>
   isValidRedirectResponse(data)
-    ? buildAbsoluteUrl(data.headers.Location, originalRequestUrl)
+    ? buildAbsoluteUrl(data.headers.location, originalRequestUrl)
     : undefined;
 
 const getQueryParamsFromUrlString = (url: string) => {
@@ -326,7 +323,7 @@ const recurseUntilRPUrl = async (
     const response: HttpClientFailureResponse = {
       code: res.status,
       type: "failure",
-      message: `malformed HTTP redirect response, location header value: ${res.headers.Location}`,
+      message: `malformed HTTP redirect response, location header value: ${res.headers.location}`,
       headers: res.headers
     };
     return response;

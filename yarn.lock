@@ -3306,10 +3306,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.3.0.tgz#4181a53e36d4cd142b93ef133d3d227d9d360f96"
   integrity sha512-3H5CqJwpEYX14QNUhqbSizJBFBeIQRFv8Bw/46+YILTZpvCloVDjfSrPDsKNLZdC1d05wfUSTGGRncMQOB2kMg==
 
-"@pagopa/io-react-native-http-client@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.1.tgz#95110809831f5d90b27df79436fe04ed92579854"
-  integrity sha512-NCApVtevPNdtwY0yhTWKLvnyy9F7usWD+UqjC4PiWG+4XFfyp8LwfIkfuRbCDww7D5+itMNr9ABCdxCyUF/b8Q==
+"@pagopa/io-react-native-http-client@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.2.tgz#8d92a7ea920f1fe01f5632ccb939bb7961392bd6"
+  integrity sha512-UVd0S8gV8RUf6ZlHhQDb2jvEyMlc+XQ76j44ewRiP4xGNDX9QmYGfr+QNUmg0PwJ55OoeH6j5lbWiW2Mh1QCtQ==
   dependencies:
     auto-changelog "^2.4.0"
 
