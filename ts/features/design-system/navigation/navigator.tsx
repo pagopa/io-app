@@ -61,6 +61,7 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
+import DSListItemScreen from "../core/DSListItemScreen";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DesignSystemParamsList } from "./params";
@@ -397,6 +398,12 @@ export const DesignSystemNavigator = () => {
           name={DESIGN_SYSTEM_ROUTES.SCREENS.WIZARD_SCREEN.route}
           component={DSWizardScreen}
           options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.LIST_ITEM_SCREEN.route}
+          component={DSListItemScreen}
+          options={{ headerShown: true }}
         />
 
         <Stack.Screen
