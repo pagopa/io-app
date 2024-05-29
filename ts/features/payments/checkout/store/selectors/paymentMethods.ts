@@ -12,6 +12,21 @@ export const walletPaymentUserWalletsSelector = createSelector(
   state => pot.map(state.userWallets, _ => _.wallets ?? [])
 );
 
+// Get from the userwallets the wallet with the attribute lastUpdated more recent
+export const walletPaymentUserWalletLastUpdatedSelector = createSelector(
+  walletPaymentUserWalletsSelector,
+  userWalletsPot =>
+    pipe(
+      userWalletsPot,
+      pot.toOption,
+      O.map(userWallets =>
+        userWallets.reduce((acc, curr) =>
+          acc.updateDate > curr.updateDate ? acc : curr
+        )
+      )
+    )
+);
+
 export const walletPaymentAllMethodsSelector = createSelector(
   selectPaymentsCheckoutState,
   state => pot.map(state.allPaymentMethods, _ => _.paymentMethods ?? [])
