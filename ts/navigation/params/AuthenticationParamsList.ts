@@ -11,7 +11,6 @@ export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_ROOTED_DEVICE]: undefined;
   [ROUTES.AUTHENTICATION_OPT_IN]: ChosenIdentifier;
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: undefined;
-  [ROUTES.AUTHENTICATION_CIE]: undefined;
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: undefined;
   [ROUTES.AUTHENTICATION_AUTH_SESSION]: undefined;
   [ROUTES.AUTHENTICATION_IDP_TEST]: undefined;
@@ -27,5 +26,7 @@ export type AuthenticationParamsList = {
   [ROUTES.CIE_CARD_READER_SCREEN]: CieCardReaderScreenNavigationParams;
   [ROUTES.CIE_CONSENT_DATA_USAGE]: CieConsentDataUsageScreenNavigationParams;
   [ROUTES.CIE_WRONG_PIN_SCREEN]: CieWrongCiePinScreenNavigationParams;
-  [ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN]: undefined;
+  [ROUTES.CIE_UNEXPECTED_ERROR]: undefined;
+  [ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN]: undefined;
+  [ROUTES.CIE_WRONG_CARD_SCREEN]: undefined;
 };
