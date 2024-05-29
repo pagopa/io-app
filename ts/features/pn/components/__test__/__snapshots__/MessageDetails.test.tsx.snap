@@ -840,7 +840,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           "lineHeight": 25,
                                         }
                                       }
-                                      role="heading"
                                       style={
                                         Array [
                                           Object {
@@ -1485,7 +1484,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
-                                              role="heading"
                                               style={
                                                 Array [
                                                   Object {
@@ -1810,7 +1808,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
-                                              role="heading"
                                               style={
                                                 Array [
                                                   Object {

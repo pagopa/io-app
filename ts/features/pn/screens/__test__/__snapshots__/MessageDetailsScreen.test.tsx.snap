@@ -825,7 +825,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "lineHeight": 25,
                                         }
                                       }
-                                      role="heading"
                                       style={
                                         Array [
                                           Object {
@@ -1431,7 +1430,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "lineHeight": 25,
                                         }
                                       }
-                                      role="heading"
                                       style={
                                         Array [
                                           Object {
@@ -2076,7 +2074,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 25,
                                                 }
                                               }
-                                              role="heading"
                                               style={
                                                 Array [
                                                   Object {
@@ -2401,7 +2398,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 25,
                                                 }
                                               }
-                                              role="heading"
                                               style={
                                                 Array [
                                                   Object {

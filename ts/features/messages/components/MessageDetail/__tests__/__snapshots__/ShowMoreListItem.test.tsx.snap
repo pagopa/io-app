@@ -1077,7 +1077,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -1670,7 +1669,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -2452,7 +2450,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -3302,7 +3299,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -4281,7 +4277,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -5396,7 +5391,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -5653,7 +5647,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -6175,7 +6168,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -7419,7 +7411,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
@@ -7676,7 +7667,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
-                                        role="heading"
                                         style={
                                           Array [
                                             Object {
