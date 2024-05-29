@@ -44,7 +44,7 @@ export const isPaymentsTransactionsEmptySelector = createSelector(
 
 export const isPaymentsSectionEmptySelector = createSelector(
   isPaymentsMethodsEmptySelector,
-  isPaymentsTransactionsEmptySelector,
+  isPaymentsLatestTransactionsEmptySelector,
   (isMethodsEmpty, isTransactionsEmpty) => isMethodsEmpty && isTransactionsEmpty
 );
 

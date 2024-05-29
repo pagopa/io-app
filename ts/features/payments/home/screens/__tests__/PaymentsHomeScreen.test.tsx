@@ -4,16 +4,14 @@ import configureMockStore from "redux-mock-store";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
-import { validTransaction } from "../../../../../__mocks__/paymentPayloads";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { IndexedById } from "../../../../../store/helpers/indexer";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { Transaction } from "../../../../../types/pagopa";
 import { NetworkError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsHomeScreen } from "../PaymentsHomeScreen";
+import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-events/TransactionListItem";
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
@@ -21,6 +19,15 @@ jest.mock("react-native-reanimated", () => ({
     duration: jest.fn()
   }
 }));
+
+const validTransaction: TransactionListItem = {
+  transactionId: "0e208420-19dc-490c-8f3f-5772b7249643",
+  payeeName: "Hessel, Muller and Kilback",
+  payeeTaxCode: "262700362",
+  amount: "246.53",
+  transactionDate: "2024-05-08T14:32:45.927Z",
+  isCart: true
+};
 
 const MOCK_WALLET: WalletInfo = {
   walletId: "1",
@@ -56,7 +63,7 @@ describe("PaymentsHomeScreen", () => {
 
   it("should render full empty screen content", () => {
     const { queryByTestId } = renderComponent({
-      transactions: pot.some({}),
+      transactions: pot.some([]),
       userMethods: pot.some({ wallets: [] })
     });
 
@@ -75,7 +82,7 @@ describe("PaymentsHomeScreen", () => {
 
   it("should render empty transactions content", () => {
     const { queryByTestId } = renderComponent({
-      transactions: pot.some({}),
+      transactions: pot.some([]),
       userMethods: pot.some({ wallets: [MOCK_WALLET, MOCK_WALLET] })
     });
 
@@ -94,7 +101,7 @@ describe("PaymentsHomeScreen", () => {
 
   it("should render empty methods content", () => {
     const { queryByTestId } = renderComponent({
-      transactions: pot.some({ [validTransaction.id]: validTransaction }),
+      transactions: pot.some([validTransaction]),
       userMethods: pot.some({ wallets: [] }),
       shouldShowAddMethodsBanner: true
     });
@@ -112,7 +119,7 @@ describe("PaymentsHomeScreen", () => {
 
   it("should not render empty methods content", () => {
     const { queryByTestId } = renderComponent({
-      transactions: pot.some({ [validTransaction.id]: validTransaction }),
+      transactions: pot.some([validTransaction]),
       userMethods: pot.some({ wallets: [] }),
       shouldShowAddMethodsBanner: false
     });
@@ -130,7 +137,7 @@ describe("PaymentsHomeScreen", () => {
 
   it("should render wallets and transactions content", () => {
     const { queryByTestId } = renderComponent({
-      transactions: pot.some({ [validTransaction.id]: validTransaction }),
+      transactions: pot.some([validTransaction]),
       userMethods: pot.some({ wallets: [MOCK_WALLET] }),
       shouldShowAddMethodsBanner: false
     });
@@ -153,18 +160,13 @@ const renderComponent = ({
   userMethods = pot.none,
   shouldShowAddMethodsBanner = true
 }: {
-  transactions?: pot.Pot<IndexedById<Transaction>, Error>;
+  transactions?: pot.Pot<ReadonlyArray<TransactionListItem>, Error>;
   userMethods?: pot.Pot<Wallets, NetworkError>;
   shouldShowAddMethodsBanner?: boolean;
 }) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const state: GlobalState = _.merge(null, globalState, {
-    wallet: {
-      transactions: {
-        transactions
-      }
-    },
     features: {
       payments: {
         wallet: {
@@ -172,6 +174,9 @@ const renderComponent = ({
         },
         home: {
           shouldShowAddMethodsBanner
+        },
+        bizEventsTransaction: {
+          latestTransactions: transactions
         }
       }
     }
