@@ -24,12 +24,14 @@ jest.mock("../../../../store/hooks", () => ({
 }));
 
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
-      navigate: mockNavigate
+      navigate: mockNavigate,
+      replace: mockReplace
     }),
     useRoute: () => ({
       params: {
@@ -109,7 +111,7 @@ describe("ActivateNfcScreen", () => {
 
       fireEvent.press(secondaryActionButton);
 
-      expect(mockNavigate).toHaveBeenCalledWith(ROUTES.CIE_CARD_READER_SCREEN, {
+      expect(mockReplace).toHaveBeenCalledWith(ROUTES.CIE_CARD_READER_SCREEN, {
         ciePin: "123456",
         authorizationUri: "https://example.com"
       });
