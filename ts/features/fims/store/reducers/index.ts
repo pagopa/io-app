@@ -3,14 +3,14 @@ import * as O from "fp-ts/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { HttpClientSuccessResponse } from "../../__mocks__/mockFIMSCallbacks";
 import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
+import { ConsentData } from "../../types";
 export type FimsState = {
   ctaUrl?: string;
-  consentsData: pot.Pot<HttpClientSuccessResponse, Error>;
+  consentsData: pot.Pot<ConsentData, Error>;
   errorState: O.Option<Error>;
 };
 
