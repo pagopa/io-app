@@ -26,6 +26,7 @@ import CieExtendedApduNotSupportedScreen from "../screens/authentication/cie/Cie
 import CieWrongCardScreen from "../screens/authentication/cie/CieWrongCardScreen";
 import CieAuthErrorScreen from "../screens/authentication/cie/CieAuthErrorScreen";
 import UnlockAccessScreen from "../screens/authentication/UnlockAccessScreen";
+import ActivateNfcScreen from "../screens/authentication/cie/ActivateNfcScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -173,6 +174,12 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.CIE_NOT_SUPPORTED}
         component={CieNotSupported}
+      />
+
+      <Stack.Screen
+        options={{ headerShown: true }}
+        name={ROUTES.CIE_ACTIVATE_NFC_SCREEN}
+        component={ActivateNfcScreen}
       />
     </Stack.Group>
   </Stack.Navigator>
