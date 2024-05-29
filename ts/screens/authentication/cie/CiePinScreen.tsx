@@ -9,7 +9,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation
+} from "@react-navigation/native";
 import React, {
   useCallback,
   useContext,
@@ -170,15 +174,11 @@ const CiePinScreen = () => {
     }
   }, [pin, showModal]);
 
-  const a11yFocusRef = useRef<boolean>(false);
-
-  useFocusEffect(() => {
-    if (!a11yFocusRef.current) {
-      setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
-      // eslint-disable-next-line functional/immutable-data
-      a11yFocusRef.current = true;
-    }
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
+    }, [])
+  );
 
   const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
   const useCieUat = useSelector(isCieLoginUatEnabledSelector);
@@ -190,6 +190,7 @@ const CiePinScreen = () => {
   });
 
   const headerHeight = useHeaderHeight();
+  const isFocused = useIsFocused();
 
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
@@ -228,7 +229,8 @@ const CiePinScreen = () => {
                 )}
                 onValueChange={setPin}
                 length={CIE_PIN_LENGTH}
-                autoFocus
+                autoFocus={isFocused}
+                key={isFocused ? "focused" : "unfocused"}
               />
               <VSpacer size={24} />
               <Banner
