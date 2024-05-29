@@ -119,7 +119,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
-          backgroundColor: "dark",
           type: "singleAction",
           firstAction: helpAction
         };

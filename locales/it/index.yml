@@ -279,6 +279,7 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: Immagine del codice a barre del tuo codice fiscale
       unavailable: Non disponibile
       preview:
         label: Anteprima del tuo codice fiscale
@@ -291,8 +292,8 @@ profile:
         hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
+    description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
-    content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
     facSimile: FAC-SIMILE
   sections:
     spid: PROFILO SPID
@@ -459,6 +460,10 @@ profile:
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Abilita ambiente di test per IT Wallet
+    banner:
+      title: Vuoi visualizzare il tuo Codice Fiscale?
+      action: Vai alla sezione “I tuoi dati”
+      close: Chiudi il banner e non mostrarlo più
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -466,6 +471,7 @@ profile:
       email: Indirizzo email
       need_validate: Da validare
       nameSurname: Nome e cognome
+      fiscalCode: Codice Fiscale
     email:
       contextualHelpTitle: Come gestire la tua mail
       contextualHelpContent: !include profile/profile_data_email_address.md
@@ -623,7 +629,7 @@ authentication:
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      apduNotSupported: "Il sistema operativo non supporta la lettura della tua carta di identità elettronica. Per maggiori informazioni, contatta il produttore del tuo dispositivo."
+      apduNotSupported: "Il sistema operativo non supporta la lettura della Carta di Identità Elettronica. Prova ad usare SPID per entrare in app."
       retry: Riprova
       noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -659,21 +665,20 @@ authentication:
       content: !include cie/temporary_blocked_cie.md
       button: "Scarica / Apri CieID"
     card:
-      title: Appoggia la carta
-      titleiOS: Tieni ferma la carta
-      headerTitle: Entra con CIE
-      layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-      layCardMessageHeaderiOS: Il sensore è posizionato nella parte alta del dispositivo.
+      title: Appoggia la CIE sul retro del dispositivo
+      titleiOS: Appoggia la CIE sul dispositivo, in alto      
+      layCardMessageHeader: Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
+      layCardMessageHeaderiOS: Se la carta non viene letta, spostala in punti diversi e attendi qualche secondo.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
-      cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
-      readerCardTitle: Tieni ferma la carta per qualche secondo
+      cieCardValid: Lettura completata!
+      readerCardTitle: Tienila ferma per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
       iosAlert:
         readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
         moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
         readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
-        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
+        readingSuccess: "Lettura completata"
         invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         tagLost: Hai rimosso la carta troppo presto.
         cardLocked: Il PIN della CIE è stato bloccato
@@ -681,16 +686,15 @@ authentication:
         wrongPin2AttemptLeft: Il PIN non è corretto
         genericError: Si è verificato un errore imprevisto. Riprova.
       error:
-        readerCardLostTitle: Avvicina nuovamente la carta
-        readerCardLostTitleiOS: Hai rimosso la carta troppo presto
-        readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
-        readerCardLostHeaderiOS: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta. Riprova di nuovo.
-        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+        readerCardLostTitle: Hai rimosso la carta troppo presto                
+        onTagLost: Appoggia di nuovo la carta sul retro del dispositivo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
         generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta
-        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica.
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+        genericErrorTitle: Non siamo riusciti a recuperare i dati dalla carta
+        genericErrorSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova.
     dataUsageConsent:
       retryCTA: Entra
   spid: SPID
