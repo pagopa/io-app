@@ -17,7 +17,6 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import { isNewServicesEnabled } from "../../config";
 import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
@@ -110,7 +109,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
-        if (isDesignSystemEnabled && isNewServicesEnabled) {
+        if (isDesignSystemEnabled) {
           return {
             title: I18n.t("services.title"),
             type: "threeActions",
