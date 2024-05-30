@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React, { ComponentProps, useState } from "react";
+import React, { ComponentProps, forwardRef, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import {
   BackProps,
@@ -32,6 +32,7 @@ type Props = {
   goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
   canGoback?: boolean;
+  excludeEndContentMargin?: boolean;
 } & SupportRequestParams;
 
 /**
@@ -39,7 +40,7 @@ type Props = {
  * the user scrolls. It also handles the contextual help and the FAQ.
  * Use of LargeHeader naming is due to similar behavior offered by the native iOS API.
  */
-export const IOScrollViewWithLargeHeader = React.forwardRef<View, Props>(
+export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
   (
     {
       children,
@@ -51,7 +52,8 @@ export const IOScrollViewWithLargeHeader = React.forwardRef<View, Props>(
       contextualHelp,
       contextualHelpMarkdown,
       faqCategories,
-      headerActionsProp = {}
+      headerActionsProp = {},
+      excludeEndContentMargin
     },
     ref
   ) => {
@@ -89,6 +91,7 @@ export const IOScrollViewWithLargeHeader = React.forwardRef<View, Props>(
         headerConfig={headerProps}
         snapOffset={titleHeight}
         includeContentMargins={false}
+        excludeEndContentMargin={excludeEndContentMargin}
       >
         <View
           ref={ref}
