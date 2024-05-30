@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import {
   duplicateSetAndAdd,
   duplicateSetAndRemove,
+  emptyMessageArray,
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "..";
@@ -400,5 +401,11 @@ describe("duplicateSetAndRemove", () => {
     expect(outputSet.has(existingItem)).toBe(true);
     expect(inputSet.has(unmatchingItem)).toBe(false);
     expect(outputSet.has(unmatchingItem)).toBe(false);
+  });
+});
+
+describe("emptyMessageArray", () => {
+  it("should return an empty array", () => {
+    expect(emptyMessageArray).toStrictEqual([]);
   });
 });
