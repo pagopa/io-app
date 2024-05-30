@@ -13,16 +13,23 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
-import { FooterActions } from "../../../../components/ui/FooterActions";
+import {
+  FooterActions,
+  FooterActionsMeasurements
+} from "../../../../components/ui/FooterActions";
 
 export type PaymentsTransactionBizEventsPreviewScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
   "PAYMENT_TRANSACTION_BIZ_EVENTS_PREVIEW_SCREEN"
 >;
 
-const PREVIEW_OVERRIDED_MARGIN_TOP = -56;
-
 const PaymentsTransactionBizEventsPreviewScreen = () => {
+  const [footerActionsMeasurements, setfooterActionsMeasurements] =
+    React.useState<FooterActionsMeasurements>({
+      actionBlockHeight: 0,
+      safeBottomAreaHeight: 0
+    });
+
   const transactionReceiptPot = useIOSelector(
     walletTransactionsBizEventsReceiptPotSelector
   );
@@ -58,16 +65,26 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
     }
   };
 
+  const handleFooterActionsMeasurements = (
+    values: FooterActionsMeasurements
+  ) => {
+    setfooterActionsMeasurements(values);
+  };
+
   if (pot.isSome(transactionReceiptPot)) {
     return (
-      <View style={{ ...IOStyles.flex }}>
+      <View
+        style={{
+          ...IOStyles.flex,
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+        }}
+      >
         <Pdf
           enablePaging
           fitPolicy={0}
           style={{
             flexGrow: 1,
-            backgroundColor: IOColors["grey-100"],
-            marginTop: PREVIEW_OVERRIDED_MARGIN_TOP
+            backgroundColor: IOColors["grey-100"]
           }}
           source={{
             uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`,
@@ -75,6 +92,7 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
           }}
         />
         <FooterActions
+          onMeasure={handleFooterActionsMeasurements}
           actions={{
             type: "SingleButton",
             primary: {
