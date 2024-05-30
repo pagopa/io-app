@@ -76,6 +76,8 @@ type IOScrollView = WithTestID<
     snapOffset?: number;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
+    /* Don't include end content margin */
+    excludeEndContentMargin?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
   }>
@@ -119,6 +121,7 @@ export const IOScrollView = ({
   actions,
   snapOffset,
   excludeSafeAreaMargins = false,
+  excludeEndContentMargin = false,
   includeContentMargins = true,
   debugMode = false,
   testID
@@ -258,7 +261,9 @@ export const IOScrollView = ({
         snapToEnd={false}
         decelerationRate="normal"
         contentContainerStyle={{
-          paddingBottom: actions
+          paddingBottom: excludeEndContentMargin
+            ? 0
+            : actions
             ? safeBottomAreaHeight
             : bottomMargin + contentEndMargin,
           paddingHorizontal: includeContentMargins
