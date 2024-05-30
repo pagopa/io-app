@@ -7,9 +7,10 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import WebView from "react-native-webview";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useIODispatch } from "../../../store/hooks";
 import {
   loginFailure,
@@ -155,19 +156,21 @@ const CieConsentDataUsageScreen = () => {
   }
   if (!hasError) {
     return (
-      <WebView
-        testID="webview-cie-test"
-        androidCameraAccessDisabled={true}
-        androidMicrophoneAccessDisabled={true}
-        textZoom={100}
-        originWhitelist={originSchemasWhiteList}
-        source={{ uri: decodeURIComponent(cieConsentUri) }}
-        javaScriptEnabled={true}
-        onShouldStartLoadWithRequest={handleShouldStartLoading}
-        renderLoading={() => <LoaderComponent />}
-        onError={handleWebViewError}
-        onHttpError={handleHttpError}
-      />
+      <SafeAreaView style={IOStyles.flex}>
+        <WebView
+          testID="webview-cie-test"
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
+          textZoom={100}
+          originWhitelist={originSchemasWhiteList}
+          source={{ uri: decodeURIComponent(cieConsentUri) }}
+          javaScriptEnabled={true}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+          renderLoading={() => <LoaderComponent />}
+          onError={handleWebViewError}
+          onHttpError={handleHttpError}
+        />
+      </SafeAreaView>
     );
   }
   return null;

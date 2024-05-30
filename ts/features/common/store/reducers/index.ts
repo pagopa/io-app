@@ -40,6 +40,10 @@ import {
   WhatsNewState,
   whatsNewPersistor
 } from "../../../whatsnew/store/reducers";
+import {
+  ProfileSettingsState,
+  profileSettingsReducerPersistor
+} from "../../../profileSettings/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -60,6 +64,7 @@ export type FeaturesState = {
   wallet: WalletState;
   fims: FimsState;
   itWallet: ItWalletState;
+  profileSettings: ProfileSettingsState & PersistPartial;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -81,6 +86,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   wallet: walletReducer,
   fims: fimsReducer,
   itWallet: itWalletReducer
+  profileSettings: profileSettingsReducerPersistor
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

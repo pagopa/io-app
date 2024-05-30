@@ -12,10 +12,10 @@ import I18n from "../../i18n";
 import { navigateToServicePreferenceScreen } from "../../store/actions/navigation";
 import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isNewWalletSectionEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
+import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -72,7 +72,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
 
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
 
   const requestParams = useMemo(
@@ -119,7 +119,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
-          backgroundColor: "dark",
           type: "singleAction",
           firstAction: helpAction
         };

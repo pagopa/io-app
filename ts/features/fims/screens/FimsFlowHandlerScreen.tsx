@@ -69,18 +69,19 @@ const FimsFlowSuccessBody = () => {
   if (consents === undefined) {
     return <LoadingScreenContent contentTitle="loading..." />;
   }
-  // TODO:: will be handled somewhere else
-  const parsedGrants: Array<string> = JSON.parse(consents.body).grants;
 
   return (
     <OperationResultScreenContent
-      title={`grant ${parsedGrants.join(",")} ?`}
+      title={`grant ${consents.claims
+        .map(item => item.display_name)
+        .join(",")} ?`}
       action={{
         label: "accept",
         onPress: () =>
           dispatch(
             fimsGetRedirectUrlAndOpenIABAction.request({
-              acceptUrl: consents.headers["confirm-url"]
+              // eslint-disable-next-line no-underscore-dangle
+              acceptUrl: consents._links.confirm.href
             })
           )
       }}
