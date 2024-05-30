@@ -633,9 +633,18 @@ authentication:
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      enableNfcTitle: Enable NFC
-      enableNfcHeader: Check NFC
-      enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+      title: Enable NFC to continue
+      subtitle: To enable IO to read your CIE, activate NFC from your device's settings.
+      listItemTitle: "How to do it::"
+      action: Open Settings
+      listItemLabel1: Step 1
+      listItemValue1: Open 'Settings' 
+      listItemLabel2: Step 2
+      listItemValue2: Search for ‘NFC’ functionality
+      listItemLabel3: Step 3
+      listItemValue3: Turn it on
+      activeNfcAlert: Activate NFC to enable IO to read your CIE!
+      activeNFCAlertButton: Enable NFC
     pin:
       accessibility:
         placeholderLabel: PIN of Electronic Identity Card
@@ -1709,6 +1718,7 @@ wallet:
       header: Seleziona un metodo
       yourMethods: Saved
       otherMethods: All methods
+      latestMethod: Recently used
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
