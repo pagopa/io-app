@@ -44,9 +44,9 @@ export const messageViewPageIndexToListCategory = (
 
 export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
   I18n.t("messages.accessibility.message.description", {
-    newMessage: message.isRead
-      ? I18n.t("messages.accessibility.message.read")
-      : I18n.t("messages.accessibility.message.unread"),
+    newMessage: I18n.t(
+      `messages.accessibility.message.${message.isRead ? "read" : "unread"}`
+    ),
     organizationName: message.organizationName,
     serviceName: message.serviceName,
     subject: message.title,
