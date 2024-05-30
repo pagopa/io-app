@@ -102,10 +102,6 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     }, [serviceId, dispatch])
   );
 
-  if (!service) {
-    return null;
-  }
-
   if (isErrorService) {
     return <ServiceDetailsFailure serviceId={serviceId} />;
   }
@@ -122,6 +118,10 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         </View>
       </ServiceDetailsScreenComponent>
     );
+  }
+
+  if (!service) {
+    return null;
   }
 
   const handlePressCta = (cta: CTA) => handleCtaAction(cta, linkTo);
