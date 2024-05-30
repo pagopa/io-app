@@ -1,16 +1,10 @@
-import {
-  ButtonLink,
-  ButtonSolid,
-  ContentWrapper,
-  IOColors,
-  VSpacer,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -45,6 +39,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
 
     return (
       <IOScrollViewWithLargeHeader
+        excludeEndContentMargin
         title={{
           label: I18n.t("features.itWallet.issuance.credentialPreview.title", {
             credential: eid.displayData.title
@@ -60,27 +55,26 @@ export const ItwIssuanceEidPreviewScreen = () => {
         <View style={[styles.content, { backgroundColor }]}>
           <ItwCredentialClaimsList data={eid} />
         </View>
-        <ContentWrapper>
-          <VSpacer size={32} />
-          <ButtonSolid
-            label={I18n.t(
-              "features.itWallet.issuance.credentialPreview.actions.primary"
-            )}
-            icon="add"
-            iconPosition="end"
-            onPress={() => undefined}
-            fullWidth={true}
-          />
-          <VSpacer size={24} />
-          <View style={{ alignSelf: "center" }}>
-            <ButtonLink
-              label={I18n.t(
+        <FooterActions
+          fixed={false}
+          actions={{
+            type: "TwoButtons",
+            primary: {
+              icon: "add",
+              iconPosition: "end",
+              label: I18n.t(
+                "features.itWallet.issuance.credentialPreview.actions.primary"
+              ),
+              onPress: () => undefined
+            },
+            secondary: {
+              label: I18n.t(
                 "features.itWallet.issuance.credentialPreview.actions.secondary"
-              )}
-              onPress={() => undefined}
-            />
-          </View>
-        </ContentWrapper>
+              ),
+              onPress: () => undefined
+            }
+          }}
+        />
       </IOScrollViewWithLargeHeader>
     );
   };

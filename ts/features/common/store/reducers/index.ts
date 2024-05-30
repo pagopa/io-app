@@ -85,7 +85,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   }),
   wallet: walletReducer,
   fims: fimsReducer,
-  itWallet: itWalletReducer
+  itWallet: itWalletReducer,
   profileSettings: profileSettingsReducerPersistor
 });
 
