@@ -110,10 +110,6 @@ const DESIGN_SYSTEM_ROUTES = {
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
       title: "Pictograms"
-    },
-    ILLUSTRATIONS: {
-      route: "DESIGN_SYSTEM_LEGACY_ILLUSTRATIONS",
-      title: "Illustrations"
     }
   } as const
 } as const;
