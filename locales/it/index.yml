@@ -3782,3 +3782,10 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
+FIMS: 
+  loadingScreen:
+    consents:
+      title: "Attendi qualche secondo"
+    in-app-browser:
+      title: "Ti stiamo indirizzando al servizio"
+      subtitle: "Attendi qualche secondo"

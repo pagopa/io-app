@@ -30,7 +30,6 @@ import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
-import { fimsCTAUrlSelector } from "../store/reducers";
 import { ConsentData } from "../types";
 
 export function* watchFimsSaga(): SagaIterator {
@@ -44,10 +43,12 @@ export function* watchFimsSaga(): SagaIterator {
   );
 }
 
-function* handleFimsGetConsentsList() {
+function* handleFimsGetConsentsList(
+  action: ActionType<typeof fimsGetConsentsListAction.request>
+) {
   const fimsToken = yield* select(fimsTokenSelector);
   const oidcProviderUrl = yield* select(fimsDomainSelector);
-  const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
+  const fimsCTAUrl = action.payload.ctaUrl;
 
   if (!fimsToken || !oidcProviderUrl || !fimsCTAUrl) {
     // TODO:: proper error handling
