@@ -3,6 +3,9 @@ import { buildEventProperties } from "../../../../utils/analytics";
 
 type ServiceBaseType = {
   service_name: string;
+} & InstitutionBaseType;
+
+type InstitutionBaseType = {
   organization_name: string;
 };
 
@@ -29,9 +32,8 @@ type SpecialServiceStatusChangedType = {
 } & ServiceBaseType;
 
 type InstitutionDetailsType = {
-  organization_name: string;
   sevices_count: number;
-};
+} & InstitutionBaseType;
 
 type ServiceSelectedType = {
   source: "featured_organization" | "featured_services";
@@ -39,7 +41,7 @@ type ServiceSelectedType = {
 
 type InstitutionSelectedType = {
   source: "featured_organization" | "main_list" | "search_list" | "recent_list";
-} & Omit<ServiceBaseType, "service_name">;
+} & InstitutionBaseType;
 
 type ServicesSearchStartType = {
   source: "bottom_link" | "header_icon";
