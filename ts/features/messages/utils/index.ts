@@ -10,7 +10,12 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { getExpireStatus } from "../../../utils/dates";
-import { PaymentData, UIMessageDetails, UIMessageId } from "../types";
+import {
+  PaymentData,
+  UIMessage,
+  UIMessageDetails,
+  UIMessageId
+} from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { getAmountFromPaymentAmount } from "../../../utils/payment";
@@ -119,3 +124,5 @@ export const duplicateSetAndRemove = <T>(inputSet: Set<T>, item: T) => {
   outputSet.delete(item);
   return outputSet;
 };
+
+export const emptyMessageArray: ReadonlyArray<UIMessage> = [];
