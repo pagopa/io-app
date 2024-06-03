@@ -30,6 +30,7 @@ import { GlobalState } from "../reducers/types";
 import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
 import { FimsActions } from "../../features/fims/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
+import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -109,6 +110,7 @@ export type Action =
   | NewServicesActions
   | FimsActions
   | ItwActions
+  | TrialSystemActions
   | ProfileSettingsActions;
 
 export type Dispatch = DispatchAPI<Action>;

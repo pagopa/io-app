@@ -3272,10 +3272,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.36.14":
-  version "1.36.14"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.36.14.tgz#bde36a531f1f9f302962d0bde8a440a1dbe3ca35"
-  integrity sha512-0Sgs31SfYKvHdaXeLoG+5wmI0ObfwYiFdQnkHF3r4LEHxWpkgvzknz2Ck/ZGA1Va/rnOf/rxCOUUc5uCmPE8nA==
+"@pagopa/io-app-design-system@1.37.1":
+  version "1.37.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.37.1.tgz#0a4d07004283533cb95824832dc8905d3c503a4d"
+  integrity sha512-DFV504qhIy0wY2xbhlgvk6QGByAbdnZk50SIecusOumA1tQ0zPzpaVCp6hnm96OykDtWF4QcFpm4PQlNzQTG5A==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3306,10 +3306,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.3.0.tgz#4181a53e36d4cd142b93ef133d3d227d9d360f96"
   integrity sha512-3H5CqJwpEYX14QNUhqbSizJBFBeIQRFv8Bw/46+YILTZpvCloVDjfSrPDsKNLZdC1d05wfUSTGGRncMQOB2kMg==
 
-"@pagopa/io-react-native-http-client@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.0.tgz#92d91d9c8d9f75f5dd303199cbe81b6e4c6316e0"
-  integrity sha512-tVHh3HJYZPV9at9Y7RBI9tOONxU8orOLQExd2Q9LNcyV8c8vjUj/VIYQWN159iETDIOR8QbSzvrlvldHxBLbpA==
+"@pagopa/io-react-native-http-client@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-http-client/-/io-react-native-http-client-1.0.2.tgz#8d92a7ea920f1fe01f5632ccb939bb7961392bd6"
+  integrity sha512-UVd0S8gV8RUf6ZlHhQDb2jvEyMlc+XQ76j44ewRiP4xGNDX9QmYGfr+QNUmg0PwJ55OoeH6j5lbWiW2Mh1QCtQ==
   dependencies:
     auto-changelog "^2.4.0"
 
@@ -3781,6 +3781,14 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.1.0.tgz#0e81ce56b4883b4b2a3001ebe1ab298b84237204"
   integrity sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
+
+"@shopify/flash-list@~1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.4.3.tgz#b7a4fe03d64f3c5ce9646859b49b9d95307f203d"
+  integrity sha512-jtIReAbwWzYBV0dQ6Io9wBX+pD0C4qQFMrb5/fkEvX8PYDgBl5KRYvpfr9WLLj8CV2Jsn1X0mYOsB+ysWrI/8g==
+  dependencies:
+    recyclerlistview "4.2.0"
+    tslib "2.4.0"
 
 "@sideway/address@^4.1.0":
   version "4.1.2"
@@ -11565,6 +11573,11 @@ lodash._reinterpolate@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
 
+lodash.debounce@4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
+
 lodash.find@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.find/-/lodash.find-4.6.0.tgz#cb0704d47ab71789ffa0de8b97dd926fb88b13b1"
@@ -14147,7 +14160,7 @@ prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@*:
+prop-types@*, prop-types@15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -14999,6 +15012,15 @@ rechoir@^0.6.2:
   integrity sha1-hSBLVNuoLVdC4oyWdW70OvUOM4Q=
   dependencies:
     resolve "^1.1.6"
+
+recyclerlistview@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-4.2.0.tgz#a140149aaa470c9787a1426452651934240d69ef"
+  integrity sha512-uuBCi0c+ggqHKwrzPX4Z/mJOzsBbjZEAwGGmlwpD/sD7raXixdAbdJ6BTcAmuWG50Cg4ru9p12M94Njwhr/27A==
+  dependencies:
+    lodash.debounce "4.0.8"
+    prop-types "15.8.1"
+    ts-object-utils "0.0.5"
 
 redent@^1.0.0:
   version "1.0.0"
@@ -16812,6 +16834,11 @@ ts-node@^7.0.1:
     source-map-support "^0.5.6"
     yn "^2.0.0"
 
+ts-object-utils@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/ts-object-utils/-/ts-object-utils-0.0.5.tgz#95361cdecd7e52167cfc5e634c76345e90a26077"
+  integrity sha512-iV0GvHqOmilbIKJsfyfJY9/dNHCs969z3so90dQWsO1eMMozvTpnB1MEaUbb3FYtZTGjv5sIy/xmslEz0Rg2TA==
+
 ts-toolbelt@^6.15.1:
   version "6.15.5"
   resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.15.5.tgz#cb3b43ed725cb63644782c64fbcad7d8f28c0a83"
@@ -16826,6 +16853,11 @@ tsconfig-paths@^3.12.0:
     json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
+
+tslib@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 tslib@^1.11.1:
   version "1.14.1"

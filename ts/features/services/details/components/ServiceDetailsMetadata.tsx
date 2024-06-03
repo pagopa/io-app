@@ -23,7 +23,7 @@ type MetadataActionListItem = {
 type MetadataInfoListItem = {
   kind: "ListItemInfo";
   condition?: boolean;
-} & Omit<ListItemInfo, "accessibilityLabel">;
+} & Omit<ListItemInfo, "accessibilityLabel" | "paymentLogoIcon">;
 
 type MetadataInfoCopyListItem = {
   kind: "ListItemInfoCopy";
@@ -132,7 +132,6 @@ export const ServiceDetailsMetadata = ({
       testID: "service-details-metadata-address",
       value: address
     },
-
     {
       kind: "ListItemInfo",
       icon: "pinOff",

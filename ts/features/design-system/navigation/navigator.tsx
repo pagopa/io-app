@@ -41,7 +41,6 @@ import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithL
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
-import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
@@ -62,6 +61,7 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
+import DSListItemScreen from "../core/DSListItemScreen";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DesignSystemParamsList } from "./params";
@@ -401,6 +401,12 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.LIST_ITEM_SCREEN.route}
+          component={DSListItemScreen}
+          options={{ headerShown: true }}
+        />
+
+        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
           component={DSBonusCardScreen}
         />
@@ -510,13 +516,6 @@ export const DesignSystemNavigator = () => {
           component={DSLegacyPictograms}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
-          }}
-        />
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}
-          component={DSLegacyIllustrations}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.title
           }}
         />
       </Stack.Navigator>

@@ -1,13 +1,24 @@
+import {
+  HttpCallConfig,
+  HttpClientFailureResponse,
+  HttpClientResponse,
+  HttpClientSuccessResponse,
+  nativeRequest,
+  setCookie
+} from "@pagopa/io-react-native-http-client";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/Either";
+import { identity, pipe } from "fp-ts/lib/function";
 import { URL } from "react-native-url-polyfill";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
+import { mixpanelTrack } from "../../../mixpanel";
 import NavigationService from "../../../navigation/NavigationService";
 import { fimsTokenSelector } from "../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
+import { buildEventProperties } from "../../../utils/analytics";
 import { LollipopConfig } from "../../lollipop";
 import { generateKeyInfo } from "../../lollipop/saga";
 import {
@@ -16,18 +27,10 @@ import {
 } from "../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import {
-  HttpCallConfig,
-  HttpClientFailureResponse,
-  HttpClientResponse,
-  HttpClientSuccessResponse,
-  mockHttpNativeCall,
-  mockSetNativeCookie
-} from "../__mocks__/mockFIMSCallbacks";
-import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
-import { fimsCTAUrlSelector } from "../store/reducers";
+import { ConsentData } from "../types";
 
 export function* watchFimsSaga(): SagaIterator {
   yield* takeLatest(
@@ -40,39 +43,57 @@ export function* watchFimsSaga(): SagaIterator {
   );
 }
 
-function* handleFimsGetConsentsList() {
+function* handleFimsGetConsentsList(
+  action: ActionType<typeof fimsGetConsentsListAction.request>
+) {
   const fimsToken = yield* select(fimsTokenSelector);
   const oidcProviderUrl = yield* select(fimsDomainSelector);
-  const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
+  const fimsCTAUrl = action.payload.ctaUrl;
 
   if (!fimsToken || !oidcProviderUrl || !fimsCTAUrl) {
     // TODO:: proper error handling
-    yield* put(
-      fimsGetConsentsListAction.failure(new Error("missing FIMS data"))
+    logToMixPanel(
+      `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderUrl: ${!!oidcProviderUrl}, fimsCTAUrl: ${!!fimsCTAUrl}`
     );
+
+    yield* put(fimsGetConsentsListAction.failure("missing FIMS data"));
     return;
   }
 
-  yield* call(
-    mockSetNativeCookie,
-    oidcProviderUrl,
-    "_io_fims_token",
-    fimsToken
-  );
+  yield* call(setCookie, oidcProviderUrl, "/", "_io_fims_token", fimsToken);
 
-  const getConsentsResult = yield* call(mockHttpNativeCall, {
+  // TODO:: use with future BE lang implementation -- const lang = getLocalePrimaryWithFallback();
+
+  const getConsentsResult = yield* call(nativeRequest, {
     verb: "get",
     followRedirects: true,
-    url: fimsCTAUrl
+    url: fimsCTAUrl,
+    headers: {
+      "Accept-Language": "it-IT"
+    }
   });
 
   if (getConsentsResult.type === "failure") {
-    yield* put(
-      fimsGetConsentsListAction.failure(new Error("consent data fetch error"))
+    logToMixPanel(
+      `consent data fetch error: ${JSON.stringify(getConsentsResult)}`
     );
+    yield* put(fimsGetConsentsListAction.failure("consent data fetch error"));
     return;
   }
-  yield* put(fimsGetConsentsListAction.success(getConsentsResult));
+
+  yield pipe(
+    getConsentsResult.body,
+    E.tryCatchK(JSON.parse, identity),
+    E.map(ConsentData.decode),
+    E.flatten,
+    E.foldW(
+      () => {
+        logToMixPanel(`could not decode: ${getConsentsResult.body}`);
+        return put(fimsGetConsentsListAction.failure("could not decode"));
+      },
+      decodedConsents => put(fimsGetConsentsListAction.success(decodedConsents))
+    )
+  );
 }
 
 // note: IAB => InAppBrowser
@@ -81,48 +102,60 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
 ) {
   const oidcProviderDomain = yield* select(fimsDomainSelector);
   if (!oidcProviderDomain) {
+    logToMixPanel(`missing FIMS, domain is ${oidcProviderDomain}`);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("missing FIMS domain")
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure("missing FIMS domain")
     );
     return;
   }
-  const { acceptUrl } = action.payload;
+  const maybeAcceptUrl = action.payload.acceptUrl;
+
+  const acceptUrl = buildAbsoluteUrl(maybeAcceptUrl ?? "", oidcProviderDomain);
   if (!acceptUrl) {
+    logToMixPanel(
+      `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`
+    );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("unable to accept grants: invalid URL")
+        "unable to accept grants: invalid URL"
       )
     );
     return;
   }
 
-  const rpUrl = yield* call(
+  const rpRedirectResponse = yield* call(
     recurseUntilRPUrl,
     { url: acceptUrl, verb: "post" },
     oidcProviderDomain
   );
   // --------------- lolliPoP -----------------
 
-  if (rpUrl.type === "failure") {
+  if (rpRedirectResponse.type === "failure") {
+    logToMixPanel(
+      `could not get RelyingParty redirect URL, ${JSON.stringify(
+        rpRedirectResponse
+      )}`
+    );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("could not get RelyingParty redirect URL")
+        "could not get RelyingParty redirect URL"
       )
     );
     return;
   }
-  const relyingPartyRedirectUrl = rpUrl.headers.Location;
+  const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
 
   const [authCode, lollipopNonce] = getQueryParamsFromUrlString(
     relyingPartyRedirectUrl
   );
 
   if (!authCode || !lollipopNonce) {
+    logToMixPanel(
+      `could not extract auth data from RelyingParty URL, auth code: ${!!authCode}, nonce: ${!!lollipopNonce}`
+    );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("could not extract auth data from RelyingParty URL")
+        "could not extract auth data from RelyingParty URL"
       )
     );
     return;
@@ -149,16 +182,17 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   );
 
   if (E.isLeft(lollipopEither)) {
+    logToMixPanel(`could not sign request with LolliPoP`);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("could not sign request with LolliPoP")
+        "could not sign request with LolliPoP"
       )
     );
     return;
   }
   const lollipopInit = lollipopEither.right;
 
-  const inAppBrowserUrl = yield* call(mockHttpNativeCall, {
+  const inAppBrowserUrlResponse = yield* call(nativeRequest, {
     verb: "get",
     url: relyingPartyRedirectUrl,
     headers: lollipopInit.headers as Record<string, string>,
@@ -166,14 +200,22 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   });
 
   const inAppBrowserRedirectUrl = extractValidRedirect(
-    inAppBrowserUrl,
+    inAppBrowserUrlResponse,
     relyingPartyRedirectUrl
   );
 
   if (!inAppBrowserRedirectUrl) {
+    logToMixPanel(
+      `IAB url call failed or without a valid redirect, code: ${
+        inAppBrowserUrlResponse.type === "failure"
+          ? // eslint-disable-next-line sonarjs/no-nested-template-literals
+            `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
+          : inAppBrowserUrlResponse.status
+      }`
+    );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("IAB url call failed or without a valid redirect")
+        "IAB url call failed or without a valid redirect"
       )
     );
     return;
@@ -201,7 +243,7 @@ const nonThrowingLollipopRequestInit = async (
 
 interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
   headers: {
-    Location: string;
+    location: string;
   };
 }
 
@@ -210,17 +252,10 @@ const isValidRedirectResponse = (
 ): res is SuccessResponseWithLocationHeader =>
   res.type === "success" &&
   isRedirect(res.status) &&
-  !!res.headers.Location &&
-  res.headers.Location.trim().length > 0;
+  !!res.headers.location &&
+  res.headers.location.trim().length > 0;
 
-const extractValidRedirect = (
-  data: HttpClientResponse,
-  originalRequestUrl: string
-) => {
-  if (!isValidRedirectResponse(data)) {
-    return undefined;
-  }
-  const redirect = data.headers.Location;
+const buildAbsoluteUrl = (redirect: string, originalRequestUrl: string) => {
   try {
     const redirectUrl = new URL(redirect);
     return redirectUrl.href;
@@ -239,6 +274,14 @@ const extractValidRedirect = (
   }
 };
 
+const extractValidRedirect = (
+  data: HttpClientResponse,
+  originalRequestUrl: string
+) =>
+  isValidRedirectResponse(data)
+    ? buildAbsoluteUrl(data.headers.location, originalRequestUrl)
+    : undefined;
+
 const getQueryParamsFromUrlString = (url: string) => {
   try {
     const constructedUrl = new URL(url);
@@ -256,7 +299,7 @@ const recurseUntilRPUrl = async (
   httpClientConfig: HttpCallConfig,
   oidcDomain: string
 ): Promise<SuccessResponseWithLocationHeader | HttpClientFailureResponse> => {
-  const res = await mockHttpNativeCall({
+  const res = await nativeRequest({
     ...httpClientConfig,
     followRedirects: false
   });
@@ -271,7 +314,8 @@ const recurseUntilRPUrl = async (
     const response: HttpClientFailureResponse = {
       code: res.status,
       type: "failure",
-      message: `malformed HTTP redirect response, location header value: ${res.headers.Location}`
+      message: `malformed HTTP redirect response, location header value: ${res.headers.location}`,
+      headers: res.headers
     };
     return response;
   }
@@ -285,12 +329,19 @@ const recurseUntilRPUrl = async (
   } else {
     return await recurseUntilRPUrl(
       {
+        ...httpClientConfig,
         verb: "get",
         url: redirectUrl,
-        followRedirects: false,
-        headers: httpClientConfig.headers
+        followRedirects: false
       },
       oidcDomain
     );
   }
+};
+
+const logToMixPanel = (toLog: string) => {
+  void mixpanelTrack(
+    "FIMS_TECH_TEMP_ERROR",
+    buildEventProperties("TECH", undefined, { message: toLog })
+  );
 };

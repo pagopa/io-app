@@ -56,7 +56,7 @@ const BonusCardContent = (props: BonusCard) => {
     <View style={styles.content} testID="BonusCardContentTestID">
       {!hideLogo && (
         <>
-          <Avatar size="medium" shape="square" logoUri={logoUri} />
+          <Avatar size="medium" logoUri={logoUri} />
           <VSpacer size={16} />
         </>
       )}

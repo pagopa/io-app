@@ -432,6 +432,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -2526,6 +2527,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
