@@ -6,3 +6,4 @@
 /ios/ItaliaApp/it.lproj/ @pagopa/io-app @thisisjp
 /ios/ItaliaApp/en.lproj/ @pagopa/io-app @thisisjp
 /ts/features/design-system @pagopa/io-app @dmnplb
+/ts/components/ui @pagopa/io-app @dmnplb

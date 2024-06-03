@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
-import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodManagementType";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
+import { isMethodOnboardable } from "../../utils";
 
 const walletOnboardingSelector = (state: GlobalState) =>
   state.features.payments.onboarding;
@@ -20,13 +19,7 @@ export const selectPaymentOnboardingMethods = createSelector(
   onboarding =>
     pot.map(
       onboarding.paymentMethods,
-      ({ paymentMethods }) =>
-        paymentMethods?.filter(
-          method =>
-            method.methodManagement ===
-              PaymentMethodManagementTypeEnum.ONBOARDABLE &&
-            method.status === PaymentMethodStatusEnum.ENABLED
-        ) ?? []
+      ({ paymentMethods }) => paymentMethods?.filter(isMethodOnboardable) ?? []
     )
 );
 

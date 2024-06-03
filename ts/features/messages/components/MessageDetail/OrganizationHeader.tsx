@@ -64,7 +64,7 @@ export const OrganizationHeader = ({
         </LabelSmall>
       </View>
       <View style={styles.itemAvatar}>
-        <Avatar logoUri={logoUri} size="small" shape="circle" />
+        <Avatar logoUri={logoUri} size="small" />
       </View>
     </View>
   );

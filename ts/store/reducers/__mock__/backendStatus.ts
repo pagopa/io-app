@@ -281,6 +281,13 @@ export const baseRawBackendStatus: BackendStatus = {
         ios: "0.0.0.0"
       }
     },
+    newPaymentSection: {
+      enabled: false,
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
+    },
     lollipop: {
       enabled: false,
       min_app_version: {
@@ -368,6 +375,13 @@ export const baseBackendConfig: Config = {
     }
   },
   idPay: {
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
+  },
+  newPaymentSection: {
+    enabled: false,
     min_app_version: {
       android: "0.0.0.0",
       ios: "0.0.0.0"

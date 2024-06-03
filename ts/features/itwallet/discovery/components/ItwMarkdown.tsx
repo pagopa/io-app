@@ -28,11 +28,11 @@ interface MarkdownParserProps {
 
 const rules = {
   paragraph: (node: ASTNode, children: Array<ReactNode>) => (
-    <>
-      <VSpacer />
-      <Body key={node.key}>{children}</Body>
-      <VSpacer />
-    </>
+    <React.Fragment key={node.key}>
+      <VSpacer size={16} />
+      <Body>{children}</Body>
+      <VSpacer size={16} />
+    </React.Fragment>
   ),
   strong: (node: ASTNode, children: Array<ReactNode>) => (
     <Body key={node.key} weight="Bold">

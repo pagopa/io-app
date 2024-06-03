@@ -20,7 +20,9 @@ import {
 } from "../../../fastLogin/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
-import itwReducer, { ItwState } from "../../../itwallet/common/store/reducers";
+import itWalletReducer, {
+  ItWalletState
+} from "../../../itwallet/common/store/reducers";
 import {
   NativeLoginState,
   nativeLoginReducer
@@ -38,6 +40,10 @@ import {
   WhatsNewState,
   whatsNewPersistor
 } from "../../../whatsnew/store/reducers";
+import {
+  ProfileSettingsState,
+  profileSettingsReducerPersistor
+} from "../../../profileSettings/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -57,7 +63,8 @@ export type FeaturesState = {
   services: ServicesState;
   wallet: WalletState;
   fims: FimsState;
-  itw: ItwState;
+  itWallet: ItWalletState;
+  profileSettings: ProfileSettingsState & PersistPartial;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -78,7 +85,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   }),
   wallet: walletReducer,
   fims: fimsReducer,
-  itw: itwReducer
+  itWallet: itWalletReducer,
+  profileSettings: profileSettingsReducerPersistor
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
