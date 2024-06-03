@@ -30,7 +30,6 @@ import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
-import { fimsCTAUrlSelector } from "../store/reducers";
 import { ConsentData } from "../types";
 
 export function* watchFimsSaga(): SagaIterator {
@@ -44,10 +43,12 @@ export function* watchFimsSaga(): SagaIterator {
   );
 }
 
-function* handleFimsGetConsentsList() {
+function* handleFimsGetConsentsList(
+  action: ActionType<typeof fimsGetConsentsListAction.request>
+) {
   const fimsToken = yield* select(fimsTokenSelector);
   const oidcProviderUrl = yield* select(fimsDomainSelector);
-  const fimsCTAUrl = yield* select(fimsCTAUrlSelector);
+  const fimsCTAUrl = action.payload.ctaUrl;
 
   if (!fimsToken || !oidcProviderUrl || !fimsCTAUrl) {
     // TODO:: proper error handling
@@ -55,9 +56,7 @@ function* handleFimsGetConsentsList() {
       `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderUrl: ${!!oidcProviderUrl}, fimsCTAUrl: ${!!fimsCTAUrl}`
     );
 
-    yield* put(
-      fimsGetConsentsListAction.failure(new Error("missing FIMS data"))
-    );
+    yield* put(fimsGetConsentsListAction.failure("missing FIMS data"));
     return;
   }
 
@@ -78,9 +77,7 @@ function* handleFimsGetConsentsList() {
     logToMixPanel(
       `consent data fetch error: ${JSON.stringify(getConsentsResult)}`
     );
-    yield* put(
-      fimsGetConsentsListAction.failure(new Error("consent data fetch error"))
-    );
+    yield* put(fimsGetConsentsListAction.failure("consent data fetch error"));
     return;
   }
 
@@ -92,9 +89,7 @@ function* handleFimsGetConsentsList() {
     E.foldW(
       () => {
         logToMixPanel(`could not decode: ${getConsentsResult.body}`);
-        return put(
-          fimsGetConsentsListAction.failure(new Error("could not decode"))
-        );
+        return put(fimsGetConsentsListAction.failure("could not decode"));
       },
       decodedConsents => put(fimsGetConsentsListAction.success(decodedConsents))
     )
@@ -109,9 +104,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
   if (!oidcProviderDomain) {
     logToMixPanel(`missing FIMS, domain is ${oidcProviderDomain}`);
     yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("missing FIMS domain")
-      )
+      fimsGetRedirectUrlAndOpenIABAction.failure("missing FIMS domain")
     );
     return;
   }
@@ -124,7 +117,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("unable to accept grants: invalid URL")
+        "unable to accept grants: invalid URL"
       )
     );
     return;
@@ -145,7 +138,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("could not get RelyingParty redirect URL")
+        "could not get RelyingParty redirect URL"
       )
     );
     return;
@@ -162,7 +155,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("could not extract auth data from RelyingParty URL")
+        "could not extract auth data from RelyingParty URL"
       )
     );
     return;
@@ -192,7 +185,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     logToMixPanel(`could not sign request with LolliPoP`);
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("could not sign request with LolliPoP")
+        "could not sign request with LolliPoP"
       )
     );
     return;
@@ -222,7 +215,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        new Error("IAB url call failed or without a valid redirect")
+        "IAB url call failed or without a valid redirect"
       )
     );
     return;

@@ -4,7 +4,9 @@ import React from "react";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
 import IdpsGrid from "../../../../components/IdpsGrid";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { randomOrderIdps } from "../../../../screens/authentication/IdpSelectionScreen";
 import { loadIdps } from "../../../../store/actions/content";
@@ -14,7 +16,10 @@ import {
   LocalIdpsFallback,
   idps as idpsFallback
 } from "../../../../utils/idps";
+import LoadingComponent from "../../../fci/components/LoadingComponent";
+import { getItwGenericMappedError } from "../../common/utils/itwErrorsUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { useItwIdpIdentification } from "../hooks/useItwIdpIdentification";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const navigation = useIONavigation();
@@ -26,26 +31,51 @@ export const ItwIdentificationIdpSelectionScreen = () => {
     randomOrderIdps(idpValue)
   );
 
+  const { startIdentification, ...identification } = useItwIdpIdentification();
+
   useFocusEffect(
     React.useCallback(() => {
       dispatch(loadIdps.request());
     }, [dispatch])
   );
 
-  const onIdpSelected = (_idp: LocalIdpsFallback) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
-    });
-  };
+  React.useEffect(() => {
+    if (identification.result) {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
+      });
+    }
+  }, [identification.result, navigation]);
+
+  if (identification.error) {
+    const mappedError = getItwGenericMappedError(() => navigation.goBack());
+    return <OperationResultScreenContent {...mappedError} />;
+  }
+
+  if (identification.isPending) {
+    return <LoadingView />;
+  }
 
   return (
-    <RNavScreenWithLargeHeader title={{ label: "" }}>
+    <IOScrollViewWithLargeHeader title={{ label: "" }}>
       <IdpsGrid
         idps={randomIdps.current}
-        onIdpSelected={onIdpSelected}
+        onIdpSelected={startIdentification}
         headerComponent={undefined}
         footerComponent={<VSpacer size={24} />}
       />
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
+};
+
+const LoadingView = () => {
+  const navigation = useIONavigation();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  });
+
+  return <LoadingComponent captionTitle={I18n.t("global.genericWaiting")} />;
 };
