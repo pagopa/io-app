@@ -29,7 +29,9 @@ import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
 import { isDevEnv } from "../../utils/environment";
+import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
+import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -165,7 +167,8 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
-  lollipop: lollipopPersistor
+  lollipop: lollipopPersistor,
+  trialSystem: trialSystemActivationStatusReducer
 });
 
 export function createRootReducer(
@@ -241,6 +244,13 @@ export function createRootReducer(
                         .securityAdviceAcknowledged._persist
                   }
                 }
+              },
+              profileSettings: {
+                ...profileSettingsReducerInitialState,
+                showProfileBanner:
+                  state.features.profileSettings.showProfileBanner,
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.features.profileSettings._persist
               },
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist

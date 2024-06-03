@@ -1,7 +1,6 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
-import { Alert } from "react-native";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
 import IdpsGrid from "../../../../components/IdpsGrid";
@@ -19,11 +18,12 @@ import {
 } from "../../../../utils/idps";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
 import { getItwGenericMappedError } from "../../common/utils/itwErrorsUtils";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwIdpIdentification } from "../hooks/useItwIdpIdentification";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
-  const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
@@ -41,9 +41,9 @@ export const ItwIdentificationIdpSelectionScreen = () => {
 
   React.useEffect(() => {
     if (identification.result) {
-      Alert.alert("Identification", identification.result, [
-        { text: "Ok", onPress: navigation.goBack }
-      ]);
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
+      });
     }
   }, [identification.result, navigation]);
 

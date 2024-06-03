@@ -4,15 +4,15 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { Platform } from "react-native";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
-import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import { LandingScreen } from "../screens/authentication/LandingScreen";
 import NewOptInScreen from "../screens/authentication/NewOptInScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
-import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
+import { CieCardReaderScreenWrapper } from "../screens/authentication/cie/CieCardReaderScreenWrapper";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
@@ -21,8 +21,12 @@ import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler
 import CieNotSupported from "../components/cie/CieNotSupported";
 import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
 import { isGestureEnabled } from "../utils/navigation";
+import CieUnexpectedErrorScreen from "../screens/authentication/cie/CieUnexpectedErrorScreen";
+import CieExtendedApduNotSupportedScreen from "../screens/authentication/cie/CieExtendedApduNotSupportedScreen";
+import CieWrongCardScreen from "../screens/authentication/cie/CieWrongCardScreen";
 import CieAuthErrorScreen from "../screens/authentication/cie/CieAuthErrorScreen";
 import UnlockAccessScreen from "../screens/authentication/UnlockAccessScreen";
+import ActivateNfcScreen from "../screens/authentication/cie/ActivateNfcScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -66,11 +70,6 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
-      name={ROUTES.AUTHENTICATION_CIE}
-      component={CardSelectionScreen}
-    />
-
-    <Stack.Screen
       name={ROUTES.AUTHENTICATION_IDP_LOGIN}
       component={IdpLoginScreen}
     />
@@ -103,7 +102,7 @@ const AuthenticationStackNavigator = () => (
 
     <Stack.Screen
       name={ROUTES.CIE_CARD_READER_SCREEN}
-      component={CieCardReaderScreen}
+      component={CieCardReaderScreenWrapper}
     />
 
     <Stack.Screen
@@ -115,12 +114,30 @@ const AuthenticationStackNavigator = () => (
       screenOptions={{
         gestureEnabled: false,
         headerShown: false,
-        ...TransitionPresets.ModalSlideFromBottomIOS
+        ...Platform.select({
+          ios: TransitionPresets.ModalSlideFromBottomIOS,
+          default: undefined
+        })
       }}
     >
       <Stack.Screen
         name={ROUTES.CIE_WRONG_PIN_SCREEN}
         component={CieWrongCiePinScreen}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CIE_UNEXPECTED_ERROR}
+        component={CieUnexpectedErrorScreen}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN}
+        component={CieExtendedApduNotSupportedScreen}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CIE_WRONG_CARD_SCREEN}
+        component={CieWrongCardScreen}
       />
 
       <Stack.Screen
@@ -157,6 +174,12 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.CIE_NOT_SUPPORTED}
         component={CieNotSupported}
+      />
+
+      <Stack.Screen
+        options={{ headerShown: true }}
+        name={ROUTES.CIE_ACTIVATE_NFC_SCREEN}
+        component={ActivateNfcScreen}
       />
     </Stack.Group>
   </Stack.Navigator>
