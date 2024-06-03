@@ -775,7 +775,7 @@ export const emptyListReasonSelector = (
     )
   );
 
-export const reasonFromMessagePageContainer = (
+const reasonFromMessagePageContainer = (
   container: MessagePage
 ): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
 

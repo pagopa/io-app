@@ -40,6 +40,7 @@ export const EmptyList = ({ category }: EmptyListProps) => {
       case "error":
         return {
           action: {
+            testID: "home_emptyList_retry",
             label: I18n.t("global.buttons.retry"),
             onPress: () =>
               dispatch(
