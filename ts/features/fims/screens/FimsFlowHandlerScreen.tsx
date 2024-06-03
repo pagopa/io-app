@@ -1,10 +1,13 @@
+import { IOStyles, LabelSmall } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
+import { View } from "react-native";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -17,8 +20,10 @@ import {
 } from "../store/actions";
 import {
   fimsConsentsDataSelector,
-  fimsErrorStateSelector
+  fimsErrorStateSelector,
+  fimsLoadingStateSelector
 } from "../store/reducers";
+import { ConsentData } from "../types";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -32,7 +37,8 @@ export const FimsFlowHandlerScreen = (
 ) => {
   const { ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
-  const errorState = useIOSelector(fimsErrorStateSelector);
+
+  useHeaderSecondLevel({ title: "", supportRequest: true });
 
   React.useEffect(() => {
     if (ctaUrl) {
@@ -40,35 +46,56 @@ export const FimsFlowHandlerScreen = (
     }
   }, [ctaUrl, dispatch]);
 
+  const loadingState = useIOSelector(fimsLoadingStateSelector);
+  const consentsPot = useIOSelector(fimsConsentsDataSelector);
+  const errorState = useIOSelector(fimsErrorStateSelector);
+
+  if (errorState !== undefined) {
+    return <FimsErrorBody title={errorState} />;
+  }
+  if (loadingState !== undefined) {
+    const subtitle =
+      loadingState === "in-app-browser" ? (
+        <View style={IOStyles.alignCenter}>
+          <LabelSmall color="grey-650" weight="Regular">
+            {I18n.t("FIMS.loadingScreen.in-app-browser.subtitle")}
+          </LabelSmall>
+        </View>
+      ) : (
+        <></>
+      );
+    const title = I18n.t(`FIMS.loadingScreen.${loadingState}.title`);
+
+    return (
+      <LoadingScreenContent contentTitle={title}>
+        {subtitle}
+      </LoadingScreenContent>
+    );
+  }
+
   return pipe(
-    errorState,
+    consentsPot,
+    pot.toOption,
     O.fold(
-      () => <FimsFlowSuccessBody />,
-      err => (
-        <OperationResultScreenContent
-          pictogram="umbrellaNew"
-          title={err.message}
-          isHeaderVisible={true}
-        />
-      )
+      () => <FimsErrorBody title="generic error" />,
+      consents => <FimsFlowSuccessBody consents={consents} />
     )
   );
 };
 
-const FimsFlowSuccessBody = () => {
-  useHeaderSecondLevel({ title: "", supportRequest: true });
+type FimsErrorBodyProps = { title: string };
+const FimsErrorBody = ({ title }: FimsErrorBodyProps) => (
+  <OperationResultScreenContent
+    pictogram="umbrellaNew"
+    title={title}
+    isHeaderVisible={true}
+  />
+);
 
+type FimsSuccessBodyProps = { consents: ConsentData };
+const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
   const dispatch = useIODispatch();
-
-  const consents = pot.getOrElse(
-    useIOSelector(fimsConsentsDataSelector),
-    undefined
-  );
   const navigation = useIONavigation();
-
-  if (consents === undefined) {
-    return <LoadingScreenContent contentTitle="loading..." />;
-  }
 
   return (
     <OperationResultScreenContent
