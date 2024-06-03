@@ -4,8 +4,9 @@ import * as O from "fp-ts/lib/Option";
 import * as Either from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import messageListData, {
-  MessageListCategory
+import {
+  MessageListCategory,
+  foldK as messageListCategoryFoldK
 } from "../../types/messageListCategory";
 import {
   loadNextPageMessages,
@@ -575,15 +576,16 @@ export const allArchiveSelector = (
 export const messagesByCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) => {
-  const items = allPaginatedSelector(state);
-
-  return messageListData.fold(
-    category,
-    () => items.inbox.data,
-    () => items.archive.data
+) =>
+  pipe(state, allPaginatedSelector, items =>
+    pipe(
+      category,
+      messageListCategoryFoldK(
+        () => items.inbox.data,
+        () => items.archive.data
+      )
+    )
   );
-};
 
 /**
  * Return the list of Inbox messages currently available.
@@ -747,5 +749,34 @@ export const messageListForCategorySelector = (
       (messagePage, _) => messagePage.page
     )
   );
+
+export const emptyListReasonSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+): "noData" | "error" | "notEmpty" =>
+  pipe(state.entities.messages.allPaginated, allPaginated =>
+    pipe(
+      category,
+      messageListCategoryFoldK(
+        () => allPaginated.inbox,
+        () => allPaginated.archive
+      ),
+      messageCollection => messageCollection.data,
+      foldK(
+        () => "noData",
+        () => "notEmpty",
+        () => "notEmpty",
+        () => "error",
+        reasonFromMessagePageContainer,
+        reasonFromMessagePageContainer,
+        (container, _) => reasonFromMessagePageContainer(container),
+        (container, _) => reasonFromMessagePageContainer(container)
+      )
+    )
+  );
+
+export const reasonFromMessagePageContainer = (
+  container: MessagePage
+): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
 
 export default reducer;

@@ -1852,7 +1852,6 @@ messages:
     one: You have 1 message
   tab:
     inbox: Inbox
-    deadlines: Expiring
     archive: Archived
   contentTitle: Messages
   refresh: Pull down to refresh
@@ -1923,10 +1922,6 @@ messages:
     emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
-  deadlines:
-    emptyMessage:
-      title: You haven't any scheduled deadline.
-      subtitle: Use the button above to check out past deadlines.
   pagination:
     migration:
       started: Please wait, we are updating the Messages section.
