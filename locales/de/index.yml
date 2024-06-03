@@ -580,9 +580,6 @@ authentication:
     nfc:      
       retry: "Erneut versuchen"
       noNfcConnectionTitle: "Hast du die Karte berührt?"
-      enableNfcTitle: "NFC aktivieren"
-      enableNfcHeader: "NFC überprüfen"
-      enableNfcContent: "Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!"
     pin:
       accessibility:
         placeholderLabel: "PIN der elektronischen Identitätskarte"

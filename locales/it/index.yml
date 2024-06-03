@@ -633,9 +633,18 @@ authentication:
       retry: Riprova
       noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      enableNfcTitle: Attiva NFC
-      enableNfcHeader: Verifica NFC
-      enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
+      title: Attiva l’NFC per continuare
+      subtitle: Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
+      listItemTitle: "Come fare:"
+      action: Apri Impostazioni
+      listItemLabel1: Step 1
+      listItemValue1: Apri “Impostazioni” 
+      listItemLabel2: Step 2
+      listItemValue2: Cerca la funzionalità “NFC”
+      listItemLabel3: Step 3
+      listItemValue3: Attiva la funzionalità
+      activeNfcAlert: Attiva l’NFC per permettere a IO di leggere la tua CIE!
+      activeNFCAlertButton: Attiva NFC
     pin:
       accessibility:
         placeholderLabel: PIN della Carta di identità elettronica
@@ -2136,6 +2145,11 @@ services:
       retry: "Riprova"
     header:
       subtitle: "{{count}} servizi disponibili"
+  search:
+    input:
+      placeholder: "Cerca un ente nazionale o locale"
+    emptyState:
+      title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -3143,10 +3157,7 @@ features:
         secondaryAction: Ho fatto
     issuance:
       credentialPreview:
-        title: "Ecco un’anteprima della tua tessera"
-        subtitle:
-          "Prima di aggiungerla, verifica che tutte le informazioni siano
-          corrette."
+        title: "{{credential}}: ecco l'anteprima"
         banner:
           title: "Qualcosa non torna?"
           content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
@@ -3161,6 +3172,9 @@ features:
         toast:
           success: "Tessera aggiunta!"
           failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
+        actions:
+          primary: Aggiungi al portafoglio
+          secondary: Annulla
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
