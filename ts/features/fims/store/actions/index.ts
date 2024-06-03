@@ -13,14 +13,14 @@ export const fimsGetConsentsListAction = createAsyncAction(
   "FIMS_GET_CONSENTS_LIST_REQUEST",
   "FIMS_GET_CONSENTS_LIST_SUCCESS",
   "FIMS_GET_CONSENTS_LIST_FAILURE"
-)<FimsGetConsentsListRequestType, ConsentData, Error>();
+)<FimsGetConsentsListRequestType, ConsentData, string>();
 
 // note: IAB==InAppBrowser
 export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
   "FIMS_GET_REDIRECT_URL_REQUEST",
   "FIMS_GET_REDIRECT_URL_SUCCESS",
   "FIMS_GET_REDIRECT_URL_FAILURE"
-)<FimsGetRedirectUrlAndOpenIABRequestType, void, Error>();
+)<FimsGetRedirectUrlAndOpenIABRequestType, void, string>();
 
 export type FimsActions =
   | ActionType<typeof fimsGetConsentsListAction>
