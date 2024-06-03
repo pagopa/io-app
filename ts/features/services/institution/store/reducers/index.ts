@@ -22,7 +22,7 @@ const institutionReducer = (
 ): InstitutionState => {
   switch (action.type) {
     case getType(paginatedServicesGet.request):
-      if (pot.isNone(state.paginatedServices)) {
+      if (action.payload.offset === 0) {
         return {
           ...state,
           paginatedServices: pot.noneLoading

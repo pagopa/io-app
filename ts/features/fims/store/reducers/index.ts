@@ -12,7 +12,7 @@ type FimsFlowStateTags = "consents" | "in-app-browser";
 
 export type FimsState = {
   currentFlowState: FimsFlowStateTags;
-  consentsData: pot.Pot<ConsentData, Error>;
+  consentsData: pot.Pot<ConsentData, string>; // string -> errMessage
 };
 
 const INITIAL_STATE: FimsState = {
@@ -62,7 +62,7 @@ export const fimsErrorStateSelector = (state: GlobalState) =>
   // this selector will be used to map the error message
   // once we have a clear error mapping
   pot.isError(state.features.fims.consentsData)
-    ? state.features.fims.consentsData.error.message
+    ? state.features.fims.consentsData.error
     : undefined;
 
 export const fimsLoadingStateSelector = (state: GlobalState) => {

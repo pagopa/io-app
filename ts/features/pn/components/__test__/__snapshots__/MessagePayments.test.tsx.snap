@@ -773,6 +773,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -2972,6 +2973,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -5502,6 +5504,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -7184,6 +7187,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -8866,6 +8870,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -10656,6 +10661,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -12446,6 +12452,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -13148,6 +13155,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
