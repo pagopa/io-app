@@ -25,7 +25,6 @@ import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { isNewServicesEnabled } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -188,9 +187,7 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={SERVICES_ROUTES.SERVICES_HOME}
           component={
-            isDesignSystemEnabled && isNewServicesEnabled
-              ? NewServicesHomeScreen
-              : ServicesHomeScreen
+            isDesignSystemEnabled ? NewServicesHomeScreen : ServicesHomeScreen
           }
           options={{
             title: I18n.t("global.navigator.services"),
