@@ -9,7 +9,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation
+} from "@react-navigation/native";
 import React, {
   useCallback,
   useContext,
@@ -26,6 +30,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IdpData } from "../../../../definitions/content/IdpData";
 import {
   CieEntityIds,
@@ -48,7 +53,7 @@ import { AuthenticationParamsList } from "../../../navigation/params/Authenticat
 import ROUTES from "../../../navigation/routes";
 import { loginSuccess } from "../../../store/actions/authentication";
 import { nfcIsEnabled } from "../../../store/actions/cie";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { SessionToken } from "../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
@@ -59,6 +64,7 @@ import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
+import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { getIdpLoginUri } from "../../../utils/login";
 
 const CIE_PIN_LENGTH = 8;
@@ -101,7 +107,8 @@ const CiePinScreen = () => {
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
   );
-
+  const isEnabled = useIOSelector(isNfcEnabledSelector);
+  const isNfcEnabled = pot.getOrElse(isEnabled, false);
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
     component: (
       <View>
@@ -132,20 +139,27 @@ const CiePinScreen = () => {
           cieConsentUri: loginUri
         });
       } else {
-        navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
-          ciePin: pin,
-          authorizationUri: authUrlGenerated
-        });
+        if (isNfcEnabled) {
+          navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
+            ciePin: pin,
+            authorizationUri: authUrlGenerated
+          });
+        } else {
+          navigation.navigate(ROUTES.CIE_ACTIVATE_NFC_SCREEN, {
+            ciePin: pin,
+            authorizationUri: authUrlGenerated
+          });
+        }
       }
       handleAuthenticationOverlayOnClose();
     }
   }, [
-    handleAuthenticationOverlayOnClose,
     authUrlGenerated,
-    hideModal,
+    doLoginSuccess,
+    handleAuthenticationOverlayOnClose,
+    isNfcEnabled,
     navigation,
-    pin,
-    doLoginSuccess
+    pin
   ]);
 
   const showModal = useCallback(() => {
@@ -170,15 +184,11 @@ const CiePinScreen = () => {
     }
   }, [pin, showModal]);
 
-  const a11yFocusRef = useRef<boolean>(false);
-
-  useFocusEffect(() => {
-    if (!a11yFocusRef.current) {
-      setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
-      // eslint-disable-next-line functional/immutable-data
-      a11yFocusRef.current = true;
-    }
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
+    }, [])
+  );
 
   const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
   const useCieUat = useSelector(isCieLoginUatEnabledSelector);
@@ -190,6 +200,7 @@ const CiePinScreen = () => {
   });
 
   const headerHeight = useHeaderHeight();
+  const isFocused = useIsFocused();
 
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
@@ -228,7 +239,8 @@ const CiePinScreen = () => {
                 )}
                 onValueChange={setPin}
                 length={CIE_PIN_LENGTH}
-                autoFocus
+                autoFocus={isFocused}
+                key={isFocused ? "focused" : "unfocused"}
               />
               <VSpacer size={24} />
               <Banner

@@ -279,6 +279,7 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: Image of barcode and fiscal code
       unavailable: Unavailable
       preview:
         label: Preview of your fiscal code document
@@ -291,8 +292,8 @@ profile:
         hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
+    description: Use the barcode to communicate your fiscal code when asked.
     help: !include profile/profile_fiscal_code.md
-    content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
     facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFILE
@@ -459,6 +460,10 @@ profile:
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Enable the IT Wallet test environment
+    banner:
+      title: Do you want to display your fiscal code?
+      action: Go to "Your data" section
+      close: Close the banner and do not show it again
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -466,6 +471,7 @@ profile:
       email: Email address
       need_validate: To be validated
       nameSurname: Name and surname
+      fiscalCode: Fiscal code
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_data_email_address.md
@@ -623,13 +629,22 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      apduNotSupported: "The operating system doesn't support the reading of your CIE. For further details, please contact your device manufacturer."
+      apduNotSupported: The operating system doesn't support the reading of the Electronic Identity Card. Try using SPID to enter the app.
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      enableNfcTitle: Enable NFC
-      enableNfcHeader: Check NFC
-      enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+      title: Enable NFC to continue
+      subtitle: To enable IO to read your CIE, activate NFC from your device's settings.
+      listItemTitle: "How to do it::"
+      action: Open Settings
+      listItemLabel1: Step 1
+      listItemValue1: Open 'Settings'
+      listItemLabel2: Step 2
+      listItemValue2: Search for ‘NFC’ functionality
+      listItemLabel3: Step 3
+      listItemValue3: Turn it on
+      activeNfcAlert: Activate NFC to enable IO to read your CIE!
+      activeNFCAlertButton: Enable NFC
     pin:
       accessibility:
         placeholderLabel: PIN of Electronic Identity Card
@@ -659,13 +674,12 @@ authentication:
       content: !include cie/temporary_blocked_cie.md
       button: "Load/open CieID"
     card:
-      headerTitle: Login with CIE
-      titleiOS: Hold the card still
-      title: Hold the card again
-      layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: The sensor is located on top of the device.
+      title: Hold your CIE on the back of your phone
+      titleiOS: Place the CIE on your phone, on top.
+      layCardMessageHeader: If the reading doesn't start, move the card to different places and wait a few seconds until you feel a vibration.
+      layCardMessageHeaderiOS: If the card is not read, move it to different places and wait a few seconds.
       layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
-      cieCardValid: Ok, your card is valid! You can remove it.
+      cieCardValid: Done!
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
@@ -673,7 +687,7 @@ authentication:
         readingInstructions: Keep your electronic ID card on the top of the iPhone.
         moreTags: More cards have been identified. Please bring one card at a time.
         readingInProgress: "READING IN PROGRESS\nHold the card still for a few seconds..."
-        readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
+        readingSuccess: "Done!"
         invalidCard: It seems that this card is not an Electronic Identity Card (CIE).
         tagLost: You removed the card too soon.
         cardLocked: The CIE PIN is blocked.
@@ -681,16 +695,15 @@ authentication:
         wrongPin2AttemptLeft: Wrong PIN
         genericError: Something went wrong! Please try again.
       error:
-        readerCardLostTitle: Hold the card again for a few seconds
-        readerCardLostTitleiOS: You removed the card too soon.
-        readerCardLostHeader: We have not yet finished reading the card data.
-        readerCardLostHeaderiOS: We have not yet finished reading the card data. Please try again.
-        onTagLost: You removed the card too soon. Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+        readerCardLostTitle: You removed the card too soon.
+        onTagLost: Place the card on the back of the device again.
         tryAgain: Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!
         generic: Something did not work as expected while we read your CIE.
         unknownCardTitle: Unknown card
-        unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
+        unknownCardContent: The card used does not seem to be an Electronic Identity Card.
         unknownCardHelpLink: What is the Electronic Identity Card?
+        genericErrorTitle: We could not retrieve the data from the card
+        genericErrorSubtitle: If you've had the problem a few times, give it a few minutes and try again.
     dataUsageConsent:
       retryCTA: Enter
   spid: SPID
@@ -1705,6 +1718,7 @@ wallet:
       header: Seleziona un metodo
       yourMethods: Saved
       otherMethods: All methods
+      latestMethod: Recently used
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
@@ -2104,6 +2118,11 @@ services:
   emptyListMessage: There are no services available at this time, pull down to refresh
   new: New
   home:
+    featured:
+      services:
+        title: Featured
+      institutions:
+        title: Featured Institutions
     institutions:
       title: National
   institution:
@@ -2114,6 +2133,11 @@ services:
       retry: "Retry"
     header:
       subtitle: "{{count}} available services"
+  search:
+    input:
+      placeholder: "Search for a national or local institution"
+    emptyState:
+      title: "Enter at least three characters to search for the name of a national or local institution"
   details:
     failure:
       title: "There is a temporary problem. Please try again"

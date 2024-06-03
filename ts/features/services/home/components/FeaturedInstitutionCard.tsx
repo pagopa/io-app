@@ -1,3 +1,6 @@
+import React from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
 import {
   Avatar,
   H6,
@@ -6,19 +9,16 @@ import {
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { WithTestID } from "../../../../types/WithTestID";
-import { logoForInstitution } from "../utils";
+import { CardPressableBase } from "../../common/components/CardPressableBase";
+import { getLogoForInstitution } from "../../common/utils";
 
 export type FeaturedInstitutionCardProps = WithTestID<{
   id: string;
   name: string;
   accessibilityLabel?: string;
   isNew?: boolean;
-  onPress?: (id: string) => void;
+  onPress?: () => void;
 }>;
 
 export const CARD_WIDTH =
@@ -59,28 +59,27 @@ const styles = StyleSheet.create({
 });
 
 const FeaturedInstitutionCard = (props: FeaturedInstitutionCardProps) => (
-  <View
-    style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
-    testID={props.testID}
+  <CardPressableBase
+    onPress={props.onPress}
+    testID={`${props.testID}-pressable`}
+    accessibilityLabel={props.accessibilityLabel}
   >
-    <View style={styles.cardContent}>
-      <View style={styles.cardAvatar}>
-        <Avatar
-          logoUri={logoForInstitution({
-            id: "",
-            name: "",
-            fiscal_code: props.id as OrganizationFiscalCode
-          })}
-          size="small"
-        />
-      </View>
-      <View style={styles.cardLabel}>
-        <H6 lineBreakMode="head" numberOfLines={2} color="hanPurple-850">
-          {props.name}
-        </H6>
+    <View
+      style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
+      testID={props.testID}
+    >
+      <View style={styles.cardContent}>
+        <View style={styles.cardAvatar}>
+          <Avatar logoUri={getLogoForInstitution(props.id)} size="small" />
+        </View>
+        <View style={styles.cardLabel}>
+          <H6 lineBreakMode="head" numberOfLines={2} color="hanPurple-850">
+            {props.name}
+          </H6>
+        </View>
       </View>
     </View>
-  </View>
+  </CardPressableBase>
 );
 
 const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => (

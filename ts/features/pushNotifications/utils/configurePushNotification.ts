@@ -12,11 +12,7 @@ import { Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import {
-  maximumItemsFromAPI,
-  pageSize,
-  remindersOptInEnabled
-} from "../../../config";
+import { maximumItemsFromAPI, pageSize } from "../../../config";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
@@ -153,7 +149,7 @@ function configurePushNotifications() {
     // Only for iOS, we need to customize push notification prompt.
     // We delay the push notification promt until opt-in screen
     // during onboarding where permission is clearly required
-    requestPermissions: !remindersOptInEnabled || Platform.OS !== "ios"
+    requestPermissions: Platform.OS !== "ios"
   });
 }
 

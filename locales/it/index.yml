@@ -279,6 +279,7 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: Immagine del codice a barre del tuo codice fiscale
       unavailable: Non disponibile
       preview:
         label: Anteprima del tuo codice fiscale
@@ -291,8 +292,8 @@ profile:
         hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
+    description: Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
     help: !include profile/profile_fiscal_code.md
-    content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
     facSimile: FAC-SIMILE
   sections:
     spid: PROFILO SPID
@@ -411,7 +412,7 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze"
           cta:
             shareData: "Condividi"
             dontShareData: "Non condividere dati"
@@ -459,6 +460,10 @@ profile:
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Abilita ambiente di test per IT Wallet
+    banner:
+      title: Vuoi visualizzare il tuo Codice Fiscale?
+      action: Vai alla sezione “I tuoi dati”
+      close: Chiudi il banner e non mostrarlo più
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -466,6 +471,7 @@ profile:
       email: Indirizzo email
       need_validate: Da validare
       nameSurname: Nome e cognome
+      fiscalCode: Codice Fiscale
     email:
       contextualHelpTitle: Come gestire la tua mail
       contextualHelpContent: !include profile/profile_data_email_address.md
@@ -522,19 +528,19 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
       title: Personalizza le notifiche
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria.
+      subtitle: Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
       titleExistingUser: Personalizza le notifiche
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
-        title: Consenti i promemoria
+        title: Consenti promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
-        title: Mostra un'anteprima
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio
-        link: Più info
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio.
+        link: Scopri di più
         bottomSheet:
-          title: Mostra un'anteprima
-          content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
+          title: Mostra anteprime
+          content: "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando."
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
 userMetadata:
@@ -623,13 +629,22 @@ authentication:
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      apduNotSupported: "Il sistema operativo non supporta la lettura della tua carta di identità elettronica. Per maggiori informazioni, contatta il produttore del tuo dispositivo."
+      apduNotSupported: "Il sistema operativo non supporta la lettura della Carta di Identità Elettronica. Prova ad usare SPID per entrare in app."
       retry: Riprova
       noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      enableNfcTitle: Attiva NFC
-      enableNfcHeader: Verifica NFC
-      enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
+      title: Attiva l’NFC per continuare
+      subtitle: Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
+      listItemTitle: "Come fare:"
+      action: Apri Impostazioni
+      listItemLabel1: Step 1
+      listItemValue1: Apri “Impostazioni”
+      listItemLabel2: Step 2
+      listItemValue2: Cerca la funzionalità “NFC”
+      listItemLabel3: Step 3
+      listItemValue3: Attiva la funzionalità
+      activeNfcAlert: Attiva l’NFC per permettere a IO di leggere la tua CIE!
+      activeNFCAlertButton: Attiva NFC
     pin:
       accessibility:
         placeholderLabel: PIN della Carta di identità elettronica
@@ -659,21 +674,20 @@ authentication:
       content: !include cie/temporary_blocked_cie.md
       button: "Scarica / Apri CieID"
     card:
-      title: Appoggia la carta
-      titleiOS: Tieni ferma la carta
-      headerTitle: Entra con CIE
-      layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-      layCardMessageHeaderiOS: Il sensore è posizionato nella parte alta del dispositivo.
+      title: Appoggia la CIE sul retro del dispositivo
+      titleiOS: Appoggia la CIE sul dispositivo, in alto
+      layCardMessageHeader: Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
+      layCardMessageHeaderiOS: Se la carta non viene letta, spostala in punti diversi e attendi qualche secondo.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
-      cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
-      readerCardTitle: Tieni ferma la carta per qualche secondo
+      cieCardValid: Lettura completata!
+      readerCardTitle: Tienila ferma per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
       iosAlert:
         readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
         moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
         readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
-        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
+        readingSuccess: "Lettura completata"
         invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         tagLost: Hai rimosso la carta troppo presto.
         cardLocked: Il PIN della CIE è stato bloccato
@@ -681,16 +695,15 @@ authentication:
         wrongPin2AttemptLeft: Il PIN non è corretto
         genericError: Si è verificato un errore imprevisto. Riprova.
       error:
-        readerCardLostTitle: Avvicina nuovamente la carta
-        readerCardLostTitleiOS: Hai rimosso la carta troppo presto
-        readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
-        readerCardLostHeaderiOS: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta. Riprova di nuovo.
-        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+        readerCardLostTitle: Hai rimosso la carta troppo presto
+        onTagLost: Appoggia di nuovo la carta sul retro del dispositivo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
         generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta
-        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica.
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+        genericErrorTitle: Non siamo riusciti a recuperare i dati dalla carta
+        genericErrorSubtitle: Se riscontri più volte il problema, attendi qualche minuto e riprova.
     dataUsageConsent:
       retryCTA: Entra
   spid: SPID
@@ -1705,6 +1718,7 @@ wallet:
       header: Seleziona un metodo
       yourMethods: Salvati
       otherMethods: Tutti i metodi
+      latestMethod: Usato di recente
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
@@ -2104,6 +2118,11 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
   new: Nuovo
   home:
+    featured:
+      services:
+        title: In primo piano
+      institutions:
+        title: Enti in evidenza
     institutions:
       title: Nazionali
   institution:
@@ -2114,6 +2133,11 @@ services:
       retry: "Riprova"
     header:
       subtitle: "{{count}} servizi disponibili"
+  search:
+    input:
+      placeholder: "Cerca un ente nazionale o locale"
+    emptyState:
+      title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"

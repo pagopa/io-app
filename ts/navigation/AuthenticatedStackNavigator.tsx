@@ -70,12 +70,10 @@ import {
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isFIMSEnabledSelector,
-  isIdPayEnabledSelector
+  isIdPayEnabledSelector,
+  isNewPaymentSectionEnabledSelector
 } from "../store/reducers/backendStatus";
-import {
-  isItWalletTestEnabledSelector,
-  isNewWalletSectionEnabledSelector
-} from "../store/reducers/persistedPreferences";
+import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
@@ -102,7 +100,7 @@ const AuthenticatedStackNavigator = () => {
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
   const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
