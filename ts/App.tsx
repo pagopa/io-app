@@ -22,7 +22,7 @@ export type AppDispatch = typeof store.dispatch;
  * Main component of the application
  * @constructor
  */
-export const App: React.FunctionComponent<never> = () => (
+export const App = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>

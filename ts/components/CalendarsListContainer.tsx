@@ -80,7 +80,9 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
     this.state = INITIAL_STATE;
   }
 
-  private renderSectionHeader = (info: { section: any }): React.ReactNode => (
+  private renderSectionHeader = (info: {
+    section: any;
+  }): React.ReactElement => (
     <SectionHeaderComponent sectionHeader={info.section.title} />
   );
 

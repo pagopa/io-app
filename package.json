@@ -242,7 +242,6 @@
     "@types/node-fetch": "^2.1.7",
     "@types/pako": "^2.0.0",
     "@types/prettier": "^2.7.3",
-    "@types/react": "16.9.43",
     "@types/react-native": "0.70.19",
     "@types/react-native-background-timer": "^2.0.0",
     "@types/react-native-i18n": "^2.0.0",
@@ -299,11 +298,7 @@
     "standard-version": "^8.0.2",
     "ts-node": "^7.0.1",
     "typescript": "^4.9.5"
-  },
-  "resolutions": {
-    "@types/react": "16.7.18",
-    "@types/prop-types": "15.5.5"
-  },
+  },  
   "react-native": {
     "path": "path-browserify",
     "crypto": "react-native-crypto"
