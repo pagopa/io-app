@@ -51,13 +51,7 @@ export const FimsFlowHandlerScreen = (
   const errorState = useIOSelector(fimsErrorStateSelector);
 
   if (errorState !== undefined) {
-    return (
-      <OperationResultScreenContent
-        pictogram="umbrellaNew"
-        title={errorState}
-        isHeaderVisible={true}
-      />
-    );
+    return <FimsErrorBody title={errorState} />;
   }
   if (loadingState !== undefined) {
     const subtitle =
@@ -83,16 +77,17 @@ export const FimsFlowHandlerScreen = (
     consentsPot,
     pot.toOption,
     O.fold(
-      () => <GenericErrorScreen />,
+      () => <FimsErrorBody title="generic error" />,
       consents => <FimsFlowSuccessBody consents={consents} />
     )
   );
 };
 
-const GenericErrorScreen = () => (
+type FimsErrorBodyProps = { title: string };
+const FimsErrorBody = ({ title }: FimsErrorBodyProps) => (
   <OperationResultScreenContent
     pictogram="umbrellaNew"
-    title={"generic error"}
+    title={title}
     isHeaderVisible={true}
   />
 );
