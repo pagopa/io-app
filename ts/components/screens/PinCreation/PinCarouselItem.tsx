@@ -36,7 +36,7 @@ export const PinCarouselItem = memo(
         IOStyles.horizontalContentPadding,
         IOStyles.alignCenter,
         {
-          height: 120,
+          height: 128,
           justifyContent: "space-between",
           width
         }
