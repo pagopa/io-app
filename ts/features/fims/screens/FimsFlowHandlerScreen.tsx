@@ -1,9 +1,22 @@
-import { IOStyles, LabelSmall } from "@pagopa/io-app-design-system";
+import {
+  ButtonText,
+  H2,
+  H4,
+  H6,
+  Icon,
+  IOColors,
+  IOStyles,
+  Label,
+  LabelSmall,
+  ListItemHeader,
+  ListItemInfo,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
-import { View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -24,6 +37,8 @@ import {
   fimsLoadingStateSelector
 } from "../store/reducers";
 import { ConsentData } from "../types";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { Link } from "../../../components/core/typography/Link";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -103,24 +118,51 @@ const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
   const navigation = useIONavigation();
 
   return (
-    <OperationResultScreenContent
-      title={`grant ${consents.claims
-        .map(item => item.display_name)
-        .join(",")} ?`}
-      action={{
-        label: "accept",
-        onPress: () =>
-          dispatch(
-            fimsGetRedirectUrlAndOpenIABAction.request({
-              // eslint-disable-next-line no-underscore-dangle
-              acceptUrl: consents._links.confirm.href
-            })
-          )
-      }}
-      secondaryAction={{
-        label: "deny",
-        onPress: () => navigation.goBack() // TODO::: clear store on back nav
-      }}
-    />
+    <SafeAreaView style={IOStyles.horizontalContentPadding}>
+      <H2>CONSENTI LA CONDIVISIONE DEI TUOI DATI</H2>
+      <Label weight="Regular">
+        Autorizza IO a trasmettere a INPS i dati necessari per la tua
+        autenticazione su Portale INPS.
+      </Label>
+      <VSpacer size={24} />
+      <H4 color="blueIO-500" onPress={() => null}>
+        Perché?
+      </H4>
+      <VSpacer size={24} />
+      <ListItemHeader label="Dati richiesti" iconName="security" />
+      <ClaimsList />
+    </SafeAreaView>
   );
 };
+
+const ClaimsList = () => (
+  <View style={styles.grantsList}>
+    <CLaimListItem label="Nome" />
+    <CLaimListItem label="Nome" />
+    <CLaimListItem label="Nome" />
+    <CLaimListItem label="Nome" />
+    <CLaimListItem label="Nome" />
+    <CLaimListItem label="Nome" />
+  </View>
+);
+
+const CLaimListItem = ({ label }: { label: string }) => (
+  <View
+    style={{
+      flexDirection: "row",
+      justifyContent: "space-between"
+    }}
+  >
+    <H6>{label}</H6>
+    <Icon name="checkTickBig" size={24} color="grey-300" />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  grantsList: {
+    backgroundColor: IOColors["grey-50"],
+    borderRadius: 8,
+    paddingHorizontal: 24,
+    paddingVertical: 12
+  }
+});
