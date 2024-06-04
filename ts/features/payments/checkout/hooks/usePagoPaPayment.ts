@@ -16,7 +16,7 @@ import {
   PaymentInitStateParams,
   initPaymentStateAction
 } from "../store/actions/orchestration";
-import { isNewWalletSectionEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 
@@ -53,7 +53,7 @@ const usePagoPaPayment = (): UsePagoPaPayment => {
 
   // Checks if the new wallet section is enabled
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
 
   /**

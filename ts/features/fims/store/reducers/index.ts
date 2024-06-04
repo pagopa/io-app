@@ -2,18 +2,21 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { HttpClientSuccessResponse } from "../../__mocks__/mockFIMSCallbacks";
 import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
+import { ConsentData } from "../../types";
+
+type FimsFlowStateTags = "consents" | "in-app-browser";
+
 export type FimsState = {
-  ctaUrl?: string;
-  consentsData: pot.Pot<HttpClientSuccessResponse, Error>;
+  currentFlowState: FimsFlowStateTags;
+  consentsData: pot.Pot<ConsentData, string>; // string -> errMessage
 };
 
 const INITIAL_STATE: FimsState = {
-  ctaUrl: undefined,
+  currentFlowState: "consents",
   consentsData: pot.none
 };
 
@@ -24,7 +27,7 @@ const reducer = (
   switch (action.type) {
     case getType(fimsGetConsentsListAction.request):
       return {
-        ctaUrl: action.payload.ctaUrl,
+        currentFlowState: "consents",
         consentsData: pot.noneLoading
       };
     case getType(fimsGetConsentsListAction.success):
@@ -34,8 +37,19 @@ const reducer = (
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {
+        currentFlowState: "in-app-browser",
+        consentsData: pot.noneLoading
+      };
+    case getType(fimsGetRedirectUrlAndOpenIABAction.success):
+      return {
         ...state,
         consentsData: pot.none
+      };
+    case getType(fimsGetConsentsListAction.failure):
+    case getType(fimsGetRedirectUrlAndOpenIABAction.failure):
+      return {
+        ...state,
+        consentsData: pot.toError(state.consentsData, action.payload)
       };
   }
   return state;
@@ -44,7 +58,20 @@ const reducer = (
 export const fimsConsentsDataSelector = (state: GlobalState) =>
   state.features.fims.consentsData;
 
-export const fimsCTAUrlSelector = (state: GlobalState) =>
-  state.features.fims.ctaUrl;
+export const fimsErrorStateSelector = (state: GlobalState) =>
+  // this selector will be used to map the error message
+  // once we have a clear error mapping
+  pot.isError(state.features.fims.consentsData)
+    ? state.features.fims.consentsData.error
+    : undefined;
+
+export const fimsLoadingStateSelector = (state: GlobalState) => {
+  if (state.features.fims.currentFlowState === "in-app-browser") {
+    return "in-app-browser";
+  }
+  return pot.isLoading(state.features.fims.consentsData)
+    ? state.features.fims.currentFlowState
+    : undefined;
+};
 
 export default reducer;
