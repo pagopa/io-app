@@ -17,7 +17,7 @@ export type FimsState = {
 
 const INITIAL_STATE: FimsState = {
   currentFlowState: "consents",
-  consentsData: pot.none
+  consentsData: pot.noneLoading
 };
 
 const reducer = (
