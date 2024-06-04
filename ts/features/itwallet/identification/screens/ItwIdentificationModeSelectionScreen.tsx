@@ -8,17 +8,16 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { Alert } from "react-native";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
+import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
@@ -62,13 +61,8 @@ export const ItwIdentificationModeSelectionScreen = () => {
     Alert.alert("Not implemented");
   };
 
-  useNavigationSwipeBackListener(() => {
-    machineRef.send({ type: "back" });
-  });
-
   return (
-    <RNavScreenWithLargeHeader
-      goBack={() => machineRef.send({ type: "back" })}
+    <IOScrollViewWithLargeHeader
       title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
     >
       <ContentWrapper>
@@ -112,6 +106,6 @@ export const ItwIdentificationModeSelectionScreen = () => {
           onPress={handleCieIdPress}
         />
       </ContentWrapper>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
