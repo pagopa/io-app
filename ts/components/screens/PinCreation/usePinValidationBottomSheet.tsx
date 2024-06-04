@@ -10,7 +10,7 @@ const BottomSheetContent = memo(() => {
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <View style={{ paddingBottom: bottom }}>
+    <View>
       <Body>{I18n.t("onboarding.pin.policy.description")}</Body>
       <VSpacer size={16} />
       <BulletList
