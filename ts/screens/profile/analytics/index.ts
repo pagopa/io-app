@@ -191,6 +191,11 @@ export function getNotificationPreferenceConfiguration(
   return "none";
 }
 
+export type NotificationPermissionType = "enabled" | "disabled";
+
+export const getNotificationPermissionType = (hasPermission: boolean) =>
+  hasPermission ? "enabled" : "disabled";
+
 export async function trackNotificationPreferenceConfiguration(
   isReminderEnabled: boolean,
   isPreviewEnabled: boolean,

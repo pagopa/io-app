@@ -8,9 +8,7 @@ import {
 import URLParse from "url-parse";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
-import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
 import { mixpanelTrack } from "../mixpanel";
-import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
 import { isLoginUtilsError } from "../features/lollipop/utils/login";
 import { ServicesDetailLoadTrack } from "../sagas/startup/loadServiceDetailRequestHandler";
 
@@ -94,57 +92,6 @@ export const buildEventProperties = (
   ...customProperties,
   flow
 });
-
-// Notifications related events
-
-export function trackNotificationInstallationTokenNotChanged() {
-  void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
-}
-
-export function trackNotificationsOptInPreviewStatus(
-  contentType: PushNotificationsContentTypeEnum
-) {
-  void mixpanelTrack(
-    "NOTIFICATIONS_OPTIN_PREVIEW_STATUS",
-    buildEventProperties("UX", "action", {
-      enabled: contentType === PushNotificationsContentTypeEnum.FULL
-    })
-  );
-}
-
-export function trackNotificationsOptInReminderStatus(
-  reminderStatus: ReminderStatusEnum
-) {
-  void mixpanelTrack(
-    "NOTIFICATIONS_OPTIN_REMINDER_STATUS",
-    buildEventProperties("UX", "action", {
-      enabled: reminderStatus === ReminderStatusEnum.ENABLED
-    })
-  );
-}
-
-export function trackNotificationsOptInReminderOnPermissionsOff() {
-  void mixpanelTrack(
-    "NOTIFICATIONS_OPTIN_REMINDER_ON_PERMISSIONS_OFF",
-    buildEventProperties("UX", "control")
-  );
-}
-
-export function trackNotificationsOptInOpenSettings() {
-  void mixpanelTrack(
-    "NOTIFICATIONS_OPTIN_OPEN_SETTINGS",
-    buildEventProperties("UX", "action")
-  );
-}
-
-export function trackNotificationsOptInSkipSystemPermissions() {
-  void mixpanelTrack(
-    "NOTIFICATIONS_OPTIN_SKIP_SYSTEM_PERMISSIONS",
-    buildEventProperties("UX", "action")
-  );
-}
-
-// End of Notifications related events
 
 // Services related events
 

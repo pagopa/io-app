@@ -3,12 +3,12 @@ import identificationReducer, {
   ItwIdentificationState
 } from "../../../identification/store/reducers";
 
-export type ItwState = {
+export type ItWalletState = {
   identification: ItwIdentificationState;
 };
 
-const itwReducer = combineReducers({
+const reducer = combineReducers({
   identification: identificationReducer
 });
 
-export default itwReducer;
+export default reducer;

@@ -432,6 +432,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {

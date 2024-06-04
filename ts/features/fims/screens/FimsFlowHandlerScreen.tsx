@@ -1,7 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/Option";
 import * as React from "react";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -12,8 +15,10 @@ import {
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../store/actions";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { fimsConsentsDataSelector } from "../store/reducers";
+import {
+  fimsConsentsDataSelector,
+  fimsErrorStateSelector
+} from "../store/reducers";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -27,7 +32,33 @@ export const FimsFlowHandlerScreen = (
 ) => {
   const { ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
+  const errorState = useIOSelector(fimsErrorStateSelector);
+
+  React.useEffect(() => {
+    if (ctaUrl) {
+      dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
+    }
+  }, [ctaUrl, dispatch]);
+
+  return pipe(
+    errorState,
+    O.fold(
+      () => <FimsFlowSuccessBody />,
+      err => (
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={err.message}
+          isHeaderVisible={true}
+        />
+      )
+    )
+  );
+};
+
+const FimsFlowSuccessBody = () => {
   useHeaderSecondLevel({ title: "", supportRequest: true });
+
+  const dispatch = useIODispatch();
 
   const consents = pot.getOrElse(
     useIOSelector(fimsConsentsDataSelector),
@@ -35,25 +66,22 @@ export const FimsFlowHandlerScreen = (
   );
   const navigation = useIONavigation();
 
-  React.useEffect(() => {
-    if (ctaUrl) {
-      dispatch(fimsGetConsentsListAction.request({ ctaUrl }));
-    }
-  }, [ctaUrl, dispatch]);
   if (consents === undefined) {
     return <LoadingScreenContent contentTitle="loading..." />;
   }
-  // TODO:: will be handled somewhere else
-  const parsedGrants: Array<string> = JSON.parse(consents.body).grants;
+
   return (
     <OperationResultScreenContent
-      title={`grant ${parsedGrants.join(",")} ?`}
+      title={`grant ${consents.claims
+        .map(item => item.display_name)
+        .join(",")} ?`}
       action={{
         label: "accept",
         onPress: () =>
           dispatch(
             fimsGetRedirectUrlAndOpenIABAction.request({
-              acceptUrl: consents.headers["confirm-url"]
+              // eslint-disable-next-line no-underscore-dangle
+              acceptUrl: consents._links.confirm.href
             })
           )
       }}

@@ -290,7 +290,6 @@ profile:
         hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
     title: "Deine persönlichen Dokumente"
     fiscalCode: "Steuernummer"
-    content: "Das Faksimile der Steuernummer ersetzt nicht das physische Dokument, sondern ermöglicht es, die Daten oder den Barcode auf der Rückseite zu lesen"
     facSimile: "Faksimile"
   sections:
     spid: "SPID PROFIL"
@@ -578,13 +577,9 @@ authentication:
     genericTitle: "Anmeldung mit CIE"
     cie: "CIE"
     noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
-    nfc:
-      apduNotSupported: "Dein Betriebssystem unterstützt das Auslesen deiner elektronischen Identitätskarte nicht. Für weitere Informationen wende dich bitte an den Hersteller deines Geräts."
+    nfc:      
       retry: "Erneut versuchen"
       noNfcConnectionTitle: "Hast du die Karte berührt?"
-      enableNfcTitle: "NFC aktivieren"
-      enableNfcHeader: "NFC überprüfen"
-      enableNfcContent: "Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!"
     pin:
       accessibility:
         placeholderLabel: "PIN der elektronischen Identitätskarte"
@@ -603,35 +598,22 @@ authentication:
       header: "Anmeldung mit CIE"
       title: "Karte vorübergehend gesperrt"
       button: "Lade / Öffne CieID"
-    card:
-      title: "Berühre die Karte"
-      titleiOS: "Halte die Karte still"
-      headerTitle: "Anmeldung mit CIE"
-      layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden an die Rückseite deines Telefons."
-      layCardMessageHeaderiOS: "Der Sensor befindet sich im oberen Teil des Geräts."
-      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
-      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."
-      readerCardTitle: "Halte die Karte für ein paar Sekunden still"
+    card:            
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."      
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
         readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon."
         moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
-        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
-        readingSuccess: "Das Auslesen war erfolgreich.\nDu kannst die Karte entfernen während wir die Datenüberprüfung abschließen."
+        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."        
         invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
         tagLost: "Du hast die Karte zu früh entfernt."        
         genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
-      error:
-        readerCardLostTitle: "Karte neu lesen"
-        readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
-        readerCardLostHeader: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen."
-        readerCardLostHeaderiOS: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen. Versuche es erneut."
-        onTagLost: "Du hast die Karte zu früh entfernt. Halte die Karte an die Rückseite des Smartphones bis eine Bestätigung auf dem Bildschirm erscheint. Es dauert nur ein paar Sekunden."
+      error:       
         tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
         generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
         unknownCardTitle: "Unbekannte Karte"
-        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte zu sein."
         unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
     dataUsageConsent:
       retryCTA: "Weiter"
@@ -700,7 +682,6 @@ authentication:
     subtitlel2: "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren."
     subtitlel3: "Um mit all deinen SPID-Anmeldedaten oder deiner CIE auf die App zugreifen zu können, musst du den Zugang entsperren."
     learnmore: "Mehr erfahren"
-    loginIO: "Schließen"
   unlockmodal:
     title: "Was bedeutet das?"
     description1_1: "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können."
