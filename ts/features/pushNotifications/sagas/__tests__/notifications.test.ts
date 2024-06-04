@@ -138,7 +138,10 @@ describe("updateInstallationSaga", () => {
 
     describe("and the user did logout", () => {
       it("should send the push notification token", () => {
-        const localState = updateState([logoutRequest()], globalState);
+        const localState = updateState(
+          [logoutRequest({ withApiCall: true })],
+          globalState
+        );
         const createOrUpdateInstallation = jest.fn();
         return expectSaga(updateInstallationSaga, createOrUpdateInstallation)
           .withState(localState)
