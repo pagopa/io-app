@@ -3,7 +3,6 @@ import { View } from "react-native";
 import {
   IOColors,
   Divider,
-  VDivider,
   HSpacer,
   VSpacer,
   IOAppMargin,
@@ -155,7 +154,7 @@ export const DSLayout = () => {
         </H3>
 
         <View style={{ flexDirection: "row", height: 100 }}>
-          <VDivider />
+          <Divider />
         </View>
         <VSpacer size={48} />
       </ContentWrapper>
