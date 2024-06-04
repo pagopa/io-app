@@ -27,6 +27,7 @@ const BottomSheetContent = memo(() => {
         ]}
         spacing={16}
       />
+    {bottom === 0 && <VSpacer size={16} />}
     </View>
   );
 });
