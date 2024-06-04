@@ -27,13 +27,13 @@ const BottomSheetContent = memo(() => {
         ]}
         spacing={16}
       />
-    {bottom === 0 && <VSpacer size={16} />}
+      {bottom === 0 && <VSpacer size={16} />}
     </View>
   );
 });
 
 export default () =>
- useIOBottomSheetAutoresizableModal({
+  useIOBottomSheetAutoresizableModal({
     title: I18n.t("onboarding.pin.policy.title"),
     component: <BottomSheetContent />
   });
