@@ -26,7 +26,13 @@ export const loginWithSPID = async () => {
   const posteIdpButtonId = "idp-posteid-button";
   await waitFor(element(by.id(posteIdpButtonId)))
     .toBeVisible()
-    .withTimeout(e2eWaitRenderTimeout);
+    .whileElement(by.id("idps-grid"))
+    .scroll(50, "down")
+    .catch(async _ => {
+      await waitFor(element(by.id(posteIdpButtonId)))
+        .toBeVisible()
+        .withTimeout(e2eWaitRenderTimeout);
+    });
 
   await element(by.id(posteIdpButtonId)).tap();
 
