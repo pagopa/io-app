@@ -5,6 +5,8 @@ import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
 import IdpsGrid from "../../../../components/IdpsGrid";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { randomOrderIdps } from "../../../../screens/authentication/IdpSelectionScreen";
 import { loadIdps } from "../../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -13,16 +15,21 @@ import {
   LocalIdpsFallback,
   idps as idpsFallback
 } from "../../../../utils/idps";
+import LoadingComponent from "../../../fci/components/LoadingComponent";
 import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { Tags } from "../../machine/tags";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
-  const machine = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
 
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
   const randomIdps = React.useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
     randomOrderIdps(idpValue)
+  );
+  const isLoading = ItWalletIssuanceMachineContext.useSelector(snap =>
+    snap.hasTag(Tags.Loading)
   );
 
   useFocusEffect(
@@ -32,8 +39,12 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   );
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
-    machine.send({ type: "identification.select-spid-idp", idp });
+    machineRef.send({ type: "identification.select-spid-idp", idp });
   };
+
+  if (isLoading) {
+    return <LoadingView />;
+  }
 
   return (
     <IOScrollViewWithLargeHeader title={{ label: "" }}>
@@ -45,4 +56,16 @@ export const ItwIdentificationIdpSelectionScreen = () => {
       />
     </IOScrollViewWithLargeHeader>
   );
+};
+
+const LoadingView = () => {
+  const navigation = useIONavigation();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  });
+
+  return <LoadingComponent captionTitle={I18n.t("global.genericWaiting")} />;
 };

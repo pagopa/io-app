@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * @deprecated This component wraps a `TopScreenComponent`, which in turn wraps a `BaseScreenComponent`
+ * which is marked as deprecated. Please read the `BaseScreenComponent` deprecation note
+ * to understand how to replace it.
+ */
 export default class DarkLayout extends React.Component<Props> {
   screenContent() {
     const wrapper = (children: React.ReactNode) =>
