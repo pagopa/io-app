@@ -41,7 +41,7 @@ const LogoutScreen = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // hard-logout
-  logout: () => dispatch(logoutRequest())
+  logout: () => dispatch(logoutRequest({ withApiCall: true }))
 });
 
 export default connect(undefined, mapDispatchToProps)(LogoutScreen);

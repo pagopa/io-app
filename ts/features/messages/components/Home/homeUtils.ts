@@ -3,6 +3,12 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { reloadAllMessages } from "../../store/actions";
 import { pageSize } from "../../../../config";
 import { MessageListCategory } from "../../types/messageListCategory";
+import { UIMessage } from "../../types";
+import I18n from "../../../../i18n";
+import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers/servicesById";
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
@@ -35,3 +41,31 @@ export const messageListCategoryToViewPageIndex = (
 export const messageViewPageIndexToListCategory = (
   pageIndex: number
 ): MessageListCategory => (pageIndex === 1 ? "ARCHIVE" : "INBOX");
+
+export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
+  I18n.t("messages.accessibility.message.description", {
+    newMessage: I18n.t(
+      `messages.accessibility.message.${message.isRead ? "read" : "unread"}`
+    ),
+    organizationName: message.organizationName,
+    serviceName: message.serviceName,
+    subject: message.title,
+    receivedAt: convertReceivedDateToAccessible(message.createdAt),
+    state: ""
+  });
+
+export const messageListItemHeight = () => 130;
+
+export const getLoadServiceDetailsActionIfNeeded = (
+  state: GlobalState,
+  serviceId: ServiceId,
+  organizationFiscalCode?: string
+): ActionType<typeof loadServiceDetail.request> | undefined => {
+  if (!organizationFiscalCode) {
+    const isLoading = isLoadingServiceByIdSelector(state, serviceId);
+    if (!isLoading) {
+      return loadServiceDetail.request(serviceId);
+    }
+  }
+  return undefined;
+};

@@ -66,7 +66,7 @@ function* handleRefreshSessionToken(
     if (withUserInteraction) {
       yield* put(refreshTokenNoPinError());
     } else {
-      yield* put(logoutRequest());
+      yield* put(logoutRequest({ withApiCall: false }));
     }
     return;
   }

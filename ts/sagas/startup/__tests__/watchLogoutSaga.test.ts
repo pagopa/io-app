@@ -10,7 +10,7 @@ const logout = jest.fn();
 
 const takeCancellableAction = [logoutRequest, logoutSuccess, logoutFailure];
 
-const logoutRequestAct = logoutRequest();
+const logoutRequestAct = logoutRequest({ withApiCall: true });
 const logoutSuccessAct = logoutSuccess();
 const logoutFailureAct = logoutFailure({
   error: new Error()

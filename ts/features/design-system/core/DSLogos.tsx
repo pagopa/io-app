@@ -155,7 +155,6 @@ const renderAvatar = () => (
         {organizationsURIs.map(({ imageSource }, i) => (
           <React.Fragment key={i}>
             <Avatar
-              shape="square"
               size="small"
               logoUri={
                 imageSource
@@ -179,7 +178,6 @@ const renderAvatar = () => (
         {organizationsURIs.map(({ imageSource }, i) => (
           <React.Fragment key={i}>
             <Avatar
-              shape="square"
               size="medium"
               logoUri={
                 imageSource

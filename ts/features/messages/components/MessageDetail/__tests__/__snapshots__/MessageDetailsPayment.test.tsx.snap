@@ -780,6 +780,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
