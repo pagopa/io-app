@@ -1,28 +1,34 @@
 import React, { useCallback, useEffect } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from "react-native-reanimated";
 import {
   Divider,
   IOStyles,
   IOToast,
+  IOVisualCostants,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useHeaderHeight } from "@react-navigation/elements";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { ServicesParamsList } from "../../common/navigation/params";
-import { getLogoForInstitution } from "../../common/utils";
-import { ServiceListItemSkeleton } from "../components/ServiceListItemSkeleton";
-import { InstitutionServicesScreenComponent } from "../components/InstitutionServicesScreenComponent";
-import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
-import { useIODispatch } from "../../../../store/hooks";
-import { paginatedServicesGet } from "../store/actions";
+import { getLogoForInstitution } from "../../common/utils";
 import { InstitutionServicesFailure } from "../components/InstitutionServicesFailure";
+import { ServiceListSkeleton } from "../components/ServiceListSkeleton";
+import { useServicesFetcher } from "../hooks/useServicesFetcher";
+import { paginatedServicesGet } from "../store/actions";
 
 export type InstitutionServicesScreenRouteParams = {
   institutionId: string;
@@ -34,6 +40,17 @@ type InstitutionServicesScreen = IOStackNavigationRouteProps<
   "INSTITUTION_SERVICES"
 >;
 
+const scrollTriggerOffsetValue: number = 88;
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1
+  },
+  refreshControlContainer: {
+    zIndex: 1
+  }
+});
+
 export const InstitutionServicesScreen = ({
   navigation,
   route
@@ -43,17 +60,22 @@ export const InstitutionServicesScreen = ({
   const dispatch = useIODispatch();
   const isFirstRender = useFirstRender();
 
+  const headerHeight = useHeaderHeight();
+  const scrollTranslationY = useSharedValue(0);
+
   const {
     currentPage,
     data,
-    fetchServices,
+    fetchNextPage,
+    fetchPage,
     isError,
     isLoading,
     isUpdating,
-    refreshServices
+    isRefreshing,
+    refresh
   } = useServicesFetcher(institutionId);
 
-  useOnFirstRender(() => fetchServices(0));
+  useOnFirstRender(() => fetchPage(0));
 
   useEffect(() => {
     if (!!data && isError) {
@@ -65,6 +87,23 @@ export const InstitutionServicesScreen = ({
     dispatch(paginatedServicesGet.cancel());
     navigation.goBack();
   }, [dispatch, navigation]);
+
+  useHeaderSecondLevel({
+    goBack,
+    title: institutionName,
+    supportRequest: true,
+    transparent: true,
+    scrollValues: {
+      triggerOffset: scrollTriggerOffsetValue,
+      contentOffsetY: scrollTranslationY
+    },
+    headerShown: !!data || !isError
+  });
+
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    // eslint-disable-next-line functional/immutable-data
+    scrollTranslationY.value = event.contentOffset.y;
+  });
 
   const navigateToServiceDetails = useCallback(
     (service: ServiceMinified) =>
@@ -78,8 +117,8 @@ export const InstitutionServicesScreen = ({
   );
 
   const handleEndReached = useCallback(
-    () => fetchServices(currentPage + 1),
-    [currentPage, fetchServices]
+    () => fetchNextPage(currentPage + 1),
+    [currentPage, fetchNextPage]
   );
 
   const renderItem = useCallback(
@@ -93,73 +132,88 @@ export const InstitutionServicesScreen = ({
     [navigateToServiceDetails]
   );
 
-  const renderListFooterComponent = useCallback(() => {
-    if (isUpdating && currentPage > 0) {
+  const renderListEmptyComponent = useCallback(() => {
+    if (isFirstRender || isLoading) {
       return (
         <>
-          <ServiceListItemSkeleton />
-          <Divider />
-          <ServiceListItemSkeleton />
-          <Divider />
-          <ServiceListItemSkeleton />
+          <ServiceListSkeleton size={5} />
+          <VSpacer size={16} />
+        </>
+      );
+    }
+    return <></>;
+  }, [isFirstRender, isLoading]);
+
+  const renderListHeaderComponent = useCallback(() => {
+    if (isFirstRender || isLoading) {
+      return (
+        <>
+          <ServicesHeaderSection isLoading={true} />
+          <VSpacer size={16} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <ServicesHeaderSection
+          logoUri={getLogoForInstitution(institutionId)}
+          title={institutionName}
+          subTitle={I18n.t("services.institution.header.subtitle", {
+            count: data?.count ?? 0
+          })}
+        />
+        <VSpacer size={16} />
+      </>
+    );
+  }, [data?.count, isFirstRender, isLoading, institutionId, institutionName]);
+
+  const renderListFooterComponent = useCallback(() => {
+    if (isUpdating && !isRefreshing) {
+      return (
+        <>
+          <ServiceListSkeleton />
+          <VSpacer size={16} />
         </>
       );
     }
     return <VSpacer size={16} />;
-  }, [currentPage, isUpdating]);
-
-  if (isFirstRender || isLoading) {
-    return (
-      <InstitutionServicesScreenComponent
-        goBack={goBack}
-        refreshing={isUpdating}
-      >
-        <ServicesHeaderSection isLoading={true} />
-        <VSpacer size={16} />
-        <FlatList
-          ItemSeparatorComponent={() => <Divider />}
-          contentContainerStyle={IOStyles.horizontalContentPadding}
-          data={Array.from({ length: 5 })}
-          keyExtractor={(_, index) => `service-placeholder-${index}`}
-          renderItem={() => <ServiceListItemSkeleton />}
-          scrollEnabled={false}
-          testID="intitution-services-list-skeleton"
-        />
-      </InstitutionServicesScreenComponent>
-    );
-  }
+  }, [isUpdating, isRefreshing]);
 
   if (!data && isError) {
-    return <InstitutionServicesFailure onRetry={() => fetchServices(0)} />;
+    return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
   }
 
+  const refreshControl = (
+    <RefreshControl
+      onRefresh={refresh}
+      progressViewOffset={headerHeight}
+      refreshing={isRefreshing}
+      style={styles.refreshControlContainer}
+    />
+  );
+
   return (
-    <InstitutionServicesScreenComponent
-      goBack={goBack}
-      title={institutionName}
-      refreshing={isUpdating}
-      onRefresh={refreshServices}
-    >
-      <ServicesHeaderSection
-        logoUri={getLogoForInstitution(institutionId)}
-        title={institutionName}
-        subTitle={I18n.t("services.institution.header.subtitle", {
-          count: data?.count ?? 0
-        })}
-      />
-      <VSpacer size={16} />
-      <FlatList
-        ItemSeparatorComponent={() => <Divider />}
-        ListFooterComponent={renderListFooterComponent}
-        contentContainerStyle={IOStyles.horizontalContentPadding}
-        data={data?.services || []}
-        keyExtractor={(item, index) => `service-${item.id}-${index}`}
-        renderItem={renderItem}
-        onEndReached={handleEndReached}
-        onEndReachedThreshold={0.001}
-        scrollEnabled={false}
-        testID="intitution-services-list"
-      />
-    </InstitutionServicesScreenComponent>
+    <Animated.FlatList
+      onScroll={scrollHandler}
+      ItemSeparatorComponent={() => <Divider />}
+      ListEmptyComponent={renderListEmptyComponent}
+      ListHeaderComponent={renderListHeaderComponent}
+      ListHeaderComponentStyle={{
+        marginHorizontal: -IOVisualCostants.appMarginDefault
+      }}
+      ListFooterComponent={renderListFooterComponent}
+      contentContainerStyle={[
+        styles.contentContainer,
+        IOStyles.horizontalContentPadding
+      ]}
+      data={data?.services || []}
+      keyExtractor={(item, index) => `service-${item.id}-${index}`}
+      onEndReached={handleEndReached}
+      onEndReachedThreshold={0.001}
+      renderItem={renderItem}
+      refreshControl={refreshControl}
+      testID="intitution-services-list"
+    />
   );
 };

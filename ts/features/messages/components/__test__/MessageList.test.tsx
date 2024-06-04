@@ -13,7 +13,7 @@ import {
   defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../__mocks__/messages";
-import MessageList from "../MessageList";
+import MessageList from "../Home/legacy";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 jest.useFakeTimers();

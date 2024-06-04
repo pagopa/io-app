@@ -12,7 +12,10 @@ import {
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
+  migrateToPaginatedMessages,
   reloadAllMessages,
+  resetMigrationStatus,
+  setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../../actions";
@@ -23,8 +26,19 @@ import reducer, {
   isLoadingInboxPreviousPage,
   AllPaginated,
   isLoadingInboxNextPage,
-  isLoadingOrUpdatingInbox
+  isLoadingOrUpdatingInbox,
+  shownMessageCategorySelector,
+  MessagePagePot,
+  messageListForCategorySelector,
+  MessagePage
 } from "../allPaginated";
+import { pageSize } from "../../../../../config";
+import { UIMessage } from "../../../types";
+import { clearCache } from "../../../../../store/actions/profile";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { MessageListCategory } from "../../../types/messageListCategory";
+import { emptyMessageArray } from "../../../utils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -480,6 +494,232 @@ describe("allPaginated reducer", () => {
     });
   });
 
+  describe("when `setShownMessageCategoryAction` is received", () => {
+    it("should change from INBOX to ARCHIVE", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("INBOX");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should change from ARCHIVE to INBOX", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("ARCHIVE");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("INBOX");
+    });
+    it("should stay ARCHIVE", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("ARCHIVE");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should stay INBOX", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("INBOX");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("INBOX");
+    });
+  });
+
+  describe("when an action that is not `setShownMessageCategoryAction` is received", () => {
+    const allPaginatedInitialState = () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("ARCHIVE");
+      return allPaginatedInitialState;
+    };
+    it("should keep its `showCategory` value (reloadAllMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        reloadAllMessages.request({ pageSize, filter: { getArchived: true } })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (reloadAllMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        reloadAllMessages.success({
+          messages: [],
+          filter: { getArchived: true },
+          pagination: {}
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (reloadAllMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        reloadAllMessages.failure({
+          error: new Error(""),
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (loadNextPageMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadNextPageMessages.request({
+          pageSize,
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadNextPageMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadNextPageMessages.success({
+          messages: [],
+          filter: { getArchived: true },
+          pagination: {}
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadNextPageMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadNextPageMessages.failure({
+          error: new Error(""),
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (loadPreviousPageMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadPreviousPageMessages.request({
+          pageSize,
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadPreviousPageMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadPreviousPageMessages.success({
+          messages: [],
+          filter: { getArchived: true },
+          pagination: {}
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadPreviousPageMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadPreviousPageMessages.failure({
+          error: new Error(""),
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (upsertMessageStatusAttributes.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        upsertMessageStatusAttributes.request({
+          message: { isRead: true } as UIMessage,
+          update: { isArchived: false, tag: "bulk" }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (upsertMessageStatusAttributes.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        upsertMessageStatusAttributes.success({
+          message: { isRead: true } as UIMessage,
+          update: { isArchived: false, tag: "bulk" }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (upsertMessageStatusAttributes.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        upsertMessageStatusAttributes.failure({
+          error: new Error(""),
+          payload: {
+            message: { isRead: true } as UIMessage,
+            update: { isArchived: false, tag: "bulk" }
+          }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (migrateToPaginatedMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        migrateToPaginatedMessages.request({})
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (migrateToPaginatedMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        migrateToPaginatedMessages.success(0)
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (migrateToPaginatedMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        migrateToPaginatedMessages.failure({ failed: [], succeeded: [] })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (resetMigrationStatus)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        resetMigrationStatus()
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (clearCache)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        clearCache()
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+  });
+
   [
     [
       reloadAllMessages.request(defaultRequestPayload),
@@ -518,7 +758,8 @@ describe("allPaginated reducer", () => {
 const defaultState: AllPaginated = {
   inbox: { data: pot.none, lastRequest: O.none },
   archive: { data: pot.none, lastRequest: O.none },
-  migration: O.none
+  migration: O.none,
+  shownCategory: "INBOX"
 };
 
 function toGlobalState(localState: AllPaginated): GlobalState {
@@ -1105,3 +1346,118 @@ describe("Message state upsert", () => {
     });
   });
 });
+
+describe("shownMessageCategorySelector", () => {
+  it("should return INBOX for the initial state", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const shownCategory = shownMessageCategorySelector(globalState);
+    expect(shownCategory).toBe("INBOX");
+  });
+  it("should return INBOX when shownCategory is INBOX", () => {
+    const globalState = appReducer(
+      undefined,
+      setShownMessageCategoryAction("INBOX")
+    );
+    const shownCategory = shownMessageCategorySelector(globalState);
+    expect(shownCategory).toBe("INBOX");
+  });
+  it("should return ARCHIVE when shownCategory is ARCHIVE", () => {
+    const globalState = appReducer(
+      undefined,
+      setShownMessageCategoryAction("ARCHIVE")
+    );
+    const shownCategory = shownMessageCategorySelector(globalState);
+    expect(shownCategory).toBe("ARCHIVE");
+  });
+});
+
+describe("messageListForCategorySelector", () => {
+  const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  categories.forEach(category => {
+    it(`for ${category} category, data pot.none, should return emptyMessageArray reference`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.none
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(emptyMessageArray);
+    });
+    it(`for ${category} category, data pot.noneLoading, should return undefined`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneLoading
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBeUndefined();
+    });
+    it(`for ${category} category, data pot.noneUpdating, should return undefined`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneUpdating({} as MessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBeUndefined();
+    });
+    it(`for ${category} category, data pot.noneError, should return emptyMessageArray reference`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneError("")
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(emptyMessageArray);
+    });
+    it(`for ${category} category, data pot.some, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.some(messagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+    it(`for ${category} category, data pot.someLoading, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someLoading(messagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+    it(`for ${category} category, data pot.someUpdating, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someUpdating(messagePage, {} as MessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+    it(`for ${category} category, data pot.someError, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someError(messagePage, "")
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyMessageList);
+    });
+  });
+});
+
+const generateAllPaginatedDataStateForCategory = (
+  category: MessageListCategory,
+  data: MessagePagePot
+): GlobalState =>
+  ({
+    entities: {
+      messages: {
+        allPaginated: {
+          inbox: category === "INBOX" ? { data } : { data: pot.none },
+          archive: category === "ARCHIVE" ? { data } : { data: pot.none }
+        }
+      }
+    }
+  } as GlobalState);
+
+const readonlyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
+
+const messagePage = {
+  page: readonlyMessageList
+} as MessagePage;
