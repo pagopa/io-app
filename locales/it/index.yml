@@ -2133,6 +2133,11 @@ services:
       retry: "Riprova"
     header:
       subtitle: "{{count}} servizi disponibili"
+  search:
+    input:
+      placeholder: "Cerca un ente nazionale o locale"
+    emptyState:
+      title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -3156,10 +3161,7 @@ features:
         secondaryAction: Ho fatto
     issuance:
       credentialPreview:
-        title: "Ecco un’anteprima della tua tessera"
-        subtitle:
-          "Prima di aggiungerla, verifica che tutte le informazioni siano
-          corrette."
+        title: "{{credential}}: ecco l'anteprima"
         banner:
           title: "Qualcosa non torna?"
           content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
@@ -3174,6 +3176,9 @@ features:
         toast:
           success: "Tessera aggiunta!"
           failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
+        actions:
+          primary: Aggiungi al portafoglio
+          secondary: Annulla
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3809,3 +3814,10 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
+FIMS: 
+  loadingScreen:
+    consents:
+      title: "Attendi qualche secondo"
+    in-app-browser:
+      title: "Ti stiamo indirizzando al servizio"
+      subtitle: "Attendi qualche secondo"
