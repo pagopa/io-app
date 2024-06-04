@@ -57,7 +57,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const isIOSVersionLessThan14 =
-  Platform.OS === "ios" && parseInt(Platform.Version as string, 10) > 14;
+  Platform.OS === "ios" && parseInt(Platform.Version as string, 10) < 14;
 
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
