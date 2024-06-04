@@ -49,7 +49,9 @@ export const loginFailure = createStandardAction("LOGIN_FAILURE")<{
   idp: keyof IdpData | undefined;
 }>();
 
-export const logoutRequest = createStandardAction("LOGOUT_REQUEST")();
+export const logoutRequest = createStandardAction("LOGOUT_REQUEST")<{
+  withApiCall: boolean;
+}>();
 
 export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")();
 
