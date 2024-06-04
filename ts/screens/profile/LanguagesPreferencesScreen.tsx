@@ -8,12 +8,19 @@ import {
   RadioItem,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { createRef, useCallback, useEffect, useState } from "react";
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Alert, View } from "react-native";
 import { pot } from "@pagopa/ts-commons";
+import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n, { availableTranslations } from "../../i18n";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
@@ -40,10 +47,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const LanguagesPreferencesScreen = () => {
   const viewRef = createRef<View>();
   const dispatch = useIODispatch();
+  const selectedLanguage = useRef<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
-  const profile = useIOSelector(profileSelector);
+  const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
-  const preferredLanguageSelect = useIOSelector(preferredLanguageSelector);
+  const preferredLanguageSelect = useIOSelector(
+    preferredLanguageSelector,
+    _.isEqual
+  );
   const preferredLanguage = pipe(
     preferredLanguageSelect,
     O.getOrElse(() => "it")
@@ -93,18 +104,30 @@ const LanguagesPreferencesScreen = () => {
     }
 
     // update completed
-    if (prevProfile && pot.isUpdating(prevProfile) && pot.isSome(profile)) {
+    if (
+      prevProfile &&
+      pot.isUpdating(prevProfile) &&
+      pot.isSome(profile) &&
+      !pot.isError(profile)
+    ) {
       setIsLoading(false);
       preferredLanguageSaveSuccessDispatch(selectedItem as Locales);
+      setSelectedItem(selectedLanguage.current);
       return;
     }
 
     // update error
-    if (prevProfile && pot.isUpdating(prevProfile) && pot.isError(profile)) {
+    if (
+      prevProfile &&
+      pot.isSome(prevProfile) &&
+      !pot.isError(prevProfile) &&
+      pot.isError(profile)
+    ) {
       setIsLoading(false);
       IOToast.error(I18n.t("errors.profileUpdateError"));
     }
   }, [
+    selectedLanguage,
     preferredLanguageSaveSuccessDispatch,
     prevProfile,
     profile,
@@ -129,7 +152,8 @@ const LanguagesPreferencesScreen = () => {
               text: I18n.t("global.buttons.confirm"),
               style: "default",
               onPress: () => {
-                setSelectedItem(language);
+                // eslint-disable-next-line functional/immutable-data
+                selectedLanguage.current = language;
                 upsertProfile(language as Locales);
               }
             }
