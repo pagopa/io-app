@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
-import * as Either from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import messageListData, {
@@ -23,6 +24,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
 import { foldK } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
+import { TranslationKeys } from "../../../../../locales/locales";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -56,10 +58,7 @@ export type MessageOperationFailure = {
 export type AllPaginated = {
   archive: Collection;
   inbox: Collection;
-  latestMessageOperation?: Either.Either<
-    MessageOperationFailure,
-    MessageOperation
-  >;
+  latestMessageOperation?: E.Either<MessageOperationFailure, MessageOperation>;
   migration: MigrationStatus;
   shownCategory: MessageListCategory;
 };
@@ -502,7 +501,7 @@ const reduceUpsertMessageStatusAttributes = (
               ...state,
               archive: remove(message, state.archive),
               inbox: insert(message, state.inbox),
-              latestMessageOperation: Either.left({
+              latestMessageOperation: E.left({
                 operation: "archive",
                 error: action.payload.error
               })
@@ -512,7 +511,7 @@ const reduceUpsertMessageStatusAttributes = (
               ...state,
               archive: insert(message, state.archive),
               inbox: remove(message, state.inbox),
-              latestMessageOperation: Either.left({
+              latestMessageOperation: E.left({
                 operation: "restore",
                 error: action.payload.error
               })
@@ -528,7 +527,7 @@ const reduceUpsertMessageStatusAttributes = (
       if (update.tag === "bulk" || update.tag === "archiving") {
         return {
           ...state,
-          latestMessageOperation: Either.right(
+          latestMessageOperation: E.right(
             update.isArchived ? "archive" : "restore"
           )
         };
@@ -745,6 +744,83 @@ export const messageListForCategorySelector = (
       messagePage => messagePage.page,
       (messagePage, _) => messagePage.page,
       (messagePage, _) => messagePage.page
+    )
+  );
+
+export const latestMessageOperationTranslationKeySelector = (
+  state: GlobalState
+): TranslationKeys | undefined =>
+  pipe(
+    state.entities.messages.allPaginated.latestMessageOperation,
+    O.fromNullable,
+    O.map(latestMessageOperation =>
+      pipe(
+        latestMessageOperation,
+        E.fold(
+          failure =>
+            pipe(
+              failure.operation === "archive",
+              B.fold(
+                () => "messages.operations.restore.failure" as const,
+                () => "messages.operations.archive.failure" as const
+              )
+            ),
+          successOperation =>
+            pipe(
+              successOperation === "archive",
+              B.fold(
+                () => "messages.operations.restore.success" as const,
+                () => "messages.operations.archive.success" as const
+              )
+            )
+        )
+      )
+    ),
+    O.toUndefined
+  );
+
+export const latestMessageOperationToastTypeSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.allPaginated.latestMessageOperation,
+    O.fromNullable,
+    O.map(latestMessageOperation =>
+      pipe(
+        latestMessageOperation,
+        E.fold(
+          _ => "error" as const,
+          _ => "success" as const
+        )
+      )
+    ),
+    O.toUndefined
+  );
+
+export const inboxMessagesErrorMessageSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.allPaginated.inbox.data,
+    messagePotToToastReportableErrorOrUndefined
+  );
+
+export const archiveMessagesErrorMessageSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.allPaginated.archive.data,
+    messagePotToToastReportableErrorOrUndefined
+  );
+
+const messagePotToToastReportableErrorOrUndefined = (
+  messagePagePot: MessagePagePot
+) =>
+  pipe(
+    messagePagePot,
+    foldK(
+      () => undefined,
+      () => undefined,
+      _ => undefined,
+      _ => undefined,
+      _ => undefined,
+      _ => undefined,
+      (_currentValue, _newValue) => undefined,
+      (_value, errorString) => errorString
     )
   );
 
