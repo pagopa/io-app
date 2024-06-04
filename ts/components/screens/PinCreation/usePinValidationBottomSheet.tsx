@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import { BulletList } from "../../BulletList";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 
 const BottomSheetContent = memo(() => {
   const { bottom } = useSafeAreaInsets();
