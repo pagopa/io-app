@@ -20,30 +20,38 @@ import { resetMixpanelSaga } from "../mixpanel";
 
 export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],
-  _: ActionType<typeof logoutRequest>
+  logoutAction: ActionType<typeof logoutRequest>
 ) {
+  const { withApiCall } = logoutAction.payload;
   // Issue a logout request to the backend, asking to delete the session
   // FIXME: if there's no connectivity to the backend, this request will
   //        block for a while.
   try {
-    const response: SagaCallReturnType<typeof logout> = yield* call(logout, {});
-    if (E.isRight(response)) {
-      if (response.right.status === 200) {
-        yield* put(logoutSuccess());
+    if (withApiCall) {
+      const response: SagaCallReturnType<typeof logout> = yield* call(
+        logout,
+        {}
+      );
+      if (E.isRight(response)) {
+        if (response.right.status === 200) {
+          yield* put(logoutSuccess());
+        } else {
+          // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
+          const error = Error(
+            response.right.status === 500 && response.right.value.title
+              ? response.right.value.title
+              : "Unknown error"
+          );
+          yield* put(logoutFailure({ error }));
+        }
       } else {
-        // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
-        const error = Error(
-          response.right.status === 500 && response.right.value.title
-            ? response.right.value.title
-            : "Unknown error"
-        );
-        yield* put(logoutFailure({ error }));
+        const logoutError = {
+          error: Error(readableReport(response.left))
+        };
+        yield* put(logoutFailure(logoutError));
       }
     } else {
-      const logoutError = {
-        error: Error(readableReport(response.left))
-      };
-      yield* put(logoutFailure(logoutError));
+      yield* put(logoutSuccess());
     }
   } catch (e) {
     const logoutError = {
