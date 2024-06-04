@@ -34,7 +34,7 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-import { WalletClientStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
+import { getLatestUsedWallet } from "../../utils";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -133,19 +133,9 @@ const reducer = (
       return {
         ...state,
         userWallets: pot.some(action.payload),
-        selectedWallet: O.fromNullable(
-          action.payload?.wallets
-            ?.filter(
-              wallet =>
-                wallet.clients.IO.status === WalletClientStatusEnum.ENABLED
-            )
-            .reduce((acc, curr) =>
-              acc.clients.IO?.lastUsage &&
-              curr.clients.IO?.lastUsage &&
-              acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
-                ? acc
-                : curr
-            )
+        selectedWallet: pipe(
+          O.fromNullable(action.payload.wallets),
+          O.chain(getLatestUsedWallet)
         )
       };
     case getType(paymentsGetPaymentUserMethodsAction.failure):

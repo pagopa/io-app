@@ -4,8 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
-import { WalletClientStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
-import { isValidPaymentMethod } from "../../utils";
+import { getLatestUsedWallet, isValidPaymentMethod } from "../../utils";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { selectPaymentsCheckoutState, walletPaymentDetailsSelector } from ".";
 
@@ -18,24 +17,7 @@ export const walletPaymentUserWalletsSelector = createSelector(
 export const walletPaymentUserWalletLastUpdatedSelector = createSelector(
   walletPaymentUserWalletsSelector,
   userWalletsPot =>
-    pipe(
-      userWalletsPot,
-      pot.toOption,
-      O.map(userWallets =>
-        userWallets.filter(
-          wallet => wallet.clients.IO?.status === WalletClientStatusEnum.ENABLED
-        )
-      ),
-      O.map(userWallets =>
-        userWallets.reduce((acc, curr) =>
-          acc.clients.IO?.lastUsage &&
-          curr.clients.IO?.lastUsage &&
-          acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
-            ? acc
-            : curr
-        )
-      )
-    )
+    pipe(userWalletsPot, pot.toOption, O.chain(getLatestUsedWallet))
 );
 
 export const walletPaymentAllMethodsSelector = createSelector(
