@@ -32,8 +32,7 @@ const BottomSheetContent = memo(() => {
 });
 
 export default () =>
-  useIOBottomSheetModal({
+ useIOBottomSheetAutoresizableModal({
     title: I18n.t("onboarding.pin.policy.title"),
-    component: <BottomSheetContent />,
-    snapPoint: [300]
+    component: <BottomSheetContent />
   });
