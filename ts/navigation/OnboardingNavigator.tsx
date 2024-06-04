@@ -45,7 +45,6 @@ const OnboardingNavigator = () => (
       component={OnboardingTosScreen}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
       name={ROUTES.ONBOARDING_PIN}
       component={OnboardingPinScreen}
     />
