@@ -16,9 +16,9 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
+import { getLogoForInstitution } from "../../common/utils";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
-import { logoForInstitution } from "../utils";
 import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
 
@@ -112,7 +112,7 @@ export const ServicesHomeScreen = () => {
         onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
-          logoUri: logoForInstitution(item)
+          logoUri: getLogoForInstitution(item.fiscal_code)
         }}
       />
     ),

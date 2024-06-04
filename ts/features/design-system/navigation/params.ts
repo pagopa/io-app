@@ -45,5 +45,4 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_STICKY.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route]: undefined;
 };
