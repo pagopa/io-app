@@ -66,15 +66,16 @@ export const InstitutionServicesScreen = ({
   const {
     currentPage,
     data,
-    fetchServices,
+    fetchNextPage,
+    fetchPage,
     isError,
     isLoading,
     isUpdating,
     isRefreshing,
-    refreshServices
+    refresh
   } = useServicesFetcher(institutionId);
 
-  useOnFirstRender(() => fetchServices(0));
+  useOnFirstRender(() => fetchPage(0));
 
   useEffect(() => {
     if (!!data && isError) {
@@ -116,8 +117,8 @@ export const InstitutionServicesScreen = ({
   );
 
   const handleEndReached = useCallback(
-    () => fetchServices(currentPage + 1),
-    [currentPage, fetchServices]
+    () => fetchNextPage(currentPage + 1),
+    [currentPage, fetchNextPage]
   );
 
   const renderItem = useCallback(
@@ -180,12 +181,12 @@ export const InstitutionServicesScreen = ({
   }, [isUpdating, isRefreshing]);
 
   if (!data && isError) {
-    return <InstitutionServicesFailure onRetry={() => fetchServices(0)} />;
+    return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
   }
 
   const refreshControl = (
     <RefreshControl
-      onRefresh={refreshServices}
+      onRefresh={refresh}
       progressViewOffset={headerHeight}
       refreshing={isRefreshing}
       style={styles.refreshControlContainer}
