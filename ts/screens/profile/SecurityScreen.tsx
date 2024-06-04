@@ -186,16 +186,17 @@ const SecurityScreen = (): React.ReactElement => {
           </>
         )}
         {/* Enable/disable biometric recognition */}
-        <ListItemSwitch
-          label={I18n.t("profile.security.list.biometric_recognition.title")}
-          description={I18n.t(
-            "profile.security.list.biometric_recognition.subtitle"
-          )}
-          onSwitchValueChange={onSwitchValueChange}
-          value={isFingerprintEnabled}
-          disabled={!isFingerprintAvailable}
-          testID="biometric-recognition"
-        />
+        {isFingerprintAvailable && (
+          <ListItemSwitch
+            label={I18n.t("profile.security.list.biometric_recognition.title")}
+            description={I18n.t(
+              "profile.security.list.biometric_recognition.subtitle"
+            )}
+            onSwitchValueChange={onSwitchValueChange}
+            value={isFingerprintEnabled}
+            testID="biometric-recognition"
+          />
+        )}
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
