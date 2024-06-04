@@ -1,15 +1,14 @@
-import * as React from "react";
 import { ContentWrapper } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import * as React from "react";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
-import ItwMarkdown from "../components/ItwMarkdown";
-import { FooterStackButton } from "../../common/components/FooterStackButton";
-import { itwIssuanceMachine } from "../../machine/issuance/machine";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { FooterStackButton } from "../../common/components/FooterStackButton";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import ItwMarkdown from "../components/ItwMarkdown";
 
 /**
  * This is the screen that shows the information about the discovery process
