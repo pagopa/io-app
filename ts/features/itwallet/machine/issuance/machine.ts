@@ -12,6 +12,9 @@ const notImplemented = () => {
 
 export const itwIssuanceMachine = setup({
   types: {
+    children: {} as {
+      identificationMachine: "identificationMachine";
+    },
     context: {} as Context,
     events: {} as Events | IdentificationEvents
   },
@@ -108,11 +111,15 @@ export const itwIssuanceMachine = setup({
       invoke: {
         id: "identificationMachine",
         src: "identificationMachine",
+        systemId: "identificationMachine",
         onDone: {
           actions: assign(({ event }) => ({
             userToken: event.output.token
           })),
           target: "#itwIssuanceMachine.EidIssuance"
+        },
+        onError: {
+          target: "#itwIssuanceMachine.Failure"
         }
       },
       on: {

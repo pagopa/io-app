@@ -1,5 +1,6 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { useSelector } from "@xstate5/react";
 import React from "react";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
@@ -22,14 +23,15 @@ import { Tags } from "../../machine/tags";
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
   const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const isLoading = useSelector(
+    machineRef.getSnapshot().children.identificationMachine,
+    snap => snap?.hasTag(Tags.Loading)
+  );
 
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
   const randomIdps = React.useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
     randomOrderIdps(idpValue)
-  );
-  const isLoading = ItWalletIssuanceMachineContext.useSelector(snap =>
-    snap.hasTag(Tags.Loading)
   );
 
   useFocusEffect(

@@ -1,5 +1,6 @@
 import { assertEvent, assign, fromPromise, setup } from "xstate5";
 import { LocalIdpsFallback } from "../../../../utils/idps";
+import { Tags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { Events } from "./events";
 import { Output } from "./output";
@@ -65,6 +66,7 @@ export const itwIdentificationMachine = setup({
           }
         },
         IdpIdentification: {
+          tags: [Tags.Loading],
           invoke: {
             input: ({ event }) => {
               assertEvent(event, "identification.select-spid-idp");
