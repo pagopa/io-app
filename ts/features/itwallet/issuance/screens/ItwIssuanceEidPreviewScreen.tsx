@@ -16,9 +16,11 @@ import {
 } from "../../common/utils/itwErrorsUtils";
 import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItWalletIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
+  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
   const eidOption = O.some(ItwCredentialsMocks.eid);
 
   /**
@@ -65,7 +67,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
               label: I18n.t(
                 "features.itWallet.issuance.credentialPreview.actions.primary"
               ),
-              onPress: () => undefined
+              onPress: () => machineRef.send({ type: "add-to-wallet" })
             },
             secondary: {
               label: I18n.t(

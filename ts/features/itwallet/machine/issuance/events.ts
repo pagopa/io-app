@@ -30,6 +30,10 @@ export type RequestAssistance = {
   type: "request-assistance";
 };
 
+export type Back = {
+  type: "back";
+};
+
 export type Next = {
   type: "next";
 };
@@ -46,5 +50,6 @@ export type Events =
   | ConfirmIdentity
   | GoToWallet
   | RequestAssistance
+  | Back
   | Next
   | Close;

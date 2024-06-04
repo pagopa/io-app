@@ -5,7 +5,7 @@ import { Events } from "./events";
 import { Output } from "./output";
 
 const notImplemented = () => {
-  throw new Error();
+  throw new Error("Not implemented");
 };
 
 export const itwIdentificationMachine = setup({
@@ -37,7 +37,7 @@ export const itwIdentificationMachine = setup({
     ModeSelection: {
       entry: "navigateToIdentificationModeScreen",
       on: {
-        "select-mode": [
+        "identification.select-mode": [
           {
             guard: ({ event }) => event.mode === 0,
             target: "Spid"
@@ -59,7 +59,7 @@ export const itwIdentificationMachine = setup({
         IdpSelection: {
           entry: "navigateToIdpSelectionScreen",
           on: {
-            "select-spid-idp": {
+            "identification.select-spid-idp": {
               target: "IdpIdentification"
             }
           }
@@ -67,7 +67,7 @@ export const itwIdentificationMachine = setup({
         IdpIdentification: {
           invoke: {
             input: ({ event }) => {
-              assertEvent(event, "select-spid-idp");
+              assertEvent(event, "identification.select-spid-idp");
               return event.idp;
             },
             src: "showSpidIdentificationWebView",
@@ -85,7 +85,7 @@ export const itwIdentificationMachine = setup({
         RequestingPin: {
           entry: "navigateToCiePinInputScreen",
           on: {
-            "input-cie-pin": {
+            "identification.input-cie-pin": {
               target: "ReadingCard"
             }
           }
@@ -94,7 +94,7 @@ export const itwIdentificationMachine = setup({
           entry: "navigateToCieReadScreen",
           invoke: {
             input: ({ event }) => {
-              assertEvent(event, "input-cie-pin");
+              assertEvent(event, "identification.input-cie-pin");
               return event.pin;
             },
             src: "readCieCard",

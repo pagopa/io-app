@@ -18,11 +18,12 @@ import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const machine = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
 
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
@@ -44,7 +45,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    machine.send({ type: "identification.select-mode", mode: 0 });
+    machineRef.send({ type: "identification.select-mode", mode: 0 });
   };
 
   const handleCiePinPress = () => {
@@ -61,8 +62,13 @@ export const ItwIdentificationModeSelectionScreen = () => {
     Alert.alert("Not implemented");
   };
 
+  useNavigationSwipeBackListener(() => {
+    machineRef.send({ type: "back" });
+  });
+
   return (
     <RNavScreenWithLargeHeader
+      goBack={() => machineRef.send({ type: "back" })}
       title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
     >
       <ContentWrapper>

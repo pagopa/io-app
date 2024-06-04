@@ -18,10 +18,10 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
-  const machine = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
 
   useOnFirstRender(() => {
-    machine.send({ type: "start", credentialType: CredentialType.PID });
+    machineRef.send({ type: "start", credentialType: CredentialType.PID });
   });
 
   useHeaderSecondLevel({
@@ -39,7 +39,7 @@ const ItwDiscoveryInfoScreen = () => {
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: () => {
-              machine.send({ type: "accept-tos" });
+              machineRef.send({ type: "accept-tos" });
             }
           }}
           secondaryActionProps={{

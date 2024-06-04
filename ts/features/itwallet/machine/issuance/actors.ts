@@ -4,7 +4,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 export const createIssuanceActorsImplementation = () => {
   const checkUserOptIn = fromPromise<undefined>(async () => undefined);
-  const issueWalletAttestation = fromPromise<string>(async () => "pippo");
+  const issueWalletAttestation = fromPromise<string>(async () => "");
   const activateWalletAttestation = fromPromise<string>(async () => "");
   const requestEid = fromPromise<StoredCredential, string | undefined>(
     async () => ({} as StoredCredential)

@@ -7,7 +7,7 @@ import { Context, InitialContext } from "./context";
 import { Events } from "./events";
 
 const notImplemented = () => {
-  throw new Error();
+  throw new Error("Not implemented");
 };
 
 export const itwIssuanceMachine = setup({
@@ -116,6 +116,9 @@ export const itwIssuanceMachine = setup({
         }
       },
       on: {
+        back: {
+          target: "TosAcceptance"
+        },
         "identification.*": {
           actions: forwardTo("identificationMachine")
         }

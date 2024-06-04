@@ -17,7 +17,7 @@ export type SelectSpidIdp = {
 };
 
 export type InputCiePin = {
-  type: "identification-input-cie-pin";
+  type: "identification.input-cie-pin";
   pin: string;
 };
 

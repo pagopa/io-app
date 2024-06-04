@@ -1,10 +1,6 @@
 import { createActorContext } from "@xstate5/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
-import { lollipopKeyTagSelector } from "../../lollipop/store/reducers/lollipop";
 import { createIdentificationActionsImplementation } from "./identification/actions";
 import { createIdentificationActorsImplementation } from "./identification/actors";
 import { itwIdentificationMachine } from "./identification/machine";
@@ -21,20 +17,10 @@ export const ItWalletIssuanceMachineContext =
 
 export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
-  const dispatch = useIODispatch();
-
-  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
-  const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
-  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
 
   const identificationActions =
     createIdentificationActionsImplementation(navigation);
-  const identificationActors = createIdentificationActorsImplementation(
-    maybeKeyTag,
-    mixpanelEnabled,
-    isFastLogin,
-    dispatch
-  );
+  const identificationActors = createIdentificationActorsImplementation();
 
   const identificationMachine = itwIdentificationMachine.provide({
     actors: identificationActors,
