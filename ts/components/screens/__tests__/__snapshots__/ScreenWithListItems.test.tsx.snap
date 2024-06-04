@@ -451,6 +451,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         "lineHeight": 25,
                                       }
                                     }
+                                    role="heading"
                                     style={
                                       Array [
                                         Object {
@@ -2186,6 +2187,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         "lineHeight": 25,
                                       }
                                     }
+                                    role="heading"
                                     style={
                                       Array [
                                         Object {

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.61.0-rc.2](https://github.com/pagopa/io-app/compare/2.61.0-rc.1...2.61.0-rc.2) (2024-05-30)
+
+
+### Bug Fixes
+
+* [[IOBP-653](https://pagopa.atlassian.net/browse/IOBP-653)] Fix `TransactionSummaryScreen` visual issues ([#5805](https://github.com/pagopa/io-app/issues/5805)) ([13778b6](https://github.com/pagopa/io-app/commit/13778b6216ce746d9cc1fd169949f783d3c22ce7))
+
 ## [2.61.0-rc.1](https://github.com/pagopa/io-app/compare/2.61.0-rc.0...2.61.0-rc.1) (2024-05-29)
 
 

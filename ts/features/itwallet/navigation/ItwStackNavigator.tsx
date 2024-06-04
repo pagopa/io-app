@@ -1,10 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
-import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
+import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
+import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
+import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -32,6 +33,12 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
       component={ItwIdentificationIdpSelectionScreen}
+    />
+    {/* ISSUANCE */}
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
+      component={ItwIssuanceEidPreviewScreen}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );
