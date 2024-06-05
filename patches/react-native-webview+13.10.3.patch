@@ -1,7 +1,6 @@
 diff --git a/node_modules/react-native-webview/.DS_Store b/node_modules/react-native-webview/.DS_Store
 new file mode 100644
-index 0000000..10f4d43
-Binary files /dev/null and b/node_modules/react-native-webview/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java
 index 07f73fd..882b722 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java
@@ -18,13 +17,13 @@ index 07f73fd..882b722 100644
                  } else {
                      requestedAndroidPermissions.add(androidPermission);
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
-index 6664b6f..37f4a32 100644
+index 6664b6f..45fe5d2 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
 +++ b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
 @@ -70,6 +70,17 @@ public class RNCWebView extends WebView implements LifecycleEventListener {
      protected boolean nestedScrollEnabled = false;
      protected ProgressChangedFilter progressChangedFilter;
-  
+ 
 +    /**
 +     * It is impossibile to override WebView getSettings(), so RNCWebView has getCustomSettings()
 +     */
