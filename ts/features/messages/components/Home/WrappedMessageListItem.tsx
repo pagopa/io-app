@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import {
   useIODispatch,
   useIOSelector,
@@ -15,14 +15,19 @@ import {
   getLoadServiceDetailsActionIfNeeded
 } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 type WrappedMessageListItemProps = {
+  index: number;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
+  index,
   message
 }: WrappedMessageListItemProps) => {
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = message.serviceId;
@@ -64,18 +69,30 @@ export const WrappedMessageListItem = ({
     [message]
   );
 
+  const onPressCallback = useCallback(() => {
+    // TODO preconditions IOCOM-840
+    navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+      params: {
+        messageId: message.id,
+        fromNotification: false
+      }
+    });
+  }, [message, navigation]);
+
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
       serviceName={serviceName}
       messageTitle={messageTitle}
       onLongPress={() => undefined}
-      onPress={() => undefined}
+      onPress={onPressCallback}
       serviceLogos={serviceLogoUriSources}
       badgeText={badgeText}
       isRead={isRead}
       organizationName={organizationName}
       formattedDate={messageDate}
+      testID={`wrapped_message_list_item_${index}`}
     />
   );
 };

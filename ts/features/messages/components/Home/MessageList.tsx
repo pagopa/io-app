@@ -53,7 +53,7 @@ export const MessageList = ({ category }: MessageListProps) => {
         </View>
       )}
       ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
-      renderItem={({ item }) => {
+      renderItem={({ index, item }) => {
         if (typeof item === "number") {
           return (
             <MessageListItemSkeleton
@@ -61,7 +61,7 @@ export const MessageList = ({ category }: MessageListProps) => {
             />
           );
         } else {
-          return <WrappedMessageListItem message={item} />;
+          return <WrappedMessageListItem index={index} message={item} />;
         }
       }}
     />
