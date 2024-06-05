@@ -5,7 +5,7 @@ import {
   Divider,
   IOStyles,
   IOToast,
-  TextInput,
+  SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
@@ -134,18 +134,14 @@ export const SearchScreen = () => {
   return (
     <>
       <ContentWrapper>
-        <TextInput
+        <SearchInput
+          autoFocus
           accessibilityLabel={I18n.t("services.search.input.placeholder")}
-          icon="search"
-          value={query}
+          cancelButtonLabel={I18n.t("services.search.input.cancel")}
+          clearAccessibilityLabel={I18n.t("services.search.input.clear")}
           onChangeText={handleChangeText}
           placeholder={I18n.t("services.search.input.placeholder")}
-          textInputProps={{
-            autoCorrect: false,
-            inputMode: "search",
-            returnKeyType: "search"
-          }}
-          autoFocus={true}
+          value={query}
         />
         <VSpacer />
       </ContentWrapper>
