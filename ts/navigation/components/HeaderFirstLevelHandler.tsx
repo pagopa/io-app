@@ -9,10 +9,8 @@ import {
   useStartSupportRequest
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
-import { navigateToServicePreferenceScreen } from "../../store/actions/navigation";
 import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
@@ -78,8 +76,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isNewPaymentSectionEnabledSelector
   );
 
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
   const requestParams = useMemo(
     () =>
       pipe(
@@ -109,38 +105,25 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
-        if (isDesignSystemEnabled) {
-          return {
-            title: I18n.t("services.title"),
-            type: "threeActions",
-            firstAction: helpAction,
-            secondAction: {
-              icon: "coggle",
-              accessibilityLabel: I18n.t("global.buttons.edit"),
-              onPress: () => {
-                navigateToServicePreferenceScreen();
-              }
-            },
-            thirdAction: {
-              icon: "search",
-              accessibilityLabel: I18n.t("global.accessibility.search"),
-              onPress: () =>
-                navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-                  screen: SERVICES_ROUTES.SEARCH
-                })
-            }
-          };
-        }
         return {
           title: I18n.t("services.title"),
-          type: "twoActions",
+          type: "threeActions",
           firstAction: helpAction,
           secondAction: {
             icon: "coggle",
             accessibilityLabel: I18n.t("global.buttons.edit"),
-            onPress: () => {
-              navigateToServicePreferenceScreen();
-            }
+            onPress: () =>
+              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+              })
+          },
+          thirdAction: {
+            icon: "search",
+            accessibilityLabel: I18n.t("global.accessibility.search"),
+            onPress: () =>
+              navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+                screen: SERVICES_ROUTES.SEARCH
+              })
           }
         };
       case ROUTES.PROFILE_MAIN:
@@ -198,7 +181,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     presentWalletHomeHeaderBottomsheet,
     isNewWalletSectionEnabled,
     dispatch,
-    isDesignSystemEnabled,
     navigation
   ]);
 
