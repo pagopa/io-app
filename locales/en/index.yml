@@ -2153,7 +2153,7 @@ services:
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
-      title: "Enter at least three characters to search for the name of a national or local institution"
+      title: "Enter the name of an organization, national or local"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
