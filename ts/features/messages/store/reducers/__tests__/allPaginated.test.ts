@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { pot } from "@pagopa/ts-commons";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
   defaultRequestPayload,
