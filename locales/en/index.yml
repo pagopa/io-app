@@ -2156,7 +2156,7 @@ services:
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
-      title: "Enter the name of an institution, national or local"
+      title: "Enter the name of an institution,\nnational or local"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
