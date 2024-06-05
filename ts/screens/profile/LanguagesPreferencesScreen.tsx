@@ -17,7 +17,7 @@ import React, {
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Alert, View } from "react-native";
-import { pot } from "@pagopa/ts-commons";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n, { availableTranslations } from "../../i18n";
