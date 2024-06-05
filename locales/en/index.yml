@@ -484,7 +484,7 @@ profile:
     list:
       biometric_recognition:
         title: Biometric recognition
-        subtitle: Usa il volto o la tua impronta.
+        subtitle: Use your fingerprint or your face.
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
@@ -3269,8 +3269,8 @@ idpay:
         subtitle: Attendi qualche secondo
   code:
     reset:
-      title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica.
+      title: ID Pay code
+      body: The code to authorise payments made with your electronic identity card.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
