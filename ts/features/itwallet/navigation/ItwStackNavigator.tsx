@@ -6,6 +6,7 @@ import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/I
 import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
+import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -38,6 +39,11 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
       component={ItwIssuanceEidPreviewScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.RESULT}
+      component={ItwIssuanceEidResultScreen}
       options={{ headerShown: false }}
     />
   </Stack.Navigator>
