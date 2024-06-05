@@ -53,9 +53,13 @@ const LanguagesPreferencesScreen = () => {
     preferredLanguageSelector,
     _.isEqual
   );
-  const preferredLanguage = pipe(
-    preferredLanguageSelect,
-    O.getOrElse(() => "it")
+  const preferredLanguage = useMemo(
+    () =>
+      pipe(
+        preferredLanguageSelect,
+        O.getOrElse(() => "it")
+      ),
+    [preferredLanguageSelect]
   );
 
   const upsertProfile = useCallback(
