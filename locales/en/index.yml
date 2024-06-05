@@ -2154,7 +2154,7 @@ services:
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
-      title: "Enter the name of an organization, national or local"
+      title: "Enter the name of an institution, national or local"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2174,7 +2174,7 @@ services:
       phone: "Contact the institution"
       email: "Send email"
       pec: "Send PEC"
-      fiscalCode: "Organization's fiscal code"
+      fiscalCode: "Institution's fiscal code"
       address: "Address"
       serviceId: "Service ID"
     tosAndPrivacy:
@@ -2182,9 +2182,9 @@ services:
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
 serviceDetail:
-  fiscalCode: "Organization's fiscal code"
-  fiscalCodeAccessibility: "Organization's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
+  fiscalCode: "Institution's fiscal code"
+  fiscalCodeAccessibility: "Institution's fiscal code"
+  fiscalCodeAccessibilityCopy: "Copy Institution's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
