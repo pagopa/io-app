@@ -19,6 +19,7 @@ import {
   fastLoginReducer
 } from "../../../fastLogin/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
+import fimsReducer, { FimsState } from "../../../fims/store/reducers";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
 import itWalletReducer, {
   ItWalletState
@@ -32,18 +33,17 @@ import paymentsReducer, {
   PaymentsState
 } from "../../../payments/common/store/reducers";
 import { PnState, pnReducer } from "../../../pn/store/reducers";
-import servicesReducer, {
-  ServicesState
-} from "../../../services/common/store/reducers";
-import fimsReducer, { FimsState } from "../../../fims/store/reducers";
-import {
-  WhatsNewState,
-  whatsNewPersistor
-} from "../../../whatsnew/store/reducers";
 import {
   ProfileSettingsState,
   profileSettingsReducerPersistor
 } from "../../../profileSettings/store/reducers";
+import servicesReducer, {
+  ServicesState
+} from "../../../services/common/store/reducers";
+import {
+  WhatsNewState,
+  whatsNewPersistor
+} from "../../../whatsnew/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
