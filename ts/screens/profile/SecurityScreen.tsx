@@ -51,13 +51,14 @@ const SecurityScreen = (): React.ReactElement => {
   const isIdPayCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const navigation = useIONavigation();
-  const [isFingerprintAvailable, setIsFingerprintAvailable] = useState(false);
+  const [isBiometricDataAvailable, setIsBiometricDataAvailable] =
+    useState(false);
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
   useEffect(() => {
     getBiometricsType().then(
       biometricsType => {
-        setIsFingerprintAvailable(isBiometricsValidType(biometricsType));
+        setIsBiometricDataAvailable(isBiometricsValidType(biometricsType));
       },
       _ => undefined
     );
@@ -171,10 +172,10 @@ const SecurityScreen = (): React.ReactElement => {
           onPress={requestIdentificationAndResetPin}
           testID="reset-unlock-code"
         />
-        <Divider />
         {isIdPayEnabled && (
           /* Reset IDPay code */
           <>
+            <Divider />
             <ListItemNav
               value={I18n.t("idpay.code.reset.title")}
               accessibilityLabel={I18n.t("idpay.code.reset.title")}
@@ -182,20 +183,24 @@ const SecurityScreen = (): React.ReactElement => {
               onPress={idPayCodeHandler}
               testID="reset-idpay-code"
             />
-            <Divider />
           </>
         )}
         {/* Enable/disable biometric recognition */}
-        {isFingerprintAvailable && (
-          <ListItemSwitch
-            label={I18n.t("profile.security.list.biometric_recognition.title")}
-            description={I18n.t(
-              "profile.security.list.biometric_recognition.subtitle"
-            )}
-            onSwitchValueChange={onSwitchValueChange}
-            value={isFingerprintEnabled}
-            testID="biometric-recognition"
-          />
+        {isBiometricDataAvailable && (
+          <>
+            <Divider />
+            <ListItemSwitch
+              label={I18n.t(
+                "profile.security.list.biometric_recognition.title"
+              )}
+              description={I18n.t(
+                "profile.security.list.biometric_recognition.subtitle"
+              )}
+              onSwitchValueChange={onSwitchValueChange}
+              value={isFingerprintEnabled}
+              testID="biometric-recognition"
+            />
+          </>
         )}
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
