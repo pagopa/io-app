@@ -2153,6 +2153,8 @@ services:
   search:
     input:
       placeholder: "Search for a national or local institution"
+      cancel: "Cancel"
+      clear: "Clear"
     emptyState:
       title: "Enter at least three characters to search for the name of a national or local institution"
   details:

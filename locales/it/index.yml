@@ -2153,6 +2153,8 @@ services:
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
+      cancel: "Annulla"
+      clear: "Cancella"
     emptyState:
       title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
   details:

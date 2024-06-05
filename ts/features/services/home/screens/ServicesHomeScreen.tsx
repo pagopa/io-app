@@ -6,6 +6,7 @@ import {
   IOToast,
   ListItemHeader,
   ListItemNav,
+  SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
@@ -64,15 +65,32 @@ export const ServicesHomeScreen = () => {
     return <></>;
   }, [isFirstRender, isLoading]);
 
+  const navigateToSearch = useCallback(
+    () =>
+      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+        screen: SERVICES_ROUTES.SEARCH
+      }),
+    [navigation]
+  );
+
   const renderListHeaderComponent = useCallback(
     () => (
       <>
+        <SearchInput
+          accessibilityLabel={I18n.t("services.search.input.placeholder")}
+          cancelButtonLabel={I18n.t("services.search.input.cancel")}
+          clearAccessibilityLabel={I18n.t("services.search.input.clear")}
+          placeholder={I18n.t("services.search.input.placeholder")}
+          pressable={{
+            onPress: navigateToSearch
+          }}
+        />
         <FeaturedServiceList />
         <FeaturedInstitutionList />
         <ListItemHeader label={I18n.t("services.home.institutions.title")} />
       </>
     ),
-    []
+    [navigateToSearch]
   );
 
   const renderListFooterComponent = useCallback(() => {
