@@ -10,16 +10,19 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
-import { EidCardPreview } from "../../common/components/EidCardPreview";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
-import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwCredentialsMocks
+} from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { CredentialCard } from "../../common/components/CredentialCard";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
@@ -73,7 +76,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
         }}
       >
         <View style={styles.preview}>
-          <EidCardPreview />
+          <CredentialCard type={CredentialType.PID} isPreview={true} />
         </View>
         <View style={styles.dropShadow}>
           <VSpacer size={24} />

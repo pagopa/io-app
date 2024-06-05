@@ -24,8 +24,8 @@ import {
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
-import { EidCardPreview } from "../../itwallet/common/components/EidCardPreview";
-import { EidCard } from "../../itwallet/common/components/EidCard";
+import { CredentialCard } from "../../itwallet/common/components/CredentialCard";
+import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 
 const styles = StyleSheet.create({
   content: {
@@ -351,29 +351,32 @@ export const DSCards = () => (
     </DesignSystemSection>
     <DesignSystemSection title="eID">
       <DSComponentViewerBox name="Preview">
-        <EidCardPreview />
+        <CredentialCard type={CredentialType.PID} isPreview={true} />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
-        <EidCard name="Anna Verdi" fiscalCode="RSGMRT80A41H501X" />
+        <CredentialCard
+          type={CredentialType.PID}
+          data={["Anna Verdi", "RSGMRT80A41H501X"]}
+        />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Masked">
-        <EidCard
-          name="Anna Verdi"
-          fiscalCode="RSGMRT80A41H501X"
+        <CredentialCard
+          type={CredentialType.PID}
+          data={["Anna Verdi", "RSGMRT80A41H501X"]}
           isMasked={true}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
-        <EidCard
-          name="Anna Verdi"
-          fiscalCode="RSGMRT80A41H501X"
+        <CredentialCard
+          type={CredentialType.PID}
+          data={["Anna Verdi", "RSGMRT80A41H501X"]}
           status="expired"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
-        <EidCard
-          name="Anna Verdi"
-          fiscalCode="RSGMRT80A41H501X"
+        <CredentialCard
+          type={CredentialType.PID}
+          data={["Anna Verdi", "RSGMRT80A41H501X"]}
           status="pending"
         />
       </DSComponentViewerBox>
