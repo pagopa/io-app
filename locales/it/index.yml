@@ -613,14 +613,14 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
-  cie_errors: 
-    error_22: 
+  cie_errors:
+    error_22:
       title: Non hai dato il consenso all’invio dei dati
       subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni
-    generic: 
+    generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
   cie:
@@ -638,7 +638,7 @@ authentication:
       listItemTitle: "Come fare:"
       action: Apri Impostazioni
       listItemLabel1: Step 1
-      listItemValue1: Apri “Impostazioni” 
+      listItemValue1: Apri “Impostazioni”
       listItemLabel2: Step 2
       listItemValue2: Cerca la funzionalità “NFC”
       listItemLabel3: Step 3
@@ -675,7 +675,7 @@ authentication:
       button: "Scarica / Apri CieID"
     card:
       title: Appoggia la CIE sul retro del dispositivo
-      titleiOS: Appoggia la CIE sul dispositivo, in alto      
+      titleiOS: Appoggia la CIE sul dispositivo, in alto
       layCardMessageHeader: Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       layCardMessageHeaderiOS: Se la carta non viene letta, spostala in punti diversi e attendi qualche secondo.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
@@ -695,7 +695,7 @@ authentication:
         wrongPin2AttemptLeft: Il PIN non è corretto
         genericError: Si è verificato un errore imprevisto. Riprova.
       error:
-        readerCardLostTitle: Hai rimosso la carta troppo presto                
+        readerCardLostTitle: Hai rimosso la carta troppo presto
         onTagLost: Appoggia di nuovo la carta sul retro del dispositivo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
         generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
@@ -3172,6 +3172,9 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+      success:
+        title: "Hai aggiunto\nIdentità Digitale!"
+        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

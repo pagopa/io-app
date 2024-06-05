@@ -613,14 +613,14 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
-  cie_errors: 
-    error_22: 
+  cie_errors:
+    error_22:
       title: You haven't agreed to share your data
       subtitle: To enter, you must agree to share some data
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
-    generic: 
+    generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie:
@@ -638,7 +638,7 @@ authentication:
       listItemTitle: "How to do it::"
       action: Open Settings
       listItemLabel1: Step 1
-      listItemValue1: Open 'Settings' 
+      listItemValue1: Open 'Settings'
       listItemLabel2: Step 2
       listItemValue2: Search for ‘NFC’ functionality
       listItemLabel3: Step 3
@@ -673,7 +673,7 @@ authentication:
       title: Card temporarily locked
       content: !include cie/temporary_blocked_cie.md
       button: "Load/open CieID"
-    card:      
+    card:
       title: Hold your CIE on the back of your phone
       titleiOS: Place the CIE on your phone, on top.
       layCardMessageHeader: If the reading doesn't start, move the card to different places and wait a few seconds until you feel a vibration.
@@ -695,7 +695,7 @@ authentication:
         wrongPin2AttemptLeft: Wrong PIN
         genericError: Something went wrong! Please try again.
       error:
-        readerCardLostTitle: You removed the card too soon.                
+        readerCardLostTitle: You removed the card too soon.
         onTagLost: Place the card on the back of the device again.
         tryAgain: Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!
         generic: Something did not work as expected while we read your CIE.
@@ -3172,6 +3172,9 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+      success:
+        title: "Hai aggiunto\nIdentità Digitale!"
+        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
