@@ -1,8 +1,6 @@
 import {
   Banner,
-  Body,
   ContentWrapper,
-  H2,
   IOToast,
   RadioGroup,
   RadioItem,
@@ -12,10 +10,10 @@ import React, {
   createRef,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Alert, View } from "react-native";
@@ -23,7 +21,6 @@ import { pot } from "@pagopa/ts-commons";
 import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n, { availableTranslations } from "../../i18n";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
 import { Locales, TranslationKeys } from "../../../locales/locales";
@@ -34,6 +31,7 @@ import { usePrevious } from "../../utils/hooks/usePrevious";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../utils/url";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -80,19 +78,22 @@ const LanguagesPreferencesScreen = () => {
     [dispatch]
   );
 
-  const renderedItem: Array<RadioItem<string>> = availableTranslations.map(
-    item => ({
-      value: I18n.t(`locales.${item}`, {
-        defaultValue: item
-      }),
-      id: item,
-      techName: `${item}-${item.toUpperCase()}`
-    })
+  const renderedItem: Array<RadioItem<string>> = useMemo(
+    () =>
+      availableTranslations.map(item => ({
+        value: I18n.t(`locales.${item}`, {
+          defaultValue: item
+        }),
+        id: item,
+        techName: `${item}-${item.toUpperCase()}`
+      })),
+    []
   );
 
-  const initialSelectedItem = renderedItem.find(
-    item => item.id === preferredLanguage
-  )?.id;
+  const initialSelectedItem = useMemo(
+    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
+    [preferredLanguage, renderedItem]
+  );
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
 
@@ -165,22 +166,20 @@ const LanguagesPreferencesScreen = () => {
     [selectedItem, upsertProfile]
   );
 
-  useHeaderSecondLevel({
-    title: "",
-    contextualHelpMarkdown,
-    canGoBack: true,
-    supportRequest: true
-  });
-
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <SafeAreaView edges={["bottom"]}>
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("profile.preferences.list.preferred_language.title")
+        }}
+        description={I18n.t(
+          "profile.preferences.list.preferred_language.subtitle"
+        )}
+        canGoback={true}
+        headerActionsProp={{ showHelp: true }}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+      >
         <ContentWrapper>
-          <H2>{I18n.t("profile.preferences.list.preferred_language.title")}</H2>
-          <VSpacer size={16} />
-          <Body>
-            {I18n.t("profile.preferences.list.preferred_language.subtitle")}
-          </Body>
           <VSpacer size={16} />
           <RadioGroup<string>
             type="radioListItem"
@@ -189,7 +188,6 @@ const LanguagesPreferencesScreen = () => {
             onPress={onLanguageSelected}
           />
           <VSpacer size={16} />
-
           <Banner
             viewRef={viewRef}
             color="neutral"
@@ -206,7 +204,7 @@ const LanguagesPreferencesScreen = () => {
             }
           />
         </ContentWrapper>
-      </SafeAreaView>
+      </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );
 };

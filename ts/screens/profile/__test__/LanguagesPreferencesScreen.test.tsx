@@ -34,11 +34,16 @@ describe("ActivateNfcScreen", () => {
         return null;
       });
 
-      const { getByText, getByTestId, toJSON } = renderComponent();
-
+      const { getByText, getByTestId, queryAllByText, toJSON } =
+        renderComponent();
       expect(
-        getByText(I18n.t("profile.preferences.list.preferred_language.title"))
-      ).toBeTruthy();
+        // With the new navbar we have two titles.
+        // The second one is the larger one.
+        // The first one is the smaller one that is shown when scrolling.
+        queryAllByText(
+          I18n.t("profile.preferences.list.preferred_language.title")
+        )[1]
+      ).not.toBeNull();
       expect(
         getByText(
           I18n.t("profile.preferences.list.preferred_language.subtitle")
