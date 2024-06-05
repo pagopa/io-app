@@ -50,7 +50,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       weight="Regular"
       weightColorFactory={[Function]}
     >
-      Organization's Fiscal Code
+      Institution's Fiscal Code
     </Text>
     <View
       style={

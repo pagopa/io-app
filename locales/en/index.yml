@@ -2156,7 +2156,7 @@ services:
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
-      title: "Enter at least three characters to search for the name of a national or local institution"
+      title: "Enter the name of an institution,\nnational or local"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2176,7 +2176,7 @@ services:
       phone: "Contact the institution"
       email: "Send email"
       pec: "Send PEC"
-      fiscalCode: "Organization's fiscal code"
+      fiscalCode: "Institution's fiscal code"
       address: "Address"
       serviceId: "Service ID"
     tosAndPrivacy:
@@ -2184,9 +2184,9 @@ services:
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
 serviceDetail:
-  fiscalCode: "Organization's fiscal code"
-  fiscalCodeAccessibility: "Organization's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
+  fiscalCode: "Institution's fiscal code"
+  fiscalCodeAccessibility: "Institution's fiscal code"
+  fiscalCodeAccessibilityCopy: "Copy Institution's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
