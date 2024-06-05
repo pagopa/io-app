@@ -1,15 +1,17 @@
-import React, { useCallback, useEffect } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import {
+  ButtonLink,
   Divider,
   IOStyles,
   IOToast,
   ListItemHeader,
   ListItemNav,
+  SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import React, { useCallback, useEffect } from "react";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -17,10 +19,10 @@ import { InstitutionListSkeleton } from "../../common/components/InstitutionList
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { getLogoForInstitution } from "../../common/utils";
-import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
-import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
+import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
+import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -38,6 +40,7 @@ export const ServicesHomeScreen = () => {
     data,
     fetchInstitutions,
     isError,
+    isLastPage,
     isLoading,
     isUpdating,
     isRefreshing,
@@ -64,23 +67,56 @@ export const ServicesHomeScreen = () => {
     return <></>;
   }, [isFirstRender, isLoading]);
 
+  const navigateToSearch = useCallback(
+    () =>
+      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+        screen: SERVICES_ROUTES.SEARCH
+      }),
+    [navigation]
+  );
+
   const renderListHeaderComponent = useCallback(
     () => (
       <>
+        <SearchInput
+          accessibilityLabel={I18n.t("services.search.input.placeholder")}
+          cancelButtonLabel={I18n.t("services.search.input.cancel")}
+          clearAccessibilityLabel={I18n.t("services.search.input.clear")}
+          placeholder={I18n.t("services.search.input.placeholder")}
+          pressable={{
+            onPress: navigateToSearch
+          }}
+        />
         <FeaturedServiceList />
         <FeaturedInstitutionList />
         <ListItemHeader label={I18n.t("services.home.institutions.title")} />
       </>
     ),
-    []
+    [navigateToSearch]
   );
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating && !isRefreshing) {
       return <InstitutionListSkeleton />;
     }
+
+    if (isLastPage) {
+      return (
+        <>
+          <VSpacer size={16} />
+          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
+            <ButtonLink
+              label={I18n.t("services.home.searchLink")}
+              onPress={navigateToSearch}
+            />
+          </View>
+          <VSpacer size={24} />
+        </>
+      );
+    }
+
     return <VSpacer size={16} />;
-  }, [isUpdating, isRefreshing]);
+  }, [isLastPage, isUpdating, isRefreshing, navigateToSearch]);
 
   const handleRefresh = useCallback(() => {
     dispatch(featuredServicesGet.request());
