@@ -3799,7 +3799,7 @@ FIMS:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
   consentsScreen:
-    title: "Consenti la condivisone dei tuoi dati"
+    title: "Consenti la condivisione dei tuoi dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"
