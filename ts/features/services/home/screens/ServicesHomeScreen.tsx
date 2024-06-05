@@ -1,5 +1,3 @@
-import React, { useCallback, useEffect } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import {
   ButtonLink,
   Divider,
@@ -10,8 +8,10 @@ import {
   SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import React, { useCallback, useEffect } from "react";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -19,10 +19,10 @@ import { InstitutionListSkeleton } from "../../common/components/InstitutionList
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { getLogoForInstitution } from "../../common/utils";
-import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
-import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
+import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
+import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -93,14 +93,6 @@ export const ServicesHomeScreen = () => {
       </>
     ),
     [navigateToSearch]
-  );
-
-  const navigateToSearch = useCallback(
-    () =>
-      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-        screen: SERVICES_ROUTES.SEARCH
-      }),
-    [navigation]
   );
 
   const renderListFooterComponent = useCallback(() => {
