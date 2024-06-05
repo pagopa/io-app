@@ -10,13 +10,13 @@ import { logosForService } from "../../../../utils/services";
 import I18n from "../../../../i18n";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import {
   accessibilityLabelForMessageItem,
   getLoadServiceDetailsActionIfNeeded
 } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 type WrappedMessageListItemProps = {
   index: number;
