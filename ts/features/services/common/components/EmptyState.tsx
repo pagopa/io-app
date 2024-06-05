@@ -1,7 +1,5 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
 import {
-  H3,
+  H6,
   IOPictograms,
   IOStyles,
   IOVisualCostants,
@@ -9,6 +7,8 @@ import {
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -30,6 +30,6 @@ export const EmptyState = ({ pictogram, title, testID }: EmptyStateProps) => (
       <Pictogram name={pictogram} size={120} />
       <VSpacer size={24} />
     </View>
-    <H3 style={styles.text}>{title}</H3>
+    <H6 style={styles.text}>{title}</H6>
   </View>
 );
