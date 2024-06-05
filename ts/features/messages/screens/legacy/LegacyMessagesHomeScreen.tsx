@@ -57,7 +57,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const isIOSVersionLessThan14 =
-  Platform.OS === "ios" && parseInt(Platform.Version as string, 10) < 14;
+  Platform.OS === "ios" && parseInt(Platform.Version as string, 10) > 14;
 
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
@@ -134,8 +134,8 @@ const LegacyMessagesHomeScreen = ({
           "en-EN": unsupportedDeviceMoreInfoUrl
         },
         message: {
-          "it-IT": I18n.t("unsupportedDevice.warning"),
-          "en-EN": I18n.t("unsupportedDevice.warning")
+          "it-IT": I18n.t("features.itWallet.unsupportedDevice.text"),
+          "en-EN": I18n.t("features.itWallet.unsupportedDevice.text")
         }
       }}
     />
@@ -159,6 +159,7 @@ const LegacyMessagesHomeScreen = ({
         backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
+      {isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           {needsMigration ? (

@@ -80,7 +80,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: più info
+    moreInfo: Più info
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -3165,6 +3165,9 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+    unsupportedDevice:
+      text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
+      moreInfo: Scopri perchè
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
