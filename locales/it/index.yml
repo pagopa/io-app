@@ -2142,6 +2142,7 @@ services:
         title: Enti in evidenza
     institutions:
       title: Nazionali
+    searchLink: Cerca tra tutti i servizi locali disponibili
   institution:
     failure:
       title: "C'è un problema temporaneo, riprova"

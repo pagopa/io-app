@@ -2142,6 +2142,7 @@ services:
         title: Featured Institutions
     institutions:
       title: National
+    searchLink: Search all available local services
   institution:
     failure:
       title: "There is a temporary problem. Please try again"
