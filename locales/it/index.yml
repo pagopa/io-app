@@ -506,6 +506,8 @@ profile:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
+        banner:
+          button: Scopri di più
       notifications:
         title: Notifiche push
         subtitle: Consenti anteprime e promemoria
@@ -2134,6 +2136,7 @@ services:
         title: Enti in evidenza
     institutions:
       title: Nazionali
+    searchLink: Cerca tra tutti i servizi locali disponibili
   institution:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2145,6 +2148,8 @@ services:
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
+      cancel: "Annulla"
+      clear: "Cancella"
     emptyState:
       title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
   details:

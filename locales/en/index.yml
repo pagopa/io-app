@@ -506,6 +506,8 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+        banner:
+          button: Learn more
       notifications:
         title: Push notifications
         subtitle: Allow previews and reminders
@@ -2134,6 +2136,7 @@ services:
         title: Featured Institutions
     institutions:
       title: National
+    searchLink: Search all available local services
   institution:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2145,6 +2148,8 @@ services:
   search:
     input:
       placeholder: "Search for a national or local institution"
+      cancel: "Cancel"
+      clear: "Clear"
     emptyState:
       title: "Enter at least three characters to search for the name of a national or local institution"
   details:
