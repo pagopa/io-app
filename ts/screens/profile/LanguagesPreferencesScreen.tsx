@@ -25,13 +25,17 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
 import { Locales, TranslationKeys } from "../../../locales/locales";
 import { profileUpsert } from "../../store/actions/profile";
-import { fromLocaleToPreferredLanguage } from "../../utils/locale";
+import {
+  fromLocaleToPreferredLanguage,
+  getFullLocale
+} from "../../utils/locale";
 import { profileSelector } from "../../store/reducers/profile";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../utils/url";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -49,6 +53,10 @@ const LanguagesPreferencesScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
+  const bannerInfoSelector = useIOSelector(
+    sectionStatusSelector("favourite_language")
+  );
+  const isBannerVisible = bannerInfoSelector && bannerInfoSelector.is_visible;
   const preferredLanguageSelect = useIOSelector(
     preferredLanguageSelector,
     _.isEqual
@@ -192,21 +200,21 @@ const LanguagesPreferencesScreen = () => {
             onPress={onLanguageSelected}
           />
           <VSpacer size={16} />
-          <Banner
-            viewRef={viewRef}
-            color="neutral"
-            size="big"
-            content={I18n.t(
-              "profile.preferences.list.preferred_language.banner.title"
-            )}
-            pictogramName="charity"
-            action={I18n.t(
-              "profile.preferences.list.preferred_language.banner.button"
-            )}
-            onPress={() =>
-              openWebUrl("https://github.com/pagopa/io-app/issues/new/choose")
-            }
-          />
+          {isBannerVisible && (
+            <Banner
+              viewRef={viewRef}
+              color="neutral"
+              size="big"
+              content={bannerInfoSelector.message[getFullLocale()]}
+              pictogramName="charity"
+              action={I18n.t(
+                "profile.preferences.list.preferred_language.banner.button"
+              )}
+              onPress={() =>
+                openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
+              }
+            />
+          )}
         </ContentWrapper>
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>

@@ -16,7 +16,7 @@ jest.mock("../../../store/hooks", () => ({
   useIODispatch: jest.fn()
 }));
 
-describe("ActivateNfcScreen", () => {
+describe("LanguagesPreferencesScreen", () => {
   beforeAll(() => {
     jest.spyOn(Alert, "alert");
   });

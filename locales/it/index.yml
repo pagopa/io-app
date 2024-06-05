@@ -507,7 +507,6 @@ profile:
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
         banner:
-          title: La traduzione in tedesco è in corso. Contribuisci su GitHub!
           button: Scopri di più
       notifications:
         title: Notifiche push

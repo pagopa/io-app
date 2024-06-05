@@ -507,7 +507,6 @@ profile:
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
         banner:
-          title: German translation is in progress. Contribute on GitHub!
           button: Learn more
       notifications:
         title: Push notifications
