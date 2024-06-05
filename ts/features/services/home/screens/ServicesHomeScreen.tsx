@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import {
+  ButtonLink,
   Divider,
   IOStyles,
   IOToast,
@@ -38,6 +39,7 @@ export const ServicesHomeScreen = () => {
     data,
     fetchInstitutions,
     isError,
+    isLastPage,
     isLoading,
     isUpdating,
     isRefreshing,
@@ -75,12 +77,36 @@ export const ServicesHomeScreen = () => {
     []
   );
 
+  const navigateToSearch = useCallback(
+    () =>
+      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+        screen: SERVICES_ROUTES.SEARCH
+      }),
+    [navigation]
+  );
+
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating && !isRefreshing) {
       return <InstitutionListSkeleton />;
     }
+
+    if (isLastPage) {
+      return (
+        <>
+          <VSpacer size={16} />
+          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
+            <ButtonLink
+              label={I18n.t("services.home.searchLink")}
+              onPress={navigateToSearch}
+            />
+          </View>
+          <VSpacer size={24} />
+        </>
+      );
+    }
+
     return <VSpacer size={16} />;
-  }, [isUpdating, isRefreshing]);
+  }, [isLastPage, isUpdating, isRefreshing, navigateToSearch]);
 
   const handleRefresh = useCallback(() => {
     dispatch(featuredServicesGet.request());
