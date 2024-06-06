@@ -486,7 +486,7 @@ profile:
     list:
       biometric_recognition:
         title: Riconoscimento biometrico
-        subtitle: Usa la tua impronta o il tuo volto
+        subtitle: Usa il volto o la tua impronta.
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
@@ -508,6 +508,8 @@ profile:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
+        banner:
+          button: Scopri di più
       notifications:
         title: Notifiche push
         subtitle: Consenti anteprime e promemoria
@@ -2156,7 +2158,7 @@ services:
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
-      title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
+      title: "Inserisci il nome di un ente,\nnazionale o locale"
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2238,7 +2240,7 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Modifica il codice di sblocco
-      subtitle: Imposta un nuovo codice di 6 cifre
+      subtitle: Imposta un nuovo codice di 6 cifre.
     confirmValid: Codice di sblocco corretto
   forgetCode:
     confirmTitle: Hai dimenticato il codice di sblocco?
@@ -3270,7 +3272,7 @@ idpay:
   code:
     reset:
       title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
