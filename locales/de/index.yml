@@ -453,7 +453,6 @@ profile:
     list:
       biometric_recognition:
         title: "Biometrische Erkennung"
-        subtitle: "Fingerabdruck- oder Gesichtserkennung benutzen"
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
@@ -2055,7 +2054,7 @@ identification:
       button: "Hast du deinen"
       code: "Entsperrcode vergessen"
       button_short: "Entsperrcode ändern"
-      subtitle: "Einen neuen 6-stelligen Code festlegen"
+      subtitle: "Einen neuen 6-stelligen Code festlegen."
     confirmValid: "Entsperrcode korrekt"
   forgetCode:
     confirmTitle: "Hast du den Entsperrcode vergessen?"
