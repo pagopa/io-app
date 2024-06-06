@@ -7,6 +7,7 @@ import {
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
 import { ConsentData } from "../../types";
+import { isStrictNone } from "../../../../utils/pot";
 
 type FimsFlowStateTags = "consents" | "in-app-browser";
 
@@ -17,7 +18,7 @@ export type FimsState = {
 
 const INITIAL_STATE: FimsState = {
   currentFlowState: "consents",
-  consentsData: pot.noneLoading
+  consentsData: pot.none
 };
 
 const reducer = (
@@ -69,7 +70,8 @@ export const fimsLoadingStateSelector = (state: GlobalState) => {
   if (state.features.fims.currentFlowState === "in-app-browser") {
     return "in-app-browser";
   }
-  return pot.isLoading(state.features.fims.consentsData)
+  const { consentsData } = state.features.fims;
+  return pot.isLoading(consentsData) || isStrictNone(consentsData)
     ? state.features.fims.currentFlowState
     : undefined;
 };

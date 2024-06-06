@@ -15,11 +15,11 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { Link } from "../../../components/core/typography/Link";
 import { LoadingSkeleton } from "../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../i18n";
@@ -38,7 +38,7 @@ type FimsSuccessBodyProps = { consents: ConsentData };
 export const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const serviceId = consents.service_id as NonEmptyString;
+  const serviceId = consents.service_id as ServiceId;
 
   const serviceData = useIOSelector(state =>
     serviceByIdSelector(state, serviceId)
@@ -101,14 +101,11 @@ export const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
     <>
       <ForceScrollDownView
         style={IOStyles.horizontalContentPadding}
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "space-between"
-        }}
+        contentContainerStyle={styles.flexSpaceBetween}
       >
         <View>
           <VSpacer size={24} />
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={styles.rowAlignCenter}>
             <View style={styles.outlineContainer}>
               <Icon name="productIOApp" size={30} color="blueIO-500" />
             </View>
@@ -179,14 +176,14 @@ const ClaimsList = ({ claims }: ClaimsListProps) => (
   <View style={styles.grantsList}>
     {claims.map((claim, index) => (
       <React.Fragment key={index}>
-        <CLaimListItem label={claim.display_name} />
+        <ClaimListItem label={claim.display_name} />
         {index < claims.length - 1 && <Divider />}
       </React.Fragment>
     ))}
   </View>
 );
 
-const CLaimListItem = ({ label }: ClaimsListItemProps) => (
+const ClaimListItem = ({ label }: ClaimsListItemProps) => (
   <View style={styles.grantItem}>
     <H6>{label}</H6>
     <Icon name="checkTickBig" size={24} color="grey-300" />
@@ -221,7 +218,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: hexToRgba(IOColors.black, 0.1)
-  }
+  },
+  flexSpaceBetween: {
+    flex: 1,
+    justifyContent: "space-between"
+  },
+  rowAlignCenter: { flexDirection: "row", alignItems: "center" }
 });
 
 type ClaimsListProps = {
