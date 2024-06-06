@@ -1,5 +1,4 @@
 import { IOSpacingScale, IOVisualCostants } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type EndScreenSpacingValues = {

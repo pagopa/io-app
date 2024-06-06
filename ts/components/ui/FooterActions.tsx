@@ -143,10 +143,10 @@ export const FooterActions = ({
   const theme = useIOTheme();
   const { isExperimental } = useIOExperimentalDesign();
 
-  const type = actions?.type;
-  const primaryAction = actions?.primary;
-  const secondaryAction = actions?.secondary;
-  const tertiaryAction = actions?.tertiary;
+  const { bottomMargin, extraBottomMargin } = useBottomMargins(
+    actions,
+    excludeSafeAreaMargins
+  );
 
   /* Total height of actions */
   const [actionBlockHeight, setActionBlockHeight] =
@@ -157,29 +157,6 @@ export const FooterActions = ({
   const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
   const TRANSPARENT_BG_COLOR: ColorValue = "transparent";
   const BUTTONSOLID_HEIGHT = isExperimental ? buttonSolidHeight : 40;
-
-  const insets = useSafeAreaInsets();
-  const needSafeAreaMargin = useMemo(() => insets.bottom !== 0, [insets]);
-  const safeAreaMargin = useMemo(() => insets.bottom, [insets]);
-
-  /* Check if the iPhone bottom handle is present.
-     If not, or if you don't need safe area insets,
-     add a default margin to prevent the button
-     from sticking to the bottom. */
-  const bottomMargin: number = useMemo(
-    () =>
-      !needSafeAreaMargin || excludeSafeAreaMargins
-        ? IOVisualCostants.appMarginDefault
-        : safeAreaMargin,
-    [needSafeAreaMargin, excludeSafeAreaMargins, safeAreaMargin]
-  );
-
-  /* When the secondary action is visible, add extra margin
-     to avoid little space from iPhone bottom handle */
-  const extraBottomMargin: number = useMemo(
-    () => (secondaryAction && needSafeAreaMargin ? extraSafeAreaMargin : 0),
-    [needSafeAreaMargin, secondaryAction]
-  );
 
   /* Safe background block. Cover everything until it reaches
      the half of the primary action button. It avoids
@@ -192,7 +169,6 @@ export const FooterActions = ({
   const getActionBlockMeasurements = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
     setActionBlockHeight(height);
-
     /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Content end margin */
     const safeBottomAreaHeight = bottomMargin + height + contentEndMargin;
@@ -247,48 +223,77 @@ export const FooterActions = ({
           <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
         )}
 
-        {primaryAction && <ButtonSolid fullWidth {...primaryAction} />}
-
-        {type === "TwoButtons" && (
-          <View
-            style={{
-              alignSelf: "center",
-              marginBottom: extraBottomMargin
-            }}
-          >
-            <VSpacer size={spaceBetweenActionAndLink} />
-            {secondaryAction && (
-              <ButtonLink
-                color="primary"
-                {...(secondaryAction as ComponentProps<typeof ButtonLink>)}
-              />
-            )}
-          </View>
-        )}
-
-        {type === "ThreeButtons" && (
-          <Fragment>
-            {secondaryAction && (
-              <Fragment>
-                <VSpacer size={spaceBetweenActions} />
-                <ButtonOutline fullWidth color="primary" {...secondaryAction} />
-              </Fragment>
-            )}
-
-            {tertiaryAction && (
-              <View
-                style={{
-                  alignSelf: "center",
-                  marginBottom: extraBottomMargin
-                }}
-              >
-                <VSpacer size={spaceBetweenActionAndLink} />
-                <ButtonLink color="primary" {...tertiaryAction} />
-              </View>
-            )}
-          </Fragment>
-        )}
+        {renderActions(actions, extraBottomMargin)}
       </View>
     </Animated.View>
+  );
+};
+
+const useBottomMargins = (
+  actions: FooterActions | undefined,
+  excludeSafeAreaMargins: boolean
+) => {
+  const insets = useSafeAreaInsets();
+  const needSafeAreaMargin: boolean = insets.bottom !== 0;
+  const safeAreaMargin = insets.bottom;
+
+  /* Check if the iPhone bottom handle is present.
+     If not, or if you don't need safe area insets,
+     add a default margin to prevent the button
+     from sticking to the bottom. */
+  const bottomMargin: number =
+    !needSafeAreaMargin || excludeSafeAreaMargins
+      ? IOVisualCostants.appMarginDefault
+      : safeAreaMargin;
+
+  /* When the secondary action is visible, add extra margin
+     to avoid little space from iPhone bottom handle */
+  const extraBottomMargin: number =
+    actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
+
+  return { bottomMargin, extraBottomMargin };
+};
+
+const renderActions = (
+  actions: FooterActions | undefined,
+  extraBottomMargin: number
+) => {
+  if (!actions) {
+    return null;
+  }
+  const {
+    type,
+    primary: primaryAction,
+    secondary: secondaryAction,
+    tertiary: tertiaryAction
+  } = actions;
+  return (
+    <Fragment>
+      {primaryAction && <ButtonSolid fullWidth {...primaryAction} />}
+      {type === "TwoButtons" && secondaryAction && (
+        <View style={{ alignSelf: "center", marginBottom: extraBottomMargin }}>
+          <VSpacer size={spaceBetweenActionAndLink} />
+          <ButtonLink color="primary" {...secondaryAction} />
+        </View>
+      )}
+      {type === "ThreeButtons" && (
+        <>
+          {secondaryAction && (
+            <>
+              <VSpacer size={spaceBetweenActions} />
+              <ButtonOutline fullWidth color="primary" {...secondaryAction} />
+            </>
+          )}
+          {tertiaryAction && (
+            <View
+              style={{ alignSelf: "center", marginBottom: extraBottomMargin }}
+            >
+              <VSpacer size={spaceBetweenActionAndLink} />
+              <ButtonLink color="primary" {...tertiaryAction} />
+            </View>
+          )}
+        </>
+      )}
+    </Fragment>
   );
 };
