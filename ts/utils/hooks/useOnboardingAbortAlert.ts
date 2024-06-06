@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Alert } from "react-native";
+import { useCallback } from "react";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import I18n from "../../i18n";
 
@@ -14,11 +15,7 @@ type OnboardingAbortAlertUtils = {
 export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
   const dispatch = useDispatch();
 
-  const executeAbortOnboarding = () => {
-    dispatch(abortOnboarding());
-  };
-
-  const showAlert = () => {
+  const showAlert = useCallback(() => {
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -30,11 +27,13 @@ export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: executeAbortOnboarding
+          onPress: () => {
+            dispatch(abortOnboarding());
+          }
         }
       ]
     );
-  };
+  }, [dispatch]);
 
   return { showAlert };
 };
