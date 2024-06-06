@@ -45,6 +45,12 @@ export type Props = PropsWithChildren<
   OwnProps & ComponentProps<typeof BaseHeader>
 >;
 
+/**
+ * @deprecated In the legacy screens, BaseScreenComponent was used to include the header
+ * in the screen component. To properly configure the header through the `react-navigation`
+ * library, please use `useHeaderSecondLevel` and configure the navigator with `headerShown`
+ * set to `true`. If in doubt, please ask for help or read the available documentation.
+ */
 const BaseScreenComponent = React.forwardRef<ReactNode, Props>(
   (props: Props, _) => {
     const {

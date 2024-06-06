@@ -33,7 +33,7 @@ const FastLoginModals = (
           ),
           onPress: () => {
             dispatch(clearTokenRefreshError());
-            dispatch(logoutRequest());
+            dispatch(logoutRequest({ withApiCall: false }));
           }
         }}
       />

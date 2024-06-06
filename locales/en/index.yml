@@ -506,6 +506,8 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+        banner:
+          button: Learn more
       notifications:
         title: Push notifications
         subtitle: Allow previews and reminders
@@ -613,14 +615,14 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
-  cie_errors: 
-    error_22: 
+  cie_errors:
+    error_22:
       title: You haven't agreed to share your data
       subtitle: To enter, you must agree to share some data
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
-    generic: 
+    generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie:
@@ -638,7 +640,7 @@ authentication:
       listItemTitle: "How to do it::"
       action: Open Settings
       listItemLabel1: Step 1
-      listItemValue1: Open 'Settings' 
+      listItemValue1: Open 'Settings'
       listItemLabel2: Step 2
       listItemValue2: Search for ‘NFC’ functionality
       listItemLabel3: Step 3
@@ -673,7 +675,7 @@ authentication:
       title: Card temporarily locked
       content: !include cie/temporary_blocked_cie.md
       button: "Load/open CieID"
-    card:      
+    card:
       title: Hold your CIE on the back of your phone
       titleiOS: Place the CIE on your phone, on top.
       layCardMessageHeader: If the reading doesn't start, move the card to different places and wait a few seconds until you feel a vibration.
@@ -695,7 +697,7 @@ authentication:
         wrongPin2AttemptLeft: Wrong PIN
         genericError: Something went wrong! Please try again.
       error:
-        readerCardLostTitle: You removed the card too soon.                
+        readerCardLostTitle: You removed the card too soon.
         onTagLost: Place the card on the back of the device again.
         tryAgain: Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!
         generic: Something did not work as expected while we read your CIE.
@@ -890,18 +892,30 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_pin.md
   pin:
     headerTitle: IO Settings
-    title: Unlock code
-    subTitle: It's a six-digit code you'll use to login and authorize some in-app operations. If supported by your device, you can replace it with biometric authentication.
+    title: Create an unlock code
+    subTitle: It's a six-digit code you'll use to login and authorize some in-app operations.
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
-    tutorial: You can change the code at any time under Profile > Security
     errors:
-      invalid: The code is not valid
+      invalid: 
+        title: Too easy!
+        description: Choose a code that is hard to guess and doesn't contain a single repeated number (e.g. 000000) or a list of ordered numbers (e.g. 123456 or 654321).
+        cta: Choose another code
       match: The code doesn’t match
     policy:
-      headerTitle: "Choose a code that's hard to guess and doesn't contain:"
-      first: repeated numbers (e.g. 000000)
-      second: a number sequence (e.g. 123456 or 654321)
+      title: How to choose the code?
+      description: It's a six-digit code you'll use to login and authorize some in-app operations.
+      bulletListTitle: "Choose a code that's hard to guess and doesn't contain::"
+      firstItem: a single repeated number (e.g. 000000)
+      secondItem: a list of ordered numbers (e.g. 123456 or 654321)
+    success:
+      message: Done!
+  pinConfirmation:
+    title: Confirm unlock code
+    errors:
+      match:
+        title: The code you enter is different than the first one
+        cta: Try again
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -1714,6 +1728,8 @@ wallet:
       title: Vuoi interrompere l'operazione?
       confirm: Sì, interrompi
       cancel: No, torna indietro
+    methodType:
+      fastPayPalPayment: Pagamento veloce con PayPal
     methodSelection:
       header: Seleziona un metodo
       yourMethods: Saved
@@ -2125,6 +2141,7 @@ services:
         title: Featured Institutions
     institutions:
       title: National
+    searchLink: Search all available local services
   institution:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2136,8 +2153,10 @@ services:
   search:
     input:
       placeholder: "Search for a national or local institution"
+      cancel: "Cancel"
+      clear: "Clear"
     emptyState:
-      title: "Enter at least three characters to search for the name of a national or local institution"
+      title: "Enter the name of an institution,\nnational or local"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2157,7 +2176,7 @@ services:
       phone: "Contact the institution"
       email: "Send email"
       pec: "Send PEC"
-      fiscalCode: "Organization's fiscal code"
+      fiscalCode: "Institution's fiscal code"
       address: "Address"
       serviceId: "Service ID"
     tosAndPrivacy:
@@ -2165,9 +2184,9 @@ services:
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
 serviceDetail:
-  fiscalCode: "Organization's fiscal code"
-  fiscalCodeAccessibility: "Organization's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
+  fiscalCode: "Institution's fiscal code"
+  fiscalCodeAccessibility: "Institution's fiscal code"
+  fiscalCodeAccessibilityCopy: "Copy Institution's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -3163,6 +3182,9 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
+      success:
+        title: "Hai aggiunto\nIdentità Digitale!"
+        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

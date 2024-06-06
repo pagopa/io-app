@@ -9,6 +9,7 @@ import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletStatus";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
+import { WalletClientStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
 
 describe("Test handleWalletPaymentGetUserWallets saga", () => {
   const T_SESSION_TOKEN = "ABCD";
@@ -25,6 +26,12 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
           paymentMethodId: "paymentMethodId",
           paymentMethodAsset: "paymentMethodAsset",
           applications: [],
+          clients: {
+            IO: {
+              status: WalletClientStatusEnum.ENABLED,
+              lastUsage: new Date()
+            }
+          },
           status: WalletStatusEnum.VALIDATED,
           updateDate: new Date()
         }
