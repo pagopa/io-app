@@ -1,10 +1,8 @@
 import { IOColors, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
-import React, { useState } from "react";
+import React from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
-import {
-  FooterActions,
-  FooterActionsMeasurements
-} from "../../../components/ui/FooterActions";
+import { FooterActions } from "../../../components/ui/FooterActions";
+import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -13,17 +11,8 @@ const onButtonPress = () => {
 export const DSFooterActions = () => {
   const theme = useIOTheme();
 
-  const [footerActionsMeasurements, setfooterActionsMeasurements] =
-    useState<FooterActionsMeasurements>({
-      actionBlockHeight: 0,
-      safeBottomAreaHeight: 0
-    });
-
-  const handleFooterActionsMeasurements = (
-    values: FooterActionsMeasurements
-  ) => {
-    setfooterActionsMeasurements(values);
-  };
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
 
   return (
     <View style={styles.container}>
