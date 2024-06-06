@@ -8,6 +8,7 @@ import * as SEP from "fp-ts/lib/Separated";
 import {
   ContentWrapper,
   IOStyles,
+  Icon,
   Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -85,12 +86,13 @@ export const MessageDetails = ({
             </MessageDetailsTagBox>
             {attachmentList.length > 0 && (
               <MessageDetailsTagBox>
-                <Tag
-                  variant="attachment"
-                  testID="attachment-tag"
-                  iconAccessibilityLabel={I18n.t(
+                <Icon
+                  name="attachment"
+                  accessibilityLabel={I18n.t(
                     "messageDetails.accessibilityAttachmentIcon"
                   )}
+                  testID="attachment-tag"
+                  size={16}
                 />
               </MessageDetailsTagBox>
             )}
