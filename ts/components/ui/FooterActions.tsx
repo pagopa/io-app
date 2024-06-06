@@ -13,13 +13,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import {
-  ComponentProps,
-  Fragment,
-  PropsWithChildren,
-  useMemo,
-  useState
-} from "react";
+import { ComponentProps, Fragment, PropsWithChildren, useState } from "react";
 import {
   ColorValue,
   LayoutChangeEvent,
@@ -161,10 +155,8 @@ export const FooterActions = ({
   /* Safe background block. Cover everything until it reaches
      the half of the primary action button. It avoids
      glitchy behavior underneath.  */
-  const safeBackgroundBlockHeight: number = useMemo(
-    () => bottomMargin + actionBlockHeight - BUTTONSOLID_HEIGHT / 2,
-    [BUTTONSOLID_HEIGHT, actionBlockHeight, bottomMargin]
-  );
+  const safeBackgroundBlockHeight =
+    bottomMargin + actionBlockHeight - BUTTONSOLID_HEIGHT / 2;
 
   const getActionBlockMeasurements = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
@@ -234,21 +226,20 @@ const useBottomMargins = (
   excludeSafeAreaMargins: boolean
 ) => {
   const insets = useSafeAreaInsets();
-  const needSafeAreaMargin: boolean = insets.bottom !== 0;
-  const safeAreaMargin = insets.bottom;
+  const needSafeAreaMargin = insets.bottom !== 0;
 
   /* Check if the iPhone bottom handle is present.
      If not, or if you don't need safe area insets,
      add a default margin to prevent the button
      from sticking to the bottom. */
-  const bottomMargin: number =
+  const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
       ? IOVisualCostants.appMarginDefault
-      : safeAreaMargin;
+      : insets.bottom;
 
   /* When the secondary action is visible, add extra margin
      to avoid little space from iPhone bottom handle */
-  const extraBottomMargin: number =
+  const extraBottomMargin =
     actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
 
   return { bottomMargin, extraBottomMargin };

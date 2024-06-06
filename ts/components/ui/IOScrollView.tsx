@@ -146,17 +146,16 @@ export const IOScrollView = ({
   };
 
   const insets = useSafeAreaInsets();
-  const needSafeAreaMargin: boolean = insets.bottom !== 0;
-  const safeAreaMargin = insets.bottom;
+  const needSafeAreaMargin = insets.bottom !== 0;
 
   /* Check if the iPhone bottom handle is present.
      If not, or if you don't need safe area insets,
      add a default margin to prevent the button
      from sticking to the bottom. */
-  const bottomMargin: number =
+  const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
       ? IOVisualCostants.appMarginDefault
-      : safeAreaMargin;
+      : insets.bottom;
 
   /* GENERATE EASING GRADIENT
      Background color should be app main background
@@ -174,21 +173,20 @@ export const IOScrollView = ({
 
   /* When the secondary action is visible, add extra margin
      to avoid little space from iPhone bottom handle */
-  const extraBottomMargin: number =
+  const extraBottomMargin =
     actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
 
   /* Safe background block. Cover at least 85% of the space
      to avoid glitchy elements underneath */
-  const safeBackgroundBlockHeight: number =
-    (bottomMargin + actionBlockHeight) * 0.85;
+  const safeBackgroundBlockHeight = (bottomMargin + actionBlockHeight) * 0.85;
 
   /* Total height of "Actions + Gradient" area */
-  const gradientAreaHeight: number =
+  const gradientAreaHeight =
     bottomMargin + actionBlockHeight + gradientSafeAreaHeight;
 
   /* Height of the safe bottom area, applied to the ScrollView:
      Actions + Content end margin */
-  const safeBottomAreaHeight: number =
+  const safeBottomAreaHeight =
     bottomMargin + actionBlockHeight + contentEndMargin;
 
   const handleScroll = useAnimatedScrollHandler(

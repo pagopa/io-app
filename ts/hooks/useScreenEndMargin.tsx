@@ -23,11 +23,11 @@ type EndScreenSpacingValues = {
 export const useScreenEndMargin = (): EndScreenSpacingValues => {
   const insets = useSafeAreaInsets();
 
-  const needSafeAreaMargin: boolean = insets.bottom !== 0;
-  const safeAreaMargin = insets.bottom;
+  const needSafeAreaMargin = insets.bottom !== 0;
+
   /* We use this fallback value to ensure that the spacing
      is is consistent across all axes. */
-  const fallbackSafeAreaMargin: number = IOVisualCostants.appMarginDefault;
+  const fallbackSafeAreaMargin = IOVisualCostants.appMarginDefault;
 
   /* End content margin. If the devices don't have safe area
      boundaries, we calculate the difference to get the same spacing
@@ -40,9 +40,9 @@ export const useScreenEndMargin = (): EndScreenSpacingValues => {
   /* Check if the iPhone bottom handle is present.
      If not add a default margin to prevent the button
      from sticking to the bottom. */
-  const screenEndSafeArea: number = !needSafeAreaMargin
+  const screenEndSafeArea = !needSafeAreaMargin
     ? fallbackSafeAreaMargin
-    : safeAreaMargin;
+    : insets.bottom;
 
   return {
     screenEndSafeArea,
