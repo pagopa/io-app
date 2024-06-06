@@ -3,10 +3,11 @@ import * as React from "react";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItwCredentialCard, ItwCredentialStatus } from "../ItwCredentialCard";
 
-describe("CredentialCard", () => {
+describe("ItwCredentialCard", () => {
   it.each([
     "valid",
     "expired",
+    "expiring",
     "pending"
   ] as ReadonlyArray<ItwCredentialStatus>)(
     "should match snapshot when status is %p",
