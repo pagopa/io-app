@@ -5,7 +5,7 @@ import {
   ListItemNav,
   ListItemSwitch
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { shufflePinPadOnPayment } from "../../config";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
@@ -19,7 +19,6 @@ import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/p
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isIdPayEnabledSelector } from "../../store/reducers/backendStatus";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { useScreenReaderEnabled } from "../../utils/accessibility";
 import { getFlowType } from "../../utils/analytics";
 import {
   biometricAuthenticationRequest,
@@ -53,7 +52,6 @@ const SecurityScreen = (): React.ReactElement => {
   const navigation = useIONavigation();
   const [isBiometricDataAvailable, setIsBiometricDataAvailable] =
     useState(false);
-  const isScreenReaderEnabled = useScreenReaderEnabled();
 
   useEffect(() => {
     getBiometricsType().then(
@@ -143,12 +141,9 @@ const SecurityScreen = (): React.ReactElement => {
     [setFingerprintPreference]
   );
 
-  const onSwitchValueChange = useMemo(
-    () =>
-      !isScreenReaderEnabled
-        ? () => setBiometricPreference(!isFingerprintEnabled)
-        : undefined,
-    [isScreenReaderEnabled, isFingerprintEnabled, setBiometricPreference]
+  const onSwitchValueChange = useCallback(
+    () => setBiometricPreference(!isFingerprintEnabled),
+    [isFingerprintEnabled, setBiometricPreference]
   );
 
   return (
