@@ -39,7 +39,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.preferences.contextualHelpContent"
 };
 
-const FAQ_CATEGORIES: Array<FAQsCategoriesType> = [
+const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
   "profile",
   "privacy",
   "authentication_SPID"
