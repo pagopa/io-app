@@ -957,17 +957,12 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 </View>
                                 <View
                                   style={
-                                    Array [
-                                      Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
-                                      },
-                                      Object {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "flex-end",
+                                      "marginLeft": 12,
+                                    }
                                   }
                                 >
                                   <View
@@ -1203,17 +1198,12 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 </View>
                                 <View
                                   style={
-                                    Array [
-                                      Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
-                                      },
-                                      Object {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "flex-end",
+                                      "marginLeft": 12,
+                                    }
                                   }
                                 >
                                   <View
@@ -1449,17 +1439,12 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 </View>
                                 <View
                                   style={
-                                    Array [
-                                      Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 12,
-                                      },
-                                      Object {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "flex-end",
+                                      "marginLeft": 12,
+                                    }
                                   }
                                 >
                                   <View

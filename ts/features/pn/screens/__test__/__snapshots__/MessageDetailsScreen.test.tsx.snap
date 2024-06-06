@@ -809,11 +809,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="Regular"
+                                      weight="SemiBold"
                                     >
                                       Attachments
                                     </Text>
@@ -883,12 +883,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <Text
                                     allowFontScaling={false}
                                     color="blueIO-500"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
+                                    defaultColor="black"
+                                    defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
                                       Object {
-                                        "fontSize": 14,
+                                        "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
@@ -896,7 +896,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     style={
                                       Array [
                                         Object {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         },
                                         Object {
@@ -1111,12 +1111,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <Text
                                     allowFontScaling={false}
                                     color="blueIO-500"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
+                                    defaultColor="black"
+                                    defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
                                       Object {
-                                        "fontSize": 14,
+                                        "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
@@ -1124,7 +1124,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     style={
                                       Array [
                                         Object {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         },
                                         Object {
@@ -1735,11 +1735,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Web",
                                                     "fontStyle": "normal",
-                                                    "fontWeight": "400",
+                                                    "fontWeight": "600",
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
+                                              weight="SemiBold"
                                             >
                                               Notifica
                                             </Text>
@@ -2060,11 +2060,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Web",
                                                     "fontStyle": "normal",
-                                                    "fontWeight": "400",
+                                                    "fontWeight": "600",
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
+                                              weight="SemiBold"
                                             >
                                               Message
                                             </Text>
