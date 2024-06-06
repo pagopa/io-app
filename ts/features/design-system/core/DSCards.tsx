@@ -24,7 +24,7 @@ import {
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
-import { CredentialCard } from "../../itwallet/common/components/CredentialCard";
+import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 
 const styles = StyleSheet.create({
@@ -351,30 +351,37 @@ export const DSCards = () => (
     </DesignSystemSection>
     <DesignSystemSection title="eID">
       <DSComponentViewerBox name="Preview">
-        <CredentialCard type={CredentialType.PID} isPreview={true} />
+        <ItwCredentialCard type={CredentialType.PID} isPreview={true} />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
-        <CredentialCard
+        <ItwCredentialCard
           type={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Masked">
-        <CredentialCard
+        <ItwCredentialCard
           type={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
           isMasked={true}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
-        <CredentialCard
+        <ItwCredentialCard
           type={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
           status="expired"
         />
       </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expiring">
+        <ItwCredentialCard
+          type={CredentialType.PID}
+          data={["Anna Verdi", "RSGMRT80A41H501X"]}
+          status="expiring"
+        />
+      </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
-        <CredentialCard
+        <ItwCredentialCard
           type={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
           status="pending"

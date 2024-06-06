@@ -1,14 +1,18 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { CredentialCard, CredentialStatus } from "../CredentialCard";
+import { ItwCredentialCard, ItwCredentialStatus } from "../ItwCredentialCard";
 
 describe("CredentialCard", () => {
-  it.each(["valid", "expired", "pending"] as ReadonlyArray<CredentialStatus>)(
+  it.each([
+    "valid",
+    "expired",
+    "pending"
+  ] as ReadonlyArray<ItwCredentialStatus>)(
     "should match snapshot when status is %p",
     status => {
       const component = render(
-        <CredentialCard
+        <ItwCredentialCard
           type={CredentialType.PID}
           data={["ABCDEFG ABCDEFG", "AAAAAA99A99A999A"]}
           status={status}
@@ -20,7 +24,7 @@ describe("CredentialCard", () => {
 
   it("should render the preview", () => {
     const component = render(
-      <CredentialCard type={CredentialType.PID} isPreview={true} />
+      <ItwCredentialCard type={CredentialType.PID} isPreview={true} />
     );
     expect(component).toMatchSnapshot();
   });

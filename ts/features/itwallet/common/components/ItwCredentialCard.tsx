@@ -7,7 +7,7 @@ import EidCardInvalidShape from "../../../../../img/features/itWallet/eid_card_i
 import I18n from "../../../../i18n";
 import { CredentialType } from "../utils/itwMocksUtils";
 
-export type CredentialStatus = "valid" | "pending" | "expired";
+export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
 type PreviewProps = {
   isPreview: true;
@@ -22,32 +22,23 @@ type DataProps = {
 type BaseProps = {
   type: CredentialType;
   isMasked?: boolean;
-  status?: CredentialStatus;
+  status?: ItwCredentialStatus;
 };
 
-export type CredentialCardProps = BaseProps & (PreviewProps | DataProps);
+export type ItwCredentialCard = BaseProps & (PreviewProps | DataProps);
 
-const credentialCardShapes: Record<
-  CredentialType,
-  [React.FC<SvgProps>, React.FC<SvgProps>]
-> = {
-  EuropeanDisabilityCard: [EidCardShape, EidCardInvalidShape],
-  EuropeanHealthInsuranceCard: [EidCardShape, EidCardInvalidShape],
-  mDL: [EidCardShape, EidCardInvalidShape],
-  PersonIdentificationData: [EidCardShape, EidCardInvalidShape]
-};
-
-export const CredentialCard = ({
+export const ItwCredentialCard = ({
   isMasked = false,
   status = "valid",
   type,
   ...props
-}: CredentialCardProps) => {
+}: ItwCredentialCard) => {
   const isValid = status === "valid";
   const shouldDisplayData = !(!isValid || isMasked) && !props.isPreview;
   const labelColor: IOColors = isValid ? "bluegreyDark" : "grey-700";
 
   const CardShape = credentialCardShapes[type][isValid ? 0 : 1];
+  const statusTagProps = tagPropsByStatus[status];
 
   return (
     <View style={props.isPreview && styles.previewContainer}>
@@ -58,19 +49,15 @@ export const CredentialCard = ({
         <View style={styles.infoContainer}>
           <View style={styles.header}>
             <Body color={labelColor} weight="SemiBold">
-              {I18n.t("features.itWallet.card.eid.label").toUpperCase()}
+              {credentialLabelByType[type].toUpperCase()}
             </Body>
-            <CredentialStatusTag status={status} />
+            {statusTagProps && <Tag {...statusTagProps} />}
           </View>
           {shouldDisplayData && <CredentialData {...props} />}
         </View>
         {!isValid && <DigitalVersionBadge />}
         <View
-          style={[
-            styles.border,
-            status === "expired" && styles.expiredBorder,
-            status === "pending" && styles.pendingBorder
-          ]}
+          style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
       </View>
     </View>
@@ -91,42 +78,56 @@ const CredentialData = ({ data }: DataProps) => (
   </View>
 );
 
-const CredentialStatusTag = ({
-  status
-}: Pick<CredentialCardProps, "status">) => {
-  if (status === "expired") {
-    return (
-      <Tag
-        variant="error"
-        text={I18n.t("features.itWallet.card.eid.expired")}
-      />
-    );
-  }
-
-  if (status === "pending") {
-    return (
-      <Tag
-        variant="customIcon"
-        text={I18n.t("features.itWallet.card.eid.pending")}
-        customIconProps={{ iconColor: "info-700", iconName: "infoFilled" }}
-      />
-    );
-  }
-
-  return null;
-};
-
 const DigitalVersionBadge = () => (
   <View style={styles.digitalVersionBadge}>
     <Badge
       // The space at the end is an hack to have extra padding inside the badge text
-      text={`${I18n.t("features.itWallet.card.eid.digital")}   `}
+      text={`${I18n.t("features.itWallet.card.digital")}   `}
       variant="default"
     />
   </View>
 );
 
+const credentialLabelByType: { [type in CredentialType]: string } = {
+  EuropeanDisabilityCard: I18n.t("features.itWallet.card.title.dc"),
+  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.title.ts"),
+  mDL: I18n.t("features.itWallet.card.title.mdl"),
+  PersonIdentificationData: I18n.t("features.itWallet.card.title.eid")
+};
+
+const credentialCardShapes: {
+  [type in CredentialType]: [React.FC<SvgProps>, React.FC<SvgProps>];
+} = {
+  EuropeanDisabilityCard: [EidCardShape, EidCardInvalidShape],
+  EuropeanHealthInsuranceCard: [EidCardShape, EidCardInvalidShape],
+  mDL: [EidCardShape, EidCardInvalidShape],
+  PersonIdentificationData: [EidCardShape, EidCardInvalidShape]
+};
+
+const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
+  expired: {
+    variant: "error",
+    text: I18n.t("features.itWallet.card.status.expired")
+  },
+  expiring: {
+    variant: "warning",
+    text: I18n.t("features.itWallet.card.status.expiring")
+  },
+  pending: {
+    variant: "customIcon",
+    text: I18n.t("features.itWallet.card.status.pending"),
+    customIconProps: { iconColor: "info-700", iconName: "infoFilled" }
+  }
+};
+
 const transparentBorderColor = "transparent";
+
+const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
+  valid: transparentBorderColor,
+  expired: IOColors["error-600"],
+  expiring: IOColors["warning-700"],
+  pending: IOColors["info-700"]
+};
 
 const styles = StyleSheet.create({
   previewContainer: {
@@ -156,12 +157,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderLeftWidth: 9,
     borderColor: transparentBorderColor
-  },
-  expiredBorder: {
-    borderColor: IOColors["error-600"]
-  },
-  pendingBorder: {
-    borderColor: IOColors["info-700"]
   },
   infoContainer: {
     paddingHorizontal: 16,

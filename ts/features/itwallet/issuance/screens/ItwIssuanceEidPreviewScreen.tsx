@@ -22,7 +22,7 @@ import {
 } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { CredentialCard } from "../../common/components/CredentialCard";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
@@ -76,7 +76,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
         }}
       >
         <View style={styles.preview}>
-          <CredentialCard type={CredentialType.PID} isPreview={true} />
+          <ItwCredentialCard type={CredentialType.PID} isPreview={true} />
         </View>
         <View style={styles.dropShadow}>
           <VSpacer size={24} />
