@@ -1,9 +1,19 @@
-import { Badge, Body, IOColors, Tag } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  Body,
+  HSpacer,
+  IOColors,
+  LabelSmall,
+  Tag
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { SvgProps } from "react-native-svg";
-import EidCardShape from "../../../../../img/features/itWallet/eid_card.svg";
-import EidCardInvalidShape from "../../../../../img/features/itWallet/eid_card_invalid.svg";
+import DcCardShape from "../../../../../img/features/itWallet/cards/dc.svg";
+import EidCardShape from "../../../../../img/features/itWallet/cards/eid.svg";
+import EidDisabledCardShape from "../../../../../img/features/itWallet/cards/eid_disabled.svg";
+import MdlCardShape from "../../../../../img/features/itWallet/cards/mdl.svg";
+import TsCardShape from "../../../../../img/features/itWallet/cards/ts.svg";
 import I18n from "../../../../i18n";
 import { CredentialType } from "../utils/itwMocksUtils";
 
@@ -43,15 +53,27 @@ export const ItwCredentialCard = ({
   return (
     <View style={props.isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <CardShape />
-        </View>
+        <View style={styles.card}>{CardShape && <CardShape />}</View>
         <View style={styles.infoContainer}>
           <View style={styles.header}>
-            <Body color={labelColor} weight="SemiBold">
-              {credentialLabelByType[type].toUpperCase()}
-            </Body>
-            {statusTagProps && <Tag {...statusTagProps} />}
+            <View style={{ flex: 1 }}>
+              <Body color={labelColor} weight="SemiBold" numberOfLines={2}>
+                {credentialTitleByType[type].toUpperCase()}
+              </Body>
+              <LabelSmall
+                color={labelColor}
+                weight="SemiBold"
+                style={{ marginTop: -4 }}
+              >
+                {credentialSubtitleByType[type]}
+              </LabelSmall>
+            </View>
+            {statusTagProps && (
+              <>
+                <HSpacer size={16} />
+                <Tag {...statusTagProps} />
+              </>
+            )}
           </View>
           {shouldDisplayData && <CredentialData {...props} />}
         </View>
@@ -88,20 +110,27 @@ const DigitalVersionBadge = () => (
   </View>
 );
 
-const credentialLabelByType: { [type in CredentialType]: string } = {
+const credentialTitleByType: { [type in CredentialType]: string } = {
   EuropeanDisabilityCard: I18n.t("features.itWallet.card.title.dc"),
   EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.title.ts"),
   mDL: I18n.t("features.itWallet.card.title.mdl"),
   PersonIdentificationData: I18n.t("features.itWallet.card.title.eid")
 };
 
+const credentialSubtitleByType: { [type in CredentialType]?: string } = {
+  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.subtitle.ts")
+};
+
 const credentialCardShapes: {
-  [type in CredentialType]: [React.FC<SvgProps>, React.FC<SvgProps>];
+  [type in CredentialType]: [
+    React.FC<SvgProps>,
+    React.FC<SvgProps> | undefined
+  ];
 } = {
-  EuropeanDisabilityCard: [EidCardShape, EidCardInvalidShape],
-  EuropeanHealthInsuranceCard: [EidCardShape, EidCardInvalidShape],
-  mDL: [EidCardShape, EidCardInvalidShape],
-  PersonIdentificationData: [EidCardShape, EidCardInvalidShape]
+  EuropeanDisabilityCard: [DcCardShape, undefined],
+  EuropeanHealthInsuranceCard: [TsCardShape, undefined],
+  mDL: [MdlCardShape, undefined],
+  PersonIdentificationData: [EidCardShape, EidDisabledCardShape]
 };
 
 const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
@@ -160,15 +189,18 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     paddingHorizontal: 16,
-    paddingTop: 12
+    paddingTop: 14
   },
   header: {
+    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
   digitalVersionBadge: { position: "absolute", bottom: 16, right: -10 },
   personalInfo: {
-    marginTop: 65
+    position: "absolute",
+    top: 95,
+    left: 16
   }
 });

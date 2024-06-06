@@ -1,4 +1,10 @@
-import { HSpacer } from "@pagopa/io-app-design-system";
+import {
+  HSpacer,
+  TabNavigation,
+  TabItem,
+  ContentWrapper,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
@@ -156,16 +162,17 @@ const featuredServicesDataForCarousel: FeaturedServicesCarouselProps = {
   ]
 };
 
-// for testing reasons, abi codes can be found here:
-// https://www.comuniecitta.it/elenco-banche-per-codice-abi
-export const DSCards = () => (
-  <DesignSystemScreen title={"Cards"}>
+const PaymentCards = () => (
+  <>
     <DesignSystemSection title="PaymentCard">
       <DSComponentViewerBox name="PaymentCard">
         <ScrollView
           horizontal={true}
           style={{ aspectRatio: 16 / 10, marginHorizontal: -24 }}
-          contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 16 }}
+          contentContainerStyle={{
+            paddingHorizontal: 24,
+            paddingVertical: 16
+          }}
         >
           <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={validDate} />
           <HSpacer size={16} />
@@ -310,6 +317,11 @@ export const DSCards = () => (
         <PaymentCardsCarouselSkeleton />
       </DSComponentViewerBox>
     </DesignSystemSection>
+  </>
+);
+
+const BonusCards = () => (
+  <>
     <DesignSystemSection title="IdPayCard">
       <IdPayCard
         name="18 app"
@@ -331,6 +343,11 @@ export const DSCards = () => (
         <CgnCard expireDate={new Date(2023, 11, 2)} />
       </DSComponentViewerBox>
     </DesignSystemSection>
+  </>
+);
+
+const ServicesCards = () => (
+  <>
     <DesignSystemSection title="InstitutionCard">
       <DSComponentViewerBox name="InstitutionCardsCarousel">
         <FeaturedInstitutionsCarousel
@@ -349,6 +366,11 @@ export const DSCards = () => (
         <FeaturedServicesCarouselSkeleton />
       </DSComponentViewerBox>
     </DesignSystemSection>
+  </>
+);
+
+const ItwCards = () => (
+  <>
     <DesignSystemSection title="eID">
       <DSComponentViewerBox name="Preview">
         <ItwCredentialCard type={CredentialType.PID} isPreview={true} />
@@ -359,25 +381,11 @@ export const DSCards = () => (
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
         />
       </DSComponentViewerBox>
-      <DSComponentViewerBox name="Masked">
-        <ItwCredentialCard
-          type={CredentialType.PID}
-          data={["Anna Verdi", "RSGMRT80A41H501X"]}
-          isMasked={true}
-        />
-      </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
         <ItwCredentialCard
           type={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
           status="expired"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Expiring">
-        <ItwCredentialCard
-          type={CredentialType.PID}
-          data={["Anna Verdi", "RSGMRT80A41H501X"]}
-          status="expiring"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
@@ -388,5 +396,138 @@ export const DSCards = () => (
         />
       </DSComponentViewerBox>
     </DesignSystemSection>
-  </DesignSystemScreen>
+    <DesignSystemSection title="Driving License">
+      <DSComponentViewerBox name="Preview">
+        <ItwCredentialCard
+          type={CredentialType.DRIVING_LICENSE}
+          isPreview={true}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Valid">
+        <ItwCredentialCard
+          type={CredentialType.DRIVING_LICENSE}
+          data={["Anna Verdi", "A - B"]}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expired">
+        <ItwCredentialCard
+          type={CredentialType.DRIVING_LICENSE}
+          data={["Anna Verdi", "A - B"]}
+          status="expired"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expiring">
+        <ItwCredentialCard
+          type={CredentialType.DRIVING_LICENSE}
+          data={["Anna Verdi", "A - B"]}
+          status="expiring"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Pending">
+        <ItwCredentialCard
+          type={CredentialType.DRIVING_LICENSE}
+          data={["Anna Verdi", "A - B"]}
+          status="pending"
+        />
+      </DSComponentViewerBox>
+    </DesignSystemSection>
+    <DesignSystemSection title="Disability Card">
+      <DSComponentViewerBox name="Preview">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          isPreview={true}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Valid">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          data={["Anna Verdi", "A - B"]}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expired">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          data={["Anna Verdi", "1234567"]}
+          status="expired"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expiring">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          data={["Anna Verdi", "1234567"]}
+          status="expiring"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Pending">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          data={["Anna Verdi", "1234567"]}
+          status="pending"
+        />
+      </DSComponentViewerBox>
+    </DesignSystemSection>
+    <DesignSystemSection title="Health Insurance Card">
+      <DSComponentViewerBox name="Preview">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          isPreview={true}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Valid">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          data={["Anna Verdi", "VRDNNA95C71C933I"]}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expired">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          data={["Anna Verdi", "VRDNNA95C71C933I"]}
+          status="expired"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expiring">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          data={["Anna Verdi", "VRDNNA95C71C933I"]}
+          status="expiring"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Pending">
+        <ItwCredentialCard
+          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          data={["Anna Verdi", "VRDNNA95C71C933I"]}
+          status="pending"
+        />
+      </DSComponentViewerBox>
+    </DesignSystemSection>
+  </>
 );
+
+// for testing reasons, abi codes can be found here:
+// https://www.comuniecitta.it/elenco-banche-per-codice-abi
+export const DSCards = () => {
+  const [page, setPage] = React.useState(0);
+
+  return (
+    <DesignSystemScreen title={"Cards"} noMargin={true}>
+      <TabNavigation
+        tabAlignment="start"
+        selectedIndex={page}
+        onItemPress={setPage}
+      >
+        <TabItem label="Payments" accessibilityLabel="Payments" />
+        <TabItem label="Bonus" accessibilityLabel="Bonus" />
+        <TabItem label="Services" accessibilityLabel="Services" />
+        <TabItem label="IT Wallet" accessibilityLabel="IT Wallet" />
+      </TabNavigation>
+      <VSpacer size={16} />
+      <ContentWrapper>
+        {page === 0 && <PaymentCards />}
+        {page === 1 && <BonusCards />}
+        {page === 2 && <ServicesCards />}
+        {page === 3 && <ItwCards />}
+      </ContentWrapper>
+    </DesignSystemScreen>
+  );
+};

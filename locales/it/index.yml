@@ -3089,6 +3089,8 @@ features:
         mdl: Patente di Guida
         dc: Carta Europea della Disabilità
         ts: Tessera Sanitaria
+      subtitle:
+        ts: Carta regionale dei servizi
       digital: Versione digitale
     generic:
       error:
