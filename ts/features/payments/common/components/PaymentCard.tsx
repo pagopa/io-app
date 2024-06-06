@@ -24,6 +24,7 @@ export type PaymentCardProps = {
   holderPhone?: string;
   holderEmail?: string;
   isExpired?: boolean;
+  pspBusinessName?: string;
 };
 
 export type PaymentCardComponentProps = WithTestID<

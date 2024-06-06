@@ -3080,6 +3080,12 @@ features:
       status:
         failure: FALLITA
         success: ""
+    details:
+      pspAlert:
+        description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
+        action: "Cosa significa?"
+        title: "Cosa significa?"
+        explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “Pagamento veloce con PayPal”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
   itWallet:
     card:
       eid:
