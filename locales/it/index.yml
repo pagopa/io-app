@@ -3062,6 +3062,9 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: Ricevuta PagoPA
+        shareButton: Salva o condividi 
   itWallet:
     card:
       eid:

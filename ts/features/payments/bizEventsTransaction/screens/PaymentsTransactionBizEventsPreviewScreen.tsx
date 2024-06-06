@@ -41,27 +41,35 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
   });
 
   const handleOnShare = async () => {
+    const transactionReceiptFile = pot.toUndefined(transactionReceiptPot);
+    if (!transactionReceiptFile) {
+      return;
+    }
     try {
       await Share.open({
         activityItemSources: [
           {
             item: {
               default: {
-                content: "Ricevuta PagoPA.pdf",
+                content: `${I18n.t(
+                  "features.payments.transactions.receipt.title"
+                )}.pdf`,
                 type: "url"
               }
             },
             placeholderItem: {
-              content: "Ricevuta PagoPA.pdf",
+              content: `${I18n.t(
+                "features.payments.transactions.receipt.title"
+              )}.pdf`,
               type: "url"
             }
           }
         ],
         type: "application/pdf",
-        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value}`
+        url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFile}`
       });
     } catch (err) {
-      // DO NOTHING
+      // Don't do anything if the user cancels the share action
     }
   };
 
@@ -96,7 +104,9 @@ const PaymentsTransactionBizEventsPreviewScreen = () => {
           actions={{
             type: "SingleButton",
             primary: {
-              label: "Salva o condividi",
+              label: I18n.t(
+                "features.payments.transactions.receipt.shareButton"
+              ),
               onPress: handleOnShare
             }
           }}
