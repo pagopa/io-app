@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Perché?"
   you: "YOU"
   id: "ID"
   badges:
@@ -156,6 +157,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    consent: "Consenti"
     deny: "Deny"
     share: Share
     delete: Delete
@@ -3804,6 +3806,7 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
+
 FIMS: 
   loadingScreen:
     consents:
@@ -3811,3 +3814,19 @@ FIMS:
     in-app-browser:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
+  consentsScreen:
+    title: "Consenti la condivisione dei tuoi dati"
+    subtitle: "Autorizza IO a trasmettere a "
+    subtitle2: " i dati necessari per la tua autenticazione su "
+    requiredData: "Dati richiesti"
+    privacy1: "Per maggiori informazioni, leggi "
+    privacyCta: "l’Informativa sulla Privacy "
+    bottomSheet:
+      title: "Accedi a servizi di terze parti tramite IO"
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti
+        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
+        che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
+        finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla
+        Privacy."
