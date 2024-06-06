@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Perché?"
   you: "TU"
   id: "ID"
   badges:
@@ -156,6 +157,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
   buttons:
+    consent: "Consenti"
     deny: "Nega"
     share: Condividi
     delete: Elimina
@@ -484,7 +486,7 @@ profile:
     list:
       biometric_recognition:
         title: Riconoscimento biometrico
-        subtitle: Usa la tua impronta o il tuo volto
+        subtitle: Usa il volto o la tua impronta.
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
@@ -2238,7 +2240,7 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Modifica il codice di sblocco
-      subtitle: Imposta un nuovo codice di 6 cifre
+      subtitle: Imposta un nuovo codice di 6 cifre.
     confirmValid: Codice di sblocco corretto
   forgetCode:
     confirmTitle: Hai dimenticato il codice di sblocco?
@@ -3271,7 +3273,7 @@ idpay:
   code:
     reset:
       title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3826,3 +3828,19 @@ FIMS:
     in-app-browser:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
+  consentsScreen:
+    title: "Consenti la condivisione dei tuoi dati"
+    subtitle: "Autorizza IO a trasmettere a "
+    subtitle2: " i dati necessari per la tua autenticazione su "
+    requiredData: "Dati richiesti"
+    privacy1: "Per maggiori informazioni, leggi "
+    privacyCta: "l’Informativa sulla Privacy "
+    bottomSheet:
+      title: "Accedi a servizi di terze parti tramite IO"
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti
+        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
+        che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
+        finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla
+        Privacy."
