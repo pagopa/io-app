@@ -18,7 +18,6 @@ import {
   Fragment,
   PropsWithChildren,
   useLayoutEffect,
-  useMemo,
   useState
 } from "react";
 import {
@@ -180,23 +179,17 @@ export const IOScrollView = ({
 
   /* Safe background block. Cover at least 85% of the space
      to avoid glitchy elements underneath */
-  const safeBackgroundBlockHeight: number = useMemo(
-    () => (bottomMargin + actionBlockHeight) * 0.85,
-    [actionBlockHeight, bottomMargin]
-  );
+  const safeBackgroundBlockHeight: number =
+    (bottomMargin + actionBlockHeight) * 0.85;
 
   /* Total height of "Actions + Gradient" area */
-  const gradientAreaHeight: number = useMemo(
-    () => bottomMargin + actionBlockHeight + gradientSafeAreaHeight,
-    [actionBlockHeight, bottomMargin]
-  );
+  const gradientAreaHeight: number =
+    bottomMargin + actionBlockHeight + gradientSafeAreaHeight;
 
   /* Height of the safe bottom area, applied to the ScrollView:
      Actions + Content end margin */
-  const safeBottomAreaHeight: number = useMemo(
-    () => bottomMargin + actionBlockHeight + contentEndMargin,
-    [actionBlockHeight, bottomMargin]
-  );
+  const safeBottomAreaHeight: number =
+    bottomMargin + actionBlockHeight + contentEndMargin;
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -221,15 +214,12 @@ export const IOScrollView = ({
   /* Set custom header with `react-navigation` library using
      `useLayoutEffect` hook */
 
-  const scrollValues: IOSCrollViewHeaderScrollValues = useMemo(
-    () => ({
+  useLayoutEffect(() => {
+    const scrollValues: IOSCrollViewHeaderScrollValues = {
       contentOffsetY: scrollPositionAbsolute,
       triggerOffset: snapOffset || 0
-    }),
-    [scrollPositionAbsolute, snapOffset]
-  );
+    };
 
-  useLayoutEffect(() => {
     if (headerConfig) {
       navigation.setOptions({
         header: () => (
@@ -238,7 +228,7 @@ export const IOScrollView = ({
         headerTransparent: headerConfig.transparent
       });
     }
-  }, [headerConfig, navigation, scrollValues]);
+  }, [headerConfig, navigation, scrollPositionAbsolute, snapOffset]);
 
   return (
     <Fragment>
