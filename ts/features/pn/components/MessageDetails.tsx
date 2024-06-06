@@ -30,7 +30,6 @@ import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
 import { MessagePayments } from "./MessagePayments";
-import { MessageInfo } from "./MessageInfo";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
@@ -126,7 +125,6 @@ export const MessageDetails = ({
             serviceId={serviceId}
           />
           <VSpacer size={16} />
-          <MessageInfo iun={message.iun} />
         </ContentWrapper>
         <MessageBottomMenu
           history={message.notificationStatusHistory}
