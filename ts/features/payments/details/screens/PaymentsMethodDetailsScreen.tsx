@@ -67,15 +67,16 @@ const PaymentsMethodDetailsScreen = () => {
     const paymentMethod = walletDetailsPot.value;
     const cardProps = getPaymentCardPropsFromWalletInfo(paymentMethod);
     const headerTitle = getCardHeaderTitle(paymentMethod.details);
+    const paymentMethodDetails = paymentMethod.details as UIWalletInfoDetails;
 
     return (
       <PaymentsMethodDetailsBaseScreenComponent
         card={{ ...cardProps, isExpired: false }}
         headerTitle={headerTitle}
       >
-        {cardProps.pspBusinessName && (
+        {paymentMethodDetails.pspBusinessName && (
           <PaymentsMethodPspDetailsAlert
-            pspBusinessName={cardProps.pspBusinessName}
+            pspBusinessName={paymentMethodDetails.pspBusinessName}
           />
         )}
         <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
