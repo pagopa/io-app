@@ -1,6 +1,3 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import {
   Avatar,
   Badge,
@@ -11,6 +8,9 @@ import {
   TestID,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
@@ -30,12 +30,13 @@ export const CARD_WIDTH = 210;
 
 const cardPadding: IOSpacingScale = 16;
 const cardBorderRadius: number = 8;
-const cardTitleMargin: number = 8;
+/* Space between the `Avatar` and the content below */
+const cardSafeInnerSpace: IOSpacingScale = 16;
 
 const styles = StyleSheet.create({
   cardContainer: {
+    flex: 1,
     width: CARD_WIDTH,
-    aspectRatio: 1,
     padding: cardPadding,
     borderRadius: cardBorderRadius,
     borderCurve: "continuous",
@@ -58,40 +59,44 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     width: "100%",
-    marginTop: cardTitleMargin
+    marginTop: cardSafeInnerSpace
   }
 });
 
-const FeaturedServiceCard = (props: FeaturedServiceCardProps) => (
+const FeaturedServiceCard = ({
+  onPress,
+  testID,
+  accessibilityLabel,
+  isNew,
+  id,
+  name,
+  organizationName
+}: FeaturedServiceCardProps) => (
   <CardPressableBase
-    onPress={props.onPress}
-    testID={`${props.testID}-pressable`}
-    accessibilityLabel={props.accessibilityLabel}
+    onPress={onPress}
+    testID={`${testID}-pressable`}
+    accessibilityLabel={accessibilityLabel}
   >
     <View
-      style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
-      testID={props.testID}
+      style={[styles.cardContainer, isNew && styles.cardContainerNew]}
+      testID={testID}
     >
       <View style={styles.cardHeader}>
-        <Avatar logoUri={logoForService(props.id, "")} size="small" />
-        {props.isNew && (
-          <Badge variant="purple" text={I18n.t("services.new")} />
-        )}
+        <Avatar logoUri={logoForService(id, "")} size="small" />
+        {isNew && <Badge variant="purple" text={I18n.t("services.new")} />}
       </View>
       <View style={styles.cardTitle}>
         <H4
           lineBreakMode="head"
           numberOfLines={3}
-          color={props.isNew ? "hanPurple-850" : "blueIO-850"}
+          color={isNew ? "hanPurple-850" : "blueIO-850"}
         >
-          {props.name}
+          {name}
         </H4>
-        {props.organizationName && (
+        {organizationName && (
           <>
             <VSpacer size={4} />
-            <OrganizationNameLabel>
-              {props.organizationName}
-            </OrganizationNameLabel>
+            <OrganizationNameLabel>{organizationName}</OrganizationNameLabel>
           </>
         )}
       </View>
