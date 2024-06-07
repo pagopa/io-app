@@ -64,6 +64,7 @@ import { DSWizardScreen } from "../core/DSWizardScreen";
 import DSListItemScreen from "../core/DSListItemScreen";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
+import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -434,6 +435,14 @@ export const DesignSystemNavigator = () => {
           name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
           component={DSEdgeToEdgeArea}
           options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.SCREEN_END_MARGIN.route}
+          component={DSScreenEndMargin}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.SCREEN_END_MARGIN.title
+          }}
         />
 
         <Stack.Screen
