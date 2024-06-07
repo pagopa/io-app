@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import { FlatList, View } from "react-native";
-import { Body, Divider, IOStyles } from "@pagopa/io-app-design-system";
+import { FlatList } from "react-native";
+import { Divider } from "@pagopa/io-app-design-system";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
@@ -13,6 +13,7 @@ import { UIMessage } from "../../types";
 import { messageListItemHeight } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
 import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
+import { EmptyList } from "./EmptyList";
 
 type MessageListProps = {
   category: MessageListCategory;
@@ -42,16 +43,7 @@ export const MessageList = ({ category }: MessageListProps) => {
     <FlatList
       contentContainerStyle={{ flexGrow: 1 }}
       data={(messageList ?? loadingList) as Readonly<Array<number | UIMessage>>}
-      ListEmptyComponent={() => (
-        <View
-          style={[
-            IOStyles.flex,
-            { justifyContent: "center", alignItems: "center" }
-          ]}
-        >
-          <Body>{`Lista vuota in corso di sviluppo`}</Body>
-        </View>
-      )}
+      ListEmptyComponent={<EmptyList category={category} />}
       ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
       renderItem={({ index, item }) => {
         if (typeof item === "number") {
