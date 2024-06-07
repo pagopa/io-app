@@ -373,24 +373,27 @@ const ItwCards = () => (
   <>
     <DesignSystemSection title="eID">
       <DSComponentViewerBox name="Preview">
-        <ItwCredentialCard type={CredentialType.PID} isPreview={true} />
+        <ItwCredentialCard
+          credentialType={CredentialType.PID}
+          isPreview={true}
+        />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
         <ItwCredentialCard
-          type={CredentialType.PID}
+          credentialType={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
         <ItwCredentialCard
-          type={CredentialType.PID}
+          credentialType={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
           status="expired"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
         <ItwCredentialCard
-          type={CredentialType.PID}
+          credentialType={CredentialType.PID}
           data={["Anna Verdi", "RSGMRT80A41H501X"]}
           status="pending"
         />
@@ -399,33 +402,33 @@ const ItwCards = () => (
     <DesignSystemSection title="Driving License">
       <DSComponentViewerBox name="Preview">
         <ItwCredentialCard
-          type={CredentialType.DRIVING_LICENSE}
+          credentialType={CredentialType.DRIVING_LICENSE}
           isPreview={true}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
         <ItwCredentialCard
-          type={CredentialType.DRIVING_LICENSE}
+          credentialType={CredentialType.DRIVING_LICENSE}
           data={["Anna Verdi", "A - B"]}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
         <ItwCredentialCard
-          type={CredentialType.DRIVING_LICENSE}
+          credentialType={CredentialType.DRIVING_LICENSE}
           data={["Anna Verdi", "A - B"]}
           status="expired"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expiring">
         <ItwCredentialCard
-          type={CredentialType.DRIVING_LICENSE}
+          credentialType={CredentialType.DRIVING_LICENSE}
           data={["Anna Verdi", "A - B"]}
           status="expiring"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
         <ItwCredentialCard
-          type={CredentialType.DRIVING_LICENSE}
+          credentialType={CredentialType.DRIVING_LICENSE}
           data={["Anna Verdi", "A - B"]}
           status="pending"
         />
@@ -434,33 +437,33 @@ const ItwCards = () => (
     <DesignSystemSection title="Disability Card">
       <DSComponentViewerBox name="Preview">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           isPreview={true}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           data={["Anna Verdi", "A - B"]}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           data={["Anna Verdi", "1234567"]}
           status="expired"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expiring">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           data={["Anna Verdi", "1234567"]}
           status="expiring"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_DISABILITY_CARD}
+          credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           data={["Anna Verdi", "1234567"]}
           status="pending"
         />
@@ -469,33 +472,33 @@ const ItwCards = () => (
     <DesignSystemSection title="Health Insurance Card">
       <DSComponentViewerBox name="Preview">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           isPreview={true}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Valid">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           data={["Anna Verdi", "VRDNNA95C71C933I"]}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expired">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           data={["Anna Verdi", "VRDNNA95C71C933I"]}
           status="expired"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Expiring">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           data={["Anna Verdi", "VRDNNA95C71C933I"]}
           status="expiring"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="Pending">
         <ItwCredentialCard
-          type={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+          credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           data={["Anna Verdi", "VRDNNA95C71C933I"]}
           status="pending"
         />

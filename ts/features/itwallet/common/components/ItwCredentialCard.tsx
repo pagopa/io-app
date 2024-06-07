@@ -24,7 +24,7 @@ type DataProps = {
 };
 
 type BaseProps = {
-  type: CredentialType;
+  credentialType: CredentialType;
   isMasked?: boolean;
   status?: ItwCredentialStatus;
 };
@@ -34,14 +34,15 @@ export type ItwCredentialCard = BaseProps & (PreviewProps | DataProps);
 export const ItwCredentialCard = ({
   isMasked = false,
   status = "valid",
-  type,
+  credentialType,
   ...props
 }: ItwCredentialCard) => {
   const isValid = status === "valid";
   const shouldDisplayData = !(!isValid || isMasked) && !props.isPreview;
   const labelColor: IOColors = isValid ? "bluegreyDark" : "grey-700";
 
-  const cardBackgroundSource = credentialCardBackgrounds[type][isValid ? 0 : 1];
+  const cardBackgroundSource =
+    credentialCardBackgrounds[credentialType][isValid ? 0 : 1];
   const statusTagProps = tagPropsByStatus[status];
 
   return (
@@ -58,14 +59,14 @@ export const ItwCredentialCard = ({
           <View style={styles.header}>
             <View style={{ flex: 1 }}>
               <Body color={labelColor} weight="SemiBold" numberOfLines={2}>
-                {credentialTitleByType[type].toUpperCase()}
+                {credentialTitleByType[credentialType].toUpperCase()}
               </Body>
               <LabelSmall
                 color={labelColor}
                 weight="SemiBold"
                 style={{ marginTop: -4 }}
               >
-                {credentialSubtitleByType[type]}
+                {credentialSubtitleByType[credentialType]}
               </LabelSmall>
             </View>
             {statusTagProps && (

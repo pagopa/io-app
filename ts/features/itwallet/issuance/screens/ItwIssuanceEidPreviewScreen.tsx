@@ -76,7 +76,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
         }}
       >
         <View style={styles.preview}>
-          <ItwCredentialCard type={CredentialType.PID} isPreview={true} />
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            isPreview={true}
+          />
         </View>
         <View style={styles.dropShadow}>
           <VSpacer size={24} />

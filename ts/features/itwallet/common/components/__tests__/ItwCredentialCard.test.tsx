@@ -14,7 +14,7 @@ describe("ItwCredentialCard", () => {
     status => {
       const component = render(
         <ItwCredentialCard
-          type={CredentialType.PID}
+          credentialType={CredentialType.PID}
           data={["ABCDEFG ABCDEFG", "AAAAAA99A99A999A"]}
           status={status}
         />
@@ -25,7 +25,7 @@ describe("ItwCredentialCard", () => {
 
   it("should render the preview", () => {
     const component = render(
-      <ItwCredentialCard type={CredentialType.PID} isPreview={true} />
+      <ItwCredentialCard credentialType={CredentialType.PID} isPreview={true} />
     );
     expect(component).toMatchSnapshot();
   });
