@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { identity, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
@@ -98,14 +99,47 @@ export const fimsErrorStateSelector = (state: GlobalState) =>
     ? state.features.fims.consentsData.error
     : undefined;
 
-export const fimsLoadingStateSelector = (state: GlobalState) => {
-  if (state.features.fims.currentFlowState === "in-app-browser") {
-    return "in-app-browser";
+export const fimsLoadingStateSelector = (state: GlobalState) =>
+  pipe(
+    state.features.fims.currentFlowState,
+    foldFimsFlowStateK(
+      consentsState =>
+        pipe(state.features.fims.consentsData, consentsPot =>
+          pipe(
+            pot.isLoading(consentsPot) || isStrictNone(consentsPot),
+            B.fold(
+              () => undefined,
+              () => consentsState
+            )
+          )
+        ),
+      identity,
+      identity
+    )
+  );
+
+const foldFimsFlowState = <A>(
+  flowState: FimsFlowStateTags,
+  onConsents: (state: "consents") => A,
+  onInAppBrowser: (state: "in-app-browser") => A,
+  onAbort: (state: "abort") => A
+) => {
+  switch (flowState) {
+    case "abort":
+      return onAbort(flowState);
+    case "in-app-browser":
+      return onInAppBrowser(flowState);
   }
-  const { consentsData } = state.features.fims;
-  return pot.isLoading(consentsData) || isStrictNone(consentsData)
-    ? state.features.fims.currentFlowState
-    : undefined;
+  return onConsents(flowState);
 };
+
+const foldFimsFlowStateK =
+  <A>(
+    onConsents: (state: "consents") => A,
+    onInAppBrowser: (state: "in-app-browser") => A,
+    onAbort: (state: "abort") => A
+  ) =>
+  (flowState: FimsFlowStateTags) =>
+    foldFimsFlowState(flowState, onConsents, onInAppBrowser, onAbort);
 
 export default reducer;

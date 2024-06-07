@@ -53,7 +53,6 @@ export function* handleFimsGetConsentsList(
     yield* put(fimsGetConsentsListAction.failure("consent data fetch error"));
     return;
   }
-
   yield pipe(
     getConsentsResult.body,
     E.tryCatchK(JSON.parse, identity),
