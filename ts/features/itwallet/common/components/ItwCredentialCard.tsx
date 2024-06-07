@@ -14,7 +14,6 @@ export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
 type PreviewProps = {
   isPreview: true;
-  data?: never;
 };
 
 type DataProps = {
