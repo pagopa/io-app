@@ -49,7 +49,7 @@ export const ItwCredentialCard = ({
       <View style={styles.cardContainer}>
         <View style={styles.card}>
           <Image
-            style={{ height: "100%", width: "100%" }}
+            style={styles.cardBackground}
             source={cardBackgroundSource}
             accessibilityIgnoresInvertColors={true}
           />
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: IOColors["grey-100"]
   },
+  cardBackground: { height: "100%", width: "100%" },
   border: {
     position: "absolute",
     left: 0,
