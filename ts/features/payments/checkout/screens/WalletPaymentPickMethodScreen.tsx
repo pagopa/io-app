@@ -119,10 +119,10 @@ const WalletPaymentPickMethodScreen = () => {
         const idPsp = pipe(
           userWalletsPots,
           pot.toOption,
-          O.map(wallets =>
+          O.chainNullableK(wallets =>
             wallets.find(wallet => wallet.walletId === walletId)
           ),
-          O.map(wallet => wallet?.details as UIWalletInfoDetails),
+          O.chainNullableK(wallet => wallet.details as UIWalletInfoDetails),
           O.map(details => details.pspId),
           O.getOrElseW(() => undefined)
         );
