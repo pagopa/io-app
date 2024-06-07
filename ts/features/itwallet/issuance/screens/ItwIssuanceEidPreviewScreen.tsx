@@ -9,10 +9,7 @@ import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
-import {
-  CredentialType,
-  ItwCredentialsMocks
-} from "../../common/utils/itwMocksUtils";
+import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewScreenContent } from "../components/ItwCredentialPreviewScreenContent";
