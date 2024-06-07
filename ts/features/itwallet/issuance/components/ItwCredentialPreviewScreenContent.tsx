@@ -5,10 +5,11 @@ import { FooterActions } from "../../../../components/ui/FooterActions";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
-import { EidCardPreview } from "../../common/components/EidCardPreview";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 type Props = {
   data: StoredCredential;
@@ -45,7 +46,10 @@ export const ItwCredentialPreviewScreenContent = ({
   return (
     <>
       <View style={styles.preview}>
-        <EidCardPreview />
+        <ItwCredentialCard
+          credentialType={data.credentialType as CredentialType}
+          isPreview={true}
+        />
       </View>
       <View style={styles.dropShadow}>
         <VSpacer size={24} />
