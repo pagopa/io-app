@@ -3809,6 +3809,8 @@ permissionRequest:
 
 FIMS: 
   loadingScreen:
+    abort:
+      title: "Operazione annullata"
     consents:
       title: "Attendi qualche secondo"
     in-app-browser:
