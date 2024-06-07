@@ -39,6 +39,7 @@ import {
 } from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -114,6 +115,18 @@ const WalletPaymentPickMethodScreen = () => {
         // In case of guest payment walletId could be undefined
         const walletId = O.toUndefined(selectedWalletIdOption);
 
+        // In case of an onboarded wallet, it could be present the idPsp that needs to be preselected in the calculateFees request
+        const idPsp = pipe(
+          userWalletsPots,
+          pot.toOption,
+          O.map(wallets =>
+            wallets.find(wallet => wallet.walletId === walletId)
+          ),
+          O.map(wallet => wallet?.details as UIWalletInfoDetails),
+          O.map(details => details.pspId),
+          O.getOrElseW(() => undefined)
+        );
+
         dispatch(
           paymentsCalculatePaymentFeesAction.request({
             paymentToken,
@@ -122,7 +135,8 @@ const WalletPaymentPickMethodScreen = () => {
             paymentAmount,
             transferList,
             isAllCCP,
-            primaryCreditorInstitution
+            primaryCreditorInstitution,
+            idPsp
           })
         );
       })
@@ -132,6 +146,7 @@ const WalletPaymentPickMethodScreen = () => {
     dispatch,
     paymentAmountPot,
     transactionPot,
+    userWalletsPots,
     selectedPaymentMethodIdOption,
     selectedWalletIdOption
   ]);
