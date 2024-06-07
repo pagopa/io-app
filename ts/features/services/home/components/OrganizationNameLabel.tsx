@@ -1,5 +1,6 @@
 import {
   IOColors,
+  useIOExperimentalDesign,
   useTypographyFactory,
   type IOFontFamily,
   type IOFontWeight
@@ -11,6 +12,7 @@ type AllowedWeight = Extract<IOFontWeight, "Regular">;
 type AllowedColors = Extract<IOColors, "grey-650">;
 
 const fontName: IOFontFamily = "ReadexPro";
+const legacyFontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 14;
 
 type OrganizationNameLabelProps = Omit<
@@ -21,15 +23,17 @@ type OrganizationNameLabelProps = Omit<
 // Custom Typography component to show the name of Department on CGN card component
 const OrganizationNameLabel: React.FunctionComponent<
   OrganizationNameLabelProps
-> = props =>
-  useTypographyFactory<AllowedWeight, AllowedColors>({
+> = props => {
+  const { isExperimental } = useIOExperimentalDesign();
+  return useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Regular",
     defaultColor: "grey-650",
-    font: fontName,
+    font: isExperimental ? fontName : legacyFontName,
     fontStyle: { fontSize },
     lineBreakMode: "head",
     numberOfLines: 1
   });
+};
 
 export default OrganizationNameLabel;
