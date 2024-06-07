@@ -3,7 +3,6 @@ import {
   Body,
   HSpacer,
   IOColors,
-  LabelSmall,
   Tag
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -57,18 +56,14 @@ export const ItwCredentialCard = ({
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.header}>
-            <View style={{ flex: 1 }}>
-              <Body color={labelColor} weight="SemiBold" numberOfLines={2}>
-                {credentialTitleByType[credentialType].toUpperCase()}
-              </Body>
-              <LabelSmall
-                color={labelColor}
-                weight="SemiBold"
-                style={{ marginTop: -4 }}
-              >
-                {credentialSubtitleByType[credentialType]}
-              </LabelSmall>
-            </View>
+            <Body
+              color={labelColor}
+              weight="SemiBold"
+              numberOfLines={2}
+              style={{ flex: 1 }}
+            >
+              {cardLabelByCredentialType[credentialType].toUpperCase()}
+            </Body>
             {statusTagProps && (
               <>
                 <HSpacer size={16} />
@@ -111,15 +106,11 @@ const DigitalVersionBadge = () => (
   </View>
 );
 
-const credentialTitleByType: { [type in CredentialType]: string } = {
-  EuropeanDisabilityCard: I18n.t("features.itWallet.card.title.dc"),
-  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.title.ts"),
-  mDL: I18n.t("features.itWallet.card.title.mdl"),
-  PersonIdentificationData: I18n.t("features.itWallet.card.title.eid")
-};
-
-const credentialSubtitleByType: { [type in CredentialType]?: string } = {
-  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.subtitle.ts")
+const cardLabelByCredentialType: { [type in CredentialType]: string } = {
+  EuropeanDisabilityCard: I18n.t("features.itWallet.card.label.dc"),
+  EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.label.ts"),
+  mDL: I18n.t("features.itWallet.card.label.mdl"),
+  PersonIdentificationData: I18n.t("features.itWallet.card.label.eid")
 };
 
 const credentialCardBackgrounds: {

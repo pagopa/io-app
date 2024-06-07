@@ -3084,13 +3084,11 @@ features:
         expired: Non valida
         expiring: In scadenza
         pending: In lavorazione
-      title:
+      label:
         eid: Identità Digitale
         mdl: Patente di Guida
         dc: Carta Europea della Disabilità
         ts: Tessera Sanitaria
-      subtitle:
-        ts: Carta regionale dei servizi
       digital: Versione digitale
     generic:
       error:
