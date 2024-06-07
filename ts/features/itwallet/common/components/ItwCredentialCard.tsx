@@ -7,13 +7,7 @@ import {
   Tag
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { SvgProps } from "react-native-svg";
-import DcCardShape from "../../../../../img/features/itWallet/cards/dc.svg";
-import EidCardShape from "../../../../../img/features/itWallet/cards/eid.svg";
-import EidDisabledCardShape from "../../../../../img/features/itWallet/cards/eid_disabled.svg";
-import MdlCardShape from "../../../../../img/features/itWallet/cards/mdl.svg";
-import TsCardShape from "../../../../../img/features/itWallet/cards/ts.svg";
+import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { CredentialType } from "../utils/itwMocksUtils";
 
@@ -47,13 +41,19 @@ export const ItwCredentialCard = ({
   const shouldDisplayData = !(!isValid || isMasked) && !props.isPreview;
   const labelColor: IOColors = isValid ? "bluegreyDark" : "grey-700";
 
-  const CardShape = credentialCardShapes[type][isValid ? 0 : 1];
+  const cardBackgroundSource = credentialCardBackgrounds[type][isValid ? 0 : 1];
   const statusTagProps = tagPropsByStatus[status];
 
   return (
     <View style={props.isPreview && styles.previewContainer}>
       <View style={styles.cardContainer}>
-        <View style={styles.card}>{CardShape && <CardShape />}</View>
+        <View style={styles.card}>
+          <Image
+            style={{ height: "100%", width: "100%" }}
+            source={cardBackgroundSource}
+            accessibilityIgnoresInvertColors={true}
+          />
+        </View>
         <View style={styles.infoContainer}>
           <View style={styles.header}>
             <View style={{ flex: 1 }}>
@@ -121,16 +121,25 @@ const credentialSubtitleByType: { [type in CredentialType]?: string } = {
   EuropeanHealthInsuranceCard: I18n.t("features.itWallet.card.subtitle.ts")
 };
 
-const credentialCardShapes: {
-  [type in CredentialType]: [
-    React.FC<SvgProps>,
-    React.FC<SvgProps> | undefined
-  ];
+const credentialCardBackgrounds: {
+  [type in CredentialType]: [ImageSourcePropType, ImageSourcePropType];
 } = {
-  EuropeanDisabilityCard: [DcCardShape, undefined],
-  EuropeanHealthInsuranceCard: [TsCardShape, undefined],
-  mDL: [MdlCardShape, undefined],
-  PersonIdentificationData: [EidCardShape, EidDisabledCardShape]
+  EuropeanDisabilityCard: [
+    require("../../../../../img/features/itWallet/cards/dc.png"),
+    require("../../../../../img/features/itWallet/cards/dc_off.png")
+  ],
+  EuropeanHealthInsuranceCard: [
+    require("../../../../../img/features/itWallet/cards/ts.png"),
+    require("../../../../../img/features/itWallet/cards/ts_off.png")
+  ],
+  mDL: [
+    require("../../../../../img/features/itWallet/cards/mdl.png"),
+    require("../../../../../img/features/itWallet/cards/mdl_off.png")
+  ],
+  PersonIdentificationData: [
+    require("../../../../../img/features/itWallet/cards/eid.png"),
+    require("../../../../../img/features/itWallet/cards/eid_off.png")
+  ]
 };
 
 const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
