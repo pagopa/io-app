@@ -2151,7 +2151,8 @@ services:
       back: "Indietro"
       retry: "Riprova"
     header:
-      subtitle: "{{count}} servizi disponibili"
+      subtitlePlural: "{{count}} servizi disponibili"
+      subtitleSingular: "{{count}} servizio disponibile"
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
