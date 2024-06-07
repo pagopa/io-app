@@ -51,8 +51,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
         expireDate: getDateFromExpiryDate(T_EXPIRE_DATE),
         holderEmail: undefined,
         holderPhone: undefined,
-        isExpired: false,
-        pspBusinessName: undefined
+        isExpired: false
       }
     ];
 

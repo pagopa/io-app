@@ -140,8 +140,7 @@ export const getPaymentCardPropsFromWalletInfo = (
     expireDate: getDateFromExpiryDate(details.expiryDate),
     holderEmail: details.maskedEmail,
     holderPhone: details.maskedNumber,
-    isExpired,
-    pspBusinessName: details.pspBusinessName
+    isExpired
   };
 };
 
