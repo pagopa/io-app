@@ -38,6 +38,8 @@ import {
 } from "../store/reducers/servicesById";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
+import * as analytics from "../../common/analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;
@@ -90,6 +92,22 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   const serviceCtas = useMemo(
     () => pipe(serviceMetadata, getServiceCTA, O.toUndefined),
     [serviceMetadata]
+  );
+
+  useOnFirstRender(
+    () => {
+      analytics.trackServiceDetails({
+        bottom_cta_available: !!serviceMetadata?.cta,
+        organization_fiscal_code: service?.organization_fiscal_code ?? "",
+        organization_name: service?.organization_name ?? "",
+        service_category: serviceMetadataInfo?.isSpecialService
+          ? "special"
+          : "standard",
+        service_id: service?.service_id ?? "",
+        service_name: service?.service_name ?? ""
+      });
+    },
+    () => !!service && !!serviceMetadataInfo
   );
 
   useEffect(() => {

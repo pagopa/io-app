@@ -1,5 +1,16 @@
-import { mixpanelTrack } from "../../../../mixpanel";
+import { getType } from "typesafe-actions";
+import { mixpanel, mixpanelTrack } from "../../../../mixpanel";
+import { Action } from "../../../../store/actions/types";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
+import { getNetworkErrorMessage } from "../../../../utils/errors";
+import { paginatedServicesGet } from "../../institution/store/actions";
+import {
+  featuredInstitutionsGet,
+  featuredServicesGet,
+  paginatedInstitutionsGet
+} from "../../home/store/actions";
+import { loadServicePreference } from "../../details/store/actions/preference";
 
 type ServiceBaseType = {
   service_name: string;
@@ -10,64 +21,83 @@ type InstitutionBaseType = {
 };
 
 type ServiceDetailsType = {
+  bottom_cta_available: boolean;
+  organization_fiscal_code: string;
   service_category: "special" | "standard";
+  service_id: string;
+} & ServiceBaseType;
+
+type ServiceDetailsConsentType = {
+  is_special_service: boolean;
   main_consent_status: boolean;
   push_consent_status: boolean;
   read_confirmation_consent_status: boolean;
-  bottom_cta_available: boolean;
-  special_service_status: "active" | "not_active" | "nd";
-} & ServiceBaseType;
+  service_id: string;
+};
+
+const ConsentTypeLabels = {
+  inbox: "main",
+  email: "email",
+  push: "push",
+  can_access_message_read_status: "read_confirmation"
+} as const;
 
 type ServiceConsentChangedType = {
-  consent_type: "main" | "push" | "read_confirmation";
+  consent_type: keyof typeof ConsentTypeLabels;
   consent_status: boolean;
-} & ServiceBaseType;
+  service_id: string;
+};
 
 type ServiceDetailsUserExitType = {
-  link: "website" | "email" | "assistance" | "bottom_cta";
-} & ServiceBaseType;
+  link: string;
+  service_id: string;
+};
 
 type SpecialServiceStatusChangedType = {
-  special_service_status: "activated" | "deactivated";
-} & ServiceBaseType;
+  is_active: boolean;
+  service_id: string;
+};
 
 type InstitutionDetailsType = {
+  organization_fiscal_code: string;
   sevices_count: number;
 } & InstitutionBaseType;
 
 type ServiceSelectedType = {
-  source: "featured_organization" | "featured_services";
+  source: "featured_services" | "organization_detail";
 } & ServiceBaseType;
 
 type InstitutionSelectedType = {
-  source: "featured_organization" | "main_list" | "search_list" | "recent_list";
+  source:
+    | "featured_organizations"
+    | "main_list"
+    | "search_list"
+    | "recent_list";
 } & InstitutionBaseType;
 
-type ServicesSearchStartType = {
-  source: "bottom_link" | "header_icon";
+export type SearchStartType = {
+  source: "bottom_link" | "header_icon" | "search_bar";
 };
 
 export const trackServicesHome = () =>
   void mixpanelTrack("SERVICES", buildEventProperties("UX", "screen_view"));
 
-export const trackServicesHomeError = (reason: string) =>
+export const trackServicesHomeError = (
+  reason: string,
+  source: "featured_services" | "main_list" | "organization_detail"
+) =>
   void mixpanelTrack(
     "SERVICES_ERROR",
-    buildEventProperties("KO", undefined, { reason })
+    buildEventProperties("KO", undefined, { reason, source })
   );
 
-export const trackOrganizationsScroll = () =>
-  void mixpanelTrack(
-    "ORGANIZATIONS_SCROLL",
-    buildEventProperties("UX", "action")
-  );
+export const trackInstitutionsScroll = () =>
+  void mixpanelTrack("SERVICES_SCROLL", buildEventProperties("UX", "action"));
 
-export const trackServicesSearchStart = ({ source }: ServicesSearchStartType) =>
+export const trackSearchStart = (props: SearchStartType) =>
   void mixpanelTrack(
     "SERVICES_SEARCH_START",
-    buildEventProperties("UX", "action", {
-      source
-    })
+    buildEventProperties("UX", "action", props)
   );
 
 export const trackServiceSelected = ({
@@ -97,12 +127,14 @@ export const trackInstitutionSelected = ({
   );
 
 export const trackInstitutionDetails = ({
+  organization_fiscal_code,
   organization_name,
   sevices_count = 0
 }: InstitutionDetailsType) =>
   void mixpanelTrack(
     "SERVICES_ORGANIZATION_DETAIL",
     buildEventProperties("UX", "screen_view", {
+      organization_fiscal_code,
       organization_name,
       sevices_count
     })
@@ -150,10 +182,22 @@ export const trackServiceDetails = (props: ServiceDetailsType) =>
     buildEventProperties("UX", "screen_view", props)
   );
 
-export const trackServiceConsentChanged = (props: ServiceConsentChangedType) =>
+export const trackServiceDetailsConsent = (props: ServiceDetailsConsentType) =>
+  void mixpanelTrack(
+    "SERVICES_DETAIL_CONSENT",
+    buildEventProperties("UX", "screen_view", props)
+  );
+
+export const trackServiceConsentChanged = ({
+  consent_type,
+  ...rest
+}: ServiceConsentChangedType) =>
   void mixpanelTrack(
     "SERVICES_CONSENT_CHANGED",
-    buildEventProperties("UX", "action", props)
+    buildEventProperties("UX", "action", {
+      ...rest,
+      consent_type: ConsentTypeLabels[consent_type]
+    })
   );
 
 export const trackServiceDetailsUserExit = (
@@ -177,3 +221,42 @@ export const trackServiceDetailsError = (reason: string) =>
     "SERVICES_DETAIL_ERROR",
     buildEventProperties("KO", undefined, { reason })
   );
+
+/**
+ * Isolated tracker for services actions
+ */
+export const trackServicesAction =
+  (_: NonNullable<typeof mixpanel>) =>
+  (action: Action): void => {
+    switch (action.type) {
+      // Services home
+      case getType(paginatedInstitutionsGet.failure):
+        return trackServicesHomeError(
+          getNetworkErrorMessage(action.payload),
+          "main_list"
+        );
+      case getType(featuredServicesGet.failure):
+        return trackServicesHomeError(
+          getNetworkErrorMessage(action.payload),
+          "featured_services"
+        );
+      case getType(featuredInstitutionsGet.failure):
+        return trackServicesHomeError(
+          getNetworkErrorMessage(action.payload),
+          "organization_detail"
+        );
+      // Search results
+      case getType(searchPaginatedInstitutionsGet.success):
+        return trackSearchResult(action.payload.count);
+      case getType(searchPaginatedInstitutionsGet.failure):
+        return trackSearchError(getNetworkErrorMessage(action.payload));
+      // Institution details
+      case getType(paginatedServicesGet.failure):
+        return trackInstitutionDetailsError(
+          getNetworkErrorMessage(action.payload)
+        );
+      // Service details
+      case getType(loadServicePreference.failure):
+        return trackServiceDetailsError(getNetworkErrorMessage(action.payload));
+    }
+  };
