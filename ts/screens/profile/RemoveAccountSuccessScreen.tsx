@@ -101,7 +101,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // hard-logout
-  logout: () => dispatch(logoutRequest())
+  logout: () => dispatch(logoutRequest({ withApiCall: true }))
 });
 
 export default connect(undefined, mapDispatchToProps)(RemoveAccountSuccess);

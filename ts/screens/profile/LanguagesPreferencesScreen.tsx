@@ -1,45 +1,41 @@
 import {
+  Banner,
   ContentWrapper,
-  IOIconSizeScale,
-  IOToast
+  IOToast,
+  RadioGroup,
+  RadioItem,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
-import { Alert, SafeAreaView, View } from "react-native";
-import { connect } from "react-redux";
-import { Locales, TranslationKeys } from "../../../locales/locales";
-import SectionStatusComponent from "../../components/SectionStatus";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { Alert, View } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import ListItemComponent from "../../components/screens/ListItemComponent";
-import { AlertModal } from "../../components/ui/AlertModal";
-import {
-  LightModalContext,
-  LightModalContextInterface
-} from "../../components/ui/LightModal";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n, { availableTranslations } from "../../i18n";
-import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
-import { profileUpsert } from "../../store/actions/profile";
-import { Dispatch } from "../../store/actions/types";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
-import { profileSelector } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
+import { Locales, TranslationKeys } from "../../../locales/locales";
+import { profileUpsert } from "../../store/actions/profile";
 import {
   fromLocaleToPreferredLanguage,
-  getLocalePrimaryWithFallback
+  getFullLocale
 } from "../../utils/locale";
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-type State = { isLoading: boolean; selectedLocale?: Locales };
-
-type LanguagesPreferencesScreenProps = Props & LightModalContextInterface;
-
-const iconSize: IOIconSizeScale = 12;
+import { profileSelector } from "../../store/reducers/profile";
+import { usePrevious } from "../../utils/hooks/usePrevious";
+import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { openWebUrl } from "../../utils/url";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -49,160 +45,180 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Allows the user to select one of the available Languages as preferred
  */
-class LanguagesPreferencesScreen extends React.PureComponent<
-  LanguagesPreferencesScreenProps,
-  State
-> {
-  constructor(props: LanguagesPreferencesScreenProps) {
-    super(props);
-    this.state = { isLoading: false };
-  }
 
-  private isAlreadyPreferred = (language: Locales) =>
-    // if the preferred Lanuage is not set, we check if language is the same in use
-    pipe(
-      this.props.preferredLanguage,
-      O.map(l => l === language),
-      O.getOrElse(() => getLocalePrimaryWithFallback() === language)
-    );
+const LanguagesPreferencesScreen = () => {
+  const viewRef = createRef<View>();
+  const dispatch = useIODispatch();
+  const selectedLanguage = useRef<string | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
+  const profile = useIOSelector(profileSelector, _.isEqual);
+  const prevProfile = usePrevious(profile);
+  const bannerInfoSelector = useIOSelector(
+    sectionStatusSelector("favourite_language")
+  );
+  const isBannerVisible = bannerInfoSelector && bannerInfoSelector.is_visible;
+  const preferredLanguageSelect = useIOSelector(
+    preferredLanguageSelector,
+    _.isEqual
+  );
+  const preferredLanguage = useMemo(
+    () =>
+      pipe(
+        preferredLanguageSelect,
+        O.getOrElse(() => "it")
+      ),
+    [preferredLanguageSelect]
+  );
 
-  private onLanguageSelected = (language: Locales) => {
-    if (!this.isAlreadyPreferred(language)) {
-      Alert.alert(
-        I18n.t("profile.preferences.list.preferred_language.alert.title") +
-          " " +
-          I18n.t(`locales.${language}` as TranslationKeys) +
-          "?",
-        I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.confirm"),
-            style: "default",
-            onPress: () => {
-              this.setState({ selectedLocale: language }, () => {
-                this.props.upsertProfile(language);
-              });
-            }
-          }
-        ],
-        { cancelable: false }
-      );
-    }
-  };
+  const upsertProfile = useCallback(
+    (language: Locales) =>
+      dispatch(
+        profileUpsert.request({
+          preferred_languages: [fromLocaleToPreferredLanguage(language)]
+        })
+      ),
+    [dispatch]
+  );
 
-  public componentDidUpdate(prevProps: Readonly<Props>) {
+  const preferredLanguageSaveSuccessDispatch = useCallback(
+    (language: Locales) =>
+      dispatch(
+        preferredLanguageSaveSuccess({
+          preferredLanguage: language
+        })
+      ),
+    [dispatch]
+  );
+
+  const renderedItem: Array<RadioItem<string>> = useMemo(
+    () =>
+      availableTranslations.map(item => ({
+        value: I18n.t(`locales.${item}`, {
+          defaultValue: item
+        }),
+        id: item,
+        techName: `${item}-${item.toUpperCase()}`
+      })),
+    []
+  );
+
+  const initialSelectedItem = useMemo(
+    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
+    [preferredLanguage, renderedItem]
+  );
+
+  const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
+
+  useEffect(() => {
     // start updating
-    if (pot.isUpdating(this.props.profile)) {
-      this.setState({ isLoading: true });
+    if (pot.isUpdating(profile)) {
+      setIsLoading(true);
       return;
     }
 
     // update completed
-    if (pot.isUpdating(prevProps.profile) && pot.isSome(this.props.profile)) {
-      this.setState({ isLoading: false });
-      pipe(
-        this.state.selectedLocale,
-        O.fromNullable,
-        O.map(this.props.preferredLanguageSaveSuccess)
-      );
-      this.showModal();
+    if (
+      prevProfile &&
+      pot.isUpdating(prevProfile) &&
+      pot.isSome(profile) &&
+      !pot.isError(profile)
+    ) {
+      setIsLoading(false);
+      preferredLanguageSaveSuccessDispatch(selectedItem as Locales);
+      setSelectedItem(selectedLanguage.current);
       return;
     }
 
     // update error
-    if (pot.isUpdating(prevProps.profile) && pot.isError(this.props.profile)) {
+    if (
+      prevProfile &&
+      pot.isSome(prevProfile) &&
+      !pot.isError(prevProfile) &&
+      pot.isError(profile)
+    ) {
+      setIsLoading(false);
       IOToast.error(I18n.t("errors.profileUpdateError"));
     }
-  }
+  }, [
+    selectedLanguage,
+    preferredLanguageSaveSuccessDispatch,
+    prevProfile,
+    profile,
+    selectedItem
+  ]);
 
-  private showModal() {
-    this.props.showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
-    );
-  }
+  const onLanguageSelected = useCallback(
+    (language: string) => {
+      if (selectedItem !== language) {
+        Alert.alert(
+          I18n.t("profile.preferences.list.preferred_language.alert.title") +
+            " " +
+            I18n.t(`locales.${language}` as TranslationKeys) +
+            "?",
+          I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
+          [
+            {
+              text: I18n.t("global.buttons.cancel"),
+              style: "cancel"
+            },
+            {
+              text: I18n.t("global.buttons.confirm"),
+              style: "default",
+              onPress: () => {
+                // eslint-disable-next-line functional/immutable-data
+                selectedLanguage.current = language;
+                upsertProfile(language as Locales);
+              }
+            }
+          ],
+          { cancelable: false }
+        );
+      }
+    },
+    [selectedItem, upsertProfile]
+  );
 
-  public render() {
-    const ContainerComponent = withLoadingSpinner(() => (
-      <RNavScreenWithLargeHeader
+  return (
+    <LoadingSpinnerOverlay isLoading={isLoading}>
+      <IOScrollViewWithLargeHeader
         title={{
           label: I18n.t("profile.preferences.list.preferred_language.title")
         }}
         description={I18n.t(
           "profile.preferences.list.preferred_language.subtitle"
         )}
-        fixedBottomSlot={
-          <SafeAreaView>
-            <SectionStatusComponent sectionKey={"favourite_language"} />
-          </SafeAreaView>
-        }
-        contextualHelpMarkdown={contextualHelpMarkdown}
+        canGoback={true}
         headerActionsProp={{ showHelp: true }}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <View style={{ flexGrow: 1 }}>
-          <ContentWrapper>
-            {availableTranslations.map((lang, index) => {
-              const isSelectedLanguage = this.isAlreadyPreferred(lang);
-              const languageTitle = I18n.t(`locales.${lang}`, {
-                defaultValue: lang
-              });
-              return (
-                <ListItemComponent
-                  key={index}
-                  title={languageTitle}
-                  hideIcon={!isSelectedLanguage}
-                  iconSize={iconSize}
-                  iconName={isSelectedLanguage ? "checkTickBig" : undefined}
-                  onPress={() => this.onLanguageSelected(lang)}
-                  accessible={true}
-                  accessibilityRole={"radio"}
-                  accessibilityLabel={`${languageTitle}, ${
-                    isSelectedLanguage
-                      ? I18n.t("global.accessibility.active")
-                      : I18n.t("global.accessibility.inactive")
-                  }`}
-                />
-              );
-            })}
-          </ContentWrapper>
-        </View>
-      </RNavScreenWithLargeHeader>
-    ));
-    return <ContainerComponent isLoading={this.state.isLoading} />;
-  }
-}
-
-const mapStateToProps = (state: GlobalState) => ({
-  preferredLanguage: preferredLanguageSelector(state),
-  profile: profileSelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  preferredLanguageSaveSuccess: (language: Locales) =>
-    dispatch(
-      preferredLanguageSaveSuccess({
-        preferredLanguage: language
-      })
-    ),
-  upsertProfile: (language: Locales) =>
-    dispatch(
-      profileUpsert.request({
-        preferred_languages: [fromLocaleToPreferredLanguage(language)]
-      })
-    )
-});
-
-const LanguagesPreferencesScreenFC = (props: Props) => {
-  const { ...modalContext } = React.useContext(LightModalContext);
-  return <LanguagesPreferencesScreen {...props} {...modalContext} />;
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <RadioGroup<string>
+            type="radioListItem"
+            items={renderedItem}
+            selectedItem={selectedItem}
+            onPress={onLanguageSelected}
+          />
+          <VSpacer size={16} />
+          {isBannerVisible && (
+            <Banner
+              viewRef={viewRef}
+              color="neutral"
+              size="big"
+              content={bannerInfoSelector.message[getFullLocale()]}
+              pictogramName="charity"
+              action={I18n.t(
+                "profile.preferences.list.preferred_language.banner.button"
+              )}
+              onPress={() =>
+                openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
+              }
+            />
+          )}
+        </ContentWrapper>
+      </IOScrollViewWithLargeHeader>
+    </LoadingSpinnerOverlay>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LanguagesPreferencesScreenFC);
+export default LanguagesPreferencesScreen;

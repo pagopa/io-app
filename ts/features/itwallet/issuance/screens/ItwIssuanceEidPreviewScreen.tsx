@@ -8,14 +8,21 @@ import { FooterActions } from "../../../../components/ui/FooterActions";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { EidCardPreview } from "../../common/components/EidCardPreview";
+import { identificationRequest } from "../../../../store/actions/identification";
+import { useIODispatch } from "../../../../store/hooks";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
-import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwCredentialsMocks
+} from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
@@ -27,6 +34,8 @@ export const ItwIssuanceEidPreviewScreen = () => {
    */
   const ContentView = ({ eid }: { eid: StoredCredential }) => {
     const theme = useIOTheme();
+    const dispatch = useIODispatch();
+    const dismissDialog = useItwDismissalDialog();
 
     const backgroundColor: ColorValue =
       IOColors[theme["appBackground-primary"]];
@@ -36,6 +45,26 @@ export const ItwIssuanceEidPreviewScreen = () => {
         headerShown: true
       });
     }, []);
+
+    const handleSaveToWallet = () => {
+      dispatch(
+        identificationRequest(
+          false,
+          true,
+          undefined,
+          {
+            label: I18n.t("global.buttons.cancel"),
+            onCancel: () => undefined
+          },
+          {
+            onSuccess: () =>
+              navigation.navigate(ITW_ROUTES.MAIN, {
+                screen: ITW_ROUTES.ISSUANCE.RESULT
+              })
+          }
+        )
+      );
+    };
 
     return (
       <IOScrollViewWithLargeHeader
@@ -47,7 +76,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
         }}
       >
         <View style={styles.preview}>
-          <EidCardPreview />
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            isPreview={true}
+          />
         </View>
         <View style={styles.dropShadow}>
           <VSpacer size={24} />
@@ -65,13 +97,13 @@ export const ItwIssuanceEidPreviewScreen = () => {
               label: I18n.t(
                 "features.itWallet.issuance.credentialPreview.actions.primary"
               ),
-              onPress: () => undefined
+              onPress: handleSaveToWallet
             },
             secondary: {
               label: I18n.t(
                 "features.itWallet.issuance.credentialPreview.actions.secondary"
               ),
-              onPress: () => undefined
+              onPress: dismissDialog.show
             }
           }}
         />

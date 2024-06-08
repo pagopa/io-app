@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -8,16 +7,18 @@ import {
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
 import { ConsentData } from "../../types";
+import { isStrictNone } from "../../../../utils/pot";
+
+type FimsFlowStateTags = "consents" | "in-app-browser";
+
 export type FimsState = {
-  ctaUrl?: string;
-  consentsData: pot.Pot<ConsentData, Error>;
-  errorState: O.Option<Error>;
+  currentFlowState: FimsFlowStateTags;
+  consentsData: pot.Pot<ConsentData, string>; // string -> errMessage
 };
 
 const INITIAL_STATE: FimsState = {
-  ctaUrl: undefined,
-  consentsData: pot.none,
-  errorState: O.none
+  currentFlowState: "consents",
+  consentsData: pot.none
 };
 
 const reducer = (
@@ -27,8 +28,7 @@ const reducer = (
   switch (action.type) {
     case getType(fimsGetConsentsListAction.request):
       return {
-        errorState: O.none,
-        ctaUrl: action.payload.ctaUrl,
+        currentFlowState: "consents",
         consentsData: pot.noneLoading
       };
     case getType(fimsGetConsentsListAction.success):
@@ -38,22 +38,19 @@ const reducer = (
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {
-        ...state,
-        errorState: O.none,
-        consentsData: pot.none
+        currentFlowState: "in-app-browser",
+        consentsData: pot.noneLoading
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.success):
       return {
         ...state,
-        consentsData: pot.none,
-        ctaUrl: undefined
+        consentsData: pot.none
       };
     case getType(fimsGetConsentsListAction.failure):
     case getType(fimsGetRedirectUrlAndOpenIABAction.failure):
       return {
-        ctaUrl: undefined,
-        consentsData: pot.none,
-        errorState: O.some(action.payload)
+        ...state,
+        consentsData: pot.toError(state.consentsData, action.payload)
       };
   }
   return state;
@@ -62,10 +59,21 @@ const reducer = (
 export const fimsConsentsDataSelector = (state: GlobalState) =>
   state.features.fims.consentsData;
 
-export const fimsCTAUrlSelector = (state: GlobalState) =>
-  state.features.fims.ctaUrl;
-
 export const fimsErrorStateSelector = (state: GlobalState) =>
-  state.features.fims.errorState;
+  // this selector will be used to map the error message
+  // once we have a clear error mapping
+  pot.isError(state.features.fims.consentsData)
+    ? state.features.fims.consentsData.error
+    : undefined;
+
+export const fimsLoadingStateSelector = (state: GlobalState) => {
+  if (state.features.fims.currentFlowState === "in-app-browser") {
+    return "in-app-browser";
+  }
+  const { consentsData } = state.features.fims;
+  return pot.isLoading(consentsData) || isStrictNone(consentsData)
+    ? state.features.fims.currentFlowState
+    : undefined;
+};
 
 export default reducer;
