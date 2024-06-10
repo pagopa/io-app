@@ -16,6 +16,7 @@ import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
 import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
+import * as analytics from "../../features/services/common/analytics";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -120,10 +121,12 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           thirdAction: {
             icon: "search",
             accessibilityLabel: I18n.t("global.accessibility.search"),
-            onPress: () =>
+            onPress: () => {
+              analytics.trackSearchStart({ source: "header_icon" });
               navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
                 screen: SERVICES_ROUTES.SEARCH
-              })
+              });
+            }
           }
         };
       case ROUTES.PROFILE_MAIN:
