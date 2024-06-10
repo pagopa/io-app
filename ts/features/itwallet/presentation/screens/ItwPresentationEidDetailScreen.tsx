@@ -10,7 +10,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { EidCard } from "../../common/components/EidCard";
 import { ItwPidAssuranceLevel } from "../../common/components/ItwPidAssuranceLevel";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
 import {
@@ -23,6 +22,7 @@ import {
 } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { ItwClaimsSections } from "../components/ItwClaimsSections";
@@ -30,6 +30,7 @@ import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetail
 
 // TODO: use the real credential update time
 const today = new Date();
+const credentialCardData: ReadonlyArray<string> = [];
 
 /**
  * @deprecated Still using `BaseScreenComponent`
@@ -60,7 +61,10 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
         }}
       >
         <View style={styles.cardContainer}>
-          <EidCard />
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            data={credentialCardData}
+          />
           <View
             style={[styles.cardBackdrop, { backgroundColor: themeColor }]}
           />
