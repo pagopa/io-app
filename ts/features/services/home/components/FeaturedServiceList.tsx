@@ -1,10 +1,12 @@
 import React, { useCallback, useMemo } from "react";
 import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { FeaturedService } from "../../../../../definitions/services/FeaturedService";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../../common/analytics";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { featuredServicesGet } from "../store/actions";
 import {
@@ -28,11 +30,17 @@ export const FeaturedServiceList = () => {
   useOnFirstRender(() => dispatch(featuredServicesGet.request()));
 
   const handlePress = useCallback(
-    (serviceId: string) => {
+    ({ id, name, organization_name }: FeaturedService) => {
+      analytics.trackServiceSelected({
+        organization_name: organization_name ?? "",
+        service_name: name,
+        source: "featured_services"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.SERVICE_DETAIL,
         params: {
-          serviceId: serviceId as NonEmptyString
+          serviceId: id as NonEmptyString
         }
       });
     },
@@ -44,7 +52,7 @@ export const FeaturedServiceList = () => {
       featuredServices.map(({ organization_name, ...rest }) => ({
         ...rest,
         organizationName: organization_name,
-        onPress: () => handlePress(rest.id)
+        onPress: () => handlePress({ organization_name, ...rest })
       })),
     [featuredServices, handlePress]
   );
