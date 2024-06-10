@@ -62,6 +62,12 @@ const ItwPlayground = () => {
     });
   };
 
+  const navigateToCredentialPreview = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
+    });
+  };
+
   return (
     <ScrollView>
       <ContentWrapper>
@@ -95,6 +101,14 @@ const ItwPlayground = () => {
           accessibilityLabel={"Issuing (TS) Playground"}
           description="Start the issuing flow to get your health card"
           onPress={() => undefined}
+        />
+        <Divider />
+        {/* Credential Preview */}
+        <ListItemNav
+          value="Credential preview"
+          accessibilityLabel="Credential preview"
+          description="Open the credential preview screen"
+          onPress={navigateToCredentialPreview}
         />
         <Divider />
         {/* Credential detail playground */}
