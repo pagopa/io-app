@@ -28,20 +28,12 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
     useRoute<PaymentsTransactionBizEventsCartItemDetailsScreenProps>();
   const { cartItem } = route.params;
 
-  const getDebtorText = (debtor: UserDetail) => {
-    const debtorNameLabel = debtor.name ? <H6>{debtor.name}</H6> : <></>;
-    const debtorCodeLabel = debtor.taxCode ? (
-      <H6>({debtor.taxCode})</H6>
-    ) : (
-      <></>
-    );
-    return (
-      <>
-        {debtorNameLabel}
-        {debtorCodeLabel}
-      </>
-    );
-  };
+  const getDebtorText = (debtor: UserDetail) => (
+    <>
+      {debtor.name ? <H6>{debtor.name}</H6> : null}
+      {debtor.taxCode ? <H6>({debtor.taxCode})</H6> : null}
+    </>
+  );
 
   return (
     <IOScrollViewWithLargeHeader
@@ -68,15 +60,16 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
             <Divider />
           </>
         )}
-        {cartItem.debtor && (
-          <>
-            <ListItemInfo
-              label={I18n.t("transaction.details.operation.debtor")}
-              value={getDebtorText(cartItem.debtor)}
-            />
-            <Divider />
-          </>
-        )}
+        {cartItem.debtor &&
+          (cartItem.debtor.name || cartItem.debtor.taxCode) && (
+            <>
+              <ListItemInfo
+                label={I18n.t("transaction.details.operation.debtor")}
+                value={getDebtorText(cartItem.debtor)}
+              />
+              <Divider />
+            </>
+          )}
         {cartItem.refNumberValue && (
           <>
             <ListItemInfo
