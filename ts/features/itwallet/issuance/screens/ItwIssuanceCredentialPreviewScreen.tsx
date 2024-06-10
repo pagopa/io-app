@@ -14,9 +14,9 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewScreenContent } from "../components/ItwCredentialPreviewScreenContent";
 
-export const ItwIssuanceEidPreviewScreen = () => {
+export const ItwIssuanceCredentialPreviewScreen = () => {
   const navigation = useIONavigation();
-  const eidOption = O.some(ItwCredentialsMocks.eid);
+  const credentialOption = O.some(ItwCredentialsMocks.mdl);
 
   const handleStoreCredentialSuccess = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -25,10 +25,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
   };
 
   /**
-   * Renders the content of the screen if the PID is decoded.
-   * @param eid - the decoded eID
+   * Renders the content of the screen if the credential is decoded.
+   * @param credential - the decoded credential
    */
-  const ContentView = ({ eid }: { eid: StoredCredential }) => {
+  const ContentView = ({ credential }: { credential: StoredCredential }) => {
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerShown: true
@@ -40,12 +40,12 @@ export const ItwIssuanceEidPreviewScreen = () => {
         excludeEndContentMargin
         title={{
           label: I18n.t("features.itWallet.issuance.credentialPreview.title", {
-            credential: eid.displayData.title
+            credential: credential.displayData.title
           })
         }}
       >
         <ItwCredentialPreviewScreenContent
-          data={eid}
+          data={credential}
           onStoreSuccess={handleStoreCredentialSuccess}
         />
       </IOScrollViewWithLargeHeader>
@@ -62,10 +62,10 @@ export const ItwIssuanceEidPreviewScreen = () => {
   };
 
   return pipe(
-    eidOption,
+    credentialOption,
     O.fold(
       () => <ErrorView />,
-      eid => <ContentView eid={eid} />
+      cred => <ContentView credential={cred} />
     )
   );
 };

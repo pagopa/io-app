@@ -20,6 +20,8 @@ import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../../common/analytics";
 
 const MIN_QUERY_LENGTH: number = 3;
 const LIST_ITEM_HEIGHT: number = 70;
@@ -39,6 +41,8 @@ export const SearchScreen = () => {
     isLoading,
     isUpdating
   } = useInstitutionsFetcher();
+
+  useOnFirstRender(() => analytics.trackSearchPage());
 
   useEffect(() => {
     if (isError) {
@@ -63,6 +67,7 @@ export const SearchScreen = () => {
     setQuery(text);
 
     if (text.length >= MIN_QUERY_LENGTH) {
+      analytics.trackSearchInput();
       fetchPage(0, text);
     } else {
       dispatch(searchPaginatedInstitutionsGet.cancel());
@@ -72,18 +77,25 @@ export const SearchScreen = () => {
   const handleEndReached = useCallback(() => {
     if (!!data && query.length >= MIN_QUERY_LENGTH) {
       fetchNextPage(currentPage + 1, query);
+      analytics.trackSearchResultScroll();
     }
   }, [currentPage, data, fetchNextPage, query]);
 
   const navigateToInstitution = useCallback(
-    (institution: Institution) =>
+    ({ id, name }: Institution) => {
+      analytics.trackInstitutionSelected({
+        organization_name: name,
+        source: "search_list"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.INSTITUTION_SERVICES,
         params: {
-          institutionId: institution.id,
-          institutionName: institution.name
+          institutionId: id,
+          institutionName: name
         }
-      }),
+      });
+    },
     [navigation]
   );
 
