@@ -2146,7 +2146,8 @@ services:
       back: "Back"
       retry: "Retry"
     header:
-      subtitle: "{{count}} available services"
+      subtitlePlural: "{{count}} available services"
+      subtitleSingular: "{{count}} available service"
   search:
     input:
       placeholder: "Search for a national or local institution"
