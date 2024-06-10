@@ -15,7 +15,8 @@ import {
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   PlainTextClaim,
-  dateClaimsConfig
+  dateClaimsConfig,
+  previewDateClaimsConfig
 } from "../utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
@@ -75,7 +76,7 @@ const PlainTextClaimItem = ({
 );
 
 /**
- * Component which renders a date type claim.
+ * Component which renders a date type claim with an optional icon and expiration badge.
  * @param label - the label of the claim
  * @param claim - the value of the claim
  */
@@ -281,10 +282,12 @@ const DrivingPrivilegesClaimItem = ({
  */
 export const ItwCredentialClaim = ({
   claim,
-  hidden
+  hidden,
+  isPreview
 }: {
   claim: ClaimDisplayFormat;
   hidden?: boolean;
+  isPreview?: boolean;
 }) =>
   pipe(
     claim.value,
@@ -296,7 +299,9 @@ export const ItwCredentialClaim = ({
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (DateFromString.is(decoded)) {
-          const dateClaimProps = dateClaimsConfig[claim.id];
+          const dateClaimProps = isPreview
+            ? previewDateClaimsConfig
+            : dateClaimsConfig[claim.id];
           return (
             <DateClaimItem
               label={claim.label}

@@ -12,9 +12,11 @@ import { ItwPidAssuranceLevel } from "./ItwPidAssuranceLevel";
  * @param data - the {@link StoredCredential} of the credential.
  */
 export const ItwCredentialClaimsList = ({
-  data
+  data,
+  isPreview
 }: {
   data: StoredCredential;
+  isPreview?: boolean;
 }) => {
   const { parsedCredential, displayData } = data;
 
@@ -24,7 +26,7 @@ export const ItwCredentialClaimsList = ({
     <>
       {claims.map((elem, index) => (
         <View key={index}>
-          <ItwCredentialClaim claim={elem} />
+          <ItwCredentialClaim claim={elem} isPreview={isPreview} />
         </View>
       ))}
       <ItwReleaserName credential={data} />

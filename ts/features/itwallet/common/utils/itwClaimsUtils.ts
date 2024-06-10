@@ -273,6 +273,11 @@ export const dateClaimsConfig: Record<string, DateClaimConfig> = {
   expiration_date: { iconVisible: true, expirationBadgeVisible: true }
 };
 
+export const previewDateClaimsConfig: DateClaimConfig = {
+  iconVisible: false,
+  expirationBadgeVisible: false
+};
+
 /**
  * Groups claims in a credential according to {@link sectionsByClaim}.
  * Claims are assigned to the designated section in the order specified by the credential's `displayData`.
