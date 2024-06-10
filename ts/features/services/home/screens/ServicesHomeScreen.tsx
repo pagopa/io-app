@@ -8,9 +8,10 @@ import {
   SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
+import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
@@ -23,6 +24,7 @@ import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
+import * as analytics from "../../common/analytics";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -34,6 +36,8 @@ export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFirstRender = useFirstRender();
+
+  const flatListRef = useRef<FlatList<Institution>>(null);
 
   const {
     currentPage,
@@ -47,7 +51,15 @@ export const ServicesHomeScreen = () => {
     refreshInstitutions
   } = useInstitutionsFetcher();
 
-  useOnFirstRender(() => fetchInstitutions(0));
+  useOnFirstRender(() => {
+    analytics.trackServicesHome();
+    fetchInstitutions(0);
+  });
+
+  useTabItemPressWhenScreenActive(
+    () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
+    false
+  );
 
   useEffect(() => {
     if (!isFirstRender && isError) {
@@ -84,7 +96,10 @@ export const ServicesHomeScreen = () => {
           clearAccessibilityLabel={I18n.t("services.search.input.clear")}
           placeholder={I18n.t("services.search.input.placeholder")}
           pressable={{
-            onPress: navigateToSearch
+            onPress: () => {
+              analytics.trackSearchStart({ source: "search_bar" });
+              navigateToSearch();
+            }
           }}
         />
         <FeaturedServiceList />
@@ -107,7 +122,10 @@ export const ServicesHomeScreen = () => {
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
             <ButtonLink
               label={I18n.t("services.home.searchLink")}
-              onPress={navigateToSearch}
+              onPress={() => {
+                analytics.trackSearchStart({ source: "bottom_link" });
+                navigateToSearch();
+              }}
             />
           </View>
           <VSpacer size={24} />
@@ -124,20 +142,26 @@ export const ServicesHomeScreen = () => {
     refreshInstitutions();
   }, [dispatch, refreshInstitutions]);
 
-  const handleEndReached = useCallback(
-    () => fetchInstitutions(currentPage + 1),
-    [currentPage, fetchInstitutions]
-  );
+  const handleEndReached = useCallback(() => {
+    analytics.trackInstitutionsScroll();
+    fetchInstitutions(currentPage + 1);
+  }, [currentPage, fetchInstitutions]);
 
   const navigateToInstitution = useCallback(
-    (institution: Institution) =>
+    ({ id, name }: Institution) => {
+      analytics.trackInstitutionSelected({
+        organization_name: name,
+        source: "main_list"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.INSTITUTION_SERVICES,
         params: {
-          institutionId: institution.id,
-          institutionName: institution.name
+          institutionId: id,
+          institutionName: name
         }
-      }),
+      });
+    },
     [navigation]
   );
 
@@ -170,6 +194,7 @@ export const ServicesHomeScreen = () => {
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.001}
       onRefresh={handleRefresh}
+      ref={flatListRef}
       refreshing={isRefreshing}
       renderItem={renderInstitutionItem}
     />
