@@ -81,6 +81,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
     },
+    SCREEN_END_MARGIN: {
+      route: "DS_SCREEN_END_MARGIN",
+      title: "Screen End margin"
+    },
     IOSCROLLVIEW: {
       route: "IOSCROLLVIEW",
       title: "IOScrollView"
