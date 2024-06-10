@@ -38,12 +38,17 @@ export const paymentsGetPaymentUserMethodsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_USER_METHODS_FAILURE"
 )<undefined, Wallets, NetworkError>();
 
+export type CalculateFeePayload = {
+  paymentMethodId: string;
+  idPsp?: string;
+};
+
 export const paymentsCalculatePaymentFeesAction = createAsyncAction(
   "PAYMENTS_CALCULATE_PAYMENT_FEES_REQUEST",
   "PAYMENTS_CALCULATE_PAYMENT_FEES_SUCCESS",
   "PAYMENTS_CALCULATE_PAYMENT_FEES_FAILURE"
 )<
-  CalculateFeeRequest & { paymentMethodId: string; idPsp?: string },
+  CalculateFeeRequest & CalculateFeePayload,
   CalculateFeeResponse,
   NetworkError
 >();
