@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
 import {
   Divider,
   H6,
@@ -13,13 +13,6 @@ import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem"
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
 import { formatAmountText } from "../utils";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-
-const styles = StyleSheet.create({
-  scrollViewContainer: {
-    ...IOStyles.flex,
-    ...IOStyles.horizontalContentPadding
-  }
-});
 
 export type PaymentsTransactionBizEventsCartItemDetailsScreenParams = {
   cartItem: CartItem;
@@ -56,7 +49,7 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
         label: cartItem.subject ?? ""
       }}
     >
-      <ScrollView style={styles.scrollViewContainer}>
+      <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
         {cartItem.amount && (
           <>
             <ListItemInfo
