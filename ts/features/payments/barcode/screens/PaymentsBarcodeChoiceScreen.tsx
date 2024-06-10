@@ -70,7 +70,9 @@ const PaymentsBarcodeChoiceScreen = () => {
     analytics.trackBarcodeMultipleCodesSelection();
 
     if (isNewWalletSectionEnabled) {
-      startPaymentFlowWithRptId(barcode.rptId);
+      startPaymentFlowWithRptId(barcode.rptId, {
+        onSuccess: "showTransaction"
+      });
     } else {
       dispatch(paymentInitializeState());
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {

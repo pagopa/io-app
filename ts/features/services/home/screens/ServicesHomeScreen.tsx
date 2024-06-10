@@ -8,9 +8,10 @@ import {
   SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
+import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
@@ -36,6 +37,8 @@ export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
   const isFirstRender = useFirstRender();
 
+  const flatListRef = useRef<FlatList<Institution>>(null);
+
   const {
     currentPage,
     data,
@@ -52,6 +55,11 @@ export const ServicesHomeScreen = () => {
     analytics.trackServicesHome();
     fetchInstitutions(0);
   });
+
+  useTabItemPressWhenScreenActive(
+    () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
+    false
+  );
 
   useEffect(() => {
     if (!isFirstRender && isError) {
@@ -186,6 +194,7 @@ export const ServicesHomeScreen = () => {
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.001}
       onRefresh={handleRefresh}
+      ref={flatListRef}
       refreshing={isRefreshing}
       renderItem={renderInstitutionItem}
     />
