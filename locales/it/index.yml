@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Perché?"
   you: "TU"
   id: "ID"
   badges:
@@ -156,6 +157,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
   buttons:
+    consent: "Consenti"
     deny: "Nega"
     share: Condividi
     delete: Elimina
@@ -484,7 +486,7 @@ profile:
     list:
       biometric_recognition:
         title: Riconoscimento biometrico
-        subtitle: Usa la tua impronta o il tuo volto
+        subtitle: Usa il volto o la tua impronta.
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
@@ -506,6 +508,8 @@ profile:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
+        banner:
+          button: Scopri di più
       notifications:
         title: Notifiche push
         subtitle: Consenti anteprime e promemoria
@@ -895,7 +899,7 @@ onboarding:
     pinLabel: Crea codice di sblocco
     pinConfirmationLabel: Ripeti codice di sblocco
     errors:
-      invalid: 
+      invalid:
         title: Troppo facile!
         description: Scegli un codice difficile da indovinare, che non contenga un unico numero ripetuto (es. 000000)o un elenco di numeri ordinati (es. 123456 o 654321).
         cta: Scegli un altro codice
@@ -1866,7 +1870,6 @@ messages:
     one: Hai 1 messaggio
   tab:
     inbox: Ricevuti
-    deadlines: In scadenza
     archive: Archiviati
   contentTitle: Messaggi
   refresh: Trascina in basso per aggiornare
@@ -1931,16 +1934,12 @@ messages:
   noContent: Contenuto non disponibile
   archive:
     emptyMessage:
-      title: Il tuo archivio è vuoto.
-      subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+      title: "Il tuo archivio è vuoto"
+      subtitle: "Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente.\nI messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca."
   inbox:
     emptyMessage:
-      title: La tua lista dei messaggi è vuota.
-      subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
-  deadlines:
-    emptyMessage:
-      title: Non hai scadenze in programma.
-      subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
+      title: Non hai ancora ricevuto alcun messaggio
+      subtitle: "Quando un ente ti invierà una comunicazione la visualizzerai qui."
   pagination:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
@@ -2139,6 +2138,7 @@ services:
         title: Enti in evidenza
     institutions:
       title: Nazionali
+    searchLink: Cerca tra tutti i servizi locali disponibili
   institution:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2146,14 +2146,15 @@ services:
       back: "Indietro"
       retry: "Riprova"
     header:
-      subtitle: "{{count}} servizi disponibili"
+      subtitlePlural: "{{count}} servizi disponibili"
+      subtitleSingular: "{{count}} servizio disponibile"
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
-      title: "Inserisci almeno tre caratteri per cercare il nome di un ente, nazionale o locale"
+      title: "Inserisci il nome di un ente,\nnazionale o locale"
   details:
     failure:
       title: "C'è un problema temporaneo, riprova"
@@ -2235,7 +2236,7 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Modifica il codice di sblocco
-      subtitle: Imposta un nuovo codice di 6 cifre
+      subtitle: Imposta un nuovo codice di 6 cifre.
     confirmValid: Codice di sblocco corretto
   forgetCode:
     confirmTitle: Hai dimenticato il codice di sblocco?
@@ -3077,11 +3078,16 @@ features:
         success: ""
   itWallet:
     card:
-      eid:
-        label: Identità Digitale
+      status:
         expired: Non valida
+        expiring: In scadenza
         pending: In lavorazione
-        digital: Versione digitale
+      label:
+        eid: Identità Digitale
+        mdl: Patente di Guida
+        dc: Carta Europea della Disabilità
+        ts: Tessera Sanitaria
+      digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3270,7 +3276,7 @@ idpay:
   code:
     reset:
       title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3809,10 +3815,26 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
-FIMS: 
+FIMS:
   loadingScreen:
     consents:
       title: "Attendi qualche secondo"
     in-app-browser:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
+  consentsScreen:
+    title: "Consenti la condivisione dei tuoi dati"
+    subtitle: "Autorizza IO a trasmettere a "
+    subtitle2: " i dati necessari per la tua autenticazione su "
+    requiredData: "Dati richiesti"
+    privacy1: "Per maggiori informazioni, leggi "
+    privacyCta: "l’Informativa sulla Privacy "
+    bottomSheet:
+      title: "Accedi a servizi di terze parti tramite IO"
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti
+        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
+        che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
+        finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla
+        Privacy."

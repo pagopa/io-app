@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Perché?"
   you: "YOU"
   id: "ID"
   badges:
@@ -156,6 +157,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    consent: "Consenti"
     deny: "Deny"
     share: Share
     delete: Delete
@@ -484,7 +486,7 @@ profile:
     list:
       biometric_recognition:
         title: Biometric recognition
-        subtitle: Use your fingerprint or your face
+        subtitle: Use your fingerprint or your face.
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
@@ -506,6 +508,8 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+        banner:
+          button: Learn more
       notifications:
         title: Push notifications
         subtitle: Allow previews and reminders
@@ -895,7 +899,7 @@ onboarding:
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
     errors:
-      invalid: 
+      invalid:
         title: Too easy!
         description: Choose a code that is hard to guess and doesn't contain a single repeated number (e.g. 000000) or a list of ordered numbers (e.g. 123456 or 654321).
         cta: Choose another code
@@ -1866,7 +1870,6 @@ messages:
     one: You have 1 message
   tab:
     inbox: Inbox
-    deadlines: Expiring
     archive: Archived
   contentTitle: Messages
   refresh: Pull down to refresh
@@ -1937,10 +1940,6 @@ messages:
     emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
-  deadlines:
-    emptyMessage:
-      title: You haven't any scheduled deadline.
-      subtitle: Use the button above to check out past deadlines.
   pagination:
     migration:
       started: Please wait, we are updating the Messages section.
@@ -2139,6 +2138,7 @@ services:
         title: Featured Institutions
     institutions:
       title: National
+    searchLink: Search all available local services
   institution:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2146,14 +2146,15 @@ services:
       back: "Back"
       retry: "Retry"
     header:
-      subtitle: "{{count}} available services"
+      subtitlePlural: "{{count}} available services"
+      subtitleSingular: "{{count}} available service"
   search:
     input:
       placeholder: "Search for a national or local institution"
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
-      title: "Enter at least three characters to search for the name of a national or local institution"
+      title: "Enter the name of an institution,\nnational or local"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2173,7 +2174,7 @@ services:
       phone: "Contact the institution"
       email: "Send email"
       pec: "Send PEC"
-      fiscalCode: "Organization's fiscal code"
+      fiscalCode: "Institution's fiscal code"
       address: "Address"
       serviceId: "Service ID"
     tosAndPrivacy:
@@ -2181,9 +2182,9 @@ services:
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
 serviceDetail:
-  fiscalCode: "Organization's fiscal code"
-  fiscalCodeAccessibility: "Organization's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
+  fiscalCode: "Institution's fiscal code"
+  fiscalCodeAccessibility: "Institution's fiscal code"
+  fiscalCodeAccessibilityCopy: "Copy Institution's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -2235,7 +2236,7 @@ identification:
       button: Did you forget the
       code: unlock code
       button_short: Change the unlock code
-      subtitle: Set a new 6-digit code
+      subtitle: Set a new 6-digit code.
     confirmValid: Correct unlock code
   forgetCode:
     confirmTitle: Did you forget the unlock code?
@@ -3077,11 +3078,16 @@ features:
         success: ""
   itWallet:
     card:
-      eid:
-        label: Identità Digitale
+      status:
         expired: Non valida
+        expiring: In scadenza
         pending: In lavorazione
-        digital: Versione digitale
+      label:
+        eid: Identità Digitale
+        mdl: Patente di Guida
+        dc: Carta Europea della Disabilità
+        ts: Tessera Sanitaria
+      digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3269,8 +3275,8 @@ idpay:
         subtitle: Attendi qualche secondo
   code:
     reset:
-      title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+      title: ID Pay code
+      body: The code to authorise payments made with your electronic identity card.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3809,10 +3815,26 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
-FIMS: 
+FIMS:
   loadingScreen:
     consents:
       title: "Attendi qualche secondo"
     in-app-browser:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
+  consentsScreen:
+    title: "Consenti la condivisione dei tuoi dati"
+    subtitle: "Autorizza IO a trasmettere a "
+    subtitle2: " i dati necessari per la tua autenticazione su "
+    requiredData: "Dati richiesti"
+    privacy1: "Per maggiori informazioni, leggi "
+    privacyCta: "l’Informativa sulla Privacy "
+    bottomSheet:
+      title: "Accedi a servizi di terze parti tramite IO"
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti
+        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
+        che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
+        finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla
+        Privacy."

@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import {
+  ButtonLink,
   Divider,
   IOStyles,
   IOToast,
@@ -9,8 +8,11 @@ import {
   SearchInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import React, { useCallback, useEffect, useRef } from "react";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
+import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -18,10 +20,10 @@ import { InstitutionListSkeleton } from "../../common/components/InstitutionList
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { getLogoForInstitution } from "../../common/utils";
-import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
-import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
+import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
+import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -34,16 +36,24 @@ export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
   const isFirstRender = useFirstRender();
 
+  const flatListRef = useRef<FlatList<Institution>>(null);
+
   const {
     currentPage,
     data,
     fetchInstitutions,
     isError,
+    isLastPage,
     isLoading,
     isUpdating,
     isRefreshing,
     refreshInstitutions
   } = useInstitutionsFetcher();
+
+  useTabItemPressWhenScreenActive(
+    () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
+    false
+  );
 
   useOnFirstRender(() => fetchInstitutions(0));
 
@@ -97,8 +107,24 @@ export const ServicesHomeScreen = () => {
     if (isUpdating && !isRefreshing) {
       return <InstitutionListSkeleton />;
     }
+
+    if (isLastPage) {
+      return (
+        <>
+          <VSpacer size={16} />
+          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
+            <ButtonLink
+              label={I18n.t("services.home.searchLink")}
+              onPress={navigateToSearch}
+            />
+          </View>
+          <VSpacer size={24} />
+        </>
+      );
+    }
+
     return <VSpacer size={16} />;
-  }, [isUpdating, isRefreshing]);
+  }, [isLastPage, isUpdating, isRefreshing, navigateToSearch]);
 
   const handleRefresh = useCallback(() => {
     dispatch(featuredServicesGet.request());
@@ -152,6 +178,7 @@ export const ServicesHomeScreen = () => {
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.001}
       onRefresh={handleRefresh}
+      ref={flatListRef}
       refreshing={isRefreshing}
       renderItem={renderInstitutionItem}
     />
