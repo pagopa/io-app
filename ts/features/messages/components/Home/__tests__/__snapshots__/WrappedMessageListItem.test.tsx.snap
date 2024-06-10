@@ -268,7 +268,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={6}
+                handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1298,7 +1298,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={5}
+                handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2383,7 +2383,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={4}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -3198,7 +3198,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={3}
+                handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
