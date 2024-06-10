@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
-import OnboardingNotificationsInfoScreenConsent from "../screens/onboarding/OnboardingNotificationsInfoScreenConsent";
-import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
+import { OnboardingNotificationsInfoScreenConsent } from "../features/pushNotifications/screens/OnboardingNotificationsInfoScreenConsent";
+import { OnboardingNotificationsPreferencesScreen } from "../features/pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
 import OnboardingPinScreen from "../screens/onboarding/OnboardingPinScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
@@ -45,7 +45,6 @@ const OnboardingNavigator = () => (
       component={OnboardingTosScreen}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
       name={ROUTES.ONBOARDING_PIN}
       component={OnboardingPinScreen}
     />
@@ -81,15 +80,21 @@ const OnboardingNavigator = () => (
       component={OnboardingCompletedScreen}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
       name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
       component={OnboardingNotificationsPreferencesScreen}
     />
-    <Stack.Screen
-      options={{ headerShown: false }}
-      name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
-      component={OnboardingNotificationsInfoScreenConsent}
-    />
+    <Stack.Group
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        presentation: "modal"
+      }}
+    >
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
+        component={OnboardingNotificationsInfoScreenConsent}
+      />
+    </Stack.Group>
   </Stack.Navigator>
 );
 

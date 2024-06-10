@@ -1,26 +1,28 @@
-import {
-  ButtonLink,
-  ButtonSolid,
-  ContentWrapper,
-  IOColors,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { EidCardPreview } from "../../common/components/EidCardPreview";
+import { identificationRequest } from "../../../../store/actions/identification";
+import { useIODispatch } from "../../../../store/hooks";
 import { ItwCredentialClaimsList } from "../../common/components/ItwCredentialClaimList";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../common/utils/itwErrorsUtils";
-import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwCredentialsMocks
+} from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
@@ -31,14 +33,42 @@ export const ItwIssuanceEidPreviewScreen = () => {
    * @param eid - the decoded eID
    */
   const ContentView = ({ eid }: { eid: StoredCredential }) => {
+    const theme = useIOTheme();
+    const dispatch = useIODispatch();
+    const dismissDialog = useItwDismissalDialog();
+
+    const backgroundColor: ColorValue =
+      IOColors[theme["appBackground-primary"]];
+
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerShown: true
       });
     }, []);
 
+    const handleSaveToWallet = () => {
+      dispatch(
+        identificationRequest(
+          false,
+          true,
+          undefined,
+          {
+            label: I18n.t("global.buttons.cancel"),
+            onCancel: () => undefined
+          },
+          {
+            onSuccess: () =>
+              navigation.navigate(ITW_ROUTES.MAIN, {
+                screen: ITW_ROUTES.ISSUANCE.RESULT
+              })
+          }
+        )
+      );
+    };
+
     return (
       <IOScrollViewWithLargeHeader
+        excludeEndContentMargin
         title={{
           label: I18n.t("features.itWallet.issuance.credentialPreview.title", {
             credential: eid.displayData.title
@@ -46,35 +76,37 @@ export const ItwIssuanceEidPreviewScreen = () => {
         }}
       >
         <View style={styles.preview}>
-          <EidCardPreview />
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            isPreview={true}
+          />
         </View>
         <View style={styles.dropShadow}>
           <VSpacer size={24} />
         </View>
-        <View style={styles.content}>
+        <View style={[styles.content, { backgroundColor }]}>
           <ItwCredentialClaimsList data={eid} />
         </View>
-        <ContentWrapper>
-          <VSpacer size={32} />
-          <ButtonSolid
-            label={I18n.t(
-              "features.itWallet.issuance.credentialPreview.actions.primary"
-            )}
-            icon="add"
-            iconPosition="end"
-            onPress={() => undefined}
-            fullWidth={true}
-          />
-          <VSpacer size={24} />
-          <View style={{ alignSelf: "center" }}>
-            <ButtonLink
-              label={I18n.t(
+        <FooterActions
+          fixed={false}
+          actions={{
+            type: "TwoButtons",
+            primary: {
+              icon: "add",
+              iconPosition: "end",
+              label: I18n.t(
+                "features.itWallet.issuance.credentialPreview.actions.primary"
+              ),
+              onPress: handleSaveToWallet
+            },
+            secondary: {
+              label: I18n.t(
                 "features.itWallet.issuance.credentialPreview.actions.secondary"
-              )}
-              onPress={() => undefined}
-            />
-          </View>
-        </ContentWrapper>
+              ),
+              onPress: dismissDialog.show
+            }
+          }}
+        />
       </IOScrollViewWithLargeHeader>
     );
   };
@@ -111,7 +143,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: IOColors.white, // Add background to cover shadow
     paddingHorizontal: 24
   }
 });

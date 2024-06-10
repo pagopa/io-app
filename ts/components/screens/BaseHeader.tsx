@@ -112,7 +112,13 @@ type State = {
 };
 const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
+
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
+/**
+ * @deprecated To properly configure the header through the `react-navigation`
+ * library, please use `useHeaderSecondLevel` and configure the navigator with `headerShown`
+ * set to `true`. If in doubt, please ask for help or read the available documentation.
+ */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
   private firstElementRef = React.createRef<View>();
 

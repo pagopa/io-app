@@ -2,10 +2,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
 import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
-import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
+import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -41,12 +42,16 @@ export const ItwStackNavigator = () => (
       component={ItwIssuanceEidPreviewScreen}
       options={{ headerShown: false }}
     />
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.RESULT}
+      component={ItwIssuanceEidResultScreen}
+      options={{ headerShown: false }}
+    />
 
     {/* CREDENTIAL PRESENTATION */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
       component={ItwPresentationEidDetailScreen}
-      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );

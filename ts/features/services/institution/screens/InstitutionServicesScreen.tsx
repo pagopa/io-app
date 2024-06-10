@@ -1,9 +1,3 @@
-import React, { useCallback, useEffect, useLayoutEffect } from "react";
-import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
 import {
   Divider,
   IOStyles,
@@ -13,6 +7,12 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
+import React, { useCallback, useEffect } from "react";
+import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from "react-native-reanimated";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -66,15 +66,16 @@ export const InstitutionServicesScreen = ({
   const {
     currentPage,
     data,
-    fetchServices,
+    fetchNextPage,
+    fetchPage,
     isError,
     isLoading,
     isUpdating,
     isRefreshing,
-    refreshServices
+    refresh
   } = useServicesFetcher(institutionId);
 
-  useOnFirstRender(() => fetchServices(0));
+  useOnFirstRender(() => fetchPage(0));
 
   useEffect(() => {
     if (!!data && isError) {
@@ -95,14 +96,9 @@ export const InstitutionServicesScreen = ({
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY
-    }
+    },
+    headerShown: !!data || !isError
   });
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true
-    });
-  }, [navigation]);
 
   const scrollHandler = useAnimatedScrollHandler(event => {
     // eslint-disable-next-line functional/immutable-data
@@ -121,8 +117,8 @@ export const InstitutionServicesScreen = ({
   );
 
   const handleEndReached = useCallback(
-    () => fetchServices(currentPage + 1),
-    [currentPage, fetchServices]
+    () => fetchNextPage(currentPage + 1),
+    [currentPage, fetchNextPage]
   );
 
   const renderItem = useCallback(
@@ -163,9 +159,14 @@ export const InstitutionServicesScreen = ({
         <ServicesHeaderSection
           logoUri={getLogoForInstitution(institutionId)}
           title={institutionName}
-          subTitle={I18n.t("services.institution.header.subtitle", {
-            count: data?.count ?? 0
-          })}
+          subTitle={I18n.t(
+            data?.count && data?.count > 1
+              ? "services.institution.header.subtitlePlural"
+              : "services.institution.header.subtitleSingular",
+            {
+              count: data?.count ?? 0
+            }
+          )}
         />
         <VSpacer size={16} />
       </>
@@ -185,12 +186,12 @@ export const InstitutionServicesScreen = ({
   }, [isUpdating, isRefreshing]);
 
   if (!data && isError) {
-    return <InstitutionServicesFailure onRetry={() => fetchServices(0)} />;
+    return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
   }
 
   const refreshControl = (
     <RefreshControl
-      onRefresh={refreshServices}
+      onRefresh={refresh}
       progressViewOffset={headerHeight}
       refreshing={isRefreshing}
       style={styles.refreshControlContainer}

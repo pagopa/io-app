@@ -12,20 +12,18 @@ import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/s
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
-import { ServicesHomeScreen as NewServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
+import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isDesignSystemEnabledSelector,
-  isNewHomeSectionEnabledSelector,
-  isNewWalletSectionEnabledSelector
+  isNewHomeSectionEnabledSelector
 } from "../store/reducers/persistedPreferences";
+import { isNewPaymentSectionEnabledSelector } from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { isNewServicesEnabled } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -61,7 +59,7 @@ export const MainTabNavigator = () => {
   const startupLoaded = useIOSelector(isStartupLoaded);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
   const isNewHomeSectionEnabled = useIOSelector(
     isNewHomeSectionEnabledSelector
@@ -187,11 +185,7 @@ export const MainTabNavigator = () => {
         )}
         <Tab.Screen
           name={SERVICES_ROUTES.SERVICES_HOME}
-          component={
-            isDesignSystemEnabled && isNewServicesEnabled
-              ? NewServicesHomeScreen
-              : ServicesHomeScreen
-          }
+          component={ServicesHomeScreen}
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
@@ -213,8 +207,8 @@ export const MainTabNavigator = () => {
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navProfile"}
-                iconNameFocused={"navProfileFocused"}
+                iconName="navProfile"
+                iconNameFocused="navProfileFocused"
                 color={color}
                 focused={focused}
               />

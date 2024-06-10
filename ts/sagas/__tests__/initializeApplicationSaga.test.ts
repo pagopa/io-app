@@ -26,7 +26,6 @@ import {
 } from "../profile";
 import {
   initializeApplicationSaga,
-  testCancellAllLocalNotifications,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
@@ -43,6 +42,7 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
+import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -74,7 +74,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
-      .call(testCancellAllLocalNotifications!)
+      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -109,7 +109,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
-      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
@@ -127,7 +126,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
-      .call(testCancellAllLocalNotifications!)
+      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -169,7 +168,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
-      .call(testCancellAllLocalNotifications!)
+      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -216,7 +215,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
-      .call(testCancellAllLocalNotifications!)
+      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -244,7 +243,6 @@ describe("initializeApplicationSaga", () => {
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
-      .next()
       .next()
       .next()
       .next()

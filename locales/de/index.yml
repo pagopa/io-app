@@ -290,7 +290,6 @@ profile:
         hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
     title: "Deine persönlichen Dokumente"
     fiscalCode: "Steuernummer"
-    content: "Das Faksimile der Steuernummer ersetzt nicht das physische Dokument, sondern ermöglicht es, die Daten oder den Barcode auf der Rückseite zu lesen"
     facSimile: "Faksimile"
   sections:
     spid: "SPID PROFIL"
@@ -454,7 +453,6 @@ profile:
     list:
       biometric_recognition:
         title: "Biometrische Erkennung"
-        subtitle: "Fingerabdruck- oder Gesichtserkennung benutzen"
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
@@ -578,13 +576,9 @@ authentication:
     genericTitle: "Anmeldung mit CIE"
     cie: "CIE"
     noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
-    nfc:
-      apduNotSupported: "Dein Betriebssystem unterstützt das Auslesen deiner elektronischen Identitätskarte nicht. Für weitere Informationen wende dich bitte an den Hersteller deines Geräts."
+    nfc:      
       retry: "Erneut versuchen"
       noNfcConnectionTitle: "Hast du die Karte berührt?"
-      enableNfcTitle: "NFC aktivieren"
-      enableNfcHeader: "NFC überprüfen"
-      enableNfcContent: "Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!"
     pin:
       accessibility:
         placeholderLabel: "PIN der elektronischen Identitätskarte"
@@ -603,35 +597,22 @@ authentication:
       header: "Anmeldung mit CIE"
       title: "Karte vorübergehend gesperrt"
       button: "Lade / Öffne CieID"
-    card:
-      title: "Berühre die Karte"
-      titleiOS: "Halte die Karte still"
-      headerTitle: "Anmeldung mit CIE"
-      layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden an die Rückseite deines Telefons."
-      layCardMessageHeaderiOS: "Der Sensor befindet sich im oberen Teil des Geräts."
-      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
-      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."
-      readerCardTitle: "Halte die Karte für ein paar Sekunden still"
+    card:            
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."      
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
         readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon."
         moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
-        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
-        readingSuccess: "Das Auslesen war erfolgreich.\nDu kannst die Karte entfernen während wir die Datenüberprüfung abschließen."
+        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."        
         invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
         tagLost: "Du hast die Karte zu früh entfernt."        
         genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
-      error:
-        readerCardLostTitle: "Karte neu lesen"
-        readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
-        readerCardLostHeader: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen."
-        readerCardLostHeaderiOS: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen. Versuche es erneut."
-        onTagLost: "Du hast die Karte zu früh entfernt. Halte die Karte an die Rückseite des Smartphones bis eine Bestätigung auf dem Bildschirm erscheint. Es dauert nur ein paar Sekunden."
+      error:       
         tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
         generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
         unknownCardTitle: "Unbekannte Karte"
-        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte zu sein."
         unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
     dataUsageConsent:
       retryCTA: "Weiter"
@@ -700,7 +681,6 @@ authentication:
     subtitlel2: "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren."
     subtitlel3: "Um mit all deinen SPID-Anmeldedaten oder deiner CIE auf die App zugreifen zu können, musst du den Zugang entsperren."
     learnmore: "Mehr erfahren"
-    loginIO: "Schließen"
   unlockmodal:
     title: "Was bedeutet das?"
     description1_1: "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können."
@@ -812,18 +792,10 @@ onboarding:
     contextualHelpTitle: "Wie lautet dein Entsperrcode?"
   pin:
     headerTitle: "IO einrichten"
-    title: "Entsperrcode"
-    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige In-App-Vorgänge zu bestätigen. Falls dein Gerät dies unterstützt, kannst du ihn später durch biometrische Daten ersetzen."
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
-    tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
     errors:
-      invalid: "Der Code ist ungültig"
       match: "Der Code stimmt nicht überein"
-    policy:
-      headerTitle: "Aus Sicherheitsgründen darf der Code folgendes nicht enthalten:"
-      first: "Wiederholungen von Zahlen (z.B. 000000)"
-      second: "fortlaufende Nummern (z.B. 123456 oder 654321)"
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
@@ -1750,7 +1722,6 @@ messages:
     one: "Du hast eine Mitteilung"
   tab:
     inbox: "Erhalten"
-    deadlines: "Fällig"
     archive: "Archiviert"
   contentTitle: "Mitteilungen"
   refresh: "Nach unten ziehen zum Aktualisieren"
@@ -1821,10 +1792,6 @@ messages:
     emptyMessage:
       title: "Deine Mitteilungsliste ist leer."
       subtitle: "Aktualisiere, um zu prüfen, ob neue Mitteilungen vorhanden sind."
-  deadlines:
-    emptyMessage:
-      title: "Du hast keine Fälligkeiten."
-      subtitle: "Über die Schaltfläche oben kannst du die bereits abgelaufenen Fristen einsehen."
   pagination:
     migration:
       started: "Bitte warte, wir aktualisieren den Mitteilungsbereich"
@@ -2087,7 +2054,7 @@ identification:
       button: "Hast du deinen"
       code: "Entsperrcode vergessen"
       button_short: "Entsperrcode ändern"
-      subtitle: "Einen neuen 6-stelligen Code festlegen"
+      subtitle: "Einen neuen 6-stelligen Code festlegen."
     confirmValid: "Entsperrcode korrekt"
   forgetCode:
     confirmTitle: "Hast du den Entsperrcode vergessen?"

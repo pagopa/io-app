@@ -4,8 +4,9 @@ import * as O from "fp-ts/lib/Option";
 import * as Either from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import messageListData, {
-  MessageListCategory
+import {
+  MessageListCategory,
+  foldK as messageListCategoryFoldK
 } from "../../types/messageListCategory";
 import {
   loadNextPageMessages,
@@ -21,6 +22,8 @@ import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
+import { foldK } from "../../../../utils/pot";
+import { emptyMessageArray } from "../../utils";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -573,15 +576,16 @@ export const allArchiveSelector = (
 export const messagesByCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) => {
-  const items = allPaginatedSelector(state);
-
-  return messageListData.fold(
-    category,
-    () => items.inbox.data,
-    () => items.archive.data
+) =>
+  pipe(state, allPaginatedSelector, items =>
+    pipe(
+      category,
+      messageListCategoryFoldK(
+        () => items.inbox.data,
+        () => items.archive.data
+      )
+    )
   );
-};
 
 /**
  * Return the list of Inbox messages currently available.
@@ -724,5 +728,55 @@ export const getCursors = createSelector(
 
 export const shownMessageCategorySelector = (state: GlobalState) =>
   state.entities.messages.allPaginated.shownCategory;
+
+export const messageListForCategorySelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state.entities.messages.allPaginated,
+    allPaginated =>
+      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox,
+    messageCollection => messageCollection.data,
+    foldK(
+      () => emptyMessageArray,
+      () => undefined,
+      _ => undefined,
+      _ => emptyMessageArray,
+      messagePage => messagePage.page,
+      messagePage => messagePage.page,
+      (messagePage, _) => messagePage.page,
+      (messagePage, _) => messagePage.page
+    )
+  );
+
+export const emptyListReasonSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+): "noData" | "error" | "notEmpty" =>
+  pipe(state.entities.messages.allPaginated, allPaginated =>
+    pipe(
+      category,
+      messageListCategoryFoldK(
+        () => allPaginated.inbox,
+        () => allPaginated.archive
+      ),
+      messageCollection => messageCollection.data,
+      foldK(
+        () => "noData",
+        () => "notEmpty",
+        () => "notEmpty",
+        () => "error",
+        reasonFromMessagePageContainer,
+        reasonFromMessagePageContainer,
+        (container, _) => reasonFromMessagePageContainer(container),
+        (container, _) => reasonFromMessagePageContainer(container)
+      )
+    )
+  );
+
+const reasonFromMessagePageContainer = (
+  container: MessagePage
+): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
 
 export default reducer;
