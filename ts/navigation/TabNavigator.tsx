@@ -12,8 +12,7 @@ import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/s
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
-import { ServicesHomeScreen as NewServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
+import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import {
@@ -186,9 +185,7 @@ export const MainTabNavigator = () => {
         )}
         <Tab.Screen
           name={SERVICES_ROUTES.SERVICES_HOME}
-          component={
-            isDesignSystemEnabled ? NewServicesHomeScreen : ServicesHomeScreen
-          }
+          component={ServicesHomeScreen}
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (

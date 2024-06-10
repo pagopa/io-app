@@ -1,6 +1,4 @@
-import React from "react";
 import configureMockStore from "redux-mock-store";
-
 import { fireEvent } from "@testing-library/react-native";
 import SecurityScreen from "../SecurityScreen";
 import I18n from "../../../i18n";
@@ -33,7 +31,7 @@ describe("Test SecurityScreen", () => {
       component.queryByText(I18n.t("profile.security.subtitle"))
     ).not.toBeNull();
   });
-  it("should render ListItemComponent reset unlock code with the right title and subtitle", () => {
+  it("should render ListItemNav reset unlock code with the right title and subtitle", () => {
     const { component } = renderComponent();
 
     expect(component).not.toBeNull();
@@ -48,13 +46,13 @@ describe("Test SecurityScreen", () => {
       component.queryByText(I18n.t("profile.security.subtitle"))
     ).not.toBeNull();
   });
-  it("when press ListItemComponent reset unlock code, should dispatch identificationRequest", () => {
+  it("when press ListItemNav reset unlock code, should dispatch identificationRequest", () => {
     const { component, store } = renderComponent();
 
     expect(component).not.toBeNull();
-    const listItemComponent = component.getByTestId("reset-unlock-code");
-    expect(listItemComponent).not.toBeNull();
-    fireEvent.press(listItemComponent);
+    const listItemNav = component.getByTestId("reset-unlock-code");
+    expect(listItemNav).not.toBeNull();
+    fireEvent.press(listItemNav);
     store.dispatch(
       identificationRequest(
         true,
@@ -80,7 +78,7 @@ const renderComponent = () => {
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <SecurityScreen />,
+      SecurityScreen,
       ROUTES.PROFILE_SECURITY,
       {},
       store
