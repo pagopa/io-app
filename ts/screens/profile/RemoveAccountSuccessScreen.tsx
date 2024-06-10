@@ -28,7 +28,10 @@ const RemoveAccountSuccess = () => {
   // do nothing
   useHardwareBackButton(() => true);
 
-  const logout = React.useCallback(() => dispatch(logoutRequest()), [dispatch]);
+  const logout = React.useCallback(
+    () => dispatch(logoutRequest({ withApiCall: true })),
+    [dispatch]
+  );
 
   const continueButtonProps: BlockButtonProps = {
     type: "Outline",

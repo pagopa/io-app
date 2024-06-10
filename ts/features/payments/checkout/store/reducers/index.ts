@@ -131,12 +131,7 @@ const reducer = (
     case getType(paymentsGetPaymentUserMethodsAction.success):
       return {
         ...state,
-        userWallets: pot.some(action.payload),
-        selectedWallet: O.fromNullable(
-          action.payload?.wallets?.reduce((acc, curr) =>
-            acc.updateDate > curr.updateDate ? acc : curr
-          )
-        )
+        userWallets: pot.some(action.payload)
       };
     case getType(paymentsGetPaymentUserMethodsAction.failure):
       return {

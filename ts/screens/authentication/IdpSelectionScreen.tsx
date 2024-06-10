@@ -205,6 +205,7 @@ const IdpSelectionScreen = (): ReactElement => {
 
   return (
     <IdpsGrid
+      testID="idps-grid"
       idps={randomIdps.current}
       onIdpSelected={onIdpSelected}
       headerComponent={headerComponent}

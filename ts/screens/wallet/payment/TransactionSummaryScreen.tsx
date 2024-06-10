@@ -8,7 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Alert, ScrollView } from "react-native";
 import {
   isError as isRemoteError,
@@ -65,6 +65,7 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
+import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
@@ -154,17 +155,8 @@ const TransactionSummaryScreen = (): React.ReactElement => {
   } = useIOSelector(state => state.wallet.payment);
 
   /* Get `FooterActions` measurements */
-  const [footerActionsMeasurements, setfooterActionsMeasurements] =
-    useState<FooterActionsMeasurements>({
-      actionBlockHeight: 0,
-      safeBottomAreaHeight: 0
-    });
-
-  const handleFooterActionsMeasurements = (
-    values: FooterActionsMeasurements
-  ) => {
-    setfooterActionsMeasurements(values);
-  };
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
 
   const error: TransactionSummaryError = pot.isError(paymentVerification)
     ? O.some(paymentVerification.error)

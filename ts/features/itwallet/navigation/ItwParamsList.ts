@@ -9,4 +9,6 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   // ISSUANCE
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
+  [ITW_ROUTES.ISSUANCE.RESULT]: undefined;
 };

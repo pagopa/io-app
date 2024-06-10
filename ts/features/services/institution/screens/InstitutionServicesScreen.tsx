@@ -1,9 +1,3 @@
-import React, { useCallback, useEffect } from "react";
-import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
 import {
   Divider,
   IOStyles,
@@ -13,6 +7,12 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
+import React, { useCallback, useEffect } from "react";
+import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from "react-native-reanimated";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -29,6 +29,7 @@ import { InstitutionServicesFailure } from "../components/InstitutionServicesFai
 import { ServiceListSkeleton } from "../components/ServiceListSkeleton";
 import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { paginatedServicesGet } from "../store/actions";
+import * as analytics from "../../common/analytics";
 
 export type InstitutionServicesScreenRouteParams = {
   institutionId: string;
@@ -77,6 +78,16 @@ export const InstitutionServicesScreen = ({
 
   useOnFirstRender(() => fetchPage(0));
 
+  useOnFirstRender(
+    () =>
+      analytics.trackInstitutionDetails({
+        organization_fiscal_code: institutionId,
+        organization_name: institutionName,
+        services_count: data?.count ?? 0
+      }),
+    () => !!data
+  );
+
   useEffect(() => {
     if (!!data && isError) {
       IOToast.error(I18n.t("global.genericError"));
@@ -106,14 +117,21 @@ export const InstitutionServicesScreen = ({
   });
 
   const navigateToServiceDetails = useCallback(
-    (service: ServiceMinified) =>
+    ({ id, name }: ServiceMinified) => {
+      analytics.trackServiceSelected({
+        organization_name: institutionName,
+        service_name: name,
+        source: "organization_detail"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.SERVICE_DETAIL,
         params: {
-          serviceId: service.id as ServiceId
+          serviceId: id as ServiceId
         }
-      }),
-    [navigation]
+      });
+    },
+    [institutionName, navigation]
   );
 
   const handleEndReached = useCallback(
@@ -159,9 +177,14 @@ export const InstitutionServicesScreen = ({
         <ServicesHeaderSection
           logoUri={getLogoForInstitution(institutionId)}
           title={institutionName}
-          subTitle={I18n.t("services.institution.header.subtitle", {
-            count: data?.count ?? 0
-          })}
+          subTitle={I18n.t(
+            data?.count && data?.count > 1
+              ? "services.institution.header.subtitlePlural"
+              : "services.institution.header.subtitleSingular",
+            {
+              count: data?.count ?? 0
+            }
+          )}
         />
         <VSpacer size={16} />
       </>

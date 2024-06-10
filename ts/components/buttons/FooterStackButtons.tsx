@@ -17,8 +17,9 @@ type FooterStackButtonProps = {
 
 /**
  * A generic component to render a stack of buttons in the footer
- * @deprecated Use `GradientScrollView` instead to get two stacked buttons
- * @param props
+ * @deprecated As a replacement, you have two options:
+ * - Use `IOScrollView` if you need a pleasant gradient effect
+ * - Use `FooterActions` if you need to set a custom `scrollHandler` to `ScrollView`
  */
 export const FooterStackButton = ({
   primaryActionProps,
