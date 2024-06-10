@@ -148,7 +148,7 @@ PODS:
   - pagopa-io-react-native-jwt (1.2.0):
     - JOSESwift (~> 2.3)
     - React-Core
-  - pagopa-io-react-native-login-utils (1.0.0):
+  - pagopa-io-react-native-login-utils (1.0.1):
     - React-Core
   - pagopa-react-native-zendesk (0.3.29):
     - React-Core
@@ -959,7 +959,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: 0799ed85dfe45c56765a394ab1f39aa2fb56f09d
   pagopa-io-react-native-jwt: f89a378bbc5ebfd93c24ec5993e97545a4815157
-  pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
+  pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: e4a63ee0745a567b641110f7ff78e457086ab7a3
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
