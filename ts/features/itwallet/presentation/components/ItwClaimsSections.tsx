@@ -38,7 +38,6 @@ export const ItwClaimsSections = ({ credential }: Props) => {
           </>
         ))
       )}
-      {/* TODO: add section for mDL */}
       {pipe(
         groupedClaims.documentData,
         O.fromNullable,
