@@ -93,7 +93,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         navigation.pop();
         // Navigate to the payment details screen (payment verification)
         if (isNewWalletSectionEnabled) {
-          startPaymentFlowWithRptId(rptId);
+          startPaymentFlowWithRptId(rptId, { onSuccess: "showTransaction" });
         } else {
           dispatch(paymentInitializeState());
           navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
