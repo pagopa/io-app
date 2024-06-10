@@ -105,7 +105,7 @@
     "@pagopa/io-react-native-crypto": "^0.3.0",
     "@pagopa/io-react-native-http-client": "1.0.2",
     "@pagopa/io-react-native-jwt": "^1.2.0",
-    "@pagopa/io-react-native-login-utils": "^1.0.0",
+    "@pagopa/io-react-native-login-utils": "^1.0.1",
     "@pagopa/io-react-native-wallet": "^0.11.1",
     "@pagopa/io-react-native-zendesk": "^0.3.29",
     "@pagopa/react-native-cie": "^1.2.1",
