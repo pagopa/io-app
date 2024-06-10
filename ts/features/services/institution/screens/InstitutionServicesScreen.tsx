@@ -1,9 +1,3 @@
-import React, { useCallback, useEffect } from "react";
-import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
 import {
   Divider,
   IOStyles,
@@ -13,6 +7,12 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
+import React, { useCallback, useEffect } from "react";
+import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from "react-native-reanimated";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -159,9 +159,14 @@ export const InstitutionServicesScreen = ({
         <ServicesHeaderSection
           logoUri={getLogoForInstitution(institutionId)}
           title={institutionName}
-          subTitle={I18n.t("services.institution.header.subtitle", {
-            count: data?.count ?? 0
-          })}
+          subTitle={I18n.t(
+            data?.count && data?.count > 1
+              ? "services.institution.header.subtitlePlural"
+              : "services.institution.header.subtitleSingular",
+            {
+              count: data?.count ?? 0
+            }
+          )}
         />
         <VSpacer size={16} />
       </>

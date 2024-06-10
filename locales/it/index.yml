@@ -899,7 +899,7 @@ onboarding:
     pinLabel: Crea codice di sblocco
     pinConfirmationLabel: Ripeti codice di sblocco
     errors:
-      invalid: 
+      invalid:
         title: Troppo facile!
         description: Scegli un codice difficile da indovinare, che non contenga un unico numero ripetuto (es. 000000)o un elenco di numeri ordinati (es. 123456 o 654321).
         cta: Scegli un altro codice
@@ -1870,7 +1870,6 @@ messages:
     one: Hai 1 messaggio
   tab:
     inbox: Ricevuti
-    deadlines: In scadenza
     archive: Archiviati
   contentTitle: Messaggi
   refresh: Trascina in basso per aggiornare
@@ -1935,16 +1934,12 @@ messages:
   noContent: Contenuto non disponibile
   archive:
     emptyMessage:
-      title: Il tuo archivio è vuoto.
-      subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+      title: "Il tuo archivio è vuoto"
+      subtitle: "Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente.\nI messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca."
   inbox:
     emptyMessage:
-      title: La tua lista dei messaggi è vuota.
-      subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
-  deadlines:
-    emptyMessage:
-      title: Non hai scadenze in programma.
-      subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
+      title: Non hai ancora ricevuto alcun messaggio
+      subtitle: "Quando un ente ti invierà una comunicazione la visualizzerai qui."
   pagination:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
@@ -2151,7 +2146,8 @@ services:
       back: "Indietro"
       retry: "Riprova"
     header:
-      subtitle: "{{count}} servizi disponibili"
+      subtitlePlural: "{{count}} servizi disponibili"
+      subtitleSingular: "{{count}} servizio disponibile"
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
@@ -3088,11 +3084,16 @@ features:
         explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “Pagamento veloce con PayPal”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
   itWallet:
     card:
-      eid:
-        label: Identità Digitale
+      status:
         expired: Non valida
+        expiring: In scadenza
         pending: In lavorazione
-        digital: Versione digitale
+      label:
+        eid: Identità Digitale
+        mdl: Patente di Guida
+        dc: Carta Europea della Disabilità
+        ts: Tessera Sanitaria
+      digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3817,7 +3818,7 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
-FIMS: 
+FIMS:
   loadingScreen:
     consents:
       title: "Attendi qualche secondo"
