@@ -14,9 +14,7 @@ import {
 import { UIMessage } from "../../types";
 import { MessagesHomeTabParamsList } from "../../navigation/MessagesHomeTabNavigator";
 import MessagesArchive from "../../components/Home/legacy/MessagesArchive";
-import messageListData, {
-  MessageListCategory
-} from "../../types/messageListCategory";
+import { MessageListCategory, fold } from "../../types/messageListCategory";
 
 export type MessagesHomeTabNavigationParams = Readonly<{
   category: MessageListCategory;
@@ -59,7 +57,7 @@ const MessageListScreen = () => {
     );
 
   const getContent = (category: MessageListCategory) =>
-    messageListData.fold(
+    fold(
       category,
       () => (
         <MessagesInbox

@@ -899,7 +899,7 @@ onboarding:
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
     errors:
-      invalid: 
+      invalid:
         title: Too easy!
         description: Choose a code that is hard to guess and doesn't contain a single repeated number (e.g. 000000) or a list of ordered numbers (e.g. 123456 or 654321).
         cta: Choose another code
@@ -1870,7 +1870,6 @@ messages:
     one: You have 1 message
   tab:
     inbox: Inbox
-    deadlines: Expiring
     archive: Archived
   contentTitle: Messages
   refresh: Pull down to refresh
@@ -1941,10 +1940,6 @@ messages:
     emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
-  deadlines:
-    emptyMessage:
-      title: You haven't any scheduled deadline.
-      subtitle: Use the button above to check out past deadlines.
   pagination:
     migration:
       started: Please wait, we are updating the Messages section.
@@ -2151,7 +2146,8 @@ services:
       back: "Back"
       retry: "Retry"
     header:
-      subtitle: "{{count}} available services"
+      subtitlePlural: "{{count}} available services"
+      subtitleSingular: "{{count}} available service"
   search:
     input:
       placeholder: "Search for a national or local institution"
@@ -3082,11 +3078,16 @@ features:
         success: ""
   itWallet:
     card:
-      eid:
-        label: Identità Digitale
+      status:
         expired: Non valida
+        expiring: In scadenza
         pending: In lavorazione
-        digital: Versione digitale
+      label:
+        eid: Identità Digitale
+        mdl: Patente di Guida
+        dc: Carta Europea della Disabilità
+        ts: Tessera Sanitaria
+      digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3811,8 +3812,7 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
-
-FIMS: 
+FIMS:
   loadingScreen:
     consents:
       title: "Attendi qualche secondo"
