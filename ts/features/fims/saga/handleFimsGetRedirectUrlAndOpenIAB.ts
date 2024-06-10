@@ -160,7 +160,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
   yield* call(handleFimsResourcesDeallocation);
-  return openAuthenticationSession(inAppBrowserRedirectUrl, "");
+  return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
 }
 
 const recurseUntilRPUrl = async (
