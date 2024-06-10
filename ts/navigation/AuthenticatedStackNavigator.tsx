@@ -108,7 +108,7 @@ const AuthenticatedStackNavigator = () => {
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN}
       screenOptions={{
-        gestureEnabled: false,
+        gestureEnabled: isGestureEnabled,
         headerMode: "screen"
       }}
     >
