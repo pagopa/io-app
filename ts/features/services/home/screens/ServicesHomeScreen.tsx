@@ -24,6 +24,7 @@ import { FeaturedInstitutionList } from "../components/FeaturedInstitutionList";
 import { FeaturedServiceList } from "../components/FeaturedServiceList";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
+import * as analytics from "../../common/analytics";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -50,12 +51,15 @@ export const ServicesHomeScreen = () => {
     refreshInstitutions
   } = useInstitutionsFetcher();
 
+  useOnFirstRender(() => {
+    analytics.trackServicesHome();
+    fetchInstitutions(0);
+  });
+
   useTabItemPressWhenScreenActive(
     () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
     false
   );
-
-  useOnFirstRender(() => fetchInstitutions(0));
 
   useEffect(() => {
     if (!isFirstRender && isError) {
@@ -92,7 +96,10 @@ export const ServicesHomeScreen = () => {
           clearAccessibilityLabel={I18n.t("services.search.input.clear")}
           placeholder={I18n.t("services.search.input.placeholder")}
           pressable={{
-            onPress: navigateToSearch
+            onPress: () => {
+              analytics.trackSearchStart({ source: "search_bar" });
+              navigateToSearch();
+            }
           }}
         />
         <FeaturedServiceList />
@@ -115,7 +122,10 @@ export const ServicesHomeScreen = () => {
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
             <ButtonLink
               label={I18n.t("services.home.searchLink")}
-              onPress={navigateToSearch}
+              onPress={() => {
+                analytics.trackSearchStart({ source: "bottom_link" });
+                navigateToSearch();
+              }}
             />
           </View>
           <VSpacer size={24} />
@@ -132,20 +142,26 @@ export const ServicesHomeScreen = () => {
     refreshInstitutions();
   }, [dispatch, refreshInstitutions]);
 
-  const handleEndReached = useCallback(
-    () => fetchInstitutions(currentPage + 1),
-    [currentPage, fetchInstitutions]
-  );
+  const handleEndReached = useCallback(() => {
+    analytics.trackInstitutionsScroll();
+    fetchInstitutions(currentPage + 1);
+  }, [currentPage, fetchInstitutions]);
 
   const navigateToInstitution = useCallback(
-    (institution: Institution) =>
+    ({ id, name }: Institution) => {
+      analytics.trackInstitutionSelected({
+        organization_name: name,
+        source: "main_list"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.INSTITUTION_SERVICES,
         params: {
-          institutionId: institution.id,
-          institutionName: institution.name
+          institutionId: id,
+          institutionName: name
         }
-      }),
+      });
+    },
     [navigation]
   );
 
