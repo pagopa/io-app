@@ -225,7 +225,7 @@ function* handleFimsGetRedirectUrlAndOpenIAB(
 
   yield* put(fimsGetRedirectUrlAndOpenIABAction.success());
   yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
-  return openAuthenticationSession(inAppBrowserRedirectUrl, "");
+  return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
 }
 
 // -------------------- UTILS --------------------
