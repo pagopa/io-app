@@ -83,7 +83,7 @@ export const InstitutionServicesScreen = ({
       analytics.trackInstitutionDetails({
         organization_fiscal_code: institutionId,
         organization_name: institutionName,
-        sevices_count: data?.count ?? 0
+        services_count: data?.count ?? 0
       }),
     () => !!data
   );
