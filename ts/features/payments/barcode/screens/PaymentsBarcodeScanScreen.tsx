@@ -94,7 +94,9 @@ const PaymentsBarcodeScanScreen = () => {
 
     if (barcode.type === "PAGOPA") {
       if (isNewWalletSectionEnabled) {
-        startPaymentFlowWithRptId(barcode.rptId);
+        startPaymentFlowWithRptId(barcode.rptId, {
+          onSuccess: "showTransaction"
+        });
       } else {
         dispatch(paymentInitializeState());
         switch (barcode.format) {
