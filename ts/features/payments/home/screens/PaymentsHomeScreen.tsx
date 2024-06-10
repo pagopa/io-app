@@ -9,9 +9,9 @@ import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyS
 import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
 import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
 import {
+  isPaymentsLatestTransactionsEmptySelector,
   isPaymentsSectionEmptySelector,
-  isPaymentsSectionLoadingSelector,
-  isPaymentsTransactionsEmptySelector
+  isPaymentsSectionLoadingSelector
 } from "../store/selectors";
 
 const PaymentsHomeScreen = () => {
@@ -19,7 +19,7 @@ const PaymentsHomeScreen = () => {
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
   const isTransactionsEmpty = useIOSelector(
-    isPaymentsTransactionsEmptySelector
+    isPaymentsLatestTransactionsEmptySelector
   );
 
   const handleOnPayNoticedPress = () => {
