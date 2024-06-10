@@ -36,11 +36,14 @@ export function* handleWalletPaymentCalculateFees(
       return;
     }
 
-    const { paymentMethodId, ...body } = { ...action.payload, language };
+    const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
     const calculateFeesRequest = calculateFees({
       eCommerceSessionToken: sessionToken,
       id: paymentMethodId,
-      body
+      body: {
+        ...body,
+        idPspList: idPsp ? [idPsp] : body.idPspList
+      }
     });
 
     const calculateFeesResult = (yield* call(
