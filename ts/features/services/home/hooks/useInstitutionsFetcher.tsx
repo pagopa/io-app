@@ -66,6 +66,7 @@ export const useInstitutionsFetcher = () => {
     currentPage,
     data: paginatedInstitutions,
     isError,
+    isLastPage,
     isLoading,
     isUpdating,
     isRefreshing,
