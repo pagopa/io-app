@@ -446,6 +446,8 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
+    itWallet:
+      itWalletTest: IT Wallet
     designSystemEnvironment: Experimental Design System
     newWalletSection: New wallet section
     newHomeSection: New messages home
@@ -453,15 +455,8 @@ profile:
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
-    addCard:
-      titleSection: Add test card
-      warning:
-        title: Warning
-        message: To add a new test card, you must enable the pagoPA test environment from the settings.
-        closeButton: Close
-    itWallet:
-      itWalletTest: IT Wallet
-      itWalletTestDescription: Enable the IT Wallet test environment
+    addTestCard:
+      title: Add test card
     banner:
       title: Do you want to display your fiscal code?
       action: Go to "Your data" section
