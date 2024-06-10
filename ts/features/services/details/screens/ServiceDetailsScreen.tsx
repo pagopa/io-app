@@ -103,7 +103,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         service_category: serviceMetadataInfo?.isSpecialService
           ? "special"
           : "standard",
-        service_id: service?.service_id ?? "",
+        service_id: serviceId,
         service_name: service?.service_name ?? ""
       });
     },
@@ -142,7 +142,13 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     return null;
   }
 
-  const handlePressCta = (cta: CTA) => handleCtaAction(cta, linkTo);
+  const handlePressCta = (cta: CTA, ctaType: keyof CTAS) => {
+    analytics.trackServiceDetailsCtaTapped({
+      cta: ctaType,
+      service_id: serviceId
+    });
+    handleCtaAction(cta, linkTo);
+  };
 
   const getActionsProps = (
     ctas?: CTAS,
@@ -164,12 +170,12 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         secondaryActionProps: {
           label: cta_1.text,
           accessibilityLabel: cta_1.text,
-          onPress: () => handlePressCta(cta_1)
+          onPress: () => handlePressCta(cta_1, "cta_1")
         },
         tertiaryActionProps: {
           label: cta_2.text,
           accessibilityLabel: cta_2.text,
-          onPress: () => handlePressCta(cta_2)
+          onPress: () => handlePressCta(cta_2, "cta_2")
         }
       };
     }
@@ -187,7 +193,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         secondaryActionProps: {
           label: cta_1.text,
           accessibilityLabel: cta_1.text,
-          onPress: () => handlePressCta(cta_1)
+          onPress: () => handlePressCta(cta_1, "cta_1")
         }
       };
     }
@@ -200,12 +206,12 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         primaryActionProps: {
           label: cta_1.text,
           accessibilityLabel: cta_1.text,
-          onPress: () => handlePressCta(cta_1)
+          onPress: () => handlePressCta(cta_1, "cta_1")
         },
         secondaryActionProps: {
           label: cta_2.text,
           accessibilityLabel: cta_2.text,
-          onPress: () => handlePressCta(cta_2)
+          onPress: () => handlePressCta(cta_2, "cta_2")
         }
       };
     }
@@ -216,7 +222,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         primaryActionProps: {
           label: ctas.cta_1.text,
           accessibilityLabel: ctas.cta_1.text,
-          onPress: () => handlePressCta(ctas.cta_1)
+          onPress: () => handlePressCta(ctas.cta_1, "cta_1")
         }
       };
     }

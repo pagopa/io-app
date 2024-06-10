@@ -11,6 +11,7 @@ import {
   paginatedInstitutionsGet
 } from "../../home/store/actions";
 import { loadServicePreference } from "../../details/store/actions/preference";
+import { CTAS } from "../../../messages/types/MessageCTA";
 
 type ServiceBaseType = {
   service_name: string;
@@ -60,7 +61,7 @@ type SpecialServiceStatusChangedType = {
 
 type InstitutionDetailsType = {
   organization_fiscal_code: string;
-  sevices_count: number;
+  services_count: number;
 } & InstitutionBaseType;
 
 type ServiceSelectedType = {
@@ -75,8 +76,13 @@ type InstitutionSelectedType = {
     | "recent_list";
 } & InstitutionBaseType;
 
-export type SearchStartType = {
+type SearchStartType = {
   source: "bottom_link" | "header_icon" | "search_bar";
+};
+
+type ServiceDetailsCtaTappedType = {
+  cta: keyof CTAS;
+  service_id: string;
 };
 
 export const trackServicesHome = () =>
@@ -84,7 +90,7 @@ export const trackServicesHome = () =>
 
 export const trackServicesHomeError = (
   reason: string,
-  source: "featured_services" | "main_list" | "organization_detail"
+  source: "featured_services" | "featured_organizations" | "main_list"
 ) =>
   void mixpanelTrack(
     "SERVICES_ERROR",
@@ -129,14 +135,14 @@ export const trackInstitutionSelected = ({
 export const trackInstitutionDetails = ({
   organization_fiscal_code,
   organization_name,
-  sevices_count = 0
+  services_count = 0
 }: InstitutionDetailsType) =>
   void mixpanelTrack(
     "SERVICES_ORGANIZATION_DETAIL",
     buildEventProperties("UX", "screen_view", {
       organization_fiscal_code,
       organization_name,
-      sevices_count
+      services_count
     })
   );
 
@@ -222,6 +228,14 @@ export const trackServiceDetailsError = (reason: string) =>
     buildEventProperties("KO", undefined, { reason })
   );
 
+export const trackServiceDetailsCtaTapped = (
+  props: ServiceDetailsCtaTappedType
+) =>
+  void mixpanelTrack(
+    "SERVICES_DETAIL_CTA_TAPPED",
+    buildEventProperties("UX", "action", props)
+  );
+
 /**
  * Isolated tracker for services actions
  */
@@ -243,7 +257,7 @@ export const trackServicesAction =
       case getType(featuredInstitutionsGet.failure):
         return trackServicesHomeError(
           getNetworkErrorMessage(action.payload),
-          "organization_detail"
+          "featured_organizations"
         );
       // Search results
       case getType(searchPaginatedInstitutionsGet.success):

@@ -122,7 +122,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             icon: "search",
             accessibilityLabel: I18n.t("global.accessibility.search"),
             onPress: () => {
-              analytics.trackSearchStart({ source: "search_bar" });
+              analytics.trackSearchStart({ source: "header_icon" });
               navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
                 screen: SERVICES_ROUTES.SEARCH
               });
