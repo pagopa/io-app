@@ -135,7 +135,14 @@ export const InstitutionServicesScreen = ({
   );
 
   const handleEndReached = useCallback(
-    () => fetchNextPage(currentPage + 1),
+    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      // guard needed to avoid endless loop
+      if (distanceFromEnd === 0) {
+        return;
+      }
+
+      fetchNextPage(currentPage + 1);
+    },
     [currentPage, fetchNextPage]
   );
 
@@ -233,7 +240,7 @@ export const InstitutionServicesScreen = ({
       data={data?.services || []}
       keyExtractor={(item, index) => `service-${item.id}-${index}`}
       onEndReached={handleEndReached}
-      onEndReachedThreshold={0.001}
+      onEndReachedThreshold={0.1}
       renderItem={renderItem}
       refreshControl={refreshControl}
       testID="intitution-services-list"
