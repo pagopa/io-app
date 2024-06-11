@@ -15,7 +15,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { useDispatch } from "react-redux";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import { Body } from "../../../../components/core/typography/Body";
@@ -30,7 +29,7 @@ import {
   pspForPaymentV2,
   pspSelectedForPaymentV2
 } from "../../../../store/actions/wallet/payment";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
@@ -164,7 +163,7 @@ const PayPalPspUpdateScreen: React.FunctionComponent = () => {
     >().params;
   const locales = getLocales();
   const navigation = useIONavigation();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const pspList = useIOSelector(pspV2ListSelector);
   const searchPaypalPsp = () => {
     dispatch(pspForPaymentV2.request({ idPayment, idWallet }));
