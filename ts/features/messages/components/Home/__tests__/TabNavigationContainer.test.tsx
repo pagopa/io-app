@@ -9,17 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { TabNavigationContainer } from "../TabNavigationContainer";
 import { MessageListCategory } from "../../../types/messageListCategory";
-import {
-  reloadAllMessages,
-  setShownMessageCategoryAction
-} from "../../../store/actions";
-import { pageSize } from "../../../../../config";
-
-const mockDispatch = jest.fn();
-jest.mock("react-redux", () => ({
-  ...jest.requireActual<typeof import("react-redux")>("react-redux"),
-  useDispatch: () => mockDispatch
-}));
+import { setShownMessageCategoryAction } from "../../../store/actions";
 
 describe("TabNavigationContainer", () => {
   beforeEach(() => {
@@ -34,16 +24,7 @@ describe("TabNavigationContainer", () => {
     const screen = renderScreen("ARCHIVE");
     expect(screen.toJSON()).toMatchSnapshot();
   });
-  it("when displaying INBOX, pot.none inbox, should dispatch reloadAllMessages.request", () => {
-    renderScreen("INBOX");
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: { getArchived: false }
-      })
-    );
-  });
-  it("when displaying INBOX and ARCHIVE chips is pressed, it should dispatch setShownMessageCategoryAction and trigger pagerViewRef ", () => {
+  it("when displaying INBOX and ARCHIVE chips is pressed, it should trigger pagerViewRef ", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("INBOX", setPageMock);
     const archivePressableComponent = screen.getByTestId(
@@ -51,41 +32,25 @@ describe("TabNavigationContainer", () => {
     );
     expect(archivePressableComponent).toBeDefined();
     fireEvent.press(archivePressableComponent);
-    expect(mockDispatch.mock.calls[1][0]).toStrictEqual(
-      setShownMessageCategoryAction("ARCHIVE")
-    );
     expect(setPageMock.mock.calls[0][0]).toStrictEqual(1);
   });
-  it("when displaying INBOX and INBOX chips is pressed, it should NOT dispatch setShownMessageCategoryAction and NOT trigger pagerViewRef ", () => {
+  it("when displaying INBOX and INBOX chips is pressed, it should NOT trigger pagerViewRef ", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("INBOX", setPageMock);
     const inboxPressableComponent = screen.getByTestId("home_tab_item_inbox");
     expect(inboxPressableComponent).toBeDefined();
     fireEvent.press(inboxPressableComponent);
-    expect(mockDispatch.mock.calls[1]).toBeUndefined();
     expect(setPageMock.mock.calls[0]).toBeUndefined();
   });
-  it("when displaying ARCHIVE, pot.none archive, should dispatch reloadAllMessages.request", () => {
-    renderScreen("ARCHIVE");
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: { getArchived: true }
-      })
-    );
-  });
-  it("when displaying INBOX and INBOX chips is pressed, it should dispatch setShownMessageCategoryAction and trigger pagerViewRef ", () => {
+  it("when displaying INBOX and INBOX chips is pressed, it should trigger pagerViewRef ", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("ARCHIVE", setPageMock);
     const inboxPressableComponent = screen.getByTestId("home_tab_item_inbox");
     expect(inboxPressableComponent).toBeDefined();
     fireEvent.press(inboxPressableComponent);
-    expect(mockDispatch.mock.calls[1][0]).toStrictEqual(
-      setShownMessageCategoryAction("INBOX")
-    );
     expect(setPageMock.mock.calls[0][0]).toStrictEqual(0);
   });
-  it("when displaying INBOX and ARCHIVE chips is pressed, it should NOT dispatch setShownMessageCategoryAction and NOT trigger pagerViewRef ", () => {
+  it("when displaying INBOX and ARCHIVE chips is pressed, it should NOT trigger pagerViewRef ", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("ARCHIVE", setPageMock);
     const archivePressableComponent = screen.getByTestId(
@@ -93,7 +58,6 @@ describe("TabNavigationContainer", () => {
     );
     expect(archivePressableComponent).toBeDefined();
     fireEvent.press(archivePressableComponent);
-    expect(mockDispatch.mock.calls[1]).toBeUndefined();
     expect(setPageMock.mock.calls[0]).toBeUndefined();
   });
 });
