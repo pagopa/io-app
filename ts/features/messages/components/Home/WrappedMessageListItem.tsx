@@ -1,21 +1,12 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
-import { serviceByIdSelector } from "../../../services/details/store/reducers/servicesById";
+import React, { useCallback, useMemo } from "react";
 import { UIMessage } from "../../types";
-import { logosForService } from "../../../../utils/services";
 import I18n from "../../../../i18n";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
-import {
-  accessibilityLabelForMessageItem,
-  getLoadServiceDetailsActionIfNeeded
-} from "./homeUtils";
+import { logoForService } from "../../../services/home/utils";
+import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
@@ -28,27 +19,12 @@ export const WrappedMessageListItem = ({
   message
 }: WrappedMessageListItemProps) => {
   const navigation = useIONavigation();
-  const dispatch = useIODispatch();
-  const store = useIOStore();
   const serviceId = message.serviceId;
-  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
-  const organizationFiscalCode = service?.organization_fiscal_code;
-  useEffect(() => {
-    const state = store.getState();
-    const loadServiceDetailsActionOrUndefined =
-      getLoadServiceDetailsActionIfNeeded(
-        state,
-        serviceId,
-        organizationFiscalCode
-      );
-    if (loadServiceDetailsActionOrUndefined) {
-      dispatch(loadServiceDetailsActionOrUndefined);
-    }
-  }, [dispatch, organizationFiscalCode, serviceId, store]);
+  const organizationFiscalCode = message.organizationFiscalCode;
 
   const serviceLogoUriSources = useMemo(
-    () => (service ? logosForService(service) : undefined),
-    [service]
+    () => logoForService(serviceId, organizationFiscalCode),
+    [serviceId, organizationFiscalCode]
   );
   const organizationName =
     message.organizationName || I18n.t("messages.errorLoading.senderInfo");
