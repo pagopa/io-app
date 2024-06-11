@@ -13,7 +13,7 @@ import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
 const styles = StyleSheet.create({
   buttonLinkContainer: {
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "flex-start"
   }
 });
 
