@@ -52,6 +52,7 @@ export const askUserToRefreshSessionToken = createAsyncAction(
 type PendingActionTypes = typeof savePendingAction | typeof clearPendingAction;
 
 export type FastLoginTokenRefreshActions =
+  | ActionType<typeof clearTokenRefreshError>
   | ActionType<PendingActionTypes>
   | ActionType<typeof refreshSessionToken>
   | ActionType<typeof askUserToRefreshSessionToken>;
