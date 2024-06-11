@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Body, H4, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOBottomSheetModal,
   useIOBottomSheetAutoresizableModal
