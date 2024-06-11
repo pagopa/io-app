@@ -10,7 +10,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect } from "react";
 import { Alert, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
 import {
   isError as isRemoteError,
   isLoading as isRemoteLoading,
@@ -40,7 +39,7 @@ import {
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
@@ -146,7 +145,7 @@ const TransactionSummaryScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const { rptId, paymentStartOrigin, initialAmount, messageId } = route.params;
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const {
     verifica: paymentVerification,
     attiva,
