@@ -11,7 +11,7 @@ import {
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
 import { ConsentData } from "../../types";
-import { foldK, isStrictNone } from "../../../../utils/pot";
+import { isStrictNone } from "../../../../utils/pot";
 
 type FimsFlowStateTags = "consents" | "in-app-browser" | "abort";
 
