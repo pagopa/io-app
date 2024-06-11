@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { ConsentData } from "../../types";
 
 type FimsGetConsentsListRequestType = {
@@ -22,6 +26,11 @@ export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
   "FIMS_GET_REDIRECT_URL_FAILURE"
 )<FimsGetRedirectUrlAndOpenIABRequestType, void, string>();
 
+export const fimsCancelOrAbortAction = createStandardAction(
+  "FIMS_CANCEL_OR_ABORT"
+)();
+
 export type FimsActions =
   | ActionType<typeof fimsGetConsentsListAction>
-  | ActionType<typeof fimsGetRedirectUrlAndOpenIABAction>;
+  | ActionType<typeof fimsGetRedirectUrlAndOpenIABAction>
+  | ActionType<typeof fimsCancelOrAbortAction>;
