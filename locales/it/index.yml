@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: più info
+    moreInfo: Più info
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -3068,7 +3068,8 @@ features:
       status:
         expired: Scaduta
     transactions:
-      title: Storico operazioni
+      multiplePayment: Pagamento multiplo
+      title: Ricevute pagoPA
       button: Vedi tutte
       empty:
         title: Qui vedrai le tue ricevute pagoPA
@@ -3188,6 +3189,9 @@ features:
       success:
         title: "Hai aggiunto\nIdentità Digitale!"
         subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+    unsupportedDevice:
+      text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
+      moreInfo: Scopri perchè
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3778,6 +3782,8 @@ bonusCard:
   removed: Rimossa
 transaction:
   details:
+    error:
+      title: É stato riscontrato un errore
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
@@ -3788,12 +3794,19 @@ transaction:
       pspName: Gestore della transazione (PSP)
       dateAndHour: Data e ora
       transactionId: ID transazione
+      paymentMethod: Metodo di pagamento
+      authCode: Codice autorizzativo
+      rrn: RRN
+      executedBy: Eseguito da
+      headedTo: Intestato a
     operation:
       amount: Importo
       creditor: Ente creditore
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+      noticeCode: Codice avviso
+      taxCode: Codice Fiscale Ente
 permissionRequest:
   gallery:
     title: Consenti a IO di accedere alle tue foto
@@ -3814,6 +3827,8 @@ permissionRequest:
     cta: Apri Impostazioni
 FIMS:
   loadingScreen:
+    abort:
+      title: "Operazione annullata"
     consents:
       title: "Attendi qualche secondo"
     in-app-browser:
