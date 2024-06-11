@@ -91,33 +91,39 @@ const generateMessageSectionData = (
       })) ?? [];
     return messageSectionData.concat(paymentsSectionData);
   } else {
+    const hasMoreThanOnePayment = (payments?.length ?? 0) > 1;
     const paymentsSectionData: ShowMoreSection =
-      payments?.map((payment, index) => ({
-        title: `${I18n.t(
-          "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
-        )} ${index + 1}`,
-        items: [
-          {
-            accessibilityLabel: I18n.t(
-              "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
-            ),
-            icon: "docPaymentCode",
-            label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
-            value: formatPaymentNoticeNumber(payment.noticeCode),
-            valueToCopy: payment.noticeCode
-          },
-          {
-            accessibilityLabel: I18n.t(
-              "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
-            ),
-            icon: "entityCode",
-            label: I18n.t(
-              "messageDetails.showMoreDataBottomSheet.entityFiscalCode"
-            ),
-            value: payment.creditorTaxId
-          }
-        ]
-      })) ?? [];
+      payments?.map((payment, index) => {
+        const titleSuffix = hasMoreThanOnePayment ? ` ${index + 1}` : ``;
+        return {
+          title: `${I18n.t(
+            "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
+          )}${titleSuffix}`,
+          items: [
+            {
+              accessibilityLabel: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
+              ),
+              icon: "docPaymentCode",
+              label: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.noticeCode"
+              ),
+              value: formatPaymentNoticeNumber(payment.noticeCode),
+              valueToCopy: payment.noticeCode
+            },
+            {
+              accessibilityLabel: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
+              ),
+              icon: "entityCode",
+              label: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.entityFiscalCode"
+              ),
+              value: payment.creditorTaxId
+            }
+          ]
+        };
+      }) ?? [];
     return messageSectionData.concat(paymentsSectionData);
   }
 };
