@@ -343,7 +343,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               "width": "100%",
                             },
                             Object {
-                              "paddingBottom": 16,
+                              "paddingBottom": 0,
                             },
                           ]
                         }
@@ -916,7 +916,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               "width": "100%",
                             },
                             Object {
-                              "paddingBottom": 16,
+                              "paddingBottom": 0,
                             },
                           ]
                         }
@@ -1916,7 +1916,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                               "width": "100%",
                             },
                             Object {
-                              "paddingBottom": 16,
+                              "paddingBottom": 0,
                             },
                           ]
                         }
@@ -2717,7 +2717,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               "width": "100%",
                             },
                             Object {
-                              "paddingBottom": 16,
+                              "paddingBottom": 0,
                             },
                           ]
                         }
@@ -3325,7 +3325,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                               "width": "100%",
                             },
                             Object {
-                              "paddingBottom": 16,
+                              "paddingBottom": 0,
                             },
                           ]
                         }
@@ -3795,7 +3795,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               "width": "100%",
                             },
                             Object {
-                              "paddingBottom": 16,
+                              "paddingBottom": 0,
                             },
                           ]
                         }

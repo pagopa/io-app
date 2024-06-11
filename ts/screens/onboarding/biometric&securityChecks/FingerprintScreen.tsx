@@ -5,7 +5,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
-import { useDispatch } from "react-redux";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
 import { H5 } from "../../../components/core/typography/H5";
@@ -15,7 +14,7 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
 import {
@@ -39,7 +38,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * the instruction to enable the fingerprint/faceID usage
  */
 const FingerprintScreen = () => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
 

@@ -784,11 +784,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -921,17 +921,12 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1167,17 +1162,12 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1413,17 +1403,12 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1659,17 +1644,12 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1905,17 +1885,12 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -2151,17 +2126,12 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -2397,17 +2367,12 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -2984,11 +2949,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -3121,17 +3086,12 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -3367,17 +3327,12 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -3613,17 +3568,12 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -3859,17 +3809,12 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -4105,17 +4050,12 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -4351,17 +4291,12 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -4597,17 +4532,12 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -5515,11 +5445,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -5644,17 +5574,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -5670,6 +5595,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -5876,17 +5802,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -6121,17 +6042,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -6366,17 +6282,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -6611,17 +6522,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -7198,11 +7104,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -7327,17 +7233,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -7353,6 +7254,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -7559,17 +7461,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -7804,17 +7701,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -8049,17 +7941,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -8294,17 +8181,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -8881,11 +8763,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -9010,17 +8892,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -9036,6 +8913,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -9242,17 +9120,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -9487,17 +9360,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -9732,17 +9600,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -9977,17 +9840,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -10672,11 +10530,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -10801,17 +10659,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -10827,6 +10680,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -11033,17 +10887,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -11278,17 +11127,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -11523,17 +11367,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -11768,17 +11607,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -12463,11 +12297,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -12592,17 +12426,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -12618,6 +12447,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -13166,11 +12996,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -13295,17 +13125,12 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -13321,6 +13146,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
