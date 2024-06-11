@@ -36,6 +36,8 @@ import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../utils/url";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
+import { LightModalContext } from "../../components/ui/LightModal";
+import { AlertModal } from "../../components/ui/AlertModal";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -51,6 +53,7 @@ const LanguagesPreferencesScreen = () => {
   const dispatch = useIODispatch();
   const selectedLanguage = useRef<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const { showModal } = React.useContext(LightModalContext);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const bannerInfoSelector = useIOSelector(
@@ -126,6 +129,16 @@ const LanguagesPreferencesScreen = () => {
       setIsLoading(false);
       preferredLanguageSaveSuccessDispatch(selectedItem as Locales);
       setSelectedItem(selectedLanguage.current);
+      showModal(
+        <AlertModal
+          message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+        />
+      );
+      IOToast.success(
+        I18n.t(
+          "profile.preferences.list.preferred_language.toast.success.title"
+        )
+      );
       return;
     }
 
@@ -144,7 +157,8 @@ const LanguagesPreferencesScreen = () => {
     preferredLanguageSaveSuccessDispatch,
     prevProfile,
     profile,
-    selectedItem
+    selectedItem,
+    showModal
   ]);
 
   const onLanguageSelected = useCallback(

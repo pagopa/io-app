@@ -507,6 +507,9 @@ profile:
         alert:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
+        toast:
+          success:
+            title: La lingua è stata cambiata con successo
         not_selected: Non selezionato
         banner:
           button: Scopri di più
