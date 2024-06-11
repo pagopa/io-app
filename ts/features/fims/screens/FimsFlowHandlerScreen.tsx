@@ -11,13 +11,17 @@ import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { FimsParamsList } from "../navigation";
-import { fimsGetConsentsListAction } from "../store/actions";
+import {
+  fimsCancelOrAbortAction,
+  fimsGetConsentsListAction
+} from "../store/actions";
 import {
   fimsConsentsDataSelector,
   fimsErrorStateSelector,
   fimsLoadingStateSelector
 } from "../store/reducers";
 import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -32,7 +36,26 @@ export const FimsFlowHandlerScreen = (
   const { ctaUrl } = props.route.params;
   const dispatch = useIODispatch();
 
-  useHeaderSecondLevel({ title: "", supportRequest: true });
+  const loadingState = useIOSelector(fimsLoadingStateSelector);
+  const consentsPot = useIOSelector(fimsConsentsDataSelector);
+  const errorState = useIOSelector(fimsErrorStateSelector);
+
+  const handleCancelOrAbort = React.useCallback(() => {
+    if (loadingState !== "abort") {
+      dispatch(fimsCancelOrAbortAction());
+    }
+  }, [dispatch, loadingState]);
+
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    goBack: handleCancelOrAbort
+  });
+
+  useHardwareBackButton(() => {
+    handleCancelOrAbort();
+    return true;
+  });
 
   React.useEffect(() => {
     if (ctaUrl) {
@@ -40,16 +63,12 @@ export const FimsFlowHandlerScreen = (
     }
   }, [ctaUrl, dispatch]);
 
-  const loadingState = useIOSelector(fimsLoadingStateSelector);
-  const consentsPot = useIOSelector(fimsConsentsDataSelector);
-  const errorState = useIOSelector(fimsErrorStateSelector);
-
   if (errorState !== undefined) {
     return <FimsErrorBody title={errorState} />;
   }
   if (loadingState !== undefined) {
     const subtitle =
-      loadingState === "in-app-browser" ? (
+      loadingState === "in-app-browser" || loadingState === "abort" ? (
         <View style={IOStyles.alignCenter}>
           <LabelSmall color="grey-650" weight="Regular">
             {I18n.t("FIMS.loadingScreen.in-app-browser.subtitle")}
@@ -72,7 +91,12 @@ export const FimsFlowHandlerScreen = (
     pot.toOption,
     O.fold(
       () => <FimsErrorBody title={I18n.t("global.genericError")} />,
-      consents => <FimsFlowSuccessBody consents={consents} />
+      consents => (
+        <FimsFlowSuccessBody
+          consents={consents}
+          onAbort={handleCancelOrAbort}
+        />
+      )
     )
   );
 };
