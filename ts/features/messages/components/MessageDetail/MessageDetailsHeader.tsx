@@ -36,7 +36,7 @@ const MessageDetailsHeaderContent = ({
   <>
     <H3 testID="message-header-subject">{subject}</H3>
     <VSpacer size={8} />
-    <LabelSmall fontSize="regular" color="grey-700">
+    <LabelSmall weight="Regular" color="grey-700">
       {localeDateFormat(
         createdAt,
         I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
