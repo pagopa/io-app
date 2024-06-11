@@ -27,6 +27,7 @@ import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
 import { GlobalState } from "../reducers/types";
+import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
 import { FimsActions } from "../../features/fims/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
@@ -105,6 +106,7 @@ export type Action =
   | WhatsNewActions
   | PaymentsFeatureActions
   | NewWalletActions
+  | CieLoginConfigActions
   | NewServicesActions
   | FimsActions
   | ItwActions
