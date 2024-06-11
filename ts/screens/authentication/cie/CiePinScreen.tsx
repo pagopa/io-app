@@ -29,7 +29,6 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IdpData } from "../../../../definitions/content/IdpData";
 import {
@@ -190,8 +189,10 @@ const CiePinScreen = () => {
     }, [])
   );
 
-  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
-  const useCieUat = useSelector(isCieLoginUatEnabledSelector);
+  const isFastLoginFeatureFlagEnabled = useIOSelector(
+    isFastLoginEnabledSelector
+  );
+  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   useHeaderSecondLevel({
     title: withTrailingPoliceCarLightEmojii("", useCieUat),

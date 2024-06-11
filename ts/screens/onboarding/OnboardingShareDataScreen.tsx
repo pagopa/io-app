@@ -1,7 +1,7 @@
 import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, SafeAreaView, View } from "react-native";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
@@ -10,7 +10,7 @@ import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLar
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { abortOnboarding } from "../../store/actions/onboarding";
-import { useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
@@ -27,7 +27,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     const flow = getFlowType(true, isFirstOnBoarding);
     trackMixpanelDeclined(flow);
