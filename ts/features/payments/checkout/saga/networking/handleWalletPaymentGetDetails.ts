@@ -8,14 +8,14 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
-import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../../common/saga/withPaymentsSessionToken";
 
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfoForIO"],
   action: ActionType<(typeof paymentsGetPaymentDetailsAction)["request"]>
 ) {
   try {
-    const getPaymentRequestInfoRequest = yield* withPagoPaPlatformSessionToken(
+    const getPaymentRequestInfoRequest = yield* withPaymentsSessionToken(
       getPaymentRequestInfo,
       paymentsGetPaymentDetailsAction.failure,
       {

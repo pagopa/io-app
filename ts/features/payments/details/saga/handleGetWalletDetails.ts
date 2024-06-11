@@ -9,7 +9,7 @@ import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletsToCards } from "../../common/utils";
-import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -21,7 +21,7 @@ export function* handleGetWalletDetails(
   action: ActionType<(typeof paymentsGetMethodDetailsAction)["request"]>
 ) {
   try {
-    const getwalletDetailsRequest = yield* withPagoPaPlatformSessionToken(
+    const getwalletDetailsRequest = yield* withPaymentsSessionToken(
       getWalletById,
       paymentsGetMethodDetailsAction.failure,
       {

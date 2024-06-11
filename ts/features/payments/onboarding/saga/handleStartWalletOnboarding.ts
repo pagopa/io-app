@@ -7,7 +7,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -20,7 +20,7 @@ export function* handleStartWalletOnboarding(
 ) {
   try {
     const { paymentMethodId } = action.payload;
-    const startOnboardingRequest = yield* withPagoPaPlatformSessionToken(
+    const startOnboardingRequest = yield* withPaymentsSessionToken(
       startOnboarding,
       paymentsStartOnboardingAction.failure,
       {

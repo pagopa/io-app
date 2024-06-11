@@ -19,7 +19,7 @@ type TokenKey = "pagoPAPlatformSessionToken" | "bearerAuth" | "Authorization";
  * @param requestBody the request body to send to the API
  * @param tokenKey the key of the token in the request body
  * */
-export function* withPagoPaPlatformSessionToken<T>(
+export function* withPaymentsSessionToken<T>(
   apiFunction: TypeofApiCall<T>,
   failureAction: (error: any) => ActionType<any>,
   requestBody: Omit<TypeofApiParams<T>, TokenKey>,

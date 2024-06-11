@@ -8,14 +8,14 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCreateTransactionAction } from "../../store/actions/networking";
-import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../../common/saga/withPaymentsSessionToken";
 
 export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransactionForIO"],
   action: ActionType<(typeof paymentsCreateTransactionAction)["request"]>
 ) {
   try {
-    const newTransactionRequest = yield* withPagoPaPlatformSessionToken(
+    const newTransactionRequest = yield* withPaymentsSessionToken(
       newTransaction,
       paymentsCreateTransactionAction.failure,
       {

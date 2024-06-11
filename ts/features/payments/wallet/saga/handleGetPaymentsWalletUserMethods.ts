@@ -10,13 +10,13 @@ import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { WalletClient } from "../../common/api/client";
 import { mapWalletsToCards } from "../../common/utils";
 import { getPaymentsWalletUserMethods } from "../store/actions";
-import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
 
 export function* handleGetPaymentsWalletUserMethods(
   getWalletsByIdUser: WalletClient["getIOPaymentWalletsByIdUser"],
   action: ActionType<(typeof getPaymentsWalletUserMethods)["request"]>
 ) {
-  const getWalletsByIdUserRequest = yield* withPagoPaPlatformSessionToken(
+  const getWalletsByIdUserRequest = yield* withPaymentsSessionToken(
     getWalletsByIdUser,
     getPaymentsWalletUserMethods.failure,
     {},

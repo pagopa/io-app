@@ -7,7 +7,7 @@ import { TransactionClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
 
 const DEFAULT_LATEST_TRANSACTION_LIST_SIZE = 5;
 
@@ -17,7 +17,7 @@ export function* handleGetLatestBizEventsTransactions(
     (typeof getPaymentsLatestBizEventsTransactionsAction)["request"]
   >
 ) {
-  const getTransactionListRequest = yield* withPagoPaPlatformSessionToken(
+  const getTransactionListRequest = yield* withPaymentsSessionToken(
     getTransactionList,
     getPaymentsLatestBizEventsTransactionsAction.failure,
     {

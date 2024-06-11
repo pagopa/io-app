@@ -7,7 +7,7 @@ import { TransactionClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to get the transaction details from the biz events API
@@ -20,7 +20,7 @@ export function* handleGetBizEventsTransactionDetails(
     (typeof getPaymentsBizEventsTransactionDetailsAction)["request"]
   >
 ) {
-  const getTransactionDetailsRequest = yield* withPagoPaPlatformSessionToken(
+  const getTransactionDetailsRequest = yield* withPaymentsSessionToken(
     getTransactionDetails,
     getPaymentsBizEventsTransactionDetailsAction.failure,
     {

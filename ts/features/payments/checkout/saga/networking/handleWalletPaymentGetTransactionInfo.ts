@@ -7,7 +7,7 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsGetPaymentTransactionInfoAction } from "../../store/actions/networking";
-import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../../common/saga/withPaymentsSessionToken";
 
 export function* handleWalletPaymentGetTransactionInfo(
   getTransactionInfo: PaymentClient["getTransactionInfoForIO"],
@@ -15,7 +15,7 @@ export function* handleWalletPaymentGetTransactionInfo(
     (typeof paymentsGetPaymentTransactionInfoAction)["request"]
   >
 ) {
-  const getTransactionInfoRequest = yield* withPagoPaPlatformSessionToken(
+  const getTransactionInfoRequest = yield* withPaymentsSessionToken(
     getTransactionInfo,
     paymentsGetPaymentTransactionInfoAction.failure,
     {

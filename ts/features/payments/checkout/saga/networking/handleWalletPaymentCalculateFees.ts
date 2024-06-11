@@ -11,7 +11,7 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
-import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../../common/saga/withPaymentsSessionToken";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFeesForIO"],
@@ -26,7 +26,7 @@ export function* handleWalletPaymentCalculateFees(
     );
 
     const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
-    const calculateFeesRequest = yield* withPagoPaPlatformSessionToken(
+    const calculateFeesRequest = yield* withPaymentsSessionToken(
       calculateFees,
       paymentsCalculatePaymentFeesAction.failure,
       {

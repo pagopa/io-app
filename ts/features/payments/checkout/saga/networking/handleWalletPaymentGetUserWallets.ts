@@ -8,13 +8,13 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsGetPaymentUserMethodsAction } from "../../store/actions/networking";
-import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../../common/saga/withPaymentsSessionToken";
 
 export function* handleWalletPaymentGetUserWallets(
   getWalletsByIdUser: PaymentClient["getWalletsByIdIOUser"],
   action: ActionType<(typeof paymentsGetPaymentUserMethodsAction)["request"]>
 ) {
-  const getWalletsByIdUserRequest = yield* withPagoPaPlatformSessionToken(
+  const getWalletsByIdUserRequest = yield* withPaymentsSessionToken(
     getWalletsByIdUser,
     paymentsGetPaymentUserMethodsAction.failure,
     {},

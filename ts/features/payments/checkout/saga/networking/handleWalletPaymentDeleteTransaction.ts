@@ -7,7 +7,7 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsDeleteTransactionAction } from "../../store/actions/networking";
-import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../../common/saga/withPaymentsSessionToken";
 
 export function* handleWalletPaymentDeleteTransaction(
   requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellationForIO"],
@@ -15,7 +15,7 @@ export function* handleWalletPaymentDeleteTransaction(
 ) {
   try {
     const requestTransactionUserCancellationRequest =
-      yield* withPagoPaPlatformSessionToken(
+      yield* withPaymentsSessionToken(
         requestTransactionUserCancellation,
         paymentsDeleteTransactionAction.failure,
         {

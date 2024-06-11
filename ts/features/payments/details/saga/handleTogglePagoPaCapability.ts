@@ -14,7 +14,7 @@ import {
   paymentsTogglePagoPaCapabilityAction
 } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
-import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
+import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to toggle the Wallet pagopa capability
@@ -36,7 +36,7 @@ export function* handleTogglePagoPaCapability(
     }));
 
     const updateWalletPagoPaApplicationRequest =
-      yield* withPagoPaPlatformSessionToken(
+      yield* withPaymentsSessionToken(
         updateWalletApplicationsById,
         paymentsTogglePagoPaCapabilityAction.failure,
         {
