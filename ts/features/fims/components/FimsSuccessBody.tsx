@@ -23,7 +23,6 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { Link } from "../../../components/core/typography/Link";
 import { LoadingSkeleton } from "../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
@@ -33,11 +32,13 @@ import { logoForService } from "../../services/home/utils";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { ConsentData, FimsClaimType } from "../types";
 
-type FimsSuccessBodyProps = { consents: ConsentData };
+type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
 
-export const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
+export const FimsFlowSuccessBody = ({
+  consents,
+  onAbort
+}: FimsSuccessBodyProps) => {
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
   const serviceId = consents.service_id as ServiceId;
 
   const serviceData = useIOSelector(state =>
@@ -68,7 +69,7 @@ export const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
         <Label weight="Regular">
           {I18n.t("FIMS.consentsScreen.subtitle2")}
         </Label>
-        <Label weight="Bold">{consents.redirection.display_name}.</Label>
+        <Label weight="Bold">{consents.redirect.display_name ?? ""}.</Label>
       </Label>
     ) : (
       <LoadingSkeleton lines={3} />
@@ -129,7 +130,7 @@ export const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
           </ButtonText>
           <VSpacer size={24} />
           <ListItemHeader label="Dati richiesti" iconName="security" />
-          <ClaimsList claims={consents.claims} />
+          <ClaimsList claims={consents.user_metadata} />
           <VSpacer size={24} />
 
           <PrivacyInfo privacyUrl={privacyUrl} />
@@ -143,10 +144,7 @@ export const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
               type: "Outline",
               buttonProps: {
                 label: I18n.t("global.buttons.cancel"),
-                onPress: () => {
-                  // BE call consents._links.cancel
-                  navigation.goBack();
-                }
+                onPress: onAbort
               }
             }}
             secondary={{
@@ -185,7 +183,7 @@ const ClaimsList = ({ claims }: ClaimsListProps) => (
 
 const ClaimListItem = ({ label }: ClaimsListItemProps) => (
   <View style={styles.grantItem}>
-    <H6>{label}</H6>
+    <H6>{label ?? ""}</H6>
     <Icon name="checkTickBig" size={24} color="grey-300" />
   </View>
 );
@@ -230,4 +228,4 @@ type ClaimsListProps = {
   claims: ReadonlyArray<FimsClaimType>;
 };
 type PrivacyInfoProps = { privacyUrl?: string };
-type ClaimsListItemProps = { label: string };
+type ClaimsListItemProps = { label?: string };
