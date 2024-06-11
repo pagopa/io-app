@@ -2,14 +2,17 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { latestTransactionsSelector } from "../../../../../store/reducers/wallet/transactions";
 import { paymentsWalletUserMethodsSelector } from "../../../wallet/store/selectors";
+import {
+  walletLatestTransactionsBizEventsListPotSelector,
+  walletTransactionBizEventsListPotSelector
+} from "../../../bizEventsTransaction/store/selectors";
 
 export const isPaymentsSectionLoadingSelector = createSelector(
   paymentsWalletUserMethodsSelector,
-  latestTransactionsSelector,
-  (methodsPot, transactionsPot) =>
-    pot.isLoading(methodsPot) || pot.isLoading(transactionsPot)
+  walletLatestTransactionsBizEventsListPotSelector,
+  (methodsPot, latestTransactionsPot) =>
+    pot.isLoading(methodsPot) || pot.isLoading(latestTransactionsPot)
 );
 
 export const isPaymentsMethodsEmptySelector = createSelector(
@@ -21,21 +24,27 @@ export const isPaymentsMethodsEmptySelector = createSelector(
     )
 );
 
+export const isPaymentsLatestTransactionsEmptySelector = createSelector(
+  walletLatestTransactionsBizEventsListPotSelector,
+  latestTransactionsPot =>
+    pot.getOrElse(
+      pot.map(latestTransactionsPot, transactions => transactions.length === 0),
+      false
+    )
+);
+
 export const isPaymentsTransactionsEmptySelector = createSelector(
-  latestTransactionsSelector,
+  walletTransactionBizEventsListPotSelector,
   transactionsPot =>
     pot.getOrElse(
-      pot.map(
-        transactionsPot,
-        transactions => _.values(transactions).length === 0
-      ),
+      pot.map(transactionsPot, transactions => transactions.length === 0),
       false
     )
 );
 
 export const isPaymentsSectionEmptySelector = createSelector(
   isPaymentsMethodsEmptySelector,
-  isPaymentsTransactionsEmptySelector,
+  isPaymentsLatestTransactionsEmptySelector,
   (isMethodsEmpty, isTransactionsEmpty) => isMethodsEmpty && isTransactionsEmpty
 );
 
