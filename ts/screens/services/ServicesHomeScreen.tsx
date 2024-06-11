@@ -38,7 +38,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import SectionStatusComponent from "../../components/SectionStatus";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -46,13 +45,8 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton"
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
 import {
   navigateToServiceDetailsScreen,
   navigateToServicePreferenceScreen
@@ -96,8 +90,6 @@ import {
 } from "../../utils/profile";
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
-type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
-
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (
     selectedItemIds: O.Option<Set<string>>
@@ -106,9 +98,7 @@ type ReduxMergedProps = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  OwnProps &
-  ReduxMergedProps &
-  LightModalContextInterface;
+  ReduxMergedProps;
 
 type State = {
   currentTab: number;
@@ -519,8 +509,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mergeProps = (
   stateProps: ReturnType<typeof mapStateToProps>,
-  dispatchProps: ReturnType<typeof mapDispatchToProps>,
-  ownProps: OwnProps
+  dispatchProps: ReturnType<typeof mapDispatchToProps>
 ) => {
   // If the user updates the area of interest, the upsert of
   // the user metadata stored on backend is triggered
@@ -539,7 +528,6 @@ const mergeProps = (
   return {
     ...stateProps,
     ...dispatchProps,
-    ...ownProps,
     ...{
       updateOrganizationsOfInterestMetadata
     }
@@ -550,4 +538,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(withLightModalContext(ServicesHomeScreen));
+)(ServicesHomeScreen);
