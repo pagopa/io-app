@@ -15,7 +15,7 @@ import { watchPaymentsMethodDetailsSaga } from "../../details/saga";
 import { watchPaymentsTransactionSaga } from "../../transaction/saga";
 import { watchPaymentsWalletSaga } from "../../wallet/saga";
 import { watchPaymentsBizEventsTransactionSaga } from "../../bizEventsTransaction/saga";
-import { handlePagoPaPlatformSessionToken } from "./handlePagoPaPlatformSessionToken";
+import { handlePaymentsSessionToken } from "./handlePaymentsSessionToken";
 
 export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -24,17 +24,16 @@ export function* watchPaymentsSaga(walletToken: string): SagaIterator {
     ? walletApiUatBaseUrl
     : walletApiBaseUrl;
 
+  const walletClient = createWalletClient(walletBaseUrl);
+  const paymentClient = createPaymentClient(walletBaseUrl);
+  const transactionClient = createTransactionClient(walletBaseUrl);
   const pagoPaPlatformClient = createPagoPaClient(walletBaseUrl, walletToken);
 
   yield* takeLatest(
     paymentsGetPagoPaPlatformSessionTokenAction.request,
-    handlePagoPaPlatformSessionToken,
+    handlePaymentsSessionToken,
     pagoPaPlatformClient.generateSessionWallet
   );
-
-  const walletClient = createWalletClient(walletBaseUrl);
-  const paymentClient = createPaymentClient(walletBaseUrl);
-  const transactionClient = createTransactionClient(walletBaseUrl);
 
   yield* fork(watchPaymentsWalletSaga, walletClient);
   yield* fork(watchPaymentsOnboardingSaga, walletClient);

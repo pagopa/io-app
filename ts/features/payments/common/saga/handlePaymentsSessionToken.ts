@@ -44,7 +44,7 @@ export function* getOrFetchPagoPaPlatformSessionToken(
   return data?.payload.token;
 }
 
-export function* handlePagoPaPlatformSessionToken(
+export function* handlePaymentsSessionToken(
   newSessionToken: PagoPaClient["generateSessionWallet"],
   action: ActionType<
     (typeof paymentsGetPagoPaPlatformSessionTokenAction)["request"]
