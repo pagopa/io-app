@@ -127,7 +127,7 @@ const LanguagesPreferencesScreen = () => {
       !pot.isError(profile)
     ) {
       setIsLoading(false);
-      preferredLanguageSaveSuccessDispatch(selectedItem as Locales);
+      preferredLanguageSaveSuccessDispatch(selectedLanguage.current as Locales);
       setSelectedItem(selectedLanguage.current);
       showModal(
         <AlertModal
