@@ -7,7 +7,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding

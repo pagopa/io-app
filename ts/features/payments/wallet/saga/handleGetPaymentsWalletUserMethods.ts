@@ -10,7 +10,7 @@ import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { WalletClient } from "../../common/api/client";
 import { mapWalletsToCards } from "../../common/utils";
 import { getPaymentsWalletUserMethods } from "../store/actions";
-import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 export function* handleGetPaymentsWalletUserMethods(
   getWalletsByIdUser: WalletClient["getIOPaymentWalletsByIdUser"],

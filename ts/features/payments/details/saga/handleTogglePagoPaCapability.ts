@@ -14,7 +14,7 @@ import {
   paymentsTogglePagoPaCapabilityAction
 } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
-import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to toggle the Wallet pagopa capability

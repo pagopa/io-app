@@ -7,7 +7,7 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsDeleteTransactionAction } from "../../store/actions/networking";
-import { withPaymentsSessionToken } from "../../../common/saga/withPaymentsSessionToken";
+import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 
 export function* handleWalletPaymentDeleteTransaction(
   requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellationForIO"],

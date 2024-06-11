@@ -6,7 +6,7 @@ import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
 import { getGenericError } from "../../../../utils/errors";
-import { getOrFetchPagoPaPlatformSessionToken } from "./handlePagoPaPlatformSessionToken";
+import { getOrFetchPagoPaPlatformSessionToken } from "../saga/handlePaymentsSessionToken";
 
 type TokenKey = "pagoPAPlatformSessionToken" | "bearerAuth" | "Authorization";
 

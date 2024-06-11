@@ -7,7 +7,7 @@ import { TransactionClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 const DEFAULT_LATEST_TRANSACTION_LIST_SIZE = 5;
 

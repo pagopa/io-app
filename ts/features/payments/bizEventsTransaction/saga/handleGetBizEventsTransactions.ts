@@ -9,7 +9,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BizEventsHeaders } from "../utils/types";
-import { withPaymentsSessionToken } from "../../common/saga/withPaymentsSessionToken";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 const DEFAULT_TRANSACTION_LIST_SIZE = 10;
 
