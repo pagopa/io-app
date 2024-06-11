@@ -145,10 +145,10 @@ export const ServicesHomeScreen = () => {
 
   const handleEndReached = useCallback(
     ({ distanceFromEnd }: { distanceFromEnd: number }) => {
-      // Managed behaviour:
+      // Managed behavior:
       // at the end of data load, in case of response error,
       // the footer is removed from total list length and
-      // "onEndReached" is triggered continuously causing an endless loop.
+      // `onEndReached` is triggered continuously causing an endless loop.
       // Implemented solution:
       // this guard is needed to avoid endless loop
       if (distanceFromEnd === 0) {
