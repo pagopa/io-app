@@ -4,10 +4,10 @@ import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../store/actions";
 import { TransactionClient } from "../../common/api/client";
-import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/handleWalletPaymentNewSessionToken";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 const DEFAULT_LATEST_TRANSACTION_LIST_SIZE = 5;
 
@@ -17,20 +17,19 @@ export function* handleGetLatestBizEventsTransactions(
     (typeof getPaymentsLatestBizEventsTransactionsAction)["request"]
   >
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
+  const getTransactionListRequest = yield* withPagoPaPlatformSessionToken(
+    getTransactionList,
+    getPaymentsLatestBizEventsTransactionsAction.failure,
+    {
+      size: DEFAULT_LATEST_TRANSACTION_LIST_SIZE,
+      walletId: "TO_REMOVE"
+    },
+    "Authorization"
+  );
 
-  if (sessionToken === undefined) {
-    yield* put(
-      getPaymentsLatestBizEventsTransactionsAction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
+  if (!getTransactionListRequest) {
     return;
   }
-  const getTransactionListRequest = getTransactionList({
-    size: DEFAULT_LATEST_TRANSACTION_LIST_SIZE,
-    Authorization: sessionToken
-  });
 
   try {
     const getTransactionListResult = (yield* call(

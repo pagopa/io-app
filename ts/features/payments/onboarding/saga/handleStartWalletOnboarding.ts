@@ -7,6 +7,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -14,18 +15,28 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  * @param action
  */
 export function* handleStartWalletOnboarding(
-  startOnboarding: WalletClient["createWallet"],
+  startOnboarding: WalletClient["createIOPaymentWallet"],
   action: ActionType<(typeof paymentsStartOnboardingAction)["request"]>
 ) {
   try {
     const { paymentMethodId } = action.payload;
-    const startOnboardingRequest = startOnboarding({
-      body: {
-        applications: ["PAGOPA"],
-        useDiagnosticTracing: true,
-        paymentMethodId
-      }
-    });
+    const startOnboardingRequest = yield* withPagoPaPlatformSessionToken(
+      startOnboarding,
+      paymentsStartOnboardingAction.failure,
+      {
+        body: {
+          applications: ["PAGOPA"],
+          useDiagnosticTracing: true,
+          paymentMethodId
+        }
+      },
+      "bearerAuth"
+    );
+
+    if (!startOnboardingRequest) {
+      return;
+    }
+
     const startOnboardingResult = (yield* call(
       withRefreshApiCall,
       startOnboardingRequest,

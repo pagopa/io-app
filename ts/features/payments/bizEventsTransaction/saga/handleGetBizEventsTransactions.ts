@@ -5,11 +5,11 @@ import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { getPaymentsBizEventsTransactionsAction } from "../store/actions";
 import { TransactionClient } from "../../common/api/client";
-import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/handleWalletPaymentNewSessionToken";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BizEventsHeaders } from "../utils/types";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 const DEFAULT_TRANSACTION_LIST_SIZE = 10;
 
@@ -17,21 +17,20 @@ export function* handleGetBizEventsTransactions(
   getTransactionList: TransactionClient["getTransactionList"],
   action: ActionType<(typeof getPaymentsBizEventsTransactionsAction)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
+  const getTransactionListRequest = yield* withPagoPaPlatformSessionToken(
+    getTransactionList,
+    getPaymentsBizEventsTransactionsAction.failure,
+    {
+      walletId: "TO_REMOVE",
+      size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
+      "x-continuation-token": action.payload.continuationToken
+    },
+    "Authorization"
+  );
 
-  if (sessionToken === undefined) {
-    yield* put(
-      getPaymentsBizEventsTransactionsAction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
+  if (!getTransactionListRequest) {
     return;
   }
-  const getTransactionListRequest = getTransactionList({
-    size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
-    Authorization: sessionToken,
-    "x-continuation-token": action.payload.continuationToken
-  });
 
   try {
     const getTransactionListResult = (yield* call(

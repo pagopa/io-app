@@ -14,12 +14,13 @@ import {
   paymentsTogglePagoPaCapabilityAction
 } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 /**
  * Handle the remote call to toggle the Wallet pagopa capability
  */
 export function* handleTogglePagoPaCapability(
-  updateWalletApplicationsById: WalletClient["updateWalletApplicationsById"],
+  updateWalletApplicationsById: WalletClient["updateIOPaymentWalletApplicationsById"],
   action: ActionType<(typeof paymentsTogglePagoPaCapabilityAction)["request"]>
 ) {
   try {
@@ -34,12 +35,23 @@ export function* handleTogglePagoPaCapability(
       status: updatePagoPaApplicationStatus(application)
     }));
 
-    const updateWalletPagoPaApplicationRequest = updateWalletApplicationsById({
-      walletId: action.payload.walletId,
-      body: {
-        applications: updatedApplications as Array<WalletApplication>
-      }
-    });
+    const updateWalletPagoPaApplicationRequest =
+      yield* withPagoPaPlatformSessionToken(
+        updateWalletApplicationsById,
+        paymentsTogglePagoPaCapabilityAction.failure,
+        {
+          walletId: action.payload.walletId,
+          body: {
+            applications: updatedApplications as Array<WalletApplication>
+          }
+        },
+        "bearerAuth"
+      );
+
+    if (!updateWalletPagoPaApplicationRequest) {
+      return;
+    }
+
     const updateWalletResult = (yield* call(
       withRefreshApiCall,
       updateWalletPagoPaApplicationRequest,

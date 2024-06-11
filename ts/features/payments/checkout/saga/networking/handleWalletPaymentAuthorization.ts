@@ -14,26 +14,15 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
-import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
+import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
 
 export function* handleWalletPaymentAuthorization(
-  requestTransactionAuthorization: PaymentClient["requestTransactionAuthorization"],
+  requestTransactionAuthorization: PaymentClient["requestTransactionAuthorizationForIO"],
   action: ActionType<
     (typeof paymentsStartPaymentAuthorizationAction)["request"]
   >
 ) {
   try {
-    const sessionToken = yield* getOrFetchWalletSessionToken();
-
-    if (sessionToken === undefined) {
-      yield* put(
-        paymentsStartPaymentAuthorizationAction.failure({
-          ...getGenericError(new Error(`Missing session token`))
-        })
-      );
-      return;
-    }
-
     const details: AuthorizationDetails =
       action.payload.walletId !== undefined
         ? {
@@ -54,11 +43,19 @@ export function* handleWalletPaymentAuthorization(
       details
     };
     const requestTransactionAuthorizationRequest =
-      requestTransactionAuthorization({
-        transactionId: action.payload.transactionId,
-        body: requestBody,
-        eCommerceSessionToken: sessionToken
-      });
+      yield* withPagoPaPlatformSessionToken(
+        requestTransactionAuthorization,
+        paymentsStartPaymentAuthorizationAction.failure,
+        {
+          transactionId: action.payload.transactionId,
+          body: requestBody
+        },
+        "pagoPAPlatformSessionToken"
+      );
+
+    if (!requestTransactionAuthorizationRequest) {
+      return;
+    }
 
     const requestTransactionAuthorizationResult = (yield* call(
       withRefreshApiCall,

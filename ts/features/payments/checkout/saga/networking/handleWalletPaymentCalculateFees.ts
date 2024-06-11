@@ -11,10 +11,10 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
-import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
+import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
 
 export function* handleWalletPaymentCalculateFees(
-  calculateFees: PaymentClient["calculateFees"],
+  calculateFees: PaymentClient["calculateFeesForIO"],
   action: ActionType<(typeof paymentsCalculatePaymentFeesAction)["request"]>
 ) {
   try {
@@ -25,26 +25,23 @@ export function* handleWalletPaymentCalculateFees(
       O.getOrElse(() => "IT")
     );
 
-    const sessionToken = yield* getOrFetchWalletSessionToken();
+    const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
+    const calculateFeesRequest = yield* withPagoPaPlatformSessionToken(
+      calculateFees,
+      paymentsCalculatePaymentFeesAction.failure,
+      {
+        id: paymentMethodId,
+        body: {
+          ...body,
+          idPspList: idPsp ? [idPsp] : body.idPspList
+        }
+      },
+      "pagoPAPlatformSessionToken"
+    );
 
-    if (sessionToken === undefined) {
-      yield* put(
-        paymentsCalculatePaymentFeesAction.failure({
-          ...getGenericError(new Error(`Missing session token`))
-        })
-      );
+    if (!calculateFeesRequest) {
       return;
     }
-
-    const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
-    const calculateFeesRequest = calculateFees({
-      eCommerceSessionToken: sessionToken,
-      id: paymentMethodId,
-      body: {
-        ...body,
-        idPspList: idPsp ? [idPsp] : body.idPspList
-      }
-    });
 
     const calculateFeesResult = (yield* call(
       withRefreshApiCall,

@@ -7,29 +7,26 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsDeleteTransactionAction } from "../../store/actions/networking";
-import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
+import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
 
 export function* handleWalletPaymentDeleteTransaction(
-  requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellation"],
+  requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellationForIO"],
   action: ActionType<(typeof paymentsDeleteTransactionAction)["request"]>
 ) {
   try {
-    const sessionToken = yield* getOrFetchWalletSessionToken();
-
-    if (sessionToken === undefined) {
-      yield* put(
-        paymentsDeleteTransactionAction.failure({
-          ...getGenericError(new Error(`Missing session token`))
-        })
+    const requestTransactionUserCancellationRequest =
+      yield* withPagoPaPlatformSessionToken(
+        requestTransactionUserCancellation,
+        paymentsDeleteTransactionAction.failure,
+        {
+          transactionId: action.payload
+        },
+        "pagoPAPlatformSessionToken"
       );
+
+    if (!requestTransactionUserCancellationRequest) {
       return;
     }
-
-    const requestTransactionUserCancellationRequest =
-      requestTransactionUserCancellation({
-        transactionId: action.payload,
-        eCommerceSessionToken: sessionToken
-      });
 
     const requestTransactionUserCancellationResult = (yield* call(
       withRefreshApiCall,

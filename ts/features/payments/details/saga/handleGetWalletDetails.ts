@@ -9,6 +9,7 @@ import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletsToCards } from "../../common/utils";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -16,13 +17,23 @@ import { mapWalletsToCards } from "../../common/utils";
  * @param action
  */
 export function* handleGetWalletDetails(
-  getWalletById: WalletClient["getWalletById"],
+  getWalletById: WalletClient["getIOPaymentWalletById"],
   action: ActionType<(typeof paymentsGetMethodDetailsAction)["request"]>
 ) {
   try {
-    const getwalletDetailsRequest = getWalletById({
-      walletId: action.payload.walletId
-    });
+    const getwalletDetailsRequest = yield* withPagoPaPlatformSessionToken(
+      getWalletById,
+      paymentsGetMethodDetailsAction.failure,
+      {
+        walletId: action.payload.walletId
+      },
+      "bearerAuth"
+    );
+
+    if (!getwalletDetailsRequest) {
+      return;
+    }
+
     const getWalletDetailsResult = (yield* call(
       withRefreshApiCall,
       getwalletDetailsRequest,

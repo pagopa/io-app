@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
@@ -12,6 +13,7 @@ import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletIdToCardKey } from "../../common/utils";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -19,13 +21,23 @@ import { mapWalletIdToCardKey } from "../../common/utils";
  * @param action
  */
 export function* handleDeleteWalletDetails(
-  deleteWalletById: WalletClient["deleteWalletById"],
+  deleteWalletById: WalletClient["deleteIOPaymentWalletById"],
   action: ActionType<(typeof paymentsDeleteMethodAction)["request"]>
 ) {
   try {
-    const deleteWalletRequest = deleteWalletById({
-      walletId: action.payload.walletId
-    });
+    const deleteWalletRequest = yield* withPagoPaPlatformSessionToken(
+      deleteWalletById,
+      paymentsDeleteMethodAction.failure,
+      {
+        walletId: action.payload.walletId
+      },
+      "bearerAuth"
+    );
+
+    if (!deleteWalletRequest) {
+      return;
+    }
+
     const deleteWalletResult = (yield* call(
       withRefreshApiCall,
       deleteWalletRequest,

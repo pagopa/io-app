@@ -7,6 +7,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -14,10 +15,20 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  * @param action
  */
 export function* handleGetPaymentMethods(
-  getPaymentMethods: WalletClient["getAllPaymentMethods"],
+  getPaymentMethods: WalletClient["getAllPaymentMethodsForIO"],
   action: ActionType<(typeof paymentsOnboardingGetMethodsAction)["request"]>
 ) {
-  const getPaymentMethodsRequest = getPaymentMethods({});
+  const getPaymentMethodsRequest = yield* withPagoPaPlatformSessionToken(
+    getPaymentMethods,
+    paymentsOnboardingGetMethodsAction.failure,
+    {},
+    "bearerAuth"
+  );
+
+  if (!getPaymentMethodsRequest) {
+    return;
+  }
+
   try {
     const getPaymentMethodsResult = (yield* call(
       withRefreshApiCall,

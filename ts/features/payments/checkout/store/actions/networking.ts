@@ -2,7 +2,6 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
-import { NewSessionTokenResponse } from "../../../../../../definitions/pagopa/ecommerce/NewSessionTokenResponse";
 import { NewTransactionRequest } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
@@ -13,12 +12,6 @@ import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
-
-export const paymentsGetNewSessionTokenAction = createAsyncAction(
-  "PAYMENTS_GET_NEW_SESSION_TOKEN_REQUEST",
-  "PAYMENTS_GET_NEW_SESSION_TOKEN_SUCCESS",
-  "PAYMENTS_GET_NEW_SESSION_TOKEN_FAILURE"
-)<undefined, NewSessionTokenResponse, NetworkError>();
 
 export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
@@ -98,7 +91,6 @@ export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
 >();
 
 export type PaymentsCheckoutNetworkingActions =
-  | ActionType<typeof paymentsGetNewSessionTokenAction>
   | ActionType<typeof paymentsGetPaymentDetailsAction>
   | ActionType<typeof paymentsGetPaymentMethodsAction>
   | ActionType<typeof paymentsGetPaymentUserMethodsAction>

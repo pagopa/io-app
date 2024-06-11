@@ -8,26 +8,22 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsGetPaymentUserMethodsAction } from "../../store/actions/networking";
-import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
+import { withPagoPaPlatformSessionToken } from "../../../common/saga/withPagoPaPlatformSessionToken";
 
 export function* handleWalletPaymentGetUserWallets(
-  getWalletsByIdUser: PaymentClient["getWalletsByIdUser"],
+  getWalletsByIdUser: PaymentClient["getWalletsByIdIOUser"],
   action: ActionType<(typeof paymentsGetPaymentUserMethodsAction)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
+  const getWalletsByIdUserRequest = yield* withPagoPaPlatformSessionToken(
+    getWalletsByIdUser,
+    paymentsGetPaymentUserMethodsAction.failure,
+    {},
+    "pagoPAPlatformSessionToken"
+  );
 
-  if (sessionToken === undefined) {
-    yield* put(
-      paymentsGetPaymentUserMethodsAction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
+  if (!getWalletsByIdUserRequest) {
     return;
   }
-
-  const getWalletsByIdUserRequest = getWalletsByIdUser({
-    eCommerceSessionToken: sessionToken
-  });
 
   try {
     const getWalletsByIdUserResult = (yield* call(

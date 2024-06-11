@@ -10,12 +10,22 @@ import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { WalletClient } from "../../common/api/client";
 import { mapWalletsToCards } from "../../common/utils";
 import { getPaymentsWalletUserMethods } from "../store/actions";
+import { withPagoPaPlatformSessionToken } from "../../common/saga/withPagoPaPlatformSessionToken";
 
 export function* handleGetPaymentsWalletUserMethods(
-  getWalletsByIdUser: WalletClient["getWalletsByIdUser"],
+  getWalletsByIdUser: WalletClient["getIOPaymentWalletsByIdUser"],
   action: ActionType<(typeof getPaymentsWalletUserMethods)["request"]>
 ) {
-  const getWalletsByIdUserRequest = getWalletsByIdUser({});
+  const getWalletsByIdUserRequest = yield* withPagoPaPlatformSessionToken(
+    getWalletsByIdUser,
+    getPaymentsWalletUserMethods.failure,
+    {},
+    "bearerAuth"
+  );
+
+  if (!getWalletsByIdUserRequest) {
+    return;
+  }
 
   try {
     const getWalletsByIdUserResult = (yield* call(
