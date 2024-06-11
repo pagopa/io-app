@@ -11,41 +11,32 @@ import I18n from "../../../../i18n";
  * This custom hook, usePaymentsLegacyAttachmentBottomSheet, is designed to display a bottom sheet
  * containing detailed information about where the user can find the legacy transaction recepit.
  */
-const usePaymentsLegacyAttachmentBottomSheet = (): IOBottomSheetModal => {
-  const getModalContent = () => (
-    <View>
-      <ParagraphWithTitle
-        title={I18n.t(
-          "features.payments.transactions.legacy.bottomSheet.noticeHeading"
-        )}
-        body={I18n.t(
-          "features.payments.transactions.legacy.bottomSheet.noticeBody"
-        )}
-      />
-      <VSpacer size={24} />
-      <ParagraphWithTitle
-        title={I18n.t(
-          "features.payments.transactions.legacy.bottomSheet.allNoticesHeading"
-        )}
-        body={I18n.t(
-          "features.payments.transactions.legacy.bottomSheet.allNoticesBody"
-        )}
-      />
-      <VSpacer size={48} />
-    </View>
-  );
-
-  const modal = useIOBottomSheetAutoresizableModal({
-    component: getModalContent(),
-    title: (
-      <H4>
-        {I18n.t("features.payments.transactions.legacy.bottomSheet.title")}
-      </H4>
+const usePaymentsLegacyAttachmentBottomSheet = (): IOBottomSheetModal =>
+  useIOBottomSheetAutoresizableModal({
+    title: I18n.t("features.payments.transactions.legacy.bottomSheet.title"),
+    component: (
+      <View>
+        <ParagraphWithTitle
+          title={I18n.t(
+            "features.payments.transactions.legacy.bottomSheet.noticeHeading"
+          )}
+          body={I18n.t(
+            "features.payments.transactions.legacy.bottomSheet.noticeBody"
+          )}
+        />
+        <VSpacer size={24} />
+        <ParagraphWithTitle
+          title={I18n.t(
+            "features.payments.transactions.legacy.bottomSheet.allNoticesHeading"
+          )}
+          body={I18n.t(
+            "features.payments.transactions.legacy.bottomSheet.allNoticesBody"
+          )}
+        />
+        <VSpacer size={48} />
+      </View>
     )
   });
-
-  return { ...modal };
-};
 
 type ParagraphWithTitleProps = {
   title: string;
