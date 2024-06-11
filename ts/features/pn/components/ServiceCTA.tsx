@@ -16,10 +16,9 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../services/details/store/actions/preference";
 import {
   trackPNServiceActivated,
-  trackPNServiceDeactivated,
-  trackPNServiceStartActivation,
-  trackPNServiceStartDeactivation
+  trackPNServiceDeactivated
 } from "../analytics";
+import * as analytics from "../../services/common/analytics";
 
 type PnServiceCtaProps = {
   serviceId: ServiceId;
@@ -99,7 +98,10 @@ export const PnServiceCta = ({ serviceId, activate }: PnServiceCtaProps) => {
         label={I18n.t("features.pn.service.activate")}
         loading={isLoading}
         onPress={() => {
-          trackPNServiceStartActivation();
+          analytics.trackSpecialServiceStatusChanged({
+            is_active: true,
+            service_id: serviceId
+          });
           dispatch(
             pnActivationUpsert.request({
               value: true,
@@ -120,7 +122,10 @@ export const PnServiceCta = ({ serviceId, activate }: PnServiceCtaProps) => {
       label={I18n.t("features.pn.service.deactivate")}
       loading={isLoading}
       onPress={() => {
-        trackPNServiceStartDeactivation();
+        analytics.trackSpecialServiceStatusChanged({
+          is_active: false,
+          service_id: serviceId
+        });
         dispatch(
           pnActivationUpsert.request({
             value: false,

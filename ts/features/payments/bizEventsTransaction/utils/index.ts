@@ -8,28 +8,25 @@ import { TransactionListItem } from "../../../../../definitions/pagopa/biz-event
 export const groupTransactionsByMonth = (
   transactions: ReadonlyArray<TransactionListItem>
 ): Array<SectionListData<TransactionListItem>> => {
-  const groups: { [month: string]: Array<TransactionListItem> } = {};
-
-  transactions.forEach(element => {
+  const groups = transactions.reduce((acc, element) => {
     if (element.transactionDate !== undefined) {
+      const isCurrentYear =
+        new Date().getFullYear() ===
+        new Date(element.transactionDate).getFullYear();
       const month = new Date(element.transactionDate).toLocaleString(
         "default",
         {
           month: "long",
-          year:
-            new Date().getFullYear() ===
-            new Date(element.transactionDate).getFullYear()
-              ? undefined
-              : "numeric"
+          year: isCurrentYear ? undefined : "numeric"
         }
       );
-
-      // eslint-disable-next-line functional/immutable-data
-      groups[month] = groups[month] || [];
-      // eslint-disable-next-line functional/immutable-data
-      groups[month].push(element);
+      return {
+        ...acc,
+        [month]: [...(acc[month] || []), element]
+      };
     }
-  });
+    return acc;
+  }, {} as { [month: string]: Array<TransactionListItem> });
 
   return Object.keys(groups).map(month => ({
     title: month,
