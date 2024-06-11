@@ -8,22 +8,16 @@ import LoadingScreenContent from "../../../components/screens/LoadingScreenConte
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { FimsParamsList } from "../navigation";
-import {
-  fimsGetConsentsListAction,
-  fimsGetRedirectUrlAndOpenIABAction
-} from "../store/actions";
+import { fimsGetConsentsListAction } from "../store/actions";
 import {
   fimsConsentsDataSelector,
   fimsErrorStateSelector,
   fimsLoadingStateSelector
 } from "../store/reducers";
-import { ConsentData } from "../types";
+import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
@@ -77,7 +71,7 @@ export const FimsFlowHandlerScreen = (
     consentsPot,
     pot.toOption,
     O.fold(
-      () => <FimsErrorBody title="generic error" />,
+      () => <FimsErrorBody title={I18n.t("global.genericError")} />,
       consents => <FimsFlowSuccessBody consents={consents} />
     )
   );
@@ -91,31 +85,3 @@ const FimsErrorBody = ({ title }: FimsErrorBodyProps) => (
     isHeaderVisible={true}
   />
 );
-
-type FimsSuccessBodyProps = { consents: ConsentData };
-const FimsFlowSuccessBody = ({ consents }: FimsSuccessBodyProps) => {
-  const dispatch = useIODispatch();
-  const navigation = useIONavigation();
-
-  return (
-    <OperationResultScreenContent
-      title={`grant ${consents.claims
-        .map(item => item.display_name)
-        .join(",")} ?`}
-      action={{
-        label: "accept",
-        onPress: () =>
-          dispatch(
-            fimsGetRedirectUrlAndOpenIABAction.request({
-              // eslint-disable-next-line no-underscore-dangle
-              acceptUrl: consents._links.confirm.href
-            })
-          )
-      }}
-      secondaryAction={{
-        label: "deny",
-        onPress: () => navigation.goBack() // TODO::: clear store on back nav
-      }}
-    />
-  );
-};

@@ -34,7 +34,6 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-import { getLatestUsedWallet } from "../../utils";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -132,11 +131,7 @@ const reducer = (
     case getType(paymentsGetPaymentUserMethodsAction.success):
       return {
         ...state,
-        userWallets: pot.some(action.payload),
-        selectedWallet: pipe(
-          O.fromNullable(action.payload.wallets),
-          O.chain(getLatestUsedWallet)
-        )
+        userWallets: pot.some(action.payload)
       };
     case getType(paymentsGetPaymentUserMethodsAction.failure):
       return {

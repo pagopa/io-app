@@ -18,11 +18,7 @@ const PaymentsBizEventsListItemTransaction = ({
   transaction,
   onPress
 }: Props) => {
-  const recipient = pipe(
-    transaction.payeeName,
-    O.fromNullable,
-    O.getOrElse(() => "")
-  );
+  const recipient = transaction.payeeName || "";
 
   const amountText = pipe(
     transaction.amount,
@@ -30,6 +26,7 @@ const PaymentsBizEventsListItemTransaction = ({
     O.map(amount => formatAmountText(amount)),
     O.getOrElse(() => "")
   );
+
   const datetime: string = pipe(
     transaction.transactionDate,
     O.fromNullable,

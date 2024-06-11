@@ -28,14 +28,14 @@ export const PaymentsBizEventsTransactionCartList = ({
     return <SkeletonTransactionDetailsList />;
   }
   if (!carts) {
-    return <></>;
+    return null;
   }
 
   return (
     <>
       {carts.map((cartItem, index) => (
         <ListItemTransaction
-          key={index.toString()}
+          key={cartItem.refNumberValue ?? index.toString()}
           title={cartItem.subject ?? ""}
           subtitle={cartItem.payee?.name ?? ""}
           transactionStatus="success"
