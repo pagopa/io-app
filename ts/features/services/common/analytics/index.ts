@@ -2,16 +2,15 @@ import { getType } from "typesafe-actions";
 import { mixpanel, mixpanelTrack } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
-import { paginatedServicesGet } from "../../institution/store/actions";
+import { loadServicePreference } from "../../details/store/actions/preference";
 import {
   featuredInstitutionsGet,
   featuredServicesGet,
   paginatedInstitutionsGet
 } from "../../home/store/actions";
-import { loadServicePreference } from "../../details/store/actions/preference";
-import { CTAS } from "../../../messages/types/MessageCTA";
+import { paginatedServicesGet } from "../../institution/store/actions";
+import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
 
 type ServiceBaseType = {
   service_name: string;
@@ -80,8 +79,10 @@ type SearchStartType = {
   source: "bottom_link" | "header_icon" | "search_bar";
 };
 
+export type CtaCategoryType = "custom_1" | "custom_2";
+
 type ServiceDetailsCtaTappedType = {
-  cta: keyof CTAS;
+  cta_category: CtaCategoryType;
   service_id: string;
 };
 
