@@ -76,30 +76,30 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   }
   const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
 
-  const [authCode, lollipopNonce] = getQueryParamsFromUrlString(
-    relyingPartyRedirectUrl
-  );
+  const queryParamsMap = getQueryParamsFromUrlString(relyingPartyRedirectUrl);
+  const nonce = queryParamsMap?.get("nonce");
 
-  if (!authCode || !lollipopNonce) {
+  if (!queryParamsMap || !nonce) {
     logToMixPanel(
-      `could not extract auth data from RelyingParty URL, auth code: ${!!authCode}, nonce: ${!!lollipopNonce}`
+      `could not extract query params or nonce from RelyingParty URL, params: ${!!queryParamsMap}, nonce: ${!!nonce}`
     );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not extract auth data from RelyingParty URL"
+        "could not extract data from RelyingParty URL"
       )
     );
     return;
   }
 
+  // Remove the nonce since it is not part of the 'customContentToSign'
+  queryParamsMap.delete("nonce");
+
   const lollipopConfig: LollipopConfig = {
-    nonce: lollipopNonce,
-    customContentToSign: {
-      authorization_code: authCode
-    }
+    nonce,
+    customContentToSign: Object.fromEntries(queryParamsMap.entries())
   };
 
-  const requestInit = { headers: {}, method: "GET" as const };
+  const requestInit = { headers: {}, method: "GET" };
 
   const keyTag = yield* select(lollipopKeyTagSelector);
   const publicKey = yield* select(lollipopPublicKeySelector);
@@ -231,11 +231,15 @@ interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
 
 const getQueryParamsFromUrlString = (url: string) => {
   try {
+    const queryParams = new Map<string, string>();
     const constructedUrl = new PolyfillURL(url);
     const params = constructedUrl.searchParams;
-    return [params.get("authorization_code"), params.get("nonce")];
+    for (const [name, value] of params) {
+      queryParams.set(name, value);
+    }
+    return queryParams;
   } catch (error) {
-    return [undefined, undefined];
+    return undefined;
   }
 };
 
