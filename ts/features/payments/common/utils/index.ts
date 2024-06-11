@@ -17,6 +17,10 @@ import { PaymentCardProps } from "../components/PaymentCard";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletCard } from "../../../newWallet/types";
+import { contentRepoUrl } from "../../../../config";
+import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
+
+export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -161,6 +165,15 @@ export const getPaymentLogoFromWalletDetails = (
     );
   }
 };
+
+export const getTransactionLogo = (transaction: TransactionListItem) =>
+  pipe(
+    transaction.payeeTaxCode,
+    O.fromNullable,
+    O.map(
+      taxCode => `${TRANSACTION_LOGO_CDN}/${taxCode.replace(/^0+/, "")}.png`
+    )
+  );
 
 export const mapWalletIdToCardKey = (walletId: string) => `method_${walletId}`;
 
