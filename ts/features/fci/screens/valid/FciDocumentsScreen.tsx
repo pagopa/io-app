@@ -5,7 +5,6 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
 import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
 import {
   RouteProp,
   StackActions,
@@ -65,11 +64,13 @@ const FciDocumentsScreen = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const currentDoc = route.params.currentDoc ?? 0;
-  const documents = useSelector(fciSignatureDetailDocumentsSelector);
+  const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const downloadPath = useIOSelector(fciDownloadPathSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useNavigation();
-  const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
+  const documentSignaturesSelector = useIOSelector(
+    fciDocumentSignaturesSelector
+  );
   const dispatch = useIODispatch();
   const isFocused = useIsFocused();
 

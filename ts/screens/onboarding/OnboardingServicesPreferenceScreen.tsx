@@ -9,7 +9,6 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { SafeAreaView, View } from "react-native";
-import { useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
@@ -22,7 +21,7 @@ import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsLi
 import ROUTES from "../../navigation/routes";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
   isServicesPreferenceModeSet,
   profileSelector,
@@ -51,7 +50,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFirstOnboarding = props.route.params.isFirstOnboarding;
-  const store = useStore();
+  const store = useIOStore();
   const profile = useIOSelector(profileSelector);
   const prevProfile = usePrevious(profile);
   const isLoading = pot.isUpdating(profile) || pot.isLoading(profile);

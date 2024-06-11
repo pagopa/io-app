@@ -33,6 +33,9 @@ describe("Test FciSignatureFields screen", () => {
       appReducer,
       globalState as any
     );
+    store.dispatch(
+      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+    );
     const component = renderComponent(props, store);
     expect(component).toBeTruthy();
   });
@@ -44,6 +47,9 @@ describe("Test FciSignatureFields screen", () => {
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
+    );
+    store.dispatch(
+      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
     );
     const component = renderComponent(props, store);
     expect(component).toBeTruthy();
