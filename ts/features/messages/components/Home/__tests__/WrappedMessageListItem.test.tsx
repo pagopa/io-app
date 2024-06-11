@@ -1,5 +1,6 @@
 import React from "react";
 import { createStore } from "redux";
+import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
@@ -15,6 +16,16 @@ const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual<typeof import("react-redux")>("react-redux"),
   useDispatch: () => mockDispatch
+}));
+
+const mockNavigate = jest.fn();
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual<typeof import("@react-navigation/native")>(
+    "@react-navigation/native"
+  ),
+  useNavigation: () => ({
+    navigate: mockNavigate
+  })
 }));
 
 describe("WrappedMessageListItem", () => {
@@ -42,6 +53,21 @@ describe("WrappedMessageListItem", () => {
     const component = renderComponent(message);
     expect(component.toJSON()).toMatchSnapshot();
   });
+  it("should trigger navigation to Message Routing when the component is pressed", () => {
+    const message = messageGenerator(false, true);
+    const component = renderComponent(message);
+    const pressable = component.getByTestId("wrapped_message_list_item_0");
+    expect(pressable).toBeDefined();
+    fireEvent.press(pressable);
+    expect(mockNavigate.mock.calls.length).toBe(1);
+    expect(mockNavigate.mock.calls[0][1]).toStrictEqual({
+      screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+      params: {
+        messageId: message.id,
+        fromNotification: false
+      }
+    });
+  });
 });
 
 const messageGenerator = (isFromSend: boolean, isRead: boolean): UIMessage =>
@@ -66,7 +92,7 @@ const renderComponent = (message: UIMessage) => {
   );
   const store = createStore(appReducer, designSystemState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <WrappedMessageListItem message={message} />,
+    () => <WrappedMessageListItem index={0} message={message} />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

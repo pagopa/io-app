@@ -1,19 +1,24 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
+  index: number;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
+  index,
   message
 }: WrappedMessageListItemProps) => {
+  const navigation = useIONavigation();
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
 
@@ -40,18 +45,33 @@ export const WrappedMessageListItem = ({
     [message]
   );
 
+  const onPressCallback = useCallback(() => {
+    if (message.category.tag === TagEnum.PN || message.hasPrecondition) {
+      // TODO preconditions IOCOM-840
+      return;
+    }
+    navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+      params: {
+        messageId: message.id,
+        fromNotification: false
+      }
+    });
+  }, [message, navigation]);
+
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
       serviceName={serviceName}
       messageTitle={messageTitle}
       onLongPress={() => undefined}
-      onPress={() => undefined}
+      onPress={onPressCallback}
       serviceLogos={serviceLogoUriSources}
       badgeText={badgeText}
       isRead={isRead}
       organizationName={organizationName}
       formattedDate={messageDate}
+      testID={`wrapped_message_list_item_${index}`}
     />
   );
 };
