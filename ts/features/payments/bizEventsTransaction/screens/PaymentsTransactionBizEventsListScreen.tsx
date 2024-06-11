@@ -118,8 +118,6 @@ const PaymentsTransactionBizEventsListScreen = () => {
     }, [dispatch])
   );
 
-  // creami un hook che quando cambia il valore di transactionPot, aggiorna uno stato creando un array di elementi raggruppati per mese e
-  // l'array deve essere composto da {title: "mese", data: [transazioni]}
   React.useEffect(() => {
     if (pot.isSome(transactionsPot)) {
       setGroupedTransactions(groupTransactionsByMonth(transactionsPot.value));

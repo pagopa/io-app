@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
 import {
   Divider,
   H6,
@@ -13,13 +13,6 @@ import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem"
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
 import { formatAmountText } from "../utils";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-
-const styles = StyleSheet.create({
-  scrollViewContainer: {
-    ...IOStyles.flex,
-    ...IOStyles.horizontalContentPadding
-  }
-});
 
 export type PaymentsTransactionBizEventsCartItemDetailsScreenParams = {
   cartItem: CartItem;
@@ -35,20 +28,12 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
     useRoute<PaymentsTransactionBizEventsCartItemDetailsScreenProps>();
   const { cartItem } = route.params;
 
-  const getDebtorText = (debtor: UserDetail) => {
-    const debtorNameLabel = debtor.name ? <H6>{debtor.name}</H6> : <></>;
-    const debtorCodeLabel = debtor.taxCode ? (
-      <H6>({debtor.taxCode})</H6>
-    ) : (
-      <></>
-    );
-    return (
-      <>
-        {debtorNameLabel}
-        {debtorCodeLabel}
-      </>
-    );
-  };
+  const getDebtorText = (debtor: UserDetail) => (
+    <>
+      {debtor.name ? <H6>{debtor.name}</H6> : null}
+      {debtor.taxCode ? <H6>({debtor.taxCode})</H6> : null}
+    </>
+  );
 
   return (
     <IOScrollViewWithLargeHeader
@@ -56,7 +41,7 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
         label: cartItem.subject ?? ""
       }}
     >
-      <ScrollView style={styles.scrollViewContainer}>
+      <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
         {cartItem.amount && (
           <>
             <ListItemInfo
@@ -75,15 +60,16 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
             <Divider />
           </>
         )}
-        {cartItem.debtor && (
-          <>
-            <ListItemInfo
-              label={I18n.t("transaction.details.operation.debtor")}
-              value={getDebtorText(cartItem.debtor)}
-            />
-            <Divider />
-          </>
-        )}
+        {cartItem.debtor &&
+          (cartItem.debtor.name || cartItem.debtor.taxCode) && (
+            <>
+              <ListItemInfo
+                label={I18n.t("transaction.details.operation.debtor")}
+                value={getDebtorText(cartItem.debtor)}
+              />
+              <Divider />
+            </>
+          )}
         {cartItem.refNumberValue && (
           <>
             <ListItemInfo

@@ -9,7 +9,7 @@ import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/han
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { BizEventsHeaders } from "../utils/bizEventsHeaders";
+import { BizEventsHeaders } from "../utils/types";
 
 const DEFAULT_TRANSACTION_LIST_SIZE = 10;
 

@@ -453,7 +453,6 @@ profile:
     list:
       biometric_recognition:
         title: "Biometrische Erkennung"
-        subtitle: "Fingerabdruck- oder Gesichtserkennung benutzen"
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
@@ -1723,7 +1722,6 @@ messages:
     one: "Du hast eine Mitteilung"
   tab:
     inbox: "Erhalten"
-    deadlines: "Fällig"
     archive: "Archiviert"
   contentTitle: "Mitteilungen"
   refresh: "Nach unten ziehen zum Aktualisieren"
@@ -1794,10 +1792,6 @@ messages:
     emptyMessage:
       title: "Deine Mitteilungsliste ist leer."
       subtitle: "Aktualisiere, um zu prüfen, ob neue Mitteilungen vorhanden sind."
-  deadlines:
-    emptyMessage:
-      title: "Du hast keine Fälligkeiten."
-      subtitle: "Über die Schaltfläche oben kannst du die bereits abgelaufenen Fristen einsehen."
   pagination:
     migration:
       started: "Bitte warte, wir aktualisieren den Mitteilungsbereich"
@@ -2060,7 +2054,7 @@ identification:
       button: "Hast du deinen"
       code: "Entsperrcode vergessen"
       button_short: "Entsperrcode ändern"
-      subtitle: "Einen neuen 6-stelligen Code festlegen"
+      subtitle: "Einen neuen 6-stelligen Code festlegen."
     confirmValid: "Entsperrcode korrekt"
   forgetCode:
     confirmTitle: "Hast du den Entsperrcode vergessen?"

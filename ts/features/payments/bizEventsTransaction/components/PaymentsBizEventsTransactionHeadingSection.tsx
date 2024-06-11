@@ -66,7 +66,7 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
         </Body>
       );
     }
-    return <></>;
+    return null;
   };
 
   const calculateTotalAmount = () => {

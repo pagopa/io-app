@@ -1,6 +1,6 @@
 import React from "react";
 import Placeholder from "rn-placeholder";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { H3, H6, IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { formatAmountText } from "../utils";
@@ -10,19 +10,11 @@ type TotalAmountSectionProps = {
   loading?: boolean;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    ...IOStyles.rowSpaceBetween,
-    ...IOStyles.alignCenter,
-    ...IOStyles.flex
-  }
-});
-
 export const PaymentsBizEventsTransactionTotalAmount = ({
   totalAmount,
   loading
 }: TotalAmountSectionProps) => (
-  <View style={styles.container}>
+  <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter, IOStyles.flex]}>
     <H6 color="grey-700">{I18n.t("transaction.details.totalAmount")}</H6>
     {loading && (
       <View>
