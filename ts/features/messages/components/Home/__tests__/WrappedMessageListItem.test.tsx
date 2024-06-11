@@ -75,7 +75,7 @@ describe("WrappedMessageListItem", () => {
   });
   it("should trigger navigation to Message Routing when the component is pressed", () => {
     const serviceId = "01HYFJYTXYHPJTNKP60MRCYRMV" as ServiceId;
-    const message = messageGenerator(true, true, serviceId);
+    const message = messageGenerator(false, true, serviceId);
     const component = renderComponent(message, serviceId);
     const pressable = component.getByTestId("wrapped_message_list_item_0");
     expect(pressable).toBeDefined();
