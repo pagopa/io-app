@@ -443,11 +443,11 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Modelli F24
                               </Text>
@@ -495,7 +495,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -690,12 +690,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -703,7 +703,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -918,12 +918,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -931,7 +931,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -2538,11 +2538,11 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Modelli F24
                               </Text>
@@ -2649,12 +2649,12 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -2662,7 +2662,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {

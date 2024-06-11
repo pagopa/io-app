@@ -4,6 +4,7 @@ import { gapBetweenItemsInAGrid } from "../../utils";
 
 const styles = StyleSheet.create({
   tagWrapper: {
+    justifyContent: "center",
     marginHorizontal: gapBetweenItemsInAGrid / 2,
     marginVertical: gapBetweenItemsInAGrid / 2
   }

@@ -58,6 +58,7 @@ export const apiPayload = {
       time_to_live: 3600,
       service_name: service_1.service_name,
       organization_name: service_1.organization_name,
+      organization_fiscal_code: service_1.organization_fiscal_code,
       message_title: "Għandek flus?"
     },
     {
@@ -70,6 +71,7 @@ export const apiPayload = {
       time_to_live: 3600,
       service_name: service_1.service_name,
       organization_name: service_1.organization_name,
+      organization_fiscal_code: service_1.organization_fiscal_code,
       message_title: "Analiżi tad-demm"
     },
     {
@@ -82,6 +84,7 @@ export const apiPayload = {
       time_to_live: 3600,
       service_name: "alert",
       organization_name: "Наркомвнудел",
+      organization_fiscal_code: "CDFSCL",
       message_title: "позвоните нам!"
     }
   ],
@@ -101,6 +104,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
+    organizationFiscalCode: service_1.organization_fiscal_code,
     title: "Għandek flus?",
     hasPrecondition: false,
     raw: apiPayload.items[0] as any
@@ -116,6 +120,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
+    organizationFiscalCode: service_1.organization_fiscal_code,
     title: "Analiżi tad-demm",
     hasPrecondition: false,
     raw: apiPayload.items[1] as any
@@ -131,6 +136,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     timeToLive,
     serviceName: service_2.service_name,
     organizationName: service_2.organization_name,
+    organizationFiscalCode: service_2.organization_fiscal_code,
     title: "позвоните нам!",
     hasPrecondition: false,
     raw: apiPayload.items[2] as any
