@@ -70,7 +70,10 @@ export const WrappedMessageListItem = ({
   );
 
   const onPressCallback = useCallback(() => {
-    // TODO preconditions IOCOM-840
+    if (message.category.tag === TagEnum.PN || message.hasPrecondition) {
+      // TODO preconditions IOCOM-840
+      return;
+    }
     navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
       params: {
