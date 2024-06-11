@@ -5,24 +5,25 @@ const confirmType = t.type({
 });
 
 const linksType = t.type({
+  abort: confirmType,
   confirm: confirmType
 });
 
-const claimType = t.type({
+const claimType = t.partial({
   name: t.string,
   display_name: t.string
 });
 
-const redirectionType = t.type({
+const redirectionType = t.partial({
   display_name: t.string
 });
 
 export const ConsentData = t.type({
   _links: linksType,
   service_id: t.string,
-  redirection: redirectionType,
+  redirect: redirectionType,
   type: t.string,
-  claims: t.readonlyArray(claimType)
+  user_metadata: t.readonlyArray(claimType)
 });
 
 export type FimsClaimType = t.TypeOf<typeof claimType>;
