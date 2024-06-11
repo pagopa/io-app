@@ -75,10 +75,7 @@ import {
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
-import {
-  isDesignSystemEnabledSelector,
-  isPagoPATestEnabledSelector
-} from "../../store/reducers/persistedPreferences";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
@@ -392,19 +389,15 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private navigateToWalletTransactionDetailsScreen = (
     transaction: Transaction
   ) => {
-    if (this.props.isDesignSystemEnabled) {
-      this.props.navigation.navigate(
-        PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
-        {
-          screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS,
-          params: {
-            transactionId: transaction.id
-          }
+    this.props.navigation.navigate(
+      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      {
+        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS,
+        params: {
+          transactionId: transaction.id
         }
-      );
-    } else {
-      this.props.navigateToTransactionDetailsScreen(transaction);
-    }
+      }
+    );
   };
 
   private transactionList(
@@ -517,7 +510,6 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 

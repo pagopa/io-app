@@ -107,8 +107,8 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../../features/pushNotifications/store/actions/notifications";
+import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackContentAction } from "./contentAnalytics";
-import { trackServiceAction } from "./serviceAnalytics";
 
 const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -397,7 +397,7 @@ export const actionTracking =
       void trackCoBadgeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);
       void trackContentAction(mixpanel)(action);
-      void trackServiceAction(mixpanel)(action);
+      void trackServicesAction(mixpanel)(action);
       void trackEuCovidCertificateActions(mixpanel)(action);
       void trackPaypalOnboarding(mixpanel)(action);
       void trackZendesk(mixpanel)(action);
