@@ -1,18 +1,22 @@
+import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useLinkTo } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import { useFocusEffect, useLinkTo } from "@react-navigation/native";
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { logosForService } from "../../../../utils/services";
 import { CTA, CTAS } from "../../../messages/types/MessageCTA";
 import {
   getServiceCTA,
   handleCtaAction
 } from "../../../messages/utils/messages";
+import * as analytics from "../../common/analytics";
+import { CtaCategoryType } from "../../common/analytics";
+import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { ServicesParamsList } from "../../common/navigation/params";
 import {
@@ -37,9 +41,6 @@ import {
   serviceMetadataInfoSelector
 } from "../store/reducers/servicesById";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
-import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
-import * as analytics from "../../common/analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;
@@ -142,9 +143,9 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     return null;
   }
 
-  const handlePressCta = (cta: CTA, ctaType: keyof CTAS) => {
+  const handlePressCta = (cta: CTA, ctaType: CtaCategoryType) => {
     analytics.trackServiceDetailsCtaTapped({
-      cta: ctaType,
+      cta_category: ctaType,
       service_id: serviceId
     });
     handleCtaAction(cta, linkTo);
@@ -170,12 +171,12 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         secondaryActionProps: {
           label: cta_1.text,
           accessibilityLabel: cta_1.text,
-          onPress: () => handlePressCta(cta_1, "cta_1")
+          onPress: () => handlePressCta(cta_1, "custom_1")
         },
         tertiaryActionProps: {
           label: cta_2.text,
           accessibilityLabel: cta_2.text,
-          onPress: () => handlePressCta(cta_2, "cta_2")
+          onPress: () => handlePressCta(cta_2, "custom_2")
         }
       };
     }
@@ -193,7 +194,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         secondaryActionProps: {
           label: cta_1.text,
           accessibilityLabel: cta_1.text,
-          onPress: () => handlePressCta(cta_1, "cta_1")
+          onPress: () => handlePressCta(cta_1, "custom_1")
         }
       };
     }
@@ -206,12 +207,12 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         primaryActionProps: {
           label: cta_1.text,
           accessibilityLabel: cta_1.text,
-          onPress: () => handlePressCta(cta_1, "cta_1")
+          onPress: () => handlePressCta(cta_1, "custom_1")
         },
         secondaryActionProps: {
           label: cta_2.text,
           accessibilityLabel: cta_2.text,
-          onPress: () => handlePressCta(cta_2, "cta_2")
+          onPress: () => handlePressCta(cta_2, "custom_2")
         }
       };
     }
@@ -222,7 +223,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         primaryActionProps: {
           label: ctas.cta_1.text,
           accessibilityLabel: ctas.cta_1.text,
-          onPress: () => handlePressCta(ctas.cta_1, "cta_1")
+          onPress: () => handlePressCta(ctas.cta_1, "custom_1")
         }
       };
     }
