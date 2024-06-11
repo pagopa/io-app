@@ -78,16 +78,7 @@ export const fimsPartialAbortUrl = (state: GlobalState) =>
 const abortUrlFromConsentsPot = (consentsPot: pot.Pot<ConsentData, string>) =>
   pipe(
     consentsPot,
-    foldK(
-      () => O.none,
-      () => O.none,
-      newConsents => O.some(newConsents),
-      _ => O.none,
-      consents => O.some(consents),
-      consents => O.some(consents),
-      (_, newConsents) => O.some(newConsents),
-      (consents, _) => O.some(consents)
-    ),
+    pot.toOption,
     // eslint-disable-next-line no-underscore-dangle
     O.map(consents => consents._links.abort.href)
   );
