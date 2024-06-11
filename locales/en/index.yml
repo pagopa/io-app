@@ -509,7 +509,7 @@ profile:
           subtitle: You'll need to restart the application to make this happen
         toast:
           success:
-            title: La lingua è stata cambiata con successo
+            title: You've switched the app language
         not_selected: Not selected
         banner:
           button: Learn more
