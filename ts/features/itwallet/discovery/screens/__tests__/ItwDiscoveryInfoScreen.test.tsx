@@ -6,6 +6,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { ItWalletIssuanceMachineContext } from "../../../machine/provider";
 
 describe("Test ItwDiscoveryInfo screen", () => {
   it("it should render the screen correctly", () => {
@@ -17,7 +18,11 @@ describe("Test ItwDiscoveryInfo screen", () => {
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <ItwDiscoveryInfoScreen />,
+    () => (
+      <ItWalletIssuanceMachineContext.Provider>
+        <ItwDiscoveryInfoScreen />
+      </ItWalletIssuanceMachineContext.Provider>
+    ),
     ITW_ROUTES.DISCOVERY.INFO,
     {},
     createStore(appReducer, globalState as any)
