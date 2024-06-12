@@ -28,15 +28,14 @@ const PaymentsHomeScreen = () => {
     isPaymentsLatestTransactionsEmptySelector
   );
   const alertInfo = useIOSelector(sectionStatusSelector("wallets"));
-  const alertAnimatedRef = React.useRef(false);
 
   const AnimatedAlertStatusInfo = React.useCallback(() => {
-    if (!alertInfo || !alertInfo.is_visible || isLoading) {
+    if (!alertInfo || !alertInfo.is_visible) {
       return null;
     }
-
-    // eslint-disable-next-line functional/immutable-data
-    alertAnimatedRef.current = true;
+    const actionLabel = alertInfo.web_url
+      ? I18n.t("features.payments.remoteAlert.cta")
+      : undefined;
 
     const handleOnPressAlertStatusInfo = (_: GestureResponderEvent) => {
       if (
@@ -48,13 +47,9 @@ const PaymentsHomeScreen = () => {
       }
     };
 
-    const actionLabel = alertInfo.web_url
-      ? I18n.t("features.payments.remoteAlert.cta")
-      : undefined;
-
     return (
       <Animated.View
-        entering={!alertAnimatedRef.current ? FadeIn.duration(200) : undefined}
+        entering={FadeIn.duration(200)}
         layout={Layout.duration(200)}
       >
         <Alert
@@ -67,7 +62,7 @@ const PaymentsHomeScreen = () => {
         />
       </Animated.View>
     );
-  }, [alertInfo, isLoading]);
+  }, [alertInfo]);
 
   const handleOnPayNoticedPress = () => {
     navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
