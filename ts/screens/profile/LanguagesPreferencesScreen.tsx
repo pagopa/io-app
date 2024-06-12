@@ -1,9 +1,9 @@
 import {
   Banner,
   ContentWrapper,
-  IOToast,
   RadioGroup,
   RadioItem,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React, {
@@ -51,6 +51,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const LanguagesPreferencesScreen = () => {
   const viewRef = createRef<View>();
   const dispatch = useIODispatch();
+  const toast = useIOToast();
   const selectedLanguage = useRef<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
   const { showModal } = React.useContext(LightModalContext);
@@ -134,7 +135,7 @@ const LanguagesPreferencesScreen = () => {
           message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
         />
       );
-      IOToast.success(
+      toast.success(
         I18n.t(
           "profile.preferences.list.preferred_language.toast.success.title"
         )
@@ -150,7 +151,7 @@ const LanguagesPreferencesScreen = () => {
       pot.isError(profile)
     ) {
       setIsLoading(false);
-      IOToast.error(I18n.t("errors.profileUpdateError"));
+      toast.error(I18n.t("errors.profileUpdateError"));
     }
   }, [
     selectedLanguage,
@@ -158,7 +159,8 @@ const LanguagesPreferencesScreen = () => {
     prevProfile,
     profile,
     selectedItem,
-    showModal
+    showModal,
+    toast
   ]);
 
   const onLanguageSelected = useCallback(
