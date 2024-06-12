@@ -891,17 +891,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -917,6 +912,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -1455,17 +1451,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View

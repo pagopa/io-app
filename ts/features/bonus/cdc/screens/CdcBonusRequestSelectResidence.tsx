@@ -7,7 +7,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { useDispatch } from "react-redux";
 import {
   RadioButtonList,
   RadioItem
@@ -19,7 +18,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { CdcBonusRequestParamsList } from "../navigation/params";
 import { CDC_ROUTES } from "../navigation/routes";
@@ -44,7 +43,7 @@ const CdcBonusRequestSelectResidence = () => {
     useNavigation<
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
     >();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const [isResidentInItaly, setIsResidentInItaly] = React.useState<
     Record<string, ResidentChoice>
   >({});

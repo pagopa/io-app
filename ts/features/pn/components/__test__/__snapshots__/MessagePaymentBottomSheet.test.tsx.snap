@@ -848,17 +848,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      Array [
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        Object {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <Text
@@ -874,6 +869,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "lineHeight": 25,
                                         }
                                       }
+                                      numberOfLines={1}
                                       style={
                                         Array [
                                           Object {
@@ -1080,17 +1076,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      Array [
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        Object {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -1325,17 +1316,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      Array [
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        Object {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -1570,17 +1556,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      Array [
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        Object {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -1815,17 +1796,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      Array [
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        Object {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -2060,17 +2036,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      Array [
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        Object {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -2305,17 +2276,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      Array [
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        Object {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View

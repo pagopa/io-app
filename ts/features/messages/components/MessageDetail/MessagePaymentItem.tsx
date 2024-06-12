@@ -8,8 +8,20 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect } from "react";
 import { View } from "react-native";
-import { useDispatch, useStore } from "react-redux";
 import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
+import I18n from "../../../../i18n";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
+import { updatePaymentForMessage } from "../../store/actions";
+import {
+  canNavigateToPaymentFromMessageSelector,
+  paymentStatusForUISelector,
+  shouldUpdatePaymentSelector
+} from "../../store/reducers/payments";
+import { UIMessageId } from "../../types";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
@@ -17,9 +29,6 @@ import {
   fold,
   isError
 } from "../../../../common/model/RemoteValue";
-import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { GlobalState } from "../../../../store/reducers/types";
 import { format } from "../../../../utils/dates";
 import {
   cleanTransactionDescription,
@@ -29,13 +38,6 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { updatePaymentForMessage } from "../../store/actions";
-import {
-  canNavigateToPaymentFromMessageSelector,
-  paymentStatusForUISelector,
-  shouldUpdatePaymentSelector
-} from "../../store/reducers/payments";
-import { UIMessageId } from "../../types";
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
@@ -166,11 +168,12 @@ export const MessagePaymentItem = ({
   rptId,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
-  const dispatch = useDispatch();
-  const store = useStore();
+  const dispatch = useIODispatch();
+  const store = useIOStore();
   const toast = useIOToast();
 
-  const globalState = store.getState() as GlobalState;
+  const globalState = store.getState();
+
   const shouldUpdatePayment = shouldUpdatePaymentSelector(
     globalState,
     messageId,

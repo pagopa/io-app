@@ -381,12 +381,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -394,7 +394,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
@@ -1051,12 +1051,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -1064,7 +1064,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
@@ -1604,12 +1604,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -1617,7 +1617,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
@@ -2164,12 +2164,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -2177,7 +2177,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
