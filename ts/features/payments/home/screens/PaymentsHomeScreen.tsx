@@ -27,7 +27,7 @@ const PaymentsHomeScreen = () => {
   const isTransactionsEmpty = useIOSelector(
     isPaymentsLatestTransactionsEmptySelector
   );
-  const alertInfo = useIOSelector(sectionStatusSelector("wallets"));
+  const alertInfo = useIOSelector(sectionStatusSelector("payments"));
 
   const AnimatedAlertStatusInfo = React.useCallback(() => {
     if (!alertInfo || !alertInfo.is_visible) {
