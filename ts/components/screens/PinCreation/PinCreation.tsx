@@ -104,6 +104,21 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
     }
   }, [navigation, isCreation, isOnboarding, showAlert, scrollToCreation]);
 
+  const handlePinChange = useCallback(
+    (value: number) => {
+      const updateValue = (prev: string) => `${prev}${value}`;
+
+      return isCreation ? setPin(updateValue) : setPinConfirmation(updateValue);
+    },
+    [isCreation]
+  );
+
+  const onDeletePress = useCallback(() => {
+    const updateValue = (prev: string) => prev.slice(0, -1);
+
+    return isCreation ? setPin(updateValue) : setPinConfirmation(updateValue);
+  }, [isCreation]);
+
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
@@ -213,8 +228,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         <VSpacer size={40} />
         <ContentWrapper>
           <NumberPad
-            value={isCreation ? pin : pinConfirmation}
-            onValueChange={isCreation ? setPin : setPinConfirmation}
+            onNumberPress={handlePinChange}
+            onDeletePress={onDeletePress}
             variant="light"
             deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
           />

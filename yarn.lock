@@ -3292,6 +3292,25 @@
     react-native-svg "^15.1.0"
     rn-placeholder "1.3.3"
 
+"@pagopa/io-app-design-system@git+https://github.com/pagopa/io-app-design-system#IOPID-1899-ds-app-ottimizzazione-number-pad":
+  version "1.38.4"
+  resolved "git+https://github.com/pagopa/io-app-design-system#7f773602c858500aad3a685224f219dd29626c80"
+  dependencies:
+    "@pagopa/ts-commons" "^12.0.0"
+    "@testing-library/jest-native" "^5.4.2"
+    "@types/react-native-i18n" "2.0.0"
+    "@types/react-test-renderer" "^18.0.0"
+    auto-changelog "^2.4.0"
+    lodash "^4.17.21"
+    react-native-easing-gradient "^1.1.1"
+    react-native-gesture-handler "^2.12.0"
+    react-native-haptic-feedback "^2.0.2"
+    react-native-linear-gradient "^2.5.6"
+    react-native-reanimated "^2.9.1"
+    react-native-safe-area-context "^3.3.2"
+    react-native-svg "^15.1.0"
+    rn-placeholder "1.3.3"
+
 "@pagopa/io-pagopa-commons@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-pagopa-commons/-/io-pagopa-commons-3.1.0.tgz#b44004456007c981898dd16c6b7c4299bcdb2ad4"
