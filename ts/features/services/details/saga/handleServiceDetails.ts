@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
 import { BackendClient } from "../../../../api/backend";
@@ -9,7 +9,6 @@ import { loadServiceDetailNotFound } from "../../../../store/actions/services";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { loadServiceDetail } from "../store/actions/details";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -46,10 +45,7 @@ export function* handleServiceDetails(
 
     if (E.isRight(response)) {
       if (response.right.status === 401) {
-        const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-        if (isFastLoginEnabled) {
-          return;
-        }
+        return;
       }
 
       if (response.right.status === 200) {
