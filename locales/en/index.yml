@@ -507,6 +507,9 @@ profile:
         alert:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
+        toast:
+          success:
+            title: You've switched the app language
         not_selected: Not selected
         banner:
           button: Learn more
