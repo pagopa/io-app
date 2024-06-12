@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../../api/backend";
 import { loadServicePreference } from "../store/actions/preference";
@@ -8,7 +8,6 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 
 export const mapKinds: Record<
   number,
@@ -38,10 +37,7 @@ export function* handleGetServicePreference(
 
     if (E.isRight(response)) {
       if (response.right.status === 401) {
-        const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-        if (isFastLoginEnabled) {
-          return;
-        }
+        return;
       }
 
       if (response.right.status === 200) {

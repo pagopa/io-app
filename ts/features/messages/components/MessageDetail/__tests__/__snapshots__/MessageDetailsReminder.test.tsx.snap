@@ -1461,9 +1461,15 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                           </View>
                           <View
                             style={
-                              Object {
-                                "flex": 1,
-                              }
+                              Array [
+                                Object {
+                                  "marginTop": -5,
+                                },
+                                Object {
+                                  "flex": 1,
+                                  "marginBottom": -4,
+                                },
+                              ]
                             }
                           >
                             <Text
@@ -1957,9 +1963,15 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
