@@ -16,7 +16,7 @@ export type PaymentsBizEventsTransactionState = {
   transactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
   details: pot.Pot<TransactionDetailResponse, NetworkError>;
-  receiptDocument: pot.Pot<Blob, NetworkError>;
+  receiptDocument: pot.Pot<string, NetworkError>;
 };
 
 const INITIAL_STATE: PaymentsBizEventsTransactionState = {
