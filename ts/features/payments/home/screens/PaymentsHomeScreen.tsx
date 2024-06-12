@@ -1,8 +1,7 @@
-import { constVoid } from "fp-ts/lib/function";
-import { Alert, GradientScrollView } from "@pagopa/io-app-design-system";
+import { GradientScrollView } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import Animated, { FadeIn, Layout } from "react-native-reanimated";
-import { GestureResponderEvent, ScrollView } from "react-native";
+import Animated, { Layout } from "react-native-reanimated";
+import { ScrollView } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -15,10 +14,7 @@ import {
   isPaymentsSectionEmptySelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
-import { sectionStatusSelector } from "../../../../store/reducers/backendStatus";
-import { getFullLocale } from "../../../../utils/locale";
-import { openWebUrl } from "../../../../utils/url";
-import { getAlertVariant } from "../../common/utils";
+import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -27,42 +23,6 @@ const PaymentsHomeScreen = () => {
   const isTransactionsEmpty = useIOSelector(
     isPaymentsLatestTransactionsEmptySelector
   );
-  const alertInfo = useIOSelector(sectionStatusSelector("payments"));
-
-  const AnimatedAlertStatusInfo = React.useCallback(() => {
-    if (!alertInfo || !alertInfo.is_visible) {
-      return null;
-    }
-    const actionLabel = alertInfo.web_url
-      ? I18n.t("features.payments.remoteAlert.cta")
-      : undefined;
-
-    const handleOnPressAlertStatusInfo = (_: GestureResponderEvent) => {
-      if (
-        alertInfo &&
-        alertInfo.web_url &&
-        alertInfo.web_url[getFullLocale()]
-      ) {
-        openWebUrl(alertInfo.web_url[getFullLocale()]);
-      }
-    };
-
-    return (
-      <Animated.View
-        entering={FadeIn.duration(200)}
-        layout={Layout.duration(200)}
-      >
-        <Alert
-          content={alertInfo.message[getFullLocale()]}
-          variant={getAlertVariant(alertInfo.level)}
-          action={actionLabel}
-          onPress={
-            alertInfo.web_url ? handleOnPressAlertStatusInfo : () => constVoid
-          }
-        />
-      </Animated.View>
-    );
-  }, [alertInfo]);
 
   const handleOnPayNoticedPress = () => {
     navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
@@ -87,7 +47,7 @@ const PaymentsHomeScreen = () => {
           flexGrow: 1
         }}
       >
-        <AnimatedAlertStatusInfo />
+        <PaymentsAlertStatus />
         <AnimatedPaymentsHomeScreenContent />
       </ScrollView>
     );
@@ -109,7 +69,7 @@ const PaymentsHomeScreen = () => {
       }
       excludeSafeAreaMargins={true}
     >
-      <AnimatedAlertStatusInfo />
+      <PaymentsAlertStatus />
       <AnimatedPaymentsHomeScreenContent />
     </GradientScrollView>
   );
