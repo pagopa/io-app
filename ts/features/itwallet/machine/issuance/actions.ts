@@ -5,28 +5,41 @@ import { ITW_ROUTES } from "../../navigation/routes";
 export const createIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>
 ) => {
-  const storeWalletAttestation = () => {};
+  const storeWalletAttestation = (_: unknown, _params: { wte: string }) => {
+    // console.log(params.wte);
+  };
+
+  const storeEid = () => {};
+
+  const storeCredential = () => {};
+
   const navigateToTosScreen = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO
     });
   };
+
   const navigateToEidPreviewScreen = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
     });
   };
-  const storeEid = () => {};
+
   const navigateToEidSuccessScreen = () => {
     navigation.popToTop();
   };
-  const closeIssuance = () => {};
   const navigateToCredentialIdentificationScreen = () => {};
+
   const navigateToCredentialPreviewScreen = () => {};
-  const storeCredential = () => {};
+
   const navigateToCredentialSuccessScreen = () => {};
+
   const navigateToWallet = () => {};
+
   const navigateToFailureScreen = () => {};
+
+  const closeIssuance = () => {};
+
   const requestAssistance = () => {};
 
   return {

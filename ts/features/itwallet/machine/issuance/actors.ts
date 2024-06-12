@@ -19,7 +19,7 @@ const WALLET_ATTESTATION_KEY_TAG = "WALLET_ATTESTATION_KEY_TAG";
 export const createIssuanceActorsImplementation = () => {
   const checkUserOptIn = fromPromise<undefined>(async () => undefined);
 
-  const issueWalletAttestation = fromPromise<string>(async () => {
+  const getWalletAttestation = fromPromise<string>(async () => {
     try {
       await ensureIntegrityServiceIsReady();
 
@@ -54,16 +54,18 @@ export const createIssuanceActorsImplementation = () => {
   });
 
   const activateWalletAttestation = fromPromise<string>(async () => "");
+
   const requestEid = fromPromise<StoredCredential, string | undefined>(
     async () => ({} as StoredCredential)
   );
+
   const requestCredential = fromPromise<StoredCredential>(
     async () => ({} as StoredCredential)
   );
 
   return {
     checkUserOptIn,
-    issueWalletAttestation,
+    getWalletAttestation,
     activateWalletAttestation,
     requestEid,
     requestCredential

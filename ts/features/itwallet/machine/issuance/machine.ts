@@ -19,23 +19,23 @@ export const itwIssuanceMachine = setup({
     events: {} as Events | IdentificationEvents
   },
   actions: {
-    storeWalletAttestation: notImplemented,
+    storeWalletAttestation: (_, _params: { wte: string }) => notImplemented(),
+    storeEid: notImplemented,
+    storeCredential: notImplemented,
     navigateToTosScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
-    storeEid: notImplemented,
     navigateToEidSuccessScreen: notImplemented,
-    closeIssuance: notImplemented,
     navigateToCredentialIdentificationScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
-    storeCredential: notImplemented,
     navigateToCredentialSuccessScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToFailureScreen: notImplemented,
+    closeIssuance: notImplemented,
     requestAssistance: notImplemented
   },
   actors: {
     checkUserOptIn: fromPromise<undefined>(notImplemented),
-    issueWalletAttestation: fromPromise<string>(notImplemented),
+    getWalletAttestation: fromPromise<string>(notImplemented),
     activateWalletAttestation: fromPromise<string>(notImplemented),
     identificationMachine: itwIdentificationMachine,
     requestEid: fromPromise<StoredCredential, string | undefined>(
@@ -86,10 +86,13 @@ export const itwIssuanceMachine = setup({
       tags: [Tags.Loading],
       description: "Wallet instance registration and attestation issuance",
       invoke: {
-        src: "issueWalletAttestation",
+        src: "getWalletAttestation",
         onDone: {
           target: "TosAcceptance",
-          actions: "storeWalletAttestation"
+          actions: ({ event }) => ({
+            type: "storeWalletAttestation",
+            params: { wte: event.output }
+          })
         },
         onError: {
           target: "Failure"
