@@ -1,6 +1,7 @@
-import { GradientScrollView } from "@pagopa/io-app-design-system";
+import { constVoid } from "fp-ts/lib/function";
+import { Alert, GradientScrollView } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { ScrollView } from "react-native";
+import { GestureResponderEvent, ScrollView } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -13,6 +14,25 @@ import {
   isPaymentsSectionEmptySelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
+import { sectionStatusSelector } from "../../../../store/reducers/backendStatus";
+import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
+import { getFullLocale } from "../../../../utils/locale";
+import { openWebUrl } from "../../../../utils/url";
+
+type AlertVariant = "error" | "success" | "warning" | "info";
+
+const getAlertVariant = (level: LevelEnum): AlertVariant => {
+  switch (level) {
+    case LevelEnum.critical:
+      return "error";
+    case LevelEnum.normal:
+      return "info";
+    case LevelEnum.warning:
+      return "warning";
+    default:
+      return "info";
+  }
+};
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -65,15 +85,52 @@ const PaymentsHomeScreen = () => {
 const PaymentsHomeScreenContent = () => {
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
   const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
+  const alertInfo = useIOSelector(sectionStatusSelector("wallets"));
 
-  if (isEmpty) {
-    return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
-  }
+  const isAlertVisible = alertInfo && alertInfo.is_visible;
+
+  const handleOnPressAlertStatusInfo = (_: GestureResponderEvent) => {
+    if (alertInfo && alertInfo.web_url && alertInfo.web_url[getFullLocale()]) {
+      openWebUrl(alertInfo.web_url[getFullLocale()]);
+    }
+  };
+
+  const PaymentsBodyContent = () => {
+    if (isEmpty) {
+      return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
+    }
+
+    return (
+      <>
+        <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
+        <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
+      </>
+    );
+  };
+
+  const AlertStatusInfo = () => {
+    if (!alertInfo || !isAlertVisible) {
+      return null;
+    }
+    const actionLabel = alertInfo.web_url
+      ? I18n.t("features.payments.remoteAlert.cta")
+      : undefined;
+    return (
+      <Alert
+        content={alertInfo.message[getFullLocale()]}
+        variant={getAlertVariant(alertInfo.level)}
+        action={actionLabel}
+        onPress={
+          alertInfo.web_url ? handleOnPressAlertStatusInfo : () => constVoid
+        }
+      />
+    );
+  };
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
-      <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
+      <AlertStatusInfo />
+      <PaymentsBodyContent />
     </>
   );
 };
