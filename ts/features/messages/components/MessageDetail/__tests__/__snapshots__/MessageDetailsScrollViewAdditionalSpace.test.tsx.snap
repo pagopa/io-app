@@ -322,7 +322,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
                       <View
                         style={
                           Object {
-                            "height": 152,
+                            "height": 136,
                           }
                         }
                       />
@@ -661,7 +661,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
                       <View
                         style={
                           Object {
-                            "height": 208,
+                            "height": 192,
                           }
                         }
                       />
@@ -1000,7 +1000,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
                       <View
                         style={
                           Object {
-                            "height": 96,
+                            "height": 80,
                           }
                         }
                       />
@@ -1339,7 +1339,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
                       <View
                         style={
                           Object {
-                            "height": 96,
+                            "height": 80,
                           }
                         }
                       />
@@ -1678,7 +1678,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
                       <View
                         style={
                           Object {
-                            "height": 152,
+                            "height": 136,
                           }
                         }
                       />
@@ -2017,7 +2017,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
                       <View
                         style={
                           Object {
-                            "height": 24,
+                            "height": 8,
                           }
                         }
                       />

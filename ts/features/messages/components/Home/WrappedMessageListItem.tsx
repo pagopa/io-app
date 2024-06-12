@@ -1,49 +1,30 @@
-import React, { useEffect, useMemo } from "react";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
-import { serviceByIdSelector } from "../../../services/details/store/reducers/servicesById";
+import React, { useCallback, useMemo } from "react";
 import { UIMessage } from "../../types";
-import { logosForService } from "../../../../utils/services";
 import I18n from "../../../../i18n";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import {
-  accessibilityLabelForMessageItem,
-  getLoadServiceDetailsActionIfNeeded
-} from "./homeUtils";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { logoForService } from "../../../services/home/utils";
+import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
+  index: number;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
+  index,
   message
 }: WrappedMessageListItemProps) => {
-  const dispatch = useIODispatch();
-  const store = useIOStore();
+  const navigation = useIONavigation();
   const serviceId = message.serviceId;
-  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
-  const organizationFiscalCode = service?.organization_fiscal_code;
-  useEffect(() => {
-    const state = store.getState();
-    const loadServiceDetailsActionOrUndefined =
-      getLoadServiceDetailsActionIfNeeded(
-        state,
-        serviceId,
-        organizationFiscalCode
-      );
-    if (loadServiceDetailsActionOrUndefined) {
-      dispatch(loadServiceDetailsActionOrUndefined);
-    }
-  }, [dispatch, organizationFiscalCode, serviceId, store]);
+  const organizationFiscalCode = message.organizationFiscalCode;
 
   const serviceLogoUriSources = useMemo(
-    () => (service ? logosForService(service) : undefined),
-    [service]
+    () => logoForService(serviceId, organizationFiscalCode),
+    [serviceId, organizationFiscalCode]
   );
   const organizationName =
     message.organizationName || I18n.t("messages.errorLoading.senderInfo");
@@ -64,18 +45,33 @@ export const WrappedMessageListItem = ({
     [message]
   );
 
+  const onPressCallback = useCallback(() => {
+    if (message.category.tag === TagEnum.PN || message.hasPrecondition) {
+      // TODO preconditions IOCOM-840
+      return;
+    }
+    navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+      params: {
+        messageId: message.id,
+        fromNotification: false
+      }
+    });
+  }, [message, navigation]);
+
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
       serviceName={serviceName}
       messageTitle={messageTitle}
       onLongPress={() => undefined}
-      onPress={() => undefined}
+      onPress={onPressCallback}
       serviceLogos={serviceLogoUriSources}
       badgeText={badgeText}
       isRead={isRead}
       organizationName={organizationName}
       formattedDate={messageDate}
+      testID={`wrapped_message_list_item_${index}`}
     />
   );
 };
