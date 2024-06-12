@@ -8,8 +8,8 @@ import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Walle
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletStatus";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 import { WalletClientStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
+import { selectPagoPaPlatformSessionToken } from "../../../../common/store/selectors";
 
 describe("Test handleWalletPaymentGetUserWallets saga", () => {
   const T_SESSION_TOKEN = "ABCD";
@@ -44,7 +44,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -70,7 +70,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -98,7 +98,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,

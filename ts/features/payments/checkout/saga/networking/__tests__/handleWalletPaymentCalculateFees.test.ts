@@ -9,8 +9,8 @@ import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsCalculatePaymentFeesAction } from "../../../store/actions/networking";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculateFees";
+import { selectPagoPaPlatformSessionToken } from "../../../../common/store/selectors";
 
 describe("Test handleWalletPaymentCalculateFees saga", () => {
   const calculateFeesPayload: CalculateFeeRequest & {
@@ -48,7 +48,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .next()
       .select(preferredLanguageSelector)
       .next("IT")
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -74,7 +74,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .next()
       .select(preferredLanguageSelector)
       .next("IT")
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -104,7 +104,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .next()
       .select(preferredLanguageSelector)
       .next("IT")
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,

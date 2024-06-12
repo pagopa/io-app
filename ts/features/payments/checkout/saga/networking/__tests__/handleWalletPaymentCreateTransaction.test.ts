@@ -11,7 +11,7 @@ import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsCreateTransactionAction } from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
+import { selectPagoPaPlatformSessionToken } from "../../../../common/store/selectors";
 
 describe("Test handleWalletPaymentCreateTransaction saga", () => {
   const newTransactionPayload: NewTransactionRequest = {
@@ -45,7 +45,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -69,7 +69,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -97,7 +97,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,

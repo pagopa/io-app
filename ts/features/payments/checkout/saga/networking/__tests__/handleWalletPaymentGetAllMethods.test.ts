@@ -10,7 +10,7 @@ import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsGetPaymentMethodsAction } from "../../../store/actions/networking";
 import { handleWalletPaymentGetAllMethods } from "../handleWalletPaymentGetAllMethods";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
+import { selectPagoPaPlatformSessionToken } from "../../../../common/store/selectors";
 
 describe("Test handleWalletPaymentGetAllMethods saga", () => {
   const T_SESSION_TOKEN = "ABCD";
@@ -44,7 +44,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       paymentsGetPaymentMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -70,7 +70,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       paymentsGetPaymentMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -98,7 +98,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       paymentsGetPaymentMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,

@@ -7,8 +7,8 @@ import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsGetPaymentDetailsAction } from "../../../store/actions/networking";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 import { handleWalletPaymentGetDetails } from "../handleWalletPaymentGetDetails";
+import { selectPagoPaPlatformSessionToken } from "../../../../common/store/selectors";
 
 describe("Test handleWalletPaymentGetDetails saga", () => {
   const rptId = "12345" as RptId;
@@ -28,7 +28,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -54,7 +54,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -82,7 +82,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
