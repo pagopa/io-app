@@ -7,11 +7,12 @@ import { ItwIdentificationModeSelectionScreen } from "../identification/screens/
 import { ItwIdentificationNfcInstructionsScreen } from "../identification/screens/ItwIdentificationNfcInstructionsScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
+import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import {
   ItWalletIssuanceMachineContext,
   ItWalletIssuanceMachineProvider
 } from "../machine/provider";
-import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
+import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -34,6 +35,10 @@ const InnerNavigator = () => {
         beforeRemove: () => machineRef.send({ type: "back" })
       }}
     >
+      <Stack.Screen
+        name={ITW_ROUTES.ONBOARDING}
+        component={WalletCardOnboardingScreen}
+      />
       {/* DISCOVERY */}
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
