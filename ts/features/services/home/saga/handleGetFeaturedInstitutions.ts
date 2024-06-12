@@ -25,6 +25,10 @@ export function* handleGetFeaturedInstitutions(
     )) as unknown as SagaCallReturnType<typeof getFeaturedInstitutions>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
+
       if (response.right.status === 200) {
         yield* put(featuredInstitutionsGet.success(response.right.value));
         return;
