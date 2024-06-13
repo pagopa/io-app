@@ -1,10 +1,9 @@
 import React, { ComponentProps, PropsWithChildren, ReactNode } from "react";
 import { ColorValue, View } from "react-native";
-import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
@@ -88,7 +87,7 @@ const BaseScreenComponent = React.forwardRef<ReactNode, Props>(
      */
     const currentScreenName = useIOSelector(currentRouteSelector);
 
-    const dispatch = useDispatch();
+    const dispatch = useIODispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
     const canShowHelp = useIOSelector(canShowHelpSelector);
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);

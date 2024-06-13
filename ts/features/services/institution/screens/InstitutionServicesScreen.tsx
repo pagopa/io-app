@@ -29,6 +29,7 @@ import { InstitutionServicesFailure } from "../components/InstitutionServicesFai
 import { ServiceListSkeleton } from "../components/ServiceListSkeleton";
 import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { paginatedServicesGet } from "../store/actions";
+import * as analytics from "../../common/analytics";
 
 export type InstitutionServicesScreenRouteParams = {
   institutionId: string;
@@ -77,6 +78,16 @@ export const InstitutionServicesScreen = ({
 
   useOnFirstRender(() => fetchPage(0));
 
+  useOnFirstRender(
+    () =>
+      analytics.trackInstitutionDetails({
+        organization_fiscal_code: institutionId,
+        organization_name: institutionName,
+        services_count: data?.count ?? 0
+      }),
+    () => !!data
+  );
+
   useEffect(() => {
     if (!!data && isError) {
       IOToast.error(I18n.t("global.genericError"));
@@ -106,18 +117,32 @@ export const InstitutionServicesScreen = ({
   });
 
   const navigateToServiceDetails = useCallback(
-    (service: ServiceMinified) =>
+    ({ id, name }: ServiceMinified) => {
+      analytics.trackServiceSelected({
+        organization_name: institutionName,
+        service_name: name,
+        source: "organization_detail"
+      });
+
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.SERVICE_DETAIL,
         params: {
-          serviceId: service.id as ServiceId
+          serviceId: id as ServiceId
         }
-      }),
-    [navigation]
+      });
+    },
+    [institutionName, navigation]
   );
 
   const handleEndReached = useCallback(
-    () => fetchNextPage(currentPage + 1),
+    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      // guard needed to avoid endless loop
+      if (distanceFromEnd === 0) {
+        return;
+      }
+
+      fetchNextPage(currentPage + 1);
+    },
     [currentPage, fetchNextPage]
   );
 
@@ -215,7 +240,7 @@ export const InstitutionServicesScreen = ({
       data={data?.services || []}
       keyExtractor={(item, index) => `service-${item.id}-${index}`}
       onEndReached={handleEndReached}
-      onEndReachedThreshold={0.001}
+      onEndReachedThreshold={0.1}
       renderItem={renderItem}
       refreshControl={refreshControl}
       testID="intitution-services-list"

@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { isGestureEnabled } from "../../../utils/navigation";
 import {
   FimsFlowHandlerScreen,
   FimsFlowHandlerScreenRouteParams
@@ -21,7 +20,10 @@ const Stack = createStackNavigator<FimsParamsList>();
 export const FimsNavigator = () => (
   <Stack.Navigator
     initialRouteName={FIMS_ROUTES.MAIN}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: true }}
+    // Make sure to disable gestures in order to prevent
+    // the user from going back by swiping and thus not
+    // calling the custom cancel logic
+    screenOptions={{ gestureEnabled: false, headerShown: true }}
   >
     <Stack.Screen
       name={FIMS_ROUTES.CONSENTS}

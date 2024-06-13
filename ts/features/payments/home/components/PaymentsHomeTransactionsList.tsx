@@ -1,4 +1,5 @@
 import {
+  Divider,
   IOStyles,
   ListItemHeader,
   ListItemTransaction
@@ -9,12 +10,15 @@ import * as React from "react";
 import { View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import { default as I18n } from "../../../../i18n";
-import { fetchTransactionsRequestWithExpBackoff } from "../../../../store/actions/wallet/transactions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { latestTransactionsSelector } from "../../../../store/reducers/wallet/transactions";
-import { isPaymentsTransactionsEmptySelector } from "../store/selectors";
+import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
+import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
+import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { PaymentsBizEventsListItemTransaction } from "../../bizEventsTransaction/components/PaymentsBizEventsListItemTransaction";
+import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
-import { PaymentsListItemTransaction } from "./PaymentsListItemTransaction";
 
 type Props = {
   enforcedLoadingState?: boolean;
@@ -22,27 +26,67 @@ type Props = {
 
 const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
-  const transactionsPot = useIOSelector(latestTransactionsSelector);
+  const latestTransactionsPot = useIOSelector(
+    walletLatestTransactionsBizEventsListPotSelector
+  );
 
-  const isLoading = pot.isLoading(transactionsPot) || enforcedLoadingState;
-  const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
+  const isLoading =
+    pot.isLoading(latestTransactionsPot) || enforcedLoadingState;
+  const isEmpty = useIOSelector(isPaymentsLatestTransactionsEmptySelector);
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 }));
+      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
     }, [dispatch])
   );
 
+  const handleNavigateToTransactionDetails = (
+    transaction: TransactionListItem
+  ) => {
+    if (transaction.transactionId === undefined) {
+      return;
+    }
+    navigation.navigate(
+      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
+      {
+        screen:
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
+        params: {
+          transactionId: transaction.transactionId
+        }
+      }
+    );
+  };
+
+  const handleNavigateToTransactionList = () => {
+    navigation.navigate(
+      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
+      {
+        screen:
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LIST_SCREEN
+      }
+    );
+  };
+
   const renderItems = () => {
-    if (!isLoading && pot.isSome(transactionsPot)) {
+    if (!isLoading && pot.isSome(latestTransactionsPot)) {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
-          {transactionsPot.value.map(transaction => (
-            <PaymentsListItemTransaction
-              key={`transaction_${transaction.id}`}
-              transaction={transaction}
-            />
+          {latestTransactionsPot.value.map((latestTransaction, index) => (
+            <React.Fragment
+              key={`transaction_${latestTransaction.transactionId}`}
+            >
+              <PaymentsBizEventsListItemTransaction
+                key={`transaction_${latestTransaction.transactionId}`}
+                onPress={() =>
+                  handleNavigateToTransactionDetails(latestTransaction)
+                }
+                transaction={latestTransaction}
+              />
+              {index < latestTransactionsPot.value.length - 1 && <Divider />}
+            </React.Fragment>
           ))}
         </View>
       );
@@ -73,6 +117,17 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       <ListItemHeader
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}
+        endElement={
+          !isLoading
+            ? {
+                type: "buttonLink",
+                componentProps: {
+                  label: I18n.t("features.payments.transactions.button"),
+                  onPress: handleNavigateToTransactionList
+                }
+              }
+            : undefined
+        }
       />
       {renderItems()}
     </Animated.View>

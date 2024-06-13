@@ -46,7 +46,7 @@ export const useInstitutionsFetcher = () => {
     [dispatch, isLoading, isUpdating]
   );
 
-  const fetchInstitutions = useCallback(
+  const fetchNextPage = useCallback(
     (page: number) => {
       if (isLastPage) {
         return;
@@ -57,7 +57,7 @@ export const useInstitutionsFetcher = () => {
     [isLastPage, fetchPage]
   );
 
-  const refreshInstitutions = useCallback(() => {
+  const refresh = useCallback(() => {
     setIsRefreshing(true);
     fetchPage(0);
   }, [fetchPage]);
@@ -65,12 +65,13 @@ export const useInstitutionsFetcher = () => {
   return {
     currentPage,
     data: paginatedInstitutions,
+    fetchPage,
+    fetchNextPage,
     isError,
     isLastPage,
     isLoading,
     isUpdating,
     isRefreshing,
-    fetchInstitutions,
-    refreshInstitutions
+    refresh
   };
 };
