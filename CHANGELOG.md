@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.62.0-rc.2](https://github.com/pagopa/io-app/compare/2.62.0-rc.1...2.62.0-rc.2) (2024-06-12)
+
+
+### Features
+
+* [[IOBP-636](https://pagopa.atlassian.net/browse/IOBP-636),[IOBP-646](https://pagopa.atlassian.net/browse/IOBP-646)] Add legacy transactions list ([#5796](https://github.com/pagopa/io-app/issues/5796)) ([8067ab6](https://github.com/pagopa/io-app/commit/8067ab64f40bc491f6da1542bc5b83f0b2f27a55))
+
+
+### Bug Fixes
+
+* Add user feedback when `Locale` changes ([#5851](https://github.com/pagopa/io-app/issues/5851)) ([e5df504](https://github.com/pagopa/io-app/commit/e5df504f1cac5b39b57758a0c6075203574f98ad))
+
+
+### Chores
+
+* [[IOBP-681](https://pagopa.atlassian.net/browse/IOBP-681)] Add PSP details alert into payment method details if provided ([#5836](https://github.com/pagopa/io-app/issues/5836)) ([490a8c5](https://github.com/pagopa/io-app/commit/490a8c5e4ce4a03e17b0d65bfc81aef489806f2a))
+* [[IOPAE-1235](https://pagopa.atlassian.net/browse/IOPAE-1235)] Search screen enhancements ([#5856](https://github.com/pagopa/io-app/issues/5856)) ([194f95a](https://github.com/pagopa/io-app/commit/194f95a03a15012db870b03540677bd07f9b824c))
+* [[IOPAE-1250](https://pagopa.atlassian.net/browse/IOPAE-1250)] Hide error toasts on refresh session ([#5853](https://github.com/pagopa/io-app/issues/5853)) ([3d43a9e](https://github.com/pagopa/io-app/commit/3d43a9e4a9c92bc3b002e66270faa137c42638b9))
+
 ## [2.62.0-rc.1](https://github.com/pagopa/io-app/compare/2.62.0-rc.0...2.62.0-rc.1) (2024-06-11)
 
 

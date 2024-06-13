@@ -81,10 +81,7 @@ export const ServicesHomeScreen = () => {
   }, [isFirstRender, isLoading]);
 
   const navigateToSearch = useCallback(
-    () =>
-      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-        screen: SERVICES_ROUTES.SEARCH
-      }),
+    () => navigation.navigate(SERVICES_ROUTES.SEARCH),
     [navigation]
   );
 
@@ -103,6 +100,7 @@ export const ServicesHomeScreen = () => {
             }
           }}
         />
+        <VSpacer size={16} />
         <FeaturedServiceList />
         <FeaturedInstitutionList />
         <ListItemHeader label={I18n.t("services.home.institutions.title")} />
