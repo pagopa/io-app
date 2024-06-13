@@ -1,14 +1,7 @@
-import {
-  FooterWithButtons,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { Alert, ScrollView, View } from "react-native";
-import { Body } from "../../../components/core/typography/Body";
+import { ListItemInfo } from "@pagopa/io-app-design-system";
+import React, { useCallback, useMemo } from "react";
+import { Alert } from "react-native";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
@@ -16,7 +9,14 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { FAQsCategoriesType } from "../../../utils/faq";
+import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
+
+const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
+  "onboarding_fingerprint"
+];
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -29,7 +29,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const MissingDeviceBiometricScreen = () => {
   const dispatch = useIODispatch();
-
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
 
   useOnFirstRender(() => {
@@ -38,77 +37,95 @@ const MissingDeviceBiometricScreen = () => {
     );
   });
 
-  const handleGoBack = () =>
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: () => dispatch(abortOnboarding())
-        }
-      ]
-    );
+  const handleGoBack = useCallback(
+    () =>
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: () => dispatch(abortOnboarding())
+          }
+        ]
+      ),
+    [dispatch]
+  );
+
+  useHeaderSecondLevel({
+    goBack: handleGoBack,
+    title: "",
+    faqCategories: FAQ_CATEGORIES,
+    supportRequest: true,
+    contextualHelpMarkdown
+  });
+
+  const listItems: Array<ListItemInfo> = useMemo(
+    () => [
+      {
+        label: I18n.t(
+          "onboarding.biometric.available.body.notEnrolled.step1.label"
+        ),
+        value: I18n.t(
+          "onboarding.biometric.available.body.notEnrolled.step1.value"
+        ),
+        icon: "systemSettingsAndroid"
+      },
+      {
+        label: I18n.t(
+          "onboarding.biometric.available.body.notEnrolled.step2.label"
+        ),
+        value: I18n.t(
+          "onboarding.biometric.available.body.notEnrolled.step2.value"
+        ),
+        icon: "systemToggleInstructions"
+      },
+      {
+        label: I18n.t(
+          "onboarding.biometric.available.body.notEnrolled.step3.label"
+        ),
+        value: I18n.t(
+          "onboarding.biometric.available.body.notEnrolled.step3.value"
+        ),
+        icon: "systemToggleInstructions"
+      }
+    ],
+    []
+  );
+
+  const primaryActionProps = useMemo(
+    () => ({
+      label: I18n.t("global.buttons.continue"),
+      accessibilityLabel: I18n.t("global.buttons.continue"),
+      onPress: () => {
+        dispatch(
+          preferenceFingerprintIsEnabledSaveSuccess({
+            isFingerprintEnabled: false
+          })
+        );
+      },
+      testID: "not-enrolled-biometric-confirm"
+    }),
+    [dispatch]
+  );
 
   return (
-    <TopScreenComponent
-      goBack={handleGoBack}
-      headerTitle={I18n.t("onboarding.biometric.headerTitle")}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["onboarding_fingerprint"]}
-    >
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: IOVisualCostants.appMarginDefault
-        }}
-      >
-        <ScreenContentHeader
-          title={I18n.t("onboarding.biometric.available.title")}
-        />
-        <VSpacer size={24} />
-        <View
-          style={{
-            flexGrow: 1,
-            paddingHorizontal: IOVisualCostants.appMarginDefault
-          }}
-        >
-          <Body>
-            {I18n.t("onboarding.biometric.available.body.infoStart") + " "}
-            <Body weight="SemiBold">
-              {I18n.t("onboarding.biometric.available.body.biometricType") +
-                " "}
-            </Body>
-            <Body>{I18n.t("onboarding.biometric.available.body.infoEnd")}</Body>
-          </Body>
-          <VSpacer size={24} />
-          <Body>
-            {I18n.t("onboarding.biometric.available.body.notEnrolled.text")}
-          </Body>
-        </View>
-      </ScrollView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () =>
-              dispatch(
-                preferenceFingerprintIsEnabledSaveSuccess({
-                  isFingerprintEnabled: false
-                })
-              ),
-            testID: "not-enrolled-biometric-confirm"
-          }
-        }}
-      />
-    </TopScreenComponent>
+    <ScreenWithListItems
+      title={I18n.t("onboarding.biometric.available.title")}
+      subtitle={`${I18n.t(
+        "onboarding.biometric.available.body.text"
+      )}\n\n${I18n.t("onboarding.biometric.available.body.notEnrolled.text")}`}
+      listItemHeaderLabel={I18n.t(
+        "onboarding.biometric.available.body.notEnrolled.label"
+      )}
+      renderItems={listItems}
+      primaryActionProps={primaryActionProps}
+    />
   );
 };
 

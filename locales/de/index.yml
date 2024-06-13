@@ -809,8 +809,6 @@ onboarding:
         biometricType: "mit deinem Gesicht oder Fingerabdruck"
         infoEnd: "auf schnellere und sicherere Weise."
         enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
-        notEnrolled:
-          text: "Um sie zu verwenden, geh zu den Geräteeinstellungen und konfiguriere sie. Aktiviere sie dann auf IO unter Profil > Sicherheit."
     unavailable:
       title: "Schütze dein Gerät"
       body:
