@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
+import { itwStoreHardwareKeyTag } from "../../issuance/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const createIssuanceActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
-  const storeWalletAttestation = (_: unknown, _params: { wte: string }) => {
-    // console.log(params.wte);
+  const storeHardwareKeyTag = (_: unknown, params: { keyTag: string }) => {
+    dispatch(itwStoreHardwareKeyTag(params.keyTag));
   };
 
   const storeEid = () => {};
@@ -28,6 +31,7 @@ export const createIssuanceActionsImplementation = (
   const navigateToEidSuccessScreen = () => {
     navigation.popToTop();
   };
+
   const navigateToCredentialIdentificationScreen = () => {};
 
   const navigateToCredentialPreviewScreen = () => {};
@@ -43,7 +47,7 @@ export const createIssuanceActionsImplementation = (
   const requestAssistance = () => {};
 
   return {
-    storeWalletAttestation,
+    storeHardwareKeyTag,
     navigateToTosScreen,
     navigateToEidPreviewScreen,
     storeEid,

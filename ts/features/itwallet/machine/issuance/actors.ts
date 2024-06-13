@@ -1,53 +1,35 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import {
-  WalletInstance,
-  WalletInstanceAttestation,
-  createCryptoContextFor
-} from "@pagopa/io-react-native-wallet";
 import { fromPromise } from "xstate5";
-import { itwWalletProviderBaseUrl } from "../../../../config";
-import {
-  ensureIntegrityServiceIsReady,
-  generateIntegrityHardwareKeyTag,
-  getIntegrityContext
-} from "../../common/utils/itwIntegrity";
-import { getOrGenerateCyptoKey } from "../../common/utils/itwSecureStorageUtils";
+import * as attestationUtils from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-
-const WALLET_ATTESTATION_KEY_TAG = "WALLET_ATTESTATION_KEY_TAG";
 
 export const createIssuanceActorsImplementation = () => {
   const checkUserOptIn = fromPromise<undefined>(async () => undefined);
 
-  const getWalletAttestation = fromPromise<string>(async () => {
+  const registerWalletInstance = fromPromise<string>(async () => {
     try {
-      await ensureIntegrityServiceIsReady();
+      const hardwareKeyTag =
+        await attestationUtils.getIntegrityHardwareKeyTag();
+      await attestationUtils.registerWalletInstance(hardwareKeyTag);
+      return Promise.resolve(hardwareKeyTag);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  });
 
-      const hardwarekeyTag = await generateIntegrityHardwareKeyTag();
-      const integrityContext = getIntegrityContext(hardwarekeyTag);
+  const getWalletAttestation = fromPromise<
+    string,
+    { hardwareKeyTag: string | undefined }
+  >(async ({ input }) => {
+    if (input.hardwareKeyTag === undefined) {
+      return Promise.reject(new Error("hardwareKeyTag is undefined"));
+    }
 
-      await WalletInstance.createWalletInstance({
-        integrityContext,
-        walletProviderBaseUrl: itwWalletProviderBaseUrl
-      });
-
-      // generate Key for Wallet Instance Attestation
-      // ensure the key esists befor starting the issuing process
-      await getOrGenerateCyptoKey(WALLET_ATTESTATION_KEY_TAG);
-
-      const wiaCryptoContext = createCryptoContextFor(
-        WALLET_ATTESTATION_KEY_TAG
+    try {
+      const walletAttestation = attestationUtils.getAttestation(
+        input.hardwareKeyTag
       );
-
-      const issuingAttestation = await WalletInstanceAttestation.getAttestation(
-        {
-          wiaCryptoContext,
-          integrityContext,
-          walletProviderBaseUrl: itwWalletProviderBaseUrl
-        }
-      );
-
-      return Promise.resolve(issuingAttestation);
+      return Promise.resolve(walletAttestation);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -65,6 +47,7 @@ export const createIssuanceActorsImplementation = () => {
 
   return {
     checkUserOptIn,
+    registerWalletInstance,
     getWalletAttestation,
     activateWalletAttestation,
     requestEid,

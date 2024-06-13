@@ -19,7 +19,7 @@ export const itwIssuanceMachine = setup({
     events: {} as Events | IdentificationEvents
   },
   actions: {
-    storeWalletAttestation: (_, _params: { wte: string }) => notImplemented(),
+    storeHardwareKeyTag: (_, _params: { keyTag: string }) => notImplemented(),
     storeEid: notImplemented,
     storeCredential: notImplemented,
     navigateToTosScreen: notImplemented,
@@ -35,7 +35,11 @@ export const itwIssuanceMachine = setup({
   },
   actors: {
     checkUserOptIn: fromPromise<undefined>(notImplemented),
-    getWalletAttestation: fromPromise<string>(notImplemented),
+    registerWalletInstance: fromPromise<string>(notImplemented),
+    getWalletAttestation: fromPromise<
+      string,
+      { hardwareKeyTag: string | undefined }
+    >(notImplemented),
     activateWalletAttestation: fromPromise<string>(notImplemented),
     identificationMachine: itwIdentificationMachine,
     requestEid: fromPromise<StoredCredential, string | undefined>(
@@ -85,17 +89,44 @@ export const itwIssuanceMachine = setup({
     WalletInitialization: {
       tags: [Tags.Loading],
       description: "Wallet instance registration and attestation issuance",
-      invoke: {
-        src: "getWalletAttestation",
-        onDone: {
-          target: "TosAcceptance",
-          actions: ({ event }) => ({
-            type: "storeWalletAttestation",
-            params: { wte: event.output }
-          })
+      initial: "WalletInstanceRegistration",
+      states: {
+        WalletInstanceRegistration: {
+          invoke: {
+            src: "registerWalletInstance",
+            onDone: {
+              actions: [
+                assign(({ event }) => ({
+                  hardwareKeyTag: event.output
+                })),
+                ({ event }) => ({
+                  type: "storeHardwareKeyTag",
+                  params: { keyTag: event.output }
+                })
+              ],
+              target: "WalletAttestationIssuance"
+            },
+            onError: {
+              target: "#itwIssuanceMachine.Failure"
+            }
+          }
         },
-        onError: {
-          target: "Failure"
+        WalletAttestationIssuance: {
+          invoke: {
+            src: "getWalletAttestation",
+            input: ({ context }) => ({
+              hardwareKeyTag: context.hardwareKeyTag
+            }),
+            onDone: {
+              actions: assign(({ event }) => ({
+                walletAttestation: event.output
+              })),
+              target: "#itwIssuanceMachine.TosAcceptance"
+            },
+            onError: {
+              target: "#itwIssuanceMachine.Failure"
+            }
+          }
         }
       }
     },

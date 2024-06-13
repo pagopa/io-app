@@ -60,7 +60,7 @@ const generateIntegrityHardwareKeyTag = () =>
     ios: async () => await generateHardwareKey(),
     android: async () => {
       const keyTag = uuid.v4().toString();
-      generate(keyTag).catch(_ => undefined);
+      await generate(keyTag);
       return keyTag;
     },
     default: () => Promise.reject(new Error("Unsupported platform"))

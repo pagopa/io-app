@@ -1,6 +1,7 @@
 import { createActorContext } from "@xstate5/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../store/hooks";
 import { createIdentificationActionsImplementation } from "./identification/actions";
 import { createIdentificationActorsImplementation } from "./identification/actors";
 import { itwIdentificationMachine } from "./identification/machine";
@@ -17,6 +18,7 @@ export const ItWalletIssuanceMachineContext =
 
 export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const identificationActions =
     createIdentificationActionsImplementation(navigation);
@@ -27,7 +29,10 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
     actions: identificationActions
   });
 
-  const issuanceActions = createIssuanceActionsImplementation(navigation);
+  const issuanceActions = createIssuanceActionsImplementation(
+    navigation,
+    dispatch
+  );
   const issuanceActors = createIssuanceActorsImplementation();
 
   const issuanceMachine = itwIssuanceMachine.provide({
