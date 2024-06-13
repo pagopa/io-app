@@ -1,4 +1,4 @@
-import { IOColors, IOToast } from "@pagopa/io-app-design-system";
+import { IOColors, useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
@@ -62,6 +62,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const transactionReceiptPot = useIOSelector(
     walletTransactionsBizEventsReceiptPotSelector
   );
+  const toast = useIOToast();
 
   const isLoading = pot.isLoading(transactionDetailsPot);
   const isLoadingReceipt = pot.isLoading(transactionReceiptPot);
@@ -82,7 +83,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   };
 
   const handleOnDownloadPdfReceiptError = () => {
-    IOToast.error("Impossibile scaricare la ricevuta, riprova più tardi.");
+    toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
 
   const handleOnDownloadPdfReceiptSuccess = () => {
@@ -132,7 +133,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
       actions={{
         type: "SingleButton",
         primary: {
-          label: "Scarica ricevuta",
+          label: I18n.t("features.payments.transactions.receipt.download"),
           onPress: handleDownloadPdfReceipt,
           loading: isLoadingReceipt,
           disabled: isLoadingReceipt
