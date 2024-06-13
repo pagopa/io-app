@@ -498,14 +498,12 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -661,6 +659,9 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -1324,14 +1325,12 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -1487,6 +1486,9 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -2336,14 +2338,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -2499,6 +2499,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -3162,14 +3165,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3325,6 +3326,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -3988,14 +3992,12 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -4151,6 +4153,9 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
