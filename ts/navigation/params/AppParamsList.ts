@@ -87,6 +87,7 @@ export type AppParamsList = {
   [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
+  [SERVICES_ROUTES.SEARCH]: undefined;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
 
   [ROUTES.BARCODE_SCAN]: undefined;

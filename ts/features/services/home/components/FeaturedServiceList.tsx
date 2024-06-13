@@ -74,7 +74,7 @@ export const FeaturedServiceList = () => {
       ) : (
         <FeaturedServicesCarousel services={mappedFeaturedServices} />
       )}
-      <VSpacer size={24} />
+      <VSpacer size={16} />
     </>
   );
 };
