@@ -16,7 +16,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { useIOStore } from "../../store/hooks";
-import { mixpanel } from "../../mixpanel";
 import { trackMixpanelScreen } from "./analytics";
 import {
   trackMixpanelDeclined,
@@ -33,9 +32,6 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     const flow = getFlowType(false, false);
     trackMixpanelDeclined(flow);
-    if (mixpanel) {
-      mixpanel.getPeople().set("TRACKING", "declined");
-    }
     trackMixpanelSetEnabled(false, flow, store.getState()).finally(() => {
       props.setMixpanelEnabled(false);
     });
