@@ -1,5 +1,4 @@
 import { mixpanelTrack } from "../../../../mixpanel";
-import { MixpanelOptInTrackingType } from "../../../../mixpanelConfig/mixpanelPropertyUtils";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../../utils/analytics";
