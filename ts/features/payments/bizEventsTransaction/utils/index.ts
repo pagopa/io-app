@@ -1,6 +1,8 @@
 import { SectionListData } from "react-native";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 
+export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
+
 /**
  * Function that groups the transactions by month and returns an array of objects with the month as title and the transactions as data
  * - The year is shown only if it's different from the current year
@@ -43,4 +45,12 @@ export const formatAmountText = (amount: string): string => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
+};
+
+export const byteArrayToBase64 = (byteArray: Uint8Array): string => {
+  // Convert Uint8Array to Buffer
+  const buffer = Buffer.from(byteArray);
+
+  // Convert Buffer to Base64 string
+  return buffer.toString("base64");
 };
