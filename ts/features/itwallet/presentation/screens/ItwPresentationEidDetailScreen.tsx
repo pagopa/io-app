@@ -3,12 +3,13 @@ import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import {
   ContentWrapper,
+  Divider,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ItwPidAssuranceLevel } from "../../common/components/ItwPidAssuranceLevel";
 import { ItwReleaserName } from "../../common/components/ItwReleaserName";
@@ -21,9 +22,9 @@ import {
   ItwCredentialsMocks
 } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { ItwClaimsSections } from "../components/ItwClaimsSections";
 import { ItwPresentationDetailFooter } from "../components/ItwPresentationDetailFooter";
@@ -33,33 +34,28 @@ const today = new Date();
 const credentialCardData: ReadonlyArray<string> = [];
 
 /**
- * @deprecated Still using `BaseScreenComponent`
- *
  * This component renders the entire credential detail.
- * `BaseScreenComponent` is used because it offers the colored header with contrast icons out of the box.
  */
 const ContentView = ({ eid }: { eid: StoredCredential }) => {
-  const insets = useSafeAreaInsets();
+  const { screenEndMargin } = useScreenEndMargin();
   const themeColor = getThemeColorByCredentialType(
     eid.credentialType as CredentialType
   );
 
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    variant: "contrast",
+    backgroundColor: themeColor
+  });
+
   return (
-    <BaseScreenComponent
-      headerTitle=""
-      headerBackgroundColor={themeColor}
-      titleColor="white"
-      goBack={true}
-      dark={true}
-      contextualHelp={emptyContextualHelp}
-    >
-      <StatusBar backgroundColor={themeColor} barStyle="light-content" />
-      <ScrollView
-        style={{
-          marginBottom:
-            IOVisualCostants.headerHeight + insets.top + insets.bottom // Compensate for the header
-        }}
-      >
+    <>
+      <FocusAwareStatusBar
+        backgroundColor={themeColor}
+        barStyle="light-content"
+      />
+      <ScrollView contentContainerStyle={{ paddingBottom: screenEndMargin }}>
         <View style={styles.cardContainer}>
           <ItwCredentialCard
             credentialType={CredentialType.PID}
@@ -73,12 +69,13 @@ const ContentView = ({ eid }: { eid: StoredCredential }) => {
         <ContentWrapper>
           <ItwClaimsSections credential={eid} />
           <ItwPidAssuranceLevel credential={eid} />
+          <Divider />
           <ItwReleaserName credential={eid} />
           <VSpacer size={40} />
           <ItwPresentationDetailFooter lastUpdateTime={today} />
         </ContentWrapper>
       </ScrollView>
-    </BaseScreenComponent>
+    </>
   );
 };
 
