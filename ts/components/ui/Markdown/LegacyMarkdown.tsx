@@ -45,13 +45,13 @@ const TITILLIUM_SANS_PRO_BOLD_FONT_PATH =
 const GLOBAL_CSS = `
 <style>
 @font-face {
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Sans Pro';
   font-style: normal;
   font-weight: normal;
   src: url('${TITILLIUM_SANS_PRO_FONT_PATH}');
 }
 @font-face {
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Sans Pro';
   font-style: normal;
   font-weight: bold;
   src: url('${TITILLIUM_SANS_PRO_BOLD_FONT_PATH}');
@@ -62,7 +62,7 @@ body {
   padding: 0;
   color: ${customVariables.textColor};
   font-size: ${customVariables.fontSizeBase}px;
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Sans Pro';
   overflow-wrap: break-word;
   hyphens: auto;
 }

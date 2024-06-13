@@ -14,7 +14,7 @@ describe("makeFontStyleObject behaviour on iOS", () => {
   });
   it("call makeFontStyleObject without parameters should have default values", () => {
     const font = makeFontStyleObject();
-    expect(font.fontFamily).toBe("Titillium Web");
+    expect(font.fontFamily).toBe("Titillium Sans Pro");
     expect(font.fontStyle).toBe(FontStyle.normal);
     expect(font.fontWeight).toBeUndefined();
   });
@@ -28,7 +28,7 @@ describe("makeFontStyleObject behaviour on iOS", () => {
     italics.map(isItalic =>
       fontWeightsMocks.map(fw => {
         const font = makeFontStyleObject(fw, isItalic, "TitilliumSansPro");
-        expect(font.fontFamily).toBe(`Titillium Web`);
+        expect(font.fontFamily).toBe(`Titillium Sans Pro`);
         expect(font.fontStyle).toBe(
           isItalic ? FontStyle.italic : FontStyle.normal
         );
