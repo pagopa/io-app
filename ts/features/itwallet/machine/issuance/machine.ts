@@ -104,14 +104,14 @@ export const itwIssuanceMachine = setup({
                   params: { keyTag: event.output }
                 })
               ],
-              target: "WalletAttestationIssuance"
+              target: "WalletAttestationRegistration"
             },
             onError: {
               target: "#itwIssuanceMachine.Failure"
             }
           }
         },
-        WalletAttestationIssuance: {
+        WalletAttestationRegistration: {
           invoke: {
             src: "getWalletAttestation",
             input: ({ context }) => ({
