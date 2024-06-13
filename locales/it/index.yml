@@ -931,7 +931,7 @@ onboarding:
     headerTitle: Configura IO
     available:
       title: Attiva il riconoscimento biometrico
-      settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
+      settings: Puoi modificare la tua scelta in ogni momento da Profilo > Sicurezza
       body:
         text: Potrai usare il tuo volto o impronta digitale al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti in modo più rapido e sicuro.
         infoStart: Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo
