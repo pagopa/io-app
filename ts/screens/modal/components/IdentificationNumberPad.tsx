@@ -41,10 +41,12 @@ export const IdentificationNumberPad = (
 
   const { pin, pinValidation, numberPadVariant, biometricsConfig } = props;
 
-  const onValueChange = useCallback((v: string) => {
-    if (v.length <= PIN_LENGTH) {
-      setValue(v);
-    }
+  const onValueChange = useCallback((v: number) => {
+    setValue(prev => (prev.length < PIN_LENGTH ? `${prev}${v}` : prev));
+  }, []);
+
+  const onDeletePress = useCallback(() => {
+    setValue((prev: string) => prev.slice(0, -1));
   }, []);
 
   // Calling pinValidation after a timeout is neeed
@@ -110,9 +112,9 @@ export const IdentificationNumberPad = (
       <VSpacer size={48} />
       <View>
         <NumberPad
-          value={value}
           deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
-          onValueChange={onValueChange}
+          onDeletePress={onDeletePress}
+          onNumberPress={onValueChange}
           variant={numberPadVariant}
           {...biometricsConfig}
         />
