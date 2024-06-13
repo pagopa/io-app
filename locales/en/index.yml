@@ -2154,6 +2154,7 @@ services:
   search:
     input:
       placeholder: "Search for a national or local institution"
+      placeholderShort: "Search for an institution"
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
@@ -3095,6 +3096,11 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: PagoPA Receipt
+        shareButton: Save or share
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
     details:
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."

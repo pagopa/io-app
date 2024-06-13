@@ -2154,6 +2154,7 @@ services:
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
+      placeholderShort: "Cerca un ente"
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
@@ -3095,6 +3096,11 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: Ricevuta PagoPA
+        shareButton: Salva o condividi 
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
     details:
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
