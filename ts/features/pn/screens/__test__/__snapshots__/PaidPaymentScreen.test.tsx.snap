@@ -589,14 +589,12 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -752,6 +750,9 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
