@@ -1385,14 +1385,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -1443,6 +1441,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -2994,14 +2995,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3052,6 +3051,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -4603,14 +4605,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -4661,6 +4661,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -6212,14 +6215,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -6270,6 +6271,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
@@ -8252,14 +8256,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -8310,6 +8312,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",
