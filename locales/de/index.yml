@@ -810,11 +810,6 @@ onboarding:
         enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
     unavailable:
       title: "Schütze dein Gerät"
-      body:
-        firstInfoStart: "IO schickt dir Mitteilungen, die dich"
-        firstInfoEnd: "persönlich betreffen."
-        secondInfoStart: "Schütze dein Gerät vor unerwünschtem Zugriff und stell sicher, dass nur du auf die App zugreifen kannst. Geh dazu in die Einstellungen deines Geräts, leg"
-        secondInfoEnd: "einen Entsperrcode fest oder konfiguriere die biometrische Erkennung."
   shareData:
     title: "IO einrichten"
   thankYouPage:

@@ -952,11 +952,15 @@ onboarding:
             value: Attivalo su IO in Profilo > Sicurezza
     unavailable:
       title: Proteggi il tuo dispositivo
+      subtitle: IO ti invia comunicazioni che ti riguardano personalmente. Assicurati che solo tu possa accedere all’app impostando un codice o un segno per sbloccare il dispositivo.
       body:
-        firstInfoStart: Io ti invia le comunicazioni che ti riguardano
-        firstInfoEnd: personalmente.
-        secondInfoStart: Proteggi il tuo dispositivo da accessi indesiderati e assicurati che solo tu possa accedere all'app. Per farlo, vai alle impostazioni del tuo dispositivo, imposta un
-        secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
+        label: Come fare
+        step1: 
+          label: Step 1
+          value: Vai alle impostazioni del tuo dispositivo
+        step2: 
+          label: Step 2
+          value: Imposta un codice o un segno per sbloccare il dispositivo
   shareData:
     title: Configura IO
   thankYouPage:
