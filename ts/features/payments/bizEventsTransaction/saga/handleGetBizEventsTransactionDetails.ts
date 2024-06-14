@@ -24,8 +24,7 @@ export function* handleGetBizEventsTransactionDetails(
     getTransactionDetails,
     getPaymentsBizEventsTransactionDetailsAction.failure,
     {
-      "transaction-id": action.payload.transactionId,
-      walletId: "TO_REMOVE"
+      "transaction-id": action.payload.transactionId
     },
     "Authorization"
   );

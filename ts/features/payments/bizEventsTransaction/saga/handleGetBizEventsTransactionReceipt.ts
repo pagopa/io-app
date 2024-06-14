@@ -4,11 +4,11 @@ import { ActionType } from "typesafe-actions";
 import { getPaymentsBizEventsReceiptAction } from "../store/actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { TransactionClient } from "../../common/api/client";
-import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/handleWalletPaymentNewSessionToken";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { byteArrayToBase64 } from "../utils";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to get the transaction receipt pdf from the biz events API
@@ -19,20 +19,18 @@ export function* handleGetBizEventsTransactionReceipt(
   getTransactionReceipt: TransactionClient["getPDFReceipt"],
   action: ActionType<(typeof getPaymentsBizEventsReceiptAction)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
+  const getTransactionReceiptRequest = yield* withPaymentsSessionToken(
+    getTransactionReceipt,
+    getPaymentsBizEventsReceiptAction.failure,
+    {
+      "event-id": action.payload.transactionId
+    },
+    "Authorization"
+  );
 
-  if (sessionToken === undefined) {
-    yield* put(
-      getPaymentsBizEventsReceiptAction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
+  if (!getTransactionReceiptRequest) {
     return;
   }
-  const getTransactionReceiptRequest = getTransactionReceipt({
-    Authorization: sessionToken,
-    "event-id": action.payload.transactionId
-  });
 
   try {
     const getTransactionReceiptResult = (yield* call(

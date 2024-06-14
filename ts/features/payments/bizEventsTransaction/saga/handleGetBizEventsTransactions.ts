@@ -21,7 +21,6 @@ export function* handleGetBizEventsTransactions(
     getTransactionList,
     getPaymentsBizEventsTransactionsAction.failure,
     {
-      walletId: "TO_REMOVE",
       size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
       "x-continuation-token": action.payload.continuationToken
     },

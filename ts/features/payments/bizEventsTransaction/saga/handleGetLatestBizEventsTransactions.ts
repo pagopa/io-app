@@ -21,8 +21,7 @@ export function* handleGetLatestBizEventsTransactions(
     getTransactionList,
     getPaymentsLatestBizEventsTransactionsAction.failure,
     {
-      size: DEFAULT_LATEST_TRANSACTION_LIST_SIZE,
-      walletId: "TO_REMOVE"
+      size: DEFAULT_LATEST_TRANSACTION_LIST_SIZE
     },
     "Authorization"
   );
