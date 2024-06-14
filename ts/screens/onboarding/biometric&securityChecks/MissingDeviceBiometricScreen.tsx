@@ -1,9 +1,7 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
-import { Alert } from "react-native";
+import React, { useMemo } from "react";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
@@ -12,6 +10,7 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
+import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
@@ -30,6 +29,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const MissingDeviceBiometricScreen = () => {
   const dispatch = useIODispatch();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const { showAlert } = useOnboardingAbortAlert();
 
   useOnFirstRender(() => {
     trackBiometricConfigurationEducationalScreen(
@@ -37,28 +37,8 @@ const MissingDeviceBiometricScreen = () => {
     );
   });
 
-  const handleGoBack = useCallback(
-    () =>
-      Alert.alert(
-        I18n.t("onboarding.alert.title"),
-        I18n.t("onboarding.alert.description"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.exit"),
-            style: "default",
-            onPress: () => dispatch(abortOnboarding())
-          }
-        ]
-      ),
-    [dispatch]
-  );
-
   useHeaderSecondLevel({
-    goBack: handleGoBack,
+    goBack: showAlert,
     title: "",
     faqCategories: FAQ_CATEGORIES,
     supportRequest: true,
