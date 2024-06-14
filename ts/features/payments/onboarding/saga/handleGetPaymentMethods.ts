@@ -22,7 +22,7 @@ export function* handleGetPaymentMethods(
     getPaymentMethods,
     paymentsOnboardingGetMethodsAction.failure,
     {},
-    "bearerAuth"
+    "pagoPAPlatformSessionToken"
   );
 
   if (!getPaymentMethodsRequest) {

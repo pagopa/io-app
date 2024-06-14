@@ -30,7 +30,7 @@ export function* handleStartWalletOnboarding(
           paymentMethodId
         }
       },
-      "bearerAuth"
+      "pagoPAPlatformSessionToken"
     );
 
     if (!startOnboardingRequest) {

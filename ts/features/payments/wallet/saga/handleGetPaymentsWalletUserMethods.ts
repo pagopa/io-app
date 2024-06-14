@@ -20,7 +20,7 @@ export function* handleGetPaymentsWalletUserMethods(
     getWalletsByIdUser,
     getPaymentsWalletUserMethods.failure,
     {},
-    "bearerAuth"
+    "pagoPAPlatformSessionToken"
   );
 
   if (!getWalletsByIdUserRequest) {

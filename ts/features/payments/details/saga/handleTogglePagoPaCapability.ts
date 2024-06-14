@@ -45,7 +45,7 @@ export function* handleTogglePagoPaCapability(
             applications: updatedApplications as Array<WalletApplication>
           }
         },
-        "bearerAuth"
+        "pagoPAPlatformSessionToken"
       );
 
     if (!updateWalletPagoPaApplicationRequest) {

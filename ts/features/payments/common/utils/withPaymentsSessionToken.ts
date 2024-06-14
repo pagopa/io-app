@@ -8,12 +8,11 @@ import { ActionType } from "typesafe-actions";
 import { getGenericError } from "../../../../utils/errors";
 import { getOrFetchPagoPaPlatformSessionToken } from "../saga/handlePaymentsSessionToken";
 
-type TokenKey = "pagoPAPlatformSessionToken" | "bearerAuth" | "Authorization";
+type TokenKey = "pagoPAPlatformSessionToken" | "Authorization";
 
 /** Handler to inject the session token in the request
  * - Biz events uses "Authorization" as token key
- * - Wallet uses "bearerAuth" as token key
- * - E-commerce uses "pagoPAPlatformSessionToken" as token key
+ * - Wallet & E-commerce uses "pagoPAPlatformSessionToken" as token key
  * @param apiFunction the API function to call
  * @param failureAction the action to dispatch in case of failure
  * @param requestBody the request body to send to the API

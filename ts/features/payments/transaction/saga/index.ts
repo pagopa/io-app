@@ -16,6 +16,6 @@ export function* watchPaymentsTransactionSaga(
   yield* takeLatest(
     getPaymentsTransactionDetailsAction.request,
     handleGetTransactionDetails,
-    walletClient.getWalletById // TODO: Add the get transaction details API call here when BIZ Event API will be available
+    walletClient.getIOPaymentWalletById // TODO: Add the get transaction details API call here when BIZ Event API will be available
   );
 }

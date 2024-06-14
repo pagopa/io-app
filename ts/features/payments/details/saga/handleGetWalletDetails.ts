@@ -27,7 +27,7 @@ export function* handleGetWalletDetails(
       {
         walletId: action.payload.walletId
       },
-      "bearerAuth"
+      "pagoPAPlatformSessionToken"
     );
 
     if (!getwalletDetailsRequest) {

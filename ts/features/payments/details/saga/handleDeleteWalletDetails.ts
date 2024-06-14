@@ -31,7 +31,7 @@ export function* handleDeleteWalletDetails(
       {
         walletId: action.payload.walletId
       },
-      "bearerAuth"
+      "pagoPAPlatformSessionToken"
     );
 
     if (!deleteWalletRequest) {
