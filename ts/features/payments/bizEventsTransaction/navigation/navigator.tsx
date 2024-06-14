@@ -8,6 +8,7 @@ import { isGestureEnabled } from "../../../../utils/navigation";
 import { PaymentsTransactionBizEventsDetailsScreen } from "../screens/PaymentsTransactionBizEventsDetailsScreen";
 import { PaymentsTransactionBizEventsListScreen } from "../screens/PaymentsTransactionBizEventsListScreen";
 import WalletTransactionCartItemDetailsScreen from "../screens/PaymentsTransactionBizEventsCartItemDetailsScreen";
+import PaymentsTransactionBizEventsPreviewScreen from "../screens/PaymentsTransactionBizEventsPreviewScreen";
 import { PaymentsTransactionBizEventsParamsList } from "./params";
 import { PaymentsTransactionBizEventsRoutes } from "./routes";
 
@@ -39,6 +40,13 @@ export const PaymentsTransactionBizEventsNavigator = () => (
         PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LIST_SCREEN
       }
       component={PaymentsTransactionBizEventsListScreen}
+      options={{ gestureEnabled: isGestureEnabled }}
+    />
+    <Stack.Screen
+      name={
+        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_PREVIEW_SCREEN
+      }
+      component={PaymentsTransactionBizEventsPreviewScreen}
       options={{ gestureEnabled: isGestureEnabled }}
     />
   </Stack.Navigator>

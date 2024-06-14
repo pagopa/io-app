@@ -937,14 +937,12 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -1100,6 +1098,9 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     Object {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    Object {
+                                      "color": "#0E0F13",
                                     },
                                     Object {
                                       "fontFamily": "Titillium Web",

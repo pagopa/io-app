@@ -123,9 +123,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             accessibilityLabel: I18n.t("global.accessibility.search"),
             onPress: () => {
               analytics.trackSearchStart({ source: "header_icon" });
-              navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-                screen: SERVICES_ROUTES.SEARCH
-              });
+              navigation.navigate(SERVICES_ROUTES.SEARCH);
             }
           }
         };
