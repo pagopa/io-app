@@ -1,4 +1,4 @@
-import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
@@ -112,7 +112,6 @@ const ServicesPreferenceScreen = (): ReactElement => {
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
       >
-        <VSpacer size={16} />
         <ContentWrapper>
           <ServicesContactComponent
             onSelectMode={handleOnSelectMode}
