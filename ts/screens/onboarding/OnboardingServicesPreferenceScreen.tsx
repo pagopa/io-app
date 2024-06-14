@@ -1,17 +1,15 @@
 import {
+  Banner,
   ContentWrapper,
-  FeatureInfo,
-  FooterWithButtons,
   IOStyles,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -37,6 +35,7 @@ import {
 } from "../profile/analytics";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -103,6 +102,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       store.getState()
     );
     onContinue(isFirstOnboarding);
+    IOToast.hideAll();
   }, [isFirstOnboarding, onContinue, profileServicePreferenceMode, store]);
 
   const selectCurrentMode = useCallback(
@@ -152,6 +152,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       profileServicePreferenceMode !== prevMode
     ) {
       setModeSelected(profileServicePreferenceMode);
+      IOToast.hideAll();
       IOToast.success(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
@@ -167,7 +168,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const showBadge = !isFirstOnboarding;
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <RNavScreenWithLargeHeader
+      <IOScrollViewWithLargeHeader
         title={{
           label: I18n.t("services.optIn.preferences.title")
         }}
@@ -175,20 +176,15 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
-        fixedBottomSlot={
-          <FooterWithButtons
-            type="SingleButton"
-            primary={{
-              type: "Solid",
-              buttonProps: {
-                label: I18n.t("global.buttons.confirm"),
-                onPress: () => handleOnContinue(),
-                accessibilityLabel: I18n.t("global.buttons.confirm"),
-                disabled: !isServicesPreferenceModeSet(modeSelected)
-              }
-            }}
-          />
-        }
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.confirm"),
+            onPress: handleOnContinue,
+            accessibilityLabel: I18n.t("global.buttons.confirm"),
+            disabled: !isServicesPreferenceModeSet(modeSelected)
+          }
+        }}
       >
         <SafeAreaView style={IOStyles.flex}>
           <ContentWrapper>
@@ -198,18 +194,18 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
               showBadge={showBadge}
             />
             <VSpacer size={16} />
-            <View>
-              <FeatureInfo
-                iconName="navProfile"
-                body={I18n.t(
-                  "profile.main.privacy.shareData.screen.profileSettings"
-                )}
-              />
-            </View>
+            <Banner
+              size="small"
+              color="neutral"
+              pictogramName="activate"
+              content={I18n.t(
+                "profile.main.privacy.shareData.screen.profileSettings"
+              )}
+            />
           </ContentWrapper>
           {manualConfigBottomSheet}
         </SafeAreaView>
-      </RNavScreenWithLargeHeader>
+      </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );
 };

@@ -2,7 +2,6 @@ import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
 import {
@@ -15,6 +14,7 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { usePrevious } from "../../utils/hooks/usePrevious";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
@@ -82,6 +82,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
       pot.isSome(profile) &&
       prevMode !== profileServicePreferenceMode
     ) {
+      IOToast.hideAll();
       IOToast.success(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
@@ -104,7 +105,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <RNavScreenWithLargeHeader
+      <IOScrollViewWithLargeHeader
         title={{
           label: I18n.t("services.optIn.preferences.title")
         }}
@@ -119,7 +120,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
           />
         </ContentWrapper>
         {manualConfigBottomSheet}
-      </RNavScreenWithLargeHeader>
+      </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );
 };
