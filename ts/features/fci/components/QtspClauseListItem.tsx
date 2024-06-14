@@ -1,9 +1,9 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
 import { CheckboxLabel, IOStyles } from "@pagopa/io-app-design-system";
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
+import { useIOSelector } from "../../../store/hooks";
 import LinkedText from "./LinkedText";
 
 type Props = {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 const QtspClauseListItem = (props: Props) => {
   const [checked, setChecked] = React.useState(props.checked || false);
-  const qtspFilledDocumentUrl = useSelector(fciQtspFilledDocumentUrlSelector);
+  const qtspFilledDocumentUrl = useIOSelector(fciQtspFilledDocumentUrlSelector);
   const onChange = (value: boolean) => {
     setChecked(value);
     props.onChange(value);

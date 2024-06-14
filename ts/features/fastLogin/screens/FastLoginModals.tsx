@@ -1,12 +1,12 @@
 import I18n from "i18n-js";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
 import { logoutRequest } from "../../../store/actions/authentication";
 import {
   askUserToRefreshSessionToken,
   clearTokenRefreshError
 } from "../store/actions/tokenRefreshActions";
+import { useIODispatch } from "../../../store/hooks";
 import AskUserInteractionScreen from "./AskUserInteractionScreen";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
 
@@ -14,7 +14,7 @@ const FastLoginModals = (
   tokenRefreshing: TokenRefreshState,
   isFastLoginUserInteractionNeeded: boolean
 ) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
 
   if (tokenRefreshing.kind === "no-pin-error") {
     return (
@@ -33,7 +33,7 @@ const FastLoginModals = (
           ),
           onPress: () => {
             dispatch(clearTokenRefreshError());
-            dispatch(logoutRequest());
+            dispatch(logoutRequest({ withApiCall: false }));
           }
         }}
       />

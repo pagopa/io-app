@@ -1,7 +1,8 @@
-import { useDispatch } from "react-redux";
 import { Alert } from "react-native";
-import { abortOnboarding } from "../../store/actions/onboarding";
+import { useCallback } from "react";
 import I18n from "../../i18n";
+import { abortOnboarding } from "../../store/actions/onboarding";
+import { useIODispatch } from "../../store/hooks";
 
 type OnboardingAbortAlertUtils = {
   showAlert: () => void;
@@ -12,13 +13,9 @@ type OnboardingAbortAlertUtils = {
  * that will trigger the `abortOnboarding` action.
  */
 export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
 
-  const executeAbortOnboarding = () => {
-    dispatch(abortOnboarding());
-  };
-
-  const showAlert = () => {
+  const showAlert = useCallback(() => {
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -30,11 +27,13 @@ export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: executeAbortOnboarding
+          onPress: () => {
+            dispatch(abortOnboarding());
+          }
         }
       ]
     );
-  };
+  }, [dispatch]);
 
   return { showAlert };
 };

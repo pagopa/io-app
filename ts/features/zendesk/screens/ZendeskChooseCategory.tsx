@@ -8,7 +8,6 @@ import {
   ScrollView,
   View
 } from "react-native";
-import { useDispatch } from "react-redux";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import { isReady } from "../../../common/model/RemoteValue";
 import { H1 } from "../../../components/core/typography/H1";
@@ -18,7 +17,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
@@ -47,7 +46,7 @@ type Props = IOStackNavigationRouteProps<
  * this screen shows the categories for which the user can ask support with the assistance
  */
 const ZendeskChooseCategory = (props: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { assistanceForPayment, assistanceForCard, assistanceForFci } =
     props.route.params;
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
