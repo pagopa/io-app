@@ -556,7 +556,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                       defaultColor="white"
                                       defaultWeight="Bold"
                                       ellipsizeMode="tail"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 16,
@@ -575,7 +575,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           },
                                           Object {
                                             "color": "#FFFFFF",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "700",
                                           },

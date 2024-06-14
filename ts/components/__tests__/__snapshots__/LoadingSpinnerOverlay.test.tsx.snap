@@ -342,7 +342,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
               style={
                 Array [
                   Object {
-                    "fontFamily": "Titillium Web",
+                    "fontFamily": "Titillium Sans Pro",
                     "fontStyle": "normal",
                     "fontWeight": "700",
                   },
