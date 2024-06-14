@@ -39,6 +39,7 @@ export const toUIMessage = (
     serviceId: messageFromApi.sender_service_id,
     serviceName: enriched.service_name,
     organizationName: enriched.organization_name,
+    organizationFiscalCode: enriched.organization_fiscal_code,
     title: enriched.message_title,
     timeToLive: messageFromApi.time_to_live,
     hasPrecondition: enriched.has_precondition ?? false,
