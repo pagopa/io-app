@@ -452,11 +452,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>
@@ -929,11 +929,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>
@@ -2092,11 +2092,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>
@@ -2569,11 +2569,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>

@@ -821,11 +821,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="Regular"
+                                      weight="SemiBold"
                                     >
                                       Attachments
                                     </Text>
@@ -907,12 +907,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <Text
                                     allowFontScaling={false}
                                     color="blueIO-500"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
+                                    defaultColor="black"
+                                    defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
                                       {
-                                        "fontSize": 14,
+                                        "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
@@ -920,7 +920,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     style={
                                       [
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         },
                                         {
@@ -1147,12 +1147,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   <Text
                                     allowFontScaling={false}
                                     color="blueIO-500"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
+                                    defaultColor="black"
+                                    defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
                                       {
-                                        "fontSize": 14,
+                                        "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
@@ -1160,7 +1160,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     style={
                                       [
                                         {
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "lineHeight": 21,
                                         },
                                         {
@@ -1805,11 +1805,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Web",
                                                     "fontStyle": "normal",
-                                                    "fontWeight": "400",
+                                                    "fontWeight": "600",
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
+                                              weight="SemiBold"
                                             >
                                               Notifica
                                             </Text>
@@ -2147,11 +2147,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "color": "#555C70",
                                                     "fontFamily": "Titillium Web",
                                                     "fontStyle": "normal",
-                                                    "fontWeight": "400",
+                                                    "fontWeight": "600",
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
+                                              weight="SemiBold"
                                             >
                                               Message
                                             </Text>
@@ -2458,14 +2458,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -2633,6 +2631,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -3322,14 +3323,12 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3497,6 +3496,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",

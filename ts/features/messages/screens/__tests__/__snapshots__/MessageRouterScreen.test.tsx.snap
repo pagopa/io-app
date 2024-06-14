@@ -513,14 +513,12 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -688,6 +686,9 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -1378,14 +1379,12 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -1553,6 +1552,9 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -2457,14 +2459,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -2632,6 +2632,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -3322,14 +3325,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3497,6 +3498,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -4187,14 +4191,12 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -4362,6 +4364,9 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",

@@ -667,14 +667,12 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -842,6 +840,9 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -1531,14 +1532,12 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -1706,6 +1705,9 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",

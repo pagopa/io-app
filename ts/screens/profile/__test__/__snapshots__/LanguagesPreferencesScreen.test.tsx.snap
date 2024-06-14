@@ -1033,14 +1033,12 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -1208,6 +1206,9 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",

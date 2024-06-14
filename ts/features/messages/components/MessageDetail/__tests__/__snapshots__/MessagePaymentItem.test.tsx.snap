@@ -932,17 +932,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -958,6 +953,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   [
                                     {
@@ -1525,17 +1521,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View

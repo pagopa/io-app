@@ -1146,11 +1146,11 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -1768,11 +1768,11 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -2596,11 +2596,11 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -3492,11 +3492,11 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -4534,11 +4534,11 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -5712,11 +5712,11 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -5986,11 +5986,11 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 2 title
                                       </Text>
@@ -6542,11 +6542,11 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 3 title
                                       </Text>
@@ -7866,11 +7866,11 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -8140,11 +8140,11 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Web",
                                               "fontStyle": "normal",
-                                              "fontWeight": "400",
+                                              "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="Regular"
+                                        weight="SemiBold"
                                       >
                                         Section 2 title
                                       </Text>

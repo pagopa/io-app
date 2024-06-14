@@ -620,14 +620,12 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -795,6 +793,9 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",

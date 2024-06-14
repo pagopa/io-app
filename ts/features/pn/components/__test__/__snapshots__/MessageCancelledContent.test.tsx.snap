@@ -429,9 +429,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -909,9 +915,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -1389,9 +1401,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -1869,9 +1887,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -2349,9 +2373,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -2829,9 +2859,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -3309,9 +3345,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -3789,9 +3831,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -4269,9 +4317,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         </View>
                         <View
                           style={
-                            {
-                              "flex": 1,
-                            }
+                            [
+                              {
+                                "marginTop": -5,
+                              },
+                              {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text

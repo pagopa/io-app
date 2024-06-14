@@ -1055,14 +1055,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -1230,6 +1228,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -2464,14 +2465,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -2639,6 +2638,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -3873,14 +3875,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -4048,6 +4048,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -5282,14 +5285,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -5457,6 +5458,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -6691,14 +6695,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -6866,6 +6868,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -8100,14 +8105,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -8275,6 +8278,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -9509,14 +9515,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -9684,6 +9688,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -10918,14 +10925,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -11093,6 +11098,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -12327,14 +12335,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -12502,6 +12508,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -13736,14 +13745,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -13911,6 +13918,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -15145,14 +15155,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -15320,6 +15328,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -16554,14 +16565,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -16729,6 +16738,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -17963,14 +17975,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -18138,6 +18148,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -19372,14 +19385,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -19547,6 +19558,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -20781,14 +20795,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -20956,6 +20968,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -22190,14 +22205,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -22365,6 +22378,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -23599,14 +23615,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -23774,6 +23788,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",
@@ -25008,14 +25025,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
                               },
+                              {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -25183,6 +25198,9 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {
                                       "fontSize": 14,
                                       "textAlign": "center",
+                                    },
+                                    {
+                                      "color": "#0E0F13",
                                     },
                                     {
                                       "fontFamily": "Titillium Web",

@@ -889,17 +889,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <Text
@@ -915,6 +910,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           "lineHeight": 25,
                                         }
                                       }
+                                      numberOfLines={1}
                                       style={
                                         [
                                           {
@@ -1138,17 +1134,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -1400,17 +1391,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -1662,17 +1648,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -1924,17 +1905,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -2186,17 +2162,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
@@ -2448,17 +2419,12 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   </View>
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "flex-end",
-                                          "marginLeft": 12,
-                                        },
-                                        {
-                                          "flexShrink": 1,
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "flex-end",
+                                        "marginLeft": 12,
+                                      }
                                     }
                                   >
                                     <View
