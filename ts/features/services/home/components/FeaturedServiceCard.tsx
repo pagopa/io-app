@@ -82,7 +82,7 @@ const FeaturedServiceCard = ({
       testID={testID}
     >
       <View style={styles.cardHeader}>
-        <Avatar logoUri={logoForService(id, "")} size="small" />
+        <Avatar logoUri={logoForService(id, "")} size="medium" />
         {isNew && <Badge variant="purple" text={I18n.t("services.new")} />}
       </View>
       <View style={styles.cardTitle}>
@@ -111,8 +111,8 @@ const FeaturedServiceCardSkeleton = ({ testID }: TestID) => (
         color={IOColors["grey-200"]}
         animate="fade"
         radius={8}
-        width={IOVisualCostants.avatarSizeSmall}
-        height={IOVisualCostants.avatarSizeSmall}
+        width={IOVisualCostants.avatarSizeMedium}
+        height={IOVisualCostants.avatarSizeMedium}
       />
     </View>
     <View style={styles.cardTitle}>
