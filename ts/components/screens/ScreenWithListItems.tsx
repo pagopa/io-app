@@ -1,10 +1,9 @@
-import React, { useCallback } from "react";
+import React, { ComponentProps, useCallback, useMemo } from "react";
 import {
   Body,
   ButtonLinkProps,
   ButtonSolidProps,
   Divider,
-  GradientScrollView,
   H2,
   ListItemHeader,
   ListItemInfo,
@@ -16,6 +15,9 @@ import {
   BodyProps,
   ComposedBodyFromArray
 } from "../core/typography/ComposedBodyFromArray";
+import { IOScrollView } from "../ui/IOScrollView";
+
+type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];
 
 export type PropsScreenWithListItems = {
   title?: string;
@@ -58,11 +60,23 @@ const ScreenWithListItems = (props: PropsScreenWithListItems) => {
     []
   );
 
+  const actions = useMemo<IOScrollViewActions>(() => {
+    if (secondaryActionProps) {
+      return {
+        type: "TwoButtons",
+        primary: primaryActionProps,
+        secondary: secondaryActionProps
+      };
+    }
+
+    return {
+      type: "SingleButton",
+      primary: primaryActionProps
+    };
+  }, [primaryActionProps, secondaryActionProps]);
+
   return (
-    <GradientScrollView
-      primaryActionProps={primaryActionProps}
-      secondaryActionProps={secondaryActionProps}
-    >
+    <IOScrollView actions={actions}>
       <H2>{title}</H2>
       {subtitle && (
         <>
@@ -87,7 +101,7 @@ const ScreenWithListItems = (props: PropsScreenWithListItems) => {
         ItemSeparatorComponent={Divider}
         renderItem={renderProfileNavItem}
       />
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 
