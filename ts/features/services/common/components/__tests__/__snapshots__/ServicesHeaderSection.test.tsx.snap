@@ -3,11 +3,11 @@
 exports[`ServicesHeaderSection component should match snapshot for loading 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "backgroundColor": "#F4F5F8",
       },
-      Object {
+      {
         "marginTop": -1334,
         "paddingBottom": undefined,
         "paddingTop": 1534,
@@ -17,7 +17,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
 >
   <View
     style={
-      Object {
+      {
         "paddingHorizontal": 24,
       }
     }
@@ -25,7 +25,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
     <View
       accessible={true}
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -36,7 +36,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
     >
       <View
         style={
-          Object {
+          {
             "marginRight": 16,
           }
         }
@@ -44,7 +44,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         <View
           collapsable={false}
           style={
-            Object {
+            {
               "opacity": 0.5,
             }
           }
@@ -54,7 +54,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
             height={66}
             radius={12}
             style={
-              Object {
+              {
                 "backgroundColor": "#D2D6E3",
                 "borderRadius": 12,
                 "height": 66,
@@ -67,7 +67,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
       </View>
       <View
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
@@ -75,7 +75,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         <View
           collapsable={false}
           style={
-            Object {
+            {
               "opacity": 0.5,
             }
           }
@@ -85,7 +85,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
             height={16}
             radius={8}
             style={
-              Object {
+              {
                 "backgroundColor": "#D2D6E3",
                 "borderRadius": 8,
                 "height": 16,
@@ -97,7 +97,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         </View>
         <View
           style={
-            Object {
+            {
               "height": 8,
             }
           }
@@ -105,7 +105,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         <View
           collapsable={false}
           style={
-            Object {
+            {
               "opacity": 0.5,
             }
           }
@@ -115,7 +115,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
             height={16}
             radius={8}
             style={
-              Object {
+              {
                 "backgroundColor": "#D2D6E3",
                 "borderRadius": 8,
                 "height": 16,
@@ -127,7 +127,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         </View>
         <View
           style={
-            Object {
+            {
               "height": 8,
             }
           }
@@ -135,7 +135,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         <View
           collapsable={false}
           style={
-            Object {
+            {
               "opacity": 0.5,
             }
           }
@@ -145,7 +145,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
             height={8}
             radius={8}
             style={
-              Object {
+              {
                 "backgroundColor": "#D2D6E3",
                 "borderRadius": 8,
                 "height": 8,
@@ -159,7 +159,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
     </View>
     <View
       style={
-        Object {
+        {
           "height": 16,
         }
       }
@@ -171,11 +171,11 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
 exports[`ServicesHeaderSection component should match the snapshot for service header 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "backgroundColor": "#F4F5F8",
       },
-      Object {
+      {
         "marginTop": -1334,
         "paddingBottom": undefined,
         "paddingTop": 1534,
@@ -185,14 +185,14 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
 >
   <View
     style={
-      Object {
+      {
         "paddingHorizontal": 24,
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -203,7 +203,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
     >
       <View
         style={
-          Object {
+          {
             "marginRight": 16,
           }
         }
@@ -211,14 +211,14 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
         <View
           accessibilityIgnoresInvertColors={true}
           style={
-            Array [
-              Object {
+            [
+              {
                 "borderColor": "rgba(14,15,19,0.1)",
                 "borderCurve": "continuous",
                 "borderWidth": 1,
                 "overflow": "hidden",
               },
-              Object {
+              {
                 "backgroundColor": "#FFFFFF",
                 "borderRadius": 12,
                 "height": 66,
@@ -230,13 +230,13 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderCurve": "continuous",
                   "overflow": "hidden",
                 },
-                Object {
+                {
                   "borderRadius": 3,
                 },
               ]
@@ -246,12 +246,12 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               accessibilityIgnoresInvertColors={true}
               onError={[Function]}
               source={
-                Object {
+                {
                   "testUri": "../../../img/test/logo.png",
                 }
               }
               style={
-                Object {
+                {
                   "height": "100%",
                   "resizeMode": "contain",
                   "width": "100%",
@@ -263,7 +263,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
       </View>
       <View
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
@@ -275,18 +275,18 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           defaultWeight="SemiBold"
           font="TitilliumWeb"
           fontStyle={
-            Object {
+            {
               "fontSize": 24,
               "lineHeight": 34,
             }
           }
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 24,
                 "lineHeight": 34,
               },
-              Object {
+              {
                 "color": "#17324D",
                 "fontFamily": "Titillium Web",
                 "fontStyle": "normal",
@@ -306,18 +306,18 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           font="TitilliumWeb"
           fontSize="regular"
           fontStyle={
-            Object {
+            {
               "fontSize": 14,
               "lineHeight": 21,
             }
           }
           style={
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 14,
                 "lineHeight": 21,
               },
-              Object {
+              {
                 "color": "#555C70",
                 "fontFamily": "Titillium Web",
                 "fontStyle": "normal",
@@ -333,7 +333,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
     </View>
     <View
       style={
-        Object {
+        {
           "height": 16,
         }
       }

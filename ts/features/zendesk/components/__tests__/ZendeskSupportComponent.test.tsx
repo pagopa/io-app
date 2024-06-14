@@ -52,20 +52,6 @@ describe("the ZendeskSupportComponent", () => {
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
   });
 
-  describe("when the user is authenticated with session info", () => {
-    beforeEach(() => {
-      mockedNavigation.mockClear();
-    });
-    const store = createStore(appReducer, globalState as any);
-    store.dispatch(idpSelected({} as SpidIdp));
-    store.dispatch(
-      loginSuccess({
-        token: "abc1234" as SessionToken,
-        idp: "test"
-      })
-    );
-  });
-
   describe("when the user press the zendesk open ticket button", () => {
     beforeEach(() => {
       mockedNavigation.mockClear();

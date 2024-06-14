@@ -3,7 +3,7 @@
 exports[`NotificationPreviewSample should match snapshot, preview off, reminder off 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,14 +326,14 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "backgroundColor": "#FFFFFF",
                             "borderColor": "#CCD4DC",
@@ -349,15 +361,15 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           minX={0}
                           minY={0}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "transparent",
                                 "borderWidth": 0,
                               },
-                              Object {
+                              {
                                 "color": "#2351E6",
                               },
-                              Object {
+                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -371,7 +383,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                         >
                           <RNSVGGroup
                             fill={
-                              Object {
+                              {
                                 "payload": 4278190080,
                                 "type": 0,
                               }
@@ -380,12 +392,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             <RNSVGPath
                               d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -394,13 +406,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -409,12 +421,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -423,13 +435,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -438,12 +450,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -452,14 +464,14 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                         </RNSVGSvgView>
                         <View
                           style={
-                            Object {
+                            {
                               "width": 16,
                             }
                           }
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "flex": 1,
                             }
                           }
@@ -471,18 +483,18 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             defaultWeight="SemiBold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -501,18 +513,18 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             defaultWeight="Bold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 14,
                                 "lineHeight": 24,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -532,8 +544,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -542,7 +554,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
 exports[`NotificationPreviewSample should match snapshot, preview off, reminder on 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -550,8 +562,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -560,8 +572,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -573,7 +585,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -589,7 +601,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -603,12 +615,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -622,7 +634,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -634,7 +646,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -642,7 +654,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -653,7 +665,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -667,7 +679,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -682,7 +694,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -696,7 +708,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -710,21 +722,34 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -736,7 +761,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -754,12 +779,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -769,10 +794,10 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -781,9 +806,9 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -799,27 +824,26 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -829,13 +853,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -845,7 +869,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -853,14 +877,14 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "backgroundColor": "#FFFFFF",
                             "borderColor": "#CCD4DC",
@@ -888,15 +912,15 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           minX={0}
                           minY={0}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "transparent",
                                 "borderWidth": 0,
                               },
-                              Object {
+                              {
                                 "color": "#2351E6",
                               },
-                              Object {
+                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -910,7 +934,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                         >
                           <RNSVGGroup
                             fill={
-                              Object {
+                              {
                                 "payload": 4278190080,
                                 "type": 0,
                               }
@@ -919,12 +943,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             <RNSVGPath
                               d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -933,13 +957,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -948,12 +972,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -962,13 +986,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -977,12 +1001,12 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -991,14 +1015,14 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                         </RNSVGSvgView>
                         <View
                           style={
-                            Object {
+                            {
                               "width": 16,
                             }
                           }
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "flex": 1,
                             }
                           }
@@ -1010,18 +1034,18 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             defaultWeight="SemiBold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -1040,18 +1064,18 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             defaultWeight="Bold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 14,
                                 "lineHeight": 24,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -1071,8 +1095,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1081,7 +1105,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
 exports[`NotificationPreviewSample should match snapshot, preview on, reminder off 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1089,8 +1113,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1099,8 +1123,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1112,7 +1136,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1128,7 +1152,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1142,12 +1166,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1161,7 +1185,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1173,7 +1197,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1181,7 +1205,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1192,7 +1216,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1206,7 +1230,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1221,7 +1245,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1235,7 +1259,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1249,21 +1273,34 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1275,7 +1312,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1293,12 +1330,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1308,10 +1345,10 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1320,9 +1357,9 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1338,27 +1375,26 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1368,13 +1404,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1384,7 +1420,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1392,14 +1428,14 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "backgroundColor": "#FFFFFF",
                             "borderColor": "#CCD4DC",
@@ -1427,15 +1463,15 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           minX={0}
                           minY={0}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "transparent",
                                 "borderWidth": 0,
                               },
-                              Object {
+                              {
                                 "color": "#2351E6",
                               },
-                              Object {
+                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -1449,7 +1485,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                         >
                           <RNSVGGroup
                             fill={
-                              Object {
+                              {
                                 "payload": 4278190080,
                                 "type": 0,
                               }
@@ -1458,12 +1494,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             <RNSVGPath
                               d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -1472,13 +1508,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -1487,12 +1523,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -1501,13 +1537,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -1516,12 +1552,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -1530,14 +1566,14 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                         </RNSVGSvgView>
                         <View
                           style={
-                            Object {
+                            {
                               "width": 16,
                             }
                           }
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "flex": 1,
                             }
                           }
@@ -1549,18 +1585,18 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             defaultWeight="SemiBold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -1579,18 +1615,18 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             defaultWeight="Bold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 14,
                                 "lineHeight": 24,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -1610,8 +1646,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1620,7 +1656,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
 exports[`NotificationPreviewSample should match snapshot, preview on, reminder on 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1628,8 +1664,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1638,8 +1674,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1651,7 +1687,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1667,7 +1703,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1681,12 +1717,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1700,7 +1736,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1712,7 +1748,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1720,7 +1756,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1731,7 +1767,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1745,7 +1781,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1760,7 +1796,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1774,7 +1810,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1788,21 +1824,34 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1814,7 +1863,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1832,12 +1881,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1847,10 +1896,10 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1859,9 +1908,9 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1877,27 +1926,26 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1907,13 +1955,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1923,7 +1971,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1931,14 +1979,14 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "backgroundColor": "#FFFFFF",
                             "borderColor": "#CCD4DC",
@@ -1966,15 +2014,15 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           minX={0}
                           minY={0}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "transparent",
                                 "borderWidth": 0,
                               },
-                              Object {
+                              {
                                 "color": "#2351E6",
                               },
-                              Object {
+                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -1988,7 +2036,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                         >
                           <RNSVGGroup
                             fill={
-                              Object {
+                              {
                                 "payload": 4278190080,
                                 "type": 0,
                               }
@@ -1997,12 +2045,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             <RNSVGPath
                               d="M2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -2011,13 +2059,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -2026,12 +2074,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5ZM2.5 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -2040,13 +2088,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               clipRule={0}
                               d="M23.5 14c0 4.418-3.582 8-7.619 8-4.8 0-8.381-3.582-8.381-8s3.582-8 8.381-8c4.037 0 7.619 3.582 7.619 8Zm-6.035-.84h1.065v-1.048h-1.057v-1.267h-1.157v4.216c0 .667.092 1.122.283 1.365.184.252.537.374 1.058.374.2 0 .498-.049.881-.138l-.054-.975-.659.016c-.114 0-.199-.024-.252-.081a.328.328 0 0 1-.092-.195 4.118 4.118 0 0 1-.016-.39V13.16Zm-3.486-1.04v4.574h1.157v-4.573h-1.157Zm-1.737-.113c.203 0 .374.068.506.204a.692.692 0 0 1 .194.507.675.675 0 0 1-.194.5.684.684 0 0 1-.498.189.693.693 0 0 1-.708-.704.72.72 0 0 1 .195-.5.672.672 0 0 1 .505-.196Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               fillRule={0}
                               propList={
-                                Array [
+                                [
                                   "fill",
                                   "fillRule",
                                 ]
@@ -2055,12 +2103,12 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             <RNSVGPath
                               d="M4.5 11.5a2 2 0 1 0-4 0V20a2 2 0 1 0 4 0v-8.5Z"
                               fill={
-                                Object {
+                                {
                                   "type": 2,
                                 }
                               }
                               propList={
-                                Array [
+                                [
                                   "fill",
                                 ]
                               }
@@ -2069,14 +2117,14 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                         </RNSVGSvgView>
                         <View
                           style={
-                            Object {
+                            {
                               "width": 16,
                             }
                           }
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "flex": 1,
                             }
                           }
@@ -2088,18 +2136,18 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             defaultWeight="SemiBold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -2118,18 +2166,18 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             defaultWeight="Bold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 14,
                                 "lineHeight": 24,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 14,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -2149,8 +2197,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

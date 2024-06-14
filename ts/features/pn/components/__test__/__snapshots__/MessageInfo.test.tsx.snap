@@ -3,7 +3,7 @@
 exports[`MessageInfo should match snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`MessageInfo should match snapshot 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`MessageInfo should match snapshot 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`MessageInfo should match snapshot 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`MessageInfo should match snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`MessageInfo should match snapshot 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`MessageInfo should match snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`MessageInfo should match snapshot 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`MessageInfo should match snapshot 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`MessageInfo should match snapshot 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`MessageInfo should match snapshot 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`MessageInfo should match snapshot 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`MessageInfo should match snapshot 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`MessageInfo should match snapshot 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`MessageInfo should match snapshot 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`MessageInfo should match snapshot 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -323,7 +335,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                         accessibilityLabel="Informazioni sulla notifica"
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -333,7 +345,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "flexDirection": "row",
                               "justifyContent": "space-between",
@@ -342,7 +354,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "marginRight": 8,
                               }
                             }
@@ -361,15 +373,15 @@ exports[`MessageInfo should match snapshot 1`] = `
                               minX={0}
                               minY={0}
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "backgroundColor": "transparent",
                                     "borderWidth": 0,
                                   },
-                                  Object {
+                                  {
                                     "color": "#BBC2D6",
                                   },
-                                  Object {
+                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -383,7 +395,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                             >
                               <RNSVGGroup
                                 fill={
-                                  Object {
+                                  {
                                     "payload": 4278190080,
                                     "type": 0,
                                   }
@@ -393,13 +405,13 @@ exports[`MessageInfo should match snapshot 1`] = `
                                   clipRule={0}
                                   d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
                                   fill={
-                                    Object {
+                                    {
                                       "type": 2,
                                     }
                                   }
                                   fillRule={0}
                                   propList={
-                                    Array [
+                                    [
                                       "fill",
                                       "fillRule",
                                     ]
@@ -410,7 +422,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -427,19 +439,19 @@ exports[`MessageInfo should match snapshot 1`] = `
                                 defaultWeight="SemiBold"
                                 font="TitilliumWeb"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
                                 role="heading"
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
@@ -458,6 +470,23 @@ exports[`MessageInfo should match snapshot 1`] = `
                       <View
                         accessibilityLabel="Codice IUN copy to clipboard"
                         accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -474,13 +503,13 @@ exports[`MessageInfo should match snapshot 1`] = `
                         <View
                           importantForAccessibility="no-hide-descendants"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
                               },
-                              Object {
+                              {
                                 "backgroundColor": undefined,
                               },
                             ]
@@ -488,15 +517,15 @@ exports[`MessageInfo should match snapshot 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
                                 },
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -506,7 +535,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "flex": 1,
                                 }
                               }
@@ -518,18 +547,18 @@ exports[`MessageInfo should match snapshot 1`] = `
                                 defaultWeight="Bold"
                                 font="TitilliumWeb"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 21,
                                   }
                                 }
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 14,
                                       "lineHeight": 21,
                                     },
-                                    Object {
+                                    {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
@@ -548,19 +577,19 @@ exports[`MessageInfo should match snapshot 1`] = `
                                 defaultWeight="SemiBold"
                                 font="TitilliumWeb"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
                                 numberOfLines={2}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#0073E6",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
@@ -575,7 +604,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "marginLeft": 12,
                                 }
                               }
@@ -594,15 +623,15 @@ exports[`MessageInfo should match snapshot 1`] = `
                                 minX={0}
                                 minY={0}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "backgroundColor": "transparent",
                                       "borderWidth": 0,
                                     },
-                                    Object {
+                                    {
                                       "color": "#0073E6",
                                     },
-                                    Object {
+                                    {
                                       "flex": 0,
                                       "height": 24,
                                       "width": 24,
@@ -616,7 +645,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                               >
                                 <RNSVGGroup
                                   fill={
-                                    Object {
+                                    {
                                       "payload": 4278190080,
                                       "type": 0,
                                     }
@@ -626,13 +655,13 @@ exports[`MessageInfo should match snapshot 1`] = `
                                     clipRule={0}
                                     d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
                                     fill={
-                                      Object {
+                                      {
                                         "type": 2,
                                       }
                                     }
                                     fillRule={0}
                                     propList={
-                                      Array [
+                                      [
                                         "fill",
                                         "fillRule",
                                       ]
@@ -650,8 +679,8 @@ exports[`MessageInfo should match snapshot 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

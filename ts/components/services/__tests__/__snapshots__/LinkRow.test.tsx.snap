@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LinkRow component should match the snapshot 1`] = `
-Array [
+[
   <Text
     accessibilityRole="link"
     color="blue"
@@ -10,7 +10,7 @@ Array [
     ellipsizeMode="tail"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "textDecorationLine": "underline",
       }
@@ -18,15 +18,15 @@ Array [
     numberOfLines={1}
     onPress={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "paddingVertical": 16,
         },
-        Object {
+        {
           "fontSize": 16,
           "textDecorationLine": "underline",
         },
-        Object {
+        {
           "color": "#0073E6",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -40,12 +40,12 @@ Array [
   </Text>,
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "#CCD4DC",
         },
         false,
-        Object {
+        {
           "height": 0.5,
         },
       ]

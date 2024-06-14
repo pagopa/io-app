@@ -8,9 +8,11 @@ import {
   LayoutRectangle,
   StyleSheet,
   Text,
-  View
+  View,
+  ViewStyle
 } from "react-native";
 import Animated, {
+  AnimatedStyleProp,
   Extrapolation,
   interpolate,
   useAnimatedScrollHandler,
@@ -69,24 +71,31 @@ export const DSFooterActionsSticky = () => {
     [actionBlockPlaceholderY, activeScreenHeight, actionBlockHeight]
   );
 
-  const actionBlockAnimatedStyle = useAnimatedStyle(() => ({
-    /* 
+  const actionBlockAnimatedStyle = useAnimatedStyle(
+    () =>
+      ({
+        /* 
     We only start translating the action block
     when it reaches the top of the placeholder
        0 = Translate is blocked
       -1 = Translate is unblocked
     */
-    transform: [
-      {
-        translateY: interpolate(
-          scrollY.value,
-          [0, actionBlockPlaceholderTopEdge - 1, actionBlockPlaceholderTopEdge],
-          [0, 0, -1],
-          { extrapolateLeft: Extrapolation.CLAMP }
-        )
-      }
-    ]
-  }));
+        transform: [
+          {
+            translateY: interpolate(
+              scrollY.value,
+              [
+                0,
+                actionBlockPlaceholderTopEdge - 1,
+                actionBlockPlaceholderTopEdge
+              ],
+              [0, 0, -1],
+              { extrapolateLeft: Extrapolation.CLAMP }
+            )
+          }
+        ]
+      } as AnimatedStyleProp<ViewStyle>)
+  );
 
   const actionBackgroundBlockAnimatedStyle = useAnimatedStyle(() => ({
     /* Avoid solid background overlap with the
@@ -141,7 +150,7 @@ export const DSFooterActionsSticky = () => {
           }
         }}
         animatedStyles={{
-          mainBlock: actionBlockAnimatedStyle,
+          mainBlock: actionBlockAnimatedStyle as any,
           background: actionBackgroundBlockAnimatedStyle
         }}
         onMeasure={handleFooterActionsHeight}

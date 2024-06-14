@@ -98,12 +98,12 @@ const FaqManager = (props: FaqManagerProps) => {
       () => ({
         title: "",
         faqs: getFAQsFromCategories(faqCategories ?? []),
-        content: constNull
+        content: null
       }),
       cHC => ({
         title: cHC.title,
         faqs: getFAQsFromCategories(faqCategories ?? []),
-        content: cHC.body()
+        content: cHC.body
       })
     )
   );

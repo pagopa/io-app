@@ -3,7 +3,7 @@
 exports[`WebviewComponent tests snapshot for component 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "#FFFFFF",
           "bottom": 0,
           "inset": 0,
@@ -23,7 +23,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
           "top": 0,
           "zIndex": 1,
         },
-        Object {
+        {
           "backgroundColor": "rgba(255,255,255,0.7)",
           "opacity": 1,
         },
@@ -32,8 +32,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flex": 1,
             "height": 100,
@@ -49,7 +49,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       />
       <View
         style={
-          Object {
+          {
             "padding": 24,
           }
         }
@@ -61,21 +61,21 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
           defaultWeight="Regular"
           font="TitilliumWeb"
           fontStyle={
-            Object {
+            {
               "fontSize": 16,
               "lineHeight": 24,
             }
           }
           style={
-            Array [
-              Object {
+            [
+              {
                 "textAlign": "center",
               },
-              Object {
+              {
                 "fontSize": 16,
                 "lineHeight": 24,
               },
-              Object {
+              {
                 "color": "#475A6D",
                 "fontFamily": "Titillium Web",
                 "fontStyle": "normal",
@@ -92,11 +92,11 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
-        Object {
+        {
           "zIndex": 0,
         },
       ]
@@ -111,12 +111,12 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       onHttpError={[Function]}
       onLoadEnd={[Function]}
       source={
-        Object {
+        {
           "uri": "https://google.com",
         }
       }
       style={
-        Object {
+        {
           "flex": 1,
         }
       }

@@ -3,7 +3,7 @@
 exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, subtitle, and list items 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -322,14 +334,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                       <RCTScrollView
                         collapsable={false}
                         contentContainerStyle={
-                          Object {
+                          {
                             "paddingBottom": 148,
                             "paddingHorizontal": 24,
                           }
                         }
                         onScroll={[Function]}
                         scrollEventThrottle={16}
-                        style={Object {}}
+                        style={{}}
                       >
                         <View>
                           <Text
@@ -339,18 +351,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             defaultWeight="SemiBold"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 28,
                                 "lineHeight": 40,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 28,
                                   "lineHeight": 40,
                                 },
-                                Object {
+                                {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -364,7 +376,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 8,
                               }
                             }
@@ -376,18 +388,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             defaultWeight="Regular"
                             font="TitilliumWeb"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 16,
                                 "lineHeight": 24,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 16,
                                   "lineHeight": 24,
                                 },
-                                Object {
+                                {
                                   "color": "#475A6D",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
@@ -401,7 +413,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 16,
                               }
                             }
@@ -410,7 +422,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             accessibilityLabel="How to do it::"
                             accessible={true}
                             style={
-                              Object {
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
@@ -420,7 +432,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             <View
                               importantForAccessibility="no-hide-descendants"
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
@@ -429,7 +441,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flex": 1,
                                   }
                                 }
@@ -446,19 +458,19 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 18,
                                         "lineHeight": 25,
                                       }
                                     }
                                     role="heading"
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "fontSize": 18,
                                           "lineHeight": 25,
                                         },
-                                        Object {
+                                        {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -478,18 +490,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             ItemSeparatorComponent={[Function]}
                             collapsable={false}
                             data={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "icon": "systemSettingsAndroid",
                                   "label": "Step 1",
                                   "value": "Open 'Settings'",
                                 },
-                                Object {
+                                {
                                   "icon": "systemAppsAndroid",
                                   "label": "Step 2",
                                   "value": "Search for ‘NFC’ functionality",
                                 },
-                                Object {
+                                {
                                   "icon": "systemToggleInstructions",
                                   "label": "Step 3",
                                   "value": "Turn it on",
@@ -515,14 +527,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             renderScrollComponent={[Function]}
                             scrollEnabled={false}
                             scrollEventThrottle={50}
-                            stickyHeaderIndices={Array []}
-                            viewabilityConfigCallbackPairs={Array []}
+                            stickyHeaderIndices={[]}
+                            viewabilityConfigCallbackPairs={[]}
                             waitFor={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "current": null,
                                 },
-                                Object {
+                                {
                                   "current": null,
                                 },
                               ]
@@ -530,6 +542,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           >
                             <View>
                               <View
+                                onFocusCapture={[Function]}
                                 onLayout={[Function]}
                                 style={null}
                               >
@@ -537,7 +550,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   accessibilityLabel="Step 1; Open 'Settings'"
                                   accessible={true}
                                   style={
-                                    Object {
+                                    {
                                       "marginHorizontal": -24,
                                       "paddingHorizontal": 24,
                                       "paddingVertical": 12,
@@ -546,7 +559,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "alignItems": "center",
                                         "flexDirection": "row",
                                         "justifyContent": "space-between",
@@ -555,7 +568,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   >
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "marginRight": 12,
                                         }
                                       }
@@ -574,15 +587,15 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#99A3C1",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -596,7 +609,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -604,14 +617,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         >
                                           <RNSVGRect
                                             fill={
-                                              Object {
+                                              {
                                                 "payload": 4282486191,
                                                 "type": 0,
                                               }
                                             }
                                             height={24}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                               ]
                                             }
@@ -623,13 +636,13 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           <RNSVGPath
                                             d="M17.95 12.784c.033-.25.05-.509.05-.784a4.81 4.81 0 0 0-.058-.783L19.633 9.9a.409.409 0 0 0 .1-.508l-1.6-2.767a.407.407 0 0 0-.491-.183l-1.992.8a5.885 5.885 0 0 0-1.35-.783L14 4.342A.403.403 0 0 0 13.6 4h-3.2c-.2 0-.358.142-.392.342l-.3 2.117c-.491.2-.941.475-1.35.783l-1.991-.8a.398.398 0 0 0-.492.183L4.283 9.392c-.1.175-.066.392.1.508l1.692 1.317A4.89 4.89 0 0 0 6 12c0 .259.017.534.058.784L4.367 14.1a.409.409 0 0 0-.1.509l1.6 2.766c.1.184.308.242.491.184l1.992-.8c.417.316.858.583 1.35.783l.3 2.117c.042.2.2.341.4.341h3.2c.2 0 .367-.141.392-.341l.3-2.117c.491-.2.941-.467 1.35-.783l1.991.8c.184.066.392 0 .492-.184l1.6-2.766c.1-.184.058-.392-.1-.509l-1.675-1.316ZM12 15c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "payload": 4294967295,
                                                 "type": 0,
                                               }
                                             }
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                               ]
                                             }
@@ -639,7 +652,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     </View>
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "flex": 1,
                                         }
                                       }
@@ -656,18 +669,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           defaultWeight="Bold"
                                           font="TitilliumWeb"
                                           fontStyle={
-                                            Object {
+                                            {
                                               "fontSize": 14,
                                               "lineHeight": 21,
                                             }
                                           }
                                           style={
-                                            Array [
-                                              Object {
+                                            [
+                                              {
                                                 "fontSize": 14,
                                                 "lineHeight": 21,
                                               },
-                                              Object {
+                                              {
                                                 "color": "#555C70",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
@@ -686,19 +699,19 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           defaultWeight="SemiBold"
                                           font="TitilliumWeb"
                                           fontStyle={
-                                            Object {
+                                            {
                                               "fontSize": 18,
                                               "lineHeight": 25,
                                             }
                                           }
                                           numberOfLines={2}
                                           style={
-                                            Array [
-                                              Object {
+                                            [
+                                              {
                                                 "fontSize": 18,
                                                 "lineHeight": 25,
                                               },
-                                              Object {
+                                              {
                                                 "color": "#0E0F13",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
@@ -716,7 +729,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "backgroundColor": "#D2D6E3",
                                       "height": 0.5,
                                     }
@@ -724,6 +737,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 />
                               </View>
                               <View
+                                onFocusCapture={[Function]}
                                 onLayout={[Function]}
                                 style={null}
                               >
@@ -731,7 +745,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   accessibilityLabel="Step 2; Search for ‘NFC’ functionality"
                                   accessible={true}
                                   style={
-                                    Object {
+                                    {
                                       "marginHorizontal": -24,
                                       "paddingHorizontal": 24,
                                       "paddingVertical": 12,
@@ -740,7 +754,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "alignItems": "center",
                                         "flexDirection": "row",
                                         "justifyContent": "space-between",
@@ -749,7 +763,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   >
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "marginRight": 12,
                                         }
                                       }
@@ -768,15 +782,15 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#99A3C1",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -790,7 +804,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -798,14 +812,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         >
                                           <RNSVGRect
                                             fill={
-                                              Object {
+                                              {
                                                 "payload": 4294417947,
                                                 "type": 0,
                                               }
                                             }
                                             height={24}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                               ]
                                             }
@@ -816,13 +830,13 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           />
                                           <RNSVGGroup
                                             fill={
-                                              Object {
+                                              {
                                                 "payload": 4294967295,
                                                 "type": 0,
                                               }
                                             }
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                               ]
                                             }
@@ -831,7 +845,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               cx="8"
                                               cy="8"
                                               fill={
-                                                Object {
+                                                {
                                                   "payload": 4278190080,
                                                   "type": 0,
                                                 }
@@ -842,7 +856,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               cx="8"
                                               cy="16"
                                               fill={
-                                                Object {
+                                                {
                                                   "payload": 4278190080,
                                                   "type": 0,
                                                 }
@@ -853,7 +867,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               cx="16"
                                               cy="16"
                                               fill={
-                                                Object {
+                                                {
                                                   "payload": 4278190080,
                                                   "type": 0,
                                                 }
@@ -864,7 +878,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               cx="16"
                                               cy="8"
                                               fill={
-                                                Object {
+                                                {
                                                   "payload": 4278190080,
                                                   "type": 0,
                                                 }
@@ -877,7 +891,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     </View>
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "flex": 1,
                                         }
                                       }
@@ -894,18 +908,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           defaultWeight="Bold"
                                           font="TitilliumWeb"
                                           fontStyle={
-                                            Object {
+                                            {
                                               "fontSize": 14,
                                               "lineHeight": 21,
                                             }
                                           }
                                           style={
-                                            Array [
-                                              Object {
+                                            [
+                                              {
                                                 "fontSize": 14,
                                                 "lineHeight": 21,
                                               },
-                                              Object {
+                                              {
                                                 "color": "#555C70",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
@@ -924,19 +938,19 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           defaultWeight="SemiBold"
                                           font="TitilliumWeb"
                                           fontStyle={
-                                            Object {
+                                            {
                                               "fontSize": 18,
                                               "lineHeight": 25,
                                             }
                                           }
                                           numberOfLines={2}
                                           style={
-                                            Array [
-                                              Object {
+                                            [
+                                              {
                                                 "fontSize": 18,
                                                 "lineHeight": 25,
                                               },
-                                              Object {
+                                              {
                                                 "color": "#0E0F13",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
@@ -954,7 +968,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "backgroundColor": "#D2D6E3",
                                       "height": 0.5,
                                     }
@@ -962,6 +976,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 />
                               </View>
                               <View
+                                onFocusCapture={[Function]}
                                 onLayout={[Function]}
                                 style={null}
                               >
@@ -969,7 +984,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   accessibilityLabel="Step 3; Turn it on"
                                   accessible={true}
                                   style={
-                                    Object {
+                                    {
                                       "marginHorizontal": -24,
                                       "paddingHorizontal": 24,
                                       "paddingVertical": 12,
@@ -978,7 +993,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "alignItems": "center",
                                         "flexDirection": "row",
                                         "justifyContent": "space-between",
@@ -987,7 +1002,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   >
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "marginRight": 12,
                                         }
                                       }
@@ -1006,15 +1021,15 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#99A3C1",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -1028,7 +1043,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -1037,13 +1052,13 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           <RNSVGPath
                                             d="M18 6.545H6c-3.312 0-6 2.81-6 6.273 0 3.463 2.688 6.273 6 6.273h12c3.312 0 6-2.81 6-6.273 0-3.462-2.688-6.273-6-6.273Zm0 10.037c-1.992 0-3.6-1.681-3.6-3.764 0-2.082 1.608-3.763 3.6-3.763s3.6 1.68 3.6 3.763-1.608 3.764-3.6 3.764Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "payload": 4286565757,
                                                 "type": 0,
                                               }
                                             }
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                               ]
                                             }
@@ -1053,7 +1068,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     </View>
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "flex": 1,
                                         }
                                       }
@@ -1070,18 +1085,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           defaultWeight="Bold"
                                           font="TitilliumWeb"
                                           fontStyle={
-                                            Object {
+                                            {
                                               "fontSize": 14,
                                               "lineHeight": 21,
                                             }
                                           }
                                           style={
-                                            Array [
-                                              Object {
+                                            [
+                                              {
                                                 "fontSize": 14,
                                                 "lineHeight": 21,
                                               },
-                                              Object {
+                                              {
                                                 "color": "#555C70",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
@@ -1100,19 +1115,19 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           defaultWeight="SemiBold"
                                           font="TitilliumWeb"
                                           fontStyle={
-                                            Object {
+                                            {
                                               "fontSize": 18,
                                               "lineHeight": 25,
                                             }
                                           }
                                           numberOfLines={2}
                                           style={
-                                            Array [
-                                              Object {
+                                            [
+                                              {
                                                 "fontSize": 18,
                                                 "lineHeight": 25,
                                               },
-                                              Object {
+                                              {
                                                 "color": "#0E0F13",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
@@ -1136,7 +1151,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                       <View
                         pointerEvents="box-none"
                         style={
-                          Object {
+                          {
                             "bottom": 0,
                             "height": 212,
                             "paddingBottom": 24,
@@ -1148,8 +1163,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                         <View
                           pointerEvents="none"
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
@@ -1157,7 +1172,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 "top": 0,
                               },
                               false,
-                              Object {
+                              {
                                 "opacity": 1,
                               },
                             ]
@@ -1165,7 +1180,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                         >
                           <BVLinearGradient
                             colors={
-                              Array [
+                              [
                                 16777215,
                                 33554431,
                                 83886079,
@@ -1191,13 +1206,13 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                               ]
                             }
                             endPoint={
-                              Object {
+                              {
                                 "x": 0.5,
                                 "y": 1,
                               }
                             }
                             locations={
-                              Array [
+                              [
                                 0,
                                 0.047619047619047616,
                                 0.09523809523809523,
@@ -1223,20 +1238,20 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                               ]
                             }
                             startPoint={
-                              Object {
+                              {
                                 "x": 0.5,
                                 "y": 0,
                               }
                             }
                             style={
-                              Object {
+                              {
                                 "height": 116.60000000000001,
                               }
                             }
                           />
                           <View
                             style={
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "height": 95.4,
@@ -1246,15 +1261,15 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                         </View>
                         <View
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "left": 0,
                                 "position": "absolute",
                                 "right": 0,
                               },
-                              Object {
+                              {
                                 "height": 68,
                               },
                             ]
@@ -1263,7 +1278,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                         <View
                           pointerEvents="box-none"
                           style={
-                            Object {
+                            {
                               "flex": 1,
                               "flexShrink": 0,
                               "justifyContent": "flex-end",
@@ -1276,9 +1291,20 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             accessibilityLabel="Open Settings"
                             accessibilityRole="button"
                             accessibilityState={
-                              Object {
+                              {
                                 "busy": false,
+                                "checked": undefined,
                                 "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
                               }
                             }
                             accessible={true}
@@ -1293,12 +1319,12 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={Object {}}
+                            style={{}}
                           >
                             <View
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "alignItems": "center",
                                     "borderRadius": 4,
                                     "elevation": 0,
@@ -1307,20 +1333,20 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     "paddingHorizontal": 16,
                                     "textAlignVertical": "center",
                                   },
-                                  Object {
+                                  {
                                     "overflow": "hidden",
                                   },
                                   false,
-                                  Object {
+                                  {
                                     "height": 40,
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": "#0073E6",
                                   },
-                                  Object {
+                                  {
                                     "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
+                                    "transform": [
+                                      {
                                         "scale": undefined,
                                       },
                                     ],
@@ -1330,8 +1356,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1350,7 +1376,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   ellipsizeMode="tail"
                                   font="TitilliumWeb"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 16,
                                     }
                                   }
@@ -1358,14 +1384,14 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   maxFontSizeMultiplier={1.3}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                       },
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                       },
-                                      Object {
+                                      {
                                         "color": "#FFFFFF",
                                         "fontFamily": "Titillium Web",
                                         "fontStyle": "normal",
@@ -1382,7 +1408,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "alignSelf": "center",
                                 "marginBottom": 0,
                               }
@@ -1390,7 +1416,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 24,
                                 }
                               }
@@ -1399,15 +1425,27 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                               accessibilityLabel="Continue"
                               accessibilityRole="button"
                               accessibilityState={
-                                Object {
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
                                   "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
                                 }
                               }
                               accessible={true}
                               collapsable={false}
                               focusable={true}
                               hitSlop={
-                                Object {
+                                {
                                   "bottom": 14,
                                   "left": 24,
                                   "right": 24,
@@ -1425,15 +1463,15 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                               onStartShouldSetResponder={[Function]}
                               onTouchEnd={[Function]}
                               style={
-                                Object {
+                                {
                                   "alignSelf": "flex-start",
                                 }
                               }
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "elevation": 0,
                                       "flexDirection": "row",
@@ -1441,10 +1479,10 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    Object {},
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {},
+                                    {
+                                      "transform": [
+                                        {
                                           "scale": undefined,
                                         },
                                       ],
@@ -1461,17 +1499,17 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   maxFontSizeMultiplier={1.3}
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "fontFamily": "Titillium Web",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },
-                                      Object {
+                                      {
                                         "color": "#0073E6",
                                       },
-                                      Object {
+                                      {
                                         "color": undefined,
                                       },
                                     ]
@@ -1490,8 +1528,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

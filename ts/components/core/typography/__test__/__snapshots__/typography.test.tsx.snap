@@ -7,18 +7,18 @@ exports[`Test Typography Components Body Snapshot 1`] = `
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -39,18 +39,18 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 26,
       "lineHeight": 32,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 26,
         "lineHeight": 32,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -71,18 +71,18 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 26,
       "lineHeight": 32,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 26,
         "lineHeight": 32,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -103,18 +103,18 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 20,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 20,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -133,18 +133,18 @@ exports[`Test Typography Components H3 Snapshot 1`] = `
   color="bluegreyDark"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 18,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 18,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -164,18 +164,18 @@ exports[`Test Typography Components H3 Snapshot 2`] = `
   color="bluegreyLight"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 18,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 18,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#CCD4DC",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -195,18 +195,18 @@ exports[`Test Typography Components H3 Snapshot 3`] = `
   color="white"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 18,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 18,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -226,18 +226,18 @@ exports[`Test Typography Components H3 Snapshot 4`] = `
   color="white"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 18,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 18,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -257,18 +257,18 @@ exports[`Test Typography Components H3 Snapshot 5`] = `
   color="white"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 18,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 18,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -288,18 +288,18 @@ exports[`Test Typography Components H4 Snapshot 1`] = `
   color="bluegreyDark"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -319,18 +319,18 @@ exports[`Test Typography Components H4 Snapshot 2`] = `
   color="blue"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -350,18 +350,18 @@ exports[`Test Typography Components H4 Snapshot 3`] = `
   color="white"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -381,18 +381,18 @@ exports[`Test Typography Components H4 Snapshot 4`] = `
   color="white"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -412,18 +412,18 @@ exports[`Test Typography Components H4 Snapshot 5`] = `
   color="white"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -443,18 +443,18 @@ exports[`Test Typography Components H4 Snapshot 6`] = `
   color="bluegreyDark"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -474,18 +474,18 @@ exports[`Test Typography Components H4 Snapshot 7`] = `
   color="bluegrey"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -505,18 +505,18 @@ exports[`Test Typography Components H4 Snapshot 8`] = `
   color="bluegreyLight"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#CCD4DC",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -536,18 +536,18 @@ exports[`Test Typography Components H4 Snapshot 9`] = `
   color="white"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 22,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "lineHeight": 22,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -569,16 +569,16 @@ exports[`Test Typography Components H5 Snapshot 1`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -599,16 +599,16 @@ exports[`Test Typography Components H5 Snapshot 2`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -629,16 +629,16 @@ exports[`Test Typography Components H5 Snapshot 3`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -659,16 +659,16 @@ exports[`Test Typography Components H5 Snapshot 4`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -689,16 +689,16 @@ exports[`Test Typography Components H5 Snapshot 5`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
       },
-      Object {
+      {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -719,16 +719,16 @@ exports[`Test Typography Components H5 Snapshot 6`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -749,16 +749,16 @@ exports[`Test Typography Components H5 Snapshot 7`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -779,16 +779,16 @@ exports[`Test Typography Components Label Snapshot 1`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -809,16 +809,16 @@ exports[`Test Typography Components Label Snapshot 2`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -839,16 +839,16 @@ exports[`Test Typography Components Label Snapshot 3`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -869,16 +869,16 @@ exports[`Test Typography Components Label Snapshot 4`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -899,18 +899,18 @@ exports[`Test Typography Components LabelSmall Snapshot 1`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
       "lineHeight": 21,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
         "lineHeight": 21,
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -931,18 +931,18 @@ exports[`Test Typography Components LabelSmall Snapshot 2`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
       "lineHeight": 21,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
         "lineHeight": 21,
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -963,18 +963,18 @@ exports[`Test Typography Components LabelSmall Snapshot 3`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
       "lineHeight": 21,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
         "lineHeight": 21,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -995,18 +995,18 @@ exports[`Test Typography Components LabelSmall Snapshot 4`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
       "lineHeight": 21,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
         "lineHeight": 21,
       },
-      Object {
+      {
         "color": "#C02927",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -1027,18 +1027,18 @@ exports[`Test Typography Components LabelSmall Snapshot 5`] = `
   defaultWeight="Bold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 14,
       "lineHeight": 21,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 14,
         "lineHeight": 21,
       },
-      Object {
+      {
         "color": "#FFFFFF",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -1059,18 +1059,18 @@ exports[`Test Typography Components Link Snapshot 1`] = `
   defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "textDecorationLine": "underline",
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
         "textDecorationLine": "underline",
       },
-      Object {
+      {
         "color": "#0073E6",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -1091,16 +1091,16 @@ exports[`Test Typography Components Monospace Snapshot 1`] = `
   defaultWeight="Regular"
   font="RobotoMono"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "fontSize": 16,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Roboto Mono",
         "fontStyle": "normal",

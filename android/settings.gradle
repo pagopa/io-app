@@ -40,8 +40,6 @@ include ':react-native-keychain'
 project(':react-native-keychain').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-keychain/android')
 include ':react-native-i18n'
 project(':react-native-i18n').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-i18n/android')
-include ':react-native-sha256'
-project(':react-native-sha256').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sha256/android')
 include ':react-native-mixpanel'
 project(':react-native-mixpanel').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mixpanel/android')
 include ':react-native-device-info'
@@ -55,12 +53,6 @@ project(':react-native-community-netinfo').projectDir = new File(rootProject.pro
 include ':react-native-screen-brightness'
 project(':react-native-screen-brightness').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-screen-brightness/android')
 include ':app'
-includeBuild('../node_modules/react-native-gradle-plugin')
-if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true") {
-    include(":ReactAndroid")
-    project(":ReactAndroid").projectDir = file('../node_modules/react-native/ReactAndroid')
-    include(":ReactAndroid:hermes-engine")
-    project(":ReactAndroid:hermes-engine").projectDir = file('../node_modules/react-native/ReactAndroid/hermes-engine')
-}
+includeBuild('../node_modules/@react-native/gradle-plugin')
 include ':react-native-art'
 project(':react-native-art').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/art/android')

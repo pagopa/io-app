@@ -49,7 +49,7 @@ export const getContextualHelpConfig = (
     ? { body: contextualHelp.body, title: contextualHelp.title }
     : contextualHelpMarkdown
     ? {
-        body: () => (
+        body: (
           <LegacyMarkdown
             onLinkClicked={onLinkClicked}
             onLoadEnd={onLoadEnd}

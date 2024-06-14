@@ -3,7 +3,7 @@
 exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,13 +326,30 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         accessibilityLabel="### Accessibility Label ###"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -338,9 +367,9 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                       >
                         <View
                           style={
-                            Object {
-                              "transform": Array [
-                                Object {
+                            {
+                              "transform": [
+                                {
                                   "scale": undefined,
                                 },
                               ],
@@ -349,8 +378,8 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
@@ -369,7 +398,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                 }
@@ -377,7 +406,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "marginRight": 8,
                                   }
                                 }
@@ -385,14 +414,14 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                 <View
                                   accessibilityIgnoresInvertColors={true}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "borderColor": "rgba(14,15,19,0.1)",
                                         "borderCurve": "continuous",
                                         "borderWidth": 1,
                                         "overflow": "hidden",
                                       },
-                                      Object {
+                                      {
                                         "backgroundColor": "#FFFFFF",
                                         "borderRadius": 8,
                                         "height": 44,
@@ -404,13 +433,13 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                 >
                                   <View
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
                                         },
-                                        Object {
+                                        {
                                           "borderRadius": 2,
                                         },
                                       ]
@@ -420,12 +449,12 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       accessibilityIgnoresInvertColors={true}
                                       onError={[Function]}
                                       source={
-                                        Object {
+                                        {
                                           "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
                                         }
                                       }
                                       style={
-                                        Object {
+                                        {
                                           "height": "100%",
                                           "resizeMode": "contain",
                                           "width": "100%",
@@ -437,7 +466,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flexGrow": 1,
                                     "flexShrink": 1,
                                   }
@@ -450,7 +479,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   defaultWeight="SemiBold"
                                   font="TitilliumWeb"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     }
@@ -458,12 +487,12 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   lineBreakMode="head"
                                   numberOfLines={2}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "fontSize": 18,
                                         "lineHeight": 25,
                                       },
-                                      Object {
+                                      {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Web",
                                         "fontStyle": "normal",
@@ -486,8 +515,8 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -496,7 +525,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
 exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -504,8 +533,8 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -514,8 +543,8 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -527,7 +556,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -543,7 +572,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -557,12 +586,12 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -576,7 +605,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -588,7 +617,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -596,7 +625,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -607,7 +636,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -621,7 +650,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -636,7 +665,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -650,7 +679,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -664,21 +693,34 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -690,7 +732,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -708,12 +750,12 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -723,10 +765,10 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -735,9 +777,9 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -753,27 +795,26 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -783,13 +824,13 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -799,7 +840,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -807,13 +848,30 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         accessibilityLabel="### Accessibility Label ###"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -831,9 +889,9 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                       >
                         <View
                           style={
-                            Object {
-                              "transform": Array [
-                                Object {
+                            {
+                              "transform": [
+                                {
                                   "scale": undefined,
                                 },
                               ],
@@ -842,8 +900,8 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
@@ -855,7 +913,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   "paddingHorizontal": 12,
                                   "width": 702,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#EEE8FC",
                                   "borderColor": "#DDD1F9",
                                 },
@@ -865,7 +923,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                 }
@@ -873,7 +931,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "marginRight": 8,
                                   }
                                 }
@@ -881,14 +939,14 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                 <View
                                   accessibilityIgnoresInvertColors={true}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "borderColor": "rgba(14,15,19,0.1)",
                                         "borderCurve": "continuous",
                                         "borderWidth": 1,
                                         "overflow": "hidden",
                                       },
-                                      Object {
+                                      {
                                         "backgroundColor": "#FFFFFF",
                                         "borderRadius": 8,
                                         "height": 44,
@@ -900,13 +958,13 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                 >
                                   <View
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
                                         },
-                                        Object {
+                                        {
                                           "borderRadius": 2,
                                         },
                                       ]
@@ -916,12 +974,12 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       accessibilityIgnoresInvertColors={true}
                                       onError={[Function]}
                                       source={
-                                        Object {
+                                        {
                                           "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
                                         }
                                       }
                                       style={
-                                        Object {
+                                        {
                                           "height": "100%",
                                           "resizeMode": "contain",
                                           "width": "100%",
@@ -933,7 +991,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flexGrow": 1,
                                     "flexShrink": 1,
                                   }
@@ -946,7 +1004,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   defaultWeight="SemiBold"
                                   font="TitilliumWeb"
                                   fontStyle={
-                                    Object {
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     }
@@ -954,12 +1012,12 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   lineBreakMode="head"
                                   numberOfLines={2}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "fontSize": 18,
                                         "lineHeight": 25,
                                       },
-                                      Object {
+                                      {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Web",
                                         "fontStyle": "normal",
@@ -982,8 +1040,8 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

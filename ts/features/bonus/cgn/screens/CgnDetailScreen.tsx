@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { connect } from "react-redux";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {
@@ -212,7 +212,10 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             decelerationRate="normal"
           >
             <View
-              style={{ height: 260, backgroundColor: HEADER_BACKGROUND_COLOR }}
+              style={{
+                height: Platform.select({ ios: 260, android: 220 }),
+                backgroundColor: HEADER_BACKGROUND_COLOR
+              }}
             />
             {props.cgnDetails && (
               <>

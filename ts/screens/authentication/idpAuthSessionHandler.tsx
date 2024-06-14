@@ -198,7 +198,7 @@ export const AuthSessionPage = () => {
         O.fold(
           () => ({
             title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-            body: () => (
+            body: (
               <LegacyMarkdown>
                 {I18n.t("authentication.idp_login.contextualHelpContent")}
               </LegacyMarkdown>

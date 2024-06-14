@@ -255,7 +255,7 @@ const IdpLoginScreen = (props: Props) => {
     if (O.isNone(props.selectedIdpTextData)) {
       return {
         title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-        body: () => (
+        body: (
           <LegacyMarkdown>
             {I18n.t("authentication.idp_login.contextualHelpContent")}
           </LegacyMarkdown>

@@ -317,7 +317,7 @@ const MessageList = ({
         scrollEventThrottle={animated?.scrollEventThrottle}
         style={styles.padded}
         getItemLayout={(
-          _: ReadonlyArray<UIMessage> | null | undefined,
+          _: ArrayLike<UIMessage> | null | undefined,
           index: number
         ) => generateItemLayout(messages.length)(index)}
         onScroll={(...args) => {

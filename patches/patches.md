@@ -158,3 +158,11 @@ Created on **16/01/2023**
   An Event has an Id property which type may be a long but the library deals only with Java's signed int32.
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
+
+### react-native-reanimated+3.12.0.patch
+
+Created on **16/01/2023**
+
+#### Reason:
+
+- Patch to fix a crash on android due to wrong file definition, to be removed in a future update

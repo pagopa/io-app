@@ -3,7 +3,7 @@
 exports[`WrappedMessageListItem should match snapshot,     from SEND,   read message 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -324,6 +336,23 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -338,20 +367,20 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          Object {
+                          {
                             "backgroundColor": undefined,
                           }
                         }
                       >
                         <View
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
                               },
-                              Object {
+                              {
                                 "backgroundColor": undefined,
                               },
                             ]
@@ -359,15 +388,15 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
                                 },
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -377,7 +406,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "flexDirection": "row",
                                   "paddingHorizontal": 16,
                                 }
@@ -385,14 +414,14 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "justifyContent": "center",
                                   }
                                 }
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "height": 44,
                                       "justifyContent": "center",
@@ -403,14 +432,14 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                   <View
                                     accessibilityIgnoresInvertColors={true}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "borderColor": "rgba(14,15,19,0.1)",
                                           "borderCurve": "continuous",
                                           "borderWidth": 1,
                                           "overflow": "hidden",
                                         },
-                                        Object {
+                                        {
                                           "backgroundColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "height": 44,
@@ -422,13 +451,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                   >
                                     <View
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "backgroundColor": "#FFFFFF",
                                             "borderCurve": "continuous",
                                             "overflow": "hidden",
                                           },
-                                          Object {
+                                          {
                                             "borderRadius": 2,
                                           },
                                         ]
@@ -438,12 +467,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          Object {
+                                          {
                                             "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
                                           }
                                         }
                                         style={
-                                          Object {
+                                          {
                                             "height": "100%",
                                             "resizeMode": "contain",
                                             "width": "100%",
@@ -454,7 +483,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                   </View>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "bottom": 0,
                                         "left": 0,
                                         "position": "absolute",
@@ -466,8 +495,20 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     <View
                                       accessibilityRole="checkbox"
                                       accessibilityState={
-                                        Object {
+                                        {
+                                          "busy": undefined,
                                           "checked": undefined,
+                                          "disabled": undefined,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
                                         }
                                       }
                                       accessible={true}
@@ -483,7 +524,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       onResponderTerminationRequest={[Function]}
                                       onStartShouldSetResponder={[Function]}
                                       style={
-                                        Object {
+                                        {
                                           "height": 44,
                                           "padding": 4,
                                           "width": 44,
@@ -493,8 +534,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     >
                                       <View
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "borderCurve": "continuous",
                                               "borderRadius": 8,
                                               "height": 44,
@@ -503,13 +544,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                               "top": 0,
                                               "width": 44,
                                             },
-                                            Object {
+                                            {
                                               "backgroundColor": "#0073E6",
                                             },
-                                            Object {
+                                            {
                                               "opacity": 0,
-                                              "transform": Array [
-                                                Object {
+                                              "transform": [
+                                                {
                                                   "scale": undefined,
                                                 },
                                               ],
@@ -526,12 +567,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": "100%",
                                               "width": "100%",
@@ -543,7 +584,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -554,7 +595,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                             fill={null}
                                             onLayout={[Function]}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "stroke",
                                                 "strokeWidth",
@@ -564,7 +605,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                               ]
                                             }
                                             stroke={
-                                              Object {
+                                              {
                                                 "payload": 4294967295,
                                                 "type": 0,
                                               }
@@ -582,7 +623,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flex": 1,
                                     "marginLeft": 8,
                                   }
@@ -590,7 +631,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -602,22 +643,22 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
                                     numberOfLines={1}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -637,21 +678,21 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     font="TitilliumWeb"
                                     fontSize="regular"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 14,
                                         "lineHeight": 21,
                                       }
                                     }
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "marginLeft": 8,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -666,7 +707,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -678,22 +719,22 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     defaultWeight="Regular"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 24,
                                       }
                                     }
                                     numberOfLines={2}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 24,
                                         },
-                                        Object {
+                                        {
                                           "color": "#475A6D",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -711,18 +752,18 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -741,18 +782,18 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       defaultWeight="Regular"
                                       font="TitilliumWeb"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 12,
                                           "textTransform": "uppercase",
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 12,
                                             "textTransform": "uppercase",
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -772,18 +813,18 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -799,7 +840,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                       "marginTop": 8,
                                     }
@@ -807,7 +848,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "alignItems": "center",
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
@@ -824,7 +865,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                   >
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "flexShrink": 1,
                                         }
                                       }
@@ -843,15 +884,15 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0B3EE3",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 16,
                                               "width": 16,
@@ -865,7 +906,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -875,13 +916,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                             clipRule={0}
                                             d="M23.3953 14.8922c.4031-.7125.6047-1.4906.6047-2.3297 0-.8906-.225-1.7109-.6703-2.4562-.4453-.74067-1.0453-1.28911-1.7953-1.64536.1781-.48281.2672-1.01719.2672-1.60782 0-1.26562-.4219-2.34374-1.2704-3.23906-.8484-.89531-1.8703-1.34062-3.0656-1.34062-.539 0-1.0453.09844-1.5281.29531-.375-.76875-.9188-1.3875-1.6219-1.86094C13.6125.23906 12.8391 0 12 0s-1.6125.23906-2.31562.7125c-.70782.47344-1.24688 1.09219-1.62188 1.86094-.48281-.19688-.99375-.29532-1.52813-.29532-1.19531 0-2.22187.45-3.07968 1.34063-.85782.89062-1.28438 1.97344-1.28438 3.23906 0 .53438.09844 1.07344.29531 1.60782-.75.35625-1.34999.90468-1.7953 1.64527C.225 10.8516 0 11.6719 0 12.5625c0 .8391.20156 1.6172.6 2.3297.40313.7125.94219 1.2656 1.62188 1.6594-.03282.2531-.05157.45-.05157.5906 0 1.2656.42656 2.3484 1.28438 3.239.85781.8954 1.88437 1.3407 3.07968 1.3407.53907 0 1.04532-.0985 1.52813-.2953.375.7875.90938 1.4109 1.60781 1.875C10.3641 23.7703 11.1422 24 12 24c.8391 0 1.6125-.2344 2.3156-.7125.7078-.4734 1.2469-1.0922 1.6219-1.8609.4828.1968.9937.2953 1.5281.2953 1.1953 0 2.2172-.4453 3.0656-1.3407.8438-.8906 1.2704-1.9687 1.2704-3.239 0-.2672-.0094-.4641-.0282-.5906.6797-.3891 1.2188-.9469 1.6219-1.6594Zm-5.6882-4.1851c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L10 15.5858l-3.29289-3.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L8.58579 17c.78105.7811 2.04741.781 2.82841 0l6.2929-6.2929Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "type": 2,
                                               }
                                             }
                                             fillRule={0}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "fillRule",
                                               ]
@@ -892,7 +933,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     </View>
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "width": 6,
                                         }
                                       }
@@ -901,8 +942,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       ellipsizeMode="tail"
                                       numberOfLines={1}
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "alignSelf": "center",
                                             "color": "#555C70",
                                             "flexShrink": 1,
@@ -910,7 +951,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                             "lineHeight": 16,
                                             "textTransform": "uppercase",
                                           },
-                                          Object {
+                                          {
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -923,14 +964,14 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                   </View>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "width": 8,
                                       }
                                     }
                                   />
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "alignItems": "center",
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
@@ -947,7 +988,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                   >
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "flexShrink": 1,
                                         }
                                       }
@@ -966,15 +1007,15 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#555C70",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 16,
                                               "width": 16,
@@ -988,7 +1029,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -997,12 +1038,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                           <RNSVGPath
                                             d="M22.95 9.5997a.9999.9999 0 0 0-.707-.29279c-.2651 0-.5195.10532-.707.29279l-10.892 10.939a4.99896 4.99896 0 0 1-1.62212 1.084 4.99813 4.99813 0 0 1-1.9135.3808 5.00017 5.00017 0 0 1-3.53586-1.4643 5.00042 5.00042 0 0 1-1.4648-3.5357 5.00026 5.00026 0 0 1 1.4643-3.5358L14.121 2.8757a3.00005 3.00005 0 0 1 4.2253.0167 2.99985 2.99985 0 0 1 .8789 2.109 2.99996 2.99996 0 0 1-.8612 2.1163L7.81502 17.7097a1.0218 1.0218 0 0 1-.707.284 1.02182 1.02182 0 0 1-.707-.284.99989.99989 0 0 1-.29278-.707c0-.2652.10531-.5195.29278-.707l9.39198-9.435a.99975.99975 0 0 0 .2807-.7034 1.00018 1.00018 0 0 0-.2929-.69842.99994.99994 0 0 0-1.4018-.01218l-9.39198 9.435a3.00022 3.00022 0 0 0-.65045.9733 3.00027 3.00027 0 0 0 0 2.2964c.1508.364.37182.6947.65045.9733a3.07287 3.07287 0 0 0 2.1215.8498 3.07287 3.07287 0 0 0 2.1215-.8498L19.778 8.5317a5.0001 5.0001 0 0 0 1.4196-3.52223 4.99983 4.99983 0 0 0-1.4646-3.50375A5.0001 5.0001 0 0 0 16.229.0416a5.00012 5.00012 0 0 0-3.522 1.4201L2.15802 12.0537C.8452 13.3665.10767 15.1471.10767 17.0037c0 1.8566.73753 3.6372 2.05035 4.95 1.31282 1.3128 3.09339 2.0504 4.95 2.0504 1.85661 0 3.63718-.7376 4.94998-2.0504l10.892-10.936a.99968.99968 0 0 0 .2948-.709c0-.1318-.026-.2623-.0766-.38392a.999.999 0 0 0-.2182-.32508Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "type": 2,
                                               }
                                             }
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                               ]
                                             }
@@ -1023,8 +1064,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1033,7 +1074,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
 exports[`WrappedMessageListItem should match snapshot,     from SEND, unread message 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1041,8 +1082,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1051,8 +1092,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1064,7 +1105,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1080,7 +1121,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1094,12 +1135,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1113,7 +1154,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1125,7 +1166,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1133,7 +1174,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1144,7 +1185,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1158,7 +1199,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1173,7 +1214,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1187,7 +1228,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1201,21 +1242,34 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1227,7 +1281,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1245,12 +1299,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1260,10 +1314,10 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1272,9 +1326,9 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1290,27 +1344,26 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1320,13 +1373,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1336,7 +1389,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1344,7 +1397,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1354,6 +1407,23 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -1368,20 +1438,20 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          Object {
+                          {
                             "backgroundColor": undefined,
                           }
                         }
                       >
                         <View
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
                               },
-                              Object {
+                              {
                                 "backgroundColor": undefined,
                               },
                             ]
@@ -1389,15 +1459,15 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
                                 },
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -1407,7 +1477,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "flexDirection": "row",
                                   "paddingHorizontal": 16,
                                 }
@@ -1415,14 +1485,14 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "justifyContent": "center",
                                   }
                                 }
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "height": 44,
                                       "justifyContent": "center",
@@ -1433,14 +1503,14 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                   <View
                                     accessibilityIgnoresInvertColors={true}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "borderColor": "rgba(14,15,19,0.1)",
                                           "borderCurve": "continuous",
                                           "borderWidth": 1,
                                           "overflow": "hidden",
                                         },
-                                        Object {
+                                        {
                                           "backgroundColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "height": 44,
@@ -1452,13 +1522,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                   >
                                     <View
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "backgroundColor": "#FFFFFF",
                                             "borderCurve": "continuous",
                                             "overflow": "hidden",
                                           },
-                                          Object {
+                                          {
                                             "borderRadius": 2,
                                           },
                                         ]
@@ -1468,12 +1538,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          Object {
+                                          {
                                             "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
                                           }
                                         }
                                         style={
-                                          Object {
+                                          {
                                             "height": "100%",
                                             "resizeMode": "contain",
                                             "width": "100%",
@@ -1484,7 +1554,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                   </View>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "bottom": 0,
                                         "left": 0,
                                         "position": "absolute",
@@ -1496,8 +1566,20 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     <View
                                       accessibilityRole="checkbox"
                                       accessibilityState={
-                                        Object {
+                                        {
+                                          "busy": undefined,
                                           "checked": undefined,
+                                          "disabled": undefined,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
                                         }
                                       }
                                       accessible={true}
@@ -1513,7 +1595,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       onResponderTerminationRequest={[Function]}
                                       onStartShouldSetResponder={[Function]}
                                       style={
-                                        Object {
+                                        {
                                           "height": 44,
                                           "padding": 4,
                                           "width": 44,
@@ -1523,8 +1605,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     >
                                       <View
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "borderCurve": "continuous",
                                               "borderRadius": 8,
                                               "height": 44,
@@ -1533,13 +1615,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                               "top": 0,
                                               "width": 44,
                                             },
-                                            Object {
+                                            {
                                               "backgroundColor": "#0073E6",
                                             },
-                                            Object {
+                                            {
                                               "opacity": 0,
-                                              "transform": Array [
-                                                Object {
+                                              "transform": [
+                                                {
                                                   "scale": undefined,
                                                 },
                                               ],
@@ -1556,12 +1638,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": "100%",
                                               "width": "100%",
@@ -1573,7 +1655,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -1584,7 +1666,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                             fill={null}
                                             onLayout={[Function]}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "stroke",
                                                 "strokeWidth",
@@ -1594,7 +1676,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                               ]
                                             }
                                             stroke={
-                                              Object {
+                                              {
                                                 "payload": 4294967295,
                                                 "type": 0,
                                               }
@@ -1612,7 +1694,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flex": 1,
                                     "marginLeft": 8,
                                   }
@@ -1620,7 +1702,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -1632,22 +1714,22 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
                                     numberOfLines={1}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -1667,21 +1749,21 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     font="TitilliumWeb"
                                     fontSize="regular"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 14,
                                         "lineHeight": 21,
                                       }
                                     }
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "marginLeft": 8,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -1696,7 +1778,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -1708,22 +1790,22 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     defaultWeight="Regular"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 24,
                                       }
                                     }
                                     numberOfLines={2}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 24,
                                         },
-                                        Object {
+                                        {
                                           "color": "#475A6D",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -1741,18 +1823,18 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -1771,18 +1853,18 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       defaultWeight="Regular"
                                       font="TitilliumWeb"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 12,
                                           "textTransform": "uppercase",
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 12,
                                             "textTransform": "uppercase",
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -1802,18 +1884,18 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -1828,7 +1910,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                   </Text>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "justifyContent": "center",
                                         "marginLeft": 8,
                                       }
@@ -1840,12 +1922,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       focusable={false}
                                       height={14}
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "backgroundColor": "transparent",
                                             "borderWidth": 0,
                                           },
-                                          Object {
+                                          {
                                             "flex": 0,
                                             "height": 14,
                                             "width": 14,
@@ -1856,7 +1938,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     >
                                       <RNSVGGroup
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
@@ -1866,13 +1948,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                           cx="50%"
                                           cy="50%"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278927075,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "fill",
                                             ]
                                           }
@@ -1884,7 +1966,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                       "marginTop": 8,
                                     }
@@ -1892,7 +1974,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                 >
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "alignItems": "center",
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
@@ -1909,7 +1991,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                   >
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "flexShrink": 1,
                                         }
                                       }
@@ -1928,15 +2010,15 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#0B3EE3",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 16,
                                               "width": 16,
@@ -1950,7 +2032,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -1960,13 +2042,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                             clipRule={0}
                                             d="M23.3953 14.8922c.4031-.7125.6047-1.4906.6047-2.3297 0-.8906-.225-1.7109-.6703-2.4562-.4453-.74067-1.0453-1.28911-1.7953-1.64536.1781-.48281.2672-1.01719.2672-1.60782 0-1.26562-.4219-2.34374-1.2704-3.23906-.8484-.89531-1.8703-1.34062-3.0656-1.34062-.539 0-1.0453.09844-1.5281.29531-.375-.76875-.9188-1.3875-1.6219-1.86094C13.6125.23906 12.8391 0 12 0s-1.6125.23906-2.31562.7125c-.70782.47344-1.24688 1.09219-1.62188 1.86094-.48281-.19688-.99375-.29532-1.52813-.29532-1.19531 0-2.22187.45-3.07968 1.34063-.85782.89062-1.28438 1.97344-1.28438 3.23906 0 .53438.09844 1.07344.29531 1.60782-.75.35625-1.34999.90468-1.7953 1.64527C.225 10.8516 0 11.6719 0 12.5625c0 .8391.20156 1.6172.6 2.3297.40313.7125.94219 1.2656 1.62188 1.6594-.03282.2531-.05157.45-.05157.5906 0 1.2656.42656 2.3484 1.28438 3.239.85781.8954 1.88437 1.3407 3.07968 1.3407.53907 0 1.04532-.0985 1.52813-.2953.375.7875.90938 1.4109 1.60781 1.875C10.3641 23.7703 11.1422 24 12 24c.8391 0 1.6125-.2344 2.3156-.7125.7078-.4734 1.2469-1.0922 1.6219-1.8609.4828.1968.9937.2953 1.5281.2953 1.1953 0 2.2172-.4453 3.0656-1.3407.8438-.8906 1.2704-1.9687 1.2704-3.239 0-.2672-.0094-.4641-.0282-.5906.6797-.3891 1.2188-.9469 1.6219-1.6594Zm-5.6882-4.1851c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L10 15.5858l-3.29289-3.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L8.58579 17c.78105.7811 2.04741.781 2.82841 0l6.2929-6.2929Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "type": 2,
                                               }
                                             }
                                             fillRule={0}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "fillRule",
                                               ]
@@ -1977,7 +2059,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     </View>
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "width": 6,
                                         }
                                       }
@@ -1986,8 +2068,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       ellipsizeMode="tail"
                                       numberOfLines={1}
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "alignSelf": "center",
                                             "color": "#555C70",
                                             "flexShrink": 1,
@@ -1995,7 +2077,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                             "lineHeight": 16,
                                             "textTransform": "uppercase",
                                           },
-                                          Object {
+                                          {
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -2008,14 +2090,14 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                   </View>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "width": 8,
                                       }
                                     }
                                   />
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "alignItems": "center",
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
@@ -2032,7 +2114,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                   >
                                     <View
                                       style={
-                                        Object {
+                                        {
                                           "flexShrink": 1,
                                         }
                                       }
@@ -2051,15 +2133,15 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "color": "#555C70",
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": 16,
                                               "width": 16,
@@ -2073,7 +2155,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -2082,12 +2164,12 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                           <RNSVGPath
                                             d="M22.95 9.5997a.9999.9999 0 0 0-.707-.29279c-.2651 0-.5195.10532-.707.29279l-10.892 10.939a4.99896 4.99896 0 0 1-1.62212 1.084 4.99813 4.99813 0 0 1-1.9135.3808 5.00017 5.00017 0 0 1-3.53586-1.4643 5.00042 5.00042 0 0 1-1.4648-3.5357 5.00026 5.00026 0 0 1 1.4643-3.5358L14.121 2.8757a3.00005 3.00005 0 0 1 4.2253.0167 2.99985 2.99985 0 0 1 .8789 2.109 2.99996 2.99996 0 0 1-.8612 2.1163L7.81502 17.7097a1.0218 1.0218 0 0 1-.707.284 1.02182 1.02182 0 0 1-.707-.284.99989.99989 0 0 1-.29278-.707c0-.2652.10531-.5195.29278-.707l9.39198-9.435a.99975.99975 0 0 0 .2807-.7034 1.00018 1.00018 0 0 0-.2929-.69842.99994.99994 0 0 0-1.4018-.01218l-9.39198 9.435a3.00022 3.00022 0 0 0-.65045.9733 3.00027 3.00027 0 0 0 0 2.2964c.1508.364.37182.6947.65045.9733a3.07287 3.07287 0 0 0 2.1215.8498 3.07287 3.07287 0 0 0 2.1215-.8498L19.778 8.5317a5.0001 5.0001 0 0 0 1.4196-3.52223 4.99983 4.99983 0 0 0-1.4646-3.50375A5.0001 5.0001 0 0 0 16.229.0416a5.00012 5.00012 0 0 0-3.522 1.4201L2.15802 12.0537C.8452 13.3665.10767 15.1471.10767 17.0037c0 1.8566.73753 3.6372 2.05035 4.95 1.31282 1.3128 3.09339 2.0504 4.95 2.0504 1.85661 0 3.63718-.7376 4.94998-2.0504l10.892-10.936a.99968.99968 0 0 0 .2948-.709c0-.1318-.026-.2623-.0766-.38392a.999.999 0 0 0-.2182-.32508Z"
                                             fill={
-                                              Object {
+                                              {
                                                 "type": 2,
                                               }
                                             }
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                               ]
                                             }
@@ -2108,8 +2190,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2118,7 +2200,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
 exports[`WrappedMessageListItem should match snapshot, not from SEND,   read message 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2126,8 +2208,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2136,8 +2218,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2149,7 +2231,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2165,7 +2247,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2179,12 +2261,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -2198,7 +2280,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -2210,7 +2292,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -2218,7 +2300,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -2229,7 +2311,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2243,7 +2325,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -2258,7 +2340,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -2272,7 +2354,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2286,21 +2368,34 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -2312,7 +2407,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -2330,12 +2425,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -2345,10 +2440,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2357,9 +2452,9 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2375,27 +2470,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2405,13 +2499,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2421,7 +2515,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2429,7 +2523,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -2439,6 +2533,23 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -2453,20 +2564,20 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          Object {
+                          {
                             "backgroundColor": undefined,
                           }
                         }
                       >
                         <View
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
                               },
-                              Object {
+                              {
                                 "backgroundColor": undefined,
                               },
                             ]
@@ -2474,15 +2585,15 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
                                 },
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -2492,7 +2603,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "flexDirection": "row",
                                   "paddingHorizontal": 16,
                                 }
@@ -2500,14 +2611,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "justifyContent": "center",
                                   }
                                 }
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "height": 44,
                                       "justifyContent": "center",
@@ -2518,14 +2629,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                   <View
                                     accessibilityIgnoresInvertColors={true}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "borderColor": "rgba(14,15,19,0.1)",
                                           "borderCurve": "continuous",
                                           "borderWidth": 1,
                                           "overflow": "hidden",
                                         },
-                                        Object {
+                                        {
                                           "backgroundColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "height": 44,
@@ -2537,13 +2648,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                   >
                                     <View
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "backgroundColor": "#FFFFFF",
                                             "borderCurve": "continuous",
                                             "overflow": "hidden",
                                           },
-                                          Object {
+                                          {
                                             "borderRadius": 2,
                                           },
                                         ]
@@ -2553,12 +2664,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          Object {
+                                          {
                                             "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
                                           }
                                         }
                                         style={
-                                          Object {
+                                          {
                                             "height": "100%",
                                             "resizeMode": "contain",
                                             "width": "100%",
@@ -2569,7 +2680,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                   </View>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "bottom": 0,
                                         "left": 0,
                                         "position": "absolute",
@@ -2581,8 +2692,20 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     <View
                                       accessibilityRole="checkbox"
                                       accessibilityState={
-                                        Object {
+                                        {
+                                          "busy": undefined,
                                           "checked": undefined,
+                                          "disabled": undefined,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
                                         }
                                       }
                                       accessible={true}
@@ -2598,7 +2721,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       onResponderTerminationRequest={[Function]}
                                       onStartShouldSetResponder={[Function]}
                                       style={
-                                        Object {
+                                        {
                                           "height": 44,
                                           "padding": 4,
                                           "width": 44,
@@ -2608,8 +2731,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     >
                                       <View
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "borderCurve": "continuous",
                                               "borderRadius": 8,
                                               "height": 44,
@@ -2618,13 +2741,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                               "top": 0,
                                               "width": 44,
                                             },
-                                            Object {
+                                            {
                                               "backgroundColor": "#0073E6",
                                             },
-                                            Object {
+                                            {
                                               "opacity": 0,
-                                              "transform": Array [
-                                                Object {
+                                              "transform": [
+                                                {
                                                   "scale": undefined,
                                                 },
                                               ],
@@ -2641,12 +2764,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": "100%",
                                               "width": "100%",
@@ -2658,7 +2781,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -2669,7 +2792,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                             fill={null}
                                             onLayout={[Function]}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "stroke",
                                                 "strokeWidth",
@@ -2679,7 +2802,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                               ]
                                             }
                                             stroke={
-                                              Object {
+                                              {
                                                 "payload": 4294967295,
                                                 "type": 0,
                                               }
@@ -2697,7 +2820,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flex": 1,
                                     "marginLeft": 8,
                                   }
@@ -2705,7 +2828,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -2717,22 +2840,22 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
                                     numberOfLines={1}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -2752,21 +2875,21 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     font="TitilliumWeb"
                                     fontSize="regular"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 14,
                                         "lineHeight": 21,
                                       }
                                     }
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "marginLeft": 8,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -2781,7 +2904,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -2793,22 +2916,22 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     defaultWeight="Regular"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 24,
                                       }
                                     }
                                     numberOfLines={2}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 24,
                                         },
-                                        Object {
+                                        {
                                           "color": "#475A6D",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -2826,18 +2949,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -2856,18 +2979,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       defaultWeight="Regular"
                                       font="TitilliumWeb"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 12,
                                           "textTransform": "uppercase",
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 12,
                                             "textTransform": "uppercase",
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -2887,18 +3010,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -2923,8 +3046,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2933,7 +3056,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
 exports[`WrappedMessageListItem should match snapshot, not from SEND, unread message 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2941,8 +3064,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2951,8 +3074,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2964,7 +3087,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2980,7 +3103,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2994,12 +3117,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -3013,7 +3136,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -3025,7 +3148,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -3033,7 +3156,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -3044,7 +3167,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -3058,7 +3181,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -3073,7 +3196,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -3087,7 +3210,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -3101,21 +3224,34 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -3127,7 +3263,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -3145,12 +3281,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -3160,10 +3296,10 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3172,9 +3308,9 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3190,27 +3326,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -3220,13 +3355,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -3236,7 +3371,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -3244,7 +3379,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -3254,6 +3389,23 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
     received on January 2nd 1990
   . "
                         accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
@@ -3268,20 +3420,20 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          Object {
+                          {
                             "backgroundColor": undefined,
                           }
                         }
                       >
                         <View
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "marginHorizontal": -24,
                                 "paddingHorizontal": 24,
                                 "paddingVertical": 12,
                               },
-                              Object {
+                              {
                                 "backgroundColor": undefined,
                               },
                             ]
@@ -3289,15 +3441,15 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "space-between",
                                 },
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -3307,7 +3459,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "flexDirection": "row",
                                   "paddingHorizontal": 16,
                                 }
@@ -3315,14 +3467,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                             >
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "justifyContent": "center",
                                   }
                                 }
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "alignItems": "center",
                                       "height": 44,
                                       "justifyContent": "center",
@@ -3333,14 +3485,14 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                   <View
                                     accessibilityIgnoresInvertColors={true}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "borderColor": "rgba(14,15,19,0.1)",
                                           "borderCurve": "continuous",
                                           "borderWidth": 1,
                                           "overflow": "hidden",
                                         },
-                                        Object {
+                                        {
                                           "backgroundColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "height": 44,
@@ -3352,13 +3504,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                   >
                                     <View
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "backgroundColor": "#FFFFFF",
                                             "borderCurve": "continuous",
                                             "overflow": "hidden",
                                           },
-                                          Object {
+                                          {
                                             "borderRadius": 2,
                                           },
                                         ]
@@ -3368,12 +3520,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          Object {
+                                          {
                                             "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
                                           }
                                         }
                                         style={
-                                          Object {
+                                          {
                                             "height": "100%",
                                             "resizeMode": "contain",
                                             "width": "100%",
@@ -3384,7 +3536,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                   </View>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "bottom": 0,
                                         "left": 0,
                                         "position": "absolute",
@@ -3396,8 +3548,20 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     <View
                                       accessibilityRole="checkbox"
                                       accessibilityState={
-                                        Object {
+                                        {
+                                          "busy": undefined,
                                           "checked": undefined,
+                                          "disabled": undefined,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
                                         }
                                       }
                                       accessible={true}
@@ -3413,7 +3577,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       onResponderTerminationRequest={[Function]}
                                       onStartShouldSetResponder={[Function]}
                                       style={
-                                        Object {
+                                        {
                                           "height": 44,
                                           "padding": 4,
                                           "width": 44,
@@ -3423,8 +3587,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     >
                                       <View
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "borderCurve": "continuous",
                                               "borderRadius": 8,
                                               "height": 44,
@@ -3433,13 +3597,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                               "top": 0,
                                               "width": 44,
                                             },
-                                            Object {
+                                            {
                                               "backgroundColor": "#0073E6",
                                             },
-                                            Object {
+                                            {
                                               "opacity": 0,
-                                              "transform": Array [
-                                                Object {
+                                              "transform": [
+                                                {
                                                   "scale": undefined,
                                                 },
                                               ],
@@ -3456,12 +3620,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                         minX={0}
                                         minY={0}
                                         style={
-                                          Array [
-                                            Object {
+                                          [
+                                            {
                                               "backgroundColor": "transparent",
                                               "borderWidth": 0,
                                             },
-                                            Object {
+                                            {
                                               "flex": 0,
                                               "height": "100%",
                                               "width": "100%",
@@ -3473,7 +3637,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       >
                                         <RNSVGGroup
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
@@ -3484,7 +3648,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                             fill={null}
                                             onLayout={[Function]}
                                             propList={
-                                              Array [
+                                              [
                                                 "fill",
                                                 "stroke",
                                                 "strokeWidth",
@@ -3494,7 +3658,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                               ]
                                             }
                                             stroke={
-                                              Object {
+                                              {
                                                 "payload": 4294967295,
                                                 "type": 0,
                                               }
@@ -3512,7 +3676,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                               </View>
                               <View
                                 style={
-                                  Object {
+                                  {
                                     "flex": 1,
                                     "marginLeft": 8,
                                   }
@@ -3520,7 +3684,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                               >
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -3532,22 +3696,22 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     defaultWeight="SemiBold"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 21,
                                       }
                                     }
                                     numberOfLines={1}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -3567,21 +3731,21 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     font="TitilliumWeb"
                                     fontSize="regular"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 14,
                                         "lineHeight": 21,
                                       }
                                     }
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "marginLeft": 8,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         },
-                                        Object {
+                                        {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -3596,7 +3760,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                 </View>
                                 <View
                                   style={
-                                    Object {
+                                    {
                                       "flexDirection": "row",
                                     }
                                   }
@@ -3608,22 +3772,22 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     defaultWeight="Regular"
                                     font="TitilliumWeb"
                                     fontStyle={
-                                      Object {
+                                      {
                                         "fontSize": 16,
                                         "lineHeight": 24,
                                       }
                                     }
                                     numberOfLines={2}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "flex": 1,
                                         },
-                                        Object {
+                                        {
                                           "fontSize": 16,
                                           "lineHeight": 24,
                                         },
-                                        Object {
+                                        {
                                           "color": "#475A6D",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
@@ -3641,18 +3805,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -3671,18 +3835,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       defaultWeight="Regular"
                                       font="TitilliumWeb"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 12,
                                           "textTransform": "uppercase",
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 12,
                                             "textTransform": "uppercase",
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -3702,18 +3866,18 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       font="TitilliumWeb"
                                       fontSize="regular"
                                       fontStyle={
-                                        Object {
+                                        {
                                           "fontSize": 14,
                                           "lineHeight": 21,
                                         }
                                       }
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "fontSize": 14,
                                             "lineHeight": 21,
                                           },
-                                          Object {
+                                          {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
@@ -3728,7 +3892,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                   </Text>
                                   <View
                                     style={
-                                      Object {
+                                      {
                                         "justifyContent": "center",
                                         "marginLeft": 8,
                                       }
@@ -3740,12 +3904,12 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       focusable={false}
                                       height={14}
                                       style={
-                                        Array [
-                                          Object {
+                                        [
+                                          {
                                             "backgroundColor": "transparent",
                                             "borderWidth": 0,
                                           },
-                                          Object {
+                                          {
                                             "flex": 0,
                                             "height": 14,
                                             "width": 14,
@@ -3756,7 +3920,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     >
                                       <RNSVGGroup
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
@@ -3766,13 +3930,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                           cx="50%"
                                           cy="50%"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278927075,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "fill",
                                             ]
                                           }
@@ -3793,8 +3957,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

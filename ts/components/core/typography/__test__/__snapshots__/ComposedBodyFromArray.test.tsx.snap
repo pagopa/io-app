@@ -8,21 +8,21 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, auto text alig
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "auto",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -42,21 +42,21 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, center text al
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -76,21 +76,21 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, default text a
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -110,21 +110,21 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, justify text a
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "justify",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -144,21 +144,21 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, left text alig
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "left",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -178,21 +178,21 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, right text ali
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "right",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -212,21 +212,21 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "auto",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -243,18 +243,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -273,18 +273,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -303,18 +303,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -333,18 +333,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -363,18 +363,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -397,21 +397,21 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -428,18 +428,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -458,18 +458,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -488,18 +488,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -518,18 +518,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -548,18 +548,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -582,21 +582,21 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "center",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -613,18 +613,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -643,18 +643,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -673,18 +673,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -703,18 +703,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -733,18 +733,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -767,21 +767,21 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "justify",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -798,18 +798,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -828,18 +828,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -858,18 +858,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -888,18 +888,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -918,18 +918,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -952,21 +952,21 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "left",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -983,18 +983,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1013,18 +1013,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1043,18 +1043,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1073,18 +1073,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1103,18 +1103,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1137,21 +1137,21 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
-    Object {
+    {
       "fontSize": 16,
       "lineHeight": 24,
     }
   }
   style={
-    Array [
-      Object {
+    [
+      {
         "textAlign": "right",
       },
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       },
-      Object {
+      {
         "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
@@ -1168,18 +1168,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1198,18 +1198,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1228,18 +1228,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1258,18 +1258,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
@@ -1288,18 +1288,18 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     defaultWeight="Regular"
     font="TitilliumWeb"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
         "lineHeight": 24,
       }
     }
     style={
-      Array [
-        Object {
+      [
+        {
           "fontSize": 16,
           "lineHeight": 24,
         },
-        Object {
+        {
           "color": "#475A6D",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",

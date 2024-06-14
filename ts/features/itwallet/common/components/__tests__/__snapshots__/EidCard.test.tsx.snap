@@ -3,7 +3,7 @@
 exports[`EidCard should match snapshot when status is "expired" 1`] = `
 <View
   style={
-    Object {
+    {
       "aspectRatio": 1.6,
       "borderRadius": 8,
       "overflow": "hidden",
@@ -12,7 +12,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "backgroundColor": "#E8EBF1",
         "bottom": 0,
         "left": 0,
@@ -26,7 +26,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "paddingHorizontal": 16,
         "paddingTop": 12,
       }
@@ -34,7 +34,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -48,18 +48,18 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
         defaultWeight="Regular"
         font="TitilliumWeb"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
             },
-            Object {
+            {
               "color": "#555C70",
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
@@ -73,7 +73,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "alignSelf": "flex-start",
             "backgroundColor": "#FFFFFF",
@@ -90,7 +90,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "flexShrink": 1,
             }
           }
@@ -109,15 +109,15 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
             minX={0}
             minY={0}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "borderWidth": 0,
                 },
-                Object {
+                {
                   "color": "#D13333",
                 },
-                Object {
+                {
                   "flex": 0,
                   "height": 16,
                   "width": 16,
@@ -131,7 +131,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
           >
             <RNSVGGroup
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
@@ -141,13 +141,13 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
                 clipRule={0}
                 d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
                 fill={
-                  Object {
+                  {
                     "type": 2,
                   }
                 }
                 fillRule={0}
                 propList={
-                  Array [
+                  [
                     "fill",
                     "fillRule",
                   ]
@@ -158,7 +158,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "width": 6,
             }
           }
@@ -167,8 +167,8 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
           ellipsizeMode="tail"
           numberOfLines={1}
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignSelf": "center",
                 "color": "#555C70",
                 "flexShrink": 1,
@@ -176,7 +176,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
                 "lineHeight": 16,
                 "textTransform": "uppercase",
               },
-              Object {
+              {
                 "fontFamily": "Titillium Web",
                 "fontStyle": "normal",
                 "fontWeight": "600",
@@ -191,7 +191,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "bottom": 16,
         "position": "absolute",
         "right": -10,
@@ -200,8 +200,8 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "borderCurve": "continuous",
             "borderRadius": 24,
@@ -210,7 +210,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
             "paddingHorizontal": 8,
             "paddingVertical": 4,
           },
-          Object {
+          {
             "backgroundColor": "#F4F5F8",
           },
         ]
@@ -220,20 +220,20 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
         ellipsizeMode="tail"
         numberOfLines={1}
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "flexShrink": 1,
               "fontSize": 12,
               "lineHeight": 16,
               "textTransform": "uppercase",
             },
-            Object {
+            {
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
-            Object {
+            {
               "color": "#555C70",
             },
           ]
@@ -245,8 +245,8 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "borderColor": "transparent",
           "borderLeftWidth": 9,
           "borderRadius": 8,
@@ -257,7 +257,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
           "right": 0,
           "top": 0,
         },
-        Object {
+        {
           "borderColor": "#D13333",
         },
         false,
@@ -270,7 +270,7 @@ exports[`EidCard should match snapshot when status is "expired" 1`] = `
 exports[`EidCard should match snapshot when status is "pending" 1`] = `
 <View
   style={
-    Object {
+    {
       "aspectRatio": 1.6,
       "borderRadius": 8,
       "overflow": "hidden",
@@ -279,7 +279,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "backgroundColor": "#E8EBF1",
         "bottom": 0,
         "left": 0,
@@ -293,7 +293,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "paddingHorizontal": 16,
         "paddingTop": 12,
       }
@@ -301,7 +301,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -315,18 +315,18 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
         defaultWeight="Regular"
         font="TitilliumWeb"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
             },
-            Object {
+            {
               "color": "#555C70",
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
@@ -340,7 +340,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "alignItems": "center",
             "alignSelf": "flex-start",
             "backgroundColor": "#FFFFFF",
@@ -357,7 +357,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "flexShrink": 1,
             }
           }
@@ -376,15 +376,15 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
             minX={0}
             minY={0}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "borderWidth": 0,
                 },
-                Object {
+                {
                   "color": "#418DAF",
                 },
-                Object {
+                {
                   "flex": 0,
                   "height": 16,
                   "width": 16,
@@ -398,7 +398,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
           >
             <RNSVGGroup
               fill={
-                Object {
+                {
                   "payload": 4278190080,
                   "type": 0,
                 }
@@ -408,13 +408,13 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
                 clipRule={0}
                 d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0Zm.028 7.556a1.528 1.528 0 1 0 0-3.056 1.528 1.528 0 0 0 0 3.056Zm0 1.944c.568 0 1.029.46 1.029 1.028v8.005a1.028 1.028 0 0 1-2.057 0v-8.005c0-.568.46-1.028 1.029-1.028Z"
                 fill={
-                  Object {
+                  {
                     "type": 2,
                   }
                 }
                 fillRule={0}
                 propList={
-                  Array [
+                  [
                     "fill",
                     "fillRule",
                   ]
@@ -425,7 +425,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "width": 6,
             }
           }
@@ -434,8 +434,8 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
           ellipsizeMode="tail"
           numberOfLines={1}
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignSelf": "center",
                 "color": "#555C70",
                 "flexShrink": 1,
@@ -443,7 +443,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
                 "lineHeight": 16,
                 "textTransform": "uppercase",
               },
-              Object {
+              {
                 "fontFamily": "Titillium Web",
                 "fontStyle": "normal",
                 "fontWeight": "600",
@@ -458,7 +458,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "bottom": 16,
         "position": "absolute",
         "right": -10,
@@ -467,8 +467,8 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "borderCurve": "continuous",
             "borderRadius": 24,
@@ -477,7 +477,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
             "paddingHorizontal": 8,
             "paddingVertical": 4,
           },
-          Object {
+          {
             "backgroundColor": "#F4F5F8",
           },
         ]
@@ -487,20 +487,20 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
         ellipsizeMode="tail"
         numberOfLines={1}
         style={
-          Array [
-            Object {
+          [
+            {
               "alignSelf": "center",
               "flexShrink": 1,
               "fontSize": 12,
               "lineHeight": 16,
               "textTransform": "uppercase",
             },
-            Object {
+            {
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
-            Object {
+            {
               "color": "#555C70",
             },
           ]
@@ -512,8 +512,8 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "borderColor": "transparent",
           "borderLeftWidth": 9,
           "borderRadius": 8,
@@ -525,7 +525,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
           "top": 0,
         },
         false,
-        Object {
+        {
           "borderColor": "#418DAF",
         },
       ]
@@ -537,7 +537,7 @@ exports[`EidCard should match snapshot when status is "pending" 1`] = `
 exports[`EidCard should match snapshot when status is "valid" 1`] = `
 <View
   style={
-    Object {
+    {
       "aspectRatio": 1.6,
       "borderRadius": 8,
       "overflow": "hidden",
@@ -546,7 +546,7 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "backgroundColor": "#E8EBF1",
         "bottom": 0,
         "left": 0,
@@ -560,7 +560,7 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "paddingHorizontal": 16,
         "paddingTop": 12,
       }
@@ -568,7 +568,7 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "space-between",
@@ -582,18 +582,18 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
         defaultWeight="Regular"
         font="TitilliumWeb"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
             },
-            Object {
+            {
               "color": "#17324D",
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
@@ -608,7 +608,7 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "marginTop": 65,
         }
       }
@@ -620,18 +620,18 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
         defaultWeight="Regular"
         font="TitilliumWeb"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
             },
-            Object {
+            {
               "color": "#17324D",
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
@@ -650,18 +650,18 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
         defaultWeight="Regular"
         font="TitilliumWeb"
         fontStyle={
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 24,
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "fontSize": 16,
               "lineHeight": 24,
             },
-            Object {
+            {
               "color": "#17324D",
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
@@ -677,8 +677,8 @@ exports[`EidCard should match snapshot when status is "valid" 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "borderColor": "transparent",
           "borderLeftWidth": 9,
           "borderRadius": 8,

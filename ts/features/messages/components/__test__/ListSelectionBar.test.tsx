@@ -51,11 +51,4 @@ describe("ListSelectionBar component", () => {
       expect(onToggleSelectionSpy).toHaveBeenCalled();
     });
   });
-
-  describe("when selected items are the same as total items", () => {
-    it("should render 'deselect all messages' button", () => {
-      const { findByText } = render(<ListSelectionBar {...defaultProps} />);
-      expect(findByText(I18n.t("messages.cta.deselectAll"))).not.toBeNull();
-    });
-  });
 });

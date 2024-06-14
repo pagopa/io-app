@@ -3,7 +3,7 @@
 exports[`LoadingScreenContent should match the snapshot with title, a child, header hidden 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,14 +326,22 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
-                          Object {
+                          {
                             "backgroundColor": "#FFFFFF",
                             "flex": 1,
                             "justifyContent": "center",
@@ -330,14 +350,14 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "paddingHorizontal": 24,
                             }
                           }
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                               }
                             }
@@ -354,7 +374,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 accessible={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
-                                  Object {
+                                  {
                                     "height": 48,
                                     "width": 48,
                                   }
@@ -364,9 +384,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 <View
                                   collapsable={false}
                                   style={
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {
+                                      "transform": [
+                                        {
                                           "rotateZ": "0deg",
                                         },
                                       ],
@@ -385,12 +405,12 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     minX={0}
                                     minY={0}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "backgroundColor": "transparent",
                                           "borderWidth": 0,
                                         },
-                                        Object {
+                                        {
                                           "flex": 0,
                                           "height": 48,
                                           "width": 48,
@@ -404,7 +424,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     <RNSVGGroup
                                       fill={null}
                                       propList={
-                                        Array [
+                                        [
                                           "fill",
                                         ]
                                       }
@@ -412,7 +432,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                       <RNSVGDefs>
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               736995,
                                               1,
@@ -429,7 +449,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         />
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               -16040221,
                                               1,
@@ -447,13 +467,13 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                       </RNSVGDefs>
                                       <RNSVGGroup
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "strokeWidth",
                                           ]
                                         }
@@ -462,18 +482,18 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-secondHalf",
                                               "type": 1,
                                             }
@@ -482,18 +502,18 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         <RNSVGPath
                                           d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-firstHalf",
                                               "type": 1,
                                             }
@@ -502,19 +522,19 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                               "strokeLinecap",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "payload": 4278927075,
                                               "type": 0,
                                             }
@@ -529,7 +549,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 24,
                                 }
                               }
@@ -542,21 +562,21 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 24,
                                   "lineHeight": 34,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
+                                  {
                                     "fontSize": 24,
                                     "lineHeight": 34,
                                   },
-                                  Object {
+                                  {
                                     "color": "#17324D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
@@ -580,8 +600,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -590,7 +610,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
 exports[`LoadingScreenContent should match the snapshot with title, a child, header shown 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -598,8 +618,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -608,8 +628,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -621,7 +641,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -637,7 +657,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -651,12 +671,12 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -670,7 +690,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -682,7 +702,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -690,7 +710,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -701,7 +721,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -715,7 +735,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -730,7 +750,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -744,7 +764,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -758,21 +778,34 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -784,7 +817,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -802,12 +835,12 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -817,10 +850,10 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -829,9 +862,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -847,27 +880,26 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -877,13 +909,13 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -893,7 +925,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -901,19 +933,22 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <RNCSafeAreaView
                         edges={
-                          Array [
-                            "bottom",
-                          ]
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
                         }
                         style={
-                          Object {
+                          {
                             "backgroundColor": "#FFFFFF",
                             "flex": 1,
                             "justifyContent": "center",
@@ -922,14 +957,14 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "paddingHorizontal": 24,
                             }
                           }
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                               }
                             }
@@ -946,7 +981,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 accessible={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
-                                  Object {
+                                  {
                                     "height": 48,
                                     "width": 48,
                                   }
@@ -956,9 +991,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 <View
                                   collapsable={false}
                                   style={
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {
+                                      "transform": [
+                                        {
                                           "rotateZ": "0deg",
                                         },
                                       ],
@@ -977,12 +1012,12 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     minX={0}
                                     minY={0}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "backgroundColor": "transparent",
                                           "borderWidth": 0,
                                         },
-                                        Object {
+                                        {
                                           "flex": 0,
                                           "height": 48,
                                           "width": 48,
@@ -996,7 +1031,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     <RNSVGGroup
                                       fill={null}
                                       propList={
-                                        Array [
+                                        [
                                           "fill",
                                         ]
                                       }
@@ -1004,7 +1039,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                       <RNSVGDefs>
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               736995,
                                               1,
@@ -1021,7 +1056,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         />
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               -16040221,
                                               1,
@@ -1039,13 +1074,13 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                       </RNSVGDefs>
                                       <RNSVGGroup
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "strokeWidth",
                                           ]
                                         }
@@ -1054,18 +1089,18 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-secondHalf",
                                               "type": 1,
                                             }
@@ -1074,18 +1109,18 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         <RNSVGPath
                                           d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-firstHalf",
                                               "type": 1,
                                             }
@@ -1094,19 +1129,19 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                               "strokeLinecap",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "payload": 4278927075,
                                               "type": 0,
                                             }
@@ -1121,7 +1156,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 24,
                                 }
                               }
@@ -1134,21 +1169,21 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 24,
                                   "lineHeight": 34,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
+                                  {
                                     "fontSize": 24,
                                     "lineHeight": 34,
                                   },
-                                  Object {
+                                  {
                                     "color": "#17324D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
@@ -1172,8 +1207,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1182,7 +1217,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
 exports[`LoadingScreenContent should match the snapshot with title, no children, header hidden 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1190,8 +1225,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1200,8 +1235,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1213,7 +1248,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1229,7 +1264,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1243,12 +1278,12 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1262,7 +1297,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1274,7 +1309,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1282,7 +1317,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1293,7 +1328,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1307,7 +1342,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1322,7 +1357,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1336,7 +1371,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1350,21 +1385,34 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1376,7 +1424,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1394,12 +1442,12 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1409,10 +1457,10 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1421,9 +1469,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1439,27 +1487,26 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1469,13 +1516,13 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1485,7 +1532,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1493,14 +1540,22 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
-                          Object {
+                          {
                             "backgroundColor": "#FFFFFF",
                             "flex": 1,
                             "justifyContent": "center",
@@ -1509,14 +1564,14 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "paddingHorizontal": 24,
                             }
                           }
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                               }
                             }
@@ -1533,7 +1588,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 accessible={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
-                                  Object {
+                                  {
                                     "height": 48,
                                     "width": 48,
                                   }
@@ -1543,9 +1598,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 <View
                                   collapsable={false}
                                   style={
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {
+                                      "transform": [
+                                        {
                                           "rotateZ": "0deg",
                                         },
                                       ],
@@ -1564,12 +1619,12 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     minX={0}
                                     minY={0}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "backgroundColor": "transparent",
                                           "borderWidth": 0,
                                         },
-                                        Object {
+                                        {
                                           "flex": 0,
                                           "height": 48,
                                           "width": 48,
@@ -1583,7 +1638,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     <RNSVGGroup
                                       fill={null}
                                       propList={
-                                        Array [
+                                        [
                                           "fill",
                                         ]
                                       }
@@ -1591,7 +1646,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                       <RNSVGDefs>
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               736995,
                                               1,
@@ -1608,7 +1663,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         />
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               -16040221,
                                               1,
@@ -1626,13 +1681,13 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                       </RNSVGDefs>
                                       <RNSVGGroup
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "strokeWidth",
                                           ]
                                         }
@@ -1641,18 +1696,18 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-secondHalf",
                                               "type": 1,
                                             }
@@ -1661,18 +1716,18 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         <RNSVGPath
                                           d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-firstHalf",
                                               "type": 1,
                                             }
@@ -1681,19 +1736,19 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                               "strokeLinecap",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "payload": 4278927075,
                                               "type": 0,
                                             }
@@ -1708,7 +1763,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 24,
                                 }
                               }
@@ -1721,21 +1776,21 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 24,
                                   "lineHeight": 34,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
+                                  {
                                     "fontSize": 24,
                                     "lineHeight": 34,
                                   },
-                                  Object {
+                                  {
                                     "color": "#17324D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
@@ -1756,8 +1811,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1766,7 +1821,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
 exports[`LoadingScreenContent should match the snapshot with title, no children, header shown 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1774,8 +1829,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1784,8 +1839,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1797,7 +1852,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1813,7 +1868,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1827,12 +1882,12 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1846,7 +1901,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1858,7 +1913,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1866,7 +1921,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1877,7 +1932,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1891,7 +1946,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1906,7 +1961,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1920,7 +1975,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1934,21 +1989,34 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1960,7 +2028,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1978,12 +2046,12 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1993,10 +2061,10 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2005,9 +2073,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -2023,27 +2091,26 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -2053,13 +2120,13 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -2069,7 +2136,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -2077,19 +2144,22 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <RNCSafeAreaView
                         edges={
-                          Array [
-                            "bottom",
-                          ]
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
                         }
                         style={
-                          Object {
+                          {
                             "backgroundColor": "#FFFFFF",
                             "flex": 1,
                             "justifyContent": "center",
@@ -2098,14 +2168,14 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "paddingHorizontal": 24,
                             }
                           }
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "alignItems": "center",
                               }
                             }
@@ -2122,7 +2192,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 accessible={true}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
-                                  Object {
+                                  {
                                     "height": 48,
                                     "width": 48,
                                   }
@@ -2132,9 +2202,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 <View
                                   collapsable={false}
                                   style={
-                                    Object {
-                                      "transform": Array [
-                                        Object {
+                                    {
+                                      "transform": [
+                                        {
                                           "rotateZ": "0deg",
                                         },
                                       ],
@@ -2153,12 +2223,12 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     minX={0}
                                     minY={0}
                                     style={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "backgroundColor": "transparent",
                                           "borderWidth": 0,
                                         },
-                                        Object {
+                                        {
                                           "flex": 0,
                                           "height": 48,
                                           "width": 48,
@@ -2172,7 +2242,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     <RNSVGGroup
                                       fill={null}
                                       propList={
-                                        Array [
+                                        [
                                           "fill",
                                         ]
                                       }
@@ -2180,7 +2250,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                       <RNSVGDefs>
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               736995,
                                               1,
@@ -2197,7 +2267,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         />
                                         <RNSVGLinearGradient
                                           gradient={
-                                            Array [
+                                            [
                                               0,
                                               -16040221,
                                               1,
@@ -2215,13 +2285,13 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                       </RNSVGDefs>
                                       <RNSVGGroup
                                         fill={
-                                          Object {
+                                          {
                                             "payload": 4278190080,
                                             "type": 0,
                                           }
                                         }
                                         propList={
-                                          Array [
+                                          [
                                             "strokeWidth",
                                           ]
                                         }
@@ -2230,18 +2300,18 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-secondHalf",
                                               "type": 1,
                                             }
@@ -2250,18 +2320,18 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         <RNSVGPath
                                           d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "brushRef": "spinner-firstHalf",
                                               "type": 1,
                                             }
@@ -2270,19 +2340,19 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                         <RNSVGPath
                                           d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
                                           fill={
-                                            Object {
+                                            {
                                               "payload": 4278190080,
                                               "type": 0,
                                             }
                                           }
                                           propList={
-                                            Array [
+                                            [
                                               "stroke",
                                               "strokeLinecap",
                                             ]
                                           }
                                           stroke={
-                                            Object {
+                                            {
                                               "payload": 4278927075,
                                               "type": 0,
                                             }
@@ -2297,7 +2367,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 24,
                                 }
                               }
@@ -2310,21 +2380,21 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
-                                Object {
+                                {
                                   "fontSize": 24,
                                   "lineHeight": 34,
                                 }
                               }
                               style={
-                                Array [
-                                  Object {
+                                [
+                                  {
                                     "textAlign": "center",
                                   },
-                                  Object {
+                                  {
                                     "fontSize": 24,
                                     "lineHeight": 34,
                                   },
-                                  Object {
+                                  {
                                     "color": "#17324D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
@@ -2345,8 +2415,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

@@ -361,7 +361,7 @@ const ColorBox = ({
             : { backgroundColor: color }
         ]}
       >
-        {color && <Text style={styles.colorPill}>{color}</Text>}
+        {color && <Text style={styles.colorPill}>{color as string}</Text>}
       </View>
 
       {name && (
