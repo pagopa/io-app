@@ -90,6 +90,7 @@ export const MessageList = ({ category }: MessageListProps) => {
       ListFooterComponent={<Footer category={category} />}
       onEndReached={onEndReachedCallback}
       onEndReachedThreshold={0.1}
+      testID={`message_list_${category.toLowerCase()}`}
     />
   );
 };
