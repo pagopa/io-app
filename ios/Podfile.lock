@@ -150,7 +150,7 @@ PODS:
     - JOSESwift (~> 2.3)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - pagopa-io-react-native-login-utils (1.0.0):
+  - pagopa-io-react-native-login-utils (1.0.1):
     - React-Core
   - pagopa-react-native-zendesk (0.3.29):
     - RCT-Folly (= 2021.07.22.00)
@@ -501,7 +501,7 @@ PODS:
     - React
   - react-native-view-shot (3.1.2):
     - React
-  - react-native-webview (13.8.1):
+  - react-native-webview (13.10.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - React-NativeModulesApple (0.72.14):
@@ -1070,7 +1070,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: 48d51868a2751db4d9220283626d0d53f2375f63
   pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
-  pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
+  pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -1107,7 +1107,7 @@ SPEC CHECKSUMS:
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
-  react-native-webview: baaebe143b736a26939d76243769df97f60e27b2
+  react-native-webview: 9946090a1cd4add775cf91327f93bc910bf89286
   React-NativeModulesApple: 3107f777453f953906d9ba9dc5f8cbd91a6ef913
   React-perflogger: daabc494c6328efc1784a4b49b8b74fca305d11c
   React-RCTActionSheet: 0e0e64a7cf6c07f1de73d1f0a92d26a70262b256

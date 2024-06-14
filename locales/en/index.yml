@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Perché?"
   you: "YOU"
   id: "ID"
   badges:
@@ -80,7 +81,7 @@ global:
   unknown: unknown
   disclaimer_beta: If you're having trouble signing in, please let us know!
   sectionStatus:
-    moreInfo: more info
+    moreInfo: More info
   accessibility:
     minusSymbol: minus
     switchLabel: "Select to activate"
@@ -156,6 +157,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    consent: "Consenti"
     deny: "Deny"
     share: Share
     delete: Delete
@@ -484,7 +486,7 @@ profile:
     list:
       biometric_recognition:
         title: Biometric recognition
-        subtitle: Use your fingerprint or your face
+        subtitle: Use your fingerprint or your face.
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
@@ -505,6 +507,9 @@ profile:
         alert:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
+        toast:
+          success:
+            title: You've switched the app language
         not_selected: Not selected
         banner:
           button: Learn more
@@ -897,7 +902,7 @@ onboarding:
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
     errors:
-      invalid: 
+      invalid:
         title: Too easy!
         description: Choose a code that is hard to guess and doesn't contain a single repeated number (e.g. 000000) or a list of ordered numbers (e.g. 123456 or 654321).
         cta: Choose another code
@@ -1868,7 +1873,6 @@ messages:
     one: You have 1 message
   tab:
     inbox: Inbox
-    deadlines: Expiring
     archive: Archived
   contentTitle: Messages
   refresh: Pull down to refresh
@@ -1939,10 +1943,6 @@ messages:
     emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
-  deadlines:
-    emptyMessage:
-      title: You haven't any scheduled deadline.
-      subtitle: Use the button above to check out past deadlines.
   pagination:
     migration:
       started: Please wait, we are updating the Messages section.
@@ -2149,10 +2149,12 @@ services:
       back: "Back"
       retry: "Retry"
     header:
-      subtitle: "{{count}} available services"
+      subtitlePlural: "{{count}} available services"
+      subtitleSingular: "{{count}} available service"
   search:
     input:
       placeholder: "Search for a national or local institution"
+      placeholderShort: "Search for an institution"
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
@@ -2238,7 +2240,7 @@ identification:
       button: Did you forget the
       code: unlock code
       button_short: Change the unlock code
-      subtitle: Set a new 6-digit code
+      subtitle: Set a new 6-digit code.
     confirmValid: Correct unlock code
   forgetCode:
     confirmTitle: Did you forget the unlock code?
@@ -3070,7 +3072,23 @@ features:
       status:
         expired: Scaduta
     transactions:
-      title: Storico operazioni
+      showLegacyTransactions: Mostra precedenti
+      legacy:
+        empty:
+          title: Nessuna ricevuta trovata
+          body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
+        banner:
+          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          action: Scopri di più
+        title: Operazioni precedenti
+        bottomSheet:
+          title: Dove trovo la ricevuta di pagamento?
+          noticeHeading: Avvisi pagati di recente
+          noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
+          allNoticesHeading: Tutti gli altri avvisi
+          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+      multiplePayment: Pagamento multiplo
+      title: Ricevute pagoPA
       button: Vedi tutte
       empty:
         title: Qui vedrai le tue ricevute pagoPA
@@ -3078,13 +3096,29 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: PagoPA Receipt
+        shareButton: Save or share
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
+    details:
+      pspAlert:
+        description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
+        action: "Cosa significa?"
+        title: "Cosa significa?"
+        explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “Pagamento veloce con PayPal”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
   itWallet:
     card:
-      eid:
-        label: Identità Digitale
+      status:
         expired: Non valida
+        expiring: In scadenza
         pending: In lavorazione
-        digital: Versione digitale
+      label:
+        eid: Identità Digitale
+        mdl: Patente di Guida
+        dc: Carta Europea della Disabilità
+        ts: Tessera Sanitaria
+      digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3185,6 +3219,9 @@ features:
       success:
         title: "Hai aggiunto\nIdentità Digitale!"
         subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+    unsupportedDevice:
+      text: Starting from 02.07.2024 your device may no longer be compatible with IO.
+      moreInfo: More info
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3269,8 +3306,8 @@ idpay:
         subtitle: Attendi qualche secondo
   code:
     reset:
-      title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+      title: ID Pay code
+      body: The code to authorise payments made with your electronic identity card.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3775,6 +3812,8 @@ bonusCard:
   removed: Rimossa
 transaction:
   details:
+    error:
+      title: É stato riscontrato un errore
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
@@ -3785,12 +3824,21 @@ transaction:
       pspName: Gestore della transazione (PSP)
       dateAndHour: Data e ora
       transactionId: ID transazione
+      paymentMethod: Metodo di pagamento
+      authCode: Codice autorizzativo
+      rrn: RRN
+      executedBy: Eseguito da
+      headedTo: Intestato a
+      alert:
+        content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
       amount: Importo
       creditor: Ente creditore
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+      noticeCode: Codice avviso
+      taxCode: Codice Fiscale Ente
 permissionRequest:
   gallery:
     title: Consenti a IO di accedere alle tue foto
@@ -3809,10 +3857,28 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
-FIMS: 
+FIMS:
   loadingScreen:
+    abort:
+      title: "Operazione annullata"
     consents:
       title: "Attendi qualche secondo"
     in-app-browser:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
+  consentsScreen:
+    title: "Consenti la condivisione dei tuoi dati"
+    subtitle: "Autorizza IO a trasmettere a "
+    subtitle2: " i dati necessari per la tua autenticazione su "
+    requiredData: "Dati richiesti"
+    privacy1: "Per maggiori informazioni, leggi "
+    privacyCta: "l’Informativa sulla Privacy "
+    bottomSheet:
+      title: "Accedi a servizi di terze parti tramite IO"
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti
+        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
+        che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
+        finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla
+        Privacy."

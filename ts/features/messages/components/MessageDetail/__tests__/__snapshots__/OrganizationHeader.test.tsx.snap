@@ -351,31 +351,30 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                           <Text
                             allowFontScaling={false}
                             color="grey-700"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
                             font="TitilliumWeb"
-                            fontSize="regular"
                             fontStyle={
                               {
-                                "fontSize": 14,
+                                "fontSize": 16,
                                 "lineHeight": 21,
                               }
                             }
                             style={
                               [
                                 {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 },
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="Bold"
+                            weight="SemiBold"
                           >
                             #### organization_name ####
                           </Text>
@@ -385,7 +384,6 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             defaultColor="blue"
                             defaultWeight="Bold"
                             font="TitilliumWeb"
-                            fontSize="regular"
                             fontStyle={
                               {
                                 "fontSize": 14,

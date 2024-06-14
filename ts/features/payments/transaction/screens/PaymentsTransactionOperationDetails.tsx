@@ -12,7 +12,7 @@ import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import I18n from "../../../../i18n";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -56,7 +56,7 @@ const WalletTransactionOperationDetailsScreen = () => {
   };
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: cleanTransactionDescription(operationName)
       }}
@@ -108,7 +108,7 @@ const WalletTransactionOperationDetailsScreen = () => {
           />
         )}
       </ScrollView>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

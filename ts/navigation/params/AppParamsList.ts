@@ -59,6 +59,8 @@ import { PaymentsTransactionParamsList } from "../../features/payments/transacti
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
+import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
+import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/bizEventsTransaction/navigation/routes";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
@@ -85,6 +87,7 @@ export type AppParamsList = {
   [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
+  [SERVICES_ROUTES.SEARCH]: undefined;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
 
   [ROUTES.BARCODE_SCAN]: undefined;
@@ -123,6 +126,7 @@ export type AppParamsList = {
   [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
   [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionParamsList>;
+  [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionBizEventsParamsList>;
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
 };

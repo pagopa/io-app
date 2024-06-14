@@ -507,7 +507,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                       <View
                         style={
                           {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }

@@ -147,11 +147,5 @@ jest.mock("react-native", () => {
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
 
-  // // eslint-disable-next-line functional/immutable-data
-  // RN.Platform.OS = "android";
-
-  // // eslint-disable-next-line functional/immutable-data
-  // RN.Platform.select = obj => obj.android;
-
   return RN;
 });

@@ -1,5 +1,6 @@
 import {
   Body,
+  ButtonLink,
   ButtonSolid,
   H4,
   IOVisualCostants,
@@ -11,6 +12,7 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
+import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
 
 type Props = {
   withPictogram?: boolean;
@@ -23,6 +25,15 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
     navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
       screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
     });
+  };
+
+  const handleOnFindLegacyTransactionsPress = () => {
+    navigation.navigate(
+      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
+      {
+        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_LIST
+      }
+    );
   };
 
   return (
@@ -44,14 +55,21 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
         {I18n.t("features.payments.transactions.empty.content")}
       </Body>
       <VSpacer size={24} />
-      <ButtonSolid
-        label={I18n.t("features.payments.cta")}
-        accessibilityLabel={I18n.t("features.payments.cta")}
-        onPress={handleOnAddMethodPress}
-        fullWidth={true}
-        icon="qrCode"
-        iconPosition="end"
-      />
+      <View style={{ alignItems: "center" }}>
+        <ButtonSolid
+          label={I18n.t("features.payments.cta")}
+          accessibilityLabel={I18n.t("features.payments.cta")}
+          onPress={handleOnAddMethodPress}
+          fullWidth={true}
+          icon="qrCode"
+          iconPosition="end"
+        />
+        <VSpacer size={16} />
+        <ButtonLink
+          label="Cerca ricevute meno recenti"
+          onPress={handleOnFindLegacyTransactionsPress}
+        />
+      </View>
     </View>
   );
 };

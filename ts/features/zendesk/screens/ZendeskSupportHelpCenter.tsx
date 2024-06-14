@@ -1,11 +1,15 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
-import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import FAQComponent from "../../../components/FAQComponent";
+import * as O from "fp-ts/lib/Option";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { View, ScrollView } from "react-native";
+import {
+  ContentWrapper,
+  HeaderSecondLevel,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -40,6 +44,8 @@ import {
   isProfileEmailValidatedSelector,
   profileSelector
 } from "../../../store/reducers/profile";
+import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
+import FAQComponent from "../../../components/FAQComponent";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -180,6 +186,9 @@ const ZendeskSupportHelpCenter = () => {
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
+  const navigation = useNavigation();
+  const { screenEndMargin } = useScreenEndMargin();
+
   // Navigation prop
   const {
     faqCategories,
@@ -222,45 +231,52 @@ const ZendeskSupportHelpCenter = () => {
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
   }
 
-  return (
-    <BaseScreenComponent
-      showChat={false}
-      customGoBack={<View />}
-      customRightIcon={{
-        iconName: "closeLarge",
-        onPress: workUnitCancel,
-        accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
-      }}
-      headerTitle={I18n.t("support.helpCenter.header")}
-    >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"ZendeskSupportHelpCenterScreen"}
-      >
-        <ScrollView style={IOStyles.horizontalContentPadding}>
-          <FaqManager
-            contextualHelpConfig={contextualHelpConfig}
-            faqCategories={faqCategories}
-            contentLoaded={markdownContentLoaded}
-            startingRoute={startingRoute}
-          />
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => (
+        <HeaderSecondLevel
+          type="singleAction"
+          title={I18n.t("support.helpCenter.header")}
+          firstAction={{
+            icon: "closeLarge",
+            onPress: workUnitCancel,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.close"
+            )
+          }}
+        />
+      )
+    });
+  });
 
-          {showRequestSupportContacts && (
-            <>
-              <VSpacer size={16} />
-              <ZendeskSupportComponent
-                assistanceForPayment={assistanceForPayment}
-                assistanceForCard={assistanceForCard}
-                assistanceForFci={
-                  assistanceForFci || signatureRequestId !== undefined
-                }
-              />
-            </>
-          )}
-          <VSpacer size={16} />
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+  return (
+    <ScrollView
+      contentContainerStyle={{ paddingBottom: screenEndMargin }}
+      testID={"ZendeskSupportHelpCenterScreen"}
+    >
+      <ContentWrapper>
+        <FaqManager
+          contextualHelpConfig={contextualHelpConfig}
+          faqCategories={faqCategories}
+          contentLoaded={markdownContentLoaded}
+          startingRoute={startingRoute}
+        />
+
+        {showRequestSupportContacts && (
+          <>
+            <VSpacer size={16} />
+            <ZendeskSupportComponent
+              assistanceForPayment={assistanceForPayment}
+              assistanceForCard={assistanceForCard}
+              assistanceForFci={
+                assistanceForFci || signatureRequestId !== undefined
+              }
+            />
+          </>
+        )}
+      </ContentWrapper>
+    </ScrollView>
   );
 };
 

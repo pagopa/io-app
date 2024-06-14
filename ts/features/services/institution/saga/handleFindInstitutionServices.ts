@@ -25,6 +25,10 @@ export function* handleFindInstitutionServices(
     )) as unknown as SagaCallReturnType<typeof findInstutionServices>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
+
       if (response.right.status === 200) {
         yield* put(paginatedServicesGet.success(response.right.value));
         return;
