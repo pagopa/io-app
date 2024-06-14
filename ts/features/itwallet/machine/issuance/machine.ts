@@ -88,10 +88,12 @@ export const itwIssuanceMachine = setup({
     },
     WalletInitialization: {
       tags: [Tags.Loading],
-      description: "Wallet instance registration and attestation issuance",
+      description: "Wallet instance registration and attestation retrieval",
       initial: "WalletInstanceRegistration",
       states: {
         WalletInstanceRegistration: {
+          description:
+            "This state generates the integry hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
           invoke: {
             src: "registerWalletInstance",
             onDone: {
@@ -104,14 +106,15 @@ export const itwIssuanceMachine = setup({
                   params: { keyTag: event.output }
                 })
               ],
-              target: "WalletAttestationRegistration"
+              target: "WalletAttestationRetrieval"
             },
             onError: {
               target: "#itwIssuanceMachine.Failure"
             }
           }
         },
-        WalletAttestationRegistration: {
+        WalletAttestationRetrieval: {
+          description: "Obtainment of the wallet attestation",
           invoke: {
             src: "getWalletAttestation",
             input: ({ context }) => ({
