@@ -140,3 +140,18 @@ jest.mock("mixpanel-react-native", () => ({
     init: jest.fn()
   }))
 }));
+
+jest.mock("react-native", () => {
+  const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
+
+  // eslint-disable-next-line functional/immutable-data
+  RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
+
+  // // eslint-disable-next-line functional/immutable-data
+  // RN.Platform.OS = "android";
+
+  // // eslint-disable-next-line functional/immutable-data
+  // RN.Platform.select = obj => obj.android;
+
+  return RN;
+});

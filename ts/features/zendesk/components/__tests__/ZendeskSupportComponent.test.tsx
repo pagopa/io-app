@@ -1,16 +1,10 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
-import {
-  idpSelected,
-  loginSuccess
-} from "../../../../store/actions/authentication";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { SessionToken } from "../../../../types/SessionToken";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ZENDESK_ROUTES from "../../navigation/routes";
