@@ -11,7 +11,6 @@ import {
   paymentsStartPaymentAuthorizationAction
 } from "../../../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "../handleWalletPaymentAuthorization";
-import { selectPagoPaPlatformSessionToken } from "../../../../common/store/selectors";
 
 describe("Test handleWalletPaymentAuthorization saga", () => {
   const requestTransactionAuthorizationPayload: WalletPaymentAuthorizePayload =
@@ -44,7 +43,6 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       )
     )
       .next()
-      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -78,7 +76,6 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       )
     )
       .next()
-      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -110,7 +107,6 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       )
     )
       .next()
-      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
