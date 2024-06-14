@@ -3272,10 +3272,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.38.1":
-  version "1.38.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.38.1.tgz#6ec8fdd624e709b7a0d089e06520a95a472b073a"
-  integrity sha512-DSlqjDl1mUFCv+Okgm35N0QQwZgRzuXoysOa7EPupnSM8wW048W12rPtbQxHU+He2ki62amNBo5T91F3kW7PiQ==
+"@pagopa/io-app-design-system@1.39.0":
+  version "1.39.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.39.0.tgz#072ad36f4e163a63ce545f0c020c5828e25621d2"
+  integrity sha512-saFzbeJsvyaPHMt75NW2L1Z+Zz3M98FgilqIL7GVK56Fga+aY2CwxNAnANN4lA4PprdqGpyb7OrkTRT9/3aPZA== 
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3321,10 +3321,10 @@
     abab "^2.0.6"
     zod "^3.22.4"
 
-"@pagopa/io-react-native-login-utils@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.0.tgz#26aa8fe2ae2c30f18d2714264524fd281f0f2b12"
-  integrity sha512-9OXV4ebpZAGdFfbV5HOt0YbVhGvVb104KshCA7u74YnsTkJp32FhdIVwoqmerRwNO4rRjwwvDjWZdhT80IrOzA==
+"@pagopa/io-react-native-login-utils@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.1.tgz#cf6bb709f1613419486b7453a15ba63f0e2784ac"
+  integrity sha512-tea892roPm42NQIeTCw4WRSVtfuCkr/i+ussj03PttM3BFdCi6y2Kvg1HITxXcDukLza3b+kENzQFRuKRKhPAQ==
 
 "@pagopa/io-react-native-wallet@^0.11.1":
   version "0.11.1"
@@ -3340,10 +3340,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.29.tgz#ada8dab8a9ef15e126275baace2084491148bac8"
   integrity sha512-CskFyF0Sz+EC/ZyJNNMFEX/Avjyn6cKRwE2K+XSTGWDKYLImPraA8YozTljclCdv3DOxk3ZklUsieMG25PfnSw==
 
-"@pagopa/openapi-codegen-ts@^12.2.1":
-  version "12.2.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-12.2.1.tgz#e2cc9cedcbb23077b4f3f80e970ebd9c55e71afe"
-  integrity sha512-NO+z8+FUuR04Kc6I6fZk2mh+PWc1wrrBiTmcmnwuGGAWcObPqt4oF7b0fpAiZF91YuAMf5BOaXsFIIeSQv3i8g==
+"@pagopa/openapi-codegen-ts@^13.2.0":
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-13.2.0.tgz#ed55405c979b582dc11a8a9b900adc45b6c7379d"
+  integrity sha512-EKo4CJReQPT8z3a6P35p3eW86VIy9gcLOVrxIj8VR5bWRhVDfFjwAmpth9pIGQ0QXPmGuylbJbWQmWHrbGLnaA==
   dependencies:
     "@pagopa/ts-commons" "^10.15.0"
     fs-extra "^6.0.0"
@@ -14750,10 +14750,10 @@ react-native-vision-camera@2.15.4:
   resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.15.4.tgz#821f0505fc8c63b87c1ae4697d2bb4f670333576"
   integrity sha512-SJXSWH1pu4V3Kj4UuX/vSgOxc9d5wb5+nHqBHd+5iUtVyVLEp0F6Jbbaha7tDoU+kUBwonhlwr2o8oV6NZ7Ibg==
 
-react-native-webview@^13.8.1:
-  version "13.8.1"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-13.8.1.tgz#d0058c063e38241476049aaab2e5cc9f254d5480"
-  integrity sha512-7Jqm1WzWJrOWraBAXQfKtr/Uo5Jw/IJHzC40jYLwgV/eVGmLJ9BpGKw6QVw7wpRkjmTZ2Typ4B1aHJLJJQFslA==
+react-native-webview@^13.10.3:
+  version "13.10.3"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-13.10.3.tgz#afde1a52311fa6c56314466850764d142b7e6729"
+  integrity sha512-Gs8TvwvKvf8C6eVa3znyDn1MeYnC6tyPyBZz2D+pxys+tMn5bFUnDVdv7UpACEyoXIifsKRG7zJZu0D8OUsd2w==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"

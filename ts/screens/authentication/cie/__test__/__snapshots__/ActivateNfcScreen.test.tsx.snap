@@ -462,11 +462,11 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Web",
                                           "fontStyle": "normal",
-                                          "fontWeight": "400",
+                                          "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="Regular"
+                                    weight="SemiBold"
                                   >
                                     How to do it::
                                   </Text>

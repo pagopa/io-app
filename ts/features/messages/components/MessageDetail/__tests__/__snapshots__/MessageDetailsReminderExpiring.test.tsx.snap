@@ -432,9 +432,15 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           </View>
                           <View
                             style={
-                              Object {
-                                "flex": 1,
-                              }
+                              Array [
+                                Object {
+                                  "marginTop": -5,
+                                },
+                                Object {
+                                  "flex": 1,
+                                  "marginBottom": -4,
+                                },
+                              ]
                             }
                           >
                             <Text

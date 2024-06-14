@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Perché?"
   you: "TU"
   id: "ID"
   badges:
@@ -80,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: più info
+    moreInfo: Più info
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -156,6 +157,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
   buttons:
+    consent: "Consenti"
     deny: "Nega"
     share: Condividi
     delete: Elimina
@@ -484,7 +486,7 @@ profile:
     list:
       biometric_recognition:
         title: Riconoscimento biometrico
-        subtitle: Usa la tua impronta o il tuo volto
+        subtitle: Usa il volto o la tua impronta.
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
@@ -505,6 +507,9 @@ profile:
         alert:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
+        toast:
+          success:
+            title: Hai cambiato lingua
         not_selected: Non selezionato
         banner:
           button: Scopri di più
@@ -897,7 +902,7 @@ onboarding:
     pinLabel: Crea codice di sblocco
     pinConfirmationLabel: Ripeti codice di sblocco
     errors:
-      invalid: 
+      invalid:
         title: Troppo facile!
         description: Scegli un codice difficile da indovinare, che non contenga un unico numero ripetuto (es. 000000)o un elenco di numeri ordinati (es. 123456 o 654321).
         cta: Scegli un altro codice
@@ -1868,7 +1873,6 @@ messages:
     one: Hai 1 messaggio
   tab:
     inbox: Ricevuti
-    deadlines: In scadenza
     archive: Archiviati
   contentTitle: Messaggi
   refresh: Trascina in basso per aggiornare
@@ -1933,16 +1937,12 @@ messages:
   noContent: Contenuto non disponibile
   archive:
     emptyMessage:
-      title: Il tuo archivio è vuoto.
-      subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+      title: "Il tuo archivio è vuoto"
+      subtitle: "Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente.\nI messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca."
   inbox:
     emptyMessage:
-      title: La tua lista dei messaggi è vuota.
-      subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
-  deadlines:
-    emptyMessage:
-      title: Non hai scadenze in programma.
-      subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
+      title: Non hai ancora ricevuto alcun messaggio
+      subtitle: "Quando un ente ti invierà una comunicazione la visualizzerai qui."
   pagination:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
@@ -2149,10 +2149,12 @@ services:
       back: "Indietro"
       retry: "Riprova"
     header:
-      subtitle: "{{count}} servizi disponibili"
+      subtitlePlural: "{{count}} servizi disponibili"
+      subtitleSingular: "{{count}} servizio disponibile"
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
+      placeholderShort: "Cerca un ente"
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
@@ -2238,7 +2240,7 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Modifica il codice di sblocco
-      subtitle: Imposta un nuovo codice di 6 cifre
+      subtitle: Imposta un nuovo codice di 6 cifre.
     confirmValid: Codice di sblocco corretto
   forgetCode:
     confirmTitle: Hai dimenticato il codice di sblocco?
@@ -3070,7 +3072,23 @@ features:
       status:
         expired: Scaduta
     transactions:
-      title: Storico operazioni
+      showLegacyTransactions: Mostra precedenti
+      legacy:
+        empty:
+          title: Nessuna ricevuta trovata
+          body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
+        banner:
+          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          action: Scopri di più
+        title: Operazioni precedenti
+        bottomSheet:
+          title: Dove trovo la ricevuta di pagamento?
+          noticeHeading: Avvisi pagati di recente
+          noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
+          allNoticesHeading: Tutti gli altri avvisi
+          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+      multiplePayment: Pagamento multiplo
+      title: Ricevute pagoPA
       button: Vedi tutte
       empty:
         title: Qui vedrai le tue ricevute pagoPA
@@ -3078,13 +3096,29 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: Ricevuta PagoPA
+        shareButton: Salva o condividi 
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
+    details:
+      pspAlert:
+        description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
+        action: "Cosa significa?"
+        title: "Cosa significa?"
+        explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “Pagamento veloce con PayPal”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
   itWallet:
     card:
-      eid:
-        label: Identità Digitale
+      status:
         expired: Non valida
+        expiring: In scadenza
         pending: In lavorazione
-        digital: Versione digitale
+      label:
+        eid: Identità Digitale
+        mdl: Patente di Guida
+        dc: Carta Europea della Disabilità
+        ts: Tessera Sanitaria
+      digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3185,6 +3219,9 @@ features:
       success:
         title: "Hai aggiunto\nIdentità Digitale!"
         subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+    unsupportedDevice:
+      text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
+      moreInfo: Scopri perchè
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3270,7 +3307,7 @@ idpay:
   code:
     reset:
       title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3775,6 +3812,8 @@ bonusCard:
   removed: Rimossa
 transaction:
   details:
+    error:
+      title: É stato riscontrato un errore
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
@@ -3785,12 +3824,21 @@ transaction:
       pspName: Gestore della transazione (PSP)
       dateAndHour: Data e ora
       transactionId: ID transazione
+      paymentMethod: Metodo di pagamento
+      authCode: Codice autorizzativo
+      rrn: RRN
+      executedBy: Eseguito da
+      headedTo: Intestato a
+      alert:
+        content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
       amount: Importo
       creditor: Ente creditore
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+      noticeCode: Codice avviso
+      taxCode: Codice Fiscale Ente
 permissionRequest:
   gallery:
     title: Consenti a IO di accedere alle tue foto
@@ -3809,10 +3857,28 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
-FIMS: 
+FIMS:
   loadingScreen:
+    abort:
+      title: "Operazione annullata"
     consents:
       title: "Attendi qualche secondo"
     in-app-browser:
       title: "Ti stiamo indirizzando al servizio"
       subtitle: "Attendi qualche secondo"
+  consentsScreen:
+    title: "Consenti la condivisione dei tuoi dati"
+    subtitle: "Autorizza IO a trasmettere a "
+    subtitle2: " i dati necessari per la tua autenticazione su "
+    requiredData: "Dati richiesti"
+    privacy1: "Per maggiori informazioni, leggi "
+    privacyCta: "l’Informativa sulla Privacy "
+    bottomSheet:
+      title: "Accedi a servizi di terze parti tramite IO"
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti
+        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
+        che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
+        finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla
+        Privacy."

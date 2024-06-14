@@ -64,6 +64,8 @@ import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
+import { PaymentsTransactionBizEventsRoutes } from "../features/payments/bizEventsTransaction/navigation/routes";
+import { PaymentsTransactionBizEventsNavigator } from "../features/payments/bizEventsTransaction/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -79,6 +81,7 @@ import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavig
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/navigation";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
+import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -156,9 +159,20 @@ const AuthenticatedStackNavigator = () => {
       )}
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
         component={ServicesNavigator}
       />
+      {/* This screen is outside the ServicesNavigator to change gesture and transion behaviour. */}
+      <Stack.Screen
+        name={SERVICES_ROUTES.SEARCH}
+        component={SearchScreen}
+        options={{
+          ...hideHeaderOptions,
+          animationEnabled: false,
+          gestureEnabled: false
+        }}
+      />
+
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
         options={hideHeaderOptions}
@@ -335,6 +349,16 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR}
         component={PaymentsTransactionNavigator}
+        options={{
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
+      />
+      <Stack.Screen
+        name={
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR
+        }
+        component={PaymentsTransactionBizEventsNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
