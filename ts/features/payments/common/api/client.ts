@@ -14,7 +14,7 @@ export const createWalletClient = (baseUrl: string) =>
 export const createPaymentClient = (baseUrl: string) =>
   createECommerceClient({
     baseUrl,
-    basePath: "/ecommerce/io/v1",
+    basePath: "/ecommerce/io/v2",
     fetchApi: defaultRetryingFetch()
   });
 
@@ -28,7 +28,7 @@ export const createTransactionClient = (baseUrl: string) =>
 export const createPagoPaClient = (baseUrl: string, walletToken: string) =>
   createPagoPaPlatformClient<"Authorization">({
     baseUrl,
-    basePath: "",
+    basePath: "/session-wallet/v1",
     fetchApi: defaultRetryingFetch(),
     withDefaults: op => params => {
       const paramsWithDefaults = {
