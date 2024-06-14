@@ -145,6 +145,9 @@ PODS:
   - pagopa-io-react-native-http-client (1.0.2):
     - Alamofire (~> 5.9.1)
     - React-Core
+  - pagopa-io-react-native-integrity (0.3.0):
+    - React-Core
+    - SwiftCBOR
   - pagopa-io-react-native-jwt (1.2.0):
     - JOSESwift (~> 2.3)
     - React-Core
@@ -558,6 +561,7 @@ PODS:
   - RNSVG (15.1.0):
     - React-Core
   - SocketRocket (0.6.1)
+  - SwiftCBOR (0.4.7)
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
     - React-Core
@@ -629,6 +633,7 @@ DEPENDENCIES:
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
+  - "pagopa-io-react-native-integrity (from `../node_modules/@pagopa/io-react-native-integrity`)"
   - "pagopa-io-react-native-jwt (from `../node_modules/@pagopa/io-react-native-jwt`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
   - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
@@ -735,6 +740,7 @@ SPEC REPOS:
     - OpenSSL-Universal
     - PromisesObjC
     - SocketRocket
+    - SwiftCBOR
     - YogaKit
     - ZendeskAnswerBotProvidersSDK
     - ZendeskAnswerBotSDK
@@ -772,6 +778,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-http-client:
     :path: "../node_modules/@pagopa/io-react-native-http-client"
+  pagopa-io-react-native-integrity:
+    :path: "../node_modules/@pagopa/io-react-native-integrity"
   pagopa-io-react-native-jwt:
     :path: "../node_modules/@pagopa/io-react-native-jwt"
   pagopa-io-react-native-login-utils:
@@ -958,6 +966,7 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: 0799ed85dfe45c56765a394ab1f39aa2fb56f09d
+  pagopa-io-react-native-integrity: 2df0acdf2dff0a4d612bfe06ec70f8fc2c1ba9a0
   pagopa-io-react-native-jwt: f89a378bbc5ebfd93c24ec5993e97545a4815157
   pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: e4a63ee0745a567b641110f7ff78e457086ab7a3
@@ -1030,6 +1039,7 @@ SPEC CHECKSUMS:
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
   RNSVG: 50cf2c7018e57cf5d3522d98d0a3a4dd6bf9d093
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: e9a95af10e00aaebe99d648ff4519fd336e16ffe
   Yoga: d6134eb3d6e3675afc1d6d65ccb3169b60e21980
