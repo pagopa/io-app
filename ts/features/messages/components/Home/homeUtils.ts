@@ -1,3 +1,5 @@
+import { constUndefined, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import { ActionType } from "typesafe-actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { loadNextPageMessages, reloadAllMessages } from "../../store/actions";
@@ -10,34 +12,29 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers/servicesById";
 import {
+  messagePagePotFromCategorySelector,
   nextMessagePageStartingIdForCategorySelector,
-  nextPageLoadingForCategoryHasErrorSelector
+  nextPageLoadingForCategoryHasErrorSelector,
+  shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
+import { isSomeOrSomeError, isStrictNone } from "../../../../utils/pot";
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
-): ActionType<typeof reloadAllMessages.request> | undefined => {
-  const allPaginatedState = state.entities.messages.allPaginated;
-  const shownMessagesCategory = allPaginatedState.shownCategory;
-  const isShowingArchivedMessages = shownMessagesCategory === "ARCHIVE";
-  const messagesCategoryPot = isShowingArchivedMessages
-    ? allPaginatedState.archive.data
-    : allPaginatedState.inbox.data;
-  if (messagesCategoryPot.kind === "PotNone") {
-    return reloadAllMessages.request({
-      pageSize,
-      filter: { getArchived: isShowingArchivedMessages }
-    });
-  }
+): ActionType<typeof reloadAllMessages.request> | undefined =>
+  pipe(state, shownMessageCategorySelector, category =>
+    pipe(
+      state,
+      messagePagePotFromCategorySelector(category),
+      isStrictNone,
+      B.fold(constUndefined, () =>
+        initialReloadAllMessagesFromCategory(category)
+      )
+    )
+  );
 
-  return undefined;
-};
-
-export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) => {
-  const shownMessageCategory =
-    state.entities.messages.allPaginated.shownCategory;
-  return messageListCategoryToViewPageIndex(shownMessageCategory);
-};
+export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) =>
+  pipe(state, shownMessageCategorySelector, messageListCategoryToViewPageIndex);
 
 export const messageListCategoryToViewPageIndex = (
   category: MessageListCategory
@@ -74,11 +71,11 @@ export const getLoadServiceDetailsActionIfNeeded = (
   return undefined;
 };
 
-export const getLoadNextPageMessagesActionIfNeeded = (
+export const getLoadNextPageMessagesActionIfAllowed = (
   state: GlobalState,
   category: MessageListCategory,
   messageListDistanceFromEnd: number
-) => {
+): ActionType<typeof loadNextPageMessages.request> | undefined => {
   const nextMessagePageStartingId =
     nextMessagePageStartingIdForCategorySelector(state, category);
   if (!nextMessagePageStartingId) {
@@ -102,3 +99,20 @@ export const getLoadNextPageMessagesActionIfNeeded = (
     filter: { getArchived: category === "ARCHIVE" }
   });
 };
+
+export const getReloadAllMessagesActionForRefreshIfAllowed = (
+  state: GlobalState,
+  category: MessageListCategory
+): ActionType<typeof reloadAllMessages.request> | undefined =>
+  pipe(
+    state,
+    messagePagePotFromCategorySelector(category),
+    isSomeOrSomeError,
+    B.fold(constUndefined, () => initialReloadAllMessagesFromCategory(category))
+  );
+
+const initialReloadAllMessagesFromCategory = (category: MessageListCategory) =>
+  reloadAllMessages.request({
+    pageSize,
+    filter: { getArchived: category === "ARCHIVE" }
+  });

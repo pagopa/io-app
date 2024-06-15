@@ -31,7 +31,7 @@ describe("MessageList", () => {
       filter: { getArchived: true }
     });
     jest
-      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfNeeded")
+      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
       .mockImplementation((_state, category, _messageListDistanceFromEnd) =>
         category === expectedCategory ? expectedAction : undefined
       );
@@ -53,7 +53,7 @@ describe("MessageList", () => {
       filter: { getArchived: true }
     });
     jest
-      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfNeeded")
+      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
       .mockImplementation((_state, category, _messageListDistanceFromEnd) =>
         category === expectedCategory ? undefined : expectedAction
       );

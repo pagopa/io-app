@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
-import { FlatList, StyleSheet } from "react-native";
-import { Divider } from "@pagopa/io-app-design-system";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import { Divider, IOColors } from "@pagopa/io-app-design-system";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
@@ -12,10 +12,14 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { messageListForCategorySelector } from "../../store/reducers/allPaginated";
+import {
+  messageListForCategorySelector,
+  shouldShowRefreshControllOnListSelector
+} from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
 import {
-  getLoadNextPageMessagesActionIfNeeded,
+  getLoadNextPageMessagesActionIfAllowed,
+  getReloadAllMessagesActionForRefreshIfAllowed,
   messageListItemHeight
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
@@ -54,11 +58,14 @@ export const MessageList = ({ category }: MessageListProps) => {
     const count = Math.floor(listHeight / messageListItemHeight());
     return [...Array(count).keys()];
   }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
+  const isRefreshing = useIOSelector(state =>
+    shouldShowRefreshControllOnListSelector(state, category)
+  );
 
   const onEndReachedCallback = useCallback(
     ({ distanceFromEnd }: { distanceFromEnd: number }) => {
       const state = store.getState();
-      const loadNextPageMessages = getLoadNextPageMessagesActionIfNeeded(
+      const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
         state,
         category,
         distanceFromEnd
@@ -69,6 +76,15 @@ export const MessageList = ({ category }: MessageListProps) => {
     },
     [category, dispatch, store]
   );
+
+  const onRefreshCallback = useCallback(() => {
+    const state = store.getState();
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(state, category);
+    if (reloadAllMessagesAction) {
+      dispatch(reloadAllMessagesAction);
+    }
+  }, [category, dispatch, store]);
 
   return (
     <FlatList
@@ -88,6 +104,14 @@ export const MessageList = ({ category }: MessageListProps) => {
         }
       }}
       ListFooterComponent={<Footer category={category} />}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={onRefreshCallback}
+          tintColor={IOColors["blueIO-500"]}
+          colors={[IOColors["blueIO-500"]]}
+        />
+      }
       onEndReached={onEndReachedCallback}
       onEndReachedThreshold={0.1}
       testID={`message_list_${category.toLowerCase()}`}

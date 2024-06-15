@@ -6,7 +6,7 @@ import * as allPaginated from "../../../store/reducers/allPaginated";
 import {
   accessibilityLabelForMessageItem,
   getInitialReloadAllMessagesActionIfNeeded,
-  getLoadNextPageMessagesActionIfNeeded,
+  getLoadNextPageMessagesActionIfAllowed,
   getLoadServiceDetailsActionIfNeeded,
   getMessagesViewPagerInitialPageIndex,
   messageListCategoryToViewPageIndex,
@@ -561,7 +561,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => false);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
       0
@@ -583,7 +583,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => false);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",
       0
@@ -605,7 +605,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => true);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
       1
@@ -627,7 +627,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => true);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",
       1
@@ -648,7 +648,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => false);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
       1
@@ -664,7 +664,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => true);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
       0
@@ -679,7 +679,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => false);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",
       1
@@ -695,7 +695,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
       .mockImplementation((_state, _category) => true);
 
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfNeeded(
+    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",
       0

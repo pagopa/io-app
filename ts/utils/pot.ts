@@ -37,3 +37,10 @@ export const foldK =
       foldSomeUpdating,
       foldSomeError
     );
+
+export const isStrictSomeError = <A, E>(p: pot.Pot<A, E>): boolean =>
+  pot.isSome(p) && pot.isError(p);
+export const isSomeLoadingOrSomeUpdating = <A, E>(p: pot.Pot<A, E>): boolean =>
+  pot.isSome(p) && (pot.isLoading(p) || pot.isUpdating(p));
+export const isSomeOrSomeError = <A, E>(p: pot.Pot<A, E>): boolean =>
+  pot.isSome(p) && !pot.isLoading(p) && !pot.isUpdating(p);
