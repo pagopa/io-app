@@ -1,4 +1,7 @@
-import { URL as PolyfillURL } from "react-native-url-polyfill";
+import {
+  URL as PolyfillURL,
+  URLSearchParams as PolyfillURLSearchParams
+} from "react-native-url-polyfill";
 import * as E from "fp-ts/lib/Either";
 import {
   HttpCallConfig,
@@ -76,12 +79,14 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   }
   const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
 
-  const queryParamsMap = getQueryParamsFromUrlString(relyingPartyRedirectUrl);
-  const nonce = queryParamsMap?.get("nonce");
+  const lollipopParamsMap = getLollipopParamsFromUrlString(
+    relyingPartyRedirectUrl
+  );
+  const state = lollipopParamsMap?.get("state");
 
-  if (!queryParamsMap || !nonce) {
+  if (!lollipopParamsMap || !state) {
     logToMixPanel(
-      `could not extract query params or nonce from RelyingParty URL, params: ${!!queryParamsMap}, nonce: ${!!nonce}`
+      `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`
     );
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure(
@@ -91,12 +96,9 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     return;
   }
 
-  // Remove the nonce since it is not part of the 'customContentToSign'
-  queryParamsMap.delete("nonce");
-
   const lollipopConfig: LollipopConfig = {
-    nonce,
-    customContentToSign: Object.fromEntries(queryParamsMap.entries())
+    nonce: state,
+    customContentToSign: Object.fromEntries(lollipopParamsMap.entries())
   };
 
   const requestInit = { headers: {}, method: "GET" };
@@ -229,15 +231,28 @@ interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
   };
 }
 
-const getQueryParamsFromUrlString = (url: string) => {
+const getLollipopParamsFromUrlString = (url: string) => {
   try {
-    const queryParams = new Map<string, string>();
+    const lollipopParams = new Map<string, string>();
     const constructedUrl = new PolyfillURL(url);
+    // Extract Query Params
     const params = constructedUrl.searchParams;
-    for (const [name, value] of params) {
-      queryParams.set(name, value);
+    params.forEach((value, name) => lollipopParams.set(name, value));
+    // Extract Fragment Params
+    const fragmentString = constructedUrl.hash;
+    if (fragmentString.length > 0) {
+      const queryParamsFragmentString = fragmentString
+        .replace("#", "")
+        .replace(";", "&")
+        .replace("?", "&");
+      const queryParamsFragment = new PolyfillURLSearchParams(
+        queryParamsFragmentString
+      );
+      queryParamsFragment.forEach((value, name) =>
+        lollipopParams.set(name, value)
+      );
     }
-    return queryParams;
+    return lollipopParams;
   } catch (error) {
     return undefined;
   }
