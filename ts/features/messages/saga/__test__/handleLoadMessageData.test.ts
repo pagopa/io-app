@@ -12,8 +12,8 @@ import {
   upsertMessageStatusAttributes
 } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { serviceByIdPotSelector } from "../../../services/store/reducers/servicesById";
-import { loadServiceDetail } from "../../../../store/actions/services";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";

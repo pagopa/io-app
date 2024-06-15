@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
@@ -51,8 +50,9 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
-import UnlockAccessScreen from "../onboarding/UnlockAccessScreen";
 import { apiUrlPrefix } from "../../config";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
+import UnlockAccessComponent from "./UnlockAccessComponent";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
@@ -228,7 +228,14 @@ const IdpLoginScreen = (props: Props) => {
       );
     } else if (pot.isError(requestState)) {
       if (errorCode === "1002") {
-        return <UnlockAccessScreen identifier="SPID" />;
+        // TODO: refactor this logic and
+        // change this UnlockAccessComponent with navigation
+        // props.navigation.navigate(ROUTES.AUTHENTICATION, {
+        //   screen: ROUTES.UNLOCK_ACCESS_SCREEN,
+        //   params: { authLevel: "L2" }
+        // });
+        // jira ticket: https://pagopa.atlassian.net/browse/IOPID-1547
+        return <UnlockAccessComponent authLevel="L2" />;
       } else {
         return (
           <IdpAuthErrorScreen
@@ -255,8 +262,7 @@ const IdpLoginScreen = (props: Props) => {
         )
       };
     }
-    const idpTextData = props.selectedIdpTextData.value;
-    return IdpCustomContextualHelpContent(idpTextData);
+    return emptyContextualHelp;
   }, [props.selectedIdpTextData]);
 
   const { loggedOutWithIdpAuth, loggedInAuth } = props;

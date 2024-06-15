@@ -171,7 +171,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -443,6 +429,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -453,11 +440,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>
@@ -471,8 +458,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -649,7 +636,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -657,25 +644,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -921,6 +894,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -931,11 +905,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>
@@ -949,8 +923,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1127,7 +1101,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -1135,25 +1109,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1294,8 +1254,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1472,7 +1432,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -1480,25 +1440,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1639,8 +1585,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1817,7 +1763,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -1825,25 +1771,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2089,6 +2021,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -2099,11 +2032,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>
@@ -2117,8 +2050,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2295,7 +2228,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -2303,25 +2236,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2567,6 +2486,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -2577,11 +2497,11 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Web",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="SemiBold"
                               >
                                 Attachments
                               </Text>
@@ -2595,8 +2515,8 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2773,7 +2693,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -2781,25 +2701,11 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2940,8 +2846,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3118,7 +3024,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -3126,25 +3032,11 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3285,8 +3177,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3463,7 +3355,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -3471,25 +3363,11 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3630,8 +3508,8 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

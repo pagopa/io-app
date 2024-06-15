@@ -1,4 +1,4 @@
-import { pot } from "@pagopa/ts-commons";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import {
   idPayBeneficiaryDetailsSelector,

@@ -16,8 +16,8 @@ import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
 } from "../../analytics";
-import { servicePreferenceSelector } from "../../../services/store/reducers/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../../services/types/ServicePreferenceResponse";
+import { servicePreferenceSelector } from "../../../services/details/store/reducers/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
 function* handlePnActivation(

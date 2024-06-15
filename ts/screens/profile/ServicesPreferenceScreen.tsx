@@ -1,9 +1,7 @@
-import { ContentWrapper, VSpacer, IOToast } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
-import { useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
@@ -14,7 +12,8 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
   trackServiceConfiguration,
@@ -30,7 +29,7 @@ import ServicesContactComponent from "./components/services/ServicesContactCompo
  * @constructor
  */
 const ServicesPreferenceScreen = (): ReactElement => {
-  const store = useStore();
+  const store = useIOStore();
   const state = store.getState();
   const dispatch = useIODispatch();
   const profile = useIOSelector(profileSelector);

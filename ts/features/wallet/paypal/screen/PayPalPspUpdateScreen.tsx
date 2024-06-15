@@ -1,39 +1,38 @@
-import { Route, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
 import {
-  View,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
-import { useDispatch } from "react-redux";
-import {
+  FooterWithButtons,
   Icon,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React, { useEffect } from "react";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
+import { isError, isReady } from "../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   pspForPaymentV2,
   pspSelectedForPaymentV2
 } from "../../../../store/actions/wallet/payment";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
-import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
-import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
@@ -94,14 +93,6 @@ const getLocales = () => ({
   )
 });
 
-const backButtonProps = (onPress: () => void) => ({
-  testID: "backButtonID",
-  primary: false,
-  bordered: true,
-  onPress,
-  title: I18n.t("global.buttons.cancel")
-});
-
 const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
   const { psp } = props;
   const imgDimensions = useImageResize(
@@ -131,6 +122,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
             ),
             imgDim => (
               <Image
+                accessibilityIgnoresInvertColors
                 testID={"pspNameLogoID"}
                 source={{ uri: psp.logoUrl }}
                 style={[
@@ -171,7 +163,7 @@ const PayPalPspUpdateScreen: React.FunctionComponent = () => {
     >().params;
   const locales = getLocales();
   const navigation = useIONavigation();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const pspList = useIOSelector(pspV2ListSelector);
   const searchPaypalPsp = () => {
     dispatch(pspForPaymentV2.request({ idPayment, idWallet }));
@@ -186,39 +178,49 @@ const PayPalPspUpdateScreen: React.FunctionComponent = () => {
       headerTitle={I18n.t("wallet.onboarding.paypal.updatePsp.headerTitle")}
     >
       {isReady(pspList) ? (
-        <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
-          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <VSpacer size={8} />
-            <H1>{locales.title}</H1>
-            <VSpacer size={8} />
-            <ScrollView>
-              <Body>{locales.body}</Body>
-              <VSpacer size={24} />
-              <PspListHeader
-                leftColumnTitle={locales.leftColumnTitle}
-                rightColumnTitle={locales.rightColumnTitle}
-              />
+        <>
+          <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
+            <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
               <VSpacer size={8} />
-              {pspList.value.map(psp => {
-                const paypalPsp = convertPspData(psp);
-                return (
-                  <PspItem
-                    psp={paypalPsp}
-                    key={`paypal_psp:${paypalPsp.id}`}
-                    onPress={() => {
-                      dispatch(pspSelectedForPaymentV2(psp));
-                      goBack();
-                    }}
-                  />
-                );
-              })}
-            </ScrollView>
-          </View>
+              <H1>{locales.title}</H1>
+              <VSpacer size={8} />
+              <ScrollView>
+                <Body>{locales.body}</Body>
+                <VSpacer size={24} />
+                <PspListHeader
+                  leftColumnTitle={locales.leftColumnTitle}
+                  rightColumnTitle={locales.rightColumnTitle}
+                />
+                <VSpacer size={8} />
+                {pspList.value.map(psp => {
+                  const paypalPsp = convertPspData(psp);
+                  return (
+                    <PspItem
+                      psp={paypalPsp}
+                      key={`paypal_psp:${paypalPsp.id}`}
+                      onPress={() => {
+                        dispatch(pspSelectedForPaymentV2(psp));
+                        goBack();
+                      }}
+                    />
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </SafeAreaView>
           <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={backButtonProps(goBack)}
+            type="SingleButton"
+            primary={{
+              type: "Outline",
+              buttonProps: {
+                label: I18n.t("global.buttons.cancel"),
+                accessibilityLabel: I18n.t("global.buttons.cancel"),
+                onPress: goBack,
+                testID: "backButtonID"
+              }
+            }}
           />
-        </SafeAreaView>
+        </>
       ) : (
         <LoadingErrorComponent
           testID={"PayPalPpsUpdateScreenLoadingError"}

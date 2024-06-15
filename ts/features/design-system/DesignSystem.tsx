@@ -1,6 +1,5 @@
 import {
   Divider,
-  IOStyles,
   IOVisualCostants,
   ListItemNav,
   VSpacer,
@@ -10,6 +9,8 @@ import * as React from "react";
 import { SectionList, StatusBar, View, useColorScheme } from "react-native";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 
@@ -40,7 +41,13 @@ const DATA_ROUTES_LEGACY: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.LEGACY
 );
 
-const DESIGN_SYSTEM_SECTION_DATA = [
+type SectionDataProps = {
+  title: string;
+  description?: string;
+  data: RoutesProps;
+};
+
+const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
   {
     title: "Foundation",
     data: DATA_ROUTES_FOUNDATION
@@ -74,6 +81,8 @@ export const DesignSystem = () => {
   const colorScheme = useColorScheme();
   const navigation = useIONavigation();
 
+  const { screenEndMargin } = useScreenEndMargin();
+
   const renderDSNavItem = ({
     item: { title, route }
   }: {
@@ -101,7 +110,13 @@ export const DesignSystem = () => {
     </View>
   );
 
-  const renderDSSectionFooter = () => <VSpacer size={40} />;
+  const renderDSSectionFooter = ({ section }: { section: SectionDataProps }) =>
+    /* We exclude the last section because
+    we already apply the `screenEndMargin` */
+    DESIGN_SYSTEM_SECTION_DATA.indexOf(section) !==
+    DESIGN_SYSTEM_SECTION_DATA.length - 1 ? (
+      <VSpacer size={40} />
+    ) : null;
 
   return (
     <>
@@ -115,7 +130,8 @@ export const DesignSystem = () => {
         contentContainerStyle={[
           IOStyles.horizontalContentPadding,
           {
-            paddingTop: IOVisualCostants.appMarginDefault
+            paddingTop: IOVisualCostants.appMarginDefault,
+            paddingBottom: screenEndMargin
           }
         ]}
         renderSectionHeader={renderDSSection}

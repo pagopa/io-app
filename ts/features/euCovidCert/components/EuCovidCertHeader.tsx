@@ -1,9 +1,8 @@
 import * as React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
-import { H1 } from "../../../components/core/typography/H1";
-import { H2 } from "../../../components/core/typography/H2";
+import { Image, StyleSheet, View } from "react-native";
+import { H3, H4 } from "@pagopa/io-app-design-system";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
+import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 
 const styles = StyleSheet.create({
   row: {
@@ -28,14 +27,15 @@ export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
   <>
     <View style={styles.row}>
       <View style={styles.column}>
-        <H1 testID={"EuCovidCertHeaderTitle"}>{props.headerData.title}</H1>
-        <H2 testID={"EuCovidCertHeaderSubTitle"}>
+        <H3 testID={"EuCovidCertHeaderTitle"}>{props.headerData.title}</H3>
+        <H4 testID={"EuCovidCertHeaderSubTitle"}>
           {props.headerData.subTitle}
-        </H2>
+        </H4>
       </View>
       {/* it could happen we don't want to show any logo, in that case url will be empty */}
       {!isStringNullyOrEmpty(props.headerData.logoUrl) && (
         <Image
+          accessibilityIgnoresInvertColors
           testID={"EuCovidCertHeaderLogoID"}
           source={{ uri: props.headerData.logoUrl }}
           style={styles.logo}

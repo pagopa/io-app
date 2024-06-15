@@ -104,7 +104,7 @@ export const DSLogos = () => {
   );
 };
 
-const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 
 const organizationsURIs = [
   {
@@ -155,7 +155,6 @@ const renderAvatar = () => (
         {organizationsURIs.map(({ imageSource }, i) => (
           <React.Fragment key={i}>
             <Avatar
-              shape="square"
               size="small"
               logoUri={
                 imageSource
@@ -179,7 +178,6 @@ const renderAvatar = () => (
         {organizationsURIs.map(({ imageSource }, i) => (
           <React.Fragment key={i}>
             <Avatar
-              shape="square"
               size="medium"
               logoUri={
                 imageSource

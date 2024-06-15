@@ -21,37 +21,31 @@
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
  */
+import { IOColors, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   Image,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import SectionStatusComponent from "../../components/SectionStatus";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
 import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
 import {
   navigateToServiceDetailsScreen,
@@ -68,18 +62,18 @@ import {
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
 import {
+  ServicesSectionState,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector,
-  ServicesSectionState,
   servicesSelector,
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
-import { servicesByIdSelector } from "../../features/services/store/reducers/servicesById";
+import { servicesByIdSelector } from "../../features/services/details/store/reducers/servicesById";
 import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
-import { profileSelector, ProfileState } from "../../store/reducers/profile";
+import { ProfileState, profileSelector } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
@@ -94,10 +88,7 @@ import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../../utils/profile";
-import { showToast } from "../../utils/showToast";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
-
-type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
+import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (
@@ -107,9 +98,7 @@ type ReduxMergedProps = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  OwnProps &
-  ReduxMergedProps &
-  LightModalContextInterface;
+  ReduxMergedProps;
 
 type State = {
   currentTab: number;
@@ -221,6 +210,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <VSpacer size={40} />
         <VSpacer size={40} />
         <Image
+          accessibilityIgnoresInvertColors
           source={require("../../../img/services/icon-loading-services.png")}
         />
         <VSpacer size={40} />
@@ -239,10 +229,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       !pot.isError(prevProps.profile) &&
       this.props.profile.error.type !== "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR"
     ) {
-      showToast(
-        I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
-        "danger"
-      );
+      IOToast.error(I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"));
     }
 
     const enableServices = this.areAllServicesInboxChannelDisabled();
@@ -259,7 +246,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           pot.isLoading(prevProps.potUserMetadata))
       ) {
         // A toast is displayed if upsert userMetadata load fails
-        showToast(this.state.toastErrorMessage, "danger");
+        IOToast.error(this.state.toastErrorMessage);
       }
 
       if (
@@ -267,7 +254,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         pot.isError(this.props.visibleServicesContentLoadState)
       ) {
         // A toast is displayed if refresh visible services fails (on content or metadata load)
-        showToast(this.state.toastErrorMessage, "danger");
+        IOToast.error(this.state.toastErrorMessage);
       }
     }
   }
@@ -514,17 +501,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  navigateToServiceDetailsScreen: (
-    params: ServiceDetailsScreenNavigationParams
-  ) => navigateToServiceDetailsScreen(params),
+  navigateToServiceDetailsScreen: (params: ServiceDetailsScreenRouteParams) =>
+    navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (service: ServicePublic) =>
     dispatch(showServiceDetails(service))
 });
 
 const mergeProps = (
   stateProps: ReturnType<typeof mapStateToProps>,
-  dispatchProps: ReturnType<typeof mapDispatchToProps>,
-  ownProps: OwnProps
+  dispatchProps: ReturnType<typeof mapDispatchToProps>
 ) => {
   // If the user updates the area of interest, the upsert of
   // the user metadata stored on backend is triggered
@@ -543,7 +528,6 @@ const mergeProps = (
   return {
     ...stateProps,
     ...dispatchProps,
-    ...ownProps,
     ...{
       updateOrganizationsOfInterestMetadata
     }
@@ -554,4 +538,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(withLightModalContext(ServicesHomeScreen));
+)(ServicesHomeScreen);

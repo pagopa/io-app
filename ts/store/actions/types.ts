@@ -8,7 +8,6 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
-
 import { BonusActions } from "../../features/bonus/common/store/actions";
 import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
@@ -23,9 +22,16 @@ import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/acti
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
+import { ServicesActions as NewServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
+import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
 import { GlobalState } from "../reducers/types";
+import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
+import { FimsActions } from "../../features/fims/store/actions";
+import { ItwActions } from "../../features/itwallet/common/store/actions";
+import { TrialSystemActions } from "../../features/trialSystem/store/actions";
+import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -38,7 +44,6 @@ import { DebugActions } from "./debug";
 import { IdentificationActions } from "./identification";
 import { InstallationActions } from "./installation";
 import { MixpanelActions } from "./mixpanel";
-import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
 import { OrganizationsActions } from "./organizations";
 import { PaymentsActions } from "./payments";
@@ -100,7 +105,13 @@ export type Action =
   | FastLoginActions
   | WhatsNewActions
   | PaymentsFeatureActions
-  | NewWalletActions;
+  | NewWalletActions
+  | CieLoginConfigActions
+  | NewServicesActions
+  | FimsActions
+  | ItwActions
+  | TrialSystemActions
+  | ProfileSettingsActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

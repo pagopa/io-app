@@ -17,16 +17,15 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
   cards: [
     {
       hpan: "9900",
-      isError: false,
       brand: "maestro",
       onPress,
       testID: "card-1"
     },
     {
       holderEmail: "test@test.it",
-      isError: true,
       onPress,
-      testID: "card-2"
+      testID: "card-2",
+      isExpired: true
     },
     {
       holderPhone: "1234",
@@ -44,6 +43,9 @@ describe("PaymentCardsCarousel", () => {
     expect(
       within(queryByTestId("card-1")!).queryByText("•••• 9900")
     ).not.toBeNull();
+    expect(
+      within(queryByTestId("card-2")!).queryByTestId("card-1-errorIcon")
+    ).toBeNull();
 
     expect(queryByTestId("card-2")).not.toBeNull();
     expect(
@@ -57,6 +59,9 @@ describe("PaymentCardsCarousel", () => {
     expect(
       within(queryByTestId("card-3")!).queryByText("BANCOMAT Pay")
     ).not.toBeNull();
+    expect(
+      within(queryByTestId("card-3")!).queryByTestId("card-3-errorIcon")
+    ).toBeNull();
   });
 });
 

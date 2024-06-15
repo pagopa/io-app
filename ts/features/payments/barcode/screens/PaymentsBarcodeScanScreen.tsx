@@ -94,7 +94,9 @@ const PaymentsBarcodeScanScreen = () => {
 
     if (barcode.type === "PAGOPA") {
       if (isNewWalletSectionEnabled) {
-        startPaymentFlowWithRptId(barcode.rptId);
+        startPaymentFlowWithRptId(barcode.rptId, {
+          onSuccess: "showTransaction"
+        });
       } else {
         dispatch(paymentInitializeState());
         switch (barcode.format) {
@@ -139,7 +141,7 @@ const PaymentsBarcodeScanScreen = () => {
   const handleManualInputPressed = () => {
     analytics.trackBarcodeManualEntryPath("avviso");
 
-    if (isDesignSystemEnabled) {
+    if (isDesignSystemEnabled || isNewWalletSectionEnabled) {
       navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
       });

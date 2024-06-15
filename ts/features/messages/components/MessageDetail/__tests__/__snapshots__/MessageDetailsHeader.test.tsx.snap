@@ -150,7 +150,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                     }
                   }
                 >
-                  DUMMY_ROUTE
+                  MESSAGE_DETAIL
                 </Text>
               </View>
               <View
@@ -171,7 +171,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -395,7 +381,6 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         defaultColor="blue"
                         defaultWeight="Bold"
                         font="TitilliumWeb"
-                        fontSize="regular"
                         fontStyle={
                           Object {
                             "fontSize": 14,
@@ -412,11 +397,11 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                               "color": "#555C70",
                               "fontFamily": "Titillium Web",
                               "fontStyle": "normal",
-                              "fontWeight": "700",
+                              "fontWeight": "400",
                             },
                           ]
                         }
-                        weight="Bold"
+                        weight="Regular"
                       >
                         18 Oct 2021, 16:00
                       </Text>
@@ -455,31 +440,30 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           <Text
                             allowFontScaling={false}
                             color="grey-700"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
                             font="TitilliumWeb"
-                            fontSize="regular"
                             fontStyle={
                               Object {
-                                "fontSize": 14,
+                                "fontSize": 16,
                                 "lineHeight": 21,
                               }
                             }
                             style={
                               Array [
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 },
                                 Object {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Web",
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="Bold"
+                            weight="SemiBold"
                           >
                             Ċentru tas-Saħħa
                           </Text>
@@ -489,13 +473,13 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             defaultColor="blue"
                             defaultWeight="Bold"
                             font="TitilliumWeb"
-                            fontSize="regular"
                             fontStyle={
                               Object {
                                 "fontSize": 14,
                                 "lineHeight": 21,
                               }
                             }
+                            onPress={[Function]}
                             style={
                               Array [
                                 Object {
@@ -561,7 +545,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 onError={[Function]}
                                 source={
                                   Object {
-                                    "uri": "https://assets.cdn.io.italia.it/logos/services/service_one.png",
+                                    "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
                                   }
                                 }
                                 style={
@@ -590,8 +574,8 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

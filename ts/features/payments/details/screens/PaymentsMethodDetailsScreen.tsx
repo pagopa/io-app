@@ -2,15 +2,13 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
-import { getDateFromExpiryDate } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
 import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
-import { PaymentCardProps } from "../../common/components/PaymentCard";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsBaseScreenComponent } from "../components/PaymentsMethodDetailsBaseScreenComponent";
 import { PaymentsMethodDetailsDeleteButton } from "../components/PaymentsMethodDetailsDeleteButton";
 import { PaymentsMethodDetailsErrorContent } from "../components/PaymentsMethodDetailsErrorContent";
@@ -18,6 +16,7 @@ import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPayme
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
+import { PaymentsMethodPspDetailsAlert } from "../components/PaymentsMethodPspDetailsAlert";
 
 export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -66,14 +65,20 @@ const PaymentsMethodDetailsScreen = () => {
 
   if (pot.isSome(walletDetailsPot) && !isLoading) {
     const paymentMethod = walletDetailsPot.value;
-    const cardProps = getPaymentCardPropsFromWallet(paymentMethod);
+    const cardProps = getPaymentCardPropsFromWalletInfo(paymentMethod);
     const headerTitle = getCardHeaderTitle(paymentMethod.details);
+    const paymentMethodDetails = paymentMethod.details as UIWalletInfoDetails;
 
     return (
       <PaymentsMethodDetailsBaseScreenComponent
-        card={cardProps}
+        card={{ ...cardProps, isExpired: false }}
         headerTitle={headerTitle}
       >
+        {paymentMethodDetails.pspBusinessName && (
+          <PaymentsMethodPspDetailsAlert
+            pspBusinessName={paymentMethodDetails.pspBusinessName}
+          />
+        )}
         <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
         <VSpacer size={24} />
         <PaymentsMethodDetailsDeleteButton paymentMethod={paymentMethod} />
@@ -93,21 +98,6 @@ const getCardHeaderTitle = (details?: UIWalletInfoDetails) => {
   }
 
   return "";
-};
-
-const getPaymentCardPropsFromWallet = (
-  wallet: WalletInfo
-): PaymentCardProps => {
-  const details = wallet.details as UIWalletInfoDetails;
-
-  return {
-    hpan: details.lastFourDigits,
-    abiCode: details.abi,
-    brand: details.brand,
-    expireDate: getDateFromExpiryDate(details.expiryDate),
-    holderEmail: details.maskedEmail,
-    holderPhone: details.maskedNumber
-  };
 };
 
 export default PaymentsMethodDetailsScreen;

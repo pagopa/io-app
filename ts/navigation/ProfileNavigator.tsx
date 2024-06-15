@@ -1,13 +1,14 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
-import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
+import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
+import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
@@ -23,16 +24,11 @@ import SecurityScreen from "../screens/profile/SecurityScreen";
 import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
-import WebPlayground from "../screens/profile/WebPlayground";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
-import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
-import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPaymentPlayground";
-import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
-import { isGestureEnabled } from "../utils/navigation";
-import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
-import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
 import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
+import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
+import { isGestureEnabled } from "../utils/navigation";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -51,7 +47,11 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_PRIVACY_MAIN}
       component={PrivacyMainScreen}
     />
-    <Stack.Screen name={ROUTES.PROFILE_PRIVACY} component={TosScreen} />
+    <Stack.Screen
+      options={{ headerShown: true }}
+      name={ROUTES.PROFILE_PRIVACY}
+      component={TosScreen}
+    />
     <Stack.Screen
       name={ROUTES.PROFILE_PRIVACY_SHARE_DATA}
       component={ShareDataScreen}
@@ -89,9 +89,6 @@ const ProfileStackNavigator = () => (
       component={LogoutScreen}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
       name={ROUTES.PROFILE_FISCAL_CODE}
       component={FiscalCodeScreen}
     />
@@ -105,13 +102,7 @@ const ProfileStackNavigator = () => (
       name={ROUTES.EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
     />
-    <Stack.Screen
-      options={{
-        headerShown: false
-      }}
-      name={ROUTES.PIN_SCREEN}
-      component={PinScreen}
-    />
+    <Stack.Screen name={ROUTES.PIN_SCREEN} component={PinScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}
@@ -127,7 +118,6 @@ const ProfileStackNavigator = () => (
       name={ROUTES.DESIGN_SYSTEM}
       component={DesignSystemNavigator}
     />
-    <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
     <Stack.Screen
       name={ROUTES.LOLLIPOP_PLAYGROUND}
       component={LollipopPlayground}
@@ -151,14 +141,6 @@ const ProfileStackNavigator = () => (
       component={IdPayCodePlayGround}
     />
     <Stack.Screen
-      name={ROUTES.WALLET_PLAYGROUND}
-      component={WalletPlayground}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_PAYMENT_PLAYGROUND}
-      component={WalletPaymentPlayground}
-    />
-    <Stack.Screen
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
       component={RemoveAccountInfo}
     />
@@ -173,12 +155,10 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS}
       component={RemoveAccountSuccess}
     />
-    {remindersOptInEnabled && (
-      <Stack.Screen
-        name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
-        component={NotificationsPreferencesScreen}
-      />
-    )}
+    <Stack.Screen
+      name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
+      component={NotificationsPreferencesScreen}
+    />
     <Stack.Screen name={ROUTES.ITW_PLAYGROUND} component={ItwPlayground} />
   </Stack.Navigator>
 );

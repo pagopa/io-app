@@ -8,14 +8,15 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   servicePreferenceResponseSuccessSelector,
   servicePreferenceSelector
-} from "../../../services/store/reducers/servicePreference";
+} from "../../../services/details/store/reducers/servicePreference";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { fold, isLoading } from "../../../../common/model/RemoteValue";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { loadServicePreference } from "../../../services/store/actions";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import * as analytics from "../../../services/common/analytics";
 
 type CgnServiceCtaProps = {
   serviceId: ServiceId;
@@ -69,11 +70,17 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
           },
           {
             text: I18n.t("global.buttons.deactivate"),
-            onPress: () => dispatch(cgnUnsubscribe.request())
+            onPress: () => {
+              analytics.trackSpecialServiceStatusChanged({
+                is_active: false,
+                service_id: serviceId
+              });
+              dispatch(cgnUnsubscribe.request());
+            }
           }
         ]
       ),
-    [dispatch]
+    [dispatch, serviceId]
   );
 
   if (!servicePreferenceResponseSuccess) {
@@ -102,6 +109,10 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
       loading={isLoadingStatus}
       testID="service-activate-bonus-button"
       onPress={() => {
+        analytics.trackSpecialServiceStatusChanged({
+          is_active: true,
+          service_id: serviceId
+        });
         dispatch(loadAvailableBonuses.request());
         dispatch(cgnActivationStart());
       }}

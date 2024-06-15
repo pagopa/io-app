@@ -16,7 +16,7 @@ import {
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
 import { message_1 } from "../../../messages/__mocks__/message";
-import { loadServiceDetail } from "../../../../store/actions/services";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { service_1 } from "../../../messages/__mocks__/messages";
 import { UIMessageId } from "../../../messages/types";
 import { applicationChangeState } from "../../../../store/actions/application";

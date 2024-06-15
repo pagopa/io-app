@@ -16,8 +16,7 @@ import {
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import { FimsNavigator } from "../features/fims/navigation/navigator";
-import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { FimsLegacyNavigator } from "../features/fimsLegacy/navigation/navigator";
 import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navigator";
 import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
@@ -58,23 +57,31 @@ import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/nav
 import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
 import { PaymentsTransactionNavigator } from "../features/payments/transaction/navigation/navigator";
 import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
-import ServicesNavigator from "../features/services/navigation/navigator";
-import { SERVICES_ROUTES } from "../features/services/navigation/routes";
+import ServicesNavigator from "../features/services/common/navigation/navigator";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
+import { PaymentsTransactionBizEventsRoutes } from "../features/payments/bizEventsTransaction/navigation/routes";
+import { PaymentsTransactionBizEventsNavigator } from "../features/payments/bizEventsTransaction/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isFIMSEnabledSelector,
-  isIdPayEnabledSelector
+  isIdPayEnabledSelector,
+  isNewPaymentSectionEnabledSelector
 } from "../store/reducers/backendStatus";
-import { isNewWalletSectionEnabledSelector } from "../store/reducers/persistedPreferences";
+import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
+import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { FIMS_ROUTES, FimsNavigator } from "../features/fims/navigation";
+import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
+import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -96,8 +103,9 @@ const AuthenticatedStackNavigator = () => {
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
+  const isItWalletEnabled = useIOSelector(isItWalletTestEnabledSelector);
 
   return (
     <Stack.Navigator
@@ -151,9 +159,20 @@ const AuthenticatedStackNavigator = () => {
       )}
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
         component={ServicesNavigator}
       />
+      {/* This screen is outside the ServicesNavigator to change gesture and transion behaviour. */}
+      <Stack.Screen
+        name={SERVICES_ROUTES.SEARCH}
+        component={SearchScreen}
+        options={{
+          ...hideHeaderOptions,
+          animationEnabled: false,
+          gestureEnabled: false
+        }}
+      />
+
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
         options={hideHeaderOptions}
@@ -223,11 +242,16 @@ const AuthenticatedStackNavigator = () => {
 
       {isFimsEnabled && (
         <Stack.Screen
-          name={FIMS_ROUTES.MAIN}
+          name={FIMS_LEGACY_ROUTES.MAIN}
           options={hideHeaderOptions}
-          component={FimsNavigator}
+          component={FimsLegacyNavigator}
         />
       )}
+      <Stack.Screen
+        name={FIMS_ROUTES.MAIN}
+        options={hideHeaderOptions}
+        component={FimsNavigator}
+      />
 
       {cdcEnabled && (
         <Stack.Screen
@@ -331,6 +355,16 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
+        name={
+          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR
+        }
+        component={PaymentsTransactionBizEventsNavigator}
+        options={{
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
+      />
+      <Stack.Screen
         name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR}
         component={WalletBarcodeNavigator}
         options={{
@@ -339,6 +373,14 @@ const AuthenticatedStackNavigator = () => {
           ...hideHeaderOptions
         }}
       />
+
+      {isItWalletEnabled && (
+        <Stack.Screen
+          name={ITW_ROUTES.MAIN}
+          component={ItwStackNavigator}
+          options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+        />
+      )}
     </Stack.Navigator>
   );
 };

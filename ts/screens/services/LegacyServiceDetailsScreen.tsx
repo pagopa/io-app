@@ -1,12 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Grid } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
@@ -25,11 +24,11 @@ import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { FooterTopShadow } from "../../components/FooterTopShadow";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { loadServiceDetail } from "../../store/actions/services";
+import { loadServiceDetail } from "../../features/services/details/store/actions/details";
 import { Dispatch } from "../../store/actions/types";
 import { contentSelector } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { serviceByIdPotSelector } from "../../features/services/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../features/services/details/store/reducers/servicesById";
 import {
   isEmailEnabledSelector,
   isInboxEnabledSelector,
@@ -41,7 +40,7 @@ import { getServiceCTA } from "../../features/messages/utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 import { useIOSelector } from "../../store/hooks";
-import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
+import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -64,8 +63,7 @@ const LegacyServiceDetailsScreen = (props: Props) => {
   const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
   const navigation = useIONavigation();
   const { serviceId, activate } =
-    useRoute<Route<"SERVICE_DETAIL", ServiceDetailsScreenNavigationParams>>()
-      .params;
+    useRoute<Route<"SERVICE_DETAIL", ServiceDetailsScreenRouteParams>>().params;
 
   const service = useIOSelector(state =>
     pipe(serviceByIdPotSelector(state, serviceId), pot.toUndefined)
@@ -114,63 +112,63 @@ const LegacyServiceDetailsScreen = (props: Props) => {
       faqCategories={["services_detail"]}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <Content style={IOStyles.flex}>
-          <Grid>
+        <ScrollView style={IOStyles.flex}>
+          <ContentWrapper>
             <OrganizationHeader
               serviceName={service.service_name}
               organizationName={service.organization_name}
               logoURLs={logosForService(service)}
             />
-          </Grid>
-          <VSpacer size={8} />
+            <VSpacer size={8} />
 
-          {metadata?.description && (
-            <>
-              <LegacyMarkdown
-                animated={true}
-                onLoadEnd={onMarkdownEnd}
-                onError={onMarkdownEnd}
-              >
-                {metadata.description}
-              </LegacyMarkdown>
-              <VSpacer size={24} />
-            </>
-          )}
+            {metadata?.description && (
+              <>
+                <LegacyMarkdown
+                  animated={true}
+                  onLoadEnd={onMarkdownEnd}
+                  onError={onMarkdownEnd}
+                >
+                  {metadata.description}
+                </LegacyMarkdown>
+                <VSpacer size={24} />
+              </>
+            )}
 
-          {canRenderItems && (
-            <>
-              {metadata && (
-                <>
-                  <TosAndPrivacyBox
-                    tosUrl={metadata.tos_url}
-                    privacyUrl={metadata.privacy_url}
-                  />
-                  <VSpacer size={24} />
-                </>
-              )}
+            {canRenderItems && (
+              <>
+                {metadata && (
+                  <>
+                    <TosAndPrivacyBox
+                      tosUrl={metadata.tos_url}
+                      privacyUrl={metadata.privacy_url}
+                    />
+                    <VSpacer size={24} />
+                  </>
+                )}
 
-              <ContactPreferencesToggles
-                serviceId={service.service_id}
-                channels={service.available_notification_channels}
-                isSpecialService={!!specialServiceInfoOpt}
-                customSpecialFlowOpt={
-                  specialServiceInfoOpt?.customSpecialFlowOpt
-                }
-              />
-              <VSpacer size={24} />
+                <ContactPreferencesToggles
+                  serviceId={service.service_id}
+                  channels={service.available_notification_channels}
+                  isSpecialService={!!specialServiceInfoOpt}
+                  customSpecialFlowOpt={
+                    specialServiceInfoOpt?.customSpecialFlowOpt
+                  }
+                />
+                <VSpacer size={24} />
 
-              <ServiceMetadataComponent
-                servicesMetadata={service.service_metadata}
-                organizationFiscalCode={service.organization_fiscal_code}
-                getItemOnPress={handleItemOnPress}
-                serviceId={service.service_id}
-                isDebugModeEnabled={props.isDebugModeEnabled}
-              />
+                <ServiceMetadataComponent
+                  servicesMetadata={service.service_metadata}
+                  organizationFiscalCode={service.organization_fiscal_code}
+                  getItemOnPress={handleItemOnPress}
+                  serviceId={service.service_id}
+                  isDebugModeEnabled={props.isDebugModeEnabled}
+                />
 
-              <EdgeBorderComponent />
-            </>
-          )}
-        </Content>
+                <EdgeBorderComponent />
+              </>
+            )}
+          </ContentWrapper>
+        </ScrollView>
 
         {showCTA && (
           <FooterTopShadow>
@@ -178,7 +176,6 @@ const LegacyServiceDetailsScreen = (props: Props) => {
               <View style={IOStyles.row}>
                 <ExtractedCTABar
                   ctas={maybeCTA.value}
-                  xsmall={false}
                   dispatch={props.dispatch}
                   serviceMetadata={metadata}
                   service={service}

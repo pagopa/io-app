@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { pot } from "@pagopa/ts-commons";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
   defaultRequestPayload,
@@ -12,7 +12,10 @@ import {
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
+  migrateToPaginatedMessages,
   reloadAllMessages,
+  resetMigrationStatus,
+  setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../../actions";
@@ -23,8 +26,21 @@ import reducer, {
   isLoadingInboxPreviousPage,
   AllPaginated,
   isLoadingInboxNextPage,
-  isLoadingOrUpdatingInbox
+  isLoadingOrUpdatingInbox,
+  shownMessageCategorySelector,
+  MessagePagePot,
+  messageListForCategorySelector,
+  MessagePage,
+  messagesByCategorySelector,
+  emptyListReasonSelector
 } from "../allPaginated";
+import { pageSize } from "../../../../../config";
+import { UIMessage } from "../../../types";
+import { clearCache } from "../../../../../store/actions/profile";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { MessageListCategory } from "../../../types/messageListCategory";
+import { emptyMessageArray } from "../../../utils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -480,6 +496,232 @@ describe("allPaginated reducer", () => {
     });
   });
 
+  describe("when `setShownMessageCategoryAction` is received", () => {
+    it("should change from INBOX to ARCHIVE", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("INBOX");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should change from ARCHIVE to INBOX", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("ARCHIVE");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("INBOX");
+    });
+    it("should stay ARCHIVE", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("ARCHIVE");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should stay INBOX", () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("INBOX");
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState,
+        setShownMessageCategoryAction("INBOX")
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("INBOX");
+    });
+  });
+
+  describe("when an action that is not `setShownMessageCategoryAction` is received", () => {
+    const allPaginatedInitialState = () => {
+      const allPaginatedInitialState = reducer(
+        undefined,
+        setShownMessageCategoryAction("ARCHIVE")
+      );
+      expect(allPaginatedInitialState.shownCategory).toBe("ARCHIVE");
+      return allPaginatedInitialState;
+    };
+    it("should keep its `showCategory` value (reloadAllMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        reloadAllMessages.request({ pageSize, filter: { getArchived: true } })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (reloadAllMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        reloadAllMessages.success({
+          messages: [],
+          filter: { getArchived: true },
+          pagination: {}
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (reloadAllMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        reloadAllMessages.failure({
+          error: new Error(""),
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (loadNextPageMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadNextPageMessages.request({
+          pageSize,
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadNextPageMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadNextPageMessages.success({
+          messages: [],
+          filter: { getArchived: true },
+          pagination: {}
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadNextPageMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadNextPageMessages.failure({
+          error: new Error(""),
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (loadPreviousPageMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadPreviousPageMessages.request({
+          pageSize,
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadPreviousPageMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadPreviousPageMessages.success({
+          messages: [],
+          filter: { getArchived: true },
+          pagination: {}
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (loadPreviousPageMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        loadPreviousPageMessages.failure({
+          error: new Error(""),
+          filter: { getArchived: true }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (upsertMessageStatusAttributes.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        upsertMessageStatusAttributes.request({
+          message: { isRead: true } as UIMessage,
+          update: { isArchived: false, tag: "bulk" }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (upsertMessageStatusAttributes.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        upsertMessageStatusAttributes.success({
+          message: { isRead: true } as UIMessage,
+          update: { isArchived: false, tag: "bulk" }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (upsertMessageStatusAttributes.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        upsertMessageStatusAttributes.failure({
+          error: new Error(""),
+          payload: {
+            message: { isRead: true } as UIMessage,
+            update: { isArchived: false, tag: "bulk" }
+          }
+        })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (migrateToPaginatedMessages.request)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        migrateToPaginatedMessages.request({})
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (migrateToPaginatedMessages.success)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        migrateToPaginatedMessages.success(0)
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+    it("should keep its `showCategory` value (migrateToPaginatedMessages.failure)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        migrateToPaginatedMessages.failure({ failed: [], succeeded: [] })
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (resetMigrationStatus)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        resetMigrationStatus()
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+
+    it("should keep its `showCategory` value (clearCache)", () => {
+      const allPaginatedFinalState = reducer(
+        allPaginatedInitialState(),
+        clearCache()
+      );
+      expect(allPaginatedFinalState.shownCategory).toBe("ARCHIVE");
+    });
+  });
+
   [
     [
       reloadAllMessages.request(defaultRequestPayload),
@@ -518,7 +760,8 @@ describe("allPaginated reducer", () => {
 const defaultState: AllPaginated = {
   inbox: { data: pot.none, lastRequest: O.none },
   archive: { data: pot.none, lastRequest: O.none },
-  migration: O.none
+  migration: O.none,
+  shownCategory: "INBOX"
 };
 
 function toGlobalState(localState: AllPaginated): GlobalState {
@@ -1105,3 +1348,332 @@ describe("Message state upsert", () => {
     });
   });
 });
+
+describe("shownMessageCategorySelector", () => {
+  it("should return INBOX for the initial state", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const shownCategory = shownMessageCategorySelector(globalState);
+    expect(shownCategory).toBe("INBOX");
+  });
+  it("should return INBOX when shownCategory is INBOX", () => {
+    const globalState = appReducer(
+      undefined,
+      setShownMessageCategoryAction("INBOX")
+    );
+    const shownCategory = shownMessageCategorySelector(globalState);
+    expect(shownCategory).toBe("INBOX");
+  });
+  it("should return ARCHIVE when shownCategory is ARCHIVE", () => {
+    const globalState = appReducer(
+      undefined,
+      setShownMessageCategoryAction("ARCHIVE")
+    );
+    const shownCategory = shownMessageCategorySelector(globalState);
+    expect(shownCategory).toBe("ARCHIVE");
+  });
+});
+
+describe("messageListForCategorySelector", () => {
+  const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  categories.forEach(category => {
+    it(`for ${category} category, data pot.none, should return emptyMessageArray reference`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.none
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(emptyMessageArray);
+    });
+    it(`for ${category} category, data pot.noneLoading, should return undefined`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneLoading
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBeUndefined();
+    });
+    it(`for ${category} category, data pot.noneUpdating, should return undefined`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneUpdating({} as MessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBeUndefined();
+    });
+    it(`for ${category} category, data pot.noneError, should return emptyMessageArray reference`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.noneError("")
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(emptyMessageArray);
+    });
+    it(`for ${category} category, data pot.some, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.some(nonEmptyMessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
+    });
+    it(`for ${category} category, data pot.someLoading, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someLoading(nonEmptyMessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
+    });
+    it(`for ${category} category, data pot.someUpdating, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someUpdating(nonEmptyMessagePage, {} as MessagePage)
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
+    });
+    it(`for ${category} category, data pot.someError, should return the message list`, () => {
+      const state = generateAllPaginatedDataStateForCategory(
+        category,
+        pot.someError(nonEmptyMessagePage, "")
+      );
+      const messageList = messageListForCategorySelector(state, category);
+      expect(messageList).toBe(readonlyNonEmptyMessageList);
+    });
+  });
+});
+
+describe("messagesByCategorySelector", () => {
+  it("should return inbox message page pot for INBOX category", () => {
+    const inputMessagePagePot = pot.some(nonEmptyMessagePage);
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      inputMessagePagePot
+    );
+    const messagePagePot = messagesByCategorySelector(state, "INBOX");
+    expect(messagePagePot).toBe(inputMessagePagePot);
+  });
+  it("should return archive message page pot for ARCHIVE category", () => {
+    const inputMessagePagePot = pot.some(nonEmptyMessagePage);
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      inputMessagePagePot
+    );
+    const messagePagePot = messagesByCategorySelector(state, "ARCHIVE");
+    expect(messagePagePot).toBe(inputMessagePagePot);
+  });
+});
+
+describe("emptyListReasonSelector", () => {
+  it("should return 'noData' for INBOX category when inbox message collection is pot.none", () => {
+    const state = generateAllPaginatedDataStateForCategory("INBOX", pot.none);
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.noneLoading", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.noneLoading
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.noneUpdating", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.noneUpdating(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'error' for INBOX category when inbox message collection is pot.noneError", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.noneError("")
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("error");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.some with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.some(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.some with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.some(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.someLoading with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someLoading(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.someLoading with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someLoading(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.someUpdating with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someUpdating(emptyMessagePage, nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.someUpdating with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for INBOX category when inbox message collection is pot.someError with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someError(emptyMessagePage, "")
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for INBOX category when inbox message collection is pot.someError with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "INBOX",
+      pot.someError(nonEmptyMessagePage, "")
+    );
+    const reason = emptyListReasonSelector(state, "INBOX");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.none", () => {
+    const state = generateAllPaginatedDataStateForCategory("ARCHIVE", pot.none);
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.noneLoading", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.noneLoading
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.noneUpdating", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.noneUpdating(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'error' for ARCHIVE category when inbox message collection is pot.noneError", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.noneError("")
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("error");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.some with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.some(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.some with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.some(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.someLoading with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someLoading(emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.someLoading with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someLoading(nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.someUpdating with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someUpdating(emptyMessagePage, nonEmptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.someUpdating with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+  it("should return 'noData' for ARCHIVE category when inbox message collection is pot.someError with no data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someError(emptyMessagePage, "")
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("noData");
+  });
+  it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.someError with data", () => {
+    const state = generateAllPaginatedDataStateForCategory(
+      "ARCHIVE",
+      pot.someError(nonEmptyMessagePage, "")
+    );
+    const reason = emptyListReasonSelector(state, "ARCHIVE");
+    expect(reason).toBe("notEmpty");
+  });
+});
+
+const generateAllPaginatedDataStateForCategory = (
+  category: MessageListCategory,
+  data: MessagePagePot
+): GlobalState =>
+  ({
+    entities: {
+      messages: {
+        allPaginated: {
+          inbox: category === "INBOX" ? { data } : { data: pot.none },
+          archive: category === "ARCHIVE" ? { data } : { data: pot.none }
+        }
+      }
+    }
+  } as GlobalState);
+
+const readonlyNonEmptyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
+const nonEmptyMessagePage = {
+  page: readonlyNonEmptyMessageList
+} as MessagePage;
+
+const readonlyEmptyMessageList: ReadonlyArray<UIMessage> = [];
+const emptyMessagePage = {
+  page: readonlyEmptyMessageList
+} as MessagePage;

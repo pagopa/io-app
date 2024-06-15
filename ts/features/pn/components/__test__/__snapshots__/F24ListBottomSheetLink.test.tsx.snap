@@ -171,7 +171,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -336,7 +322,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -531,12 +517,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -544,7 +530,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -623,7 +609,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -759,12 +745,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -772,7 +758,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -851,7 +837,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -987,12 +973,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1000,7 +986,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -1079,7 +1065,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1215,12 +1201,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1228,7 +1214,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -1307,7 +1293,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1443,12 +1429,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1456,7 +1442,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -1535,7 +1521,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1671,12 +1657,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1684,7 +1670,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -1763,7 +1749,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1899,12 +1885,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1912,7 +1898,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -1991,7 +1977,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2127,12 +2113,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -2140,7 +2126,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -2219,7 +2205,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2355,12 +2341,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -2368,7 +2354,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -2447,7 +2433,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2583,12 +2569,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -2596,7 +2582,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -2675,7 +2661,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2753,8 +2739,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2931,7 +2917,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -2939,25 +2925,11 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3096,7 +3068,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -3239,8 +3211,8 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3417,7 +3389,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -3425,25 +3397,11 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3582,7 +3540,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -3777,12 +3735,12 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
+                                        defaultColor="black"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumWeb"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -3790,7 +3748,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
@@ -3869,7 +3827,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -3947,8 +3905,8 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

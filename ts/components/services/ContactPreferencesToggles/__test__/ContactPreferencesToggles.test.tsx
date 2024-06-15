@@ -5,10 +5,10 @@ import { NotificationChannelEnum } from "../../../../../definitions/backend/Noti
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { loadServicePreference } from "../../../../features/services/store/actions";
+import { loadServicePreference } from "../../../../features/services/details/store/actions/preference";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { ServicePreferenceResponse } from "../../../../features/services/types/ServicePreferenceResponse";
+import { ServicePreferenceResponse } from "../../../../features/services/details/types/ServicePreferenceResponse";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ContactPreferencesToggles from "../index";
 

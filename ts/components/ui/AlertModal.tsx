@@ -1,11 +1,11 @@
-import React from "react";
 import {
-  BackHandler,
-  NativeEventSubscription,
-  StyleSheet,
-  View
-} from "react-native";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+  IOColors,
+  IOVisualCostants,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import themeVariables from "../../theme/variables";
 import { Body } from "../core/typography/Body";
 import { Overlay } from "./Overlay";
@@ -21,49 +21,30 @@ const styles = StyleSheet.create({
     width: "auto",
     backgroundColor: IOColors.white,
     padding: themeVariables.contentPadding,
-    borderRadius: 8
+    marginHorizontal: IOVisualCostants.appMarginDefault,
+    borderCurve: "continuous",
+    borderRadius: 16
   }
 });
 
-type Props = Readonly<{
+type AlertModalProps = Readonly<{
   message: string;
 }>;
 
 /**
  * A custom alert to show a message
  */
-export class AlertModal extends React.PureComponent<Props> {
-  private subscription: NativeEventSubscription | undefined;
-  constructor(props: Props) {
-    super(props);
-  }
+export const AlertModal = ({ message }: AlertModalProps) => {
+  useHardwareBackButton(() => true);
 
-  public componentDidMount() {
-    // eslint-disable-next-line functional/immutable-data
-    this.subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.onBackPressed
-    );
-  }
-
-  public componentWillUnmount() {
-    this.subscription?.remove();
-  }
-
-  private onBackPressed() {
-    return true;
-  }
-
-  public render() {
-    return (
-      <Overlay
-        backgroundColor={opaqueBgColor}
-        foreground={
-          <View style={styles.container}>
-            <Body color="bluegreyDark">{this.props.message}</Body>
-          </View>
-        }
-      />
-    );
-  }
-}
+  return (
+    <Overlay
+      backgroundColor={opaqueBgColor}
+      foreground={
+        <View style={styles.container}>
+          <Body color="bluegreyDark">{message}</Body>
+        </View>
+      }
+    />
+  );
+};

@@ -24,7 +24,7 @@ import { ServiceName } from "../../../../../../definitions/backend/ServiceName";
 import { ServiceTuple } from "../../../../../../definitions/backend/ServiceTuple";
 import { UserMetadataState } from "../../../userMetadata";
 import { OrganizationsState } from "../../organizations";
-import { ServicesByIdState } from "../../../../../features/services/store/reducers/servicesById";
+import { ServicesByIdState } from "../../../../../features/services/details/store/reducers/servicesById";
 import { VisibleServicesState } from "../visibleServices";
 import { ServiceScopeEnum } from "../../../../../../definitions/backend/ServiceScope";
 import { StandardServiceCategoryEnum } from "../../../../../../definitions/backend/StandardServiceCategory";

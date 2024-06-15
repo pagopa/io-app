@@ -41,7 +41,7 @@ import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessageTimeline } from "./MessageTimeline";
 import { MessageTimelineCTA } from "./MessageTimelineCTA";
 import { LegacyMessageF24 } from "./LegacyMessageF24";
-import { LegacyMessageFooter } from "./LegacyMessageFooter";
+import { MessageFooter } from "./MessageFooter";
 import { LegacyMessagePayments } from "./LegacyMessagePayments";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
@@ -194,7 +194,7 @@ export const LegacyMessageDetails = ({
         />
       )}
 
-      <LegacyMessageFooter
+      <MessageFooter
         messageId={messageId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}

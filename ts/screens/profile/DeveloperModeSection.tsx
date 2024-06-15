@@ -32,6 +32,7 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesItWalletTestSetEnabled,
+  preferencesNewHomeSectionSetEnabled,
   preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -43,10 +44,11 @@ import {
   walletTokenSelector
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
+import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
 import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
+  isNewHomeSectionEnabledSelector,
   isNewWalletSectionEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -177,7 +179,7 @@ const DeveloperActionsSection = () => {
       data={filteredDevActionButtons}
       renderItem={renderDevActionButton}
       ItemSeparatorComponent={() => <VSpacer size={8} />}
-      ListFooterComponent={() => <VSpacer size={16} />}
+      ListFooterComponent={() => <VSpacer size={8} />}
     />
   );
 };
@@ -290,11 +292,22 @@ const DesignSystemSection = () => {
   const isNewWalletSectionEnabled = useIOSelector(
     isNewWalletSectionEnabledSelector
   );
+  const isNewHomeSectionEnabled = useIOSelector(
+    isNewHomeSectionEnabledSelector
+  );
 
   const onNewWalletSectionToggle = (enabled: boolean) => {
     dispatch(
       preferencesNewWalletSectionSetEnabled({
         isNewWalletSectionEnabled: enabled
+      })
+    );
+  };
+
+  const onNewHomeSectionToggle = (enabled: boolean) => {
+    dispatch(
+      preferencesNewHomeSectionSetEnabled({
+        isNewHomeSectionEnabled: enabled
       })
     );
   };
@@ -328,6 +341,12 @@ const DesignSystemSection = () => {
         value={isNewWalletSectionEnabled}
         onSwitchValueChange={onNewWalletSectionToggle}
       />
+      <Divider />
+      <ListItemSwitch
+        label={I18n.t("profile.main.newHomeSection")}
+        value={isNewHomeSectionEnabled}
+        onSwitchValueChange={onNewHomeSectionToggle}
+      />
     </ContentWrapper>
   );
 };
@@ -342,13 +361,6 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.LOLLIPOP_PLAYGROUND
-        })
-    },
-    {
-      value: "MyPortal Web",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.WEB_PLAYGROUND
         })
     },
     {
@@ -379,13 +391,6 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.IDPAY_CODE_PLAYGROUND
-        })
-    },
-    {
-      value: "Payments",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.WALLET_PLAYGROUND
         })
     },
     {
@@ -516,6 +521,7 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(
       preferencesItWalletTestSetEnabled({ isItWalletTestEnabled: enabled })
     );
+    handleShowModal();
   };
   return (
     <ContentWrapper>

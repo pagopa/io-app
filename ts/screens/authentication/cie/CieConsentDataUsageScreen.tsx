@@ -2,230 +2,178 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import * as React from "react";
-import { Alert, BackHandler, NativeEventSubscription } from "react-native";
-import WebView from "react-native-webview";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import I18n from "../../../i18n";
+import WebView from "react-native-webview";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useIODispatch } from "../../../store/hooks";
 import {
   loginFailure,
   loginSuccess
 } from "../../../store/actions/authentication";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
-import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import { trackLoginCieDataSharingError } from "../analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../originSchemasWhiteList";
-import { GlobalState } from "../../../store/reducers/types";
-import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
-import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
-import UnlockAccessScreen from "../../onboarding/UnlockAccessScreen";
-import {
-  trackLoginCieConsentDataUsageScreen,
-  trackLoginCieDataSharingError
-} from "../analytics/cieAnalytics";
+import ROUTES from "../../../navigation/routes";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
+  errorCodeDebugMode?: string;
 };
 
-type State = {
-  hasError: boolean;
-  errorCode?: string;
-  isLoginSuccess?: boolean;
-};
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-const loaderComponent = (
+const LoaderComponent = () => (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
     <VSpacer size={16} />
   </LoadingSpinnerOverlay>
 );
 
-type CieConsentDataUsageScreenProps = Props &
-  CieConsentDataUsageScreenNavigationParams;
-class CieConsentDataUsageScreen extends React.Component<
-  CieConsentDataUsageScreenProps,
-  State
-> {
-  private subscription: NativeEventSubscription | undefined;
-  constructor(props: CieConsentDataUsageScreenProps) {
-    super(props);
-    trackLoginCieConsentDataUsageScreen();
-    this.state = {
-      hasError: false,
-      isLoginSuccess: undefined
-    };
-  }
+const CieConsentDataUsageScreen = () => {
+  const route =
+    useRoute<
+      Route<
+        typeof ROUTES.CIE_CONSENT_DATA_USAGE,
+        CieConsentDataUsageScreenNavigationParams
+      >
+    >();
+  const { cieConsentUri } = route.params;
+  const dispatch = useIODispatch();
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
+  const [errorCode, setErrorCode] = useState<string | undefined>();
+  const { showAlert } = useOnboardingAbortAlert();
+  const navigation = useIONavigation();
+  const loginSuccessDispatch = useCallback(
+    (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
+    [dispatch]
+  );
 
-  private showAbortAlert = (): boolean => {
+  const loginFailureDispatch = useCallback(
+    (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
+    [dispatch]
+  );
+
+  const navigateToLandingScreen = useCallback(() => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_LANDING
+    });
+  }, [navigation]);
+
+  const showAbortAlert = useCallback((): boolean => {
     // if the screen is in error state, skip the confirmation alert to go back at the landing screen
-    if (this.state.hasError) {
-      this.props.resetNavigation();
+    if (hasError) {
+      navigateToLandingScreen();
       return true;
     }
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: this.props.resetNavigation
-        }
-      ]
-    );
+    showAlert();
     return true;
-  };
+  }, [hasError, navigateToLandingScreen, showAlert]);
 
-  public componentDidMount() {
-    // eslint-disable-next-line functional/immutable-data
-    this.subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.showAbortAlert
-    );
-  }
+  useHardwareBackButton(() => {
+    showAbortAlert();
+    return true;
+  });
 
-  public componentWillUnmount() {
-    this.subscription?.remove();
-  }
+  const handleWebViewError = useCallback(() => setHasError(true), []);
 
-  get cieAuthorizationUri(): string {
-    return this.props.cieConsentUri;
-  }
+  const handleHttpError = useCallback(
+    (event: WebViewHttpErrorEvent) => {
+      loginFailureDispatch(
+        new Error(
+          `HTTP error ${event.nativeEvent.description} with Authorization uri`
+        )
+      );
+    },
+    [loginFailureDispatch]
+  );
 
-  private handleWebViewError = () => {
-    this.setState({ hasError: true });
-  };
+  const handleLoginSuccess = useCallback(
+    (token: SessionToken) => {
+      setIsLoginSuccess(true);
+      setHasError(false);
+      loginSuccessDispatch(token);
+    },
+    [loginSuccessDispatch]
+  );
 
-  private handleHttpError = (event: WebViewHttpErrorEvent) => {
-    this.props.loginFailure(
-      new Error(
-        `HTTP error ${event.nativeEvent.description} with Authorization uri`
-      )
-    );
-  };
+  const handleLoginFailure = useCallback(
+    (errorCode?: string) => {
+      setHasError(true);
+      setErrorCode(errorCode);
+      loginFailureDispatch(
+        new Error(`login CIE failure with code ${errorCode || "n/a"}`)
+      );
+    },
+    [loginFailureDispatch]
+  );
 
-  private handleLoginSuccess = (token: SessionToken) => {
-    this.setState({ isLoginSuccess: true, hasError: false }, () => {
-      this.props.loginSuccess(token);
-    });
-  };
+  const handleShouldStartLoading = useCallback(
+    (event: WebViewNavigation): boolean => {
+      const isLoginUrlWithToken = onLoginUriChanged(
+        handleLoginFailure,
+        handleLoginSuccess
+      )(event);
+      // URL can be loaded if it's not the login URL containing the session token - this avoids
+      // making a (useless) GET request with the session in the URL
+      return !isLoginUrlWithToken;
+    },
+    [handleLoginFailure, handleLoginSuccess]
+  );
 
-  private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
-    const isLoginUrlWithToken = onLoginUriChanged(
-      this.handleLoginFailure,
-      this.handleLoginSuccess
-    )(event);
-    // URL can be loaded if it's not the login URL containing the session token - this avoids
-    // making a (useless) GET request with the session in the URL
-    return !isLoginUrlWithToken;
-  };
-
-  private handleLoginFailure = (errorCode?: string) => {
-    this.props.loginFailure(
-      new Error(`login CIE failure with code ${errorCode || "n/a"}`)
-    );
-    this.setState({ hasError: true, errorCode });
-  };
-
-  private getContent = () => {
-    if (this.state.isLoginSuccess) {
-      return loaderComponent;
+  useEffect(() => {
+    if (hasError && errorCode === "22") {
+      trackLoginCieDataSharingError();
     }
-    if (this.state.hasError) {
-      if (this.state.errorCode === "22") {
-        trackLoginCieDataSharingError();
+  }, [errorCode, hasError]);
+
+  useEffect(() => {
+    if (hasError) {
+      if (errorCode === "1002") {
+        navigation.navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.UNLOCK_ACCESS_SCREEN,
+          params: { authLevel: "L2" }
+        });
+        return;
       }
-      if (this.state.errorCode === "1002") {
-        return <UnlockAccessScreen identifier="CIE" />;
-      } else {
-        const errorTranslationKey = this.state.errorCode
-          ? `authentication.errors.spid.error_${this.state.errorCode}`
-          : "authentication.errors.network.title";
-        return (
-          <GenericErrorComponent
-            retryButtonTitle={I18n.t(
-              "authentication.cie.dataUsageConsent.retryCTA"
-            )}
-            onRetry={this.props.resetNavigation}
-            onCancel={undefined}
-            image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
-            text={I18n.t(errorTranslationKey, {
-              defaultValue: I18n.t("authentication.errors.spid.unknown")
-            })}
-          />
-        );
-      }
-    } else {
-      return (
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTH_ERROR_SCREEN,
+        params: { errorCode }
+      });
+    }
+  }, [errorCode, hasError, navigation]);
+
+  if (isLoginSuccess) {
+    return <LoaderComponent />;
+  }
+  if (!hasError) {
+    return (
+      <SafeAreaView style={IOStyles.flex}>
         <WebView
+          testID="webview-cie-test"
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           textZoom={100}
           originWhitelist={originSchemasWhiteList}
-          source={{ uri: decodeURIComponent(this.cieAuthorizationUri) }}
+          source={{ uri: decodeURIComponent(cieConsentUri) }}
           javaScriptEnabled={true}
-          onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-          renderLoading={() => loaderComponent}
-          onError={this.handleWebViewError}
-          onHttpError={this.handleHttpError}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+          renderLoading={() => <LoaderComponent />}
+          onError={handleWebViewError}
+          onHttpError={handleHttpError}
         />
-      );
-    }
-  };
-
-  public render(): React.ReactNode {
-    const goBack = this.state.hasError ? false : this.showAbortAlert;
-    return (
-      <TopScreenComponent
-        goBack={goBack}
-        headerTitle={withTrailingPoliceCarLightEmojii(
-          I18n.t("authentication.cie.genericTitle"),
-          this.props.isCieUatEnabled
-        )}
-      >
-        {this.getContent()}
-      </TopScreenComponent>
+      </SafeAreaView>
     );
   }
-}
-
-const mapStateToProps = (state: GlobalState) => ({
-  isCieUatEnabled: isCieLoginUatEnabledSelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resetNavigation: () => resetToAuthenticationRoute(),
-  loginSuccess: (token: SessionToken) =>
-    dispatch(loginSuccess({ token, idp: "cie" })),
-  loginFailure: (error: Error) => dispatch(loginFailure({ error, idp: "cie" }))
-});
-
-const CieConsentDataUsageScreenFC = (props: Props) => {
-  const { cieConsentUri } =
-    useRoute<
-      Route<"CIE_CONSENT_DATA_USAGE", CieConsentDataUsageScreenNavigationParams>
-    >().params;
-  return <CieConsentDataUsageScreen {...props} cieConsentUri={cieConsentUri} />;
+  return null;
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CieConsentDataUsageScreenFC);
+export default CieConsentDataUsageScreen;

@@ -1,19 +1,19 @@
+import * as React from "react";
+import { StackActions } from "@react-navigation/native";
+import { increment } from "fp-ts/lib/function";
 import {
   Body,
   ButtonSolidProps,
   FooterWithButtons
 } from "@pagopa/io-app-design-system";
-import { StackActions } from "@react-navigation/native";
-import { increment } from "fp-ts/lib/function";
-import * as React from "react";
 import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { trackFciStartSignature } from "../analytics";
 import { FCI_ROUTES } from "../navigation/routes";
-import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
+import { useIOSelector } from "../../../store/hooks";
+import { trackFciStartSignature } from "../analytics";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 type Props = {
   currentDoc: number;

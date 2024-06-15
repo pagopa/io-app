@@ -120,7 +120,7 @@ type GetIdpsListT = IGetApiRequestType<
 
 const getIdpsT: GetIdpsListT = {
   method: "get",
-  url: () => "/spid/idps/list2.json",
+  url: () => "/spid/idps/list.json",
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(SpidIdps)

@@ -29,21 +29,22 @@ export const DSWallet = () => {
       expireDate: new Date()
     },
     {
-      key: "3",
-      type: "payment",
-      category: "payment",
-      walletId: "1",
-      abiCode: "03069",
-      brand: "pagoBancomat",
-      holderName: "Anna Verdi",
-      expireDate: new Date()
-    },
-    {
       key: "4",
       type: "payment",
       category: "payment",
       walletId: "1",
       holderEmail: "anna_v********@**hoo.it"
+    },
+    {
+      key: "2",
+      type: "payment",
+      category: "payment",
+      walletId: "1",
+      hpan: "9900",
+      brand: "maestro",
+      holderName: "Anna Verdi",
+      expireDate: new Date(),
+      isExpired: true
     }
   ];
 

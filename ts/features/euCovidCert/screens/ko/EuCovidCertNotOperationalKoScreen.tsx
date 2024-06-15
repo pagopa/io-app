@@ -1,17 +1,11 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { GlobalState } from "../../../../store/reducers/types";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import notOperational from "../../../../../img/messages/empty-due-date-list-icon.png";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
-import notOperational from "../../../../../img/messages/empty-due-date-list-icon.png";
-import EuCovidCertLearnMoreLink from "../../components/EuCovidCertLearnMoreLink";
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+import { EuCovidCertLearnMoreLink } from "../../components/EuCovidCertLearnMoreLink";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 const EuCovidCertNotOperationalComponent = (): React.ReactElement => (
   <>
@@ -20,6 +14,7 @@ const EuCovidCertNotOperationalComponent = (): React.ReactElement => (
     <InfoScreenComponent
       image={
         <Image
+          accessibilityIgnoresInvertColors
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}
           source={notOperational}
@@ -32,17 +27,9 @@ const EuCovidCertNotOperationalComponent = (): React.ReactElement => (
   </>
 );
 
-const EuCovidCertNotOperationalKoScreen = (_: Props): React.ReactElement => (
+export const EuCovidCertNotOperationalKoScreen = (): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertNotOperationalKoScreen"}
     content={<EuCovidCertNotOperationalComponent />}
   />
 );
-
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EuCovidCertNotOperationalKoScreen);

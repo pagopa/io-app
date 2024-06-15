@@ -1,95 +1,14 @@
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as E from "fp-ts/lib/Either";
 import { buffers, channel, Channel } from "redux-saga";
-import {
-  call,
-  fork,
-  put,
-  select,
-  take,
-  takeLatest
-} from "typed-redux-saga/macro";
+import { call, fork, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { PathTraversalSafePathParam } from "../../../definitions/backend/PathTraversalSafePathParam";
 import { BackendClient } from "../../api/backend";
 import { totServiceFetchWorkers } from "../../config";
 import { applicationChangeState } from "../../store/actions/application";
-import {
-  loadServiceDetail,
-  loadServiceDetailNotFound,
-  loadServicesDetail
-} from "../../store/actions/services";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { convertUnknownToError } from "../../utils/errors";
-import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
-import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
+import { loadServiceDetail } from "../../features/services/details/store/actions/details";
+import { loadServicesDetail } from "../../store/actions/services";
 import { trackServiceDetailLoadingStatistics } from "../../utils/analytics";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
-
-/**
- * A generator to load the service details from the Backend
- *
- * @param {function} getService - The function that makes the Backend request
- * @param action
- * @returns {IterableIterator<ReduxSagaEffect | Either<Error, ServicePublic>>}
- */
-export function* loadServiceDetailRequestHandler(
-  getService: ReturnType<typeof BackendClient>["getService"],
-  action: ActionType<(typeof loadServiceDetail)["request"]>
-): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getService>> {
-  try {
-    const serviceIdEither = PathTraversalSafePathParam.decode(action.payload);
-
-    if (E.isLeft(serviceIdEither)) {
-      throw Error("Unable to decode ServiceId to PathTraversalSafePathParam");
-    }
-
-    const response = (yield* call(
-      withRefreshApiCall,
-      getService({
-        service_id: serviceIdEither.right
-      }),
-      action
-    )) as unknown as SagaCallReturnType<typeof getService>;
-
-    if (E.isLeft(response)) {
-      throw Error(readableReport(response.left));
-    }
-
-    if (response.right.status === 401) {
-      const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-      if (isFastLoginEnabled) {
-        return;
-      }
-    }
-
-    if (response.right.status === 200) {
-      yield* put(loadServiceDetail.success(response.right.value));
-
-      // If it is occurring during the first load of serivces,
-      // mark the service as read (it will not display the badge on the list item)
-      yield* call(handleServiceReadabilitySaga, action.payload);
-
-      // Update, if needed, the name of the organization that provides the service
-      yield* call(handleOrganizationNameUpdateSaga, response.right.value);
-    } else {
-      if (response.right.status === 404) {
-        yield* put(loadServiceDetailNotFound(action.payload as ServiceId));
-      }
-      throw Error(`response status ${response.right.status}`);
-    }
-  } catch (e) {
-    yield* put(
-      loadServiceDetail.failure({
-        service_id: action.payload,
-        error: convertUnknownToError(e)
-      })
-    );
-  }
-}
+import { handleServiceDetails } from "../../features/services/details/saga/handleServiceDetails";
 
 /**
  * A generator that listen for loadServiceDetail.request from a channel and perform the
@@ -107,7 +26,7 @@ function* handleServiceLoadRequest(
     const action: ActionType<typeof loadServiceDetail.request> = yield* take(
       requestsChannel
     );
-    yield* call(loadServiceDetailRequestHandler, getService, action);
+    yield* call(handleServiceDetails, getService, action);
   }
 }
 

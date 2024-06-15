@@ -64,6 +64,7 @@ Object {
       "migration": Object {
         "_tag": "None",
       },
+      "shownCategory": "INBOX",
     },
     "detailsById": Object {},
     "downloads": Object {},
@@ -164,6 +165,7 @@ Object {
   "isIdPayTestEnabled": false,
   "isItWalletTestEnabled": false,
   "isMixpanelEnabled": null,
+  "isNewHomeSectionEnabled": false,
   "isNewWalletSectionEnabled": false,
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,

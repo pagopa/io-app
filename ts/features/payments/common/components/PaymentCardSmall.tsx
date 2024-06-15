@@ -17,7 +17,6 @@ export type PaymentCardSmallProps = WithTestID<
   PaymentCardProps & {
     bankName?: string;
     onPress?: () => void;
-    isError?: boolean;
     accessibilityLabel?: string;
   }
 >;
@@ -25,7 +24,6 @@ export type PaymentCardSmallProps = WithTestID<
 const PaymentCardSmall = ({
   testID,
   onPress,
-  isError,
   accessibilityLabel,
   ...props
 }: PaymentCardSmallProps) => {
@@ -67,10 +65,13 @@ const PaymentCardSmall = ({
       testID={`${testID}-pressable`}
       accessibilityLabel={accessibilityLabel}
     >
-      <View style={[styles.card, isError && styles.cardError]} testID={testID}>
+      <View
+        style={[styles.card, props.isExpired && styles.cardError]}
+        testID={testID}
+      >
         <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
           <LogoPaymentWithFallback brand={iconName} size={24} />
-          {isError && (
+          {props.isExpired && (
             <Icon
               testID={`${testID}-errorIcon`}
               name="errorFilled"
@@ -84,7 +85,7 @@ const PaymentCardSmall = ({
           ellipsizeMode="tail"
           weight="Regular"
           numberOfLines={1}
-          color={isError ? "error-850" : "grey-700"}
+          color={props.isExpired ? "error-850" : "grey-700"}
         >
           {labelText}
         </Chip>

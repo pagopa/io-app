@@ -9,14 +9,13 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import * as React from "react";
-import { Alert, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useDispatch, useStore } from "react-redux";
+import { Alert, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -30,7 +29,6 @@ import {
   fastLoginOptInFFEnabled,
   isFastLoginEnabledSelector
 } from "../../features/fastLogin/store/selectors";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
@@ -39,66 +37,21 @@ import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
-import { useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { ComponentProps } from "../../types/react";
-import { setAccessibilityFocus } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
   trackSpidLoginSelected
 } from "./analytics";
 import { Carousel } from "./carousel/Carousel";
-
-const carouselCards: ReadonlyArray<
-  ComponentProps<typeof LandingCardComponent>
-> = [
-  {
-    id: 0,
-    pictogramName: "hello",
-    title: I18n.t("authentication.landing.card5-title"),
-    content: I18n.t("authentication.landing.card5-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.accessibility.carousel.label"
-    )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
-      "authentication.landing.card5-content-accessibility"
-    )}`,
-    accessibilityHint: I18n.t(
-      "authentication.landing.accessibility.carousel.hint"
-    )
-  },
-  {
-    id: 1,
-    pictogramName: "star",
-    title: I18n.t("authentication.landing.card1-title"),
-    content: I18n.t("authentication.landing.card1-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.card1-title"
-    )}. ${I18n.t("authentication.landing.card1-content")}`
-  },
-  {
-    id: 2,
-    pictogramName: "cardFavourite",
-    title: I18n.t("authentication.landing.card2-title"),
-    content: I18n.t("authentication.landing.card2-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.card2-title"
-    )}. ${I18n.t("authentication.landing.card2-content")}`
-  },
-  {
-    id: 3,
-    pictogramName: "doc",
-    title: I18n.t("authentication.landing.card3-title"),
-    content: I18n.t("authentication.landing.card3-content"),
-    accessibilityLabel: `${I18n.t(
-      "authentication.landing.card3-title"
-    )}. ${I18n.t("authentication.landing.card3-content")}`
-  }
-];
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -127,9 +80,9 @@ export const LandingScreen = () => {
     setHasTabletCompatibilityAlertAlreadyShown
   ] = React.useState<boolean>(false);
 
-  const store = useStore();
+  const store = useIOStore();
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
@@ -256,6 +209,55 @@ export const LandingScreen = () => {
       {
         days: isFastLoginEnabled ? "365" : "30"
       }
+    );
+
+    const carouselCards: ReadonlyArray<
+      ComponentProps<typeof LandingCardComponent>
+    > = React.useMemo(
+      () => [
+        {
+          id: 0,
+          pictogramName: "hello",
+          title: I18n.t("authentication.landing.card5-title"),
+          content: I18n.t("authentication.landing.card5-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.accessibility.carousel.label"
+          )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
+            "authentication.landing.card5-content-accessibility"
+          )}`,
+          accessibilityHint: I18n.t(
+            "authentication.landing.accessibility.carousel.hint"
+          )
+        },
+        {
+          id: 1,
+          pictogramName: "star",
+          title: I18n.t("authentication.landing.card1-title"),
+          content: I18n.t("authentication.landing.card1-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.card1-title"
+          )}. ${I18n.t("authentication.landing.card1-content")}`
+        },
+        {
+          id: 2,
+          pictogramName: "cardFavourite",
+          title: I18n.t("authentication.landing.card2-title"),
+          content: I18n.t("authentication.landing.card2-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.card2-title"
+          )}. ${I18n.t("authentication.landing.card2-content")}`
+        },
+        {
+          id: 3,
+          pictogramName: "doc",
+          title: I18n.t("authentication.landing.card3-title"),
+          content: I18n.t("authentication.landing.card3-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.card3-title"
+          )}. ${I18n.t("authentication.landing.card3-content")}`
+        }
+      ],
+      []
     );
 
     return (

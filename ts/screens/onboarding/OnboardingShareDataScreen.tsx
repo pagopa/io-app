@@ -1,21 +1,16 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, SafeAreaView, View } from "react-native";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../components/box/InfoBox";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../components/buttons/ButtonConfigurations";
 import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { abortOnboarding } from "../../store/actions/onboarding";
-import { useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
@@ -32,7 +27,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     const flow = getFlowType(true, isFirstOnBoarding);
     trackMixpanelDeclined(flow);
@@ -77,27 +72,40 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
       }}
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       fixedBottomSlot={
-        <SafeAreaView>
-          <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={cancelButtonProps(
-              present,
-              I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
-            )}
-            rightButton={confirmButtonProps(
-              () => {
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t(
+                "profile.main.privacy.shareData.screen.cta.dontShare"
+              ),
+              accessibilityLabel: I18n.t(
+                "profile.main.privacy.shareData.screen.cta.dontShare"
+              ),
+              onPress: present
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t(
+                "profile.main.privacy.shareData.screen.cta.shareData"
+              ),
+              accessibilityLabel: I18n.t(
+                "profile.main.privacy.shareData.screen.cta.shareData"
+              ),
+              onPress: () => {
                 trackMixpanelSetEnabled(
                   true,
                   getFlowType(true, isFirstOnBoarding)
                 );
                 props.setMixpanelEnabled(true);
               },
-              I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
-              undefined,
-              "share-data-confirm-button"
-            )}
-          />
-        </SafeAreaView>
+              testID: "share-data-confirm-button"
+            }
+          }}
+        />
       }
     >
       <SafeAreaView style={IOStyles.flex}>

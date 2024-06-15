@@ -1,33 +1,33 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useIsFocused } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
+import I18n from "i18n-js";
 import { NotificationChannelEnum } from "../../../../definitions/backend/NotificationChannel";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import I18n from "../../../i18n";
+import { trackPNPushSettings } from "../../../features/pn/analytics";
 import {
   loadServicePreference,
   upsertServicePreference
-} from "../../../features/services/store/actions";
+} from "../../../features/services/details/store/actions/preference";
 import { Dispatch } from "../../../store/actions/types";
 import { useIOSelector } from "../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../store/reducers/backendStatus";
 import {
   servicePreferenceSelector,
   ServicePreferenceState
-} from "../../../features/services/store/reducers/servicePreference";
+} from "../../../features/services/details/store/reducers/servicePreference";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   isServicePreferenceResponseSuccess,
   ServicePreference
-} from "../../../features/services/types/ServicePreferenceResponse";
+} from "../../../features/services/details/types/ServicePreferenceResponse";
 import { isStrictSome } from "../../../utils/pot";
-import { showToast } from "../../../utils/showToast";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
-import { trackPNPushSettings } from "../../../features/pn/analytics";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox" | "can_access_message_read_status";
@@ -91,7 +91,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     if (!isFirstRender) {
       if (isError) {
-        showToast(I18n.t("global.genericError"));
+        IOToast.error(I18n.t("global.genericError"));
       }
     } else {
       setIsFirstRender(false);

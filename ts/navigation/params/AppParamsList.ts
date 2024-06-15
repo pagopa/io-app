@@ -15,8 +15,9 @@ import {
 import CGN_ROUTES from "../../features/bonus/cgn/navigation/routes";
 import { FciParamsList } from "../../features/fci/navigation/params";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
-import { FimsParamsList } from "../../features/fims/navigation/params";
-import FIMS_ROUTES from "../../features/fims/navigation/routes";
+import { FimsLegacyParamsList } from "../../features/fimsLegacy/navigation/params";
+import FIMS_LEGACY_ROUTES from "../../features/fimsLegacy/navigation/routes";
+import { FIMS_ROUTES, FimsParamsList } from "../../features/fims/navigation";
 import { IdPayBarcodeParamsList } from "../../features/idpay/barcode/navigation/params";
 import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/routes";
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
@@ -56,13 +57,17 @@ import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
 import { PaymentsTransactionParamsList } from "../../features/payments/transaction/navigation/params";
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
-import { ServicesParamsList } from "../../features/services/navigation/params";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
+import { ServicesParamsList } from "../../features/services/common/navigation/params";
+import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
+import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
+import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/bizEventsTransaction/navigation/routes";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
+import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
@@ -82,6 +87,7 @@ export type AppParamsList = {
   [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
+  [SERVICES_ROUTES.SEARCH]: undefined;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
 
   [ROUTES.BARCODE_SCAN]: undefined;
@@ -97,6 +103,7 @@ export type AppParamsList = {
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [UADONATION_ROUTES.WEBVIEW]: NavigatorScreenParams<UAWebviewScreenNavigationParams>;
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
+  [FIMS_LEGACY_ROUTES.MAIN]: NavigatorScreenParams<FimsLegacyParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
@@ -119,6 +126,9 @@ export type AppParamsList = {
   [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
   [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionParamsList>;
+  [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionBizEventsParamsList>;
+
+  [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
 };
 
 /**

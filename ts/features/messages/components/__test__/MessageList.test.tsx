@@ -1,4 +1,4 @@
-import { pot } from "@pagopa/ts-commons";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { Text } from "react-native";
@@ -13,13 +13,10 @@ import {
   defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../__mocks__/messages";
-import MessageList from "../MessageList";
+import MessageList from "../Home/legacy";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 jest.useFakeTimers();
-jest.mock("../../../../utils/showToast", () => ({
-  showToast: jest.fn()
-}));
 
 const messages = successReloadMessagesPayload.messages;
 

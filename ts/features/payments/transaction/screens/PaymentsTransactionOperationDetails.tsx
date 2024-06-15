@@ -12,7 +12,7 @@ import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import I18n from "../../../../i18n";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -56,7 +56,7 @@ const WalletTransactionOperationDetailsScreen = () => {
   };
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: cleanTransactionDescription(operationName)
       }}
@@ -64,7 +64,6 @@ const WalletTransactionOperationDetailsScreen = () => {
       <ScrollView style={styles.scrollViewContainer}>
         {operationDetails.importo && (
           <ListItemInfo
-            accessibilityLabel={I18n.t("transaction.details.operation.amount")}
             label={I18n.t("transaction.details.operation.amount")}
             value={formatNumberCentsToAmount(
               operationDetails.importo,
@@ -78,9 +77,6 @@ const WalletTransactionOperationDetailsScreen = () => {
           <>
             <ListItemInfo
               label={I18n.t("transaction.details.operation.creditor")}
-              accessibilityLabel={I18n.t(
-                "transaction.details.operation.creditor"
-              )}
               value={operationDetails.enteBeneficiario}
             />
             <Divider />
@@ -90,9 +86,6 @@ const WalletTransactionOperationDetailsScreen = () => {
           <>
             <ListItemInfo
               label={I18n.t("transaction.details.operation.debtor")}
-              accessibilityLabel={I18n.t(
-                "transaction.details.operation.debtor"
-              )}
               value={getDebtorText()}
             />
             <Divider />
@@ -102,7 +95,6 @@ const WalletTransactionOperationDetailsScreen = () => {
           <>
             <ListItemInfo
               label={I18n.t("transaction.details.operation.iuv")}
-              accessibilityLabel={I18n.t("transaction.details.operation.iuv")}
               value={operationDetails.IUV}
             />
             <Divider />
@@ -112,12 +104,11 @@ const WalletTransactionOperationDetailsScreen = () => {
           <ListItemInfo
             numberOfLines={4}
             label={I18n.t("transaction.details.operation.subject")}
-            accessibilityLabel={I18n.t("transaction.details.operation.subject")}
             value={operationSubject}
           />
         )}
       </ScrollView>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

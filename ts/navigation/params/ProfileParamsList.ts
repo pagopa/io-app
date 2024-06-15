@@ -22,7 +22,6 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_DOWNLOAD_DATA]: undefined;
   [ROUTES.MARKDOWN_PLAYGROUND]: undefined;
   [ROUTES.DESIGN_SYSTEM]: undefined;
-  [ROUTES.WEB_PLAYGROUND]: undefined;
   [ROUTES.LOLLIPOP_PLAYGROUND]: undefined;
   [ROUTES.PROFILE_REMOVE_ACCOUNT_INFO]: undefined;
   [ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS]: undefined;
@@ -31,7 +30,5 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS]: undefined;
   [ROUTES.IDPAY_ONBOARDING_PLAYGROUND]: undefined;
   [ROUTES.IDPAY_CODE_PLAYGROUND]: undefined;
-  [ROUTES.WALLET_PLAYGROUND]: undefined;
-  [ROUTES.WALLET_PAYMENT_PLAYGROUND]: undefined;
   [ROUTES.ITW_PLAYGROUND]: undefined;
 };

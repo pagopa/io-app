@@ -1,13 +1,13 @@
-import * as React from "react";
-import { useState, useCallback } from "react";
 import {
-  CodeInput,
-  NumberPad,
-  VSpacer,
-  IOStyles,
   BiometricsValidType,
-  IconButton
+  CodeInput,
+  IOStyles,
+  IconButton,
+  NumberPad,
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 import I18n from "../../../i18n";
 import { isDevEnv } from "../../../utils/environment";
@@ -41,10 +41,12 @@ export const IdentificationNumberPad = (
 
   const { pin, pinValidation, numberPadVariant, biometricsConfig } = props;
 
-  const onValueChange = useCallback((v: string) => {
-    if (v.length <= PIN_LENGTH) {
-      setValue(v);
-    }
+  const onValueChange = useCallback((v: number) => {
+    setValue(prev => (prev.length < PIN_LENGTH ? `${prev}${v}` : prev));
+  }, []);
+
+  const onDeletePress = useCallback(() => {
+    setValue((prev: string) => prev.slice(0, -1));
   }, []);
 
   // Calling pinValidation after a timeout is neeed
@@ -82,26 +84,23 @@ export const IdentificationNumberPad = (
           onValidate={onPinValidated}
         />
       </View>
-      <VSpacer size={48} />
-      <View>
-        <NumberPad
-          value={value}
-          deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
-          onValueChange={onValueChange}
-          variant={numberPadVariant}
-          {...biometricsConfig}
-        />
-      </View>
       {isDevEnv && (
         <View
           accessible={false}
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden
-          style={IOStyles.alignCenter}
+          style={{
+            zIndex: 10,
+            opacity: 0.75,
+            alignSelf: "center",
+            position: "absolute",
+            /* Ugly magic number, but the position is nicer with this value */
+            bottom: 38
+          }}
         >
-          <VSpacer size={16} />
           <IconButton
-            icon={"systemPermissionsAndroid"}
+            icon="unlocked"
+            iconSize={16}
             color="contrast"
             onPress={() => {
               setValue(pin);
@@ -110,6 +109,16 @@ export const IdentificationNumberPad = (
           />
         </View>
       )}
+      <VSpacer size={48} />
+      <View>
+        <NumberPad
+          deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
+          onDeletePress={onDeletePress}
+          onNumberPress={onValueChange}
+          variant={numberPadVariant}
+          {...biometricsConfig}
+        />
+      </View>
     </>
   );
 };

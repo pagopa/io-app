@@ -6,7 +6,7 @@ import LocalServicesWebView from "../../components/services/LocalServicesWebView
 import { showServiceDetails } from "../../store/actions/services";
 import { useIODispatch } from "../../store/hooks";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
+import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 
 const styles = StyleSheet.create({
   contentWrapper: {

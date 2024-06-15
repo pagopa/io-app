@@ -171,7 +171,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -338,8 +324,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -516,7 +502,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -524,25 +510,11 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -985,17 +957,12 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 </View>
                                 <View
                                   style={
-                                    Array [
-                                      Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 16,
-                                      },
-                                      Object {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "flex-end",
+                                      "marginLeft": 12,
+                                    }
                                   }
                                 >
                                   <View
@@ -1231,17 +1198,12 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 </View>
                                 <View
                                   style={
-                                    Array [
-                                      Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 16,
-                                      },
-                                      Object {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "flex-end",
+                                      "marginLeft": 12,
+                                    }
                                   }
                                 >
                                   <View
@@ -1477,17 +1439,12 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 </View>
                                 <View
                                   style={
-                                    Array [
-                                      Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "flex-end",
-                                        "marginLeft": 16,
-                                      },
-                                      Object {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "flex-end",
+                                      "marginLeft": 12,
+                                    }
                                   }
                                 >
                                   <View
@@ -1606,8 +1563,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1784,7 +1741,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -1792,25 +1749,11 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2153,7 +2096,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -2190,8 +2133,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2368,7 +2311,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -2376,25 +2319,11 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2737,7 +2666,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -2853,7 +2782,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -2969,7 +2898,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3085,7 +3014,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3201,7 +3130,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3238,8 +3167,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -3416,7 +3345,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -3424,25 +3353,11 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3785,7 +3700,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -3901,7 +3816,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4017,7 +3932,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4133,7 +4048,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4249,7 +4164,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4286,8 +4201,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -4464,7 +4379,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -4472,25 +4387,11 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -4833,7 +4734,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -4949,7 +4850,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5065,7 +4966,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5181,7 +5082,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5297,7 +5198,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5334,8 +5235,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -5512,7 +5413,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -5520,25 +5421,11 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -5881,7 +5768,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -5997,7 +5884,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -6113,7 +6000,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -6229,7 +6116,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -6345,7 +6232,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                               <View
                                 style={
                                   Object {
-                                    "marginLeft": 16,
+                                    "marginLeft": 12,
                                   }
                                 }
                               >
@@ -6420,8 +6307,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

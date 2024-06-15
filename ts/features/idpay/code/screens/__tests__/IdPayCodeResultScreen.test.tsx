@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import * as reactRedux from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -9,7 +8,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { getGenericError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IdPayCodeRoutes } from "../../navigation/routes";
-import { idPayResetCode } from "../../store/actions";
 import { IdPayCodeState } from "../../store/reducers";
 import { IdPayCodeResultScreen } from "../IdPayCodeResultScreen";
 
@@ -33,18 +31,12 @@ jest.mock("@react-navigation/native", () => {
 });
 
 describe("IdPayCodeResultScreen", () => {
-  const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
-
   const tCode = Array.from({ length: 5 }, () =>
     Math.floor(Math.random() * 9)
   ).join("");
 
   describe("when continue button si pressed", () => {
     it("should reset the store and pop the screen", () => {
-      const dispatchMock = jest.fn();
-      useDispatchMock.mockReturnValue(dispatchMock);
-
-      expect(dispatchMock).not.toHaveBeenCalled();
       expect(mockPop).not.toHaveBeenCalled();
 
       const { component } = renderComponent({ code: pot.some(tCode) });
@@ -53,7 +45,6 @@ describe("IdPayCodeResultScreen", () => {
       fireEvent(continueButton, "onPress");
 
       expect(mockPop).toHaveBeenCalled();
-      expect(dispatchMock).toHaveBeenCalledWith(idPayResetCode());
     });
   });
 

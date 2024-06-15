@@ -1,9 +1,4 @@
-import {
-  ButtonSolid,
-  ContentWrapper,
-  IOToast,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast } from "@pagopa/io-app-design-system";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -12,23 +7,23 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { constNull, pipe } from "fp-ts/lib/function";
-import { ActionSheet } from "native-base";
+import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect } from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
+import { Alert, ScrollView } from "react-native";
 import {
   isError as isRemoteError,
   isLoading as isRemoteLoading,
   isUndefined
 } from "../../../common/model/RemoteValue";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import {
+  FooterActions,
+  FooterActionsMeasurements
+} from "../../../components/ui/FooterActions";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToPaymentTransactionErrorScreen } from "../../../store/actions/navigation";
@@ -44,13 +39,12 @@ import {
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
-import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -71,6 +65,7 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
+import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
@@ -91,17 +86,12 @@ export type TransactionSummaryErrorContent = PayloadForAction<
 
 export type TransactionSummaryError = O.Option<TransactionSummaryErrorContent>;
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
-
 const renderFooter = (
   isLoading: boolean,
   error: TransactionSummaryError,
   continueWithPayment: () => void,
-  help: () => void
+  help: () => void,
+  onMeasure?: (values: FooterActionsMeasurements) => void
 ) => {
   if (O.isSome(error)) {
     const errorOrUndefined = O.toUndefined(error);
@@ -111,11 +101,15 @@ const renderFooter = (
       case "DATA":
       case "UNCOVERED":
         return (
-          <ButtonSolid
-            onPress={help}
-            fullWidth
-            accessibilityLabel={I18n.t("payment.details.info.buttons.help")}
-            label={I18n.t("payment.details.info.buttons.help")}
+          <FooterActions
+            onMeasure={onMeasure}
+            actions={{
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("payment.details.info.buttons.help"),
+                onPress: help
+              }
+            }}
           />
         );
       // There's a strange case where error is 'some' but
@@ -128,25 +122,18 @@ const renderFooter = (
         return <></>;
     }
   }
-  if (isLoading) {
-    return (
-      <ButtonSolid
-        loading
-        onPress={constNull}
-        fullWidth
-        label={I18n.t("wallet.continue")}
-        accessibilityLabel={I18n.t("wallet.continue")}
-        disabled
-      />
-    );
-  }
 
   return (
-    <ButtonSolid
-      fullWidth
-      onPress={continueWithPayment}
-      label={I18n.t("wallet.continue")}
-      accessibilityLabel={I18n.t("wallet.continue")}
+    <FooterActions
+      onMeasure={onMeasure}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          loading: isLoading,
+          label: I18n.t("wallet.continue"),
+          onPress: continueWithPayment
+        }
+      }}
     />
   );
 };
@@ -158,7 +145,7 @@ const TransactionSummaryScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const { rptId, paymentStartOrigin, initialAmount, messageId } = route.params;
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const {
     verifica: paymentVerification,
     attiva,
@@ -166,6 +153,10 @@ const TransactionSummaryScreen = (): React.ReactElement => {
     check,
     pspsV2
   } = useIOSelector(state => state.wallet.payment);
+
+  /* Get `FooterActions` measurements */
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
 
   const error: TransactionSummaryError = pot.isError(paymentVerification)
     ? O.some(paymentVerification.error)
@@ -292,25 +283,26 @@ const TransactionSummaryScreen = (): React.ReactElement => {
     if (pot.isSome(paymentId)) {
       // If we have a paymentId (payment check already done) we need to
       // ask the user to cancel the payment and in case reset it
-      ActionSheet.show(
-        {
-          options: [
-            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
-            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
-          ],
-          destructiveButtonIndex: 0,
-          cancelButtonIndex: 1,
-          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            dispatch(backToEntrypointPayment());
-            resetPayment();
-            IOToast.success(
-              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess")
-            );
+      Alert.alert(
+        I18n.t("wallet.ConfirmPayment.confirmCancelTitle"),
+        undefined,
+        [
+          {
+            text: I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            style: "destructive",
+            onPress: () => {
+              dispatch(backToEntrypointPayment());
+              resetPayment();
+              IOToast.success(
+                I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess")
+              );
+            }
+          },
+          {
+            text: I18n.t("wallet.ConfirmPayment.confirmContinuePayment"),
+            style: "cancel"
           }
-        }
+        ]
       );
     } else {
       navigation.goBack();
@@ -387,22 +379,31 @@ const TransactionSummaryScreen = (): React.ReactElement => {
     O.getOrElse(() => rptId.organizationFiscalCode)
   );
 
+  useHeaderSecondLevel({
+    title: I18n.t("wallet.ConfirmPayment.paymentInformations"),
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp,
+    goBack,
+    backTestID: "back-button-transaction-summary"
+  });
+
   return (
-    <SafeAreaView style={IOStyles.flex}>
-      <BaseScreenComponent
-        backButtonTestID={"back-button-transaction-summary"}
-        goBack={goBack}
-        contextualHelp={emptyContextualHelp}
-        headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
+    <>
+      <ScrollView
+        style={{ flexGrow: 1 }}
+        contentContainerStyle={{
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+        }}
       >
         {showsInlineError && <TransactionSummaryStatus error={error} />}
-        <ScrollView style={styles.container}>
+        <ContentWrapper>
           <TransactionSummary
             paymentVerification={paymentVerification}
             paymentNoticeNumber={paymentNoticeNumber}
             organizationFiscalCode={organizationFiscalCode}
             isPaid={isPaid}
           />
+
           {showsInlineError && pot.isError(paymentVerification) && (
             <TransactionSummaryErrorDetails
               error={error}
@@ -411,18 +412,17 @@ const TransactionSummaryScreen = (): React.ReactElement => {
               messageId={messageId}
             />
           )}
-        </ScrollView>
-        <ContentWrapper>
-          {renderFooter(
-            isLoading,
-            error,
-            () => continueWithPayment(),
-            () => startAssistanceRequest(error, messageId)
-          )}
-          <VSpacer size={16} />
         </ContentWrapper>
-      </BaseScreenComponent>
-    </SafeAreaView>
+      </ScrollView>
+
+      {renderFooter(
+        isLoading,
+        error,
+        () => continueWithPayment(),
+        () => startAssistanceRequest(error, messageId),
+        handleFooterActionsMeasurements
+      )}
+    </>
   );
 };
 

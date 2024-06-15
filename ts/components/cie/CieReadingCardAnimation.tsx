@@ -1,10 +1,15 @@
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
+/**
+ * TODO: refactor to a functional component.
+ * https://pagopa.atlassian.net/browse/IOPID-1857
+ */
+import {
+  IOColors,
+  IOPictograms,
+  Pictogram
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, Animated, Easing, Image, StyleSheet } from "react-native";
+import { Animated, Easing, StyleSheet, View } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
-import customVariables from "../../theme/variables";
-import AnimatedRing from "../animations/AnimatedRing";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -15,6 +20,8 @@ export enum ReadingState {
 
 type Props = Readonly<{
   readingState: ReadingState;
+  pictogramName: IOPictograms;
+  circleColor: string;
 }>;
 
 type State = Readonly<{
@@ -22,43 +29,30 @@ type State = Readonly<{
 }>;
 
 // Image dimension
-const imgDimension = 180;
-const boxDimension = 245;
+const imgDimension = 188;
 const progressThreshold = 60;
-
-// Setting for 'radar' animation
-const ringSettings = {
-  dimension: imgDimension,
-  // Three different animation start delays (one is 0), one for each ring
-  delayX1: 700 as Millisecond,
-  delayX2: 1400 as Millisecond,
-  duration: 2100 as Millisecond
-};
+const circleBorderWidth = 3;
 
 const styles = StyleSheet.create({
   imgContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: boxDimension
+    height: imgDimension
   },
   img: {
     overflow: "hidden",
     backgroundColor: IOColors.white,
-    height: imgDimension - 3,
-    width: imgDimension - 3,
-    borderRadius: imgDimension / 2
-  },
-  rings: {
-    height: boxDimension,
-    width: boxDimension,
-    position: "absolute",
-    overflow: "hidden",
+    height: imgDimension,
+    width: imgDimension,
+    borderRadius: imgDimension / 2,
     justifyContent: "center",
     alignItems: "center"
   },
-  successIcon: {
-    position: "absolute",
-    alignSelf: "flex-start"
+  imgWrapper: {
+    height: imgDimension + 30,
+    width: imgDimension + 30,
+    paddingStart: 15,
+    paddingTop: 25
   },
   flexStart: {
     justifyContent: "flex-start"
@@ -168,56 +162,29 @@ export default class CieReadingCardAnimation extends React.PureComponent<
   public render() {
     return (
       <View style={styles.imgContainer} accessible={false}>
-        {this.props.readingState === ReadingState.waiting_card && (
-          <View style={styles.rings}>
-            <AnimatedRing
-              dimension={ringSettings.dimension}
-              startAnimationAfter={0 as Millisecond}
-              duration={ringSettings.duration}
-              boxDimension={boxDimension}
-            />
-            <AnimatedRing
-              dimension={ringSettings.dimension}
-              startAnimationAfter={ringSettings.delayX1}
-              duration={ringSettings.duration}
-              boxDimension={boxDimension}
-            />
-            <AnimatedRing
-              dimension={ringSettings.dimension}
-              startAnimationAfter={ringSettings.delayX2}
-              duration={ringSettings.duration}
-              boxDimension={boxDimension}
-            />
-          </View>
-        )}
-
         <View style={styles.flexStart}>
           <ProgressCircle
             percent={
               this.props.readingState === ReadingState.completed
-                ? 0
+                ? 100
                 : this.state.progressBarValue
             }
             radius={imgDimension / 2}
-            borderWidth={3}
+            borderWidth={circleBorderWidth}
             color={
               this.props.readingState === ReadingState.error
-                ? customVariables.brandDanger
-                : customVariables.brandPrimary
+                ? IOColors.greyLight
+                : this.props.circleColor
             }
             shadowColor={IOColors.greyLight}
             bgColor={IOColors.greyLight}
           >
-            <Image
-              source={require("../../../img/cie/place-card-illustration.png")}
-              style={styles.img}
-            />
-          </ProgressCircle>
-          {this.props.readingState === ReadingState.completed && (
-            <View style={styles.successIcon}>
-              <Icon name="success" color="blue" size={48} />
+            <View style={styles.img}>
+              <View style={styles.imgWrapper}>
+                <Pictogram size={"100%"} name={this.props.pictogramName} />
+              </View>
             </View>
-          )}
+          </ProgressCircle>
         </View>
       </View>
     );

@@ -9,7 +9,7 @@ import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { logosForService } from "../../../../utils/services";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdPotSelector } from "../../../services/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
 import { gapBetweenItemsInAGrid } from "../../utils";
 import { OrganizationHeader } from "./OrganizationHeader";
 
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
   createdAt: Date;
-  subject: string;
   serviceId: ServiceId;
+  subject: string;
 }>;
 
 const MessageDetailsHeaderContent = ({
@@ -36,7 +36,7 @@ const MessageDetailsHeaderContent = ({
   <>
     <H3 testID="message-header-subject">{subject}</H3>
     <VSpacer size={8} />
-    <LabelSmall fontSize="regular" color="grey-700">
+    <LabelSmall weight="Regular" color="grey-700">
       {localeDateFormat(
         createdAt,
         I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
@@ -68,6 +68,7 @@ export const MessageDetailsHeader = ({
           <OrganizationHeader
             logoUri={logosForService(service)}
             organizationName={service.organization_name}
+            serviceId={serviceId}
             serviceName={service.service_name}
           />
           <Divider />

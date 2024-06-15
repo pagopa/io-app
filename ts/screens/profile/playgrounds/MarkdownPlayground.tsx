@@ -50,16 +50,22 @@ const styles = StyleSheet.create({
 const MARKDOWN_REFERENCE = I18n.t("global.markdown.reference");
 
 const MARKDOWN_HEADING = `# I am a Header 1
+# I am a Header 1 with a looong looong looooong title
 
 ## I am a Header 2
+## I am a Header 2 with a looong looong looooong title
 
 ### I am a Header 3
+### I am a Header 3 with a looong looong looooong title
 
 #### I am a Header 4
+#### I am a Header 4 with a looong looong looooong title
 
 ##### I am a Header 5
+##### I am a Header 5 with a looong looong looooong loooong title
 
 ###### I am a Header 6
+###### I am a Header 6 with a looong looong looooong loooooong title
 `;
 
 const MARKDOWN_PARAGRAPH = `A simple paragraph.
@@ -116,6 +122,7 @@ const MarkdownPlayground = () => {
       >
         <View style={styles.row}>
           <TextInput
+            accessibilityLabel="Markdown content"
             multiline={true}
             placeholder={"paste here your markdown and press the button"}
             style={styles.textInput}
@@ -179,7 +186,6 @@ const MarkdownPlayground = () => {
           <View style={styles.row}>
             <ExtractedCtaButton
               cta={maybeCTA.value.cta_1}
-              xsmall={true}
               onCTAPress={handleCtaPress}
             />
           </View>
@@ -190,7 +196,6 @@ const MarkdownPlayground = () => {
             <View style={styles.row}>
               <ExtractedCtaButton
                 cta={maybeCTA.value.cta_2}
-                xsmall={true}
                 onCTAPress={handleCtaPress}
               />
             </View>

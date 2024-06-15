@@ -19,6 +19,7 @@ import { MessagesStatus } from "../reducers/messagesStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { MessageListCategory } from "../../types/messageListCategory";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
@@ -313,6 +314,10 @@ export const addUserSelectedPaymentRptId = createAction(
   resolve => (paymentId: string) => resolve({ paymentId })
 );
 
+export const setShownMessageCategoryAction = createStandardAction(
+  "SET_SHOWN_MESSAGE_CATEGORY"
+)<MessageListCategory>();
+
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
   | typeof loadNextPageMessages
@@ -336,4 +341,5 @@ export type MessagesActions = ActionType<
   | typeof updatePaymentForMessage
   | typeof cancelQueuedPaymentUpdates
   | typeof addUserSelectedPaymentRptId
+  | typeof setShownMessageCategoryAction
 >;

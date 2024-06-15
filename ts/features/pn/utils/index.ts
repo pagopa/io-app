@@ -13,14 +13,30 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { TimelineStatus } from "../components/Timeline";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
-export function getNotificationStatusInfo(status: NotificationStatus) {
-  return I18n.t(`features.pn.details.timeline.status.${status}`, {
+export const getNotificationStatusInfo = (status: NotificationStatus) =>
+  I18n.t(`features.pn.details.timeline.status.${status}`, {
     defaultValue: status
   });
-}
+
+export const notificationStatusToTimelineStatus = (
+  status: NotificationStatus
+): TimelineStatus => {
+  switch (status) {
+    case "VIEWED":
+      return "viewed";
+    case "EFFECTIVE_DATE":
+      return "effective";
+    case "UNREACHABLE":
+      return "unreachable";
+    case "CANCELLED":
+      return "cancelled";
+  }
+  return "default";
+};
 
 export type PNOptInMessageInfo = {
   isPNOptInMessage: boolean;
@@ -115,3 +131,17 @@ export const containsF24FromPNMessagePot = (
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
+
+export const canShowMorePaymentsLink = (
+  isCancelled: boolean,
+  payments?: ReadonlyArray<NotificationPaymentInfo>
+): payments is ReadonlyArray<NotificationPaymentInfo> =>
+  !isCancelled &&
+  !!payments &&
+  payments.length > maxVisiblePaymentCountGenerator();
+
+export const shouldUseBottomSheetForPayments = (
+  isCancelled: boolean,
+  payments?: ReadonlyArray<NotificationPaymentInfo>
+): payments is ReadonlyArray<NotificationPaymentInfo> =>
+  !isCancelled && (payments?.length ?? 0) > 1;

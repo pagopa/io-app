@@ -1,20 +1,20 @@
+import * as React from "react";
 import {
-  Body,
   CodeInput,
   H2,
   IOColors,
-  IOVisualCostants,
-  LabelLink,
-  LabelSmallAlt,
   ListItemSwitch,
   NumberPad,
-  Pictogram,
   VSpacer,
-  hexToRgba
+  hexToRgba,
+  LabelSmallAlt,
+  IOVisualCostants,
+  LabelLink,
+  Pictogram,
+  Body
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
-import { Alert, StatusBar, View } from "react-native";
+import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const PIN_LENGTH = 6;
@@ -27,11 +27,13 @@ export const DSNumberPad = () => {
 
   const navigation = useNavigation();
 
-  const onValueChange = (v: string) => {
-    if (v.length <= PIN_LENGTH) {
-      setValue(v);
-    }
-  };
+  const onValueChange = React.useCallback((v: number) => {
+    setValue(prev => (prev.length < PIN_LENGTH ? `${prev}${v}` : prev));
+  }, []);
+
+  const onDeletePress = React.useCallback(() => {
+    setValue((prev: string) => prev.slice(0, -1));
+  }, []);
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -59,7 +61,6 @@ export const DSNumberPad = () => {
         }
       ]}
     >
-      <StatusBar barStyle={darkBackground ? "light-content" : "default"} />
       <View
         style={{
           backgroundColor: IOColors.white,
@@ -103,16 +104,16 @@ export const DSNumberPad = () => {
           value={value}
           length={PIN_LENGTH}
           variant={darkBackground ? "light" : "dark"}
-          onValueChange={onValueChange}
+          onValueChange={setValue}
           onValidate={v => v === "123456"}
         />
       </View>
       <VSpacer size={48} />
       <View>
         <NumberPad
-          value={value}
           deleteAccessibilityLabel="Delete"
-          onValueChange={onValueChange}
+          onDeletePress={onDeletePress}
+          onNumberPress={onValueChange}
           variant={darkBackground ? "dark" : "light"}
           biometricType="FACE_ID"
           biometricAccessibilityLabel="Face ID"

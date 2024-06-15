@@ -18,68 +18,71 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
     }
   >
     <Text
+      allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="Bold"
+      defaultWeight="SemiBold"
       font="TitilliumWeb"
       fontStyle={
         Object {
-          "fontSize": 26,
-          "lineHeight": 32,
+          "fontSize": 24,
+          "lineHeight": 34,
         }
       }
       style={
         Array [
           Object {
-            "fontSize": 26,
-            "lineHeight": 32,
+            "fontSize": 24,
+            "lineHeight": 34,
           },
           Object {
             "color": "#17324D",
             "fontFamily": "Titillium Web",
             "fontStyle": "normal",
-            "fontWeight": "700",
+            "fontWeight": "600",
           },
         ]
       }
       testID="EuCovidCertHeaderTitle"
-      weight="Bold"
+      weight="SemiBold"
     >
       title
     </Text>
     <Text
+      allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="Bold"
+      defaultWeight="SemiBold"
       font="TitilliumWeb"
       fontStyle={
         Object {
-          "fontSize": 20,
+          "fontSize": 22,
           "lineHeight": 24,
         }
       }
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 22,
             "lineHeight": 24,
           },
           Object {
             "color": "#17324D",
             "fontFamily": "Titillium Web",
             "fontStyle": "normal",
-            "fontWeight": "700",
+            "fontWeight": "600",
           },
         ]
       }
       testID="EuCovidCertHeaderSubTitle"
-      weight="Bold"
+      weight="SemiBold"
     >
       subtitle
     </Text>
   </View>
   <Image
     accessibilityElementsHidden={true}
+    accessibilityIgnoresInvertColors={true}
     importantForAccessibility="no"
     resizeMode="contain"
     source={

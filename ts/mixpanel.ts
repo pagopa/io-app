@@ -1,5 +1,5 @@
 import { Mixpanel } from "mixpanel-react-native";
-import { mixpanelToken } from "./config";
+import { mixpanelToken, mixpanelUrl } from "./config";
 import { getDeviceId } from "./utils/device";
 import { GlobalState } from "./store/reducers/types";
 import { updateMixpanelSuperProperties } from "./mixpanelConfig/superProperties";
@@ -17,11 +17,7 @@ export const initializeMixPanel = async (state: GlobalState) => {
   }
   const trackAutomaticEvents = true;
   const privateInstance = new Mixpanel(mixpanelToken, trackAutomaticEvents);
-  await privateInstance.init(
-    undefined,
-    undefined,
-    "https://api-eu.mixpanel.com"
-  );
+  await privateInstance.init(undefined, undefined, mixpanelUrl);
   mixpanel = privateInstance;
   // On app first open
   // On profile page, when user opt-in

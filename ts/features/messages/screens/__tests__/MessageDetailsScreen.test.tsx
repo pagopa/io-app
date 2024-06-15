@@ -19,7 +19,7 @@ import {
   messageWithValidPayment,
   message_1
 } from "../../../messages/__mocks__/message";
-import { loadServiceDetail } from "../../../../store/actions/services";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { service_1 } from "../../../messages/__mocks__/messages";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";

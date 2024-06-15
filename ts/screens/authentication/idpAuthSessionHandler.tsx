@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import { pipe } from "fp-ts/lib/function";
-import I18n from "i18n-js";
+import I18n from "../../i18n";
 import * as React from "react";
 import {
   LoginUtilsError,
@@ -18,7 +18,6 @@ import {
 } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppState, SafeAreaView, View, StyleSheet } from "react-native";
-import { Text } from "native-base";
 import { H3 } from "../../components/core/typography/H3";
 import BaseScreenComponent, {
   ContextualHelpProps
@@ -37,7 +36,7 @@ import NavigationService from "../../navigation/NavigationService";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -53,8 +52,12 @@ import {
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { SessionToken } from "../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonSolid,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import themeVariables from "../../theme/variables";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
@@ -63,7 +66,6 @@ import {
   IdpAuthErrorScreen,
   IdpAuthErrorScreenType
 } from "./idpAuthErrorScreen";
-import { useStore } from "react-redux";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -149,8 +151,8 @@ export const AuthSessionPage = () => {
 
   const dispatch = useIODispatch();
 
-  // We call useStore beacause we only need some values from store, we don't need any re-render logic
-  const store = useStore();
+  // We call useIOStore beacause we only need some values from store, we don't need any re-render logic
+  const store = useIOStore();
 
   // Memoized values/func --start--
   const state = useMemo(() => store.getState(), [store]);
@@ -408,12 +410,15 @@ export const AuthSessionPage = () => {
                   {I18n.t("spid.pending_login.title")}
                 </H3>
                 <VSpacer size={16} />
-                <Text>{I18n.t("spid.pending_login.details")}</Text>
+                <Body>{I18n.t("spid.pending_login.details")}</Body>
               </View>
               <View style={styles.buttonContainer}>
-                <ButtonDefaultOpacity block={true} onPress={onBack}>
-                  <Text>{I18n.t("spid.pending_login.button")}</Text>
-                </ButtonDefaultOpacity>
+                <ButtonSolid
+                  fullWidth
+                  label={I18n.t("spid.pending_login.button")}
+                  accessibilityLabel={I18n.t("spid.pending_login.button")}
+                  onPress={onBack}
+                />
               </View>
             </SafeAreaView>
           )}

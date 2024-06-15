@@ -9,7 +9,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { serviceByIdPotSelector } from "../../services/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../services/details/store/reducers/servicesById";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { LegacyMessageDetails } from "../components/LegacyMessageDetails";

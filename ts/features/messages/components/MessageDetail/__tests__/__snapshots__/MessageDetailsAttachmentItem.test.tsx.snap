@@ -171,7 +171,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -179,25 +179,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -395,12 +381,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -408,7 +394,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
@@ -487,7 +473,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -677,8 +663,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -855,7 +841,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -863,25 +849,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1079,12 +1051,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -1092,7 +1064,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
@@ -1171,7 +1143,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -1244,8 +1216,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1422,7 +1394,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -1430,25 +1402,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1646,12 +1604,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -1659,7 +1617,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
@@ -1738,7 +1696,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -1818,8 +1776,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1996,7 +1954,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           </View>
         </View>
       </View>
-      <RNSScreenContainer
+      <View
         onLayout={[Function]}
         style={
           Object {
@@ -2004,25 +1962,11 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           }
         }
       >
-        <RNSModalScreen
+        <View
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
-          gestureResponseDistance={
-            Object {
-              "bottom": -1,
-              "end": -1,
-              "start": -1,
-              "top": -1,
-            }
-          }
-          onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
-          sheetCornerRadius={-1}
-          sheetExpandsWhenScrolledToEdge={true}
-          sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2220,12 +2164,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              defaultColor="black"
+                              defaultWeight="SemiBold"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -2233,7 +2177,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
@@ -2312,7 +2256,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >
@@ -2385,8 +2329,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               </View>
             </View>
           </View>
-        </RNSModalScreen>
-      </RNSScreenContainer>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaProvider>
 </View>

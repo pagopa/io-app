@@ -2,13 +2,12 @@ import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 
 import I18n from "../../../../i18n";
-import ListSelectionBar from "../ListSelectionBar";
+import ListSelectionBar from "../Home/legacy/ListSelectionBar";
 
 jest.useFakeTimers();
 
 const defaultProps = {
   onResetSelection: jest.fn(),
-  onToggleAllSelection: jest.fn(),
   onToggleSelection: jest.fn(),
   primaryButtonText: "archive",
   totalItems: 3,
@@ -57,18 +56,6 @@ describe("ListSelectionBar component", () => {
     it("should render 'deselect all messages' button", () => {
       const { findByText } = render(<ListSelectionBar {...defaultProps} />);
       expect(findByText(I18n.t("messages.cta.deselectAll"))).not.toBeNull();
-    });
-  });
-
-  describe("when onToggleAllSelection is undefined", () => {
-    const props = {
-      ...defaultProps,
-      onToggleAllSelection: undefined
-    };
-
-    it("should not render the 'select all messages' button", () => {
-      const component = render(<ListSelectionBar {...props} />);
-      expect(component.queryByTestId("toggleAllSelection")).toBeNull();
     });
   });
 });

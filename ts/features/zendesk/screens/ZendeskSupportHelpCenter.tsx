@@ -1,14 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { View, ScrollView } from "react-native";
+import {
+  ContentWrapper,
+  HeaderSecondLevel,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import FAQComponent from "../../../components/FAQComponent";
 import BaseScreenComponent, {
   ContextualHelpProps
 } from "../../../components/screens/BaseScreenComponent";
@@ -24,23 +27,25 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
-import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
-import { ZendeskParamsList } from "../navigation/params";
-import {
-  getZendeskConfig,
-  ZendeskStartPayload,
-  zendeskSupportCancel,
-  zendeskSupportCompleted
-} from "../store/actions";
-import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
 import {
   addTicketCustomField,
   zendeskFciId
 } from "../../../utils/supportAssistance";
+import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
+import { ZendeskParamsList } from "../navigation/params";
+import {
+  ZendeskStartPayload,
+  getZendeskConfig,
+  zendeskSupportCancel,
+  zendeskSupportCompleted
+} from "../store/actions";
 import {
   isProfileEmailValidatedSelector,
   profileSelector
 } from "../../../store/reducers/profile";
+import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
+import FAQComponent from "../../../components/FAQComponent";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -65,7 +70,7 @@ export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
  * @constructor
  */
 const FaqManager = (props: FaqManagerProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
@@ -181,6 +186,9 @@ const ZendeskSupportHelpCenter = () => {
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
+  const navigation = useNavigation();
+  const { screenEndMargin } = useScreenEndMargin();
+
   // Navigation prop
   const {
     faqCategories,
@@ -223,45 +231,52 @@ const ZendeskSupportHelpCenter = () => {
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
   }
 
-  return (
-    <BaseScreenComponent
-      showChat={false}
-      customGoBack={<View />}
-      customRightIcon={{
-        iconName: "closeLarge",
-        onPress: workUnitCancel,
-        accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
-      }}
-      headerTitle={I18n.t("support.helpCenter.header")}
-    >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"ZendeskSupportHelpCenterScreen"}
-      >
-        <ScrollView style={IOStyles.horizontalContentPadding}>
-          <FaqManager
-            contextualHelpConfig={contextualHelpConfig}
-            faqCategories={faqCategories}
-            contentLoaded={markdownContentLoaded}
-            startingRoute={startingRoute}
-          />
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => (
+        <HeaderSecondLevel
+          type="singleAction"
+          title={I18n.t("support.helpCenter.header")}
+          firstAction={{
+            icon: "closeLarge",
+            onPress: workUnitCancel,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.close"
+            )
+          }}
+        />
+      )
+    });
+  });
 
-          {showRequestSupportContacts && (
-            <>
-              <VSpacer size={16} />
-              <ZendeskSupportComponent
-                assistanceForPayment={assistanceForPayment}
-                assistanceForCard={assistanceForCard}
-                assistanceForFci={
-                  assistanceForFci || signatureRequestId !== undefined
-                }
-              />
-            </>
-          )}
-          <VSpacer size={16} />
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+  return (
+    <ScrollView
+      contentContainerStyle={{ paddingBottom: screenEndMargin }}
+      testID={"ZendeskSupportHelpCenterScreen"}
+    >
+      <ContentWrapper>
+        <FaqManager
+          contextualHelpConfig={contextualHelpConfig}
+          faqCategories={faqCategories}
+          contentLoaded={markdownContentLoaded}
+          startingRoute={startingRoute}
+        />
+
+        {showRequestSupportContacts && (
+          <>
+            <VSpacer size={16} />
+            <ZendeskSupportComponent
+              assistanceForPayment={assistanceForPayment}
+              assistanceForCard={assistanceForCard}
+              assistanceForFci={
+                assistanceForFci || signatureRequestId !== undefined
+              }
+            />
+          </>
+        )}
+      </ContentWrapper>
+    </ScrollView>
   );
 };
 
