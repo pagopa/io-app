@@ -36,7 +36,9 @@ import reducer, {
   shouldShowFooterListComponentSelector,
   nextMessagePageStartingIdForCategorySelector,
   nextPageLoadingForCategoryHasErrorSelector,
-  LastRequestType
+  LastRequestType,
+  messagePagePotFromCategorySelector,
+  shouldShowRefreshControllOnListSelector
 } from "../allPaginated";
 import { pageSize } from "../../../../../config";
 import { UIMessage } from "../../../types";
@@ -1930,6 +1932,67 @@ describe("nextPageLoadingForCategoryHasErrorSelector", () => {
           const nextPageLoadingHasError =
             nextPageLoadingForCategoryHasErrorSelector(state, category);
           expect(nextPageLoadingHasError).toBe(expectedOutput);
+        });
+      })
+    )
+  );
+});
+
+describe("messagePagePotFromCategorySelector", () => {
+  it("should return messagePagePot, INBOX category", () => {
+    const category: MessageListCategory = "INBOX";
+    const messagePagePot = pot.some({} as MessagePage);
+    const state = generateAllPaginatedDataStateForCategory(
+      category,
+      messagePagePot
+    );
+    const outputMessagePagePot =
+      messagePagePotFromCategorySelector(category)(state);
+    expect(outputMessagePagePot).toStrictEqual(messagePagePot);
+  });
+});
+
+describe("shouldShowRefreshControllOnListSelector", () => {
+  const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  const messagePagePotData: ReadonlyArray<MessagePagePot> = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(nonEmptyMessagePage),
+    pot.noneError(""),
+    pot.some(nonEmptyMessagePage),
+    pot.someLoading(nonEmptyMessagePage),
+    pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
+    pot.someError(nonEmptyMessagePage, "")
+  ];
+  const messageRequests: ReadonlyArray<LastRequestType> = [
+    O.some("next"),
+    O.some("previous"),
+    O.some("all"),
+    O.none
+  ];
+
+  categories.forEach(category =>
+    messagePagePotData.forEach(messagePagePot =>
+      messageRequests.forEach(messageRequest => {
+        // eslint-disable-next-line no-underscore-dangle
+        const expectedOutput =
+          (messagePagePot.kind === "PotSomeLoading" ||
+            messagePagePot.kind === "PotSomeUpdating") &&
+          O.isSome(messageRequest) &&
+          (messageRequest.value === "all" ||
+            messageRequest.value === "previous");
+        // eslint-disable-next-line no-underscore-dangle
+        it(`should return ${expectedOutput}, ${category}, '${
+          O.isSome(messageRequest) ? messageRequest.value : "None"
+        }' lastRequest, ${messagePagePot.kind}`, () => {
+          const state = generateAllPaginatedDataStateForCategory(
+            category,
+            messagePagePot,
+            messageRequest
+          );
+          const shouldShowRefreshControl =
+            shouldShowRefreshControllOnListSelector(state, category);
+          expect(shouldShowRefreshControl).toBe(expectedOutput);
         });
       })
     )

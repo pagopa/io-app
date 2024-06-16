@@ -9,6 +9,7 @@ import {
   getLoadNextPageMessagesActionIfAllowed,
   getLoadServiceDetailsActionIfNeeded,
   getMessagesViewPagerInitialPageIndex,
+  getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
   messageListItemHeight,
   messageViewPageIndexToListCategory
@@ -23,6 +24,7 @@ import { UIMessage } from "../../../types";
 import { format } from "../../../../../utils/dates";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
+import { MessagePage } from "../../../store/reducers/allPaginated";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -701,5 +703,204 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       0
     );
     expect(loadNextPageMessagesRequest).toBeUndefined();
+  });
+});
+
+describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+  it("should return undefined when messagePagePot is pot.none", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category ? pot.none : pot.some({} as MessagePage)
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toBeUndefined();
+  });
+  it("should return undefined when messagePagePot is pot.noneLoading", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category
+            ? pot.noneLoading
+            : pot.some({} as MessagePage)
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toBeUndefined();
+  });
+  it("should return undefined when messagePagePot is pot.noneUpdating", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category
+            ? pot.noneUpdating({} as MessagePage)
+            : pot.some({} as MessagePage)
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toBeUndefined();
+  });
+  it("should return undefined when messagePagePot is pot.noneError", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category
+            ? pot.noneError("")
+            : pot.some({} as MessagePage)
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toBeUndefined();
+  });
+  it("should return 'reloadAllMessages.request' when messagePagePot is pot.some, INBOX", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category ? pot.some({} as MessagePage) : pot.none
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toStrictEqual(
+      reloadAllMessages.request({
+        pageSize,
+        filter: {
+          getArchived: false
+        }
+      })
+    );
+  });
+  it("should return 'reloadAllMessages.request' when messagePagePot is pot.some, ARCHIVE", () => {
+    const category: MessageListCategory = "ARCHIVE";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category ? pot.some({} as MessagePage) : pot.none
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toStrictEqual(
+      reloadAllMessages.request({
+        pageSize,
+        filter: {
+          getArchived: true
+        }
+      })
+    );
+  });
+  it("should return undefined when messagePagePot is pot.someLoading", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category
+            ? pot.someLoading({} as MessagePage)
+            : pot.some({} as MessagePage)
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toBeUndefined();
+  });
+  it("should return undefined when messagePagePot is pot.someUpdating", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category
+            ? pot.someUpdating({} as MessagePage, {} as MessagePage)
+            : pot.some({} as MessagePage)
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toBeUndefined();
+  });
+  it("should return 'reloadAllMessagesAction.request' when messagePagePot is pot.someError, INBOX", () => {
+    const category: MessageListCategory = "INBOX";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category
+            ? pot.someError({} as MessagePage, "")
+            : pot.none
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toStrictEqual(
+      reloadAllMessages.request({
+        pageSize,
+        filter: {
+          getArchived: false
+        }
+      })
+    );
+  });
+  it("should return 'reloadAllMessagesAction.request' when messagePagePot is pot.someError, ARCHIVE", () => {
+    const category: MessageListCategory = "ARCHIVE";
+    jest
+      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
+      .mockImplementation(
+        mockCategory => (_state: GlobalState) =>
+          mockCategory === category
+            ? pot.someError({} as MessagePage, "")
+            : pot.noneLoading
+      );
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(
+        {} as GlobalState,
+        category
+      );
+    expect(reloadAllMessagesAction).toStrictEqual(
+      reloadAllMessages.request({
+        pageSize,
+        filter: {
+          getArchived: true
+        }
+      })
+    );
   });
 });
