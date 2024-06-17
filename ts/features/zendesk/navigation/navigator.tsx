@@ -31,6 +31,7 @@ export const ZendeskStackNavigator = () => (
       component={ZendeskAskPermissions}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ZENDESK_ROUTES.CHOOSE_CATEGORY}
       component={ZendeskChooseCategory}
     />

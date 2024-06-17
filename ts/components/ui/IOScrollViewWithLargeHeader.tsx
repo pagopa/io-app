@@ -16,6 +16,7 @@ import {
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
+import { WithTestID } from "../../types/WithTestID";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
@@ -24,16 +25,18 @@ export type LargeHeaderTitleProps = {
   testID?: string;
 };
 
-type Props = {
-  children: React.ReactNode;
-  actions?: ComponentProps<typeof IOScrollView>["actions"];
-  title: LargeHeaderTitleProps;
-  description?: string;
-  goBack?: BackProps["goBack"];
-  headerActionsProp?: HeaderActionProps;
-  canGoback?: boolean;
-  excludeEndContentMargin?: boolean;
-} & SupportRequestParams;
+type Props = WithTestID<
+  {
+    children: React.ReactNode;
+    actions?: ComponentProps<typeof IOScrollView>["actions"];
+    title: LargeHeaderTitleProps;
+    description?: string;
+    goBack?: BackProps["goBack"];
+    headerActionsProp?: HeaderActionProps;
+    canGoback?: boolean;
+    excludeEndContentMargin?: boolean;
+  } & SupportRequestParams
+>;
 
 /**
  * Special `IOScrollView` screen with a large title that is hidden by a transition when
@@ -53,7 +56,8 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelpMarkdown,
       faqCategories,
       headerActionsProp = {},
-      excludeEndContentMargin
+      excludeEndContentMargin,
+      testID
     },
     ref
   ) => {
@@ -92,6 +96,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         snapOffset={titleHeight}
         includeContentMargins={false}
         excludeEndContentMargin={excludeEndContentMargin}
+        testID={testID}
       >
         <View
           ref={ref}
