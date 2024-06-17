@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
@@ -35,7 +35,7 @@ export const SearchScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const ref = useRef<SearchInputRef>(null);
+  const searchInputRef = useRef<SearchInputRef>(null);
   const [query, setQuery] = useState<string>("");
 
   const {
@@ -52,7 +52,7 @@ export const SearchScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      ref.current?.focus();
+      searchInputRef.current?.focus();
     }, [])
   );
 
@@ -164,13 +164,15 @@ export const SearchScreen = () => {
         ]}
       >
         <SearchInput
-          ref={ref}
           accessibilityLabel={I18n.t("services.search.input.placeholderShort")}
+          autoFocus={true}
           cancelButtonLabel={I18n.t("services.search.input.cancel")}
           clearAccessibilityLabel={I18n.t("services.search.input.clear")}
+          keepCancelVisible={true}
           onCancel={handleCancel}
           onChangeText={handleChangeText}
           placeholder={I18n.t("services.search.input.placeholderShort")}
+          ref={searchInputRef}
           value={query}
         />
       </View>
@@ -185,6 +187,10 @@ export const SearchScreen = () => {
         onEndReachedThreshold={0.1}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
+        keyboardDismissMode={Platform.select({
+          ios: "interactive",
+          default: "on-drag"
+        })}
         keyboardShouldPersistTaps="handled"
       />
     </>
