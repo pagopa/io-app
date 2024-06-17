@@ -14,6 +14,7 @@ import {
   reloadAllMessages
 } from "../../../store/actions";
 import { pageSize } from "../../../../../config";
+import { RefreshControlProps } from "../CustomRefreshControl";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -69,70 +70,18 @@ describe("MessageList", () => {
 
     expect(mockDispatch.mock.calls.length).toBe(0);
   });
-  it("should dispatch 'reloadAllMessages.request' when output from 'getReloadAllMessagesActionForRefreshIfAllowed' is not undefined, INBOX", () => {
+  it("should have the custom refresh control", () => {
     const expectedCategory: MessageListCategory = "INBOX";
-    const expectedAction = reloadAllMessages.request({
-      pageSize,
-      filter: { getArchived: false }
-    });
-    jest
-      .spyOn(homeUtils, "getReloadAllMessagesActionForRefreshIfAllowed")
-      .mockImplementation((_state, category) =>
-        category === expectedCategory ? expectedAction : undefined
-      );
-
     const component = renderComponent(expectedCategory);
     const messageList = component.getByTestId("message_list_inbox");
     expect(messageList).toBeTruthy();
 
     const { refreshControl } = messageList.props;
-    refreshControl.props.onRefresh();
+    expect(refreshControl).toBeTruthy();
 
-    expect(mockDispatch.mock.calls.length).toBe(1);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(expectedAction);
-  });
-  it("should dispatch 'reloadAllMessages.request' when output from 'getReloadAllMessagesActionForRefreshIfAllowed' is not undefined, ARCHIVE", () => {
-    const expectedCategory: MessageListCategory = "ARCHIVE";
-    const expectedAction = reloadAllMessages.request({
-      pageSize,
-      filter: { getArchived: true }
-    });
-    jest
-      .spyOn(homeUtils, "getReloadAllMessagesActionForRefreshIfAllowed")
-      .mockImplementation((_state, category) =>
-        category === expectedCategory ? expectedAction : undefined
-      );
-
-    const component = renderComponent(expectedCategory);
-    const messageList = component.getByTestId("message_list_archive");
-    expect(messageList).toBeTruthy();
-
-    const { refreshControl } = messageList.props;
-    refreshControl.props.onRefresh();
-
-    expect(mockDispatch.mock.calls.length).toBe(1);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(expectedAction);
-  });
-  it("should not dispatch 'reloadAllMessages.request' when output from 'getReloadAllMessagesActionForRefreshIfAllowed' is undefined", () => {
-    const expectedCategory: MessageListCategory = "INBOX";
-    const unexpectedAction = reloadAllMessages.request({
-      pageSize,
-      filter: { getArchived: false }
-    });
-    jest
-      .spyOn(homeUtils, "getReloadAllMessagesActionForRefreshIfAllowed")
-      .mockImplementation((_state, category) =>
-        category === expectedCategory ? undefined : unexpectedAction
-      );
-
-    const component = renderComponent(expectedCategory);
-    const messageList = component.getByTestId("message_list_inbox");
-    expect(messageList).toBeTruthy();
-
-    const { refreshControl } = messageList.props;
-    refreshControl.props.onRefresh();
-
-    expect(mockDispatch.mock.calls.length).toBe(0);
+    expect((refreshControl.props as RefreshControlProps).category).toBe(
+      expectedCategory
+    );
   });
 });
 

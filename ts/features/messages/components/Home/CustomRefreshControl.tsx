@@ -10,7 +10,7 @@ import {
 import { shouldShowRefreshControllOnListSelector } from "../../store/reducers/allPaginated";
 import { getReloadAllMessagesActionForRefreshIfAllowed } from "./homeUtils";
 
-type RefreshControlProps = {
+export type RefreshControlProps = {
   category: MessageListCategory;
 };
 
