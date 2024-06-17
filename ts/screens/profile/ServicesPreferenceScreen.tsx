@@ -1,4 +1,4 @@
-import { ContentWrapper, IOToast } from "@pagopa/io-app-design-system";
+import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
@@ -30,6 +30,7 @@ import ServicesContactComponent from "./components/services/ServicesContactCompo
  */
 const ServicesPreferenceScreen = (): ReactElement => {
   const store = useIOStore();
+  const toast = useIOToast();
   const state = store.getState();
   const dispatch = useIODispatch();
   const profile = useIOSelector(profileSelector);
@@ -70,7 +71,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
     // otherwise, if the profile is in error state,
     // the toast will be shown immediately without any updates
     if (prevProfile && !pot.isError(prevProfile) && pot.isError(profile)) {
-      IOToast.error(I18n.t("global.genericError"));
+      toast.error(I18n.t("global.genericError"));
       return;
     }
     // if profile preferences are updated correctly
@@ -82,14 +83,14 @@ const ServicesPreferenceScreen = (): ReactElement => {
       pot.isSome(profile) &&
       prevMode !== profileServicePreferenceMode
     ) {
-      IOToast.hideAll();
-      IOToast.success(
+      toast.hideAll();
+      toast.success(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
       );
     }
-  }, [profile, prevProfile, profileServicePreferenceMode, prevMode]);
+  }, [profile, prevProfile, profileServicePreferenceMode, prevMode, toast]);
 
   const handleOnSelectMode = useCallback(
     (mode: ServicesPreferencesModeEnum) => {

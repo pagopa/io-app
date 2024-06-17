@@ -2,8 +2,8 @@ import {
   Banner,
   ContentWrapper,
   IOStyles,
-  IOToast,
-  VSpacer
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
@@ -48,6 +48,7 @@ type Props = IOStackNavigationRouteProps<
 const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const toast = useIOToast();
   const isFirstOnboarding = props.route.params.isFirstOnboarding;
   const store = useIOStore();
   const profile = useIOSelector(profileSelector);
@@ -102,8 +103,14 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       store.getState()
     );
     onContinue(isFirstOnboarding);
-    IOToast.hideAll();
-  }, [isFirstOnboarding, onContinue, profileServicePreferenceMode, store]);
+    toast.hideAll();
+  }, [
+    isFirstOnboarding,
+    onContinue,
+    profileServicePreferenceMode,
+    store,
+    toast
+  ]);
 
   const selectCurrentMode = useCallback(
     (mode: ServicesPreferencesModeEnum) => {
@@ -138,7 +145,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     // otherwise, if the profile is in error state,
     // the toast will be shown immediately without any updates
     if (prevProfile && !pot.isError(prevProfile) && pot.isError(profile)) {
-      IOToast.error(I18n.t("global.genericError"));
+      toast.error(I18n.t("global.genericError"));
       return;
     }
 
@@ -152,14 +159,14 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       profileServicePreferenceMode !== prevMode
     ) {
       setModeSelected(profileServicePreferenceMode);
-      IOToast.hideAll();
-      IOToast.success(
+      toast.hideAll();
+      toast.success(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
       );
     }
-  }, [prevMode, prevProfile, profile, profileServicePreferenceMode]);
+  }, [prevMode, prevProfile, profile, profileServicePreferenceMode, toast]);
 
   // show a badge when the user is not new
   // As explained in this comment (https://pagopa.atlassian.net/browse/IOPID-1511?focusedCommentId=126354)
