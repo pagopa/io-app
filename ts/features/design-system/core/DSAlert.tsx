@@ -218,60 +218,6 @@ export const DSAlert = () => {
           content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         />
       </DSFullWidthComponent>
-
-      <VSpacer size={40} />
-
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
-        Legacy components
-      </H2>
-      <DSFullWidthComponent>
-        <StatusContent
-          accessibilityLabel={`Accessibility text for the advice component`}
-          backgroundColor={statusColorMap.normal}
-          foregroundColor={getStatusTextColor(LevelEnum.normal)}
-          iconName={statusIconMap.normal}
-          testID={"SectionStatusComponentContent"}
-          ref={viewRef}
-        >
-          {
-            "L’invio dei Certificati Verdi è in corso e potrebbe richiedere diversi giorni."
-          }
-        </StatusContent>
-      </DSFullWidthComponent>
-      <VSpacer size={16} />
-      <DSFullWidthComponent>
-        <SectionStatusComponent sectionKey={"favourite_language"} />
-      </DSFullWidthComponent>
-      <VSpacer size={16} />
-      <DSFullWidthComponent>
-        <StatusContent
-          accessibilityLabel={`Accessibility text for the advice component`}
-          backgroundColor={statusColorMap.warning}
-          foregroundColor={getStatusTextColor(LevelEnum.warning)}
-          iconName={statusIconMap.warning}
-          testID={"SectionStatusComponentContent"}
-          ref={viewRef}
-        >
-          {"La sezione Messaggi è in manutenzione, tornerà operativa a breve"}
-        </StatusContent>
-      </DSFullWidthComponent>
-      <VSpacer size={16} />
-      <DSFullWidthComponent>
-        <StatusContent
-          accessibilityLabel={`Accessibility text for the advice component`}
-          backgroundColor={statusColorMap.critical}
-          foregroundColor={getStatusTextColor(LevelEnum.critical)}
-          iconName={statusIconMap.critical}
-          testID={"SectionStatusComponentContent"}
-          ref={viewRef}
-        >
-          {
-            "I nostri sistemi potrebbero rispondere con lentezza, ci scusiamo per il disagio."
-          }
-        </StatusContent>
-      </DSFullWidthComponent>
-      <VSpacer size={16} />
-      <VSpacer size={40} />
     </DesignSystemScreen>
   );
 };

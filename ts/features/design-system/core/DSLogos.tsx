@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarSearch,
   HSpacer,
   IOColors,
   IOLogoPaymentCardType,
@@ -165,6 +166,7 @@ const renderAvatar = () => (
               }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
           </React.Fragment>
         ))}
       </ScrollView>
@@ -188,6 +190,30 @@ const renderAvatar = () => (
               }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
+          </React.Fragment>
+        ))}
+      </ScrollView>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={`AvatarSearch`}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={styles.horizontalScroll}
+      >
+        {organizationsURIs.map(({ imageSource }, i) => (
+          <React.Fragment key={i}>
+            <AvatarSearch
+              source={
+                imageSource
+                  ? Array.isArray(imageSource)
+                    ? imageSource.map(s => ({ uri: s }))
+                    : [{ uri: imageSource }]
+                  : []
+              }
+            />
+            {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
           </React.Fragment>
         ))}
       </ScrollView>
