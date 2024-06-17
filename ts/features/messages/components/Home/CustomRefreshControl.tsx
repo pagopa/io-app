@@ -37,7 +37,7 @@ export const CustomRefreshControl = ({ category }: RefreshControlProps) => {
       onRefresh={onRefreshCallback}
       tintColor={IOColors["blueIO-500"]}
       colors={[IOColors["blueIO-500"]]}
-      testID={`custom_refresh_control_${category.toLowerCase()}}`}
+      testID={`custom_refresh_control_${category.toLowerCase()}`}
     />
   );
 };

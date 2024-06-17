@@ -1,5 +1,6 @@
 import React from "react";
 import { createStore } from "redux";
+import { ReactTestInstance } from "react-test-renderer";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -31,7 +32,7 @@ describe("CustomRefreshControl", () => {
     const component = renderComponent(category);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  /* it("should dispatch 'reloadAllMessages.request' when output from 'getReloadAllMessagesActionForRefreshIfAllowed' is not undefined, INBOX", () => {
+  it("should dispatch 'reloadAllMessages.request' when output from 'getReloadAllMessagesActionForRefreshIfAllowed' is not undefined, INBOX", () => {
     const expectedCategory: MessageListCategory = "INBOX";
     const expectedAction = reloadAllMessages.request({
       pageSize,
@@ -44,12 +45,13 @@ describe("CustomRefreshControl", () => {
       );
 
     const component = renderComponent(expectedCategory);
-    const refreshControl = component.getByTestId(
-      "custom_refresh_control_inbox"
+    const refreshControl = customFindByTestId(
+      "custom_refresh_control_inbox",
+      component.container
     );
     expect(refreshControl).toBeTruthy();
 
-    refreshControl.props.onRefresh();
+    refreshControl!.props.onRefresh();
 
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(expectedAction);
@@ -67,12 +69,13 @@ describe("CustomRefreshControl", () => {
       );
 
     const component = renderComponent(expectedCategory);
-    const refreshControl = component.getByTestId(
-      "custom_refresh_control_archive"
+    const refreshControl = customFindByTestId(
+      "custom_refresh_control_archive",
+      component.container
     );
     expect(refreshControl).toBeTruthy();
 
-    refreshControl.props.onRefresh();
+    refreshControl!.props.onRefresh();
 
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(expectedAction);
@@ -90,15 +93,16 @@ describe("CustomRefreshControl", () => {
       );
 
     const component = renderComponent(expectedCategory);
-    const refreshControl = component.getByTestId(
-      "custom_refresh_control_inbox"
+    const refreshControl = customFindByTestId(
+      "custom_refresh_control_inbox",
+      component.container
     );
     expect(refreshControl).toBeTruthy();
 
-    refreshControl.props.onRefresh();
+    refreshControl!.props.onRefresh();
 
     expect(mockDispatch.mock.calls.length).toBe(0);
-  }); */
+  });
 });
 
 const renderComponent = (category: MessageListCategory) => {
@@ -115,4 +119,27 @@ const renderComponent = (category: MessageListCategory) => {
     {},
     store
   );
+};
+
+const customFindByTestId = (
+  inputTestID: string,
+  container: string | ReactTestInstance | undefined
+): ReactTestInstance | undefined => {
+  if (!container || typeof container === "string") {
+    return undefined;
+  }
+  const testID = container?.props?.testID;
+  if (testID && inputTestID === testID) {
+    return container;
+  }
+  const children = container.children as Array<string | ReactTestInstance>;
+  // eslint-disable-next-line functional/no-let
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i];
+    const searchResult = customFindByTestId(inputTestID, child);
+    if (searchResult) {
+      return searchResult;
+    }
+  }
+  return undefined;
 };

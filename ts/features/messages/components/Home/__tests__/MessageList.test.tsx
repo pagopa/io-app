@@ -9,10 +9,7 @@ import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as homeUtils from "../homeUtils";
-import {
-  loadNextPageMessages,
-  reloadAllMessages
-} from "../../../store/actions";
+import { loadNextPageMessages } from "../../../store/actions";
 import { pageSize } from "../../../../../config";
 import { RefreshControlProps } from "../CustomRefreshControl";
 
