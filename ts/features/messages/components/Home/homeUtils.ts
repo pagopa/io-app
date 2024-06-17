@@ -100,7 +100,9 @@ export const getLoadNextPageMessagesActionIfAllowed = (
           messagePagePot: archiveData,
           lastRequest: allPaginated.archive.lastRequest
         };
-  const nextMessagePageStartingId = isSomeOrSomeError(messagePagePot) ? messagePagePot.value.next : undefined;
+  const nextMessagePageStartingId = isSomeOrSomeError(messagePagePot)
+    ? messagePagePot.value.next
+    : undefined;
   if (!nextMessagePageStartingId) {
     return undefined;
   }

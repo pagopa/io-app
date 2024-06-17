@@ -25,8 +25,12 @@ import { UIMessage } from "../../../types";
 import { format } from "../../../../../utils/dates";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
-import { MessagePage } from "../../../store/reducers/allPaginated";
-import { isSomeOrSomeError, isStrictSome, isStrictSomeError } from "../../../../../utils/pot";
+import {
+  isLoadingOrUpdating,
+  isSomeOrSomeError,
+  isStrictSome,
+  isStrictSomeError
+} from "../../../../../utils/pot";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -554,36 +558,68 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
 describe("getLoadNextPageMessagesActionIfNeeded", () => {
   const nextValues = [undefined, "01J0KB1T5XVKHERASERQ01CG4J"];
   const generatePots = (nextValue?: string) => [
-    pot.none, pot.noneLoading, pot.noneUpdating({page: [], next: nextValue}), pot.noneError(""),
-    pot.some({page: [], next: nextValue}), pot.someLoading({page: [], next: nextValue}), 
-    pot.someUpdating({page: [], next: nextValue}, {page: [], next: nextValue}), pot.someError({page: [], next: nextValue}, "")
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating({ page: [], next: nextValue }),
+    pot.noneError(""),
+    pot.some({ page: [], next: nextValue }),
+    pot.someLoading({ page: [], next: nextValue }),
+    pot.someUpdating(
+      { page: [], next: nextValue },
+      { page: [], next: nextValue }
+    ),
+    pot.someError({ page: [], next: nextValue }, "")
   ];
-  const lastRequestValues = [O.none, O.some("next"), O.some("previous"), O.some("all")];
+  const lastRequestValues = [
+    O.none,
+    O.some("next"),
+    O.some("previous"),
+    O.some("all")
+  ];
   const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
 
-  const computeExpectedLoadNextPageMessagesValue = (state: GlobalState, category: MessageListCategory, messageListDistanceFromBottom: number) => {
+  const computeExpectedLoadNextPageMessagesValue = (
+    state: GlobalState,
+    category: MessageListCategory,
+    messageListDistanceFromBottom: number
+  ) => {
     // This method is the human-unreadable logic of the `getLoadNextPageMessagesActionIfAllowed` method
     // Check that one instead to filter out the case where the loadNextPageMessages.request action is returned.
-    const allPaginated =  state.entities.messages.allPaginated;
-    const selectedCollection = category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox;
-    const oppositeCollection = category === "ARCHIVE" ? allPaginated.inbox : allPaginated.archive;
-    const selectedCollectionNextValue = isSomeOrSomeError(selectedCollection.data) ? selectedCollection.data.value.next : undefined;
-    const canLoadNextMessages = !pot.isLoading(oppositeCollection.data) && !pot.isUpdating(oppositeCollection.data) &&
-      (isStrictSome(selectedCollection.data) && !!selectedCollectionNextValue || 
-      isStrictSomeError(selectedCollection.data) && !!selectedCollectionNextValue && (O.isNone(selectedCollection.lastRequest) || selectedCollection.lastRequest.value !== "next" || messageListDistanceFromBottom > 0));
-    return canLoadNextMessages ? loadNextPageMessages.request({
-      pageSize,
-      cursor: selectedCollectionNextValue,
-      filter: { getArchived: category === "ARCHIVE" }
-    }) : undefined;
-  }; 
+    const allPaginated = state.entities.messages.allPaginated;
+    const selectedCollection =
+      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox;
+    const oppositeCollection =
+      category === "ARCHIVE" ? allPaginated.inbox : allPaginated.archive;
+    const selectedCollectionNextValue = isSomeOrSomeError(
+      selectedCollection.data
+    )
+      ? selectedCollection.data.value.next
+      : undefined;
+    const canLoadNextMessages =
+      !pot.isLoading(oppositeCollection.data) &&
+      !pot.isUpdating(oppositeCollection.data) &&
+      ((isStrictSome(selectedCollection.data) &&
+        !!selectedCollectionNextValue) ||
+        (isStrictSomeError(selectedCollection.data) &&
+          !!selectedCollectionNextValue &&
+          (O.isNone(selectedCollection.lastRequest) ||
+            selectedCollection.lastRequest.value !== "next" ||
+            messageListDistanceFromBottom > 0)));
+    return canLoadNextMessages
+      ? loadNextPageMessages.request({
+          pageSize,
+          cursor: selectedCollectionNextValue,
+          filter: { getArchived: category === "ARCHIVE" }
+        })
+      : undefined;
+  };
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  nextValues.forEach(inboxNextValue => 
-    generatePots(inboxNextValue).forEach(inboxData => 
+  nextValues.forEach(inboxNextValue =>
+    generatePots(inboxNextValue).forEach(inboxData =>
       lastRequestValues.forEach(inboxLastRequestValue =>
         nextValues.forEach(archiveNextValue =>
           generatePots(archiveNextValue).forEach(archiveData =>
-            lastRequestValues.forEach(archiveLastRequestValue =>  {
+            lastRequestValues.forEach(archiveLastRequestValue => {
               const state = {
                 entities: {
                   messages: {
@@ -595,322 +631,105 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                       archive: {
                         data: archiveData,
                         lastRequest: archiveLastRequestValue
-                      },
+                      }
                     }
                   }
                 }
               } as GlobalState;
-              categories.forEach(category => 
+              categories.forEach(category =>
                 [0, 1].forEach(messageListDistance => {
-                  const expectedOutput = computeExpectedLoadNextPageMessagesValue(state, category, messageListDistance);
+                  const expectedOutput =
+                    computeExpectedLoadNextPageMessagesValue(
+                      state,
+                      category,
+                      messageListDistance
+                    );
                   // eslint-disable-next-line no-underscore-dangle
-                  it(`Should return '${expectedOutput ? "loadNextPageMessages.request" : "undefined"}' for '${category}' with state '${category === "ARCHIVE" ? archiveData.kind : inboxData.kind}' where next page index is '${category === "ARCHIVE" ? archiveNextValue : inboxNextValue}' and lastRequest value is '${category === "ARCHIVE" ? (O.isSome(archiveLastRequestValue) ? archiveLastRequestValue.value : "None") : O.isSome(inboxLastRequestValue) ? inboxLastRequestValue.value : "None"}' (messageListDistance is ${messageListDistance}), opposite category state '${category === "ARCHIVE" ? inboxData.kind : archiveData.kind}' (opposite 'lastRequest' and 'next page index' values not logged for concision)`, () => {
-                    const loadNextPageMessageAction = getLoadNextPageMessagesActionIfAllowed(state, category, messageListDistance);
-                    expect(loadNextPageMessageAction).toStrictEqual(expectedOutput);
+                  it(`Should return '${
+                    expectedOutput
+                      ? "loadNextPageMessages.request"
+                      : "undefined"
+                  }' for '${category}' with state '${
+                    category === "ARCHIVE" ? archiveData.kind : inboxData.kind
+                  }' where next page index is '${
+                    category === "ARCHIVE" ? archiveNextValue : inboxNextValue
+                  }' and lastRequest value is '${
+                    category === "ARCHIVE"
+                      ? O.isSome(archiveLastRequestValue)
+                        ? archiveLastRequestValue.value
+                        : "None"
+                      : O.isSome(inboxLastRequestValue)
+                      ? inboxLastRequestValue.value
+                      : "None"
+                  }' (messageListDistance is ${messageListDistance}), opposite category state '${
+                    category === "ARCHIVE" ? inboxData.kind : archiveData.kind
+                  }' (opposite 'lastRequest' and 'next page index' values not logged for concision)`, () => {
+                    const loadNextPageMessageAction =
+                      getLoadNextPageMessagesActionIfAllowed(
+                        state,
+                        category,
+                        messageListDistance
+                      );
+                    expect(loadNextPageMessageAction).toStrictEqual(
+                      expectedOutput
+                    );
                   });
-              }));
+                })
+              );
             })
           )
         )
       )
     )
   );
-
-
-
-
-  /* it("should return loadNextPageMessages.request, defined 'next' pagination index, no error on messagePagePot, list fully scrolled-down, INBOX category", () => {
-    const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "INBOX",
-      0
-    );
-    expect(loadNextPageMessagesRequest).toStrictEqual(
-      loadNextPageMessages.request({
-        pageSize,
-        cursor: nextPageIndex,
-        filter: { getArchived: false }
-      })
-    );
-  });
-  it("should return loadNextPageMessages.request, defined 'next' pagination index, no error on messagePagePot, list fully scrolled-down, ARCHIVE category", () => {
-    const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "ARCHIVE",
-      0
-    );
-    expect(loadNextPageMessagesRequest).toStrictEqual(
-      loadNextPageMessages.request({
-        pageSize,
-        cursor: nextPageIndex,
-        filter: { getArchived: true }
-      })
-    );
-  });
-  it("should return loadNextPageMessages.request, defined 'next' pagination index, error on messagePagePot, list not-fully scrolled-down, INBOX category", () => {
-    const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "INBOX",
-      1
-    );
-    expect(loadNextPageMessagesRequest).toStrictEqual(
-      loadNextPageMessages.request({
-        pageSize,
-        cursor: nextPageIndex,
-        filter: { getArchived: false }
-      })
-    );
-  });
-  it("should return loadNextPageMessages.request, defined 'next' pagination index, error on messagePagePot, list not-fully scrolled-down, ARCHIVE category", () => {
-    const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "ARCHIVE",
-      1
-    );
-    expect(loadNextPageMessagesRequest).toStrictEqual(
-      loadNextPageMessages.request({
-        pageSize,
-        cursor: nextPageIndex,
-        filter: { getArchived: true }
-      })
-    );
-  });
-  it("should return undefined, undefined 'next' pagination index, no error on messagePagePot, list not-fully scrolled-down, INBOX category", () => {
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "INBOX",
-      1
-    );
-    expect(loadNextPageMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined, defined 'next' pagination index, error on messagePagePot, list fully scrolled-down, INBOX category", () => {
-    // const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "INBOX",
-      0
-    );
-    expect(loadNextPageMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined, undefined 'next' pagination index, no error on messagePagePot, list not-fully scrolled-down, ARCHIVE category", () => {
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "ARCHIVE",
-      1
-    );
-    expect(loadNextPageMessagesRequest).toBeUndefined();
-  });
-  it("should return undefined, defined 'next' pagination index, error on messagePagePot, list fully scrolled-down, ARCHIVE category", () => {
-    // const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
-      {} as GlobalState,
-      "ARCHIVE",
-      0
-    );
-    expect(loadNextPageMessagesRequest).toBeUndefined();
-  }); */
 });
-/*
+
 describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-    jest.clearAllMocks();
-  });
-  it("should return undefined when messagePagePot is pot.none", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category ? pot.none : pot.some({} as MessagePage)
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toBeUndefined();
-  });
-  it("should return undefined when messagePagePot is pot.noneLoading", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category
-            ? pot.noneLoading
-            : pot.some({} as MessagePage)
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toBeUndefined();
-  });
-  it("should return undefined when messagePagePot is pot.noneUpdating", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category
-            ? pot.noneUpdating({} as MessagePage)
-            : pot.some({} as MessagePage)
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toBeUndefined();
-  });
-  it("should return undefined when messagePagePot is pot.noneError", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category
-            ? pot.noneError("")
-            : pot.some({} as MessagePage)
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toBeUndefined();
-  });
-  it("should return 'reloadAllMessages.request' when messagePagePot is pot.some, INBOX", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category ? pot.some({} as MessagePage) : pot.none
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: {
-          getArchived: false
-        }
+  const pots = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating({ page: [] }),
+    pot.noneError(""),
+    pot.some({ page: [] }),
+    pot.someLoading({ page: [] }),
+    pot.someUpdating({ page: [] }, { page: [] }),
+    pot.someError({ page: [] }, "")
+  ];
+  const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  categories.forEach(category =>
+    pots.forEach(inboxPot =>
+      pots.forEach(archivePot => {
+        const expectedOutput =
+          !isLoadingOrUpdating(inboxPot) && !isLoadingOrUpdating(archivePot)
+            ? reloadAllMessages.request({
+                pageSize,
+                filter: { getArchived: category === "ARCHIVE" }
+              })
+            : undefined;
+        it(`should return '${
+          expectedOutput ? "reloadAllMessages.request" : "undefined"
+        }' for category '${category}', where inbox state is '${
+          inboxPot.kind
+        }' and archive state is '${archivePot.kind}'`, () => {
+          const state = {
+            entities: {
+              messages: {
+                allPaginated: {
+                  archive: {
+                    data: archivePot
+                  },
+                  inbox: {
+                    data: inboxPot
+                  }
+                }
+              }
+            }
+          } as GlobalState;
+          const reloadAllMessagesAction =
+            getReloadAllMessagesActionForRefreshIfAllowed(state, category);
+          expect(reloadAllMessagesAction).toStrictEqual(expectedOutput);
+        });
       })
-    );
-  });
-  it("should return 'reloadAllMessages.request' when messagePagePot is pot.some, ARCHIVE", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category ? pot.some({} as MessagePage) : pot.none
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: {
-          getArchived: true
-        }
-      })
-    );
-  });
-  it("should return undefined when messagePagePot is pot.someLoading", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category
-            ? pot.someLoading({} as MessagePage)
-            : pot.some({} as MessagePage)
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toBeUndefined();
-  });
-  it("should return undefined when messagePagePot is pot.someUpdating", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category
-            ? pot.someUpdating({} as MessagePage, {} as MessagePage)
-            : pot.some({} as MessagePage)
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toBeUndefined();
-  });
-  it("should return 'reloadAllMessagesAction.request' when messagePagePot is pot.someError, INBOX", () => {
-    const category: MessageListCategory = "INBOX";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category
-            ? pot.someError({} as MessagePage, "")
-            : pot.none
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: {
-          getArchived: false
-        }
-      })
-    );
-  });
-  it("should return 'reloadAllMessagesAction.request' when messagePagePot is pot.someError, ARCHIVE", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    jest
-      .spyOn(allPaginated, "messagePagePotFromCategorySelector")
-      .mockImplementation(
-        mockCategory => (_state: GlobalState) =>
-          mockCategory === category
-            ? pot.someError({} as MessagePage, "")
-            : pot.noneLoading
-      );
-    const reloadAllMessagesAction =
-      getReloadAllMessagesActionForRefreshIfAllowed(
-        {} as GlobalState,
-        category
-      );
-    expect(reloadAllMessagesAction).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: {
-          getArchived: true
-        }
-      })
-    );
-  });
+    )
+  );
 });
- */
