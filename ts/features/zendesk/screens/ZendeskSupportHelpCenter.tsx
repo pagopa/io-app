@@ -29,7 +29,6 @@ import {
 } from "../../../components/screens/BaseScreenComponent/utils";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { zendeskPrivacyUrl } from "../../../config";
-import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 import I18n from "../../../i18n";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";

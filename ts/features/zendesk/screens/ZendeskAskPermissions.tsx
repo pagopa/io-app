@@ -84,7 +84,7 @@ type ItemProps = {
   identityProvider: string;
 };
 
-type ItemPermissionProps = Pick<
+export type ItemPermissionProps = Pick<
   ComponentProps<typeof ListItemInfo>,
   "testID" | "label" | "value" | "icon"
 > & {

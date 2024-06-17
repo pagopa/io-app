@@ -1,23 +1,19 @@
 import {
+  ButtonLink,
+  ContentWrapper,
   Divider,
-  FooterWithButtons,
-  IOColors,
-  IOIconSizeScale,
   IOToast,
-  Icon,
+  IOVisualCostants,
+  ListItemHeader,
+  ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import { H1 } from "../../../components/core/typography/H1";
-import { H3 } from "../../../components/core/typography/H3";
-import { H4 } from "../../../components/core/typography/H4";
-import { Link } from "../../../components/core/typography/Link";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import React, { ComponentProps } from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import {
@@ -32,51 +28,14 @@ import {
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { openWebUrl } from "../../../utils/url";
-import ZendeskItemPermissionComponent, {
-  ItemPermissionProps
-} from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
+import { ItemPermissionProps } from "./ZendeskAskPermissions";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
   assistanceForFci: boolean;
 };
-
-type ItemProps = {
-  fiscalCode?: string;
-  nameSurname?: string;
-  email?: string;
-};
-
-const iconStyleProps = {
-  size: 24 as IOIconSizeScale,
-  color: "blue" as IOColors
-};
-
-const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
-  {
-    id: "profileNameSurname",
-    icon: <Icon name="profile" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.nameSurname"),
-    value: props.nameSurname,
-    testId: "profileNameSurname"
-  },
-  {
-    id: "profileFiscalCode",
-    icon: <Icon name="fiscalCodeIndividual" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.fiscalCode"),
-    value: props.fiscalCode,
-    testId: "profileFiscalCode"
-  },
-  {
-    id: "profileEmail",
-    icon: <Icon name="email" {...iconStyleProps} />,
-    title: I18n.t("support.askPermissions.emailAddress"),
-    value: props.email,
-    testId: "profileEmail"
-  }
-];
 
 type Props = IOStackNavigationRouteProps<
   ZendeskParamsList,
@@ -91,6 +50,8 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const { assistanceForPayment, assistanceForCard, assistanceForFci } =
     props.route.params;
+
+  /* Get user's profile data */
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const nameSurname = useIOSelector(profileNameSurnameSelector);
   const email = pipe(
@@ -101,78 +62,98 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     )
   );
 
-  const itemsProps: ItemProps = {
-    fiscalCode,
-    nameSurname,
-    email
+  const permissionItems: ReadonlyArray<ItemPermissionProps> = [
+    {
+      id: "profileNameSurname",
+      icon: "profile",
+      label: I18n.t("support.askPermissions.nameSurname"),
+      value: nameSurname,
+      testID: "profileNameSurname"
+    },
+    {
+      id: "profileFiscalCode",
+      icon: "fiscalCodeIndividual",
+      label: I18n.t("support.askPermissions.fiscalCode"),
+      value: fiscalCode,
+      testID: "profileFiscalCode"
+    },
+    {
+      id: "profileEmail",
+      icon: "email",
+      label: I18n.t("support.askPermissions.emailAddress"),
+      value: email,
+      testID: "profileEmail"
+    }
+  ];
+
+  /* Remove items that have no value associated with them */
+  const items = permissionItems.filter(it => it.value);
+
+  const renderPermissionItem = ({
+    item
+  }: ListRenderItemInfo<ItemPermissionProps>) => (
+    <ListItemInfo
+      testID={item?.testID}
+      label={item?.label}
+      value={item?.value}
+      icon={item?.icon}
+    />
+  );
+
+  const buttonConf: ComponentProps<
+    typeof IOScrollViewWithLargeHeader
+  >["actions"] = {
+    type: "SingleButton",
+    primary: {
+      label: I18n.t("support.askPermissions.cta.allow"),
+      testID: "continueButtonId",
+      onPress: () => {
+        navigation.navigate("ZENDESK_MAIN", {
+          screen: "ZENDESK_SEE_REPORTS_ROUTERS",
+          params: {
+            assistanceForPayment,
+            assistanceForCard,
+            assistanceForFci
+          }
+        });
+      }
+    }
   };
 
-  const items = getItems(itemsProps)
-    // remove these item whose have no value associated
-    .filter(it => it.value);
-
   return (
-    <BaseScreenComponent
-      showChat={false}
-      goBack={true}
-      headerTitle={I18n.t("support.askPermissions.listTitle")}
+    <IOScrollViewWithLargeHeader
+      title={{ label: I18n.t("support.askPermissions.title") }}
+      testID={"ZendeskAskPermissions"}
+      description={I18n.t("support.askPermissions.listBody")}
+      actions={buttonConf}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
-        <ScrollView>
-          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <H1>{I18n.t("support.askPermissions.title")}</H1>
-            <VSpacer size={16} />
-            <H4 weight={"Regular"}>
-              {I18n.t("support.askPermissions.listBody")}
-            </H4>
-            <VSpacer size={4} />
-            <Link
-              onPress={() => {
-                openWebUrl(zendeskPrivacyUrl, () =>
-                  IOToast.error(I18n.t("global.jserror.title"))
-                );
-              }}
-            >
-              {I18n.t("support.askPermissions.privacyLink")}
-            </Link>
-            <VSpacer size={8} />
-            <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
+      <ContentWrapper>
+        <ButtonLink
+          label={I18n.t("support.askPermissions.privacyLink")}
+          onPress={() => {
+            openWebUrl(zendeskPrivacyUrl, () =>
+              IOToast.error(I18n.t("global.jserror.title"))
+            );
+          }}
+        />
+      </ContentWrapper>
 
-            {/* TODO: Replace this chunk with `FlatList` to avoid manual control on Divider */}
-            {items.map((item, idx, arr) => (
-              <>
-                <ZendeskItemPermissionComponent
-                  key={`permission_item_${idx}`}
-                  {...item}
-                />
-                {idx !== arr.length - 1 && <Divider />}
-              </>
-            ))}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("support.askPermissions.cta.allow"),
-            accessibilityLabel: I18n.t("support.askPermissions.cta.allow"),
-            testID: "continueButtonId",
-            onPress: () => {
-              navigation.navigate("ZENDESK_MAIN", {
-                screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-                params: {
-                  assistanceForPayment,
-                  assistanceForCard,
-                  assistanceForFci
-                }
-              });
-            }
-          }
+      <VSpacer size={16} />
+
+      <FlatList
+        ListHeaderComponent={
+          <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
+        }
+        scrollEnabled={false}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
+        data={items}
+        keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
+        renderItem={renderPermissionItem}
+        ItemSeparatorComponent={() => <Divider />}
       />
-    </BaseScreenComponent>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

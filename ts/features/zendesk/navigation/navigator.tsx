@@ -42,6 +42,7 @@ export const ZendeskStackNavigator = () => (
       component={ZendeskChooseSubCategory}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS}
       component={ZendeskAskSeeReportsPermissions}
     />
