@@ -36,16 +36,17 @@ export const ZendeskStackNavigator = () => (
       component={ZendeskChooseCategory}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
+      name={ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY}
+      component={ZendeskChooseSubCategory}
+    />
+    <Stack.Screen
       name={ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS}
       component={ZendeskAskSeeReportsPermissions}
     />
     <Stack.Screen
       name={ZENDESK_ROUTES.SEE_REPORTS_ROUTERS}
       component={ZendeskSeeReportsRouters}
-    />
-    <Stack.Screen
-      name={ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY}
-      component={ZendeskChooseSubCategory}
     />
   </Stack.Navigator>
 );

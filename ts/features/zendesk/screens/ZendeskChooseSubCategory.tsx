@@ -1,18 +1,12 @@
-import { Divider, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import React from "react";
 import {
-  FlatList,
-  ListRenderItemInfo,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  View
-} from "react-native";
+  Divider,
+  IOVisualCostants,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
+import React from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -76,8 +70,9 @@ const ZendeskChooseSubCategory = (props: Props) => {
   const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
     const subCategory = listItem.item;
     return (
-      <Pressable
-        accessibilityRole="button"
+      <ListItemNav
+        testID={subCategory.value}
+        value={subCategory.description[locale]}
         onPress={() => {
           selectedSubcategory(subCategory);
           // Set sub-category as custom field
@@ -88,56 +83,26 @@ const ZendeskChooseSubCategory = (props: Props) => {
             assistanceForFci
           });
         }}
-        testID={subCategory.value}
-        // Hacky solution waiting for the replacement with `ListItem` from the DS
-        style={{
-          paddingVertical: 16
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-between"
-          }}
-        >
-          <H4
-            weight={"Regular"}
-            color={"bluegreyDark"}
-            style={{
-              flex: 1,
-              flexGrow: 1
-            }}
-          >
-            {subCategory.description[locale]}
-          </H4>
-          <View>
-            <Icon name="chevronRightListItem" size={24} color="blue" />
-          </View>
-        </View>
-      </Pressable>
+      />
     );
   };
 
   return (
-    <BaseScreenComponent
-      showChat={false}
-      goBack={true}
-      headerTitle={selectedCategory.description[locale]}
+    <IOScrollViewWithLargeHeader
+      title={{ label: I18n.t("support.chooseCategory.title.subCategory") }}
+      testID={"ZendeskChooseCategory"}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
-        <ScrollView style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("support.chooseCategory.title.subCategory")}</H1>
-          <VSpacer size={16} />
-          <FlatList
-            data={subCategories}
-            keyExtractor={c => c.value}
-            renderItem={renderItem}
-            ItemSeparatorComponent={() => <Divider />}
-          />
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+      <FlatList
+        scrollEnabled={false}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={subCategories}
+        keyExtractor={c => c.value}
+        renderItem={renderItem}
+        ItemSeparatorComponent={() => <Divider />}
+      />
+    </IOScrollViewWithLargeHeader>
   );
 };
 
