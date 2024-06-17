@@ -13,9 +13,11 @@ import { idpSelector } from "../store/reducers/authentication";
 import { tosVersionSelector } from "../store/reducers/profile";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
+  MixpanelOptInTrackingType,
   Property,
   PropertyToUpdate,
   loginSessionConfigHandler,
+  mixpanelOptInHandler,
   notificationConfigurationHandler,
   serviceConfigHandler
 } from "./mixpanelPropertyUtils";
@@ -28,6 +30,7 @@ type ProfileProperties = {
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
+  TRACKING: MixpanelOptInTrackingType;
 };
 
 export const updateMixpanelProfileProperties = async (
@@ -44,6 +47,7 @@ export const updateMixpanelProfileProperties = async (
   const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
   const notificationsEnabled = await checkNotificationPermissions();
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
+  const TRACKING = mixpanelOptInHandler(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -53,7 +57,8 @@ export const updateMixpanelProfileProperties = async (
     NOTIFICATION_CONFIGURATION,
     NOTIFICATION_PERMISSION:
       getNotificationPermissionType(notificationsEnabled),
-    SERVICE_CONFIGURATION
+    SERVICE_CONFIGURATION,
+    TRACKING
   };
 
   if (forceUpdateFor) {
