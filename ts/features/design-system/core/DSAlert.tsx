@@ -1,18 +1,11 @@
+import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import { Alert, VSpacer } from "@pagopa/io-app-design-system";
-import StatusContent from "../../../components/SectionStatus/StatusContent";
-import SectionStatusComponent, {
-  getStatusTextColor,
-  statusColorMap,
-  statusIconMap
-} from "../../../components/SectionStatus";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSAlert = () => {
   const viewRef = React.createRef<View>();

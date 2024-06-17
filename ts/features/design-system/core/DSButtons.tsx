@@ -1,5 +1,4 @@
 import {
-  BlockButtons,
   ButtonLink,
   ButtonOutline,
   ButtonSolid,
@@ -13,15 +12,11 @@ import {
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as React from "react";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
