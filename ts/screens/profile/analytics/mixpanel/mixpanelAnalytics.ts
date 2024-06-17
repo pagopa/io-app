@@ -4,13 +4,13 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../../utils/analytics";
 
 export async function trackMixpanelSetEnabled(
-  enabled: boolean,
+  isEnabled: boolean,
   flow: FlowType,
   state: GlobalState
 ) {
   await updateMixpanelProfileProperties(state, {
     property: "TRACKING",
-    value: enabled ? "accepted" : "declined"
+    value: isEnabled ? "accepted" : "declined"
   });
   void mixpanelTrack(
     "MIXPANEL_SET_ENABLED",
@@ -18,7 +18,7 @@ export async function trackMixpanelSetEnabled(
       "UX",
       "action",
       {
-        value: enabled
+        value: isEnabled
       },
       flow
     )
