@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   foldK,
+  isLoadingOrUpdating,
   isSomeLoadingOrSomeUpdating,
   isSomeOrSomeError,
   isStrictNone,
@@ -212,6 +213,16 @@ describe("isSomeOrSomeError", () => {
       potInstance.kind === "PotSome" || potInstance.kind === "PotSomeError";
     it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
       const output = isSomeOrSomeError(potInstance);
+      expect(output).toBe(expectedOutput);
+    });
+  });
+});
+
+describe("isLoadingOrUpdating", () => {
+  potInstances.forEach(potInstance => {
+    const expectedOutput = potInstance.kind === "PotNoneLoading" || potInstance.kind === "PotNoneUpdating" || potInstance.kind === "PotSomeLoading" || potInstance.kind === "PotSomeUpdating";
+    it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
+      const output = isLoadingOrUpdating(potInstance);
       expect(output).toBe(expectedOutput);
     });
   });
