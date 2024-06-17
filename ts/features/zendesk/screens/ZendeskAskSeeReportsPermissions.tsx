@@ -96,7 +96,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       testID={item?.testID}
       label={item?.label}
       value={item?.value}
-      icon={item?.icon}
+      icon={item.icon}
     />
   );
 
@@ -141,13 +141,13 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       <VSpacer size={16} />
 
       <FlatList
-        ListHeaderComponent={
-          <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
-        }
         scrollEnabled={false}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
+        ListHeaderComponent={
+          <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
+        }
         data={items}
         keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
         renderItem={renderPermissionItem}

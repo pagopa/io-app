@@ -76,14 +76,6 @@ import {
  */
 const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
-type ItemProps = {
-  fiscalCode: string;
-  nameSurname: string;
-  email: string;
-  deviceDescription: string;
-  identityProvider: string;
-};
-
 export type ItemPermissionProps = Pick<
   ComponentProps<typeof ListItemInfo>,
   "testID" | "label" | "value" | "icon"
@@ -91,103 +83,6 @@ export type ItemPermissionProps = Pick<
   id?: string;
   zendeskID?: string;
 };
-
-const getPermissionItems = (
-  props: ItemProps
-): ReadonlyArray<ItemPermissionProps> => [
-  {
-    id: "profileNameSurname",
-    icon: "profile",
-    label: I18n.t("support.askPermissions.nameSurname"),
-    value: props.nameSurname,
-    testID: "profileNameSurname"
-  },
-  {
-    id: "profileFiscalCode",
-    icon: "fiscalCodeIndividual",
-    label: I18n.t("support.askPermissions.fiscalCode"),
-    value: props.fiscalCode,
-    testID: "profileFiscalCode"
-  },
-  {
-    id: "profileEmail",
-    icon: "email",
-    label: I18n.t("support.askPermissions.emailAddress"),
-    value: props.email,
-    testID: "profileEmail"
-  },
-  {
-    id: "galleryProminentDisclosure",
-    icon: "gallery",
-    label: I18n.t("support.askPermissions.prominentDisclosure"),
-    value: I18n.t("support.askPermissions.prominentDisclosureData"),
-    testID: "galleryProminentDisclosure"
-  },
-  {
-    id: "paymentIssues",
-    icon: "docGiacenza",
-    label: I18n.t("support.askPermissions.stock"),
-    value: I18n.t("support.askPermissions.stockValue"),
-    testID: "paymentIssues"
-  },
-  {
-    id: "addCardIssues",
-    icon: "creditCard",
-    label: I18n.t("support.askPermissions.card"),
-    value: I18n.t("support.askPermissions.cardValue"),
-    testID: "addCardIssues"
-  },
-  {
-    id: "addFciIssues",
-    icon: "docGiacenza",
-    label: I18n.t("support.askPermissions.fci"),
-    value: I18n.t("support.askPermissions.fciValue"),
-    testID: "addFciIssues"
-  },
-  {
-    icon: "device",
-    label: I18n.t("support.askPermissions.deviceAndOS"),
-    value: props.deviceDescription,
-    zendeskID: zendeskDeviceAndOSId,
-    testID: "deviceAndOS"
-  },
-  {
-    icon: "battery",
-    label: I18n.t("support.askPermissions.devicePerformance"),
-    value: Platform.select({
-      ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
-        storage: formatBytesWithUnit(getFreeDiskStorage())
-      }),
-      android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
-    }),
-    testID: "devicePerformance"
-  },
-  {
-    icon: "website",
-    label: I18n.t("support.askPermissions.ipAddress"),
-    value: I18n.t("support.askPermissions.ipAddressValue"),
-    testID: "ipAddress"
-  },
-  {
-    icon: "info",
-    label: I18n.t("support.askPermissions.appVersionsHistory"),
-    value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
-    testID: "appVersionsHistory"
-  },
-  {
-    icon: "login",
-    label: I18n.t("support.askPermissions.identityProvider"),
-    value: props.identityProvider,
-    zendeskID: zendeskidentityProviderId,
-    testID: "identityProvider"
-  },
-  {
-    icon: "history",
-    label: I18n.t("support.askPermissions.navigationData"),
-    value: I18n.t("support.askPermissions.navigationDataValue"),
-    testID: "navigationData"
-  }
-];
 
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
@@ -250,15 +145,102 @@ const ZendeskAskPermissions = () => {
 
   const currentVersion = getAppVersion();
 
-  const itemsProps: ItemProps = {
-    fiscalCode,
-    nameSurname,
-    email,
-    deviceDescription: `${getModel()} · ${
-      isIos ? "iOS" : "Android"
-    } · ${getSystemVersion()}`,
-    identityProvider
-  };
+  const permissionItems: ReadonlyArray<ItemPermissionProps> = [
+    {
+      id: "profileNameSurname",
+      icon: "profile",
+      label: I18n.t("support.askPermissions.nameSurname"),
+      value: nameSurname,
+      testID: "profileNameSurname"
+    },
+    {
+      id: "profileFiscalCode",
+      icon: "fiscalCodeIndividual",
+      label: I18n.t("support.askPermissions.fiscalCode"),
+      value: fiscalCode,
+      testID: "profileFiscalCode"
+    },
+    {
+      id: "profileEmail",
+      icon: "email",
+      label: I18n.t("support.askPermissions.emailAddress"),
+      value: email,
+      testID: "profileEmail"
+    },
+    {
+      id: "galleryProminentDisclosure",
+      icon: "gallery",
+      label: I18n.t("support.askPermissions.prominentDisclosure"),
+      value: I18n.t("support.askPermissions.prominentDisclosureData"),
+      testID: "galleryProminentDisclosure"
+    },
+    {
+      id: "paymentIssues",
+      icon: "docGiacenza",
+      label: I18n.t("support.askPermissions.stock"),
+      value: I18n.t("support.askPermissions.stockValue"),
+      testID: "paymentIssues"
+    },
+    {
+      id: "addCardIssues",
+      icon: "creditCard",
+      label: I18n.t("support.askPermissions.card"),
+      value: I18n.t("support.askPermissions.cardValue"),
+      testID: "addCardIssues"
+    },
+    {
+      id: "addFciIssues",
+      icon: "docGiacenza",
+      label: I18n.t("support.askPermissions.fci"),
+      value: I18n.t("support.askPermissions.fciValue"),
+      testID: "addFciIssues"
+    },
+    {
+      icon: "device",
+      label: I18n.t("support.askPermissions.deviceAndOS"),
+      value: `${getModel()} · ${
+        isIos ? "iOS" : "Android"
+      } · ${getSystemVersion()}`,
+      zendeskID: zendeskDeviceAndOSId,
+      testID: "deviceAndOS"
+    },
+    {
+      icon: "battery",
+      label: I18n.t("support.askPermissions.devicePerformance"),
+      value: Platform.select({
+        ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
+          storage: formatBytesWithUnit(getFreeDiskStorage())
+        }),
+        android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
+      }),
+      testID: "devicePerformance"
+    },
+    {
+      icon: "website",
+      label: I18n.t("support.askPermissions.ipAddress"),
+      value: I18n.t("support.askPermissions.ipAddressValue"),
+      testID: "ipAddress"
+    },
+    {
+      icon: "info",
+      label: I18n.t("support.askPermissions.appVersionsHistory"),
+      value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
+      testID: "appVersionsHistory"
+    },
+    {
+      icon: "login",
+      label: I18n.t("support.askPermissions.identityProvider"),
+      value: identityProvider,
+      zendeskID: zendeskidentityProviderId,
+      testID: "identityProvider"
+    },
+    {
+      icon: "history",
+      label: I18n.t("support.askPermissions.navigationData"),
+      value: I18n.t("support.askPermissions.navigationDataValue"),
+      testID: "navigationData"
+    }
+  ];
 
   // It should never happens since it is selected in the previous screen
   if (zendeskSelectedCategory === undefined) {
@@ -281,7 +263,7 @@ const ZendeskAskPermissions = () => {
     ...(isIos ? ["galleryProminentDisclosure"] : [])
   ];
 
-  const items = getPermissionItems(itemsProps)
+  const items = permissionItems
     .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
     .filter(it => (!assistanceForCard ? it.id !== "addCardIssues" : true))
     .filter(it => (!assistanceForFci ? it.id !== "addFciIssues" : true))
@@ -386,13 +368,13 @@ const ZendeskAskPermissions = () => {
       <VSpacer size={16} />
 
       <FlatList
-        ListHeaderComponent={
-          <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
-        }
         scrollEnabled={false}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
+        ListHeaderComponent={
+          <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
+        }
         data={items}
         keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
         renderItem={renderPermissionItem}
