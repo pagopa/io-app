@@ -1,16 +1,23 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { View, ScrollView } from "react-native";
 import {
+  Body,
+  ButtonLink,
   ContentWrapper,
+  FeatureInfo,
+  H4,
+  H6,
   HeaderSecondLevel,
   IOColors,
-  VSpacer
+  IOToast,
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import { H3 } from "../../../components/core/typography/H3";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { ScrollView, View } from "react-native";
+import FAQComponent from "../../../components/FAQComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpProps
@@ -21,18 +28,24 @@ import {
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
+import { zendeskPrivacyUrl } from "../../../config";
+import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 import I18n from "../../../i18n";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
+import {
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../../store/reducers/profile";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import {
   addTicketCustomField,
   zendeskFciId
 } from "../../../utils/supportAssistance";
+import { openWebUrl } from "../../../utils/url";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
-import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   ZendeskStartPayload,
@@ -40,12 +53,8 @@ import {
   zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
-import {
-  isProfileEmailValidatedSelector,
-  profileSelector
-} from "../../../store/reducers/profile";
-import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
-import FAQComponent from "../../../components/FAQComponent";
+import ZendeskSupportActions from "../components/ZendeskSupportActions";
+import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -76,6 +85,8 @@ const FaqManager = (props: FaqManagerProps) => {
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
   const maybeContextualData = pot.getOrElse(potContextualData, O.none);
+
+  const theme = useIOTheme();
 
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
@@ -144,7 +155,9 @@ const FaqManager = (props: FaqManagerProps) => {
         <>
           {!isStringNullyOrEmpty(contextualHelpData.title) && (
             <>
-              <H3 accessible={true}>{contextualHelpData.title}</H3>
+              <H4 color={theme["textHeading-default"]} accessible={true}>
+                {contextualHelpData.title}
+              </H4>
               <VSpacer size={16} />
             </>
           )}
@@ -187,7 +200,8 @@ const ZendeskSupportHelpCenter = () => {
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
   const navigation = useNavigation();
-  const { screenEndMargin } = useScreenEndMargin();
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
 
   // Navigation prop
   const {
@@ -251,32 +265,61 @@ const ZendeskSupportHelpCenter = () => {
   });
 
   return (
-    <ScrollView
-      contentContainerStyle={{ paddingBottom: screenEndMargin }}
-      testID={"ZendeskSupportHelpCenterScreen"}
-    >
-      <ContentWrapper>
-        <FaqManager
-          contextualHelpConfig={contextualHelpConfig}
-          faqCategories={faqCategories}
-          contentLoaded={markdownContentLoaded}
-          startingRoute={startingRoute}
-        />
+    <>
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+        }}
+        testID={"ZendeskSupportHelpCenterScreen"}
+      >
+        <ContentWrapper>
+          <FaqManager
+            contextualHelpConfig={contextualHelpConfig}
+            faqCategories={faqCategories}
+            contentLoaded={markdownContentLoaded}
+            startingRoute={startingRoute}
+          />
 
-        {showRequestSupportContacts && (
-          <>
-            <VSpacer size={16} />
-            <ZendeskSupportComponent
-              assistanceForPayment={assistanceForPayment}
-              assistanceForCard={assistanceForCard}
-              assistanceForFci={
-                assistanceForFci || signatureRequestId !== undefined
-              }
-            />
-          </>
-        )}
-      </ContentWrapper>
-    </ScrollView>
+          {showRequestSupportContacts && (
+            <>
+              <VSpacer size={16} />
+              <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
+              <VSpacer size={16} />
+              <Body>
+                {I18n.t("support.helpCenter.supportComponent.subtitle")}
+              </Body>
+              <VSpacer size={16} />
+              <ButtonLink
+                label={I18n.t("support.askPermissions.privacyLink")}
+                onPress={() => {
+                  openWebUrl(zendeskPrivacyUrl, () =>
+                    IOToast.error(I18n.t("global.jserror.title"))
+                  );
+                }}
+              />
+              <VSpacer size={24} />
+              <FeatureInfo
+                iconName="notice"
+                body={I18n.t(
+                  "support.helpCenter.supportComponent.adviceMessage"
+                )}
+              />
+              <VSpacer size={16} />
+            </>
+          )}
+        </ContentWrapper>
+      </ScrollView>
+      {showRequestSupportContacts && (
+        <ZendeskSupportActions
+          onMeasure={handleFooterActionsMeasurements}
+          assistanceForPayment={assistanceForPayment}
+          assistanceForCard={assistanceForCard}
+          assistanceForFci={
+            assistanceForFci || signatureRequestId !== undefined
+          }
+        />
+      )}
+    </>
   );
 };
 
