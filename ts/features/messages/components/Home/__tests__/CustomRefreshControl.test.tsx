@@ -52,8 +52,8 @@ describe("CustomRefreshControl", () => {
     refreshControl.props.onRefresh();
 
     expect(mockDispatch.mock.calls.length).toBe(1);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(expectedAction); */
-  }); */
+    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(expectedAction);
+  });
   it("should dispatch 'reloadAllMessages.request' when output from 'getReloadAllMessagesActionForRefreshIfAllowed' is not undefined, ARCHIVE", () => {
     const expectedCategory: MessageListCategory = "ARCHIVE";
     const expectedAction = reloadAllMessages.request({
