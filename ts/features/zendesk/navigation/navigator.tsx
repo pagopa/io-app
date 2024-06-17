@@ -27,6 +27,7 @@ export const ZendeskStackNavigator = () => (
       component={ZendeskPanicMode}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ZENDESK_ROUTES.ASK_PERMISSIONS}
       component={ZendeskAskPermissions}
     />
