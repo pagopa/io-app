@@ -550,19 +550,8 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
 });
 
 describe("getLoadNextPageMessagesActionIfNeeded", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-    jest.clearAllMocks();
-  });
   it("should return loadNextPageMessages.request, defined 'next' pagination index, no error on messagePagePot, list fully scrolled-down, INBOX category", () => {
     const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => nextPageIndex);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => false);
-
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
@@ -578,13 +567,6 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   });
   it("should return loadNextPageMessages.request, defined 'next' pagination index, no error on messagePagePot, list fully scrolled-down, ARCHIVE category", () => {
     const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => nextPageIndex);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => false);
-
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",
@@ -600,13 +582,6 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   });
   it("should return loadNextPageMessages.request, defined 'next' pagination index, error on messagePagePot, list not-fully scrolled-down, INBOX category", () => {
     const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => nextPageIndex);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => true);
-
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
@@ -622,13 +597,6 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   });
   it("should return loadNextPageMessages.request, defined 'next' pagination index, error on messagePagePot, list not-fully scrolled-down, ARCHIVE category", () => {
     const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => nextPageIndex);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => true);
-
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",
@@ -643,13 +611,6 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
     );
   });
   it("should return undefined, undefined 'next' pagination index, no error on messagePagePot, list not-fully scrolled-down, INBOX category", () => {
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => undefined);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => false);
-
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
@@ -658,14 +619,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
     expect(loadNextPageMessagesRequest).toBeUndefined();
   });
   it("should return undefined, defined 'next' pagination index, error on messagePagePot, list fully scrolled-down, INBOX category", () => {
-    const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => nextPageIndex);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => true);
-
+    // const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "INBOX",
@@ -674,13 +628,6 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
     expect(loadNextPageMessagesRequest).toBeUndefined();
   });
   it("should return undefined, undefined 'next' pagination index, no error on messagePagePot, list not-fully scrolled-down, ARCHIVE category", () => {
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => undefined);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => false);
-
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",
@@ -689,14 +636,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
     expect(loadNextPageMessagesRequest).toBeUndefined();
   });
   it("should return undefined, defined 'next' pagination index, error on messagePagePot, list fully scrolled-down, ARCHIVE category", () => {
-    const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
-    jest
-      .spyOn(allPaginated, "nextMessagePageStartingIdForCategorySelector")
-      .mockImplementation((_state, _category) => nextPageIndex);
-    jest
-      .spyOn(allPaginated, "nextPageLoadingForCategoryHasErrorSelector")
-      .mockImplementation((_state, _category) => true);
-
+    // const nextPageIndex = "01J0B1D9EGQ1G505B9203RN9SY";
     const loadNextPageMessagesRequest = getLoadNextPageMessagesActionIfAllowed(
       {} as GlobalState,
       "ARCHIVE",

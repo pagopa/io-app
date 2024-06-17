@@ -22,11 +22,7 @@ import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
-import {
-  foldK,
-  isSomeLoadingOrSomeUpdating,
-  isStrictSomeError
-} from "../../../../utils/pot";
+import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
 
 export type MessagePage = {
@@ -774,37 +770,6 @@ export const shouldShowFooterListComponentSelector = (
     messageCollectionFromCategory(category),
     messagePagePotByLastRequest(nextLastRequestSet),
     O.map(isSomeLoadingOrSomeUpdating),
-    O.getOrElse(constFalse)
-  );
-
-export const nextMessagePageStartingIdForCategorySelector = (
-  state: GlobalState,
-  category: MessageListCategory
-) =>
-  pipe(
-    state,
-    messagePagePotFromCategorySelector(category),
-    foldK(
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      messagePage => messagePage.next,
-      constUndefined,
-      constUndefined,
-      (messagePage, _) => messagePage.next
-    )
-  );
-
-export const nextPageLoadingForCategoryHasErrorSelector = (
-  state: GlobalState,
-  category: MessageListCategory
-) =>
-  pipe(
-    state,
-    messageCollectionFromCategory(category),
-    messagePagePotByLastRequest(nextLastRequestSet),
-    O.map(isStrictSomeError),
     O.getOrElse(constFalse)
   );
 

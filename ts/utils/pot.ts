@@ -5,6 +5,12 @@ interface Some<T> {
   readonly kind: "PotSome";
   readonly value: T;
 }
+// type alias of pot.SomeError to make possible type guard, since pot.Some is not exported
+interface SomeError<T, E> {
+  readonly kind: "PotSomeError";
+  readonly value: T;
+  readonly error: E;
+}
 
 // return true if pot is just None, not NoneLoading, nor NoneUpdating, nor NoneError
 export const isStrictNone = <T, E>(p: pot.Pot<T, E>): boolean =>
@@ -38,9 +44,14 @@ export const foldK =
       foldSomeError
     );
 
-export const isStrictSomeError = <A, E>(p: pot.Pot<A, E>): boolean =>
-  pot.isSome(p) && pot.isError(p);
+export const isStrictSomeError = <A, E>(
+  p: pot.Pot<A, E>
+): p is SomeError<A, E> => pot.isSome(p) && pot.isError(p);
 export const isSomeLoadingOrSomeUpdating = <A, E>(p: pot.Pot<A, E>): boolean =>
   pot.isSome(p) && (pot.isLoading(p) || pot.isUpdating(p));
-export const isSomeOrSomeError = <A, E>(p: pot.Pot<A, E>): boolean =>
+export const isSomeOrSomeError = <A, E>(
+  p: pot.Pot<A, E>
+): p is Some<A> | SomeError<A, E> =>
   pot.isSome(p) && !pot.isLoading(p) && !pot.isUpdating(p);
+export const isLoadingOrUpdating = <A, E>(p: pot.Pot<A, E>): boolean =>
+  pot.isLoading(p) || pot.isUpdating(p);
