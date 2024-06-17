@@ -106,7 +106,7 @@ const DeveloperActionsSection = () => {
   };
 
   const sendSentryTestEvent = () => {
-    Sentry.captureException(new Error("First error"));
+    Sentry.captureException(new Error("Random test Error"));
   };
 
   const dumpAsyncStorage = () => {
