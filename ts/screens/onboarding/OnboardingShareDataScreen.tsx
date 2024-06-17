@@ -10,7 +10,7 @@ import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLar
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { abortOnboarding } from "../../store/actions/onboarding";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
@@ -28,11 +28,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     const flow = getFlowType(true, isFirstOnBoarding);
     trackMixpanelDeclined(flow);
-    trackMixpanelSetEnabled(false, flow);
-    props.setMixpanelEnabled(false);
+    trackMixpanelSetEnabled(false, flow, store.getState()).finally(() => {
+      props.setMixpanelEnabled(false);
+    });
   });
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
@@ -96,11 +98,17 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
                 "profile.main.privacy.shareData.screen.cta.shareData"
               ),
               onPress: () => {
-                trackMixpanelSetEnabled(
-                  true,
-                  getFlowType(true, isFirstOnBoarding)
-                );
+                // Before tracking any event, we need to enable mixpanel
                 props.setMixpanelEnabled(true);
+                // We wait some time to allow mixpanel to be enabled
+                // before tracking the event
+                setTimeout(() => {
+                  void trackMixpanelSetEnabled(
+                    true,
+                    getFlowType(false, isFirstOnBoarding),
+                    store.getState()
+                  );
+                }, 1000);
               },
               testID: "share-data-confirm-button"
             }

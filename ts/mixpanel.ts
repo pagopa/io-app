@@ -44,8 +44,13 @@ export const resetMixpanel = () => {
 
 export const terminateMixpanel = () => {
   if (mixpanel) {
-    mixpanel.flush();
-    mixpanel.optOutTracking();
+    const mp = mixpanel;
+    mp.flush();
+    // Wait for the flush to complete
+    // (mainly) to let profile properties to update.
+    setTimeout(() => {
+      mp.optOutTracking();
+    }, 1000);
     mixpanel = undefined;
   }
 };
