@@ -160,7 +160,7 @@ const AuthenticatedStackNavigator = () => {
       )}
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
-        options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
+        options={hideHeaderOptions}
         component={ServicesNavigator}
       />
       {/* This screen is outside the ServicesNavigator to change gesture and transion behaviour. */}
