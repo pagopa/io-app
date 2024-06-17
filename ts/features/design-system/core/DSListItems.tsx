@@ -30,7 +30,6 @@ import DetailedlistItemComponent from "../../../components/DetailedlistItemCompo
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import { getBadgeTextByTransactionStatus } from "../../payments/common/utils";
-import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
@@ -233,15 +232,6 @@ export const DSListItems = () => {
           value={"Value"}
           checked={false}
           onPress={() => alert("Action triggered")}
-        />
-      </DSComponentViewerBox>
-
-      <DSComponentViewerBox name="ZendeskItemPermissionComponent">
-        <ZendeskItemPermissionComponent
-          icon={<Icon name="info" size={24} />}
-          title="Storico versioni dell'app"
-          value="Per capire se il problema dipende dall'ultimo aggiornamento"
-          testId="TestID"
         />
       </DSComponentViewerBox>
       <H2
