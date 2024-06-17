@@ -56,6 +56,12 @@ const ItwPlayground = () => {
     });
   };
 
+  const navigateToCredentialDetail = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
+    });
+  };
+
   const navigateToCredentialPreview = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
@@ -103,6 +109,14 @@ const ItwPlayground = () => {
           accessibilityLabel="Credential preview"
           description="Open the credential preview screen"
           onPress={navigateToCredentialPreview}
+        />
+        <Divider />
+        {/* Credential detail playground */}
+        <ListItemNav
+          value="Credential detail (eID)"
+          accessibilityLabel={"Credential detail (eID) Playground"}
+          description="Open the eID credential detail screen"
+          onPress={navigateToCredentialDetail}
         />
         <Divider />
         <VSpacer />
