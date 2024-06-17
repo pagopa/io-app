@@ -41,7 +41,24 @@ export const getPaymentsBizEventsTransactionDetailsAction = createAsyncAction(
   "PAYMENTS_BIZ_EVENTS_TRANSACTION_DETAILS_CANCEL"
 )<{ transactionId: string }, TransactionDetailResponse, NetworkError, void>();
 
+export type PaymentsTransactionReceiptPayload = {
+  transactionId: string;
+  onSuccess?: () => void;
+  onError?: () => void;
+};
+
+/**
+ * asycn action to download biz-events transaction preview pdf
+ */
+export const getPaymentsBizEventsReceiptAction = createAsyncAction(
+  "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_REQUEST",
+  "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_SUCCESS",
+  "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_FAILURE",
+  "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_CANCEL"
+)<PaymentsTransactionReceiptPayload, string, NetworkError, void>();
+
 export type PaymentsTransactionBizEventsActions =
   | ActionType<typeof getPaymentsBizEventsTransactionsAction>
   | ActionType<typeof getPaymentsLatestBizEventsTransactionsAction>
-  | ActionType<typeof getPaymentsBizEventsTransactionDetailsAction>;
+  | ActionType<typeof getPaymentsBizEventsTransactionDetailsAction>
+  | ActionType<typeof getPaymentsBizEventsReceiptAction>;

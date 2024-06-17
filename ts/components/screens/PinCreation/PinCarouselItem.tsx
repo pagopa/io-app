@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import React, { RefObject, memo } from "react";
 import { Dimensions, View } from "react-native";
-import { PIN_LENGTH_SIX } from "../../../utils/constants";
 
 const { width } = Dimensions.get("screen");
 
@@ -17,6 +16,7 @@ export type PinCaouselItemProps = WithTestID<{
   titleRef?: RefObject<View>;
   description?: string;
   value: string;
+  maxLength: number;
   handleOnValidate: (val: string) => boolean;
   onValueChange: (val: string) => void;
 }>;
@@ -28,6 +28,7 @@ export const PinCarouselItem = memo(
     value,
     testID,
     titleRef,
+    maxLength,
     handleOnValidate,
     onValueChange
   }: PinCaouselItemProps) => (
@@ -59,7 +60,7 @@ export const PinCarouselItem = memo(
       )}
       <VSpacer size={32} />
       <CodeInput
-        length={PIN_LENGTH_SIX}
+        length={maxLength}
         onValidate={handleOnValidate}
         onValueChange={onValueChange}
         variant="dark"
