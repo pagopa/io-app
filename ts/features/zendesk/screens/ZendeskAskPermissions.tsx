@@ -340,10 +340,10 @@ const ZendeskAskPermissions = () => {
     item
   }: ListRenderItemInfo<ItemPermissionProps>) => (
     <ListItemInfo
-      testID={item.testID}
-      label={item.label}
-      value={item.value}
-      icon={item.icon}
+      testID={item?.testID}
+      label={item?.label}
+      value={item?.value}
+      icon={item?.icon}
     />
   );
 
