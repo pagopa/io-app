@@ -67,25 +67,24 @@ const ZendeskChooseSubCategory = (props: Props) => {
 
   const locale = getFullLocale();
 
-  const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
-    const subCategory = listItem.item;
-    return (
-      <ListItemNav
-        testID={subCategory.value}
-        value={subCategory.description[locale]}
-        onPress={() => {
-          selectedSubcategory(subCategory);
-          // Set sub-category as custom field
-          addTicketCustomField(subCategoriesId, subCategory.value);
-          props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
-            assistanceForPayment,
-            assistanceForCard,
-            assistanceForFci
-          });
-        }}
-      />
-    );
-  };
+  const renderItem = ({
+    item: subCategory
+  }: ListRenderItemInfo<ZendeskSubCategory>) => (
+    <ListItemNav
+      testID={subCategory.value}
+      value={subCategory.description[locale]}
+      onPress={() => {
+        selectedSubcategory(subCategory);
+        // Set sub-category as custom field
+        addTicketCustomField(subCategoriesId, subCategory.value);
+        props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
+          assistanceForPayment,
+          assistanceForCard,
+          assistanceForFci
+        });
+      }}
+    />
+  );
 
   return (
     <IOScrollViewWithLargeHeader

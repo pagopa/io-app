@@ -70,33 +70,32 @@ const ZendeskChooseCategory = (props: Props) => {
 
   const locale = getFullLocale();
 
-  const renderItem = (listItem: ListRenderItemInfo<ZendeskCategory>) => {
-    const category = listItem.item;
-    return (
-      <ListItemNav
-        testID={category.value}
-        value={category.description[locale]}
-        onPress={() => {
-          selectedCategory(category);
-          // Set category as custom field
-          addTicketCustomField(categoriesId, category.value);
-          if (hasSubCategories(category)) {
-            props.navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
-              assistanceForPayment,
-              assistanceForCard,
-              assistanceForFci
-            });
-          } else {
-            props.navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
-              assistanceForPayment,
-              assistanceForCard,
-              assistanceForFci
-            });
-          }
-        }}
-      />
-    );
-  };
+  const renderItem = ({
+    item: category
+  }: ListRenderItemInfo<ZendeskCategory>) => (
+    <ListItemNav
+      testID={category.value}
+      value={category.description[locale]}
+      onPress={() => {
+        selectedCategory(category);
+        // Set category as custom field
+        addTicketCustomField(categoriesId, category.value);
+        if (hasSubCategories(category)) {
+          props.navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
+            assistanceForPayment,
+            assistanceForCard,
+            assistanceForFci
+          });
+        } else {
+          props.navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
+            assistanceForPayment,
+            assistanceForCard,
+            assistanceForFci
+          });
+        }
+      }}
+    />
+  );
 
   return (
     <IOScrollViewWithLargeHeader
