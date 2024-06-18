@@ -9,8 +9,9 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { UIMessage } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
 import { WrappedMessageListItem } from "../WrappedMessageListItem";
+import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -33,28 +34,38 @@ describe("WrappedMessageListItem", () => {
     jest.resetAllMocks();
     jest.clearAllMocks();
   });
-  it("should match snapshot, not from SEND, unread message", () => {
-    const message = messageGenerator(false, false);
+  it("should match snapshot, not from SEND, not a payment, unread message", () => {
+    const message = messageGenerator(false, false, false);
     const component = renderComponent(message);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot, not from SEND,   read message", () => {
-    const message = messageGenerator(false, true);
+  it("should match snapshot, not from SEND, not a payment, read message", () => {
+    const message = messageGenerator(false, false, true);
     const component = renderComponent(message);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot,     from SEND, unread message", () => {
-    const message = messageGenerator(true, false);
+  it("should match snapshot, not from SEND, contains payment, unread message", () => {
+    const message = messageGenerator(true, false, false);
     const component = renderComponent(message);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot,     from SEND,   read message", () => {
-    const message = messageGenerator(true, true);
+  it("should match snapshot, not from SEND, contains payment, read message", () => {
+    const message = messageGenerator(true, false, true);
+    const component = renderComponent(message);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, from SEND, unread message", () => {
+    const message = messageGenerator(false, true, false);
+    const component = renderComponent(message);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, from SEND, read message", () => {
+    const message = messageGenerator(false, true, true);
     const component = renderComponent(message);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should trigger navigation to Message Routing when the component is pressed", () => {
-    const message = messageGenerator(false, true);
+    const message = messageGenerator(false, false, true);
     const component = renderComponent(message);
     const pressable = component.getByTestId("wrapped_message_list_item_0");
     expect(pressable).toBeDefined();
@@ -70,7 +81,11 @@ describe("WrappedMessageListItem", () => {
   });
 });
 
-const messageGenerator = (isFromSend: boolean, isRead: boolean): UIMessage =>
+const messageGenerator = (
+  hasPayment: boolean,
+  isFromSend: boolean,
+  isRead: boolean
+): UIMessage =>
   ({
     createdAt: new Date(1990, 0, 2, 3, 4),
     isRead,
@@ -80,7 +95,11 @@ const messageGenerator = (isFromSend: boolean, isRead: boolean): UIMessage =>
     serviceName: "Service name",
     title: "Message title",
     category: {
-      tag: isFromSend ? SENDTagEnum.PN : TagEnum.PAYMENT
+      tag: isFromSend
+        ? SENDTagEnum.PN
+        : hasPayment
+        ? PaymentTagEnum.PAYMENT
+        : TagEnum.GENERIC
     }
   } as UIMessage);
 

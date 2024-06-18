@@ -16,6 +16,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
+import { DoubleAvatar } from "./DoubleAvatar";
 
 const styles = StyleSheet.create({
   badgeContainer: { flexDirection: "row", marginTop: 8 },
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
 type MessageListItemProps = WithTestID<{
   accessibilityLabel: string;
   badgeText?: string;
+  doubleAvatar?: boolean;
   formattedDate: string;
   isRead: boolean;
   messageTitle: string;
@@ -78,6 +80,7 @@ const BadgeComponent = ({ color, width = 14 }: BadgeComponentProps) => (
 export const MessageListItem = ({
   accessibilityLabel,
   badgeText,
+  doubleAvatar,
   formattedDate,
   isRead,
   messageTitle,
@@ -99,7 +102,11 @@ export const MessageListItem = ({
     <View style={styles.container}>
       <View style={styles.serviceLogoAndSelectionContainer}>
         <View style={styles.serviceLogoContainer}>
-          <Avatar logoUri={serviceLogos} size="small" />
+          {doubleAvatar ? (
+            <DoubleAvatar backgroundLogoUri={serviceLogos} />
+          ) : (
+            <Avatar logoUri={serviceLogos} size="small" />
+          )}
           <View style={StyleSheet.absoluteFill}>
             <AnimatedMessageCheckbox checked={selected} />
           </View>
