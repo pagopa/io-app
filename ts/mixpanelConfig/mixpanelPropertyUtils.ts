@@ -11,6 +11,7 @@ import {
 } from "../store/reducers/profile";
 import { fastLoginOptInSelector } from "../features/fastLogin/store/selectors";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
 export type Property<K, T extends keyof K> = {
   property: T;
@@ -58,4 +59,16 @@ export const serviceConfigHandler = (
     return "not set";
   }
   return serviceConfigState;
+};
+
+export type MixpanelOptInTrackingType = "accepted" | "declined" | "not set";
+export const mixpanelOptInHandler = (
+  state: GlobalState
+): MixpanelOptInTrackingType => {
+  const isMixpanelEnabledResult = isMixpanelEnabled(state);
+  return isMixpanelEnabledResult === undefined
+    ? "not set"
+    : isMixpanelEnabledResult
+    ? "accepted"
+    : "declined";
 };

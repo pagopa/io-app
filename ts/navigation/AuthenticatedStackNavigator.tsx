@@ -3,6 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import React from "react";
+import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
@@ -168,8 +169,13 @@ const AuthenticatedStackNavigator = () => {
         component={SearchScreen}
         options={{
           ...hideHeaderOptions,
-          animationEnabled: false,
-          gestureEnabled: false
+          gestureEnabled: false,
+          ...Platform.select({
+            ios: {
+              animationEnabled: false
+            },
+            default: undefined
+          })
         }}
       />
 
