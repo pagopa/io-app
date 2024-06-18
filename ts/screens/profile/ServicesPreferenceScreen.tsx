@@ -1,8 +1,7 @@
-import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
 import {
@@ -15,6 +14,7 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { usePrevious } from "../../utils/hooks/usePrevious";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
@@ -30,6 +30,7 @@ import ServicesContactComponent from "./components/services/ServicesContactCompo
  */
 const ServicesPreferenceScreen = (): ReactElement => {
   const store = useIOStore();
+  const toast = useIOToast();
   const state = store.getState();
   const dispatch = useIODispatch();
   const profile = useIOSelector(profileSelector);
@@ -70,7 +71,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
     // otherwise, if the profile is in error state,
     // the toast will be shown immediately without any updates
     if (prevProfile && !pot.isError(prevProfile) && pot.isError(profile)) {
-      IOToast.error(I18n.t("global.genericError"));
+      toast.error(I18n.t("global.genericError"));
       return;
     }
     // if profile preferences are updated correctly
@@ -82,13 +83,14 @@ const ServicesPreferenceScreen = (): ReactElement => {
       pot.isSome(profile) &&
       prevMode !== profileServicePreferenceMode
     ) {
-      IOToast.success(
+      toast.hideAll();
+      toast.success(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
       );
     }
-  }, [profile, prevProfile, profileServicePreferenceMode, prevMode]);
+  }, [profile, prevProfile, profileServicePreferenceMode, prevMode, toast]);
 
   const handleOnSelectMode = useCallback(
     (mode: ServicesPreferencesModeEnum) => {
@@ -104,14 +106,13 @@ const ServicesPreferenceScreen = (): ReactElement => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <RNavScreenWithLargeHeader
+      <IOScrollViewWithLargeHeader
         title={{
           label: I18n.t("services.optIn.preferences.title")
         }}
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
       >
-        <VSpacer size={16} />
         <ContentWrapper>
           <ServicesContactComponent
             onSelectMode={handleOnSelectMode}
@@ -119,7 +120,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
           />
         </ContentWrapper>
         {manualConfigBottomSheet}
-      </RNavScreenWithLargeHeader>
+      </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );
 };

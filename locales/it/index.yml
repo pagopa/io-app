@@ -2154,6 +2154,7 @@ services:
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
+      placeholderShort: "Cerca un ente"
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
@@ -3095,6 +3096,11 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: Ricevuta PagoPA
+        shareButton: Salva o condividi 
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
     details:
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
@@ -3216,6 +3222,20 @@ features:
     unsupportedDevice:
       text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
       moreInfo: Scopri perchè
+    presentation:
+      credentialDetails:
+        personalDataTitle: "Dati personali"
+        documentDataTitle: "Dati documento"
+        lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        hiddenClaim: "Nascosto"
+        status:
+          valid: Valida
+          expired: Scaduta
+        actions:
+          removeFromWallet: "Rimuovi dal Portafoglio"
+          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          showClaimValues: "Mostra gli attributi del documento"
+          hideClaimValues: "Nascondi gli attributi del documento"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

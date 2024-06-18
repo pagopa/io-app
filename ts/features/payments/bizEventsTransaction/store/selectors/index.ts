@@ -17,3 +17,7 @@ export const walletTransactionBizEventsListPotSelector = (state: GlobalState) =>
 export const walletLatestTransactionsBizEventsListPotSelector = (
   state: GlobalState
 ) => walletTransactionBizEventsSelector(state).latestTransactions;
+
+export const walletTransactionsBizEventsReceiptPotSelector = (
+  state: GlobalState
+) => walletTransactionBizEventsSelector(state).receiptDocument;

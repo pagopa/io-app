@@ -23,6 +23,8 @@ type CommonProps = {
   headerShown?: boolean;
   transparent?: boolean;
   scrollValues?: ScrollValues;
+  variant?: "neutral" | "contrast";
+  backgroundColor?: string;
 };
 
 type NoAdditionalActions = {
@@ -75,7 +77,9 @@ export const useHeaderSecondLevel = ({
   secondAction,
   thirdAction,
   transparent = false,
-  scrollValues
+  scrollValues,
+  variant,
+  backgroundColor
 }: HeaderSecondLevelHookProps) => {
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
@@ -154,6 +158,8 @@ export const useHeaderSecondLevel = ({
         <HeaderSecondLevel
           scrollValues={scrollValues}
           transparent={transparent}
+          variant={variant}
+          backgroundColor={backgroundColor}
           {...headerComponentProps}
         />
       ),
@@ -165,6 +171,8 @@ export const useHeaderSecondLevel = ({
     headerShown,
     navigation,
     transparent,
-    scrollValues
+    scrollValues,
+    variant,
+    backgroundColor
   ]);
 };

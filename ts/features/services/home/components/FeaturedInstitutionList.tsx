@@ -76,7 +76,7 @@ export const FeaturedInstitutionList = () => {
           institutions={mappedFeaturedInstitutions}
         />
       )}
-      <VSpacer size={24} />
+      <VSpacer size={16} />
     </>
   );
 };

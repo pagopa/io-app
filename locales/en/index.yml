@@ -2154,6 +2154,7 @@ services:
   search:
     input:
       placeholder: "Search for a national or local institution"
+      placeholderShort: "Search for an institution"
       cancel: "Cancel"
       clear: "Clear"
     emptyState:
@@ -3095,6 +3096,11 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: PagoPA Receipt
+        shareButton: Save or share
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
     details:
       pspAlert:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
@@ -3216,6 +3222,20 @@ features:
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
+    presentation:
+      credentialDetails:
+        personalDataTitle: "Personal data"
+        documentDataTitle: "Document data"
+        lastUpdated: "Last updated on {{lastUpdateTime}}"
+        hiddenClaim: "Hidden"
+        status:
+          valid: Valid
+          expired: Expired
+        actions:
+          removeFromWallet: "Remove from Wallet"
+          requestAssistance: "Something wrong? Contact {{authSource}}"
+          showClaimValues: "Show claim values"
+          hideClaimValues: "Hide claim values"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
