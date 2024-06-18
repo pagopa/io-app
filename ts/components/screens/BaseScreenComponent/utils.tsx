@@ -40,24 +40,16 @@ export const handleOnLinkClicked = (hideHelp: () => void) => (url: string) => {
  */
 export const getContextualHelpConfig = (
   contextualHelp: ContextualHelpProps | undefined,
-  contextualHelpMarkdown: ContextualHelpPropsMarkdown | undefined,
-  onLoadEnd: () => void,
-  onLinkClicked: (url: string) => void,
-  shouldHandleLink?: (url: string) => boolean
+  contextualHelpMarkdown: ContextualHelpPropsMarkdown | undefined
+  // onLoadEnd: () => void,
+  // onLinkClicked: (url: string) => void,
+  // shouldHandleLink?: (url: string) => boolean
 ): ContextualHelpProps | undefined =>
   contextualHelp
     ? { body: contextualHelp.body, title: contextualHelp.title }
     : contextualHelpMarkdown
     ? {
-        body: () => (
-          <LegacyMarkdown
-            onLinkClicked={onLinkClicked}
-            onLoadEnd={onLoadEnd}
-            shouldHandleLink={shouldHandleLink}
-          >
-            {I18n.t(contextualHelpMarkdown.body)}
-          </LegacyMarkdown>
-        ),
+        body: I18n.t(contextualHelpMarkdown.body),
         title: I18n.t(contextualHelpMarkdown.title)
       }
     : undefined;
@@ -77,9 +69,7 @@ export const getContextualHelpData = (
       () => defaultData,
       data => ({
         title: data.title,
-        content: (
-          <LegacyMarkdown onLoadEnd={onReady}>{data.content}</LegacyMarkdown>
-        ),
+        content: data.content,
         faqs: pipe(
           data.faqs,
           O.fromNullable,

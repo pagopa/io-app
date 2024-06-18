@@ -7,7 +7,6 @@ import {
   H4,
   H6,
   HeaderSecondLevel,
-  IOColors,
   IOToast,
   VSpacer,
   useIOTheme
@@ -17,15 +16,13 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FlatList, ListRenderItemInfo, ScrollView, View } from "react-native";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
 import {
   getContextualHelpConfig,
   getContextualHelpData,
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
-import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { zendeskPrivacyUrl } from "../../../config";
 import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 import I18n from "../../../i18n";
@@ -44,6 +41,7 @@ import {
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import ItwMarkdown from "../../itwallet/discovery/components/ItwMarkdown";
 import ZendeskSupportActions from "../components/ZendeskSupportActions";
 import { ZendeskParamsList } from "../navigation/params";
 import {
@@ -57,13 +55,13 @@ type FaqManagerProps = Pick<
   ZendeskStartPayload,
   "faqCategories" | "startingRoute"
 > & {
-  contentLoaded: boolean;
+  contentLoaded?: boolean;
   contextualHelpConfig: ContextualHelpProps | undefined;
 };
 
 export type ContextualHelpData = {
   title: string;
-  content: React.ReactNode;
+  content: string;
   faqs?: ReadonlyArray<FAQType>;
 };
 
@@ -88,6 +86,7 @@ const FaqManager = (props: FaqManagerProps) => {
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
   );
+
   const [lastContextualDataUpdate, setLastContextualDataUpdate] =
     useState<Date>(new Date());
   const { contextualHelpConfig, faqCategories, contentLoaded } = props;
@@ -117,7 +116,7 @@ const FaqManager = (props: FaqManagerProps) => {
       cHC => ({
         title: cHC.title,
         faqs: getFAQsFromCategories(faqCategories ?? []),
-        content: cHC.body()
+        content: cHC.body
       })
     )
   );
@@ -154,11 +153,11 @@ const FaqManager = (props: FaqManagerProps) => {
 
   return (
     <>
-      {isContentLoading && (
+      {/* {isContentLoading && (
         <View style={[IOStyles.flex, IOStyles.centerJustified]}>
           <ActivityIndicator color={IOColors.blueUltraLight} />
         </View>
-      )}
+      )} */}
       {!isContentLoading && (
         <>
           {!isStringNullyOrEmpty(contextualHelpData.title) && (
@@ -166,12 +165,11 @@ const FaqManager = (props: FaqManagerProps) => {
               <H4 color={theme["textHeading-default"]} accessible={true}>
                 {contextualHelpData.title}
               </H4>
-              <VSpacer size={16} />
             </>
           )}
           {contextualHelpData.content && (
             <>
-              {contextualHelpData.content}
+              <ItwMarkdown content={contextualHelpData.content} />
               <VSpacer size={16} />
             </>
           )}
@@ -231,20 +229,20 @@ const ZendeskSupportHelpCenter = () => {
     assistanceForFci
   } = route.params;
 
-  const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
-    !contextualHelpMarkdown
-  );
+  // const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
+  //   !contextualHelpMarkdown
+  // );
 
   const contextualHelpConfig = getContextualHelpConfig(
     contextualHelp,
-    contextualHelpMarkdown,
-    () => setMarkdownContentLoaded(true),
-    constNull,
-    _ => {
-      // when a link is clicked in the contextual help, terminate the workunit before the link will be handled (i.e: internal or external navigation)
-      workUnitComplete();
-      return true;
-    }
+    contextualHelpMarkdown
+    // () => setMarkdownContentLoaded(true),
+    // constNull,
+    // _ => {
+    //   // when a link is clicked in the contextual help, terminate the workunit before the link will be handled (i.e: internal or external navigation)
+    //   workUnitComplete();
+    //   return true;
+    // }
   );
 
   /**
@@ -293,7 +291,7 @@ const ZendeskSupportHelpCenter = () => {
           <FaqManager
             contextualHelpConfig={contextualHelpConfig}
             faqCategories={faqCategories}
-            contentLoaded={markdownContentLoaded}
+            // contentLoaded={markdownContentLoaded}
             startingRoute={startingRoute}
           />
 
