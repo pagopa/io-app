@@ -109,7 +109,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("all")
@@ -225,7 +225,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("next")
@@ -380,7 +380,7 @@ describe("allPaginated reducer", () => {
           pot.isLoading(reducer(undefined, actionRequest).archive.data)
         ).toBe(false);
       });
-      // eslint-disable-next-line sonarjs/no-identical-functions
+
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
           O.some("previous")

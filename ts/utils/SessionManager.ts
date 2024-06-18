@@ -140,7 +140,7 @@ export class SessionManager<T> {
         // always return a Promise<IResponseType<A, B>>
         if (E.isRight(response) && (response.right as any).status === 401) {
           // our token is expired, reset it
-          // eslint-disable-next-line
+           
           this.token = undefined;
           continue;
         }

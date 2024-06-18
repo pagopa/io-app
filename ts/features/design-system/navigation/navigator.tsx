@@ -148,7 +148,7 @@ export const DesignSystemNavigator = () => {
         fontSize: 14
       },
       headerTitleAlign: "center",
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
       headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
       headerLeft: RNNBackButton,
       headerMode: "screen"
