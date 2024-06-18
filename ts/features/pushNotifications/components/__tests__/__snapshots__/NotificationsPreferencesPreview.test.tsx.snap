@@ -502,7 +502,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 18,
@@ -517,7 +517,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -532,7 +532,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 14,
@@ -547,7 +547,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1075,7 +1075,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 18,
@@ -1090,7 +1090,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1105,7 +1105,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 14,
@@ -1120,7 +1120,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1648,7 +1648,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 18,
@@ -1663,7 +1663,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1678,7 +1678,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 14,
@@ -1693,7 +1693,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -2221,7 +2221,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 18,
@@ -2236,7 +2236,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -2251,7 +2251,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 14,
@@ -2266,7 +2266,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },

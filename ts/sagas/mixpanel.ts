@@ -17,6 +17,7 @@ import {
   sessionInvalid
 } from "../store/actions/authentication";
 import { GlobalState } from "../store/reducers/types";
+import { updateMixpanelProfileProperties } from "../mixpanelConfig/profileProperties";
 
 export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
   yield* takeLatest(
@@ -96,4 +97,8 @@ export function* askMixpanelOptIn() {
     NavigationService.dispatchNavigationAction,
     StackActions.popToTop()
   );
+  // Update mixpanel profile properties
+  // (mainly for mixpanel opt-in)
+  const state = (yield* select()) as GlobalState;
+  yield* call(updateMixpanelProfileProperties, state);
 }

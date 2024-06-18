@@ -470,7 +470,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                               defaultColor="black"
                               defaultWeight="Regular"
                               ellipsizeMode="tail"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 12,
@@ -484,7 +484,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                   },
                                   Object {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },

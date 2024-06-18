@@ -15,7 +15,7 @@ type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 >;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 export const bodyFontSize = 16;
 export const bodyLineHeight = 24;
 export const bodyDefaultColor: AllowedColors = "bluegrey";
