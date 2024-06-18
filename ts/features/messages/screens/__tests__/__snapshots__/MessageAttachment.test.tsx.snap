@@ -421,7 +421,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 color="bluegrey"
                                 defaultColor="bluegrey"
                                 defaultWeight="Regular"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -439,7 +439,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     },
                                     {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },

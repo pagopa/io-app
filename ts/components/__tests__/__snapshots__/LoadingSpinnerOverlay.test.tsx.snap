@@ -232,7 +232,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -250,7 +250,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "400",
               },
@@ -656,7 +656,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -674,7 +674,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "400",
               },

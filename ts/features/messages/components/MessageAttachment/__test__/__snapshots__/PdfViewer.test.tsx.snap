@@ -232,7 +232,7 @@ exports[`PdfViewer should match the snapshot 1`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -250,7 +250,7 @@ exports[`PdfViewer should match the snapshot 1`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "400",
               },

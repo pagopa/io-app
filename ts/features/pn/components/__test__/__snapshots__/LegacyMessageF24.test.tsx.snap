@@ -351,7 +351,7 @@ exports[`MessageF24 component when there are multiple F24 should match the snaps
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 20,
@@ -369,7 +369,7 @@ exports[`MessageF24 component when there are multiple F24 should match the snaps
                                 },
                                 {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },
@@ -897,7 +897,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 20,
@@ -915,7 +915,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                 },
                                 {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },

@@ -63,7 +63,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -77,7 +77,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -114,7 +114,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -131,7 +131,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -157,7 +157,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -172,7 +172,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -225,7 +225,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -241,7 +241,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -321,7 +321,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -335,7 +335,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -372,7 +372,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -389,7 +389,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -415,7 +415,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -430,7 +430,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -543,7 +543,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -559,7 +559,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -712,7 +712,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -726,7 +726,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -763,7 +763,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -780,7 +780,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -806,7 +806,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -821,7 +821,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -934,7 +934,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -950,7 +950,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1145,7 +1145,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -1159,7 +1159,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -1196,7 +1196,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -1213,7 +1213,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -1239,7 +1239,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -1254,7 +1254,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -1367,7 +1367,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -1383,7 +1383,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1463,7 +1463,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -1477,7 +1477,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -1514,7 +1514,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -1531,7 +1531,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -1557,7 +1557,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -1572,7 +1572,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -1685,7 +1685,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -1701,7 +1701,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1781,7 +1781,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -1795,7 +1795,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -1832,7 +1832,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -1849,7 +1849,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -1877,7 +1877,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -1892,7 +1892,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -2007,7 +2007,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -2023,7 +2023,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2180,7 +2180,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -2194,7 +2194,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -2231,7 +2231,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -2248,7 +2248,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -2274,7 +2274,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -2289,7 +2289,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -2402,7 +2402,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -2418,7 +2418,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2498,7 +2498,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -2512,7 +2512,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -2549,7 +2549,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -2566,7 +2566,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -2592,7 +2592,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -2607,7 +2607,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -2720,7 +2720,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -2736,7 +2736,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2816,7 +2816,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -2830,7 +2830,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -2867,7 +2867,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -2884,7 +2884,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -2910,7 +2910,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -2925,7 +2925,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -3038,7 +3038,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -3054,7 +3054,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3096,7 +3096,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
             [
               {
                 "alignSelf": "center",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3182,7 +3182,7 @@ exports[`MessageList Item component with all the flags set to false should match
         color="bluegreyDark"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 14,
@@ -3196,7 +3196,7 @@ exports[`MessageList Item component with all the flags set to false should match
             },
             {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -3233,7 +3233,7 @@ exports[`MessageList Item component with all the flags set to false should match
         color="bluegrey"
         defaultColor="blue"
         defaultWeight="Bold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -3250,7 +3250,7 @@ exports[`MessageList Item component with all the flags set to false should match
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "700",
             },
@@ -3276,7 +3276,7 @@ exports[`MessageList Item component with all the flags set to false should match
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -3291,7 +3291,7 @@ exports[`MessageList Item component with all the flags set to false should match
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -3404,7 +3404,7 @@ exports[`MessageList Item component with all the flags set to false should match
       >
         <Text
           color="bluegreyDark"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -3420,7 +3420,7 @@ exports[`MessageList Item component with all the flags set to false should match
               },
               {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },

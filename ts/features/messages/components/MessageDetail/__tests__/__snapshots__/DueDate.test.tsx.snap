@@ -203,7 +203,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -218,7 +218,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -232,7 +232,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -247,7 +247,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -262,7 +262,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -277,7 +277,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -503,7 +503,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -518,7 +518,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -532,7 +532,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -547,7 +547,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -562,7 +562,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -577,7 +577,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -803,7 +803,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -818,7 +818,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -832,7 +832,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -847,7 +847,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -862,7 +862,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -877,7 +877,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1103,7 +1103,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -1118,7 +1118,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -1132,7 +1132,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -1147,7 +1147,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1162,7 +1162,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -1177,7 +1177,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1403,7 +1403,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -1418,7 +1418,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -1432,7 +1432,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -1447,7 +1447,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1462,7 +1462,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -1477,7 +1477,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1703,7 +1703,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -1718,7 +1718,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -1732,7 +1732,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -1747,7 +1747,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -1762,7 +1762,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -1777,7 +1777,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2003,7 +2003,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -2018,7 +2018,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -2032,7 +2032,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2047,7 +2047,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2062,7 +2062,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2077,7 +2077,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2303,7 +2303,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -2318,7 +2318,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -2332,7 +2332,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2347,7 +2347,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2362,7 +2362,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2377,7 +2377,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2603,7 +2603,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -2618,7 +2618,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -2632,7 +2632,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2647,7 +2647,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2662,7 +2662,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2677,7 +2677,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2903,7 +2903,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -2918,7 +2918,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -2932,7 +2932,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2947,7 +2947,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -2962,7 +2962,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -2977,7 +2977,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3203,7 +3203,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -3218,7 +3218,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -3232,7 +3232,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -3247,7 +3247,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3262,7 +3262,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -3277,7 +3277,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3503,7 +3503,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -3518,7 +3518,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -3532,7 +3532,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -3547,7 +3547,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3562,7 +3562,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -3577,7 +3577,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3803,7 +3803,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -3818,7 +3818,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -3832,7 +3832,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -3847,7 +3847,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -3862,7 +3862,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -3877,7 +3877,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -4103,7 +4103,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -4118,7 +4118,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -4132,7 +4132,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -4147,7 +4147,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -4162,7 +4162,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -4177,7 +4177,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -4403,7 +4403,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -4418,7 +4418,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -4432,7 +4432,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -4447,7 +4447,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -4462,7 +4462,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -4477,7 +4477,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -4703,7 +4703,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -4718,7 +4718,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -4732,7 +4732,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -4747,7 +4747,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -4762,7 +4762,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -4777,7 +4777,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5003,7 +5003,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -5018,7 +5018,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -5032,7 +5032,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5047,7 +5047,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5062,7 +5062,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5077,7 +5077,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5303,7 +5303,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -5318,7 +5318,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -5332,7 +5332,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5347,7 +5347,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5362,7 +5362,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5377,7 +5377,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5603,7 +5603,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -5618,7 +5618,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -5632,7 +5632,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5647,7 +5647,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5662,7 +5662,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5677,7 +5677,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5903,7 +5903,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -5918,7 +5918,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -5932,7 +5932,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5947,7 +5947,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -5962,7 +5962,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -5977,7 +5977,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -6203,7 +6203,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -6218,7 +6218,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -6232,7 +6232,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -6247,7 +6247,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -6262,7 +6262,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -6277,7 +6277,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -6503,7 +6503,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -6518,7 +6518,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -6532,7 +6532,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -6547,7 +6547,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -6562,7 +6562,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -6577,7 +6577,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -6803,7 +6803,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -6818,7 +6818,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -6832,7 +6832,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -6847,7 +6847,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -6862,7 +6862,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -6877,7 +6877,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -7103,7 +7103,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -7118,7 +7118,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -7132,7 +7132,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -7147,7 +7147,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -7162,7 +7162,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -7177,7 +7177,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -7403,7 +7403,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -7418,7 +7418,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -7432,7 +7432,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -7447,7 +7447,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -7462,7 +7462,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -7477,7 +7477,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -7703,7 +7703,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -7718,7 +7718,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -7732,7 +7732,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -7747,7 +7747,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -7762,7 +7762,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -7777,7 +7777,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8003,7 +8003,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -8018,7 +8018,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -8032,7 +8032,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8047,7 +8047,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8062,7 +8062,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8077,7 +8077,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8303,7 +8303,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -8318,7 +8318,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -8332,7 +8332,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8347,7 +8347,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8362,7 +8362,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8377,7 +8377,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8603,7 +8603,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
         color="white"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -8618,7 +8618,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
             },
             {
               "color": "#FFFFFF",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -8632,7 +8632,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8647,7 +8647,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8662,7 +8662,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
           color="white"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8677,7 +8677,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
               {
                 "color": "#FFFFFF",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8903,7 +8903,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -8918,7 +8918,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -8932,7 +8932,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8947,7 +8947,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -8962,7 +8962,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -8977,7 +8977,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -9203,7 +9203,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
         color="bluegrey"
         defaultColor="bluegrey"
         defaultWeight="Regular"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -9218,7 +9218,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
             },
             {
               "color": "#475A6D",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "400",
             },
@@ -9232,7 +9232,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -9247,7 +9247,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -9262,7 +9262,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
           color="bluegrey"
           defaultColor="bluegrey"
           defaultWeight="Regular"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 16,
@@ -9277,7 +9277,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
               {
                 "color": "#475A6D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -9424,7 +9424,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
       color="bluegreyDark"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -9439,7 +9439,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
           },
           {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },

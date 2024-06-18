@@ -7,7 +7,12 @@ import {
   View
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOStyles,
+  VSpacer,
+  makeFontStyleObject
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -54,11 +59,11 @@ const styles = StyleSheet.create({
   message: {
     paddingStart: variables.spacerWidth,
     color: IOColors.white,
-    font: "TitilliumWeb",
-    fontSize: variables.headerBodyFontSize
+    fontSize: variables.headerBodyFontSize,
+    ...makeFontStyleObject("Regular", undefined, "TitilliumSansPro")
   },
   messageBold: {
-    fontWeight: "bold"
+    ...makeFontStyleObject("Bold", undefined, "TitilliumSansPro")
   }
 });
 
