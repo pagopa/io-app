@@ -337,7 +337,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             color="black"
                             defaultColor="black"
                             defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 28,
@@ -352,7 +352,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
@@ -374,7 +374,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -389,7 +389,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -444,7 +444,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     color="grey-700"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 18,
@@ -460,7 +460,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         },
                                         Object {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -654,7 +654,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           color="grey-700"
                                           defaultColor="blue"
                                           defaultWeight="Bold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 14,
@@ -669,7 +669,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                               Object {
                                                 "color": "#555C70",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
                                               },
@@ -684,7 +684,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           color="black"
                                           defaultColor="black"
                                           defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 18,
@@ -700,7 +700,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
                                               },
@@ -892,7 +892,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           color="grey-700"
                                           defaultColor="blue"
                                           defaultWeight="Bold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 14,
@@ -907,7 +907,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                               Object {
                                                 "color": "#555C70",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
                                               },
@@ -922,7 +922,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           color="black"
                                           defaultColor="black"
                                           defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 18,
@@ -938,7 +938,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
                                               },
@@ -1068,7 +1068,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           color="grey-700"
                                           defaultColor="blue"
                                           defaultWeight="Bold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 14,
@@ -1083,7 +1083,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                               Object {
                                                 "color": "#555C70",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
                                               },
@@ -1098,7 +1098,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           color="black"
                                           defaultColor="black"
                                           defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 18,
@@ -1114,7 +1114,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
                                               },
@@ -1348,7 +1348,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   defaultColor="white"
                                   defaultWeight="Bold"
                                   ellipsizeMode="tail"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -1367,7 +1367,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       },
                                       Object {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },
@@ -1463,7 +1463,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",

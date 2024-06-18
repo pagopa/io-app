@@ -32,29 +32,29 @@ const INJECTED_JAVASCRIPT = `
 ${NOTIFY_LINK_CLICK_SCRIPT}
 `;
 
-const TITILLIUM_WEB_FONT_PATH =
+const TITILLIUM_SANS_PRO_FONT_PATH =
   Platform.OS === "android"
-    ? "file:///android_asset/fonts/TitilliumWeb-Regular.ttf"
-    : `${RNFS.MainBundlePath}/TitilliumWeb-Regular.ttf`;
+    ? "file:///android_asset/fonts/TitilliumSansPro-Regular.otf"
+    : `${RNFS.MainBundlePath}/TitilliumSansPro-Regular.otf`;
 
-const TITILLIUM_WEB_BOLD_FONT_PATH =
+const TITILLIUM_SANS_PRO_BOLD_FONT_PATH =
   Platform.OS === "android"
-    ? "file:///android_asset/fonts/TitilliumWeb-Bold.ttf"
-    : `${RNFS.MainBundlePath}/TitilliumWeb-Bold.ttf`;
+    ? "file:///android_asset/fonts/TitilliumSansPro-Bold.otf"
+    : `${RNFS.MainBundlePath}/TitilliumSansPro-Bold.otf`;
 
 const GLOBAL_CSS = `
 <style>
 @font-face {
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Sans Pro';
   font-style: normal;
   font-weight: normal;
-  src: url('${TITILLIUM_WEB_FONT_PATH}');
+  src: url('${TITILLIUM_SANS_PRO_FONT_PATH}');
 }
 @font-face {
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Sans Pro';
   font-style: normal;
   font-weight: bold;
-  src: url('${TITILLIUM_WEB_BOLD_FONT_PATH}');
+  src: url('${TITILLIUM_SANS_PRO_BOLD_FONT_PATH}');
 }
 
 body {
@@ -62,7 +62,7 @@ body {
   padding: 0;
   color: ${customVariables.textColor};
   font-size: ${customVariables.fontSizeBase}px;
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Sans Pro';
   overflow-wrap: break-word;
   hyphens: auto;
 }

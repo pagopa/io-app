@@ -766,7 +766,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -782,7 +782,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -861,7 +861,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -877,7 +877,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -892,7 +892,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -908,7 +908,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -960,7 +960,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1102,7 +1102,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1118,7 +1118,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1133,7 +1133,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1149,7 +1149,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1201,7 +1201,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1343,7 +1343,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1359,7 +1359,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1374,7 +1374,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1390,7 +1390,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1442,7 +1442,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1584,7 +1584,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1600,7 +1600,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1615,7 +1615,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1631,7 +1631,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1683,7 +1683,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1825,7 +1825,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1841,7 +1841,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1856,7 +1856,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1872,7 +1872,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1924,7 +1924,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2066,7 +2066,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2082,7 +2082,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -2097,7 +2097,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2113,7 +2113,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -2165,7 +2165,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2307,7 +2307,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2323,7 +2323,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -2338,7 +2338,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2354,7 +2354,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -2406,7 +2406,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2931,7 +2931,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -2947,7 +2947,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -3026,7 +3026,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3042,7 +3042,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3057,7 +3057,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3073,7 +3073,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -3125,7 +3125,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -3267,7 +3267,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3283,7 +3283,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3298,7 +3298,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3314,7 +3314,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -3366,7 +3366,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -3508,7 +3508,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3524,7 +3524,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3539,7 +3539,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3555,7 +3555,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -3607,7 +3607,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -3749,7 +3749,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3765,7 +3765,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3780,7 +3780,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3796,7 +3796,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -3848,7 +3848,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -3990,7 +3990,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4006,7 +4006,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -4021,7 +4021,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4037,7 +4037,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -4089,7 +4089,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -4231,7 +4231,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4247,7 +4247,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -4262,7 +4262,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4278,7 +4278,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -4330,7 +4330,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -4472,7 +4472,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4488,7 +4488,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -4503,7 +4503,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4519,7 +4519,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -4571,7 +4571,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -5427,7 +5427,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -5443,7 +5443,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -5514,7 +5514,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5530,7 +5530,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -5545,7 +5545,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5561,7 +5561,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -5588,7 +5588,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -5604,7 +5604,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -5742,7 +5742,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5758,7 +5758,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -5773,7 +5773,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5789,7 +5789,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -5841,7 +5841,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -5982,7 +5982,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5998,7 +5998,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -6013,7 +6013,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6029,7 +6029,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -6081,7 +6081,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -6222,7 +6222,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6238,7 +6238,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -6253,7 +6253,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6269,7 +6269,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -6321,7 +6321,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -6462,7 +6462,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6478,7 +6478,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -6493,7 +6493,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6509,7 +6509,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -6561,7 +6561,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -7086,7 +7086,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -7102,7 +7102,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -7173,7 +7173,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7189,7 +7189,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7204,7 +7204,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7220,7 +7220,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -7247,7 +7247,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -7263,7 +7263,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -7401,7 +7401,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7417,7 +7417,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7432,7 +7432,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7448,7 +7448,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -7500,7 +7500,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -7641,7 +7641,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7657,7 +7657,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7672,7 +7672,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7688,7 +7688,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -7740,7 +7740,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -7881,7 +7881,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7897,7 +7897,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7912,7 +7912,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7928,7 +7928,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -7980,7 +7980,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -8121,7 +8121,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8137,7 +8137,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -8152,7 +8152,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8168,7 +8168,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -8220,7 +8220,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -8745,7 +8745,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -8761,7 +8761,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -8832,7 +8832,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8848,7 +8848,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -8863,7 +8863,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8879,7 +8879,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -8906,7 +8906,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -8922,7 +8922,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -9060,7 +9060,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9076,7 +9076,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9091,7 +9091,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9107,7 +9107,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -9159,7 +9159,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -9300,7 +9300,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9316,7 +9316,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9331,7 +9331,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9347,7 +9347,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -9399,7 +9399,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -9540,7 +9540,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9556,7 +9556,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9571,7 +9571,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9587,7 +9587,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -9639,7 +9639,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -9780,7 +9780,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9796,7 +9796,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9811,7 +9811,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9827,7 +9827,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -9879,7 +9879,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -10038,7 +10038,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -10512,7 +10512,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -10528,7 +10528,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -10599,7 +10599,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -10615,7 +10615,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -10630,7 +10630,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -10646,7 +10646,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -10673,7 +10673,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -10689,7 +10689,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -10827,7 +10827,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -10843,7 +10843,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -10858,7 +10858,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -10874,7 +10874,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -10926,7 +10926,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11067,7 +11067,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11083,7 +11083,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -11098,7 +11098,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11114,7 +11114,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -11166,7 +11166,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11307,7 +11307,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11323,7 +11323,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -11338,7 +11338,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11354,7 +11354,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -11406,7 +11406,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11547,7 +11547,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11563,7 +11563,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -11578,7 +11578,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11594,7 +11594,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -11646,7 +11646,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11805,7 +11805,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -12279,7 +12279,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -12295,7 +12295,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -12366,7 +12366,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -12382,7 +12382,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -12397,7 +12397,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -12413,7 +12413,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -12440,7 +12440,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -12456,7 +12456,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -12978,7 +12978,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -12994,7 +12994,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -13065,7 +13065,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -13081,7 +13081,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -13096,7 +13096,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -13112,7 +13112,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -13139,7 +13139,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -13155,7 +13155,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
