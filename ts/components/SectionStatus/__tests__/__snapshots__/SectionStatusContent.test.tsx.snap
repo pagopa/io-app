@@ -138,7 +138,7 @@ exports[`StatusContent should match the snapshot 1`] = `
     color="bluegreyDark"
     defaultColor="blue"
     defaultWeight="Bold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 16,
@@ -158,7 +158,7 @@ exports[`StatusContent should match the snapshot 1`] = `
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },

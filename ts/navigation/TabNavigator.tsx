@@ -91,7 +91,7 @@ export const MainTabNavigator = () => {
             ...makeFontStyleObject(
               "Regular",
               false,
-              isDesignSystemEnabled ? "ReadexPro" : "TitilliumWeb"
+              isDesignSystemEnabled ? "ReadexPro" : "TitilliumSansPro"
             )
           },
           tabBarHideOnKeyboard: true,
