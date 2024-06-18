@@ -400,10 +400,10 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                     },
                                     Object {
                                       "backgroundColor": "#FFFFFF",
-                                      "borderRadius": 8,
-                                      "height": 44,
-                                      "padding": 6,
-                                      "width": 44,
+                                      "borderRadius": 12,
+                                      "height": 66,
+                                      "padding": 9,
+                                      "width": 66,
                                     },
                                   ]
                                 }
@@ -417,7 +417,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                         "overflow": "hidden",
                                       },
                                       Object {
-                                        "borderRadius": 2,
+                                        "borderRadius": 3,
                                       },
                                     ]
                                   }
@@ -901,10 +901,10 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     },
                                     Object {
                                       "backgroundColor": "#FFFFFF",
-                                      "borderRadius": 8,
-                                      "height": 44,
-                                      "padding": 6,
-                                      "width": 44,
+                                      "borderRadius": 12,
+                                      "height": 66,
+                                      "padding": 9,
+                                      "width": 66,
                                     },
                                   ]
                                 }
@@ -918,7 +918,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                         "overflow": "hidden",
                                       },
                                       Object {
-                                        "borderRadius": 2,
+                                        "borderRadius": 3,
                                       },
                                     ]
                                   }
