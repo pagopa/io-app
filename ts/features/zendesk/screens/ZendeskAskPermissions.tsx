@@ -200,7 +200,7 @@ const ZendeskAskPermissions = () => {
       label: I18n.t("support.askPermissions.deviceAndOS"),
       value: `${getModel()} · ${
         isIos ? "iOS" : "Android"
-      } · ${getSystemVersion()}`,
+      } ${getSystemVersion()}`,
       zendeskID: zendeskDeviceAndOSId,
       testID: "deviceAndOS"
     },
