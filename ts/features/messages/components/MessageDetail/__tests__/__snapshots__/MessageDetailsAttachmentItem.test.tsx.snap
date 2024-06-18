@@ -383,7 +383,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               color="blueIO-500"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -399,7 +399,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   },
                                   Object {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -454,7 +454,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1053,7 +1053,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               color="blueIO-500"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -1069,7 +1069,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   },
                                   Object {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1124,7 +1124,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1606,7 +1606,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               color="blueIO-500"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -1622,7 +1622,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   },
                                   Object {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1677,7 +1677,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2166,7 +2166,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               color="blueIO-500"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -2182,7 +2182,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   },
                                   Object {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -2237,7 +2237,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },

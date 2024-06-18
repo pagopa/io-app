@@ -520,7 +520,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 color="black"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 28,
@@ -535,7 +535,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     },
                                     Object {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -557,7 +557,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 color="bluegrey"
                                 defaultColor="bluegrey"
                                 defaultWeight="Regular"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 16,
@@ -572,7 +572,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -594,7 +594,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -609,7 +609,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -841,7 +841,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -856,7 +856,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -871,7 +871,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="black"
                                       defaultColor="black"
                                       defaultWeight="SemiBold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 18,
@@ -887,7 +887,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                           Object {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1065,7 +1065,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1080,7 +1080,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1095,7 +1095,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="black"
                                       defaultColor="black"
                                       defaultWeight="SemiBold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 18,
@@ -1111,7 +1111,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                           Object {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1241,7 +1241,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1256,7 +1256,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1271,7 +1271,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       color="black"
                                       defaultColor="black"
                                       defaultWeight="SemiBold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 18,
@@ -1287,7 +1287,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                           Object {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1438,7 +1438,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                         defaultColor="white"
                                         defaultWeight="Bold"
                                         ellipsizeMode="tail"
-                                        font="TitilliumWeb"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 16,
@@ -1457,7 +1457,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                             },
                                             Object {
                                               "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
                                             },

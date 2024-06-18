@@ -788,7 +788,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -803,7 +803,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },

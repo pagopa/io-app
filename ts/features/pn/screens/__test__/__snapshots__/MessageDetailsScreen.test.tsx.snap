@@ -319,7 +319,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "textTransform": "uppercase",
                                         },
                                         Object {
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -418,7 +418,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 24,
@@ -433,7 +433,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -456,7 +456,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               color="grey-700"
                               defaultColor="blue"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 14,
@@ -471,7 +471,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   },
                                   Object {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -518,7 +518,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="SemiBold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -533,7 +533,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                       Object {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -548,7 +548,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   color="blueIO-500"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 14,
@@ -564,7 +564,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                       Object {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },
@@ -656,7 +656,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               color="grey-850"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -671,7 +671,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   },
                                   Object {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -791,7 +791,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="SemiBold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 18,
@@ -807,7 +807,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -885,7 +885,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     color="blueIO-500"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -901,7 +901,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                         Object {
                                           "color": "#0B3EE3",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -956,7 +956,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1113,7 +1113,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     color="blueIO-500"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -1129,7 +1129,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                         Object {
                                           "color": "#0B3EE3",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -1184,7 +1184,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1432,7 +1432,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       style={
                                         Array [
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1620,7 +1620,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       style={
                                         Array [
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1717,7 +1717,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -1733,7 +1733,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },
@@ -1876,7 +1876,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 14,
@@ -1891,7 +1891,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
                                                   },
@@ -1906,7 +1906,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -1922,7 +1922,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                   Object {
                                                     "color": "#0073E6",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },
@@ -2042,7 +2042,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -2058,7 +2058,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },
@@ -2201,7 +2201,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 14,
@@ -2216,7 +2216,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
                                                   },
@@ -2231,7 +2231,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -2247,7 +2247,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                   Object {
                                                     "color": "#0073E6",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },
@@ -2520,7 +2520,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       "color": "#0E0F13",
                                     },
                                     Object {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -3086,7 +3086,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 24,
@@ -3104,7 +3104,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -3126,7 +3126,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -3144,7 +3144,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   },
                                   Object {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -3341,7 +3341,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                       "color": "#0E0F13",
                                     },
                                     Object {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
