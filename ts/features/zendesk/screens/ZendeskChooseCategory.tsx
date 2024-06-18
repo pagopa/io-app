@@ -99,7 +99,10 @@ const ZendeskChooseCategory = (props: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{ label: I18n.t("support.chooseCategory.title.category") }}
+      title={{
+        label: I18n.t("support.chooseCategory.title.category"),
+        section: I18n.t("support.chooseCategory.header")
+      }}
       description={I18n.t("support.chooseCategory.subTitle.category")}
       testID={"ZendeskChooseCategory"}
     >

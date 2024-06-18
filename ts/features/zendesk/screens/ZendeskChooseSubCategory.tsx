@@ -88,7 +88,10 @@ const ZendeskChooseSubCategory = (props: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{ label: I18n.t("support.chooseCategory.title.subCategory") }}
+      title={{
+        label: I18n.t("support.chooseCategory.title.subCategory"),
+        section: selectedCategory.description[locale]
+      }}
       testID={"ZendeskChooseCategory"}
     >
       <FlatList

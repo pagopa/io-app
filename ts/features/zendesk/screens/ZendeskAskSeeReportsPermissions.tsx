@@ -122,7 +122,10 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{ label: I18n.t("support.askPermissions.title") }}
+      title={{
+        label: I18n.t("support.askPermissions.title"),
+        section: I18n.t("support.askPermissions.listTitle")
+      }}
       testID={"ZendeskAskPermissions"}
       description={I18n.t("support.askPermissions.listBody")}
       actions={buttonConf}

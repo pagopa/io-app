@@ -141,9 +141,10 @@ const FaqManager = (props: FaqManagerProps) => {
 
   const isContentLoading = contextualHelpData.content === undefined;
 
-  const renderFaqItem = ({ item, index }: ListRenderItemInfo<FAQType>) => (
+  const renderFaqItem = ({ item }: ListRenderItemInfo<FAQType>) => (
     <AccordionItem
-      id={`item-${index}`}
+      /* Delete `id` prop when new DS version is released */
+      id={0}
       title={item.title}
       body={item.content}
       // onLinkClicked={props.onLinkClicked}
