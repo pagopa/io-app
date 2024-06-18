@@ -422,7 +422,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -438,7 +438,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -887,7 +887,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -903,7 +903,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -2014,7 +2014,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -2030,7 +2030,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -2479,7 +2479,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -2495,7 +2495,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },

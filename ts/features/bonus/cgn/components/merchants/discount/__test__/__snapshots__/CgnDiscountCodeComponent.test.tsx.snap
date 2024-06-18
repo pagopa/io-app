@@ -13,7 +13,7 @@ Array [
     accessibilityRole="header"
     accessible={true}
     color="bluegreyDark"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -28,7 +28,7 @@ Array [
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },

@@ -21,7 +21,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
     <Text
       accessibilityRole="text"
       color="bluegreyDark"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -36,7 +36,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
           },
           Object {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },

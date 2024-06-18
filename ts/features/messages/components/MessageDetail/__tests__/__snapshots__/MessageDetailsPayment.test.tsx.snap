@@ -773,7 +773,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -789,7 +789,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
