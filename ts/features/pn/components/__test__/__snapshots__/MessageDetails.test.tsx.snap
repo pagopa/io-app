@@ -460,7 +460,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           "textTransform": "uppercase",
                                         },
                                         Object {
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -559,7 +559,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 24,
@@ -574,7 +574,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -597,7 +597,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="grey-700"
                               defaultColor="blue"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 14,
@@ -612,7 +612,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   },
                                   Object {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -649,7 +649,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="grey-850"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -664,7 +664,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   },
                                   Object {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -843,7 +843,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       style={
                                         Array [
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1031,7 +1031,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       style={
                                         Array [
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1128,7 +1128,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -1144,7 +1144,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },
@@ -1287,7 +1287,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 14,
@@ -1302,7 +1302,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
                                                   },
@@ -1317,7 +1317,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -1333,7 +1333,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                   Object {
                                                     "color": "#0073E6",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },
@@ -1453,7 +1453,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -1469,7 +1469,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },
@@ -1612,7 +1612,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 14,
@@ -1627,7 +1627,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                   Object {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
                                                   },
@@ -1642,7 +1642,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="SemiBold"
-                                              font="TitilliumWeb"
+                                              font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 18,
@@ -1658,7 +1658,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                   Object {
                                                     "color": "#0073E6",
-                                                    "fontFamily": "Titillium Web",
+                                                    "fontFamily": "Titillium Sans Pro",
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                   },

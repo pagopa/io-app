@@ -424,7 +424,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 16,
@@ -443,7 +443,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     },
                                     Object {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -540,7 +540,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 style={
                                   Array [
                                     Object {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
@@ -997,7 +997,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 16,
@@ -1016,7 +1016,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     },
                                     Object {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -1105,7 +1105,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
                                   },
@@ -1209,7 +1209,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 style={
                                   Array [
                                     Object {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
@@ -1997,7 +1997,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 16,
@@ -2016,7 +2016,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     },
                                     Object {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -3406,7 +3406,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 16,
@@ -3425,7 +3425,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                     },
                                     Object {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -3876,7 +3876,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 16,
@@ -3895,7 +3895,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     },
                                     Object {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -3992,7 +3992,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 style={
                                   Array [
                                     Object {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
