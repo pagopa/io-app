@@ -21,7 +21,7 @@ export const createPaymentClient = (baseUrl: string) =>
 export const createTransactionClient = (baseUrl: string) =>
   createBizEventsClient({
     baseUrl,
-    basePath: "/bizevents/bizevents/tx-service-jwt/v1",
+    basePath: "/bizevents/tx-service-jwt/v1",
     fetchApi: defaultRetryingFetch()
   });
 
