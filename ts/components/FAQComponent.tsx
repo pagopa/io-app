@@ -10,6 +10,9 @@ type Props = Readonly<{
   shouldHandleLink?: ComponentProps<typeof LegacyMarkdown>["shouldHandleLink"];
 }>;
 
+/**
+ * @deprecated This component is not used anymore and will be removed in future releases.
+ */
 const FAQComponent: React.FunctionComponent<Props> = (props: Props) => (
   <>
     {props.faqs.map((faqType: FAQType, i: number) => (

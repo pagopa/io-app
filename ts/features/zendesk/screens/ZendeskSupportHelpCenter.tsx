@@ -1,4 +1,5 @@
 import {
+  AccordionItem,
   Body,
   ButtonLink,
   ContentWrapper,
@@ -16,12 +17,9 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
-import FAQComponent from "../../../components/FAQComponent";
+import { FlatList, ListRenderItemInfo, ScrollView, View } from "react-native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent, {
-  ContextualHelpProps
-} from "../../../components/screens/BaseScreenComponent";
+import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
 import {
   getContextualHelpConfig,
   getContextualHelpData,
@@ -29,6 +27,7 @@ import {
 } from "../../../components/screens/BaseScreenComponent/utils";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { zendeskPrivacyUrl } from "../../../config";
+import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 import I18n from "../../../i18n";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -45,6 +44,7 @@ import {
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import ZendeskSupportActions from "../components/ZendeskSupportActions";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   ZendeskStartPayload,
@@ -52,8 +52,6 @@ import {
   zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
-import ZendeskSupportActions from "../components/ZendeskSupportActions";
-import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -73,7 +71,7 @@ export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
 
 /**
  * This component must be used only here.
- * Make the {@link ZendeskSupportHelpCenter} compatible with {@link BaseScreenComponent} and substitute the {@link ContextualHelp}
+ * Make the {@link ZendeskSupportHelpCenter} compatible with {@link HeaderSecondLevel} and substitute the {@link ContextualHelp}
  * It show the title and the FAQ of the contextual help.
  * @constructor
  */
@@ -143,6 +141,16 @@ const FaqManager = (props: FaqManagerProps) => {
 
   const isContentLoading = contextualHelpData.content === undefined;
 
+  const renderFaqItem = ({ item, index }: ListRenderItemInfo<FAQType>) => (
+    <AccordionItem
+      id={`item-${index}`}
+      title={item.title}
+      body={item.content}
+      // onLinkClicked={props.onLinkClicked}
+      // shouldHandleLink={props.shouldHandleLink}
+    />
+  );
+
   return (
     <>
       {isContentLoading && (
@@ -167,15 +175,24 @@ const FaqManager = (props: FaqManagerProps) => {
             </>
           )}
           {contextualHelpData.faqs && isContentLoaded && (
-            <FAQComponent
-              shouldHandleLink={_ => {
-                // when a link is clicked in the faq, terminate the workunit before the link will be handled (i.e: internal or external navigation)
-                workUnitComplete();
-                return true;
-              }}
-              faqs={contextualHelpData.faqs}
+            <FlatList
+              ListHeaderComponent={<VSpacer size={8} />}
+              scrollEnabled={false}
+              data={contextualHelpData.faqs}
+              keyExtractor={c => c.title}
+              renderItem={renderFaqItem}
+              ItemSeparatorComponent={() => <VSpacer size={8} />}
+              ListFooterComponent={<VSpacer size={8} />}
             />
           )}
+          {/* <FAQComponent
+                shouldHandleLink={_ => {
+                  // when a link is clicked in the faq, terminate the workunit before the link will be handled (i.e: internal or external navigation)
+                  workUnitComplete();
+                  return true;
+                }}
+                faqs={contextualHelpData.faqs}
+              /> */}
         </>
       )}
     </>
@@ -281,9 +298,9 @@ const ZendeskSupportHelpCenter = () => {
 
           {showRequestSupportContacts && (
             <>
-              <VSpacer size={16} />
+              <VSpacer size={24} />
               <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
-              <VSpacer size={16} />
+              <VSpacer size={8} />
               <Body>
                 {I18n.t("support.helpCenter.supportComponent.subtitle")}
               </Body>
@@ -303,7 +320,6 @@ const ZendeskSupportHelpCenter = () => {
                   "support.helpCenter.supportComponent.adviceMessage"
                 )}
               />
-              <VSpacer size={16} />
             </>
           )}
         </ContentWrapper>
