@@ -12,7 +12,10 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-platform :ios, min_ios_version_supported
+min_ios_versions_supported = ['12.4', min_ios_version_supported]  
+index_of_max = min_ios_versions_supported.each_with_index.max_by { |number, _| number.to_f }[1]
+
+platform :ios, min_ios_versions_supported[index_of_max] 
 
 prepare_react_native_project!
  
