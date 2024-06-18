@@ -514,7 +514,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 18,
@@ -529,7 +529,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -544,7 +544,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 14,
@@ -559,7 +559,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1099,7 +1099,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 18,
@@ -1114,7 +1114,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1129,7 +1129,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 14,
@@ -1144,7 +1144,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1684,7 +1684,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 18,
@@ -1699,7 +1699,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1714,7 +1714,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 14,
@@ -1729,7 +1729,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -2269,7 +2269,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 18,
@@ -2284,7 +2284,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -2299,7 +2299,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 14,
@@ -2314,7 +2314,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },

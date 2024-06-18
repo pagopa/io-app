@@ -353,7 +353,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 16,
@@ -368,7 +368,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                                 },
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
@@ -383,7 +383,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             color="blueIO-500"
                             defaultColor="blue"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 14,
@@ -399,7 +399,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                                 },
                                 {
                                   "color": "#0B3EE3",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },

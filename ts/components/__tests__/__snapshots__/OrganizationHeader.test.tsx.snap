@@ -22,7 +22,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 24,
@@ -37,7 +37,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
           },
           {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
@@ -52,7 +52,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -67,7 +67,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
           },
           {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },

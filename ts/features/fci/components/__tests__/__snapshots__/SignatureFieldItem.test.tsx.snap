@@ -102,7 +102,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               color="black"
               defaultColor="black"
               defaultWeight="SemiBold"
-              font="TitilliumWeb"
+              font="TitilliumSansPro"
               fontStyle={
                 {
                   "fontSize": 18,
@@ -120,7 +120,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   },
                   {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Web",
+                    "fontFamily": "Titillium Sans Pro",
                     "fontStyle": "normal",
                     "fontWeight": "600",
                   },
@@ -251,7 +251,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       color="blue"
       defaultColor="blue"
       defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -269,7 +269,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           },
           {
             "color": "#0073E6",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },

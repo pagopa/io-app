@@ -560,7 +560,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 24,
@@ -578,7 +578,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                   },
                                   {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1167,7 +1167,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 24,
@@ -1185,7 +1185,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                   },
                                   {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1774,7 +1774,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 24,
@@ -1792,7 +1792,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                   },
                                   {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -2378,7 +2378,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 24,
@@ -2396,7 +2396,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                   },
                                   {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },

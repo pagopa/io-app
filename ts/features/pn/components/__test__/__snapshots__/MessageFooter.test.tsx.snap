@@ -1127,7 +1127,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -1146,7 +1146,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     },
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },

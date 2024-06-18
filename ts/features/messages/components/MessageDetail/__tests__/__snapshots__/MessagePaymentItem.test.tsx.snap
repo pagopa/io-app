@@ -872,7 +872,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -888,7 +888,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     },
                                     {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -903,7 +903,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -919,7 +919,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     },
                                     {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -946,7 +946,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 18,
@@ -962,7 +962,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     },
                                     {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1461,7 +1461,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -1477,7 +1477,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     },
                                     {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1492,7 +1492,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -1508,7 +1508,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     },
                                     {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1560,7 +1560,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         "textTransform": "uppercase",
                                       },
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },

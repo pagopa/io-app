@@ -431,7 +431,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 24,
@@ -449,7 +449,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                   },
                                   {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -565,7 +565,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                         defaultColor="white"
                                         defaultWeight="Bold"
                                         ellipsizeMode="tail"
-                                        font="TitilliumWeb"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           {
                                             "fontSize": 16,
@@ -584,7 +584,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                             },
                                             {
                                               "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
                                             },
@@ -798,7 +798,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                       "color": "#0E0F13",
                                     },
                                     {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },

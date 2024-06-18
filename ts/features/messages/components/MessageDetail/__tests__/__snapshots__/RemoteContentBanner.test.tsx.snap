@@ -413,7 +413,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               color="grey-700"
                               defaultColor="blue"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 14,
@@ -428,7 +428,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   },
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -535,7 +535,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                     style={
                                       [
                                         {
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "700",
@@ -794,7 +794,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                 color="bluegrey"
                                 defaultColor="bluegrey"
                                 defaultWeight="Regular"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -812,7 +812,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                     },
                                     {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -825,7 +825,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 16,
@@ -840,7 +840,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       },
                                       {
                                         "color": "#475A6D",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -855,7 +855,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 16,
@@ -870,7 +870,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       },
                                       {
                                         "color": "#475A6D",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -885,7 +885,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 16,
@@ -900,7 +900,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       },
                                       {
                                         "color": "#475A6D",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -917,7 +917,7 @@ The sender can edit the information in a dynamic message only
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 16,
@@ -932,7 +932,7 @@ The sender can edit the information in a dynamic message only
                                       },
                                       {
                                         "color": "#475A6D",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -947,7 +947,7 @@ The sender can edit the information in a dynamic message only
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 16,
@@ -962,7 +962,7 @@ The sender can edit the information in a dynamic message only
                                       },
                                       {
                                         "color": "#475A6D",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },

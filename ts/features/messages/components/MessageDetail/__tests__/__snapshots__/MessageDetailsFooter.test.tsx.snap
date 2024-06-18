@@ -499,7 +499,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1030,7 +1030,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1561,7 +1561,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2092,7 +2092,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2623,7 +2623,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2788,7 +2788,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3319,7 +3319,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3484,7 +3484,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4015,7 +4015,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4180,7 +4180,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4711,7 +4711,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4876,7 +4876,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

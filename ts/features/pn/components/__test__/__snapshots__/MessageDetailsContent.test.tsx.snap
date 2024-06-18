@@ -14,7 +14,7 @@ exports[`MessageDetailsContent component should match the snapshot when abstract
     color="grey-850"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -29,7 +29,7 @@ exports[`MessageDetailsContent component should match the snapshot when abstract
         },
         {
           "color": "#2B2E38",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },

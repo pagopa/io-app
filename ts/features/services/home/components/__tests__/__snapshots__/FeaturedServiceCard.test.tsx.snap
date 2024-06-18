@@ -473,7 +473,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                 color="blueIO-850"
                                 defaultColor="bluegreyDark"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 22,
@@ -490,7 +490,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                     },
                                     {
                                       "color": "#031344",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1010,7 +1010,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                         "textTransform": "uppercase",
                                       },
                                       {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1037,7 +1037,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 color="hanPurple-850"
                                 defaultColor="bluegreyDark"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 22,
@@ -1054,7 +1054,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     },
                                     {
                                       "color": "#1A0744",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },

@@ -210,7 +210,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 31,
@@ -225,7 +225,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -247,7 +247,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 16,
@@ -262,7 +262,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -462,7 +462,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -477,7 +477,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -492,7 +492,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -507,7 +507,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -581,7 +581,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -600,7 +600,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -671,7 +671,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -686,7 +686,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -709,7 +709,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
                                   {
@@ -728,7 +728,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -801,7 +801,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -820,7 +820,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -891,7 +891,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -906,7 +906,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -962,7 +962,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 14,
@@ -977,7 +977,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -1216,7 +1216,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 16,
@@ -1231,7 +1231,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -1357,7 +1357,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -1376,7 +1376,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -1469,7 +1469,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "color": "#0E0F13",
                                     },
                                     {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -1854,7 +1854,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 31,
@@ -1869,7 +1869,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -1891,7 +1891,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 16,
@@ -1906,7 +1906,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -2106,7 +2106,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -2121,7 +2121,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -2136,7 +2136,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -2151,7 +2151,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -2225,7 +2225,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -2244,7 +2244,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -2315,7 +2315,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -2330,7 +2330,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -2353,7 +2353,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
                                   {
@@ -2372,7 +2372,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -2445,7 +2445,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -2464,7 +2464,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -2535,7 +2535,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -2550,7 +2550,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -2606,7 +2606,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 14,
@@ -2621,7 +2621,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -2860,7 +2860,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 16,
@@ -2875,7 +2875,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -3002,7 +3002,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -3021,7 +3021,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -3114,7 +3114,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "color": "#0E0F13",
                                     },
                                     {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -3499,7 +3499,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 31,
@@ -3514,7 +3514,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -3536,7 +3536,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 16,
@@ -3551,7 +3551,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -3751,7 +3751,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -3766,7 +3766,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -3781,7 +3781,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -3796,7 +3796,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -3870,7 +3870,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -3889,7 +3889,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -3960,7 +3960,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -3975,7 +3975,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3998,7 +3998,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
                                   {
@@ -4017,7 +4017,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -4090,7 +4090,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -4109,7 +4109,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -4180,7 +4180,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -4195,7 +4195,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -4251,7 +4251,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 14,
@@ -4266,7 +4266,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -4505,7 +4505,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 16,
@@ -4520,7 +4520,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -4647,7 +4647,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -4666,7 +4666,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -4759,7 +4759,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "color": "#0E0F13",
                                     },
                                     {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -5144,7 +5144,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 31,
@@ -5159,7 +5159,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -5181,7 +5181,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 16,
@@ -5196,7 +5196,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                   {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -5396,7 +5396,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -5411,7 +5411,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -5426,7 +5426,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -5441,7 +5441,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -5515,7 +5515,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -5534,7 +5534,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -5605,7 +5605,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -5620,7 +5620,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -5643,7 +5643,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
                                   {
@@ -5662,7 +5662,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -5735,7 +5735,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -5754,7 +5754,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -5825,7 +5825,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -5840,7 +5840,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -5896,7 +5896,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 14,
@@ -5911,7 +5911,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -6150,7 +6150,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 16,
@@ -6165,7 +6165,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -6292,7 +6292,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -6311,7 +6311,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },
@@ -6404,7 +6404,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       "color": "#0E0F13",
                                     },
                                     {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -6789,7 +6789,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 31,
@@ -6804,7 +6804,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   },
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -6826,7 +6826,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 16,
@@ -6841,7 +6841,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   },
                                   {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -7041,7 +7041,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -7056,7 +7056,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -7071,7 +7071,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -7086,7 +7086,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -7160,7 +7160,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -7179,7 +7179,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -7397,7 +7397,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -7412,7 +7412,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7435,7 +7435,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 color="blue"
                                 defaultColor="blue"
                                 defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
                                   {
@@ -7454,7 +7454,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     },
                                     {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
@@ -7527,7 +7527,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 18,
@@ -7546,7 +7546,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -7764,7 +7764,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 14,
@@ -7779,7 +7779,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     },
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7835,7 +7835,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   color="grey-700"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     {
                                       "fontSize": 14,
@@ -7850,7 +7850,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       },
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -8089,7 +8089,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 16,
@@ -8104,7 +8104,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                         {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -8480,7 +8480,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       "color": "#0E0F13",
                                     },
                                     {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },

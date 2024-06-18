@@ -829,7 +829,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -845,7 +845,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -860,7 +860,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -876,7 +876,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -903,7 +903,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="blue"
                                       defaultColor="black"
                                       defaultWeight="SemiBold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 18,
@@ -919,7 +919,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1074,7 +1074,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1090,7 +1090,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1105,7 +1105,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1121,7 +1121,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1173,7 +1173,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1331,7 +1331,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1347,7 +1347,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1362,7 +1362,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1378,7 +1378,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1430,7 +1430,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1588,7 +1588,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1604,7 +1604,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1619,7 +1619,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1635,7 +1635,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1687,7 +1687,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1845,7 +1845,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1861,7 +1861,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1876,7 +1876,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -1892,7 +1892,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1944,7 +1944,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -2102,7 +2102,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -2118,7 +2118,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -2133,7 +2133,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -2149,7 +2149,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -2201,7 +2201,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -2359,7 +2359,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -2375,7 +2375,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -2390,7 +2390,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         {
                                           "fontSize": 14,
@@ -2406,7 +2406,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -2458,7 +2458,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },

@@ -1543,7 +1543,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               color="warning-850"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 {
                                   "fontSize": 16,
@@ -1558,7 +1558,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                   },
                                   {
                                     "color": "#614C15",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1581,7 +1581,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               style={
                                 [
                                   {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -2057,7 +2057,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 16,
@@ -2072,7 +2072,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                 },
                                 {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },

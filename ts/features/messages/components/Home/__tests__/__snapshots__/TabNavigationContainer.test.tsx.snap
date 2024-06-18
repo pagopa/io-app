@@ -531,7 +531,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -546,7 +546,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -710,7 +710,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     color="blue"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -725,7 +725,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                         {
                                           "color": "#0073E6",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -1298,7 +1298,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     color="blue"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -1313,7 +1313,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                         {
                                           "color": "#0073E6",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
@@ -1477,7 +1477,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       {
                                         "fontSize": 14,
@@ -1492,7 +1492,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },

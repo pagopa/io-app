@@ -49,7 +49,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           defaultColor="black"
           defaultWeight="SemiBold"
           ellipsizeMode="tail"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             {
               "fontSize": 18,
@@ -68,7 +68,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
               },
               {
                 "color": "#001F3D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -143,7 +143,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
         color="black"
         defaultColor="black"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 16,
@@ -158,7 +158,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             },
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -173,7 +173,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
         color="blueItalia-500"
         defaultColor="bluegreyDark"
         defaultWeight="SemiBold"
-        font="TitilliumWeb"
+        font="TitilliumSansPro"
         fontStyle={
           {
             "fontSize": 24,
@@ -188,7 +188,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             },
             {
               "color": "#0066CC",
-              "fontFamily": "Titillium Web",
+              "fontFamily": "Titillium Sans Pro",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
@@ -204,7 +204,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
       color="blueItalia-850"
       defaultColor="black"
       defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 16,
@@ -219,7 +219,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           },
           {
             "color": "#001F3D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },

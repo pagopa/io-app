@@ -481,7 +481,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 18,
@@ -496,7 +496,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
@@ -511,7 +511,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 14,
@@ -526,7 +526,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1032,7 +1032,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 18,
@@ -1047,7 +1047,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
@@ -1062,7 +1062,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 14,
@@ -1077,7 +1077,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1583,7 +1583,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 18,
@@ -1598,7 +1598,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
@@ -1613,7 +1613,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 14,
@@ -1628,7 +1628,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2134,7 +2134,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 18,
@@ -2149,7 +2149,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
@@ -2164,7 +2164,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               {
                                 "fontSize": 14,
@@ -2179,7 +2179,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },

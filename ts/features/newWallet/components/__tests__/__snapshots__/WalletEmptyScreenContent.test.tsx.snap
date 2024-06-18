@@ -510,7 +510,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                           color="grey-650"
                           defaultColor="bluegrey"
                           defaultWeight="Regular"
-                          font="TitilliumWeb"
+                          font="TitilliumSansPro"
                           fontStyle={
                             {
                               "fontSize": 16,
@@ -528,7 +528,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                               },
                               {
                                 "color": "#636B82",
-                                "fontFamily": "Titillium Web",
+                                "fontFamily": "Titillium Sans Pro",
                                 "fontStyle": "normal",
                                 "fontWeight": "400",
                               },
@@ -701,7 +701,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                 defaultColor="white"
                                 defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   {
                                     "fontSize": 16,
@@ -720,7 +720,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                     },
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
                                     },

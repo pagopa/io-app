@@ -84,7 +84,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         {
           "fontSize": 24,
@@ -99,7 +99,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
           },
           {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
@@ -114,7 +114,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       color="grey-700"
       defaultColor="blue"
       defaultWeight="Bold"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontSize="regular"
       fontStyle={
         {
@@ -130,7 +130,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
           },
           {
             "color": "#555C70",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "700",
           },

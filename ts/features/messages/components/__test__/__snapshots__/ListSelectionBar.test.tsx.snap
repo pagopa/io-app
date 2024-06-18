@@ -101,7 +101,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
           style={
             [
               {
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "700",
               },
@@ -217,7 +217,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
             defaultColor="white"
             defaultWeight="Bold"
             ellipsizeMode="tail"
-            font="TitilliumWeb"
+            font="TitilliumSansPro"
             fontStyle={
               {
                 "fontSize": 16,
@@ -236,7 +236,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
                 },
                 {
                   "color": "#FFFFFF",
-                  "fontFamily": "Titillium Web",
+                  "fontFamily": "Titillium Sans Pro",
                   "fontStyle": "normal",
                   "fontWeight": "700",
                 },

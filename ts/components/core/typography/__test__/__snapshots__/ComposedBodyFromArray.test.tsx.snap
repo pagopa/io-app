@@ -6,7 +6,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, auto text alig
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -24,7 +24,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, auto text alig
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -40,7 +40,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, center text al
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -58,7 +58,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, center text al
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -74,7 +74,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, default text a
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -92,7 +92,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, default text a
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -108,7 +108,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, justify text a
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -126,7 +126,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, justify text a
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -142,7 +142,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, left text alig
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -160,7 +160,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, left text alig
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -176,7 +176,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, right text ali
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -194,7 +194,7 @@ exports[`ComposedBodyFromArray should match snapshot, empty body, right text ali
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -210,7 +210,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -228,7 +228,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -241,7 +241,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -256,7 +256,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -271,7 +271,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -286,7 +286,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "700",
         },
@@ -301,7 +301,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -316,7 +316,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "300",
         },
@@ -331,7 +331,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -346,7 +346,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "500",
         },
@@ -361,7 +361,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -376,7 +376,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
@@ -395,7 +395,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -413,7 +413,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -426,7 +426,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -441,7 +441,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -456,7 +456,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -471,7 +471,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "700",
         },
@@ -486,7 +486,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -501,7 +501,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "300",
         },
@@ -516,7 +516,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -531,7 +531,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "500",
         },
@@ -546,7 +546,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -561,7 +561,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
@@ -580,7 +580,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -598,7 +598,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -611,7 +611,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -626,7 +626,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -641,7 +641,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -656,7 +656,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "700",
         },
@@ -671,7 +671,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -686,7 +686,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "300",
         },
@@ -701,7 +701,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -716,7 +716,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "500",
         },
@@ -731,7 +731,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -746,7 +746,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
@@ -765,7 +765,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -783,7 +783,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -796,7 +796,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -811,7 +811,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -826,7 +826,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -841,7 +841,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "700",
         },
@@ -856,7 +856,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -871,7 +871,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "300",
         },
@@ -886,7 +886,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -901,7 +901,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "500",
         },
@@ -916,7 +916,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -931,7 +931,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
@@ -950,7 +950,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -968,7 +968,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -981,7 +981,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -996,7 +996,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -1011,7 +1011,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1026,7 +1026,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "700",
         },
@@ -1041,7 +1041,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1056,7 +1056,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "300",
         },
@@ -1071,7 +1071,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1086,7 +1086,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "500",
         },
@@ -1101,7 +1101,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1116,7 +1116,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
@@ -1135,7 +1135,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     {
       "fontSize": 16,
@@ -1153,7 +1153,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
       },
       {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -1166,7 +1166,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1181,7 +1181,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -1196,7 +1196,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1211,7 +1211,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "700",
         },
@@ -1226,7 +1226,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1241,7 +1241,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "300",
         },
@@ -1256,7 +1256,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1271,7 +1271,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "500",
         },
@@ -1286,7 +1286,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       {
         "fontSize": 16,
@@ -1301,7 +1301,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         },
         {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
