@@ -35,7 +35,7 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
     style={
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontSize": 10,
         "fontStyle": "normal",
         "fontWeight": "700",
@@ -81,7 +81,7 @@ exports[`CustomBadge component match snapshot for 100 1`] = `
     style={
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontSize": 10,
         "fontStyle": "normal",
         "fontWeight": "700",

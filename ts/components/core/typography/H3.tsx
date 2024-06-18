@@ -53,7 +53,7 @@ type BoldKindProps = SemiBoldProps | BoldProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 export const h3FontSize = 18;
 export const h3LineHeight = 22;
 
