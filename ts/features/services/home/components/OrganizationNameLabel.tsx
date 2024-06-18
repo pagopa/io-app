@@ -12,7 +12,7 @@ type AllowedWeight = Extract<IOFontWeight, "Regular">;
 type AllowedColors = Extract<IOColors, "grey-650">;
 
 const fontName: IOFontFamily = "ReadexPro";
-const legacyFontName: IOFontFamily = "TitilliumWeb";
+const legacyFontName: IOFontFamily = "TitilliumSansPro";
 const fontSize = 14;
 
 type OrganizationNameLabelProps = Omit<
