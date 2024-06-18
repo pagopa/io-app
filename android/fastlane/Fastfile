@@ -55,16 +55,16 @@ platform :android do
       commits_count: 1
     )
 
-    # upload_to_play_store(
-    #   track: "internal",
-    #   skip_upload_screenshots: true,
-    #   skip_upload_images: true
-    # )
+    upload_to_play_store(
+      track: "internal",
+      skip_upload_screenshots: true,
+      skip_upload_images: true
+    )
   end
 
   desc "Promote the internal version to alpha"
   lane :promote_internal_to_alpha do
-    # upload_to_play_store(track: "internal", track_promote_to: "alpha")
+    upload_to_play_store(track: "internal", track_promote_to: "alpha")
   end
 
   desc "Build the App in release mode and deploy a new fast login version to the Google Play Store"
