@@ -12,7 +12,7 @@ import { openWebUrl } from "../../../../utils/url";
 import { ioSuppliersUrl } from "../../../../urls";
 
 const shareDataSecurityMoreLink =
-  "https://www.pagopa.it/it/politiche-per-la-sicurezza-delle-informazioni";
+  "https://www.pagopa.it/it/politiche-sulla-sicurezza-delle-informazioni-e-sulla-qualita/";
 
 const MarkdownBody = () => (
   <>
