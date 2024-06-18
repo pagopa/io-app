@@ -19,16 +19,16 @@ describe("makeFontStyleObject behaviour on Android", () => {
   });
   it("default font family should be Titillium if specify the weight", () => {
     const font = makeFontStyleObject("Bold");
-    expect(font.fontFamily).toBe("TitilliumWeb-Bold");
+    expect(font.fontFamily).toBe("TitilliumSansPro-Bold");
     expect(font.fontStyle).toBeUndefined();
     expect(font.fontWeight).toBeUndefined();
   });
-  it("TitilliumWeb, all weight", () => {
+  it("TitilliumSansPro, all weight", () => {
     italics.map(isItalic =>
       fontWeightsMocks.map(fw =>
         expect(
-          makeFontStyleObject(fw, isItalic, "TitilliumWeb").fontFamily
-        ).toBe(`TitilliumWeb-${fw}${isItalic ? "Italic" : ""}`)
+          makeFontStyleObject(fw, isItalic, "TitilliumSansPro").fontFamily
+        ).toBe(`TitilliumSansPro-${fw}${isItalic ? "Italic" : ""}`)
       )
     );
   });
