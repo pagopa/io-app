@@ -121,6 +121,12 @@ const renderComponent = (category: MessageListCategory) => {
   );
 };
 
+// Standard 'xxxByTestId's seem not to find the CustomRefreshControl
+// marked with the proper test ID but the component is properly
+// registered with the correct testID property. This method implements
+// the hierachy-view tree traversal until a valid component with testID
+// is found or the entire tree has been visited and returns either the
+// found component or undefined
 const customFindByTestId = (
   inputTestID: string,
   container: string | ReactTestInstance | undefined
