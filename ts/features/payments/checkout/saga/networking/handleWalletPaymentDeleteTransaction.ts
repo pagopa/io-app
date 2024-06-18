@@ -8,6 +8,7 @@ import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsDeleteTransactionAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../../common/store/actions";
 
 export function* handleWalletPaymentDeleteTransaction(
   requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellationForIO"],
@@ -51,8 +52,10 @@ export function* handleWalletPaymentDeleteTransaction(
 
     if (requestTransactionUserCancellationResult.right.status === 202) {
       yield* put(paymentsDeleteTransactionAction.success());
-    } else if (requestTransactionUserCancellationResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+    } else if (requestTransactionUserCancellationResult.right.status === 401) {
+      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+    } else {
       yield* put(
         paymentsDeleteTransactionAction.failure({
           ...getGenericError(

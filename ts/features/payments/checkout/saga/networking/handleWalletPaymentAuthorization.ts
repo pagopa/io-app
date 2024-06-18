@@ -15,6 +15,7 @@ import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../../common/store/actions";
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorizationForIO"],
@@ -82,8 +83,10 @@ export function* handleWalletPaymentAuthorization(
           requestTransactionAuthorizationResult.right.value
         )
       );
-    } else if (requestTransactionAuthorizationResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+    } else if (requestTransactionAuthorizationResult.right.status === 401) {
+      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+    } else {
       yield* put(
         paymentsStartPaymentAuthorizationAction.failure({
           ...getGenericError(

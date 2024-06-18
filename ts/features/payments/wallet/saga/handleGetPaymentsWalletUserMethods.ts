@@ -11,6 +11,7 @@ import { WalletClient } from "../../common/api/client";
 import { mapWalletsToCards } from "../../common/utils";
 import { getPaymentsWalletUserMethods } from "../store/actions";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 export function* handleGetPaymentsWalletUserMethods(
   getWalletsByIdUser: WalletClient["getIOPaymentWalletsByIdUser"],
@@ -52,8 +53,10 @@ export function* handleGetPaymentsWalletUserMethods(
             yield* put(getPaymentsWalletUserMethods.success(res.value));
           } else if (res.status === 404) {
             yield* put(getPaymentsWalletUserMethods.success({ wallets: [] }));
-          } else if (res.status !== 401) {
-            // The 401 status is handled by the withRefreshApiCall
+          } else if (res.status === 401) {
+            // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+            yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+          } else {
             yield* put(
               getPaymentsWalletUserMethods.failure({
                 ...getGenericError(new Error(`Error: ${res.status}`))

@@ -8,6 +8,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 const DEFAULT_LATEST_TRANSACTION_LIST_SIZE = 5;
 
@@ -55,7 +56,10 @@ export function* handleGetLatestBizEventsTransactions(
       );
     } else if (getTransactionListResult.right.status === 404) {
       yield* put(getPaymentsLatestBizEventsTransactionsAction.success([]));
-    } else if (getTransactionListResult.right.status !== 401) {
+    } else if (getTransactionListResult.right.status === 401) {
+      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+    } else {
       // The 401 status is handled by the withRefreshApiCall
       yield* put(
         getPaymentsLatestBizEventsTransactionsAction.failure({

@@ -9,6 +9,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { byteArrayToBase64 } from "../utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to get the transaction receipt pdf from the biz events API
@@ -56,8 +57,10 @@ export function* handleGetBizEventsTransactionReceipt(
       );
       action.payload.onSuccess?.();
       yield* put(getPaymentsBizEventsReceiptAction.success(base64File));
-    } else if (getTransactionReceiptResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+    } else if (getTransactionReceiptResult.right.status === 401) {
+      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+    } else {
       action.payload.onError?.();
       yield* put(
         getPaymentsBizEventsReceiptAction.failure({

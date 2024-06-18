@@ -2,7 +2,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { paymentsGetPagoPaPlatformSessionTokenAction } from "../actions";
+import {
+  paymentsGetPagoPaPlatformSessionTokenAction,
+  paymentsResetPagoPaPlatformSessionTokenAction
+} from "../actions";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsPagoPaPlatformState = {
@@ -32,6 +35,11 @@ const reducer = (
       return {
         ...state,
         sessionToken: pot.toError(state.sessionToken, action.payload)
+      };
+    case getType(paymentsResetPagoPaPlatformSessionTokenAction):
+      return {
+        ...state,
+        sessionToken: pot.none
       };
   }
   return state;

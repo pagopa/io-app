@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { PaymentsMethodDetailsActions } from "../../../details/store/actions";
 import { PaymentsHistoryActions } from "../../../history/store/actions";
 import { PaymentsOnboardingActions } from "../../../onboarding/store/actions";
@@ -17,7 +21,11 @@ export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
   "PAYMENTS_GET_NEW_SESSION_TOKEN_FAILURE"
 )<undefined, SessionTokenResponse, NetworkError>();
 
+export const paymentsResetPagoPaPlatformSessionTokenAction =
+  createStandardAction("PAYMENTS_RESET_SESSION_TOKEN")<undefined>();
+
 export type PaymentsActions =
+  | ActionType<typeof paymentsResetPagoPaPlatformSessionTokenAction>
   | ActionType<typeof paymentsGetPagoPaPlatformSessionTokenAction>
   | PaymentsOnboardingActions
   | PaymentsMethodDetailsActions

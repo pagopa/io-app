@@ -8,6 +8,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -57,8 +58,10 @@ export function* handleStartWalletOnboarding(
         paymentsStartOnboardingAction.success(startOnboardingResult.right.value)
       );
       return;
-    } else if (startOnboardingResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+    } else if (startOnboardingResult.right.status === 401) {
+      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+    } else {
       yield* put(
         paymentsStartOnboardingAction.failure({
           ...getGenericError(

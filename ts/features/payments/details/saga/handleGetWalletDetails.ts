@@ -10,6 +10,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletsToCards } from "../../common/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -56,8 +57,9 @@ export function* handleGetWalletDetails(
         );
         return;
       }
-      // not handled error codes (401 is handled by withRefreshApiCall)
-      if (getWalletDetailsResult.right.status !== 401) {
+      if (getWalletDetailsResult.right.status === 401) {
+        yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+      } else {
         yield* put(
           paymentsGetMethodDetailsAction.failure({
             ...getGenericError(

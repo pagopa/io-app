@@ -14,6 +14,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletIdToCardKey } from "../../common/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -59,8 +60,9 @@ export function* handleDeleteWalletDetails(
         }
         return;
       }
-      // not handled error codes (401 is handled by withRefreshApiCall)
-      if (deleteWalletResult.right.status !== 401) {
+      if (deleteWalletResult.right.status === 401) {
+        yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+      } else {
         const failureAction = paymentsDeleteMethodAction.failure({
           ...getGenericError(
             new Error(`response status code ${deleteWalletResult.right.status}`)
