@@ -52,9 +52,8 @@ import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
 import { apiUrlPrefix } from "../../config";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import UnlockAccessComponent from "./UnlockAccessComponent";
+import ROUTES from "../../navigation/routes";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
-import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -102,7 +101,7 @@ const IdpLoginScreen = (props: Props) => {
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
   const {
-    retryLollipopLogin,
+    // retryLollipopLogin,
     shouldBlockUrlNavigationWhileCheckingLollipop,
     webviewSource
   } = useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
@@ -162,10 +161,10 @@ const IdpLoginScreen = (props: Props) => {
     props.dispatchLoginSuccess(token, idp);
   };
 
-  const onRetryButtonPressed = (): void => {
-    setRequestState(pot.noneLoading);
-    retryLollipopLogin();
-  };
+  // const onRetryButtonPressed = (): void => {
+  //   setRequestState(pot.noneLoading);
+  //   retryLollipopLogin();
+  // };
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
@@ -227,25 +226,14 @@ const IdpLoginScreen = (props: Props) => {
         </View>
       );
     } else if (pot.isError(requestState)) {
-      if (errorCode === "1002") {
-        // TODO: refactor this logic and
-        // change this UnlockAccessComponent with navigation
-        // props.navigation.navigate(ROUTES.AUTHENTICATION, {
-        //   screen: ROUTES.UNLOCK_ACCESS_SCREEN,
-        //   params: { authLevel: "L2" }
-        // });
-        // jira ticket: https://pagopa.atlassian.net/browse/IOPID-1547
-        return <UnlockAccessComponent authLevel="L2" />;
-      } else {
-        return (
-          <IdpAuthErrorScreen
-            requestStateError={requestState.error}
-            errorCode={errorCode}
-            onCancel={() => props.navigation.goBack()}
-            onRetry={onRetryButtonPressed}
-          />
-        );
-      }
+      props.navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTH_ERROR_SCREEN,
+        params: {
+          errorCode,
+          authMethod: "SPID",
+          authLevel: "L2"
+        }
+      });
     }
     // loading complete, no mask needed
     return null;

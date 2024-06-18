@@ -1,31 +1,33 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
-import AuthErrorScreen from "../components/AuthErrorScreen";
 import I18n from "../../../../i18n";
+import AuthErrorComponent from "../components/AuthErrorComponent";
 
-describe("AuthErrorScreen", () => {
+describe("AuthErrorComponent", () => {
   const testCases = [
     {
       description: "renders correctly with generic error code",
       errorCode: "generic",
-      expectedTitle: I18n.t("authentication.cie_errors.generic.title"),
-      expectedSubtitle: I18n.t("authentication.cie_errors.generic.subtitle"),
+      expectedTitle: I18n.t("authentication.auth_errors.generic.title"),
+      expectedSubtitle: I18n.t("authentication.auth_errors.generic.subtitle"),
       expectRetryCalled: true,
       expectCancelCalled: true
     },
     {
       description: 'renders correctly with error code "22"',
       errorCode: "22",
-      expectedTitle: I18n.t("authentication.cie_errors.error_22.title"),
-      expectedSubtitle: I18n.t("authentication.cie_errors.error_22.subtitle"),
+      expectedTitle: I18n.t("authentication.auth_errors.error_22.title"),
+      expectedSubtitle: I18n.t("authentication.auth_errors.error_22.subtitle"),
       expectRetryCalled: true,
       expectCancelCalled: true
     },
     {
       description: 'renders correctly with error code "1001"',
       errorCode: "1001",
-      expectedTitle: I18n.t("authentication.cie_errors.error_1001.title"),
-      expectedSubtitle: I18n.t("authentication.cie_errors.error_1001.subtitle"),
+      expectedTitle: I18n.t("authentication.auth_errors.error_1001.title"),
+      expectedSubtitle: I18n.t(
+        "authentication.auth_errors.error_1001.subtitle"
+      ),
       expectRetryCalled: false,
       expectCancelCalled: true
     }
@@ -45,7 +47,8 @@ describe("AuthErrorScreen", () => {
         const onCancelMock = jest.fn();
 
         const { getByText } = render(
-          <AuthErrorScreen
+          <AuthErrorComponent
+            authLevel="L2"
             errorCode={errorCode}
             onRetry={onRetryMock}
             onCancel={onCancelMock}

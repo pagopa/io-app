@@ -2,24 +2,29 @@ import { Route, useRoute } from "@react-navigation/native";
 import React, { useCallback } from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import AuthErrorScreen from "./components/AuthErrorScreen";
+import { UnlockAccessProps } from "../UnlockAccessComponent";
+import AuthErrorComponent from "./components/AuthErrorComponent";
 
 export type AuthErrorScreenProps = {
   errorCode?: string;
-};
+  authMethod: "SPID" | "CIE";
+} & UnlockAccessProps;
 
-const CieAuthErrorScreen = () => {
+const AuthErrorScreen = () => {
   const route =
     useRoute<Route<typeof ROUTES.AUTH_ERROR_SCREEN, AuthErrorScreenProps>>();
-  const { errorCode } = route.params;
+  const { errorCode, authMethod, authLevel } = route.params;
 
   const navigation = useIONavigation();
 
   const onRetry = useCallback(() => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_PIN_SCREEN
+      screen:
+        authMethod === "CIE"
+          ? ROUTES.CIE_PIN_SCREEN
+          : ROUTES.AUTHENTICATION_IDP_SELECTION
     });
-  }, [navigation]);
+  }, [authMethod, navigation]);
 
   const onCancel = useCallback(() => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
@@ -28,7 +33,8 @@ const CieAuthErrorScreen = () => {
   }, [navigation]);
 
   return (
-    <AuthErrorScreen
+    <AuthErrorComponent
+      authLevel={authLevel}
       onCancel={onCancel}
       onRetry={onRetry}
       errorCode={errorCode}
@@ -36,4 +42,4 @@ const CieAuthErrorScreen = () => {
   );
 };
 
-export default CieAuthErrorScreen;
+export default AuthErrorScreen;
