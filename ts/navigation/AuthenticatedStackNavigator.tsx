@@ -142,7 +142,7 @@ const AuthenticatedStackNavigator = () => {
 
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{ ...hideHeaderOptions, gestureEnabled: false }}
         component={MessagesStackNavigator}
       />
       {isNewWalletSectionEnabled ? (
