@@ -26,7 +26,7 @@ const reducer = (
     case getType(paymentsGetPagoPaPlatformSessionTokenAction.success):
       return {
         ...state,
-        sessionToken: pot.some(action.payload.token)
+        sessionToken: pot.some(action.payload.token as string)
       };
     case getType(paymentsGetPagoPaPlatformSessionTokenAction.failure):
       return {
