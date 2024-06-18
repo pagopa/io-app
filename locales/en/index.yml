@@ -394,38 +394,40 @@ profile:
           title: "Share usage data"
           description: "Help the IO team to monitor the functioning of the app"
         screen:
-          title: "Your usage data"
-          description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
+          title: "I tuoi dati su IO"
+          description: Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.
           why:
             description:
-              one: "IO collects only the information "
-              two: "necessary "
-              three: "to monitor and improve the provided services."
-            cta: "Why?"
+              one: "Usiamo "
+              two: "solo i dati necessari "
+              three: "a monitorare il funzionamento dell’app e a migliorare i servizi offerti."
+            cta: "Perché raccogliamo i dati"
           security:
             description:
-              one: "We take security measures to protect your data."
-            cta: "Learn more"
+              one: "Adottiamo misure di sicurezza per "
+              two: "proteggere "
+              three: i tuoi dati.
+            cta: Come proteggiamo i dati
           gdpr:
             description:
-              one: "The IO team works with other providers in accordance with "
-              two: "GDPR regulations."
-            cta: "See our providers"
+              one: "Collaboriamo solo con fornitori che trattano i dati in modo "
+              two: "trasparente e sicuro."
+            cta: "Chi sono i fornitori"
           additionalInformation:
-            description: "For more information, please read "
-            cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in Profile > Preferences"
+            description: "Per maggiori informazioni, leggi l'"
+            cta: "Informativa Privacy e i Termini e Condizioni d’uso"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Privacy e Condizioni d’uso"
           cta:
             shareData: "Share"
             dontShareData: "Don’t share data"
-            dontShare: "Don’t share"
+            dontShare: Non ora
           confirmToast: "Preferences updated!"
         alert:
           title: "You are not giving IO consent to collect your usage data"
           body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
         whyBottomSheet:
-          title: "For what purposes do we collect information?"
-          body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
+          title: "Perché raccogliamo i dati?"
+          body: "Non raccogliamo dati per finalità di marketing.  \n\nUsiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per **fornirti un servizio migliore** e **assisterti in caso di necessità.**"
         securityBottomSheet:
           title: "What does pseudonymisation mean?"
           body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."
