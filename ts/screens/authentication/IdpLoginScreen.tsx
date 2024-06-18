@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -101,7 +100,7 @@ const IdpLoginScreen = (props: Props) => {
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
   const {
-    // retryLollipopLogin,
+    retryLollipopLogin,
     shouldBlockUrlNavigationWhileCheckingLollipop,
     webviewSource
   } = useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
@@ -161,10 +160,10 @@ const IdpLoginScreen = (props: Props) => {
     props.dispatchLoginSuccess(token, idp);
   };
 
-  // const onRetryButtonPressed = (): void => {
-  //   setRequestState(pot.noneLoading);
-  //   retryLollipopLogin();
-  // };
+  const onRetryButtonPressed = useCallback((): void => {
+    setRequestState(pot.noneLoading);
+    retryLollipopLogin();
+  }, [retryLollipopLogin]);
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
@@ -225,19 +224,28 @@ const IdpLoginScreen = (props: Props) => {
           <RefreshIndicator />
         </View>
       );
-    } else if (pot.isError(requestState)) {
-      props.navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTH_ERROR_SCREEN,
-        params: {
-          errorCode,
-          authMethod: "SPID",
-          authLevel: "L2"
-        }
-      });
     }
     // loading complete, no mask needed
     return null;
   };
+
+  const navigateToAuthErrorScreen = useCallback(() => {
+    props.navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCode,
+        authMethod: "SPID",
+        authLevel: "L2",
+        onRetrySpid: onRetryButtonPressed
+      }
+    });
+  }, [errorCode, onRetryButtonPressed, props.navigation]);
+
+  useEffect(() => {
+    if (pot.isError(requestState)) {
+      navigateToAuthErrorScreen();
+    }
+  }, [navigateToAuthErrorScreen, requestState]);
 
   const contextualHelp = useMemo(() => {
     if (O.isNone(props.selectedIdpTextData)) {
@@ -270,7 +278,8 @@ const IdpLoginScreen = (props: Props) => {
     // login-url was not available and so the hook that
     // retrieves the public key cannot produce a valid output
     if (pot.isError(requestState)) {
-      return renderMask();
+      navigateToAuthErrorScreen();
+      return null;
     }
     return <LoadingSpinnerOverlay isLoading={true} />;
   }

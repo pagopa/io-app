@@ -25,7 +25,7 @@ import CieUnexpectedErrorScreen from "../screens/authentication/cie/CieUnexpecte
 import CieExtendedApduNotSupportedScreen from "../screens/authentication/cie/CieExtendedApduNotSupportedScreen";
 import CieWrongCardScreen from "../screens/authentication/cie/CieWrongCardScreen";
 import ActivateNfcScreen from "../screens/authentication/cie/ActivateNfcScreen";
-import AuthErrorScreen from "../screens/authentication/cie/AuthErrorScreen";
+import AuthErrorScreen from "../screens/authentication/AuthErrorScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
