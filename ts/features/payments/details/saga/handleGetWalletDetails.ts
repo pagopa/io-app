@@ -1,16 +1,13 @@
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletsToCards } from "../../common/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
-import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -22,20 +19,15 @@ export function* handleGetWalletDetails(
   action: ActionType<(typeof paymentsGetMethodDetailsAction)["request"]>
 ) {
   try {
-    const getwalletDetailsRequest = yield* withPaymentsSessionToken(
+    const getWalletDetailsResult = yield* withPaymentsSessionToken(
       getWalletById,
       paymentsGetMethodDetailsAction.failure,
+      action,
       {
         walletId: action.payload.walletId
       },
       "pagoPAPlatformSessionToken"
     );
-
-    const getWalletDetailsResult = (yield* call(
-      withRefreshApiCall,
-      getwalletDetailsRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof getWalletById>;
     if (E.isRight(getWalletDetailsResult)) {
       if (getWalletDetailsResult.right.status === 200) {
         // Upsert the card in the wallet
@@ -53,9 +45,8 @@ export function* handleGetWalletDetails(
         );
         return;
       }
-      if (getWalletDetailsResult.right.status === 401) {
-        yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
-      } else {
+      if (getWalletDetailsResult.right.status !== 401) {
+        // The 401 status is handled by the withPaymentsSessionToken
         yield* put(
           paymentsGetMethodDetailsAction.failure({
             ...getGenericError(

@@ -1,14 +1,11 @@
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { paymentsStartOnboardingAction } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
-import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -21,9 +18,10 @@ export function* handleStartWalletOnboarding(
 ) {
   try {
     const { paymentMethodId } = action.payload;
-    const startOnboardingRequest = yield* withPaymentsSessionToken(
+    const startOnboardingResult = yield* withPaymentsSessionToken(
       startOnboarding,
       paymentsStartOnboardingAction.failure,
+      action,
       {
         body: {
           applications: ["PAGOPA"],
@@ -33,11 +31,6 @@ export function* handleStartWalletOnboarding(
       },
       "pagoPAPlatformSessionToken"
     );
-    const startOnboardingResult = (yield* call(
-      withRefreshApiCall,
-      startOnboardingRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof startOnboarding>;
     if (E.isLeft(startOnboardingResult)) {
       yield* put(
         paymentsStartOnboardingAction.failure({
@@ -54,9 +47,7 @@ export function* handleStartWalletOnboarding(
       );
       return;
     } else if (startOnboardingResult.right.status === 401) {
-      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
-      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
-    } else {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsStartOnboardingAction.failure({
           ...getGenericError(

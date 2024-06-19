@@ -2,13 +2,11 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { toUpper } from "lodash";
-import { call, put, select } from "typed-redux-saga/macro";
+import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
@@ -26,9 +24,10 @@ export function* handleWalletPaymentCalculateFees(
     );
 
     const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
-    const calculateFeesRequest = yield* withPaymentsSessionToken(
+    const calculateFeesResult = yield* withPaymentsSessionToken(
       calculateFees,
       paymentsCalculatePaymentFeesAction.failure,
+      action,
       {
         id: paymentMethodId,
         body: {
@@ -38,11 +37,6 @@ export function* handleWalletPaymentCalculateFees(
       },
       "pagoPAPlatformSessionToken"
     );
-    const calculateFeesResult = (yield* call(
-      withRefreshApiCall,
-      calculateFeesRequest,
-      action
-    )) as SagaCallReturnType<typeof calculateFees>;
 
     if (E.isLeft(calculateFeesResult)) {
       yield* put(

@@ -1,11 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCreateTransactionAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
@@ -15,20 +13,15 @@ export function* handleWalletPaymentCreateTransaction(
   action: ActionType<(typeof paymentsCreateTransactionAction)["request"]>
 ) {
   try {
-    const newTransactionRequest = yield* withPaymentsSessionToken(
+    const newTransactionResult = yield* withPaymentsSessionToken(
       newTransaction,
       paymentsCreateTransactionAction.failure,
+      action,
       {
         body: action.payload
       },
       "pagoPAPlatformSessionToken"
     );
-
-    const newTransactionResult = (yield* call(
-      withRefreshApiCall,
-      newTransactionRequest,
-      action
-    )) as SagaCallReturnType<typeof newTransaction>;
 
     yield* put(
       pipe(

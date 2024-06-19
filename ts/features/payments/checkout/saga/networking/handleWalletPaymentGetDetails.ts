@@ -1,11 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
@@ -15,20 +13,15 @@ export function* handleWalletPaymentGetDetails(
   action: ActionType<(typeof paymentsGetPaymentDetailsAction)["request"]>
 ) {
   try {
-    const getPaymentRequestInfoRequest = yield* withPaymentsSessionToken(
+    const getPaymentRequestInfoResult = yield* withPaymentsSessionToken(
       getPaymentRequestInfo,
       paymentsGetPaymentDetailsAction.failure,
+      action,
       {
         rpt_id: action.payload
       },
       "pagoPAPlatformSessionToken"
     );
-
-    const getPaymentRequestInfoResult = (yield* call(
-      withRefreshApiCall,
-      getPaymentRequestInfoRequest,
-      action
-    )) as SagaCallReturnType<typeof getPaymentRequestInfo>;
 
     yield* put(
       pipe(

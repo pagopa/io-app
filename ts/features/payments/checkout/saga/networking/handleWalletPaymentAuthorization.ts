@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ApmDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/ApmDetailType";
 import { AuthorizationDetails } from "../../../../../../definitions/pagopa/ecommerce/AuthorizationDetails";
@@ -10,14 +10,11 @@ import {
 import { WalletDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletDetailType";
 import { RedirectDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/RedirectDetailType";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
-import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
-import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../../common/store/actions";
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorizationForIO"],
@@ -49,22 +46,18 @@ export function* handleWalletPaymentAuthorization(
       pspId: action.payload.pspId,
       details
     };
-    const requestTransactionAuthorizationRequest =
+
+    const requestTransactionAuthorizationResult =
       yield* withPaymentsSessionToken(
         requestTransactionAuthorization,
         paymentsStartPaymentAuthorizationAction.failure,
+        action,
         {
           transactionId: action.payload.transactionId,
           body: requestBody
         },
         "pagoPAPlatformSessionToken"
       );
-
-    const requestTransactionAuthorizationResult = (yield* call(
-      withRefreshApiCall,
-      requestTransactionAuthorizationRequest,
-      action
-    )) as SagaCallReturnType<typeof requestTransactionAuthorization>;
 
     if (E.isLeft(requestTransactionAuthorizationResult)) {
       yield* put(
@@ -85,10 +78,8 @@ export function* handleWalletPaymentAuthorization(
           requestTransactionAuthorizationResult.right.value
         )
       );
-    } else if (requestTransactionAuthorizationResult.right.status === 401) {
-      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
-      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
-    } else {
+    } else if (requestTransactionAuthorizationResult.right.status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
       yield* put(
         paymentsStartPaymentAuthorizationAction.failure({
           ...getGenericError(

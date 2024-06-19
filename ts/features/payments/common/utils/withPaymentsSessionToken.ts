@@ -1,16 +1,23 @@
+import { Validation } from "io-ts";
 import {
   TypeofApiCall,
-  TypeofApiParams
+  TypeofApiParams,
+  TypeofApiResponse
 } from "@pagopa/ts-commons/lib/requests";
-import { put } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
+import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
 
 import { getGenericError } from "../../../../utils/errors";
 import { getOrFetchPagoPaPlatformSessionToken } from "../saga/handlePaymentsSessionToken";
+import { Action } from "../../../../store/actions/types";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../store/actions";
 
 type TokenKey = "pagoPAPlatformSessionToken" | "Authorization";
 
-/** Handler to inject the session token in the request
+/**
+ * This handler injects the session token in the request body and calls the API function.
+ * It also handles the case of a 401 response, resetting the session token and retrying the request.
  * - Biz events uses "Authorization" as token key
  * - Wallet & E-commerce uses "pagoPAPlatformSessionToken" as token key
  * @param apiFunction the API function to call
@@ -21,11 +28,15 @@ type TokenKey = "pagoPAPlatformSessionToken" | "Authorization";
 export function* withPaymentsSessionToken<T>(
   apiFunction: TypeofApiCall<T>,
   failureAction: (error: any) => ActionType<any>,
+  action: Action,
   requestBody: Omit<TypeofApiParams<T>, TokenKey>,
   tokenKey?: keyof TypeofApiParams<T> & TokenKey
 ) {
   // Get the session token
   const sessionToken = yield* getOrFetchPagoPaPlatformSessionToken();
+
+  // eslint-disable-next-line functional/no-let
+  let requestFunction: Promise<Validation<TypeofApiResponse<T>>>;
 
   // If token is missing, dispatch failure action and return a dummy function
   if (sessionToken === undefined) {
@@ -34,19 +45,25 @@ export function* withPaymentsSessionToken<T>(
         ...getGenericError(new Error(`Missing session token`))
       })
     );
-    return apiFunction(requestBody as TypeofApiParams<T>);
+    requestFunction = apiFunction(requestBody as TypeofApiParams<T>);
+  } else if (tokenKey === undefined) {
+    // If the token key is missing, call the api function without the token
+    requestFunction = apiFunction(requestBody as TypeofApiParams<T>);
+  } else {
+    // Creates the request with the token injected
+    const requestWithToken = {
+      ...requestBody,
+      [tokenKey]: sessionToken
+    } as TypeofApiParams<T>;
+    requestFunction = apiFunction(requestWithToken);
   }
 
-  // If the token key is missing, call the api function without the token
-  if (tokenKey === undefined) {
-    return apiFunction(requestBody as TypeofApiParams<T>);
+  const response = yield* call(() => requestFunction);
+
+  if (E.isRight(response) && (response.right as any).status === 401) {
+    yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
+    yield* put(action);
   }
 
-  // Creates the request with the token injected
-  const requestWithToken = {
-    ...requestBody,
-    [tokenKey]: sessionToken
-  } as TypeofApiParams<T>;
-
-  return apiFunction(requestWithToken);
+  return response;
 }

@@ -1,14 +1,11 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { paymentsOnboardingGetMethodsAction } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
-import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -19,19 +16,14 @@ export function* handleGetPaymentMethods(
   getPaymentMethods: WalletClient["getAllPaymentMethodsForIO"],
   action: ActionType<(typeof paymentsOnboardingGetMethodsAction)["request"]>
 ) {
-  const getPaymentMethodsRequest = yield* withPaymentsSessionToken(
-    getPaymentMethods,
-    paymentsOnboardingGetMethodsAction.failure,
-    {},
-    "pagoPAPlatformSessionToken"
-  );
-
   try {
-    const getPaymentMethodsResult = (yield* call(
-      withRefreshApiCall,
-      getPaymentMethodsRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof getPaymentMethods>;
+    const getPaymentMethodsResult = yield* withPaymentsSessionToken(
+      getPaymentMethods,
+      paymentsOnboardingGetMethodsAction.failure,
+      action,
+      {},
+      "pagoPAPlatformSessionToken"
+    );
 
     if (E.isLeft(getPaymentMethodsResult)) {
       yield* put(
@@ -50,11 +42,8 @@ export function* handleGetPaymentMethods(
           getPaymentMethodsResult.right.value
         )
       );
-    } else if (getPaymentMethodsResult.right.status === 401) {
-      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
-      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
-    } else {
-      // The 401 status is handled by the withRefreshApiCall
+    } else if (getPaymentMethodsResult.right.status !== 401) {
+      // The 401 status is handled by the withpaymentsSessionToken
       yield* put(
         paymentsOnboardingGetMethodsAction.failure({
           ...getGenericError(

@@ -1,14 +1,11 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getPaymentsBizEventsTransactionDetailsAction } from "../store/actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { TransactionClient } from "../../common/api/client";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
-import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to get the transaction details from the biz events API
@@ -21,21 +18,16 @@ export function* handleGetBizEventsTransactionDetails(
     (typeof getPaymentsBizEventsTransactionDetailsAction)["request"]
   >
 ) {
-  const getTransactionDetailsRequest = yield* withPaymentsSessionToken(
-    getTransactionDetails,
-    getPaymentsBizEventsTransactionDetailsAction.failure,
-    {
-      "transaction-id": action.payload.transactionId
-    },
-    "Authorization"
-  );
-
   try {
-    const getTransactionDetailsResult = (yield* call(
-      withRefreshApiCall,
-      getTransactionDetailsRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof getTransactionDetails>;
+    const getTransactionDetailsResult = yield* withPaymentsSessionToken(
+      getTransactionDetails,
+      getPaymentsBizEventsTransactionDetailsAction.failure,
+      action,
+      {
+        "transaction-id": action.payload.transactionId
+      },
+      "Authorization"
+    );
 
     if (E.isLeft(getTransactionDetailsResult)) {
       yield* put(
@@ -54,11 +46,8 @@ export function* handleGetBizEventsTransactionDetails(
           getTransactionDetailsResult.right.value
         )
       );
-    } else if (getTransactionDetailsResult.right.status === 401) {
-      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
-      yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
-    } else {
-      // The 401 status is handled by the withRefreshApiCall
+    } else if (getTransactionDetailsResult.right.status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
       yield* put(
         getPaymentsBizEventsTransactionDetailsAction.failure({
           ...getGenericError(

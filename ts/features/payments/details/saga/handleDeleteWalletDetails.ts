@@ -1,8 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../types/utils";
 import {
   paymentsDeleteMethodAction,
   paymentsGetMethodDetailsAction
@@ -10,11 +9,9 @@ import {
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletIdToCardKey } from "../../common/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
-import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../common/store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -26,20 +23,16 @@ export function* handleDeleteWalletDetails(
   action: ActionType<(typeof paymentsDeleteMethodAction)["request"]>
 ) {
   try {
-    const deleteWalletRequest = yield* withPaymentsSessionToken(
+    const deleteWalletResult = yield* withPaymentsSessionToken(
       deleteWalletById,
       paymentsDeleteMethodAction.failure,
+      action,
       {
         walletId: action.payload.walletId
       },
       "pagoPAPlatformSessionToken"
     );
 
-    const deleteWalletResult = (yield* call(
-      withRefreshApiCall,
-      deleteWalletRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof deleteWalletById>;
     if (E.isRight(deleteWalletResult)) {
       if (deleteWalletResult.right.status === 204) {
         yield* put(
@@ -56,9 +49,8 @@ export function* handleDeleteWalletDetails(
         }
         return;
       }
-      if (deleteWalletResult.right.status === 401) {
-        yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
-      } else {
+      if (deleteWalletResult.right.status !== 401) {
+        // The 401 status is handled by the withPaymentsSessionToken
         const failureAction = paymentsDeleteMethodAction.failure({
           ...getGenericError(
             new Error(`response status code ${deleteWalletResult.right.status}`)
