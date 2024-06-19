@@ -2,6 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { openWebUrl } from "../../../../utils/url";
 import { ShareDataComponent } from "../ShareDataComponent";
+import I18n from "../../../../i18n";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../../utils/hooks/bottomSheet", () => {
@@ -28,7 +29,9 @@ describe("Test ShareDataComponent", () => {
     const component = renderComponent();
 
     expect(component).not.toBeNull();
-    const linkComponent = component.getByTestId("why");
+    const linkComponent = component.getByText(
+      I18n.t("profile.main.privacy.shareData.screen.why.cta")
+    );
     expect(linkComponent).not.toBeNull();
     fireEvent.press(linkComponent);
     expect(mockPresentFn).toHaveBeenCalled();
@@ -37,7 +40,9 @@ describe("Test ShareDataComponent", () => {
     const component = renderComponent();
 
     expect(component).not.toBeNull();
-    const linkComponent = component.getByTestId("security");
+    const linkComponent = component.getByText(
+      I18n.t("profile.main.privacy.shareData.screen.security.cta")
+    );
     expect(linkComponent).not.toBeNull();
     fireEvent.press(linkComponent);
     expect(mockPresentFn).toHaveBeenCalled();
@@ -46,7 +51,9 @@ describe("Test ShareDataComponent", () => {
     const component = renderComponent();
 
     expect(component).not.toBeNull();
-    const linkComponent = component.getByTestId("gdpr");
+    const linkComponent = component.getByText(
+      I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")
+    );
     expect(linkComponent).not.toBeNull();
     fireEvent.press(linkComponent);
     expect(openWebUrl).toHaveBeenCalled();
