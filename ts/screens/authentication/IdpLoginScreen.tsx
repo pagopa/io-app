@@ -16,7 +16,6 @@ import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthe
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
-import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
@@ -52,6 +51,7 @@ import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
 import { apiUrlPrefix } from "../../config";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
+import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import UnlockAccessComponent from "./UnlockAccessComponent";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
@@ -223,7 +223,7 @@ const IdpLoginScreen = (props: Props) => {
     if (pot.isLoading(requestState)) {
       return (
         <View style={styles.refreshIndicatorContainer}>
-          <RefreshIndicator />
+          <LoadingIndicator />
         </View>
       );
     } else if (pot.isError(requestState)) {
