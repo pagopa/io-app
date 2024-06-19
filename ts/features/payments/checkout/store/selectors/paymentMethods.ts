@@ -85,6 +85,16 @@ export const walletPaymentSelectedWalletIdOptionSelector = createSelector(
     )
 );
 
+export const walletPaymentSelectedPaymentMethodManagementOptionSelector =
+  createSelector(
+    walletPaymentSelectedPaymentMethodOptionSelector,
+    selectedPaymentMethodOption =>
+      pipe(
+        selectedPaymentMethodOption,
+        O.map(({ methodManagement }) => methodManagement)
+      )
+  );
+
 export const notHasValidPaymentMethodsSelector = createSelector(
   walletPaymentAllMethodsSelector,
   walletPaymentUserWalletsSelector,
