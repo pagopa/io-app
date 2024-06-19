@@ -24,6 +24,7 @@ type TokenKey = "pagoPAPlatformSessionToken" | "Authorization";
  * @param failureAction the action to dispatch in case of failure
  * @param requestBody the request body to send to the API
  * @param tokenKey the key of the token in the request body
+ *
  * */
 export function* withPaymentsSessionToken<T>(
   apiFunction: TypeofApiCall<T>,
