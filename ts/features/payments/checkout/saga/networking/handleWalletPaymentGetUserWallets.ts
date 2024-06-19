@@ -21,10 +21,6 @@ export function* handleWalletPaymentGetUserWallets(
     "pagoPAPlatformSessionToken"
   );
 
-  if (!getWalletsByIdUserRequest) {
-    return;
-  }
-
   try {
     const getWalletsByIdUserResult = (yield* call(
       withRefreshApiCall,

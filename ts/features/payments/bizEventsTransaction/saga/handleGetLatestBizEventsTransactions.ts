@@ -27,10 +27,6 @@ export function* handleGetLatestBizEventsTransactions(
     "Authorization"
   );
 
-  if (!getTransactionListRequest) {
-    return;
-  }
-
   try {
     const getTransactionListResult = (yield* call(
       withRefreshApiCall,

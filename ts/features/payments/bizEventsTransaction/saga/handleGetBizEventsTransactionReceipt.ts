@@ -29,10 +29,6 @@ export function* handleGetBizEventsTransactionReceipt(
     "Authorization"
   );
 
-  if (!getTransactionReceiptRequest) {
-    return;
-  }
-
   try {
     const getTransactionReceiptResult = (yield* call(
       withRefreshApiCall,

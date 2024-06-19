@@ -34,7 +34,7 @@ export function* withPaymentsSessionToken<T>(
         ...getGenericError(new Error(`Missing session token`))
       })
     );
-    return undefined;
+    return apiFunction(requestBody as TypeofApiParams<T>);
   }
 
   // If the token key is missing, call the api function without the token

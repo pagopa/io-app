@@ -30,10 +30,6 @@ export function* handleGetBizEventsTransactionDetails(
     "Authorization"
   );
 
-  if (!getTransactionDetailsRequest) {
-    return;
-  }
-
   try {
     const getTransactionDetailsResult = (yield* call(
       withRefreshApiCall,

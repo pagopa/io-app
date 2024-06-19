@@ -25,10 +25,6 @@ export function* handleWalletPaymentGetTransactionInfo(
     "pagoPAPlatformSessionToken"
   );
 
-  if (!getTransactionInfoRequest) {
-    return;
-  }
-
   try {
     const getTransactionInfoResult = (yield* call(
       withRefreshApiCall,

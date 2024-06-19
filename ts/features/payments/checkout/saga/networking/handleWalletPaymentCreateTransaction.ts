@@ -24,10 +24,6 @@ export function* handleWalletPaymentCreateTransaction(
       "pagoPAPlatformSessionToken"
     );
 
-    if (!newTransactionRequest) {
-      return;
-    }
-
     const newTransactionResult = (yield* call(
       withRefreshApiCall,
       newTransactionRequest,

@@ -35,10 +35,6 @@ export function* handleDeleteWalletDetails(
       "pagoPAPlatformSessionToken"
     );
 
-    if (!deleteWalletRequest) {
-      return;
-    }
-
     const deleteWalletResult = (yield* call(
       withRefreshApiCall,
       deleteWalletRequest,

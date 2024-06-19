@@ -25,10 +25,6 @@ export function* handleWalletPaymentDeleteTransaction(
         "pagoPAPlatformSessionToken"
       );
 
-    if (!requestTransactionUserCancellationRequest) {
-      return;
-    }
-
     const requestTransactionUserCancellationResult = (yield* call(
       withRefreshApiCall,
       requestTransactionUserCancellationRequest,

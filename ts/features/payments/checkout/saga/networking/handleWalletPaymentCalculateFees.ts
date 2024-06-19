@@ -38,11 +38,6 @@ export function* handleWalletPaymentCalculateFees(
       },
       "pagoPAPlatformSessionToken"
     );
-
-    if (!calculateFeesRequest) {
-      return;
-    }
-
     const calculateFeesResult = (yield* call(
       withRefreshApiCall,
       calculateFeesRequest,

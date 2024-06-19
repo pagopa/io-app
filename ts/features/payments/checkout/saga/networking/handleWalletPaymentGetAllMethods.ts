@@ -21,10 +21,6 @@ export function* handleWalletPaymentGetAllMethods(
     "pagoPAPlatformSessionToken"
   );
 
-  if (!getAllPaymentMethodsRequest) {
-    return;
-  }
-
   try {
     const getAllPaymentMethodsResult = (yield* call(
       withRefreshApiCall,

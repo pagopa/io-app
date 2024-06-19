@@ -10,10 +10,12 @@ export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
 
 export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
-  method.methodManagement === PaymentMethodManagementTypeEnum.ONBOARDABLE ||
-  method.methodManagement === PaymentMethodManagementTypeEnum.NOT_ONBOARDABLE ||
-  method.methodManagement ===
-    PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT;
+  [
+    PaymentMethodManagementTypeEnum.ONBOARDABLE,
+    PaymentMethodManagementTypeEnum.NOT_ONBOARDABLE,
+    PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT,
+    PaymentMethodManagementTypeEnum.REDIRECT
+  ].includes(method.methodManagement);
 
 export const getLatestUsedWallet = (
   wallets: ReadonlyArray<WalletInfo>

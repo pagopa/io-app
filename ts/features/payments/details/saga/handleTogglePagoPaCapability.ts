@@ -48,10 +48,6 @@ export function* handleTogglePagoPaCapability(
         "pagoPAPlatformSessionToken"
       );
 
-    if (!updateWalletPagoPaApplicationRequest) {
-      return;
-    }
-
     const updateWalletResult = (yield* call(
       withRefreshApiCall,
       updateWalletPagoPaApplicationRequest,

@@ -33,11 +33,6 @@ export function* handleStartWalletOnboarding(
       },
       "pagoPAPlatformSessionToken"
     );
-
-    if (!startOnboardingRequest) {
-      return;
-    }
-
     const startOnboardingResult = (yield* call(
       withRefreshApiCall,
       startOnboardingRequest,

@@ -11,6 +11,8 @@ import {
   paymentsStartPaymentAuthorizationAction
 } from "../../../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "../handleWalletPaymentAuthorization";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
+import { selectPagoPaPlatformSessionToken } from "../../../../common/store/selectors";
 
 describe("Test handleWalletPaymentAuthorization saga", () => {
   const requestTransactionAuthorizationPayload: WalletPaymentAuthorizePayload =
@@ -21,7 +23,8 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       pspId: "",
       isAllCCP: false,
       transactionId: "",
-      walletId: ""
+      walletId: "",
+      paymentMethodManagement: PaymentMethodManagementTypeEnum.REDIRECT
     };
   const T_SESSION_TOKEN = "ABCD";
 
@@ -43,6 +46,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       )
     )
       .next()
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -76,6 +80,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       )
     )
       .next()
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
@@ -107,6 +112,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       )
     )
       .next()
+      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,

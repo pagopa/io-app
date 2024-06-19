@@ -31,10 +31,6 @@ export function* handleGetWalletDetails(
       "pagoPAPlatformSessionToken"
     );
 
-    if (!getwalletDetailsRequest) {
-      return;
-    }
-
     const getWalletDetailsResult = (yield* call(
       withRefreshApiCall,
       getwalletDetailsRequest,
