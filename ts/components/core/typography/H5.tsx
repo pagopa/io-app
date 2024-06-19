@@ -44,7 +44,7 @@ type BoldKindProps = SemiBoldProps | RegularProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 export const h5FontSize = 14;
 export const h5DefaultColor: AllowedColors = "bluegreyDark";
 export const h5DefaultWeight: AllowedWeight = "SemiBold";
