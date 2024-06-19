@@ -24,7 +24,7 @@ type Props = {
 
 const BoxedRefreshIndicator = ({ action, caption, white }: Props) => (
   <View style={[styles.refreshBox, white && styles.whiteBg]}>
-    <LoadingIndicator />
+    <LoadingIndicator testID="refreshIndicator" />
     {caption ? caption : null}
     {action ? action : null}
   </View>
