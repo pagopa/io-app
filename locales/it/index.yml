@@ -3063,6 +3063,8 @@ features:
   payments:
     title: Pagamenti
     cta: Paga un avviso
+    remoteAlert:
+      cta: Scopri di più
     methods:
       title: Metodi di pagamento
       button: Aggiungi
