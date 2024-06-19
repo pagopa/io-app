@@ -11,8 +11,11 @@ import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { getDateFromExpiryDate } from "../../../../../utils/dates";
+import { selectPagoPaPlatformSessionToken } from "../../../common/store/selectors";
 
 describe("handleGetPaymentsWalletUserMethods", () => {
+  const T_SESSION_TOKEN = "ABCD";
+
   it(`should put ${getType(getPaymentsWalletUserMethods.success)} and ${getType(
     walletAddCards
   )} when response is success`, () => {
@@ -61,6 +64,8 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
+      .select(selectPagoPaPlatformSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
@@ -85,6 +90,8 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
+      .select(selectPagoPaPlatformSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
@@ -111,6 +118,8 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
+      .select(selectPagoPaPlatformSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
