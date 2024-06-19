@@ -218,7 +218,9 @@ const IdpLoginScreen = (props: Props) => {
   };
 
   const renderMask = () => {
-    if (pot.isLoading(requestState)) {
+    // in order to prevent graphic glitches when navigating
+    // to the error screen the spinner is shown also when the login has failed
+    if (pot.isLoading(requestState) || pot.isError(requestState)) {
       return (
         <View style={styles.refreshIndicatorContainer}>
           <RefreshIndicator />
@@ -278,7 +280,6 @@ const IdpLoginScreen = (props: Props) => {
     // login-url was not available and so the hook that
     // retrieves the public key cannot produce a valid output
     if (pot.isError(requestState)) {
-      navigateToAuthErrorScreen();
       return null;
     }
     return <LoadingSpinnerOverlay isLoading={true} />;
