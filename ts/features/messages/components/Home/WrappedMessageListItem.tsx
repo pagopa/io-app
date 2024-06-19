@@ -24,9 +24,7 @@ export const WrappedMessageListItem = ({
   const organizationFiscalCode = message.organizationFiscalCode;
 
   const messageCategoryTag = message.category.tag;
-  const doubleAvatar =
-    messageCategoryTag === SENDTagEnum.PN ||
-    messageCategoryTag === PaymentTagEnum.PAYMENT;
+  const doubleAvatar = messageCategoryTag === PaymentTagEnum.PAYMENT;
   const serviceLogoUriSources = useMemo(
     () => logoForService(serviceId, organizationFiscalCode),
     [serviceId, organizationFiscalCode]
