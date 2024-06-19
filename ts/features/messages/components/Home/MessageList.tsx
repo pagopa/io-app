@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { FlatList } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { FlatList, StyleSheet } from "react-native";
 import { Divider } from "@pagopa/io-app-design-system";
 import {
   useSafeAreaFrame,
@@ -7,13 +7,27 @@ import {
 } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { MessageListCategory } from "../../types/messageListCategory";
-import { useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { messageListForCategorySelector } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
-import { messageListItemHeight } from "./homeUtils";
+import {
+  getLoadNextPageMessagesActionIfNeeded,
+  messageListItemHeight
+} from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
 import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
 import { EmptyList } from "./EmptyList";
+import { Footer } from "./Footer";
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1
+  }
+});
 
 type MessageListProps = {
   category: MessageListCategory;
@@ -23,6 +37,8 @@ const topBarHeight = 108;
 const bottomTabHeight = 54;
 
 export const MessageList = ({ category }: MessageListProps) => {
+  const store = useIOStore();
+  const dispatch = useIODispatch();
   const safeAreaFrame = useSafeAreaFrame();
   const safeAreaInsets = useSafeAreaInsets();
   const messageList = useIOSelector(state =>
@@ -39,9 +55,24 @@ export const MessageList = ({ category }: MessageListProps) => {
     return [...Array(count).keys()];
   }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
+  const onEndReachedCallback = useCallback(
+    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      const state = store.getState();
+      const loadNextPageMessages = getLoadNextPageMessagesActionIfNeeded(
+        state,
+        category,
+        distanceFromEnd
+      );
+      if (loadNextPageMessages) {
+        dispatch(loadNextPageMessages);
+      }
+    },
+    [category, dispatch, store]
+  );
+
   return (
     <FlatList
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={styles.contentContainer}
       data={(messageList ?? loadingList) as Readonly<Array<number | UIMessage>>}
       ListEmptyComponent={<EmptyList category={category} />}
       ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
@@ -56,6 +87,10 @@ export const MessageList = ({ category }: MessageListProps) => {
           return <WrappedMessageListItem index={index} message={item} />;
         }
       }}
+      ListFooterComponent={<Footer category={category} />}
+      onEndReached={onEndReachedCallback}
+      onEndReachedThreshold={0.1}
+      testID={`message_list_${category.toLowerCase()}`}
     />
   );
 };

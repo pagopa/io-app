@@ -8,6 +8,7 @@ import { NewTransactionResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RequestAuthorizationResponse } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
@@ -83,6 +84,7 @@ export type WalletPaymentAuthorizePayload = {
   isAllCCP: boolean;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;
+  paymentMethodManagement: PaymentMethodManagementTypeEnum;
 };
 
 export const paymentsStartPaymentAuthorizationAction = createAsyncAction(

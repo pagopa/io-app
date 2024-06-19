@@ -81,7 +81,7 @@ global:
   unknown: unknown
   disclaimer_beta: If you're having trouble signing in, please let us know!
   sectionStatus:
-    moreInfo: More info
+    moreInfo: more info
   accessibility:
     minusSymbol: minus
     switchLabel: "Select to activate"
@@ -3065,6 +3065,8 @@ features:
   payments:
     title: Payments
     cta: Paga un avviso
+    remoteAlert:
+      cta: Scopri di più
     methods:
       title: Metodi di pagamento
       button: Aggiungi
