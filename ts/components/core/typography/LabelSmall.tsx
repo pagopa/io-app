@@ -23,7 +23,7 @@ type OwnProps = ExternalTypographyProps<
 > &
   AllowedFontSize;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 
 const fontSizeMapping: Record<FontSize, number> = { regular: 14, small: 12 };
 const lineHeightMapping: Record<FontSize, number> = { regular: 21, small: 18 };
