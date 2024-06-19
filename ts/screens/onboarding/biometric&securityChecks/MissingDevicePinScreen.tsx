@@ -1,5 +1,6 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import React, { useMemo } from "react";
+import { Platform } from "react-native";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
@@ -53,7 +54,10 @@ const MissingDevicePinScreen = () => {
       {
         label: I18n.t("onboarding.biometric.unavailable.body.step2.label"),
         value: I18n.t("onboarding.biometric.unavailable.body.step2.value"),
-        icon: "systemToggleInstructions"
+        icon: Platform.select({
+          ios: "systemPasswordiOS",
+          android: "systemPasswordAndroid"
+        })
       }
     ],
     []

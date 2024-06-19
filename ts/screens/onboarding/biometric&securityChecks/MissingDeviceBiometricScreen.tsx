@@ -45,7 +45,7 @@ const MissingDeviceBiometricScreen = () => {
     contextualHelpMarkdown
   });
 
-  const listItems: Array<ListItemInfo> = useMemo(
+  const listItems = useMemo<Array<ListItemInfo>>(
     () => [
       {
         label: I18n.t(
@@ -63,7 +63,7 @@ const MissingDeviceBiometricScreen = () => {
         value: I18n.t(
           "onboarding.biometric.available.body.notEnrolled.step2.value"
         ),
-        icon: "systemToggleInstructions"
+        icon: "systemBiometricRecognitionOS"
       },
       {
         label: I18n.t(
