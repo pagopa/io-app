@@ -3,7 +3,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { getPaymentsWalletUserMethods } from "../../store/actions";
 import { handleGetPaymentsWalletUserMethods } from "../handleGetPaymentsWalletUserMethods";
 import { WalletCard } from "../../../../newWallet/types";
@@ -11,7 +10,6 @@ import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { getDateFromExpiryDate } from "../../../../../utils/dates";
-import { selectPagoPaPlatformSessionToken } from "../../../common/store/selectors";
 
 describe("handleGetPaymentsWalletUserMethods", () => {
   const T_SESSION_TOKEN = "ABCD";
@@ -64,13 +62,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
-      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        getPaymentsWalletUserMethods.request()
-      )
       .next(E.right({ status: 200, value: getWalletsByIdUserResponse }))
       .put(walletAddCards(cards))
       .next()
@@ -90,13 +82,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
-      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        getPaymentsWalletUserMethods.request()
-      )
       .next(E.right({ status: 400, value: undefined }))
       .put(
         getPaymentsWalletUserMethods.failure(
@@ -118,13 +104,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
-      .select(selectPagoPaPlatformSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        getPaymentsWalletUserMethods.request()
-      )
       .next(E.left([]))
       .put(
         getPaymentsWalletUserMethods.failure({

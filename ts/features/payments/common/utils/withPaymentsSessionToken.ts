@@ -60,6 +60,7 @@ export function* withPaymentsSessionToken<T>(
 
   const response = yield* call(() => requestFunction);
 
+  // If the response is a 401, reset the session token and retry the request
   if (E.isRight(response) && (response.right as any).status === 401) {
     yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
     yield* put(action);
