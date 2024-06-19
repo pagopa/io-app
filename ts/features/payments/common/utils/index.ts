@@ -19,6 +19,8 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletCard } from "../../../newWallet/types";
 import { contentRepoUrl } from "../../../../config";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
+import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
+import { AlertVariant } from "./types";
 
 export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
 
@@ -194,3 +196,20 @@ export const mapWalletsToCards = (
  */
 export const formatPaymentNoticeNumber = (noticeNumber: string) =>
   noticeNumber.replace(/(\d{4})/g, "$1  ").trim();
+
+/**
+ * Function that returns the alert variant based on the given LevelEnum provided
+ * by the backend config file
+ */
+export const getAlertVariant = (level: LevelEnum): AlertVariant => {
+  switch (level) {
+    case LevelEnum.critical:
+      return "error";
+    case LevelEnum.normal:
+      return "info";
+    case LevelEnum.warning:
+      return "warning";
+    default:
+      return "info";
+  }
+};
