@@ -146,7 +146,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     color="black"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -161,7 +161,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         },
         Object {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
@@ -296,7 +296,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     color="black"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -314,7 +314,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         },
         Object {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },

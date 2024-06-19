@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: Più info
+    moreInfo: più info
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -3078,6 +3078,8 @@ features:
   payments:
     title: Pagamenti
     cta: Paga un avviso
+    remoteAlert:
+      cta: Scopri di più
     methods:
       title: Metodi di pagamento
       button: Aggiungi
@@ -3237,6 +3239,20 @@ features:
     unsupportedDevice:
       text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
       moreInfo: Scopri perchè
+    presentation:
+      credentialDetails:
+        personalDataTitle: "Dati personali"
+        documentDataTitle: "Dati documento"
+        lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        hiddenClaim: "Nascosto"
+        status:
+          valid: Valida
+          expired: Scaduta
+        actions:
+          removeFromWallet: "Rimuovi dal Portafoglio"
+          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          showClaimValues: "Mostra gli attributi del documento"
+          hideClaimValues: "Nascondi gli attributi del documento"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

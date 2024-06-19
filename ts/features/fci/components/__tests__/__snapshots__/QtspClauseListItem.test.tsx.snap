@@ -342,7 +342,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             color="bluegreyDark"
                             defaultColor="bluegreyDark"
                             defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 22,
@@ -357,7 +357,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                 },
                                 Object {
                                   "color": "#17324D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
@@ -370,7 +370,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="bluegreyDark"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 18,
@@ -385,7 +385,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -401,7 +401,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="blue"
                               defaultColor="blue"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -419,7 +419,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   },
                                   Object {
                                     "color": "#0073E6",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
@@ -434,7 +434,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="bluegreyDark"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 18,
@@ -449,7 +449,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -596,7 +596,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               color="black"
                               defaultColor="black"
                               defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 18,
@@ -614,7 +614,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   },
                                   Object {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
