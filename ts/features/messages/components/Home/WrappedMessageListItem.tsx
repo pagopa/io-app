@@ -7,6 +7,8 @@ import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
+import { useIOSelector } from "../../../../store/hooks";
+import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
@@ -22,6 +24,10 @@ export const WrappedMessageListItem = ({
   const navigation = useIONavigation();
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
+
+  const isPaymentMessageWithPaidNotice = useIOSelector(state =>
+    isPaymentMessageWithPaidNoticeSelector(state, message.category)
+  );
 
   const messageCategoryTag = message.category.tag;
   const doubleAvatar = messageCategoryTag === PaymentTagEnum.PAYMENT;
@@ -42,6 +48,14 @@ export const WrappedMessageListItem = ({
   const badgeText =
     messageCategoryTag === SENDTagEnum.PN
       ? I18n.t("features.pn.details.badge.legalValue")
+      : isPaymentMessageWithPaidNotice
+      ? I18n.t("messages.badge.paid")
+      : undefined;
+  const badgeVariant =
+    messageCategoryTag === SENDTagEnum.PN
+      ? "legalMessage"
+      : isPaymentMessageWithPaidNotice
+      ? "success"
       : undefined;
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message),
@@ -65,14 +79,15 @@ export const WrappedMessageListItem = ({
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
+      badgeText={badgeText}
+      badgeVariant={badgeVariant}
       doubleAvatar={doubleAvatar}
-      serviceName={serviceName}
+      isRead={isRead}
       messageTitle={messageTitle}
       onLongPress={() => undefined}
       onPress={onPressCallback}
       serviceLogos={serviceLogoUriSources}
-      badgeText={badgeText}
-      isRead={isRead}
+      serviceName={serviceName}
       organizationName={organizationName}
       formattedDate={messageDate}
       testID={`wrapped_message_list_item_${index}`}

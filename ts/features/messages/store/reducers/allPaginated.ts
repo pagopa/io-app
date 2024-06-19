@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as Either from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
@@ -24,6 +24,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
 import { foldK } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { foldMessageCategoryK } from "../../utils/messageCategory";
+import { paymentsByRptIdSelector } from "../../../../store/reducers/entities/payments";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -772,6 +775,35 @@ export const emptyListReasonSelector = (
         (container, _) => reasonFromMessagePageContainer(container),
         (container, _) => reasonFromMessagePageContainer(container)
       )
+    )
+  );
+
+/**
+ * This method checks if there is a local record of a processed payment
+ * for the given message category's rptId (ricevuta pagamento telematico).
+ *
+ * Be aware that such record is persisted on the device and it is not synchronized
+ * with server so it is lost upon device change / app folder cleaning / app uninstall.
+ *
+ * @param state Redux global state
+ * @param category The enriched message category, returned by the `GET /messages?enrich_result_data=true` endpoint, that contains the rptId
+ * @returns true if there is a matching paid transaction
+ */
+export const isPaymentMessageWithPaidNoticeSelector = (
+  state: GlobalState,
+  category: MessageCategory
+) =>
+  pipe(
+    category,
+    foldMessageCategoryK(
+      constFalse,
+      paymentCategory =>
+        pipe(
+          state,
+          paymentsByRptIdSelector,
+          paymentRecord => !!paymentRecord[paymentCategory.rptId]
+        ),
+      constFalse
     )
   );
 

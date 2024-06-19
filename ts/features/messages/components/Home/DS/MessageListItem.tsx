@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
 type MessageListItemProps = WithTestID<{
   accessibilityLabel: string;
   badgeText?: string;
+  badgeVariant?: "legalMessage" | "success";
   doubleAvatar?: boolean;
   formattedDate: string;
   isRead: boolean;
@@ -80,6 +81,7 @@ const BadgeComponent = ({ color, width = 14 }: BadgeComponentProps) => (
 export const MessageListItem = ({
   accessibilityLabel,
   badgeText,
+  badgeVariant,
   doubleAvatar,
   formattedDate,
   isRead,
@@ -144,9 +146,9 @@ export const MessageListItem = ({
             </View>
           )}
         </View>
-        {badgeText && (
+        {badgeText && badgeVariant && (
           <View style={styles.badgeContainer}>
-            <Tag text={badgeText} variant="legalMessage" />
+            <Tag text={badgeText} variant={badgeVariant} />
             <HSpacer size={8} />
             <Tag variant="attachment" />
           </View>
