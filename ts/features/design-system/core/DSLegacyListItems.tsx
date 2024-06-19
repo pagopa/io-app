@@ -8,8 +8,6 @@ import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
-import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 
 export const DSLegacyListItems = () => (
   <DesignSystemScreen title={"Legacy List Items"}>
@@ -147,18 +145,6 @@ export const DSLegacyListItems = () => (
         accessible={true}
         accessibilityRole={"button"}
         accessibilityLabel={"Accessibility Label"}
-      />
-    </DSComponentViewerBox>
-
-    <DSComponentViewerBox name="CgnMerchantListItem">
-      <CgnMerchantListItem
-        categories={[
-          ProductCategoryEnum.cultureAndEntertainment,
-          ProductCategoryEnum.home
-        ]}
-        name={"Partner Name"}
-        onPress={() => alert("Action triggered")}
-        isNew={true}
       />
     </DSComponentViewerBox>
   </DesignSystemScreen>
