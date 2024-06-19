@@ -13,7 +13,6 @@ import { connect } from "react-redux";
 
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
@@ -52,6 +51,7 @@ import { trackSpidLoginError } from "../../utils/analytics";
 import { apiUrlPrefix } from "../../config";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import ROUTES from "../../navigation/routes";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -266,6 +266,15 @@ const IdpLoginScreen = (props: Props) => {
   const { loggedOutWithIdpAuth, loggedInAuth } = props;
   const hasError = pot.isError(requestState);
 
+  useHeaderSecondLevel({
+    title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
+      loggedOutWithIdpAuth?.idp.name
+    }`,
+    supportRequest: true,
+    contextualHelp,
+    faqCategories: ["authentication_SPID"]
+  });
+
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;
   }
@@ -286,33 +295,24 @@ const IdpLoginScreen = (props: Props) => {
   }
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      contextualHelp={contextualHelp}
-      faqCategories={["authentication_SPID"]}
-      headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
-        loggedOutWithIdpAuth.idp.name
-      }`}
-    >
-      <View style={styles.webViewWrapper}>
-        {!hasError && (
-          <WebView
-            cacheEnabled={false}
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            textZoom={100}
-            originWhitelist={originSchemasWhiteList}
-            source={webviewSource}
-            onError={handleLoadingError}
-            onHttpError={handleLoadingError}
-            javaScriptEnabled={true}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
-          />
-        )}
-        {renderMask()}
-      </View>
-    </BaseScreenComponent>
+    <View style={styles.webViewWrapper}>
+      {!hasError && (
+        <WebView
+          cacheEnabled={false}
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
+          textZoom={100}
+          originWhitelist={originSchemasWhiteList}
+          source={webviewSource}
+          onError={handleLoadingError}
+          onHttpError={handleLoadingError}
+          javaScriptEnabled={true}
+          onNavigationStateChange={handleNavigationStateChange}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+        />
+      )}
+      {renderMask()}
+    </View>
   );
 };
 
