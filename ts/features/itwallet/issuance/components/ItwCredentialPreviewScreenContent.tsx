@@ -55,7 +55,7 @@ export const ItwCredentialPreviewScreenContent = ({
         <VSpacer size={24} />
       </View>
       <View style={[styles.content, { backgroundColor }]}>
-        <ItwCredentialClaimsList data={data} />
+        <ItwCredentialClaimsList data={data} isPreview={true} />
       </View>
       <FooterActions
         fixed={false}
