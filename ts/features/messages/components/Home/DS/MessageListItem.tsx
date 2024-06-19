@@ -149,8 +149,12 @@ export const MessageListItem = ({
         {badgeText && badgeVariant && (
           <View style={styles.badgeContainer}>
             <Tag text={badgeText} variant={badgeVariant} />
-            <HSpacer size={8} />
-            <Tag variant="attachment" />
+            {badgeVariant === "legalMessage" && (
+              <>
+                <HSpacer size={8} />
+                <Tag variant="attachment" />
+              </>
+            )}
           </View>
         )}
       </View>
