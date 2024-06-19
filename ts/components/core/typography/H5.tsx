@@ -4,7 +4,7 @@ import { IOFontFamily, IOFontWeight } from "../fonts";
 import { ExternalTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-// these colors are allowed only when the weight is SemiBold
+// these colors are allowed only when the weight is Semibold
 type AllowedSemiBoldColors = Extract<
   IOColors,
   "bluegreyDark" | "bluegrey" | "bluegreyLight" | "blue" | "white" | "red"
@@ -26,11 +26,11 @@ type AllowedRegularColors = Extract<
 type AllowedColors = AllowedSemiBoldColors | AllowedRegularColors;
 
 // all the possible weight
-type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Regular">;
+type AllowedWeight = Extract<IOFontWeight, "Semibold" | "Regular">;
 
-// these are the properties allowed only if weight is undefined or SemiBold
+// these are the properties allowed only if weight is undefined or Semibold
 type SemiBoldProps = {
-  weight?: Extract<IOFontWeight, "SemiBold">;
+  weight?: Extract<IOFontWeight, "Semibold">;
   color?: AllowedSemiBoldColors;
 };
 
@@ -47,11 +47,11 @@ type OwnProps = ExternalTypographyProps<BoldKindProps>;
 const fontName: IOFontFamily = "TitilliumSansPro";
 export const h5FontSize = 14;
 export const h5DefaultColor: AllowedColors = "bluegreyDark";
-export const h5DefaultWeight: AllowedWeight = "SemiBold";
+export const h5DefaultWeight: AllowedWeight = "Semibold";
 
 /**
  * Typography component to render `H5` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `SemiBold`, color: `bluegreyDark`
+ * default values(if not defined) are weight: `Semibold`, color: `bluegreyDark`
  * @param props
  * @constructor
  */

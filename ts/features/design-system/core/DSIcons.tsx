@@ -98,7 +98,7 @@ export const DSIcons = () => {
       </View>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         Navigation
@@ -121,7 +121,7 @@ export const DSIcons = () => {
       </View>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         Biometric
@@ -144,7 +144,7 @@ export const DSIcons = () => {
       </View>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         Categories
@@ -167,7 +167,7 @@ export const DSIcons = () => {
       </View>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         Product
@@ -190,7 +190,7 @@ export const DSIcons = () => {
       </View>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         System
@@ -214,7 +214,7 @@ export const DSIcons = () => {
 
       <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         IconContained
@@ -229,7 +229,7 @@ export const DSIcons = () => {
 
       <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         Sizes
@@ -253,7 +253,7 @@ export const DSIcons = () => {
       </View>
       <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12 }}
       >
         Colors

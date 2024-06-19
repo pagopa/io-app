@@ -10,7 +10,7 @@ type AllowedBoldColors = Extract<
   "bluegreyDark" | "blue" | "white" | "greenLight"
 >;
 
-// these colors are allowed only when the weight is SemiBold
+// these colors are allowed only when the weight is Semibold
 type AllowedSemiBoldColors = Extract<
   IOColors,
   "white" | "bluegreyDark" | "blue" | "bluegreyLight"
@@ -29,7 +29,7 @@ type AllowedColors =
   | AllowedRegularColors;
 
 // all the possible weight
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold" | "Regular">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Semibold" | "Regular">;
 
 // these are the properties allowed only if weight is Bold or undefined
 type BoldProps = {
@@ -37,13 +37,13 @@ type BoldProps = {
   color?: AllowedBoldColors;
 };
 
-// these are the properties allowed only if weight is undefined or SemiBold
+// these are the properties allowed only if weight is undefined or Semibold
 type SemiBoldProps = {
-  weight: Extract<IOFontWeight, "SemiBold">;
+  weight: Extract<IOFontWeight, "Semibold">;
   color?: AllowedSemiBoldColors;
 };
 
-// these are the properties allowed only if weight is undefined or SemiBold
+// these are the properties allowed only if weight is undefined or Semibold
 type RegularProps = {
   weight: Extract<IOFontWeight, "Regular">;
   color?: AllowedRegularColors;
@@ -74,7 +74,7 @@ export const calculateH4WeightColor = (
       ? color
       : newWeight === "Bold"
       ? "bluegreyDark"
-      : newWeight === "SemiBold"
+      : newWeight === "Semibold"
       ? "white"
       : "bluegreyDark";
   return {

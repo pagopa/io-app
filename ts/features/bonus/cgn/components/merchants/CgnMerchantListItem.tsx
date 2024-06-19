@@ -45,7 +45,7 @@ export const renderCategoryElement = (category: ProductCategory) =>
         <View style={styles.row}>
           <Icon name={c.icon} size={20} color="bluegrey" />
           <HSpacer size={8} />
-          <H5 weight={"SemiBold"} color={"bluegrey"}>
+          <H5 weight={"Semibold"} color={"bluegrey"}>
             {I18n.t(c.nameKey).toLocaleUpperCase()}
           </H5>
         </View>
@@ -76,7 +76,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
                   }}
                 />
                 <HSpacer size={8} />
-                <H5 color={"bluegrey"} weight={"SemiBold"}>
+                <H5 color={"bluegrey"} weight={"Semibold"}>
                   {I18n.t("bonus.cgn.merchantDetail.categories.counting", {
                     count: categories.length - 1
                   }).toLocaleUpperCase()}
