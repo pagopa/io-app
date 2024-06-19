@@ -235,7 +235,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   color="black"
                                   defaultColor="black"
                                   defaultWeight="SemiBold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 28,
@@ -250,7 +250,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       },
                                       Object {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -280,7 +280,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   color="grey-700"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -295,7 +295,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       },
                                       Object {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -405,7 +405,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             color="black"
                                             defaultColor="black"
                                             defaultWeight="SemiBold"
-                                            font="TitilliumWeb"
+                                            font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
                                                 "fontSize": 18,
@@ -423,7 +423,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 },
                                                 Object {
                                                   "color": "#0E0F13",
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -601,7 +601,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             color="black"
                                             defaultColor="black"
                                             defaultWeight="SemiBold"
-                                            font="TitilliumWeb"
+                                            font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
                                                 "fontSize": 18,
@@ -619,7 +619,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 },
                                                 Object {
                                                   "color": "#0E0F13",
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -797,7 +797,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             color="black"
                                             defaultColor="black"
                                             defaultWeight="SemiBold"
-                                            font="TitilliumWeb"
+                                            font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
                                                 "fontSize": 18,
@@ -815,7 +815,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 },
                                                 Object {
                                                   "color": "#0E0F13",
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -1103,7 +1103,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       "color": "#0E0F13",
                                     },
                                     Object {
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },

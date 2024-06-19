@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, makeFontStyleObject } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
@@ -33,10 +33,9 @@ const styles = StyleSheet.create({
   },
   migrationMessageButtonText: {
     color: IOColors.white,
-    fontWeight: "700",
     fontSize: 16,
     lineHeight: 18,
-    fontFamily: "TitilliumWeb"
+    ...makeFontStyleObject("Bold", undefined, "TitilliumSansPro")
   },
   activityIndicator: {
     padding: 12

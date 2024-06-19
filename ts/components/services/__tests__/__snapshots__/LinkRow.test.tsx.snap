@@ -8,7 +8,7 @@ Array [
     defaultColor="blue"
     defaultWeight="SemiBold"
     ellipsizeMode="tail"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 16,
@@ -28,7 +28,7 @@ Array [
         },
         Object {
           "color": "#0073E6",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
