@@ -142,8 +142,6 @@ const FaqManager = (props: FaqManagerProps) => {
 
   const renderFaqItem = ({ item }: ListRenderItemInfo<FAQType>) => (
     <AccordionItem
-      /* Delete `id` prop when new DS version is released */
-      id={0}
       title={item.title}
       body={item.content}
       // onLinkClicked={props.onLinkClicked}
