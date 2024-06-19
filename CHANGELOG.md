@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.63.0-rc.0](https://github.com/pagopa/io-app/compare/2.62.0-rc.2...2.63.0-rc.0) (2024-06-19)
+
+
+### Features
+
+* [[IOBP-689](https://pagopa.atlassian.net/browse/IOBP-689),[IOBP-699](https://pagopa.atlassian.net/browse/IOBP-699)] Add new payment method management type handling ([#5860](https://github.com/pagopa/io-app/issues/5860)) ([3e3a79e](https://github.com/pagopa/io-app/commit/3e3a79ee0695ffb7344a8fc2a4b219f157e18586))
+* [[IOCOM-832](https://pagopa.atlassian.net/browse/IOCOM-832)] Next message page loading ([#5854](https://github.com/pagopa/io-app/issues/5854)) ([77da2f2](https://github.com/pagopa/io-app/commit/77da2f2985e8bd536caf6811e2e4b65e5edbc79d))
+* **IT Wallet:** [[SIW-1036](https://pagopa.atlassian.net/browse/SIW-1036)] Add eID detail screen ([#5801](https://github.com/pagopa/io-app/issues/5801)) ([f6e0e19](https://github.com/pagopa/io-app/commit/f6e0e19415494591a97255d7f810d9d142e3024c))
+* [[IOBP-652](https://pagopa.atlassian.net/browse/IOBP-652)] Add biz events download PDF receipt ([#5797](https://github.com/pagopa/io-app/issues/5797)) ([257c7d5](https://github.com/pagopa/io-app/commit/257c7d5e83d183f165ff22441307dad66dc3db37))
+* [[IOPID-1899](https://pagopa.atlassian.net/browse/IOPID-1899)] Upgrade DS lib to `1.39.0` ([#5858](https://github.com/pagopa/io-app/issues/5858)) ([e5de0d3](https://github.com/pagopa/io-app/commit/e5de0d310c767d096adee4e6bf5c64f1085b44b5))
+
+
+### Bug Fixes
+
+* [[IOPAE-1253](https://pagopa.atlassian.net/browse/IOPAE-1253)] Set `keepCancelVisible` prop to true on SearchInput ([#5863](https://github.com/pagopa/io-app/issues/5863)) ([9e382c2](https://github.com/pagopa/io-app/commit/9e382c2cc5e847b5c5979391b3bf8ef3b64c8031))
+
+
+### Chores
+
+* [[IOBP-695](https://pagopa.atlassian.net/browse/IOBP-695)] Add banner of service to payments home screen ([#5855](https://github.com/pagopa/io-app/issues/5855)) ([71b76b4](https://github.com/pagopa/io-app/commit/71b76b42fce69ce1f693421c2a5873ce88f73e60))
+* **Cross:** [[IOAPPX-292](https://pagopa.atlassian.net/browse/IOAPPX-292)] Update iOS deployment version to `14.0` ([#5751](https://github.com/pagopa/io-app/issues/5751)) ([73e689f](https://github.com/pagopa/io-app/commit/73e689f8d49667d5427992b560a1344a1e22b104))
+* [[IOCOM-1541](https://pagopa.atlassian.net/browse/IOCOM-1541)] Show push notification token in the profile section (dev mode on) ([#5874](https://github.com/pagopa/io-app/issues/5874)) ([50203de](https://github.com/pagopa/io-app/commit/50203de0a873dfba4e68eea73b820827177f4f50))
+* **Cross:** [[IOAPPX-320](https://pagopa.atlassian.net/browse/IOAPPX-320)] Completely replace `TitilliumWeb` with `TitilliumSansPro` ([#5859](https://github.com/pagopa/io-app/issues/5859)) ([c97c2ef](https://github.com/pagopa/io-app/commit/c97c2effe41e115180ada39d683727eb4ef98e42))
+* [[IOPID-1787](https://pagopa.atlassian.net/browse/IOPID-1787)] Add `TRACKING`  Profile Property ([#5857](https://github.com/pagopa/io-app/issues/5857)) ([c0fe107](https://github.com/pagopa/io-app/commit/c0fe10726c91cc7a8e641352dd0cabbe2c9398c9))
+* [[IOPID-1844](https://pagopa.atlassian.net/browse/IOPID-1844)] Edit preferences screen  ([#5862](https://github.com/pagopa/io-app/issues/5862)) ([181a295](https://github.com/pagopa/io-app/commit/181a295571289995ba51116e7df74a8d58b034e1))
+
 ## [2.62.0-rc.2](https://github.com/pagopa/io-app/compare/2.62.0-rc.1...2.62.0-rc.2) (2024-06-12)
 
 
