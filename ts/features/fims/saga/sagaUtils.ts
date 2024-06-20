@@ -3,9 +3,12 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
 export const buildAbsoluteUrl = (
-  redirect: string,
+  redirect: string | undefined = undefined,
   originalRequestUrl: string
 ) => {
+  if (!redirect) {
+    return undefined;
+  }
   try {
     const redirectUrl = new PolyfillURL(redirect);
     return redirectUrl.href;
