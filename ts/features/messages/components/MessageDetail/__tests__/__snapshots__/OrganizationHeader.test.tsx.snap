@@ -339,31 +339,30 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                           <Text
                             allowFontScaling={false}
                             color="grey-700"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
-                            font="TitilliumWeb"
-                            fontSize="regular"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
-                                "fontSize": 14,
+                                "fontSize": 16,
                                 "lineHeight": 21,
                               }
                             }
                             style={
                               Array [
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="Bold"
+                            weight="SemiBold"
                           >
                             #### organization_name ####
                           </Text>
@@ -372,8 +371,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             color="blueIO-500"
                             defaultColor="blue"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
-                            fontSize="regular"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 14,
@@ -389,7 +387,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                                 },
                                 Object {
                                   "color": "#0B3EE3",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },

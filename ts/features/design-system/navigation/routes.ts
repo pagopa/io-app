@@ -54,6 +54,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "WIZARD_SCREEN",
       title: "Wizard Screen"
     },
+    LIST_ITEM_SCREEN: {
+      route: "LIST_ITEM_SCREEN",
+      title: "List Item Screen"
+    },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
       title: "Bonus Card Screen"
@@ -76,6 +80,10 @@ const DESIGN_SYSTEM_ROUTES = {
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
+    },
+    SCREEN_END_MARGIN: {
+      route: "DS_SCREEN_END_MARGIN",
+      title: "Screen End margin"
     },
     IOSCROLLVIEW: {
       route: "IOSCROLLVIEW",
@@ -106,10 +114,6 @@ const DESIGN_SYSTEM_ROUTES = {
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
       title: "Pictograms"
-    },
-    ILLUSTRATIONS: {
-      route: "DESIGN_SYSTEM_LEGACY_ILLUSTRATIONS",
-      title: "Illustrations"
     }
   } as const
 } as const;

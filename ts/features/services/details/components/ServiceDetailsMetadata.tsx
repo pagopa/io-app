@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { FlatList, Linking, ListRenderItemInfo, Platform } from "react-native";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
   Divider,
   IOStyles,
@@ -9,11 +9,12 @@ import {
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../store/reducers/servicesById";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { openWebUrl } from "../../../../utils/url";
+import { handleItemOnPress } from "../../../../utils/url";
+import * as analytics from "../../common/analytics";
 
 type MetadataActionListItem = {
   kind: "ListItemAction";
@@ -23,7 +24,7 @@ type MetadataActionListItem = {
 type MetadataInfoListItem = {
   kind: "ListItemInfo";
   condition?: boolean;
-} & Omit<ListItemInfo, "accessibilityLabel">;
+} & Omit<ListItemInfo, "accessibilityLabel" | "paymentLogoIcon">;
 
 type MetadataInfoCopyListItem = {
   kind: "ListItemInfoCopy";
@@ -59,13 +60,25 @@ export const ServiceDetailsMetadata = ({
     web_url
   } = serviceMetadataById || {};
 
+  const handleOpenUrl = useCallback(
+    (link: keyof ServiceMetadata, value: string) => {
+      analytics.trackServiceDetailsUserExit({
+        link,
+        service_id: serviceId
+      });
+
+      handleItemOnPress(value)();
+    },
+    [serviceId]
+  );
+
   const metadataListItems: ReadonlyArray<MetadataListItem> = [
     {
       kind: "ListItemAction",
       condition: !!web_url,
       icon: "website",
       label: I18n.t("services.details.metadata.website"),
-      onPress: () => openWebUrl(`${web_url}`),
+      onPress: () => handleOpenUrl("web_url", `${web_url}`),
       testID: "service-details-metadata-web-url"
     },
     {
@@ -73,7 +86,7 @@ export const ServiceDetailsMetadata = ({
       condition: Platform.OS === "android" && !!app_android,
       icon: "device",
       label: I18n.t("services.details.metadata.downloadApp"),
-      onPress: () => openWebUrl(`${app_android}`),
+      onPress: () => handleOpenUrl("app_android", `${app_android}`),
       testID: "service-details-metadata-app-android"
     },
     {
@@ -81,7 +94,7 @@ export const ServiceDetailsMetadata = ({
       condition: Platform.OS === "ios" && !!app_ios,
       icon: "device",
       label: I18n.t("services.details.metadata.downloadApp"),
-      onPress: () => openWebUrl(`${app_ios}`),
+      onPress: () => handleOpenUrl("app_ios", `${app_ios}`),
       testID: "service-details-metadata-app-ios"
     },
     {
@@ -89,7 +102,7 @@ export const ServiceDetailsMetadata = ({
       condition: !!support_url,
       icon: "chat",
       label: I18n.t("services.details.metadata.support"),
-      onPress: () => openWebUrl(`${support_url}`),
+      onPress: () => handleOpenUrl("support_url", `${support_url}`),
       testID: "service-details-metadata-support-url"
     },
     {
@@ -97,7 +110,7 @@ export const ServiceDetailsMetadata = ({
       icon: "phone",
       condition: !!phone,
       label: I18n.t("services.details.metadata.phone"),
-      onPress: () => Linking.openURL(`tel:${phone}`),
+      onPress: () => handleOpenUrl("phone", `tel:${phone}`),
       testID: "service-details-metadata-phone"
     },
     {
@@ -105,7 +118,7 @@ export const ServiceDetailsMetadata = ({
       condition: !!email,
       icon: "email",
       label: I18n.t("services.details.metadata.email"),
-      onPress: () => Linking.openURL(`mailto:${email}`),
+      onPress: () => handleOpenUrl("email", `mailto:${email}`),
       testID: "service-details-metadata-email"
     },
     {
@@ -113,14 +126,14 @@ export const ServiceDetailsMetadata = ({
       condition: !!pec,
       icon: "pec",
       label: I18n.t("services.details.metadata.pec"),
-      onPress: () => Linking.openURL(`mailto:${pec}`),
+      onPress: () => handleOpenUrl("pec", `mailto:${pec}`),
       testID: "service-details-metadata-pec"
     },
     {
       kind: "ListItemInfoCopy",
       label: I18n.t("services.details.metadata.fiscalCode"),
       icon: "entityCode",
-      onPress: () => clipboardSetStringWithFeedback(organizationFiscalCode),
+      onPress: handleItemOnPress(serviceId, "COPY"),
       value: organizationFiscalCode,
       testID: "service-details-metadata-org-fiscal-code"
     },
@@ -132,7 +145,6 @@ export const ServiceDetailsMetadata = ({
       testID: "service-details-metadata-address",
       value: address
     },
-
     {
       kind: "ListItemInfo",
       icon: "pinOff",

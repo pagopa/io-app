@@ -103,13 +103,7 @@ const ProfileStackNavigator = () => (
       name={ROUTES.EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
     />
-    <Stack.Screen
-      options={{
-        headerShown: false
-      }}
-      name={ROUTES.PIN_SCREEN}
-      component={PinScreen}
-    />
+    <Stack.Screen name={ROUTES.PIN_SCREEN} component={PinScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}

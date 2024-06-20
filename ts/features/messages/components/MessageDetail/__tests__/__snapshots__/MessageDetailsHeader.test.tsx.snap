@@ -342,7 +342,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         color="bluegreyDark"
                         defaultColor="bluegreyDark"
                         defaultWeight="SemiBold"
-                        font="TitilliumWeb"
+                        font="TitilliumSansPro"
                         fontStyle={
                           Object {
                             "fontSize": 24,
@@ -357,7 +357,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             },
                             Object {
                               "color": "#17324D",
-                              "fontFamily": "Titillium Web",
+                              "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
                               "fontWeight": "600",
                             },
@@ -380,8 +380,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         color="grey-700"
                         defaultColor="blue"
                         defaultWeight="Bold"
-                        font="TitilliumWeb"
-                        fontSize="regular"
+                        font="TitilliumSansPro"
                         fontStyle={
                           Object {
                             "fontSize": 14,
@@ -396,13 +395,13 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             },
                             Object {
                               "color": "#555C70",
-                              "fontFamily": "Titillium Web",
+                              "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
-                              "fontWeight": "700",
+                              "fontWeight": "400",
                             },
                           ]
                         }
-                        weight="Bold"
+                        weight="Regular"
                       >
                         18 Oct 2021, 16:00
                       </Text>
@@ -441,31 +440,30 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           <Text
                             allowFontScaling={false}
                             color="grey-700"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
-                            font="TitilliumWeb"
-                            fontSize="regular"
+                            defaultColor="black"
+                            defaultWeight="SemiBold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
-                                "fontSize": 14,
+                                "fontSize": 16,
                                 "lineHeight": 21,
                               }
                             }
                             style={
                               Array [
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="Bold"
+                            weight="SemiBold"
                           >
                             Ċentru tas-Saħħa
                           </Text>
@@ -474,8 +472,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             color="blueIO-500"
                             defaultColor="blue"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
-                            fontSize="regular"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 14,
@@ -491,7 +488,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 },
                                 Object {
                                   "color": "#0B3EE3",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },

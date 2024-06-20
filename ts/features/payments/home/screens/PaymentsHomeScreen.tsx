@@ -1,5 +1,6 @@
 import { GradientScrollView } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import Animated, { Layout } from "react-native-reanimated";
 import { ScrollView } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -9,17 +10,18 @@ import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyS
 import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
 import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
 import {
+  isPaymentsLatestTransactionsEmptySelector,
   isPaymentsSectionEmptySelector,
-  isPaymentsSectionLoadingSelector,
-  isPaymentsTransactionsEmptySelector
+  isPaymentsSectionLoadingSelector
 } from "../store/selectors";
+import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
   const isTransactionsEmpty = useIOSelector(
-    isPaymentsTransactionsEmptySelector
+    isPaymentsLatestTransactionsEmptySelector
   );
 
   const handleOnPayNoticedPress = () => {
@@ -27,6 +29,15 @@ const PaymentsHomeScreen = () => {
       screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
     });
   };
+
+  const AnimatedPaymentsHomeScreenContent = React.useCallback(
+    () => (
+      <Animated.View layout={Layout.duration(200)}>
+        <PaymentsHomeScreenContent />
+      </Animated.View>
+    ),
+    []
+  );
 
   if (isTransactionsEmpty) {
     return (
@@ -36,7 +47,8 @@ const PaymentsHomeScreen = () => {
           flexGrow: 1
         }}
       >
-        <PaymentsHomeScreenContent />
+        <PaymentsAlertStatus />
+        <AnimatedPaymentsHomeScreenContent />
       </ScrollView>
     );
   }
@@ -57,7 +69,8 @@ const PaymentsHomeScreen = () => {
       }
       excludeSafeAreaMargins={true}
     >
-      <PaymentsHomeScreenContent />
+      <PaymentsAlertStatus />
+      <AnimatedPaymentsHomeScreenContent />
     </GradientScrollView>
   );
 };

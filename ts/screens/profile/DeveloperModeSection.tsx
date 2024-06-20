@@ -188,10 +188,7 @@ const DeveloperDataSection = () => {
   const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
   const sessionToken = useIOSelector(sessionTokenSelector);
   const walletToken = useIOSelector(walletTokenSelector);
-  const { id: notificationId } = useIOSelector(
-    notificationsInstallationSelector
-  );
-  const { token: notificationToken } = useIOSelector(
+  const { id: notificationId, token: notificationToken } = useIOSelector(
     notificationsInstallationSelector
   );
   const publicKey = useIOSelector(lollipopPublicKeySelector);
@@ -224,7 +221,7 @@ const DeveloperDataSection = () => {
       onPress: () => clipboardSetStringWithFeedback(`${notificationId}`)
     },
     {
-      condition: isDevEnv && !!notificationToken,
+      condition: !!notificationToken,
       label: "Notification token",
       value: `${notificationToken}`,
       onPress: () => clipboardSetStringWithFeedback(`${notificationToken}`)

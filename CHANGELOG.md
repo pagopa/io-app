@@ -2,6 +2,156 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.63.0-rc.0](https://github.com/pagopa/io-app/compare/2.62.0-rc.2...2.63.0-rc.0) (2024-06-19)
+
+
+### Features
+
+* [[IOBP-689](https://pagopa.atlassian.net/browse/IOBP-689),[IOBP-699](https://pagopa.atlassian.net/browse/IOBP-699)] Add new payment method management type handling ([#5860](https://github.com/pagopa/io-app/issues/5860)) ([3e3a79e](https://github.com/pagopa/io-app/commit/3e3a79ee0695ffb7344a8fc2a4b219f157e18586))
+* [[IOCOM-832](https://pagopa.atlassian.net/browse/IOCOM-832)] Next message page loading ([#5854](https://github.com/pagopa/io-app/issues/5854)) ([77da2f2](https://github.com/pagopa/io-app/commit/77da2f2985e8bd536caf6811e2e4b65e5edbc79d))
+* **IT Wallet:** [[SIW-1036](https://pagopa.atlassian.net/browse/SIW-1036)] Add eID detail screen ([#5801](https://github.com/pagopa/io-app/issues/5801)) ([f6e0e19](https://github.com/pagopa/io-app/commit/f6e0e19415494591a97255d7f810d9d142e3024c))
+* [[IOBP-652](https://pagopa.atlassian.net/browse/IOBP-652)] Add biz events download PDF receipt ([#5797](https://github.com/pagopa/io-app/issues/5797)) ([257c7d5](https://github.com/pagopa/io-app/commit/257c7d5e83d183f165ff22441307dad66dc3db37))
+* [[IOPID-1899](https://pagopa.atlassian.net/browse/IOPID-1899)] Upgrade DS lib to `1.39.0` ([#5858](https://github.com/pagopa/io-app/issues/5858)) ([e5de0d3](https://github.com/pagopa/io-app/commit/e5de0d310c767d096adee4e6bf5c64f1085b44b5))
+
+
+### Bug Fixes
+
+* [[IOPAE-1253](https://pagopa.atlassian.net/browse/IOPAE-1253)] Set `keepCancelVisible` prop to true on SearchInput ([#5863](https://github.com/pagopa/io-app/issues/5863)) ([9e382c2](https://github.com/pagopa/io-app/commit/9e382c2cc5e847b5c5979391b3bf8ef3b64c8031))
+
+
+### Chores
+
+* [[IOBP-695](https://pagopa.atlassian.net/browse/IOBP-695)] Add banner of service to payments home screen ([#5855](https://github.com/pagopa/io-app/issues/5855)) ([71b76b4](https://github.com/pagopa/io-app/commit/71b76b42fce69ce1f693421c2a5873ce88f73e60))
+* **Cross:** [[IOAPPX-292](https://pagopa.atlassian.net/browse/IOAPPX-292)] Update iOS deployment version to `14.0` ([#5751](https://github.com/pagopa/io-app/issues/5751)) ([73e689f](https://github.com/pagopa/io-app/commit/73e689f8d49667d5427992b560a1344a1e22b104))
+* [[IOCOM-1541](https://pagopa.atlassian.net/browse/IOCOM-1541)] Show push notification token in the profile section (dev mode on) ([#5874](https://github.com/pagopa/io-app/issues/5874)) ([50203de](https://github.com/pagopa/io-app/commit/50203de0a873dfba4e68eea73b820827177f4f50))
+* **Cross:** [[IOAPPX-320](https://pagopa.atlassian.net/browse/IOAPPX-320)] Completely replace `TitilliumWeb` with `TitilliumSansPro` ([#5859](https://github.com/pagopa/io-app/issues/5859)) ([c97c2ef](https://github.com/pagopa/io-app/commit/c97c2effe41e115180ada39d683727eb4ef98e42))
+* [[IOPID-1787](https://pagopa.atlassian.net/browse/IOPID-1787)] Add `TRACKING`  Profile Property ([#5857](https://github.com/pagopa/io-app/issues/5857)) ([c0fe107](https://github.com/pagopa/io-app/commit/c0fe10726c91cc7a8e641352dd0cabbe2c9398c9))
+* [[IOPID-1844](https://pagopa.atlassian.net/browse/IOPID-1844)] Edit preferences screen  ([#5862](https://github.com/pagopa/io-app/issues/5862)) ([181a295](https://github.com/pagopa/io-app/commit/181a295571289995ba51116e7df74a8d58b034e1))
+
+## [2.62.0-rc.2](https://github.com/pagopa/io-app/compare/2.62.0-rc.1...2.62.0-rc.2) (2024-06-12)
+
+
+### Features
+
+* [[IOBP-636](https://pagopa.atlassian.net/browse/IOBP-636),[IOBP-646](https://pagopa.atlassian.net/browse/IOBP-646)] Add legacy transactions list ([#5796](https://github.com/pagopa/io-app/issues/5796)) ([8067ab6](https://github.com/pagopa/io-app/commit/8067ab64f40bc491f6da1542bc5b83f0b2f27a55))
+
+
+### Bug Fixes
+
+* Add user feedback when `Locale` changes ([#5851](https://github.com/pagopa/io-app/issues/5851)) ([e5df504](https://github.com/pagopa/io-app/commit/e5df504f1cac5b39b57758a0c6075203574f98ad))
+
+
+### Chores
+
+* [[IOBP-681](https://pagopa.atlassian.net/browse/IOBP-681)] Add PSP details alert into payment method details if provided ([#5836](https://github.com/pagopa/io-app/issues/5836)) ([490a8c5](https://github.com/pagopa/io-app/commit/490a8c5e4ce4a03e17b0d65bfc81aef489806f2a))
+* [[IOPAE-1235](https://pagopa.atlassian.net/browse/IOPAE-1235)] Search screen enhancements ([#5856](https://github.com/pagopa/io-app/issues/5856)) ([194f95a](https://github.com/pagopa/io-app/commit/194f95a03a15012db870b03540677bd07f9b824c))
+* [[IOPAE-1250](https://pagopa.atlassian.net/browse/IOPAE-1250)] Hide error toasts on refresh session ([#5853](https://github.com/pagopa/io-app/issues/5853)) ([3d43a9e](https://github.com/pagopa/io-app/commit/3d43a9e4a9c92bc3b002e66270faa137c42638b9))
+
+## [2.62.0-rc.1](https://github.com/pagopa/io-app/compare/2.62.0-rc.0...2.62.0-rc.1) (2024-06-11)
+
+
+### Features
+
+* [[IOBP-637](https://pagopa.atlassian.net/browse/IOBP-637),[IOBP-440](https://pagopa.atlassian.net/browse/IOBP-440)] New transactions list and details with biz events integration ([#5768](https://github.com/pagopa/io-app/issues/5768)) ([aaa9d2e](https://github.com/pagopa/io-app/commit/aaa9d2edc3a19ee63690abada17d96ebce7a8d94))
+* [[IOCOM-1392](https://pagopa.atlassian.net/browse/IOCOM-1392),[IOCOM-1394](https://pagopa.atlassian.net/browse/IOCOM-1394),[IOCOM-1478](https://pagopa.atlassian.net/browse/IOCOM-1478),[IOCOM-1482](https://pagopa.atlassian.net/browse/IOCOM-1482),[IOCOM-1481](https://pagopa.atlassian.net/browse/IOCOM-1481),[IOCOM-1483](https://pagopa.atlassian.net/browse/IOCOM-1483),[IOCOM-1496](https://pagopa.atlassian.net/browse/IOCOM-1496),[IOCOM-1503](https://pagopa.atlassian.net/browse/IOCOM-1503)] Fixes for reported new message details anomalies ([#5833](https://github.com/pagopa/io-app/issues/5833)) ([0c37522](https://github.com/pagopa/io-app/commit/0c375228798c0b4aaffefdc12ef601cbd3340268))
+* [[IOCOM-1411](https://pagopa.atlassian.net/browse/IOCOM-1411)] Navigation to message routing, from new DS messages' home ([#5830](https://github.com/pagopa/io-app/issues/5830)) ([f206ef7](https://github.com/pagopa/io-app/commit/f206ef7aa525e2756f79f72603ec4fb481a06839))
+* [[IOPLT-358](https://pagopa.atlassian.net/browse/IOPLT-358)] Upgrade react-redux to latest supportable version ([#5578](https://github.com/pagopa/io-app/issues/5578)) ([3765654](https://github.com/pagopa/io-app/commit/37656546cf68af010b5ce151fe47e17eb0c85b66))
+* **IT Wallet:** [[SIW-1029](https://pagopa.atlassian.net/browse/SIW-1029)] Add IT Wallet credential preview screen ([#5841](https://github.com/pagopa/io-app/issues/5841)) ([47d1dbb](https://github.com/pagopa/io-app/commit/47d1dbb532c2bde7235d0ca4b9d44a85a2444b31))
+* [[IOPID-1532](https://pagopa.atlassian.net/browse/IOPID-1532)] Integrate new DS in Security Screen ([#5821](https://github.com/pagopa/io-app/issues/5821)) ([7fea834](https://github.com/pagopa/io-app/commit/7fea834e2073e45431d21b872ba0ac1f96bd560d))
+
+
+### Bug Fixes
+
+* [[IOBP-684](https://pagopa.atlassian.net/browse/IOBP-684)] Navigation to the payments home when payment success ([#5835](https://github.com/pagopa/io-app/issues/5835)) ([6f3c320](https://github.com/pagopa/io-app/commit/6f3c320d537a53e0a325aaebdab06e73b83f1fcc))
+* [[IOCOM-1501](https://pagopa.atlassian.net/browse/IOCOM-1501)] Fixed unresponsive PagerView on Home after fast login ([#5827](https://github.com/pagopa/io-app/issues/5827)) ([80490e8](https://github.com/pagopa/io-app/commit/80490e89903b5bfd5d6ad3aab820ad20b83a5408))
+
+
+### Chores
+
+* [[IOBP-635](https://pagopa.atlassian.net/browse/IOBP-635)] Removed FF from the new transaction details screen ([#5834](https://github.com/pagopa/io-app/issues/5834)) ([821786a](https://github.com/pagopa/io-app/commit/821786abd59736b6c46ec73965a8afc89d5dd15a))
+* [[IOBP-686](https://pagopa.atlassian.net/browse/IOBP-686)] Removed temporary the latest used payment method section ([#5831](https://github.com/pagopa/io-app/issues/5831)) ([4205371](https://github.com/pagopa/io-app/commit/420537108fe33f329e49b68ce0d77f758534ee19))
+* [[IOBP-690](https://pagopa.atlassian.net/browse/IOBP-690)] Add pre-selection psp logic for payment methods with pspId indicated ([#5838](https://github.com/pagopa/io-app/issues/5838)) ([e654f6f](https://github.com/pagopa/io-app/commit/e654f6f84f90596a01fdd50d61302c444882a765))
+* [[IOCOM-1422](https://pagopa.atlassian.net/browse/IOCOM-1422),[IOCOM-1425](https://pagopa.atlassian.net/browse/IOCOM-1425),[IOCOM-1426](https://pagopa.atlassian.net/browse/IOCOM-1426)] FIMS Consents screen ([#5820](https://github.com/pagopa/io-app/issues/5820)) ([a7fb875](https://github.com/pagopa/io-app/commit/a7fb8754da03b622e00ca265781d9dae5ab0743d))
+* [[IOCOM-1424](https://pagopa.atlassian.net/browse/IOCOM-1424),[IOCOM-1428](https://pagopa.atlassian.net/browse/IOCOM-1428)] FIMS flow cancelling ([#5843](https://github.com/pagopa/io-app/issues/5843)) ([0289169](https://github.com/pagopa/io-app/commit/0289169e0c079417fa2fadf57ec2cbb0862ea14a))
+* [[IOCOM-1479](https://pagopa.atlassian.net/browse/IOCOM-1479)] `organization_fiscal_code` from `GET /messages` ([#5847](https://github.com/pagopa/io-app/issues/5847)) ([6471059](https://github.com/pagopa/io-app/commit/6471059809d943c5155b87d8704d3aa484a9acd0))
+* [[IOCOM-1498](https://pagopa.atlassian.net/browse/IOCOM-1498)] FIMS InApp Browser's cookie sharing on iOS ([#5816](https://github.com/pagopa/io-app/issues/5816)) ([7ea4af1](https://github.com/pagopa/io-app/commit/7ea4af1961df00aecd2cb56acd4fc10181a6ff27))
+* [[IOCOM-1499](https://pagopa.atlassian.net/browse/IOCOM-1499)] All query params are signed with lollipop on RP redirect url ([#5837](https://github.com/pagopa/io-app/issues/5837)) ([9b738f3](https://github.com/pagopa/io-app/commit/9b738f33f70849c476d1f59da7757a4a4b5973d8))
+* [[IOPAE-1187](https://pagopa.atlassian.net/browse/IOPAE-1187)] Add services Mixpanel analytics events ([#5804](https://github.com/pagopa/io-app/issues/5804)) ([592673a](https://github.com/pagopa/io-app/commit/592673a9e6d5ae11049b662b79eeb27c9396f005))
+* [[IOPAE-1231](https://pagopa.atlassian.net/browse/IOPAE-1231)] Update mixpanel trackServiceDetailsCtaTapped event props ([#5848](https://github.com/pagopa/io-app/issues/5848)) ([119dc7b](https://github.com/pagopa/io-app/commit/119dc7bb5b238d3dd49a8bfe08c3f897940b741b))
+* [[IOPAE-1236](https://pagopa.atlassian.net/browse/IOPAE-1236)] Add conditional fontFamily for `OrganizationNameLabel` based on `useIOExperimentalDesign` ([#5839](https://github.com/pagopa/io-app/issues/5839)) ([e3deae8](https://github.com/pagopa/io-app/commit/e3deae8fe97c70c56a9c6335eb4d3e2d3bd64ca2))
+* [[IOPAE-1237](https://pagopa.atlassian.net/browse/IOPAE-1237)] Add singular/plural services count locales into `InstitutionServicesScreen` ([#5840](https://github.com/pagopa/io-app/issues/5840)) ([d1d8487](https://github.com/pagopa/io-app/commit/d1d84874b60856d9c0ed07793e4f54f160f94324))
+* [[IOPAE-1240](https://pagopa.atlassian.net/browse/IOPAE-1240)] Restore scroll to top in the `ServicesHomeScreen` ([#5844](https://github.com/pagopa/io-app/issues/5844)) ([01ec4fa](https://github.com/pagopa/io-app/commit/01ec4fadbb8682a20e3d3251cff73d044cf6991f))
+* [[IOPAE-1249](https://pagopa.atlassian.net/browse/IOPAE-1249)] Fix the endless loop of FlatList's `onEndReached` ([#5849](https://github.com/pagopa/io-app/issues/5849)) ([ced63de](https://github.com/pagopa/io-app/commit/ced63de00fb68b2ead42f627583f3f4bde475ada))
+* **Cross:** [[IOAPPX-307](https://pagopa.atlassian.net/browse/IOAPPX-307)] Add `useScreenEndMargin` hook ([#5808](https://github.com/pagopa/io-app/issues/5808)) ([af7b8a6](https://github.com/pagopa/io-app/commit/af7b8a6d5870c8a96cc1f0ee563d9699cf1c1637))
+* **Cross:** [[IOAPPX-309](https://pagopa.atlassian.net/browse/IOAPPX-309)] Add `useFooterActionsMeasurements` hook ([#5811](https://github.com/pagopa/io-app/issues/5811)) ([a27a6ac](https://github.com/pagopa/io-app/commit/a27a6ac32b0bf42a78a5aa890952e6f959e36af3))
+* **IT Wallet:** [[SIW-1165](https://pagopa.atlassian.net/browse/SIW-1165)] Add status banner to warn about iOS version upgrade to 14 ([#5819](https://github.com/pagopa/io-app/issues/5819)) ([067f0a9](https://github.com/pagopa/io-app/commit/067f0a926e8b5d27f647d5e68b8f15aec3e72971))
+* **IT Wallet:** [[SIW-1200](https://pagopa.atlassian.net/browse/SIW-1200)] Add IT Wallet credential cards components ([#5832](https://github.com/pagopa/io-app/issues/5832)) ([2016ab0](https://github.com/pagopa/io-app/commit/2016ab0cd995bf6bc3d37c8e85fd92b8bfba1e35))
+
+## [2.62.0-rc.0](https://github.com/pagopa/io-app/compare/2.61.0-rc.2...2.62.0-rc.0) (2024-06-05)
+
+
+### Features
+
+* [[IOPID-1531](https://pagopa.atlassian.net/browse/IOPID-1531)] Integrate new DS on language preferences screen ([#5823](https://github.com/pagopa/io-app/issues/5823)) ([93cf676](https://github.com/pagopa/io-app/commit/93cf6765c4a33a498f8cbef22983ce36c2b0165a))
+* **IT Wallet:** [[SIW-1022](https://pagopa.atlassian.net/browse/SIW-1022)] Add PIN/biometric authorization for eID store action ([#5792](https://github.com/pagopa/io-app/issues/5792)) ([f3bebba](https://github.com/pagopa/io-app/commit/f3bebba057c7c40df7d693b9b8dee6d3b0c9fc13))
+* [[IOCOM-1335](https://pagopa.atlassian.net/browse/IOCOM-1335),[IOCOM-1421](https://pagopa.atlassian.net/browse/IOCOM-1421)] FIMS flow loading screens ([#5806](https://github.com/pagopa/io-app/issues/5806)) ([70631c1](https://github.com/pagopa/io-app/commit/70631c1018dad594eae6bc3894fe58eaeda9ba0d))
+* [[IOPID-1507](https://pagopa.atlassian.net/browse/IOPID-1507),[IOPID-1533](https://pagopa.atlassian.net/browse/IOPID-1533)] Integrate new DS in Pin Screen flow ([#5737](https://github.com/pagopa/io-app/issues/5737)) ([32cb276](https://github.com/pagopa/io-app/commit/32cb27615a68eb954e4ada1a0c1b45bedfb0fa36))
+* **IT Wallet:** [[SIW-1021](https://pagopa.atlassian.net/browse/SIW-1021)] Add IT Wallet eID preview screen ([#5780](https://github.com/pagopa/io-app/issues/5780)) ([02bd520](https://github.com/pagopa/io-app/commit/02bd520d87166d5bf28096d143f4c99a3475080b))
+* [[IOCOM-824](https://pagopa.atlassian.net/browse/IOCOM-824),[IOCOM-825](https://pagopa.atlassian.net/browse/IOCOM-825)] Loading and loaded message list adapted to the new DS ([#5784](https://github.com/pagopa/io-app/issues/5784)) ([0782d34](https://github.com/pagopa/io-app/commit/0782d34ca2072358098df9771af19e07420bd05b))
+
+
+### Bug Fixes
+
+* [[IOPID-1880](https://pagopa.atlassian.net/browse/IOPID-1880)] Fix `/logout` api call always in `401` ([#5802](https://github.com/pagopa/io-app/issues/5802)) ([50f254f](https://github.com/pagopa/io-app/commit/50f254fa9860aa4ec24a85fa393915ba82c1564c))
+* `pot` import ([#5828](https://github.com/pagopa/io-app/issues/5828)) ([94d3999](https://github.com/pagopa/io-app/commit/94d3999300b95b696eb80261834cbbebd11c686a))
+* e2e login when `PosteID` is hidden ([#5818](https://github.com/pagopa/io-app/issues/5818)) ([0bb9606](https://github.com/pagopa/io-app/commit/0bb96062481051af2b734d678efcff8f818dfd92))
+
+
+### Chores
+
+* [[IOBP-665](https://pagopa.atlassian.net/browse/IOBP-665),[IOBP-570](https://pagopa.atlassian.net/browse/IOBP-570)] PayPal metadata and latest used payment method adaption ([#5803](https://github.com/pagopa/io-app/issues/5803)) ([5d017f9](https://github.com/pagopa/io-app/commit/5d017f92bea409167373efd16d03d4095e24c5bd))
+* [[IOPAE-1148](https://pagopa.atlassian.net/browse/IOPAE-1148)] Add Institutions search ([#5769](https://github.com/pagopa/io-app/issues/5769)) ([50fa6cf](https://github.com/pagopa/io-app/commit/50fa6cfafc57c142837e95350efe287c9b39ea61))
+* [[IOPAE-1206](https://pagopa.atlassian.net/browse/IOPAE-1206)] Replace `TextInput` with `SearchInput` in the services section ([#5815](https://github.com/pagopa/io-app/issues/5815)) ([2c709b5](https://github.com/pagopa/io-app/commit/2c709b53998c9dfda96e471c6322a382d0728a27))
+* [[IOPAE-1212](https://pagopa.atlassian.net/browse/IOPAE-1212)] Added button to navigate the search screen ([#5824](https://github.com/pagopa/io-app/issues/5824)) ([f209752](https://github.com/pagopa/io-app/commit/f209752f0a68d03b98d5a36dbc1d9e4602302bda))
+* [[IOPAE-1213](https://pagopa.atlassian.net/browse/IOPAE-1213)] Update Services Search EmptyState copy and font size ([#5826](https://github.com/pagopa/io-app/issues/5826)) ([f508a17](https://github.com/pagopa/io-app/commit/f508a178d1a2cfe97c14f44bcc38a874dd1deb97))
+* [[IOPAE-1221](https://pagopa.atlassian.net/browse/IOPAE-1221)] Enable new services section by default ([#5829](https://github.com/pagopa/io-app/issues/5829)) ([6a08e77](https://github.com/pagopa/io-app/commit/6a08e77703c9cf3f329acc7b7c45502e4e964bd8))
+* fix maintenance team on publicode ([#5825](https://github.com/pagopa/io-app/issues/5825)) ([52b4d00](https://github.com/pagopa/io-app/commit/52b4d002b10c895b13d85b184e079e319671e09a))
+* **Cross:** [[IOAPPX-306](https://pagopa.atlassian.net/browse/IOAPPX-306)] Add deprecation note to `BaseScreenComponent` and its related components ([#5807](https://github.com/pagopa/io-app/issues/5807)) ([413c863](https://github.com/pagopa/io-app/commit/413c8634fe87bc45ffbd27c55641abaf89c1a365))
+* **IT Wallet:** [[SIW-1153](https://pagopa.atlassian.net/browse/SIW-1153)] Add SPID identification flow ([#5791](https://github.com/pagopa/io-app/issues/5791)) ([6143176](https://github.com/pagopa/io-app/commit/61431768aa92d4400c7093ab9a9c110d02646e31))
+
+## [2.61.0-rc.2](https://github.com/pagopa/io-app/compare/2.61.0-rc.1...2.61.0-rc.2) (2024-05-30)
+
+
+### Bug Fixes
+
+* [[IOBP-653](https://pagopa.atlassian.net/browse/IOBP-653)] Fix `TransactionSummaryScreen` visual issues ([#5805](https://github.com/pagopa/io-app/issues/5805)) ([13778b6](https://github.com/pagopa/io-app/commit/13778b6216ce746d9cc1fd169949f783d3c22ce7))
+
+## [2.61.0-rc.1](https://github.com/pagopa/io-app/compare/2.61.0-rc.0...2.61.0-rc.1) (2024-05-29)
+
+
+### Features
+
+* [[IOBP-647](https://pagopa.atlassian.net/browse/IOBP-647)] Latest used method pre-selection ([#5783](https://github.com/pagopa/io-app/issues/5783)) ([0e6759f](https://github.com/pagopa/io-app/commit/0e6759f10c7475994eff8a7959e3e3622f85d339))
+* [[IOCOM-1133](https://pagopa.atlassian.net/browse/IOCOM-1133),[IOCOM-1235](https://pagopa.atlassian.net/browse/IOCOM-1235),[IOCOM-1372](https://pagopa.atlassian.net/browse/IOCOM-1372)] Push Notification Opt In screen, new DS ([#5734](https://github.com/pagopa/io-app/issues/5734)) ([45d20bc](https://github.com/pagopa/io-app/commit/45d20bc77ed78589d826fd806096dab06bb6995b))
+* [[IOPID-1521](https://pagopa.atlassian.net/browse/IOPID-1521),[IOPID-1522](https://pagopa.atlassian.net/browse/IOPID-1522),[IOPID-1523](https://pagopa.atlassian.net/browse/IOPID-1523)] Integrate new DS in Profile section ([#5778](https://github.com/pagopa/io-app/issues/5778)) ([c3a7a82](https://github.com/pagopa/io-app/commit/c3a7a82f075dac0196c909e5d5e0a66104563018))
+* [[IOPID-1724](https://pagopa.atlassian.net/browse/IOPID-1724),[IOPID-1726](https://pagopa.atlassian.net/browse/IOPID-1726),[IOPID-1727](https://pagopa.atlassian.net/browse/IOPID-1727)] Revamp `CieCardReaderScreen` ([#5773](https://github.com/pagopa/io-app/issues/5773)) ([a001580](https://github.com/pagopa/io-app/commit/a00158033a21dedb6640e04143639a5fa29bf29c)), closes [/github.com/pagopa/io-app/pull/5773/files#diff-b667d338f5e01d2a34f0f7ae24e9abd4801cec542c58b42639df8ec47a218684](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-b667d338f5e01d2a34f0f7ae24e9abd4801cec542c58b42639df8ec47a218684) [/github.com/pagopa/io-app/pull/5773/files#diff-f28674b1c9dd81de4c21b57d41a098877e839e2051dc19cd81d0472170e28510](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-f28674b1c9dd81de4c21b57d41a098877e839e2051dc19cd81d0472170e28510) [/github.com/pagopa/io-app/pull/5773/files#diff-76cb33c8e945f67d436b5f6e484c70430e8b65658d94a387718fd39c4ae51822](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-76cb33c8e945f67d436b5f6e484c70430e8b65658d94a387718fd39c4ae51822) [/github.com/pagopa/io-app/pull/5773/files#diff-d68212c2e8855af6aa24a464269050d367ae5d5d9bfdacb1dfed7fb7196307](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-d68212c2e8855af6aa24a464269050d367ae5d5d9bfdacb1dfed7fb7196307) [/github.com/pagopa/io-app/pull/5773/files#diff-cd0e2e142510110db17d17e0e403028bfdc66c4410ad64016bf46236a7a9a60](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-cd0e2e142510110db17d17e0e403028bfdc66c4410ad64016bf46236a7a9a60) [/github.com/pagopa/io-app/pull/5773/files#diff-f84525c4c8c54f4c7c6fc92319850acf3227adb7263e6b7166e14ef96bbbca48](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-f84525c4c8c54f4c7c6fc92319850acf3227adb7263e6b7166e14ef96bbbca48) [/github.com/pagopa/io-app/pull/5773/files#diff-a76659fdb26dd57df7f5acb4ca5d09950db012fde4c3c142c93afeb7f2c5ae31](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-a76659fdb26dd57df7f5acb4ca5d09950db012fde4c3c142c93afeb7f2c5ae31) [/github.com/pagopa/io-app/pull/5773/files#diff-8b526b13b041571bd46d1132483a94efac459770810eace93ab42dceda6e733](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-8b526b13b041571bd46d1132483a94efac459770810eace93ab42dceda6e733) [/github.com/pagopa/io-app/pull/5773/files#diff-0e49b6b37a5061c1c4bb1d98565024e499549b98e4ba388ca99db64a6d365be5](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-0e49b6b37a5061c1c4bb1d98565024e499549b98e4ba388ca99db64a6d365be5) [/github.com/pagopa/io-app/pull/5773/files#diff-8661f2a6ef4e60806c0c09fa047b9d64ab6c524a4ca5b9f78eedf0bb9efde5d0](https://github.com/pagopa//github.com/pagopa/io-app/pull/5773/files/issues/diff-8661f2a6ef4e60806c0c09fa047b9d64ab6c524a4ca5b9f78eedf0bb9efde5d0)
+* [[IOPID-1855](https://pagopa.atlassian.net/browse/IOPID-1855)] Add new DS on Activate NFC screen and create generic component  ([#5790](https://github.com/pagopa/io-app/issues/5790)) ([c016415](https://github.com/pagopa/io-app/commit/c0164154126b2d26c327def8639edf35c2b4d11d))
+
+
+### Chores
+
+* [[IOBP-644](https://pagopa.atlassian.net/browse/IOBP-644)] Add other onboardable method filters ([#5785](https://github.com/pagopa/io-app/issues/5785)) ([15086be](https://github.com/pagopa/io-app/commit/15086beee8bb4c42b016aa09257930e71ba1df90))
+* [[IOBP-659](https://pagopa.atlassian.net/browse/IOBP-659)] Add remote feature flag to the new payment section ([#5798](https://github.com/pagopa/io-app/issues/5798)) ([a3854c1](https://github.com/pagopa/io-app/commit/a3854c1010cb98d05b220de566b0f9b5817e3f30))
+* [[IOCOM-1354](https://pagopa.atlassian.net/browse/IOCOM-1354)] `NOTIFICATION_PERMISSION` super and profile property ([#5749](https://github.com/pagopa/io-app/issues/5749)) ([4cc55c8](https://github.com/pagopa/io-app/commit/4cc55c83cd38e110d95e0f3a1e4be577ba589259))
+* [[IOCOM-1358](https://pagopa.atlassian.net/browse/IOCOM-1358)] FIMS flow IAB saga ([#5782](https://github.com/pagopa/io-app/issues/5782)) ([98aa311](https://github.com/pagopa/io-app/commit/98aa311847dbce151da900e67db2cfcb8e6032fd))
+* [[IOCOM-1384](https://pagopa.atlassian.net/browse/IOCOM-1384)] FIMS flow error handling/native client ([#5800](https://github.com/pagopa/io-app/issues/5800)) ([cf5223b](https://github.com/pagopa/io-app/commit/cf5223b55103e603122e4517ae9ff58cd13827a5))
+* [[IOCOM-1464](https://pagopa.atlassian.net/browse/IOCOM-1464)] Latest HTTP Client package  ([#5799](https://github.com/pagopa/io-app/issues/5799)) ([17fdb27](https://github.com/pagopa/io-app/commit/17fdb279af0b314414bf313452eb3c6fdf9adc69))
+* [[IOPAE-1142](https://pagopa.atlassian.net/browse/IOPAE-1142)] Added featured carousels in `ServicesHomeScreen` ([#5793](https://github.com/pagopa/io-app/issues/5793)) ([ca2de78](https://github.com/pagopa/io-app/commit/ca2de7835f5dcc32080b4568f29682bd523f0069))
+* [[IOPAE-1185](https://pagopa.atlassian.net/browse/IOPAE-1185)] Add `headerShown` prop to `useHeaderSecondLevel` ([#5795](https://github.com/pagopa/io-app/issues/5795)) ([b8b56cc](https://github.com/pagopa/io-app/commit/b8b56cc5498c36cc67a19dd1c2607af5ee02ef65))
+* [[IOPLT-514](https://pagopa.atlassian.net/browse/IOPLT-514)] Add Trial System redux store ([#5776](https://github.com/pagopa/io-app/issues/5776)) ([7344fab](https://github.com/pagopa/io-app/commit/7344fab90a4692a3c7ad2aa01ecaeba140ec0662)), closes [pagopa/io-backend#1119](https://github.com/pagopa/io-backend/issues/1119)
+* **Cross:** [[IOAPPX-300](https://pagopa.atlassian.net/browse/IOAPPX-300)] Add `FooterActions` that replaces `FooterWithButtons` ([#5787](https://github.com/pagopa/io-app/issues/5787)) ([0fc4041](https://github.com/pagopa/io-app/commit/0fc4041c7c0db968ce98c45ecadfbeab248c8f17))
+* change EIC login flow with the dev server to navigate to `CieConsentDataUsageScreen` ([#5788](https://github.com/pagopa/io-app/issues/5788)) ([3bfb1d2](https://github.com/pagopa/io-app/commit/3bfb1d2df9435ca2c439d289290c98751dbbfd03))
+
 ## [2.61.0-rc.0](https://github.com/pagopa/io-app/compare/2.60.0-rc.2...2.61.0-rc.0) (2024-05-22)
 
 

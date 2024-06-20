@@ -1,11 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import {
+  constFalse,
+  constTrue,
+  constUndefined,
+  pipe
+} from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as Either from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import messageListData, {
-  MessageListCategory
+import {
+  MessageListCategory,
+  foldK as messageListCategoryFoldK
 } from "../../types/messageListCategory";
 import {
   loadNextPageMessages,
@@ -21,6 +27,8 @@ import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
+import { foldK } from "../../../../utils/pot";
+import { emptyMessageArray } from "../../utils";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -573,15 +581,7 @@ export const allArchiveSelector = (
 export const messagesByCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) => {
-  const items = allPaginatedSelector(state);
-
-  return messageListData.fold(
-    category,
-    () => items.inbox.data,
-    () => items.archive.data
-  );
-};
+) => pipe(state, messagePagePotFromCategory(category));
 
 /**
  * Return the list of Inbox messages currently available.
@@ -724,5 +724,128 @@ export const getCursors = createSelector(
 
 export const shownMessageCategorySelector = (state: GlobalState) =>
   state.entities.messages.allPaginated.shownCategory;
+
+export const messageListForCategorySelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messagePagePotFromCategory(category),
+    foldK(
+      () => emptyMessageArray,
+      constUndefined,
+      constUndefined,
+      _ => emptyMessageArray,
+      messagePage => messagePage.page,
+      messagePage => messagePage.page,
+      (messagePage, _) => messagePage.page,
+      (messagePage, _) => messagePage.page
+    )
+  );
+
+export const emptyListReasonSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+): "noData" | "error" | "notEmpty" =>
+  pipe(
+    state,
+    messagePagePotFromCategory(category),
+    foldK(
+      () => "noData",
+      () => "notEmpty",
+      () => "notEmpty",
+      () => "error",
+      reasonFromMessagePageContainer,
+      reasonFromMessagePageContainer,
+      (container, _) => reasonFromMessagePageContainer(container),
+      (container, _) => reasonFromMessagePageContainer(container)
+    )
+  );
+
+export const shouldShowFooterListComponentSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messagePagePotFromCategory(category),
+    foldK(
+      constFalse,
+      constFalse,
+      constFalse,
+      constFalse,
+      constFalse,
+      constTrue,
+      constTrue,
+      constFalse
+    )
+  );
+
+export const nextMessagePageStartingIdForCategorySelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messagePagePotFromCategory(category),
+    foldK(
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      messagePage => messagePage.next,
+      constUndefined,
+      constUndefined,
+      (messagePage, _) => messagePage.next
+    )
+  );
+
+export const nextPageLoadingForCategoryHasErrorSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messageCollectionFromCategory(category),
+    messageCollection =>
+      pipe(
+        messageCollection.lastRequest,
+        O.filter(lastRequest => lastRequest === "next"),
+        O.fold(
+          () => O.none,
+          () => O.some(messageCollection.data)
+        )
+      ),
+    O.map(
+      messagePagePot =>
+        pot.isSome(messagePagePot) && pot.isError(messagePagePot)
+    ),
+    O.getOrElse(() => false)
+  );
+
+const messagePagePotFromCategory =
+  (category: MessageListCategory) => (state: GlobalState) =>
+    pipe(
+      state,
+      messageCollectionFromCategory(category),
+      messageCollection => messageCollection.data
+    );
+
+const messageCollectionFromCategory =
+  (category: MessageListCategory) => (state: GlobalState) =>
+    pipe(state.entities.messages.allPaginated, allPaginated =>
+      pipe(
+        category,
+        messageListCategoryFoldK(
+          () => allPaginated.inbox,
+          () => allPaginated.archive
+        )
+      )
+    );
+
+const reasonFromMessagePageContainer = (
+  container: MessagePage
+): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
 
 export default reducer;

@@ -19,8 +19,11 @@ import {
   fastLoginReducer
 } from "../../../fastLogin/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
+import fimsReducer, { FimsState } from "../../../fims/store/reducers";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
-import itwReducer, { ItwState } from "../../../itwallet/common/store/reducers";
+import itWalletReducer, {
+  ItWalletState
+} from "../../../itwallet/common/store/reducers";
 import {
   NativeLoginState,
   nativeLoginReducer
@@ -30,18 +33,17 @@ import paymentsReducer, {
   PaymentsState
 } from "../../../payments/common/store/reducers";
 import { PnState, pnReducer } from "../../../pn/store/reducers";
-import servicesReducer, {
-  ServicesState
-} from "../../../services/common/store/reducers";
-import fimsReducer, { FimsState } from "../../../fims/store/reducers";
-import {
-  WhatsNewState,
-  whatsNewPersistor
-} from "../../../whatsnew/store/reducers";
 import {
   ProfileSettingsState,
   profileSettingsReducerPersistor
 } from "../../../profileSettings/store/reducers";
+import servicesReducer, {
+  ServicesState
+} from "../../../services/common/store/reducers";
+import {
+  WhatsNewState,
+  whatsNewPersistor
+} from "../../../whatsnew/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -61,7 +63,7 @@ export type FeaturesState = {
   services: ServicesState;
   wallet: WalletState;
   fims: FimsState;
-  itw: ItwState;
+  itWallet: ItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
 };
 
@@ -83,7 +85,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   }),
   wallet: walletReducer,
   fims: fimsReducer,
-  itw: itwReducer,
+  itWallet: itWalletReducer,
   profileSettings: profileSettingsReducerPersistor
 });
 

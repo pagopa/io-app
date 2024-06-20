@@ -25,6 +25,10 @@ export function* handleGetFeaturedServices(
     )) as unknown as SagaCallReturnType<typeof getFeaturedServices>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
+
       if (response.right.status === 200) {
         yield* put(featuredServicesGet.success(response.right.value));
         return;
