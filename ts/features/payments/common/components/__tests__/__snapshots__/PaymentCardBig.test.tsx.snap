@@ -825,9 +825,9 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                           allowFontScaling={false}
                           color="black"
                           defaultColor="black"
-                          defaultWeight="SemiBold"
+                          defaultWeight="Semibold"
                           ellipsizeMode="tail"
-                          font="TitilliumWeb"
+                          font="TitilliumSansPro"
                           fontStyle={
                             Object {
                               "fontSize": 18,
@@ -846,13 +846,13 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                               },
                               Object {
                                 "color": "#0E0F13",
-                                "fontFamily": "Titillium Web",
+                                "fontFamily": "Titillium Sans Pro",
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
                               },
                             ]
                           }
-                          weight="SemiBold"
+                          weight="Semibold"
                         >
                           someEmail@test.com
                         </Text>

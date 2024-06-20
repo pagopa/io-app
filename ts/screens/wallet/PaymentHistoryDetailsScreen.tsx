@@ -323,7 +323,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               {O.isSome(data.errorDetail) && (
                 <View key={"error"}>
                   <Body>{I18n.t("payment.errorDetails")}</Body>
-                  <Body weight="SemiBold" color="bluegreyDark">
+                  <Body weight="Semibold" color="bluegreyDark">
                     {data.errorDetail.value}
                   </Body>
                 </View>
@@ -381,7 +381,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                   <View
                     style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}
                   >
-                    <Body weight="SemiBold" color="bluegreyDark">
+                    <Body weight="Semibold" color="bluegreyDark">
                       {data.idTransaction}
                     </Body>
                     <CopyButtonComponent

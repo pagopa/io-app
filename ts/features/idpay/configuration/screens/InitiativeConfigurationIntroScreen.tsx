@@ -44,7 +44,7 @@ const RequiredDataItem = (props: RequiredDataItemProps) => (
   <View style={[IOStyles.row, styles.listItem]}>
     {!!props.icon && <View style={styles.icon}>{props.icon}</View>}
     <View>
-      <H4 weight="SemiBold" color="bluegreyDark">
+      <H4 weight="Semibold" color="bluegreyDark">
         {props.title}
       </H4>
       <LabelSmall weight="Regular" color="bluegrey">

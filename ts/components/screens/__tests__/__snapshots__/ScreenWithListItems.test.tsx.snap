@@ -336,8 +336,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 28,
@@ -352,13 +352,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Test Title
                           </Text>
@@ -374,7 +374,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -389,7 +389,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -443,8 +443,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     allowFontScaling={false}
                                     color="grey-700"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 18,
@@ -460,13 +460,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         },
                                         Object {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     List Header
                                   </Text>
@@ -566,7 +566,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                           color="grey-700"
                                           defaultColor="blue"
                                           defaultWeight="Bold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 14,
@@ -581,7 +581,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                               },
                                               Object {
                                                 "color": "#555C70",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
                                               },
@@ -595,8 +595,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
+                                          defaultWeight="Semibold"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 18,
@@ -612,13 +612,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 1
                                         </Text>
@@ -677,7 +677,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                           color="grey-700"
                                           defaultColor="blue"
                                           defaultWeight="Bold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 14,
@@ -692,7 +692,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                               },
                                               Object {
                                                 "color": "#555C70",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
                                               },
@@ -706,8 +706,8 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
+                                          defaultWeight="Semibold"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 18,
@@ -723,13 +723,13 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 2
                                         </Text>
@@ -958,7 +958,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                   defaultColor="white"
                                   defaultWeight="Bold"
                                   ellipsizeMode="tail"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -977,7 +977,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                       },
                                       Object {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },
@@ -1341,8 +1341,8 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 28,
@@ -1357,13 +1357,13 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           />
                           <RCTScrollView
                             ItemSeparatorComponent={[Function]}
@@ -1621,7 +1621,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                   defaultColor="white"
                                   defaultWeight="Bold"
                                   ellipsizeMode="tail"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -1640,7 +1640,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                       },
                                       Object {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },
@@ -2004,8 +2004,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 28,
@@ -2020,13 +2020,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Test Title
                           </Text>
@@ -2042,7 +2042,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -2060,7 +2060,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2073,7 +2073,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -2091,7 +2091,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   },
                                   Object {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -2106,7 +2106,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -2124,13 +2124,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   },
                                   Object {
                                     "color": "#475A6D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Subtitle Part 2 Bold
                             </Text>
@@ -2179,8 +2179,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     allowFontScaling={false}
                                     color="grey-700"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 18,
@@ -2196,13 +2196,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         },
                                         Object {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     List Header
                                   </Text>
@@ -2302,7 +2302,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                           color="grey-700"
                                           defaultColor="blue"
                                           defaultWeight="Bold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 14,
@@ -2317,7 +2317,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                               },
                                               Object {
                                                 "color": "#555C70",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
                                               },
@@ -2331,8 +2331,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
+                                          defaultWeight="Semibold"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 18,
@@ -2348,13 +2348,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 1
                                         </Text>
@@ -2413,7 +2413,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                           color="grey-700"
                                           defaultColor="blue"
                                           defaultWeight="Bold"
-                                          font="TitilliumWeb"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 14,
@@ -2428,7 +2428,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                               },
                                               Object {
                                                 "color": "#555C70",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
                                               },
@@ -2442,8 +2442,8 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
+                                          defaultWeight="Semibold"
+                                          font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 18,
@@ -2459,13 +2459,13 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Titillium Sans Pro",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 2
                                         </Text>
@@ -2694,7 +2694,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   defaultColor="white"
                                   defaultWeight="Bold"
                                   ellipsizeMode="tail"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -2713,7 +2713,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                       },
                                       Object {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
                                       },

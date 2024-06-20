@@ -90,8 +90,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               allowFontScaling={false}
               color="black"
               defaultColor="black"
-              defaultWeight="SemiBold"
-              font="TitilliumWeb"
+              defaultWeight="Semibold"
+              font="TitilliumSansPro"
               fontStyle={
                 Object {
                   "fontSize": 18,
@@ -109,13 +109,13 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   },
                   Object {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Web",
+                    "fontFamily": "Titillium Sans Pro",
                     "fontStyle": "normal",
                     "fontWeight": "600",
                   },
                 ]
               }
-              weight="SemiBold"
+              weight="Semibold"
             >
               Clause title 1
             </Text>
@@ -222,8 +222,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       allowFontScaling={false}
       color="blue"
       defaultColor="blue"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -241,14 +241,14 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           },
           Object {
             "color": "#0073E6",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
         ]
       }
       testID="SignatureFieldItemDetailTestID"
-      weight="SemiBold"
+      weight="Semibold"
     >
       See on document
     </Text>

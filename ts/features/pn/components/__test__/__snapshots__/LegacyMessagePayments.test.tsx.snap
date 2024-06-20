@@ -670,7 +670,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 20,
@@ -688,7 +688,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },
@@ -806,8 +806,8 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                               <Text
                                 color="bluegreyDark"
                                 defaultColor="bluegreyDark"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -820,7 +820,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     },
                                     Object {
                                       "color": "#17324D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -897,7 +897,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     color="bluegrey"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -913,7 +913,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -928,7 +928,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     color="bluegrey"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -944,13 +944,13 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     n1
                                   </Text>
@@ -996,7 +996,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                             "textTransform": "uppercase",
                                           },
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1138,7 +1138,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     color="bluegrey"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -1154,7 +1154,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -1169,7 +1169,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     color="bluegrey"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -1185,13 +1185,13 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     n2
                                   </Text>
@@ -1237,7 +1237,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                             "textTransform": "uppercase",
                                           },
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1379,7 +1379,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     color="bluegrey"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -1395,7 +1395,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -1410,7 +1410,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                     color="bluegrey"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -1426,13 +1426,13 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     n3
                                   </Text>
@@ -1478,7 +1478,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                             "textTransform": "uppercase",
                                           },
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1909,7 +1909,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 20,
@@ -1927,7 +1927,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a single 
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },
@@ -2479,7 +2479,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 20,
@@ -2497,7 +2497,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five load
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },
@@ -3513,7 +3513,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 20,
@@ -3531,7 +3531,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five paya
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },
@@ -4547,7 +4547,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 20,
@@ -4565,7 +4565,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for five proc
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },
@@ -5581,7 +5581,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                             color="bluegrey"
                             defaultColor="bluegreyDark"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 20,
@@ -5599,7 +5599,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for more than
                                 },
                                 Object {
                                   "color": "#475A6D",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "700",
                                 },

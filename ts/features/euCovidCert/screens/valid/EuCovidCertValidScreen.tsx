@@ -146,7 +146,7 @@ const addBottomSheetItem = (config: {
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View style={IOStyles.flex}>
-          <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+          <H3 color={"bluegreyDark"} weight={"Semibold"}>
             {config.title}
           </H3>
           <H5 color={"bluegrey"} weight={"Regular"}>
@@ -182,7 +182,7 @@ const Footer = (props: FooterProps): React.ReactElement => {
       })}
     </View>,
     <View style={IOStyles.flex}>
-      <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+      <H3 color={"bluegreyDark"} weight={"Semibold"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.title")}
       </H3>
       <H5 color={"bluegrey"} weight={"Regular"}>
