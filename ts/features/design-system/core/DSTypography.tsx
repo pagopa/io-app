@@ -53,7 +53,7 @@ export const DSTypography = () => {
     <DesignSystemScreen title={"Typography"}>
       <LegacyH2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: sectionTitleMargin }}
       >
         New typographic scale
@@ -95,7 +95,7 @@ export const DSTypography = () => {
 
       <LegacyH2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: sectionTitleMargin }}
       >
         Legacy typographic scale
@@ -143,7 +143,7 @@ export const LegacyH2Row = () => (
     <View>
       <LegacyH2>{getTitle("H2")}</LegacyH2>
       <LegacyH2 style={styles.distancedTitle}>{getLongerTitle("H2")}</LegacyH2>
-      <LegacyH2 style={styles.distancedTitle} weight={"SemiBold"}>
+      <LegacyH2 style={styles.distancedTitle} weight={"Semibold"}>
         {getTitle("H2 Semibold")}
       </LegacyH2>
     </View>
@@ -188,10 +188,10 @@ export const LegacyH4Row = () => (
     </View>
     <VSpacer size={16} />
     <View style={styles.row}>
-      {/* SemiBold */}
+      {/* Semibold */}
       <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <LegacyH4 color={"white"} weight={"SemiBold"}>
-          Header H4 SemiBold
+        <LegacyH4 color={"white"} weight={"Semibold"}>
+          Header H4 Semibold
         </LegacyH4>
       </View>
     </View>

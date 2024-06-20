@@ -884,7 +884,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Causale
                               </Text>
@@ -904,7 +904,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -927,7 +927,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0.99 €
                               </Text>
@@ -1444,7 +1444,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 n1
                               </Text>
