@@ -47,7 +47,7 @@
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true/>
     <key>NFCReaderUsageDescription</key>
-    <string>NFC tag to read CIE cards</string>
+    <string>NFC tag to read EIC cards</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSExceptionDomains</key>
