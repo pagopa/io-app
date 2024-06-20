@@ -15,7 +15,7 @@ type PartialAllowedColors = Extract<
   | "grey-200"
 >;
 type AllowedColors = PartialAllowedColors | IOTheme["textBody-tertiary"];
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "Semibold">;
 type FontSize = "regular" | "small";
 type AllowedFontSize = { fontSize?: FontSize };
 type OwnProps = ExternalTypographyProps<

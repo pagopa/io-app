@@ -45,7 +45,7 @@ type ParagraphWithTitleProps = {
 
 const ParagraphWithTitle = ({ title, body }: ParagraphWithTitleProps) => (
   <View>
-    <Body weight="SemiBold" color="black">
+    <Body weight="Semibold" color="black">
       {title}
     </Body>
     <VSpacer size={8} />

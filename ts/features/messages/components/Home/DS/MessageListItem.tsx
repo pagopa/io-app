@@ -130,7 +130,7 @@ export const MessageListItem = ({
         </View>
         <View style={styles.serviceNameAndMessageTitleContainer}>
           <Body numberOfLines={2} style={IOStyles.flex}>
-            <LabelSmall fontSize="regular" color="grey-700" weight="SemiBold">
+            <LabelSmall fontSize="regular" color="grey-700" weight="Semibold">
               {serviceName}
             </LabelSmall>
             <Caption weight="Regular" color="grey-700">

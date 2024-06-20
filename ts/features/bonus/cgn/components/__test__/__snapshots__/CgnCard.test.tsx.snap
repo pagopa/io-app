@@ -50,7 +50,7 @@ exports[`CgnCard should match the snapshot 1`] = `
         allowFontScaling={false}
         color="black"
         defaultColor="black"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           Object {
@@ -72,7 +72,7 @@ exports[`CgnCard should match the snapshot 1`] = `
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Carta Giovani Nazionale
       </Text>
@@ -81,7 +81,7 @@ exports[`CgnCard should match the snapshot 1`] = `
       allowFontScaling={false}
       color="black"
       defaultColor="black"
-      defaultWeight="SemiBold"
+      defaultWeight="Semibold"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -106,7 +106,7 @@ exports[`CgnCard should match the snapshot 1`] = `
           },
         ]
       }
-      weight="SemiBold"
+      weight="Semibold"
     >
       Dipartimento per le politiche giovanili e il servizio civile universale
     </Text>
@@ -114,7 +114,7 @@ exports[`CgnCard should match the snapshot 1`] = `
       allowFontScaling={false}
       color="blueItalia-850"
       defaultColor="black"
-      defaultWeight="SemiBold"
+      defaultWeight="Semibold"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -136,7 +136,7 @@ exports[`CgnCard should match the snapshot 1`] = `
           },
         ]
       }
-      weight="SemiBold"
+      weight="Semibold"
     >
       Valida fino al 12/23
     </Text>

@@ -22,7 +22,7 @@ const renderTable = (data: ReadonlyArray<TableRow>): React.ReactNode =>
       <Fragment key={`${item.label}_${index}`}>
         <View style={styles.infoRow} testID={item.testID}>
           <Body>{item.label}</Body>
-          <Body weight="SemiBold">{item.value}</Body>
+          <Body weight="Semibold">{item.value}</Body>
         </View>
         {!isLast && <Divider />}
       </Fragment>

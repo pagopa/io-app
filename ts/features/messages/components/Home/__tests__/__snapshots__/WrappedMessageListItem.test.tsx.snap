@@ -600,7 +600,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -626,7 +626,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -731,7 +731,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -1631,7 +1631,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1657,7 +1657,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -1762,7 +1762,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -4646,7 +4646,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -4672,7 +4672,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -4777,7 +4777,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -5462,7 +5462,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -5488,7 +5488,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -5593,7 +5593,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
