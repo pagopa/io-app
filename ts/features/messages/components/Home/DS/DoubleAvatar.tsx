@@ -25,6 +25,7 @@ type DoubleAvatarProps = {
 };
 
 const avatarContainerSize: IOIconSizeScale = 30;
+const avatarDoubleRadiusSizeSmall: number = 6;
 const internalSpaceDefaultSize: number = 3;
 const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
@@ -97,7 +98,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
           {
             height: avatarContainerSize,
             width: avatarContainerSize,
-            borderRadius: IOVisualCostants.avatarRadiusSizeSmall,
+            borderRadius: avatarDoubleRadiusSizeSmall,
             backgroundColor:
               imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
             padding:
@@ -121,8 +122,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
               styles.avatarInnerWrapper,
               {
                 borderRadius:
-                  IOVisualCostants.avatarRadiusSizeSmall -
-                  internalSpaceDefaultSize
+                  avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
               }
             ]}
           >
@@ -142,7 +142,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
           {
             height: avatarContainerSize,
             width: avatarContainerSize,
-            borderRadius: IOVisualCostants.avatarRadiusSizeSmall,
+            borderRadius: avatarDoubleRadiusSizeSmall,
             backgroundColor:
               imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
             padding: 0,
@@ -156,8 +156,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
             styles.avatarInnerWrapper,
             {
               borderRadius:
-                IOVisualCostants.avatarRadiusSizeSmall -
-                internalSpaceDefaultSize
+                avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
             }
           ]}
         >
