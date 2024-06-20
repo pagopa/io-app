@@ -2,6 +2,7 @@ import {
   URL as PolyfillURL,
   URLSearchParams as PolyfillURLSearchParams
 } from "react-native-url-polyfill";
+import { Parser as HTMLParser2 } from "htmlparser2";
 import * as E from "fp-ts/lib/Either";
 import {
   HttpCallConfig,
@@ -14,6 +15,7 @@ import {
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { ReduxSagaEffect } from "../../../types/utils";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
 import { LollipopConfig } from "../../lollipop";
@@ -77,65 +79,21 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     );
     return;
   }
-  const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
 
-  const lollipopParamsMap = getLollipopParamsFromUrlString(
-    relyingPartyRedirectUrl
-  );
-  const state = lollipopParamsMap?.get("state");
-
-  if (!lollipopParamsMap || !state) {
-    logToMixPanel(
-      `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`
-    );
-    yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not extract data from RelyingParty URL"
+  const inAppBrowserUrlResponseWrapper = isRedirect(rpRedirectResponse.status)
+    ? yield* call(
+        redirectToRelyingPartyWithAuthorizationCodeFlow,
+        rpRedirectResponse
       )
-    );
+    : yield* call(postToRelyingPartyWithImplicitCodeFlow, rpRedirectResponse);
+  if (!inAppBrowserUrlResponseWrapper) {
+    // Error and cancellation have already been handled
     return;
   }
 
-  const lollipopConfig: LollipopConfig = {
-    nonce: state,
-    customContentToSign: Object.fromEntries(lollipopParamsMap.entries())
-  };
-
-  const requestInit = { headers: {}, method: "GET" };
-
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
-  const lollipopEither = yield* call(
-    nonThrowingLollipopRequestInit,
-    lollipopConfig,
-    keyInfo,
-    relyingPartyRedirectUrl,
-    requestInit
-  );
-
-  if (E.isLeft(lollipopEither)) {
-    logToMixPanel(`could not sign request with LolliPoP`);
-    yield* put(
-      fimsGetRedirectUrlAndOpenIABAction.failure(
-        "could not sign request with LolliPoP"
-      )
-    );
-    return;
-  }
-  const lollipopInit = lollipopEither.right;
-
-  const inAppBrowserUrlResponse = yield* call(nativeRequest, {
-    verb: "get",
-    url: relyingPartyRedirectUrl,
-    headers: lollipopInit.headers as Record<string, string>,
-    followRedirects: false
-  });
-
-  if (isCancelledFailure(rpRedirectResponse)) {
-    return;
-  }
-
+  const relyingPartyRedirectUrl =
+    inAppBrowserUrlResponseWrapper.relyingPartyUrl;
+  const inAppBrowserUrlResponse = inAppBrowserUrlResponseWrapper.response;
   const inAppBrowserRedirectUrl = extractValidRedirect(
     inAppBrowserUrlResponse,
     relyingPartyRedirectUrl
@@ -168,7 +126,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
 const recurseUntilRPUrl = async (
   httpClientConfig: HttpCallConfig,
   oidcDomain: string
-): Promise<SuccessResponseWithLocationHeader | HttpClientFailureResponse> => {
+): Promise<HttpClientResponse> => {
   const res = await nativeRequest({
     ...httpClientConfig,
     followRedirects: false
@@ -178,6 +136,9 @@ const recurseUntilRPUrl = async (
 
   if (!redirectUrl) {
     if (res.type === "failure") {
+      return res;
+    }
+    if (200 <= res.status && res.status < 300) {
       return res;
     }
     // error case
@@ -195,7 +156,7 @@ const recurseUntilRPUrl = async (
     .startsWith(oidcDomain.toLowerCase());
 
   if (!isOIDCProviderBaseUrl) {
-    return res as SuccessResponseWithLocationHeader;
+    return res;
   } else {
     return await recurseUntilRPUrl(
       {
@@ -219,39 +180,19 @@ const extractValidRedirect = (
 
 const isValidRedirectResponse = (
   res: HttpClientResponse
-): res is SuccessResponseWithLocationHeader =>
+): res is HttpClientSuccessResponse =>
   res.type === "success" &&
   isRedirect(res.status) &&
   !!res.headers.location &&
   res.headers.location.trim().length > 0;
-
-interface SuccessResponseWithLocationHeader extends HttpClientSuccessResponse {
-  headers: {
-    location: string;
-  };
-}
 
 const getLollipopParamsFromUrlString = (url: string) => {
   try {
     const lollipopParams = new Map<string, string>();
     const constructedUrl = new PolyfillURL(url);
     // Extract Query Params
-    const params = constructedUrl.searchParams;
+    const params: PolyfillURLSearchParams = constructedUrl.searchParams;
     params.forEach((value, name) => lollipopParams.set(name, value));
-    // Extract Fragment Params
-    const fragmentString = constructedUrl.hash;
-    if (fragmentString.length > 0) {
-      const queryParamsFragmentString = fragmentString
-        .replace("#", "")
-        .replace(";", "&")
-        .replace("?", "&");
-      const queryParamsFragment = new PolyfillURLSearchParams(
-        queryParamsFragmentString
-      );
-      queryParamsFragment.forEach((value, name) =>
-        lollipopParams.set(name, value)
-      );
-    }
     return lollipopParams;
   } catch (error) {
     return undefined;
@@ -261,13 +202,253 @@ const getLollipopParamsFromUrlString = (url: string) => {
 const isRedirect = (statusCode: number) =>
   statusCode >= 300 && statusCode < 400;
 
-const nonThrowingLollipopRequestInit = async (
-  ...props: Parameters<typeof lollipopRequestInit>
-) => {
-  try {
-    const res = await lollipopRequestInit(...props);
-    return E.right(res);
-  } catch (error) {
-    return E.left(error);
+type RelyingPartyOutput = {
+  relyingPartyUrl: string;
+  response: HttpClientResponse;
+};
+
+function* postToRelyingPartyWithImplicitCodeFlow(
+  rpTextHtmlResponse: HttpClientSuccessResponse
+): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
+  const formPostDataEither = yield* call(
+    extractFormPostDataFromHTML,
+    rpTextHtmlResponse.body
+  );
+  if (E.isLeft(formPostDataEither)) {
+    const errorMessage = formPostDataEither.left;
+    logToMixPanel(
+      `Form extraction from HTML page failed, implicit code flow: ${errorMessage}`
+    );
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        "Could not process redirection page, Implicit code flow"
+      )
+    );
+    return undefined;
   }
+
+  const formData = formPostDataEither.right.params;
+  const relyingPartyRedirectUrl = formPostDataEither.right.url;
+  const state = formPostDataEither.right.state;
+
+  const lollipopSignatureEither = yield* call(
+    generateLollipopSignature,
+    state,
+    formData,
+    relyingPartyRedirectUrl
+  );
+  if (E.isLeft(lollipopSignatureEither)) {
+    const errorMessage = lollipopSignatureEither.left;
+    logToMixPanel(
+      `Could not sign request with LolliPoP, Implicit code flow: ${errorMessage}`
+    );
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        "could not sign request with LolliPoP, Implicit code flow"
+      )
+    );
+    return undefined;
+  }
+
+  const lollipopSignature = lollipopSignatureEither.right;
+
+  const inAppBrowserUrlResponse = yield* call(nativeRequest, {
+    verb: "post",
+    body: Object.fromEntries(formData.entries()),
+    url: relyingPartyRedirectUrl,
+    headers: lollipopSignature.headers as Record<string, string>,
+    followRedirects: false
+  });
+
+  if (isCancelledFailure(inAppBrowserUrlResponse)) {
+    return undefined;
+  }
+
+  const output: RelyingPartyOutput = {
+    relyingPartyUrl: relyingPartyRedirectUrl,
+    response: inAppBrowserUrlResponse
+  };
+  return output;
+}
+
+function* redirectToRelyingPartyWithAuthorizationCodeFlow(
+  rpRedirectResponse: HttpClientSuccessResponse
+): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
+  const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
+  if (!relyingPartyRedirectUrl || relyingPartyRedirectUrl.trim().length === 0) {
+    logToMixPanel(
+      `could not find valid Location header for Relying Party redirect url, authorization code flow: ${!!relyingPartyRedirectUrl}`
+    );
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        "Could not find valid Location header, Authorization code flow"
+      )
+    );
+    return undefined;
+  }
+
+  const lollipopParamsMap = getLollipopParamsFromUrlString(
+    relyingPartyRedirectUrl
+  );
+  const state = lollipopParamsMap?.get("state");
+  if (!lollipopParamsMap || !state) {
+    logToMixPanel(
+      `could not extract lollipop params or state from RelyingParty URL, params: ${!!lollipopParamsMap}, state: ${!!state}`
+    );
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        "could not extract data from RelyingParty URL"
+      )
+    );
+    return undefined;
+  }
+
+  const lollipopSignatureEither = yield* call(
+    generateLollipopSignature,
+    state,
+    lollipopParamsMap,
+    relyingPartyRedirectUrl
+  );
+  if (E.isLeft(lollipopSignatureEither)) {
+    const errorMessage = lollipopSignatureEither.left;
+    logToMixPanel(
+      `Could not sign request with LolliPoP, Authorization code flow: ${errorMessage}`
+    );
+    yield* put(
+      fimsGetRedirectUrlAndOpenIABAction.failure(
+        "could not sign request with LolliPoP, Authorization code flow"
+      )
+    );
+    return undefined;
+  }
+
+  const lollipopSignature = lollipopSignatureEither.right;
+
+  const inAppBrowserUrlResponse = yield* call(nativeRequest, {
+    verb: "get",
+    url: relyingPartyRedirectUrl,
+    headers: lollipopSignature.headers as Record<string, string>,
+    followRedirects: false
+  });
+
+  if (isCancelledFailure(inAppBrowserUrlResponse)) {
+    return undefined;
+  }
+
+  return {
+    relyingPartyUrl: relyingPartyRedirectUrl,
+    response: inAppBrowserUrlResponse
+  };
+}
+
+function* generateLollipopSignature(
+  state: string,
+  lollipopParamsMap: Map<string, string>,
+  relyingPartyRedirectUrl: string
+): Generator<ReduxSagaEffect, E.Either<string, RequestInit>, any> {
+  const lollipopConfig: LollipopConfig = {
+    nonce: state,
+    customContentToSign: Object.fromEntries(lollipopParamsMap.entries())
+  };
+
+  const requestInit = { headers: {}, method: "GET" };
+
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+  try {
+    const lollipopSignature = yield* call(
+      lollipopRequestInit,
+      lollipopConfig,
+      keyInfo,
+      relyingPartyRedirectUrl,
+      requestInit
+    );
+    return E.right(lollipopSignature);
+  } catch (e) {
+    return E.left(`${e}`);
+  }
+}
+
+type PostData = {
+  url: string;
+  params: Map<string, string>;
+  state: string;
+};
+
+const extractFormPostDataFromHTML = (
+  html: string
+): E.Either<string, PostData> => {
+  const formData = new Map<string, string>();
+  try {
+    const parser = new HTMLParser2({
+      onopentag(name, attributes) {
+        processHtmlFormTag(name, attributes, formData);
+      }
+    });
+    parser.write(html);
+    parser.end();
+  } catch (e) {
+    return E.left(`${e}`);
+  }
+
+  return validateAndProcessExtractedFormData(formData);
+};
+
+const processHtmlFormTag = (
+  name: string,
+  attributes: Record<string, string>,
+  formData: Map<string, string>
+) => {
+  const tagForm = "form";
+  const tagInput = "input";
+  if (tagForm === name.toLowerCase()) {
+    const method = attributes.method;
+    if (method) {
+      formData.set("method", method.trim().toLowerCase());
+    }
+    const action = attributes.action;
+    if (action) {
+      formData.set("action", action.trim());
+    }
+  } else if (tagInput === name.toLowerCase()) {
+    const name = attributes.name;
+    const value = attributes.value;
+    if (name && value) {
+      formData.set(name.trim(), value.trim());
+    }
+  }
+};
+
+const validateAndProcessExtractedFormData = (
+  formData: Map<string, string>
+): E.Either<string, PostData> => {
+  const method = formData.get("method");
+  if ("post" !== method) {
+    return E.left(`Invalid form 'method' found: ${method}`);
+  }
+
+  const relyingPartyRedirectUrl = formData.get("action");
+  if (!relyingPartyRedirectUrl) {
+    return E.left(`Missing form 'action' value`);
+  }
+  try {
+    new URL(relyingPartyRedirectUrl);
+  } catch {
+    return E.left(`Invalid form 'action' value`);
+  }
+
+  const state = formData.get("state");
+  if (!state || state.trim().length === 0) {
+    return E.left(`Missing or invalid 'state' attribute: ${!!state}`);
+  }
+
+  formData.delete("method");
+  formData.delete("action");
+
+  return E.right({
+    params: formData,
+    state,
+    url: relyingPartyRedirectUrl
+  });
 };
