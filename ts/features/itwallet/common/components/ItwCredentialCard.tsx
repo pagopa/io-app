@@ -57,7 +57,7 @@ export const ItwCredentialCard = ({
           <View style={styles.header}>
             <Body
               color={labelColor}
-              weight="SemiBold"
+              weight="Semibold"
               numberOfLines={2}
               style={{ flex: 1 }}
             >
@@ -86,7 +86,7 @@ const CredentialData = ({ data }: DataProps) => (
     {data.map(value => (
       <Body
         color="bluegreyDark"
-        weight="SemiBold"
+        weight="Semibold"
         key={`credential_data_${value}`}
       >
         {value}

@@ -25,7 +25,7 @@ export const DSLegacyButtons = () => {
     <DesignSystemScreen title={"Legacy Buttons"}>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Block Buttons (not NativeBase)
@@ -36,7 +36,7 @@ export const DSLegacyButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Specific buttons

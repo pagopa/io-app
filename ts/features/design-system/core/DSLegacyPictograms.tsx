@@ -58,7 +58,7 @@ export const DSLegacyPictograms = () => {
     <DesignSystemScreen title={"Legacy Pictograms"}>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Vector
@@ -78,7 +78,7 @@ export const DSLegacyPictograms = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Raster
@@ -162,7 +162,7 @@ export const DSLegacyPictograms = () => {
       </View>
       <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         EU Covid Certificate

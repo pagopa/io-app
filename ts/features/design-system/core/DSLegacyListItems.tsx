@@ -99,7 +99,7 @@ export const DSLegacyListItems = () => (
 
     <H2
       color={"bluegrey"}
-      weight={"SemiBold"}
+      weight={"Semibold"}
       style={{ marginBottom: 16, marginTop: 16 }}
     >
       Derivated from ListItem (NativeBase)
@@ -129,7 +129,7 @@ export const DSLegacyListItems = () => (
     </DSComponentViewerBox>
     <H2
       color={"bluegrey"}
-      weight={"SemiBold"}
+      weight={"Semibold"}
       style={{ marginBottom: 16, marginTop: 16 }}
     >
       Misc

@@ -46,7 +46,7 @@ export const DSButtons = () => {
     <DesignSystemScreen title={"Buttons"}>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonSolid
@@ -57,7 +57,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonOutline
@@ -68,7 +68,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonLink
@@ -79,7 +79,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         IconButton
@@ -90,7 +90,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         IconButtonSolid
@@ -101,7 +101,7 @@ export const DSButtons = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         IconButtonContained (Icebox)

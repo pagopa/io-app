@@ -98,7 +98,7 @@ export const DSPictograms = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{
           marginBottom: 16
         }}
@@ -124,7 +124,7 @@ export const DSPictograms = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{
           marginBottom: 16
         }}
@@ -150,7 +150,7 @@ export const DSPictograms = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{
           marginBottom: 16
         }}

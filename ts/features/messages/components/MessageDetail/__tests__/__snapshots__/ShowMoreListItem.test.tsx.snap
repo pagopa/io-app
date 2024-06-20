@@ -1069,7 +1069,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1092,7 +1092,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -1662,7 +1662,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1685,7 +1685,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -1783,7 +1783,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1806,7 +1806,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -2444,7 +2444,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2467,7 +2467,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -2633,7 +2633,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2656,7 +2656,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -3294,7 +3294,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3317,7 +3317,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -3415,7 +3415,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3438,7 +3438,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -3612,7 +3612,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3635,7 +3635,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -4273,7 +4273,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4296,7 +4296,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -4462,7 +4462,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4485,7 +4485,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -4727,7 +4727,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4750,7 +4750,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -5388,7 +5388,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5411,7 +5411,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -5509,7 +5509,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5532,7 +5532,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -5645,7 +5645,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5668,7 +5668,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 2 title
                                       </Text>
@@ -5766,7 +5766,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5789,7 +5789,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -6031,7 +6031,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6054,7 +6054,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 3
                                       </Text>
@@ -6167,7 +6167,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6190,7 +6190,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 3 title
                                       </Text>
@@ -6288,7 +6288,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6311,7 +6311,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 4
                                       </Text>
@@ -6553,7 +6553,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6576,7 +6576,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 5
                                       </Text>
@@ -6750,7 +6750,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6773,7 +6773,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 6
                                       </Text>
@@ -7411,7 +7411,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7434,7 +7434,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -7532,7 +7532,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7555,7 +7555,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -7668,7 +7668,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         allowFontScaling={false}
                                         color="grey-700"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7691,7 +7691,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         Section 2 title
                                       </Text>
@@ -7789,7 +7789,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7812,7 +7812,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -8054,7 +8054,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -8077,7 +8077,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         value 3
                                       </Text>
