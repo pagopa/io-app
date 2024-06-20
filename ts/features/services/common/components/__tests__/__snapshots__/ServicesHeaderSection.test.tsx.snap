@@ -273,7 +273,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           color="bluegreyDark"
           defaultColor="bluegreyDark"
           defaultWeight="SemiBold"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontStyle={
             Object {
               "fontSize": 24,
@@ -288,7 +288,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               },
               Object {
                 "color": "#17324D",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "600",
               },
@@ -303,7 +303,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           color="grey-700"
           defaultColor="blue"
           defaultWeight="Bold"
-          font="TitilliumWeb"
+          font="TitilliumSansPro"
           fontSize="regular"
           fontStyle={
             Object {
@@ -319,7 +319,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               },
               Object {
                 "color": "#555C70",
-                "fontFamily": "Titillium Web",
+                "fontFamily": "Titillium Sans Pro",
                 "fontStyle": "normal",
                 "fontWeight": "700",
               },

@@ -81,7 +81,7 @@ global:
   unknown: unknown
   disclaimer_beta: If you're having trouble signing in, please let us know!
   sectionStatus:
-    moreInfo: More info
+    moreInfo: more info
   accessibility:
     minusSymbol: minus
     switchLabel: "Select to activate"
@@ -3064,6 +3064,8 @@ features:
   payments:
     title: Payments
     cta: Paga un avviso
+    remoteAlert:
+      cta: Scopri di più
     methods:
       title: Metodi di pagamento
       button: Aggiungi
@@ -3223,6 +3225,20 @@ features:
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
+    presentation:
+      credentialDetails:
+        personalDataTitle: "Personal data"
+        documentDataTitle: "Document data"
+        lastUpdated: "Last updated on {{lastUpdateTime}}"
+        hiddenClaim: "Hidden"
+        status:
+          valid: Valid
+          expired: Expired
+        actions:
+          removeFromWallet: "Remove from Wallet"
+          requestAssistance: "Something wrong? Contact {{authSource}}"
+          showClaimValues: "Show claim values"
+          hideClaimValues: "Hide claim values"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

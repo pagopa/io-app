@@ -6,7 +6,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 22,
@@ -21,7 +21,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
@@ -34,7 +34,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -49,7 +49,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -62,7 +62,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -77,7 +77,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -92,7 +92,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -107,7 +107,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -122,7 +122,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -137,7 +137,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -152,7 +152,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -167,7 +167,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -182,7 +182,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -197,7 +197,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -212,7 +212,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -227,7 +227,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -242,7 +242,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -257,7 +257,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -272,7 +272,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -287,7 +287,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -302,7 +302,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -317,7 +317,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -332,7 +332,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -347,7 +347,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -362,7 +362,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -377,7 +377,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -392,7 +392,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -407,7 +407,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -422,7 +422,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -437,7 +437,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -452,7 +452,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -467,7 +467,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
@@ -482,7 +482,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     color="bluegreyDark"
     defaultColor="black"
     defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -497,7 +497,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         },
         Object {
           "color": "#17324D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "400",
         },
