@@ -1,57 +1,42 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { foldK, isStrictNone, isStrictSome } from "../pot";
+import {
+  foldK,
+  isLoadingOrUpdating,
+  isSomeLoadingOrSomeUpdating,
+  isSomeOrSomeError,
+  isStrictNone,
+  isStrictSome,
+  isStrictSomeError
+} from "../pot";
+
+const potInstances = [
+  pot.none,
+  pot.noneLoading,
+  pot.noneUpdating({}),
+  pot.noneError(""),
+  pot.some({}),
+  pot.someLoading({}),
+  pot.someUpdating({}, {}),
+  pot.someError({}, "")
+];
 
 describe("isStrictNone", () => {
-  it("should return true for pot.none", () => {
-    expect(isStrictNone(pot.none)).toBe(true);
-  });
-  it("should return false for pot.noneLoading", () => {
-    expect(isStrictNone(pot.noneLoading)).toBe(false);
-  });
-  it("should return false for pot.noneUpdating", () => {
-    expect(isStrictNone(pot.noneUpdating({}))).toBe(false);
-  });
-  it("should return false for pot.noneError", () => {
-    expect(isStrictNone(pot.noneError(""))).toBe(false);
-  });
-  it("should return false for pot.some", () => {
-    expect(isStrictNone(pot.some({}))).toBe(false);
-  });
-  it("should return false for pot.someLoading", () => {
-    expect(isStrictNone(pot.someLoading({}))).toBe(false);
-  });
-  it("should return false for pot.someUpdating", () => {
-    expect(isStrictNone(pot.someUpdating({}, {}))).toBe(false);
-  });
-  it("should return false for pot.someError", () => {
-    expect(isStrictNone(pot.someError({}, ""))).toBe(false);
+  potInstances.forEach(potInstance => {
+    const expectedOutput = potInstance.kind === "PotNone";
+    it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
+      const output = isStrictNone(potInstance);
+      expect(output).toBe(expectedOutput);
+    });
   });
 });
 
 describe("isStrictSome", () => {
-  it("should return false for pot.none", () => {
-    expect(isStrictSome(pot.none)).toBe(false);
-  });
-  it("should return false for pot.noneLoading", () => {
-    expect(isStrictSome(pot.noneLoading)).toBe(false);
-  });
-  it("should return false for pot.noneUpdating", () => {
-    expect(isStrictSome(pot.noneUpdating({}))).toBe(false);
-  });
-  it("should return false for pot.noneError", () => {
-    expect(isStrictSome(pot.noneError(""))).toBe(false);
-  });
-  it("should return true for pot.some", () => {
-    expect(isStrictSome(pot.some({}))).toBe(true);
-  });
-  it("should return false for pot.someLoading", () => {
-    expect(isStrictSome(pot.someLoading({}))).toBe(false);
-  });
-  it("should return false for pot.someUpdating", () => {
-    expect(isStrictSome(pot.someUpdating({}, {}))).toBe(false);
-  });
-  it("should return false for pot.someError", () => {
-    expect(isStrictSome(pot.someError({}, ""))).toBe(false);
+  potInstances.forEach(potInstance => {
+    const expectedOutput = potInstance.kind === "PotSome";
+    it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
+      const output = isStrictSome(potInstance);
+      expect(output).toBe(expectedOutput);
+    });
   });
 });
 
@@ -197,6 +182,53 @@ describe("foldK", () => {
     expect(mockFoldInstance.foldSomeError.mock.calls[0][0]).toBe(inputObject);
     expect(mockFoldInstance.foldSomeError.mock.calls[0][1]).toBe(inputError);
     verifyZeroCallMock(mockFoldInstance, "foldSomeError");
+  });
+});
+
+describe("isStrictSomeError", () => {
+  potInstances.forEach(potInstance => {
+    const expectedOutput = potInstance.kind === "PotSomeError";
+    it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
+      const output = isStrictSomeError(potInstance);
+      expect(output).toBe(expectedOutput);
+    });
+  });
+});
+
+describe("isSomeLoadingOrSomeUpdating", () => {
+  potInstances.forEach(potInstance => {
+    const expectedOutput =
+      potInstance.kind === "PotSomeLoading" ||
+      potInstance.kind === "PotSomeUpdating";
+    it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
+      const output = isSomeLoadingOrSomeUpdating(potInstance);
+      expect(output).toBe(expectedOutput);
+    });
+  });
+});
+
+describe("isSomeOrSomeError", () => {
+  potInstances.forEach(potInstance => {
+    const expectedOutput =
+      potInstance.kind === "PotSome" || potInstance.kind === "PotSomeError";
+    it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
+      const output = isSomeOrSomeError(potInstance);
+      expect(output).toBe(expectedOutput);
+    });
+  });
+});
+
+describe("isLoadingOrUpdating", () => {
+  potInstances.forEach(potInstance => {
+    const expectedOutput =
+      potInstance.kind === "PotNoneLoading" ||
+      potInstance.kind === "PotNoneUpdating" ||
+      potInstance.kind === "PotSomeLoading" ||
+      potInstance.kind === "PotSomeUpdating";
+    it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
+      const output = isLoadingOrUpdating(potInstance);
+      expect(output).toBe(expectedOutput);
+    });
   });
 });
 
