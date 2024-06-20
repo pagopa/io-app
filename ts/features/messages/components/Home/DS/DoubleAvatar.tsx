@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Image,
   ImageRequireSource,
@@ -54,6 +54,24 @@ const styles = StyleSheet.create({
   }
 });
 
+const getImageState = (
+  backgroundLogoUri?:
+    | ImageRequireSource
+    | ImageURISource
+    | ReadonlyArray<ImageURISource>
+) => {
+  switch (typeof backgroundLogoUri) {
+    case "number":
+      return addCacheTimestampToUri(backgroundLogoUri as ImageURISource);
+    case "object":
+      if (Array.isArray(backgroundLogoUri)) {
+        return addCacheTimestampToUri(backgroundLogoUri[0]);
+      } // eslint-disable-next-line no-fallthrough
+    default:
+      return undefined;
+  }
+};
+
 /**
  * DoubleAvatar component is used to display the background logo of an organization, with a fixed pagoPA icon on top. It accepts the following props:
  * - `backgroundLogoUri`: the uri of the image to display. If not provided, a placeholder icon will be displayed. It can be a single uri or an array of uris, in which case the first one that is available will be used.
@@ -64,15 +82,11 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
   const theme = useIOTheme();
   const indexValue = React.useRef<number>(0);
 
-  const [imageSource, setImageSource] = React.useState(
-    backgroundLogoUri === undefined
-      ? undefined
-      : Array.isArray(backgroundLogoUri)
-      ? addCacheTimestampToUri(backgroundLogoUri[0])
-      : typeof backgroundLogoUri === "number"
-      ? backgroundLogoUri
-      : addCacheTimestampToUri(backgroundLogoUri as ImageURISource)
+  const imageInitialState = useCallback(
+    () => getImageState(backgroundLogoUri),
+    [backgroundLogoUri]
   );
+  const [imageSource, setImageSource] = React.useState(imageInitialState);
 
   const onError = () => {
     if (
