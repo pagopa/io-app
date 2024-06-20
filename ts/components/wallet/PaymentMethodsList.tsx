@@ -153,7 +153,7 @@ const renderListItem = (
               <View style={IOStyles.rowSpaceBetween}>
                 <View>
                   {badgeStatus?.badge}
-                  <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+                  <H3 color={"bluegreyDark"} weight={"Semibold"}>
                     {itemInfo.item.name}
                   </H3>
                 </View>
@@ -189,7 +189,7 @@ const renderListItem = (
                   variant="solid"
                   color="blue"
                 />
-                <H3 color={"bluegrey"} weight={"SemiBold"}>
+                <H3 color={"bluegrey"} weight={"Semibold"}>
                   {itemInfo.item.name}
                 </H3>
               </View>

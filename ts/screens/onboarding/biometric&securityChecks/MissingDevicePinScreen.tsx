@@ -78,7 +78,7 @@ const MissingDevicePinScreen = () => {
           <Body>
             {I18n.t("onboarding.biometric.unavailable.body.firstInfoStart") +
               " "}
-            <Body weight="SemiBold">
+            <Body weight="Semibold">
               {I18n.t("onboarding.biometric.unavailable.body.firstInfoEnd")}
             </Body>
           </Body>
@@ -86,7 +86,7 @@ const MissingDevicePinScreen = () => {
           <Body>
             {I18n.t("onboarding.biometric.unavailable.body.secondInfoStart") +
               " "}
-            <Body weight="SemiBold">
+            <Body weight="Semibold">
               {I18n.t("onboarding.biometric.unavailable.body.secondInfoEnd")}
             </Body>
           </Body>
