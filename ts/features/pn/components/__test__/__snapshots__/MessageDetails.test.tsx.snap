@@ -558,7 +558,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -581,7 +581,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                 ]
                               }
                               testID="message-header-subject"
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               ######## subject ########
                             </Text>
@@ -1127,7 +1127,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               allowFontScaling={false}
                                               color="grey-700"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1150,7 +1150,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               Notifica
                                             </Text>
@@ -1316,7 +1316,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               allowFontScaling={false}
                                               color="blue"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1339,7 +1339,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               731143-7-0317-8200-0
                                             </Text>
@@ -1452,7 +1452,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               allowFontScaling={false}
                                               color="grey-700"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1475,7 +1475,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               Message
                                             </Text>
@@ -1641,7 +1641,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               allowFontScaling={false}
                                               color="blue"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1664,7 +1664,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               01HRYR6C761DGH3S84HBBXMMKT
                                             </Text>

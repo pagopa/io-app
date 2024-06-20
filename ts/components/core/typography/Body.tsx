@@ -9,7 +9,7 @@ type PartialAllowedColors = Extract<
   "bluegreyDark" | "white" | "blue" | "bluegrey" | "bluegreyLight"
 >;
 type AllowedColors = PartialAllowedColors | IOTheme["textBody-default"];
-type AllowedWeight = Extract<IOFontWeight, "Regular" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Regular" | "Semibold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>

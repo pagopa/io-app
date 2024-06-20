@@ -86,7 +86,7 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
       )}
     </View>
     <VSpacer size={8} />
-    <H3 weight={"SemiBold"} color={"blue"}>
+    <H3 weight={"Semibold"} color={"blue"}>
       {props.title}
     </H3>
   </TouchableDefaultOpacity>

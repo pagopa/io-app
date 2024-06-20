@@ -20,7 +20,7 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
     }}
     onPress={() => onPress(value)}
   >
-    <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
+    <H4 weight={checked ? "Semibold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>
     <Icon
