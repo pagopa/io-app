@@ -47,7 +47,7 @@
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true/>
     <key>NFCReaderUsageDescription</key>
-    <string>NFC tag to read NDEF messages into the application</string>
+    <string>NFC tag to read CIE cards</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSExceptionDomains</key>
