@@ -6,10 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Platform } from "react-native";
-import SectionStatusComponent, {
-  InnerSectionStatus
-} from "../../../../components/SectionStatus";
+import SectionStatusComponent from "../../../../components/SectionStatus";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../../../components/search/SearchButton";
@@ -44,8 +41,6 @@ import {
   MessagesStatus,
   messagesStatusSelector
 } from "../../store/reducers/messagesStatus";
-import { unsupportedDeviceMoreInfoUrl } from "../../../../config";
-import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -55,9 +50,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",
   body: "messages.contextualHelpContent"
 };
-
-const isIOSVersionLessThan14 =
-  Platform.OS === "ios" && parseInt(Platform.Version as string, 10) < 14;
 
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
@@ -123,24 +115,6 @@ const LegacyMessagesHomeScreen = ({
     />
   );
 
-  const unsupportedDevicesStatusComponent = isIOSVersionLessThan14 && (
-    <InnerSectionStatus
-      sectionKey={"messages"}
-      sectionStatus={{
-        is_visible: true,
-        level: LevelEnum.warning,
-        web_url: {
-          "it-IT": unsupportedDeviceMoreInfoUrl,
-          "en-EN": unsupportedDeviceMoreInfoUrl
-        },
-        message: {
-          "it-IT": I18n.t("features.itWallet.unsupportedDevice.text"),
-          "en-EN": I18n.t("features.itWallet.unsupportedDevice.text")
-        }
-      }}
-    />
-  );
-
   return (
     <TopScreenComponent
       accessibilityEvents={{
@@ -159,7 +133,6 @@ const LegacyMessagesHomeScreen = ({
         backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
-      {isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           {needsMigration ? (
@@ -200,7 +173,6 @@ const LegacyMessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
-      {!isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {bottomSheet}
       {securitySuggestionBottomSheet}
     </TopScreenComponent>
