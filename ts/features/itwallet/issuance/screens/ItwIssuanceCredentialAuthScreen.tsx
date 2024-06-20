@@ -45,7 +45,10 @@ const ItwIssuanceCredentialAuthScreen = () => {
           <HSpacer size={8} />
           <Icon name={"transactions"} color={"grey-450"} size={24} />
           <HSpacer size={8} />
-          <Avatar size="small" />
+          <Avatar
+            size="small"
+            logoUri={require("../../../../../img/app/app-logo-inverted.png")}
+          />
         </View>
         <VSpacer size={24} />
         <H2>Tessera Sanitaria: dati necessari</H2>
