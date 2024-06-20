@@ -11,6 +11,7 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import _ from "lodash";
 import {
   ComponentProps,
   default as React,
@@ -110,7 +111,7 @@ const ZendeskAskPermissions = () => {
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = pipe(
-    useIOSelector(idpSelector),
+    useIOSelector(idpSelector, _.isEqual),
     O.map(idp => idp.name),
     O.getOrElse(() => notAvailable)
   );
