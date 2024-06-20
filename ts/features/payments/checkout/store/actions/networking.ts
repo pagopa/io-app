@@ -84,7 +84,7 @@ export type WalletPaymentAuthorizePayload = {
   isAllCCP: boolean;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;
-  paymentMethodManagement: PaymentMethodManagementTypeEnum;
+  paymentMethodManagement?: PaymentMethodManagementTypeEnum;
 };
 
 export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
