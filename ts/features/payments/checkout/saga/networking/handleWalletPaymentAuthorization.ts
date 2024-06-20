@@ -8,6 +8,8 @@ import {
   RequestAuthorizationRequest
 } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
 import { WalletDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletDetailType";
+import { RedirectDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/RedirectDetailType";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
@@ -41,7 +43,11 @@ export function* handleWalletPaymentAuthorization(
             walletId: action.payload.walletId
           }
         : {
-            detailType: ApmDetailTypeEnum.apm,
+            detailType:
+              action.payload.paymentMethodManagement ===
+              PaymentMethodManagementTypeEnum.REDIRECT
+                ? RedirectDetailTypeEnum.redirect
+                : ApmDetailTypeEnum.apm,
             paymentMethodId: action.payload.paymentMethodId
           };
 

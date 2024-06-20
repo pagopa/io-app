@@ -13,12 +13,6 @@ import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend
 import { WrappedMessageListItem } from "../WrappedMessageListItem";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 
-const mockDispatch = jest.fn();
-jest.mock("react-redux", () => ({
-  ...jest.requireActual<typeof import("react-redux")>("react-redux"),
-  useDispatch: () => mockDispatch
-}));
-
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
