@@ -2539,7 +2539,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           },
                                           Object {
                                             "backgroundColor": "#FFFFFF",
-                                            "borderRadius": 8,
+                                            "borderRadius": 6,
                                             "bottom": 0,
                                             "height": 30,
                                             "padding": 3,
@@ -2558,7 +2558,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               "overflow": "hidden",
                                             },
                                             Object {
-                                              "borderRadius": 5,
+                                              "borderRadius": 3,
                                             },
                                           ]
                                         }
@@ -2595,7 +2595,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           Object {
                                             "alignItems": "center",
                                             "backgroundColor": "#FFFFFF",
-                                            "borderRadius": 8,
+                                            "borderRadius": 6,
                                             "height": 30,
                                             "justifyContent": "center",
                                             "padding": 0,
@@ -2613,7 +2613,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               "overflow": "hidden",
                                             },
                                             Object {
-                                              "borderRadius": 5,
+                                              "borderRadius": 3,
                                             },
                                           ]
                                         }
@@ -2838,7 +2838,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2864,7 +2864,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -2969,7 +2969,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -3476,7 +3476,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           },
                                           Object {
                                             "backgroundColor": "#FFFFFF",
-                                            "borderRadius": 8,
+                                            "borderRadius": 6,
                                             "bottom": 0,
                                             "height": 30,
                                             "padding": 3,
@@ -3495,7 +3495,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               "overflow": "hidden",
                                             },
                                             Object {
-                                              "borderRadius": 5,
+                                              "borderRadius": 3,
                                             },
                                           ]
                                         }
@@ -3532,7 +3532,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           Object {
                                             "alignItems": "center",
                                             "backgroundColor": "#FFFFFF",
-                                            "borderRadius": 8,
+                                            "borderRadius": 6,
                                             "height": 30,
                                             "justifyContent": "center",
                                             "padding": 0,
@@ -3550,7 +3550,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               "overflow": "hidden",
                                             },
                                             Object {
-                                              "borderRadius": 5,
+                                              "borderRadius": 3,
                                             },
                                           ]
                                         }
@@ -3775,7 +3775,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -3801,7 +3801,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -3906,7 +3906,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
