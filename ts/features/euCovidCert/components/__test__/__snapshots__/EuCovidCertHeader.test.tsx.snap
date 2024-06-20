@@ -21,7 +21,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
+      defaultWeight="Semibold"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -44,7 +44,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
         ]
       }
       testID="EuCovidCertHeaderTitle"
-      weight="SemiBold"
+      weight="Semibold"
     >
       title
     </Text>
@@ -52,7 +52,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
+      defaultWeight="Semibold"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -75,7 +75,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
         ]
       }
       testID="EuCovidCertHeaderSubTitle"
-      weight="SemiBold"
+      weight="Semibold"
     >
       subtitle
     </Text>

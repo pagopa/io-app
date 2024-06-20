@@ -344,7 +344,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -366,7 +366,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Test Title
                           </Text>
@@ -451,7 +451,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     allowFontScaling={false}
                                     color="grey-700"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -474,7 +474,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     List Header
                                   </Text>
@@ -603,7 +603,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Semibold"
                                           font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
@@ -626,7 +626,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 1
                                         </Text>
@@ -714,7 +714,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Semibold"
                                           font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
@@ -737,7 +737,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 2
                                         </Text>
@@ -1353,7 +1353,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1375,7 +1375,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           />
                           <RCTScrollView
                             ItemSeparatorComponent={[Function]}
@@ -2020,7 +2020,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2042,7 +2042,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Test Title
                           </Text>
@@ -2146,7 +2146,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Subtitle Part 2 Bold
                             </Text>
@@ -2195,7 +2195,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     allowFontScaling={false}
                                     color="grey-700"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2218,7 +2218,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     List Header
                                   </Text>
@@ -2347,7 +2347,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Semibold"
                                           font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
@@ -2370,7 +2370,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 1
                                         </Text>
@@ -2458,7 +2458,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Semibold"
                                           font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
@@ -2481,7 +2481,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Value 2
                                         </Text>

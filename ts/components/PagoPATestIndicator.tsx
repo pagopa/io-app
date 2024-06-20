@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     textTransform: "uppercase",
     color: IOColors["grey-850"],
-    ...makeFontStyleObject("SemiBold")
+    ...makeFontStyleObject("Semibold")
   }
 });
 

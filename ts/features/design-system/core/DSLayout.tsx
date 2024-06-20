@@ -32,7 +32,7 @@ export const DSLayout = () => {
         </H1>
         <H3
           color={theme["textHeading-default"]}
-          weight={"SemiBold"}
+          weight={"Semibold"}
           style={{ marginBottom: 16 }}
         >
           ContentWrapper
@@ -81,7 +81,7 @@ export const DSLayout = () => {
 
         <H3
           color={theme["textHeading-default"]}
-          weight={"SemiBold"}
+          weight={"Semibold"}
           style={{ marginBottom: 16 }}
         >
           VSpacer
@@ -102,7 +102,7 @@ export const DSLayout = () => {
 
         <H3
           color={theme["textHeading-default"]}
-          weight={"SemiBold"}
+          weight={"Semibold"}
           style={{ marginBottom: 16 }}
         >
           HSpacer
@@ -132,7 +132,7 @@ export const DSLayout = () => {
 
         <H3
           color={theme["textHeading-default"]}
-          weight={"SemiBold"}
+          weight={"Semibold"}
           style={{ marginBottom: 16 }}
         >
           Default (Horizontal)

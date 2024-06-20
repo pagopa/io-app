@@ -6,7 +6,7 @@ Array [
     accessibilityRole="link"
     color="blue"
     defaultColor="blue"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     ellipsizeMode="tail"
     font="TitilliumSansPro"
     fontStyle={
@@ -34,7 +34,7 @@ Array [
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
     Email
   </Text>,

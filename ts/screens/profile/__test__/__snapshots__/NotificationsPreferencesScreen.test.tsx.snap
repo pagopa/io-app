@@ -213,7 +213,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -235,7 +235,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -488,7 +488,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -510,7 +510,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -607,7 +607,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -633,7 +633,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -735,7 +735,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -761,7 +761,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -827,7 +827,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -853,7 +853,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -1591,7 +1591,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1613,7 +1613,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -1866,7 +1866,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1888,7 +1888,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -1985,7 +1985,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2011,7 +2011,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -2113,7 +2113,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -2139,7 +2139,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -2205,7 +2205,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2231,7 +2231,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -2969,7 +2969,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2991,7 +2991,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -3244,7 +3244,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -3266,7 +3266,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -3363,7 +3363,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -3389,7 +3389,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -3491,7 +3491,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -3517,7 +3517,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -3583,7 +3583,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -3609,7 +3609,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -4347,7 +4347,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -4369,7 +4369,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -4622,7 +4622,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -4644,7 +4644,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a notice due tomorrow
                                   </Text>
@@ -4741,7 +4741,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -4767,7 +4767,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -4869,7 +4869,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -4895,7 +4895,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -4961,7 +4961,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -4987,7 +4987,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -5725,7 +5725,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -5747,7 +5747,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -6000,7 +6000,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -6022,7 +6022,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -6119,7 +6119,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -6145,7 +6145,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -6247,7 +6247,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -6273,7 +6273,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -6339,7 +6339,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -6365,7 +6365,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -7103,7 +7103,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -7125,7 +7125,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -7378,7 +7378,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -7400,7 +7400,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -7497,7 +7497,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -7523,7 +7523,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -7625,7 +7625,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -7651,7 +7651,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -7717,7 +7717,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -7743,7 +7743,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -8481,7 +8481,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -8503,7 +8503,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -8756,7 +8756,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -8778,7 +8778,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -8875,7 +8875,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -8901,7 +8901,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -9003,7 +9003,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -9029,7 +9029,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -9095,7 +9095,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -9121,7 +9121,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -9859,7 +9859,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -9881,7 +9881,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -10134,7 +10134,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -10156,7 +10156,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Comune di Ipazia
                                   </Text>
@@ -10253,7 +10253,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -10279,7 +10279,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -10381,7 +10381,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -10407,7 +10407,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -10473,7 +10473,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -10499,7 +10499,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -11237,7 +11237,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -11259,7 +11259,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -11512,7 +11512,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -11534,7 +11534,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -11631,7 +11631,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -11657,7 +11657,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -11759,7 +11759,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -11785,7 +11785,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -11851,7 +11851,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -11877,7 +11877,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -12615,7 +12615,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -12637,7 +12637,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -12890,7 +12890,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -12912,7 +12912,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a notice due soon
                                   </Text>
@@ -13009,7 +13009,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -13035,7 +13035,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -13137,7 +13137,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -13163,7 +13163,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -13229,7 +13229,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -13255,7 +13255,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -13993,7 +13993,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -14015,7 +14015,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -14268,7 +14268,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -14290,7 +14290,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -14387,7 +14387,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -14413,7 +14413,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -14515,7 +14515,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -14541,7 +14541,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -14607,7 +14607,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -14633,7 +14633,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -15371,7 +15371,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -15393,7 +15393,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -15646,7 +15646,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -15668,7 +15668,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Comune di Ipazia
                                   </Text>
@@ -15765,7 +15765,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -15791,7 +15791,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -15893,7 +15893,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -15919,7 +15919,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -15985,7 +15985,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -16011,7 +16011,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -16749,7 +16749,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -16771,7 +16771,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -17024,7 +17024,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -17046,7 +17046,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -17143,7 +17143,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -17169,7 +17169,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -17271,7 +17271,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -17297,7 +17297,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -17363,7 +17363,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -17389,7 +17389,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -18127,7 +18127,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -18149,7 +18149,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -18402,7 +18402,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -18424,7 +18424,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -18521,7 +18521,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -18547,7 +18547,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -18649,7 +18649,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -18675,7 +18675,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -18741,7 +18741,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -18767,7 +18767,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -19505,7 +19505,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -19527,7 +19527,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -19780,7 +19780,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -19802,7 +19802,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -19899,7 +19899,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -19925,7 +19925,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -20027,7 +20027,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -20053,7 +20053,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -20119,7 +20119,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -20145,7 +20145,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -20883,7 +20883,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -20905,7 +20905,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -21158,7 +21158,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -21180,7 +21180,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a notice due tomorrow
                                   </Text>
@@ -21277,7 +21277,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -21303,7 +21303,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -21405,7 +21405,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -21431,7 +21431,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -21497,7 +21497,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -21523,7 +21523,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -22261,7 +22261,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -22283,7 +22283,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -22536,7 +22536,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -22558,7 +22558,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -22655,7 +22655,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -22681,7 +22681,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -22783,7 +22783,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -22809,7 +22809,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -22875,7 +22875,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -22901,7 +22901,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -23639,7 +23639,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -23661,7 +23661,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -23914,7 +23914,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -23936,7 +23936,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -24033,7 +24033,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -24059,7 +24059,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -24161,7 +24161,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -24187,7 +24187,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -24253,7 +24253,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -24279,7 +24279,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>

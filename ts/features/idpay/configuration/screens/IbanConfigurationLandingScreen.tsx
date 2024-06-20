@@ -83,7 +83,7 @@ const IbanConfigurationLanding = () => {
           <Body style={styles.textCenter}>
             {I18n.t("idpay.configuration.iban.landing.body")}
           </Body>
-          <Body color="blue" weight="SemiBold" onPress={present}>
+          <Body color="blue" weight="Semibold" onPress={present}>
             {I18n.t("idpay.configuration.iban.landing.bodyLink")}
           </Body>
         </View>

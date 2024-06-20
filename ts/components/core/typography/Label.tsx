@@ -13,7 +13,7 @@ type PartialAllowedColors = Extract<
   "blue" | "bluegrey" | "bluegreyDark" | "white" | "red"
 >;
 type AllowedColors = PartialAllowedColors | IOColorsStatusForeground;
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "Semibold">;
 type LabelProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 > & { fontSize?: FontSize };
