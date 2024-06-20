@@ -11,6 +11,7 @@ import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as homeUtils from "../homeUtils";
 import { loadNextPageMessages } from "../../../store/actions";
 import { pageSize } from "../../../../../config";
+import { RefreshControlProps } from "../CustomRefreshControl";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -28,10 +29,10 @@ describe("MessageList", () => {
     const expectedAction = loadNextPageMessages.request({
       pageSize,
       cursor: "01J0B4PFPP24MBX6K8ZYQXXBDW",
-      filter: { getArchived: true }
+      filter: { getArchived: false }
     });
     jest
-      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfNeeded")
+      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
       .mockImplementation((_state, category, _messageListDistanceFromEnd) =>
         category === expectedCategory ? expectedAction : undefined
       );
@@ -47,15 +48,15 @@ describe("MessageList", () => {
   });
   it("should not dispatch 'loadNextPageMessages.request' when output from 'getLoadNextPageMessagesActionIfNeeded' is undefined", () => {
     const expectedCategory: MessageListCategory = "INBOX";
-    const expectedAction = loadNextPageMessages.request({
+    const unexpectedAction = loadNextPageMessages.request({
       pageSize,
       cursor: "01J0B4PFPP24MBX6K8ZYQXXBDW",
       filter: { getArchived: true }
     });
     jest
-      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfNeeded")
+      .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
       .mockImplementation((_state, category, _messageListDistanceFromEnd) =>
-        category === expectedCategory ? undefined : expectedAction
+        category === expectedCategory ? undefined : unexpectedAction
       );
 
     const component = renderComponent(expectedCategory);
@@ -65,6 +66,19 @@ describe("MessageList", () => {
     fireEvent(messageList, "endReached", { distanceFromEnd: 0 });
 
     expect(mockDispatch.mock.calls.length).toBe(0);
+  });
+  it("should have the custom refresh control", () => {
+    const expectedCategory: MessageListCategory = "INBOX";
+    const component = renderComponent(expectedCategory);
+    const messageList = component.getByTestId("message_list_inbox");
+    expect(messageList).toBeTruthy();
+
+    const { refreshControl } = messageList.props;
+    expect(refreshControl).toBeTruthy();
+
+    expect((refreshControl.props as RefreshControlProps).category).toBe(
+      expectedCategory
+    );
   });
 });
 
