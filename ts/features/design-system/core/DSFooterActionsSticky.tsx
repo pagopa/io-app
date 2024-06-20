@@ -141,7 +141,7 @@ export const DSFooterActionsSticky = () => {
           }
         }}
         animatedStyles={{
-          mainBlock: actionBlockAnimatedStyle as any,
+          mainBlock: actionBlockAnimatedStyle,
           background: actionBackgroundBlockAnimatedStyle
         }}
         onMeasure={handleFooterActionsHeight}
