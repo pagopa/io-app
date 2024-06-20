@@ -100,19 +100,16 @@ const PreferencesScreen = () => {
 
   const renderPreferencesNavItem = ({
     item: { value, description, onPress, testID }
-  }: ListRenderItemInfo<PreferencesNavListItem>) => 
+  }: ListRenderItemInfo<PreferencesNavListItem>) => (
     // If condition is either true or undefined, render the item
-     (
-      <ListItemNav
-        accessibilityLabel={value}
-        value={value}
-        description={description}
-        onPress={onPress}
-        testID={testID}
-      />
-    )
-  ;
-
+    <ListItemNav
+      accessibilityLabel={`${value} ${description}`}
+      value={value}
+      description={description}
+      onPress={onPress}
+      testID={testID}
+    />
+  );
   const filteredPreferencesNavListItems = preferencesNavListItems.filter(
     item => item.condition !== false
   );
