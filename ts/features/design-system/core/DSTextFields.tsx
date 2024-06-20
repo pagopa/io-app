@@ -339,7 +339,7 @@ const LegacyTextFields = () => {
 
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12, marginTop: 48 }}
       >
         Authentication
@@ -368,7 +368,7 @@ const LegacyTextFields = () => {
 
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 12, marginTop: 48 }}
       >
         Payments

@@ -22,7 +22,7 @@ const fonts = {
 const fontWeights = {
   "300": "Light",
   "400": "Regular",
-  "600": "SemiBold",
+  "600": "Semibold",
   "700": "Bold"
 };
 
