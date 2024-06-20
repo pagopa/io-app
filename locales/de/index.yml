@@ -460,12 +460,9 @@ profile:
     contextualHelpTitle: "Deine Einstellungen"
     list:
       wip: "In Bearbeitung"
-      language: "Sprache"
       digitalDomicile: "Digitales Domizil"
-      service_contact: "Dienste verwalten"
       preferred_calendar:
         title: "Bevorzugter Kalender"
-        not_selected: "Nicht ausgewählt"
       preferred_language:
         title: "Bevorzugte Sprache"
         subtitle: "In welcher Sprache möchtest du die App nutzen?"
