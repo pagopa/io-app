@@ -430,7 +430,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -455,7 +455,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Questo avviso è stato già pagato!
                             </Text>
@@ -626,6 +626,10 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }

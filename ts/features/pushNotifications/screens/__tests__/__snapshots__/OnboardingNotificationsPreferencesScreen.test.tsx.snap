@@ -209,7 +209,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -231,7 +231,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -461,7 +461,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -483,7 +483,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a notice due soon
                                   </Text>
@@ -580,7 +580,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -606,7 +606,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -708,7 +708,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -734,7 +734,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -800,7 +800,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -826,7 +826,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -1414,6 +1414,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -1853,7 +1857,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1875,7 +1879,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -2105,7 +2109,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2127,7 +2131,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
@@ -2224,7 +2228,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2250,7 +2254,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -2352,7 +2356,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -2378,7 +2382,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -2444,7 +2448,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -2470,7 +2474,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -3059,6 +3063,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3498,7 +3506,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3520,7 +3528,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -3750,7 +3758,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3772,7 +3780,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a notice due tomorrow
                                   </Text>
@@ -3869,7 +3877,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -3895,7 +3903,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -3997,7 +4005,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -4023,7 +4031,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -4089,7 +4097,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -4115,7 +4123,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -4704,6 +4712,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -5143,7 +5155,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5165,7 +5177,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -5395,7 +5407,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5417,7 +5429,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Comune di Ipazia
                                   </Text>
@@ -5514,7 +5526,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5540,7 +5552,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -5642,7 +5654,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -5668,7 +5680,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -5734,7 +5746,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -5760,7 +5772,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -6350,6 +6362,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
                             ]
                           }
                         >
@@ -6788,7 +6804,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6810,7 +6826,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -7040,7 +7056,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7062,7 +7078,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     You have a notice due soon
                                   </Text>
@@ -7159,7 +7175,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7185,7 +7201,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -7434,7 +7450,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="blue"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontSize="small"
                                 fontStyle={
@@ -7460,7 +7476,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -7526,7 +7542,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -7552,7 +7568,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -8425,6 +8441,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }

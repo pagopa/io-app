@@ -83,7 +83,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
+      defaultWeight="Semibold"
       font="TitilliumSansPro"
       fontStyle={
         {
@@ -105,7 +105,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
           },
         ]
       }
-      weight="SemiBold"
+      weight="Semibold"
     >
       #### title ####
     </Text>

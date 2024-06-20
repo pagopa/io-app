@@ -200,7 +200,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="bluegreyDark"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -226,7 +226,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
       ]
     }
     testID="LoadingSpinnerCaptionTitleID"
-    weight="SemiBold"
+    weight="Semibold"
   >
     Loading
   </Text>

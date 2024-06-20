@@ -200,7 +200,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       accessibilityRole="link"
       color="blue"
       defaultColor="blue"
-      defaultWeight="SemiBold"
+      defaultWeight="Semibold"
       font="TitilliumSansPro"
       fontStyle={
         {

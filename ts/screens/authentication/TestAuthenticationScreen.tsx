@@ -42,7 +42,7 @@ const checkUsernameValid = (username: string): boolean =>
 const VersionView = () => (
   <View style={styles.appVersion} testID="appVersionView">
     <Body>{I18n.t("profile.main.appVersion")}</Body>
-    <Body numberOfLines={1} weight="SemiBold" testID="appVersion">
+    <Body numberOfLines={1} weight="Semibold" testID="appVersion">
       {getAppVersion()}
     </Body>
   </View>

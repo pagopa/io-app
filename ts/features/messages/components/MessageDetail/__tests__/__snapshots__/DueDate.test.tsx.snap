@@ -253,7 +253,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/01/2022 
         </Text>
@@ -283,7 +283,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -553,7 +553,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            28/02/2022 
         </Text>
@@ -583,7 +583,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -853,7 +853,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            28/02/2023 
         </Text>
@@ -883,7 +883,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -1153,7 +1153,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            29/02/2024 
         </Text>
@@ -1183,7 +1183,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -1453,7 +1453,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/03/2022 
         </Text>
@@ -1483,7 +1483,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -1753,7 +1753,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            30/04/2022 
         </Text>
@@ -1783,7 +1783,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -2053,7 +2053,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/05/2022 
         </Text>
@@ -2083,7 +2083,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -2353,7 +2353,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            30/06/2022 
         </Text>
@@ -2383,7 +2383,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -2653,7 +2653,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/07/2022 
         </Text>
@@ -2683,7 +2683,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -2953,7 +2953,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/08/2022 
         </Text>
@@ -2983,7 +2983,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -3253,7 +3253,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            30/09/2022 
         </Text>
@@ -3283,7 +3283,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -3553,7 +3553,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/10/2022 
         </Text>
@@ -3583,7 +3583,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -3853,7 +3853,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            01/12/2022 
         </Text>
@@ -3883,7 +3883,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -4153,7 +4153,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/12/2022 
         </Text>
@@ -4183,7 +4183,7 @@ exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            22:59
         </Text>
@@ -4453,7 +4453,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/01/2022 
         </Text>
@@ -4483,7 +4483,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -4753,7 +4753,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            28/02/2022 
         </Text>
@@ -4783,7 +4783,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -5053,7 +5053,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            28/02/2023 
         </Text>
@@ -5083,7 +5083,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -5353,7 +5353,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            29/02/2024 
         </Text>
@@ -5383,7 +5383,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -5653,7 +5653,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/03/2022 
         </Text>
@@ -5683,7 +5683,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -5953,7 +5953,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            30/04/2022 
         </Text>
@@ -5983,7 +5983,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -6253,7 +6253,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/05/2022 
         </Text>
@@ -6283,7 +6283,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -6553,7 +6553,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            30/06/2022 
         </Text>
@@ -6583,7 +6583,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -6853,7 +6853,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/07/2022 
         </Text>
@@ -6883,7 +6883,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -7153,7 +7153,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/08/2022 
         </Text>
@@ -7183,7 +7183,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -7453,7 +7453,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            30/09/2022 
         </Text>
@@ -7483,7 +7483,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -7753,7 +7753,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/10/2022 
         </Text>
@@ -7783,7 +7783,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -8053,7 +8053,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            01/12/2022 
         </Text>
@@ -8083,7 +8083,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -8353,7 +8353,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            31/12/2022 
         </Text>
@@ -8383,7 +8383,7 @@ exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            23:59
         </Text>
@@ -8653,7 +8653,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            01/12/2021 
         </Text>
@@ -8683,7 +8683,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            13:29
         </Text>
@@ -8953,7 +8953,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            01/12/2021 
         </Text>
@@ -8983,7 +8983,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            13:29
         </Text>
@@ -9253,7 +9253,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            01/12/2021 
         </Text>
@@ -9283,7 +9283,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expiration
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
            13:29
         </Text>

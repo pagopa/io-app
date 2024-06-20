@@ -80,7 +80,7 @@ const CdcBonusRequestSelectResidence = () => {
               >
                 <Icon name="bonus" size={20} />
                 <HSpacer size={16} />
-                <H3 weight={"SemiBold"} color={"bluegrey"}>
+                <H3 weight={"Semibold"} color={"bluegrey"}>
                   {b.year}
                 </H3>
               </View>

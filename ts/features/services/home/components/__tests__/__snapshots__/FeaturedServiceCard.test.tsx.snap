@@ -472,7 +472,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                 allowFontScaling={false}
                                 color="blueIO-850"
                                 defaultColor="bluegreyDark"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -496,7 +496,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 ### Service ###
                               </Text>
@@ -1036,7 +1036,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 allowFontScaling={false}
                                 color="hanPurple-850"
                                 defaultColor="bluegreyDark"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -1060,7 +1060,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 ### Service ###
                               </Text>

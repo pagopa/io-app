@@ -789,7 +789,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -812,7 +812,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -955,7 +955,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345610
                               </Text>
@@ -1213,7 +1213,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345620
                               </Text>
@@ -1471,7 +1471,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345630
                               </Text>
@@ -1729,7 +1729,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345640
                               </Text>
@@ -1987,7 +1987,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345650
                               </Text>
@@ -2245,7 +2245,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345660
                               </Text>
@@ -2503,7 +2503,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345670
                               </Text>
@@ -3085,7 +3085,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -3108,7 +3108,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -3251,7 +3251,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345610
                               </Text>
@@ -3509,7 +3509,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345620
                               </Text>
@@ -3767,7 +3767,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345630
                               </Text>
@@ -4025,7 +4025,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345640
                               </Text>
@@ -4283,7 +4283,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345650
                               </Text>
@@ -4541,7 +4541,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345660
                               </Text>
@@ -4799,7 +4799,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345670
                               </Text>
@@ -5724,7 +5724,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -5747,7 +5747,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -5882,7 +5882,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
@@ -5902,7 +5902,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -5925,7 +5925,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -6127,7 +6127,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
@@ -6384,7 +6384,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
@@ -6641,7 +6641,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
@@ -6898,7 +6898,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
@@ -7480,7 +7480,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -7503,7 +7503,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -7638,7 +7638,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
@@ -7658,7 +7658,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -7681,7 +7681,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -7883,7 +7883,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
@@ -8140,7 +8140,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
@@ -8397,7 +8397,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
@@ -8654,7 +8654,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
@@ -9236,7 +9236,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -9259,7 +9259,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -9394,7 +9394,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
@@ -9414,7 +9414,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -9437,7 +9437,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -9639,7 +9639,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
@@ -9896,7 +9896,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
@@ -10153,7 +10153,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
@@ -10410,7 +10410,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
@@ -11112,7 +11112,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -11135,7 +11135,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -11270,7 +11270,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
@@ -11290,7 +11290,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -11313,7 +11313,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -11515,7 +11515,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
@@ -11772,7 +11772,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
@@ -12029,7 +12029,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
@@ -12286,7 +12286,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
@@ -12988,7 +12988,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -13011,7 +13011,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -13146,7 +13146,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
@@ -13166,7 +13166,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -13189,7 +13189,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -13716,7 +13716,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -13739,7 +13739,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -13874,7 +13874,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
@@ -13894,7 +13894,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -13917,7 +13917,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>

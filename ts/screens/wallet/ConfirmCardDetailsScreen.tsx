@@ -271,7 +271,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
               <VSpacer size={24} />
               <View style={styles.preferredMethodContainer}>
                 <View style={IOStyles.flex}>
-                  <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+                  <H4 weight={"Semibold"} color={"bluegreyDark"}>
                     {I18n.t("wallet.saveCard.infoTitle")}
                   </H4>
                   <H5 weight={"Regular"} color={"bluegrey"}>

@@ -71,7 +71,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
           },
         ]
       }
-      weight="SemiBold"
+      weight="Semibold"
       weightColorFactory={[Function]}
     >
       Discount code
@@ -224,7 +224,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity
@@ -335,7 +335,7 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity
@@ -446,7 +446,7 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity
@@ -564,7 +564,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Discount code
@@ -717,7 +717,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Validity

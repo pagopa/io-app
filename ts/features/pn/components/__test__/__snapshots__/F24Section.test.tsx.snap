@@ -436,7 +436,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -459,7 +459,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Modelli F24
                               </Text>
@@ -727,7 +727,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -750,7 +750,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         2
                                       </Text>
@@ -967,7 +967,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           {
@@ -990,7 +990,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         4
                                       </Text>
@@ -2615,7 +2615,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2638,7 +2638,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Modelli F24
                               </Text>
@@ -2758,7 +2758,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               allowFontScaling={false}
                               color="blueIO-500"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -2781,7 +2781,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               2
                             </Text>

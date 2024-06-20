@@ -433,7 +433,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -456,7 +456,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Attachments
                               </Text>
@@ -910,7 +910,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -933,7 +933,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Attachments
                               </Text>
@@ -2073,7 +2073,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2096,7 +2096,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Attachments
                               </Text>
@@ -2550,7 +2550,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -2573,7 +2573,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Attachments
                               </Text>

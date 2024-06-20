@@ -796,7 +796,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   {
@@ -819,7 +819,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 pagoPA notices
                               </Text>

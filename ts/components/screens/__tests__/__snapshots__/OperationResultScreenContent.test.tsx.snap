@@ -378,7 +378,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -403,7 +403,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               title
                             </Text>

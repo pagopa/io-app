@@ -515,7 +515,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -540,7 +540,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -1115,7 +1115,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -1140,7 +1140,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Loading messages has failed
                             </Text>
@@ -2502,7 +2502,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -2527,7 +2527,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -3445,7 +3445,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3470,7 +3470,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -4388,7 +4388,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -4413,7 +4413,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -5331,7 +5331,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -5356,7 +5356,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your archive is empty.
                             </Text>
@@ -6274,7 +6274,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6299,7 +6299,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -6874,7 +6874,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -6899,7 +6899,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Loading messages has failed
                             </Text>
@@ -8261,7 +8261,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -8286,7 +8286,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -9204,7 +9204,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -9229,7 +9229,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -10147,7 +10147,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -10172,7 +10172,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>
@@ -11090,7 +11090,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -11115,7 +11115,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Your message list is empty.
                             </Text>

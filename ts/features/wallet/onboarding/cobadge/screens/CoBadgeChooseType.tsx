@@ -70,7 +70,7 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View>
-          <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+          <H3 color={"bluegreyDark"} weight={"Semibold"}>
             {cardPathItem.item.title}
           </H3>
         </View>

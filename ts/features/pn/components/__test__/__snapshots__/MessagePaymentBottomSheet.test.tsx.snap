@@ -882,7 +882,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Uno due tre
                                     </Text>
@@ -902,7 +902,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       allowFontScaling={false}
                                       color="blue"
                                       defaultColor="black"
-                                      defaultWeight="SemiBold"
+                                      defaultWeight="Semibold"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -925,7 +925,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       1.99 €
                                     </Text>
@@ -1127,7 +1127,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  20
                                     </Text>
@@ -1384,7 +1384,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  30
                                     </Text>
@@ -1641,7 +1641,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  40
                                     </Text>
@@ -1898,7 +1898,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  50
                                     </Text>
@@ -2155,7 +2155,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  60
                                     </Text>
@@ -2412,7 +2412,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  70
                                     </Text>

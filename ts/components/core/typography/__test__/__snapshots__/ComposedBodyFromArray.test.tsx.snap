@@ -382,7 +382,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
      weights
   </Text>
@@ -567,7 +567,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
      weights
   </Text>
@@ -752,7 +752,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
      weights
   </Text>
@@ -937,7 +937,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
      weights
   </Text>
@@ -1122,7 +1122,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
      weights
   </Text>
@@ -1307,7 +1307,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
      weights
   </Text>

@@ -62,7 +62,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -83,7 +83,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -247,7 +247,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -320,7 +320,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -341,7 +341,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -565,7 +565,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -711,7 +711,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -732,7 +732,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -956,7 +956,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -1144,7 +1144,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -1165,7 +1165,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -1389,7 +1389,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -1462,7 +1462,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -1483,7 +1483,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -1707,7 +1707,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -1780,7 +1780,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -1801,7 +1801,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -2029,7 +2029,7 @@ exports[`MessageList Item component when category=EU_COVID_CERT and rptId matche
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -2179,7 +2179,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -2200,7 +2200,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -2424,7 +2424,7 @@ exports[`MessageList Item component when category=GENERIC and rptId matches=fals
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -2497,7 +2497,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -2518,7 +2518,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -2742,7 +2742,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=fals
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -2815,7 +2815,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -2836,7 +2836,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -3060,7 +3060,7 @@ exports[`MessageList Item component when category=PAYMENT and rptId matches=true
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?
@@ -3181,7 +3181,7 @@ exports[`MessageList Item component with all the flags set to false should match
       <Text
         color="bluegreyDark"
         defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultWeight="Semibold"
         font="TitilliumSansPro"
         fontStyle={
           {
@@ -3202,7 +3202,7 @@ exports[`MessageList Item component with all the flags set to false should match
             },
           ]
         }
-        weight="SemiBold"
+        weight="Semibold"
       >
         Ċentru tas-Saħħa
       </Text>
@@ -3426,7 +3426,7 @@ exports[`MessageList Item component with all the flags set to false should match
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
           weightColorFactory={[Function]}
         >
           Għandek flus?

@@ -428,7 +428,7 @@ const EmailInsertScreen = () => {
               ) : (
                 <>
                   {I18n.t("email.edit.subtitle")}
-                  <Body weight="SemiBold">
+                  <Body weight="Semibold">
                     {` ${pipe(
                       optionEmail,
                       O.getOrElse(() => "")

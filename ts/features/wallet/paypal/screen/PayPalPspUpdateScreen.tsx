@@ -113,7 +113,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
           O.fold(
             () => (
               <H4
-                weight={"SemiBold"}
+                weight={"Semibold"}
                 color={"bluegreyDark"}
                 testID={"pspNameTestID"}
               >

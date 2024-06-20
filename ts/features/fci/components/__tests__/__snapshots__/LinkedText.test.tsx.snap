@@ -5,7 +5,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   allowFontScaling={false}
   color="bluegreyDark"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
+  defaultWeight="Semibold"
   font="TitilliumSansPro"
   fontStyle={
     {
@@ -27,13 +27,13 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
 >
   <Text
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -61,7 +61,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -91,7 +91,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -121,7 +121,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -151,7 +151,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -181,7 +181,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -211,7 +211,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -241,7 +241,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -271,7 +271,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -301,7 +301,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -331,7 +331,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -361,7 +361,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -391,7 +391,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -421,7 +421,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -451,7 +451,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {
@@ -481,7 +481,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     allowFontScaling={false}
     color="bluegreyDark"
     defaultColor="black"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     font="TitilliumSansPro"
     fontStyle={
       {

@@ -876,7 +876,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   after you've received it
                                 </Text>
@@ -938,7 +938,7 @@ The sender can edit the information in a dynamic message only
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   specific cases
                                 </Text>

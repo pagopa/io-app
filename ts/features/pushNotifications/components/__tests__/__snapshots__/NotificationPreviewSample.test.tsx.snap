@@ -480,7 +480,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -502,7 +502,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             You have a new message
                           </Text>
@@ -1031,7 +1031,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -1053,7 +1053,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             You have a notice due tomorrow
                           </Text>
@@ -1582,7 +1582,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -1604,7 +1604,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Comune di Ipazia
                           </Text>
@@ -2133,7 +2133,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               {
@@ -2155,7 +2155,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             You have a notice due soon
                           </Text>

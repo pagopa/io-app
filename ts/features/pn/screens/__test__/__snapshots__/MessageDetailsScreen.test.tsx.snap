@@ -429,7 +429,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -452,7 +452,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 ]
                               }
                               testID="message-header-subject"
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               ######## subject ########
                             </Text>
@@ -529,7 +529,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     {
@@ -551,7 +551,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Ċentru tas-Saħħa
                                 </Text>
@@ -802,7 +802,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       allowFontScaling={false}
                                       color="grey-700"
                                       defaultColor="black"
-                                      defaultWeight="SemiBold"
+                                      defaultWeight="Semibold"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         {
@@ -825,7 +825,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Attachments
                                     </Text>
@@ -908,7 +908,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     allowFontScaling={false}
                                     color="blueIO-500"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -931,7 +931,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     A First Attachment
                                   </Text>
@@ -1148,7 +1148,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     allowFontScaling={false}
                                     color="blueIO-500"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       {
@@ -1171,7 +1171,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     A Second Attachment
                                   </Text>
@@ -1786,7 +1786,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               allowFontScaling={false}
                                               color="grey-700"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -1809,7 +1809,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               Notifica
                                             </Text>
@@ -1992,7 +1992,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               allowFontScaling={false}
                                               color="blue"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -2015,7 +2015,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               731143-7-0317-8200-0
                                             </Text>
@@ -2128,7 +2128,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               allowFontScaling={false}
                                               color="grey-700"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -2151,7 +2151,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               Message
                                             </Text>
@@ -2334,7 +2334,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               allowFontScaling={false}
                                               color="blue"
                                               defaultColor="black"
-                                              defaultWeight="SemiBold"
+                                              defaultWeight="Semibold"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 {
@@ -2357,7 +2357,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   },
                                                 ]
                                               }
-                                              weight="SemiBold"
+                                              weight="Semibold"
                                             >
                                               FAT00001
                                             </Text>
@@ -2464,6 +2464,10 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3233,7 +3237,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 {
@@ -3258,7 +3262,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Qualcosa è andato storto
                             </Text>
@@ -3329,6 +3333,10 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }

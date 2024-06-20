@@ -34,8 +34,9 @@ import reducer, {
   messagesByCategorySelector,
   emptyListReasonSelector,
   shouldShowFooterListComponentSelector,
-  nextMessagePageStartingIdForCategorySelector,
-  nextPageLoadingForCategoryHasErrorSelector
+  LastRequestType,
+  messagePagePotFromCategorySelector,
+  shouldShowRefreshControllOnListSelector
 } from "../allPaginated";
 import { pageSize } from "../../../../../config";
 import { UIMessage } from "../../../types";
@@ -44,6 +45,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
+import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -1657,384 +1659,64 @@ describe("emptyListReasonSelector", () => {
 });
 
 describe("shouldShowFooterListComponentSelector", () => {
-  it("Footer should be hidden, INBOX, pot.none", () => {
+  const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  const messagePagePots: Array<MessagePagePot> = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(emptyMessagePage),
+    pot.noneError(""),
+    pot.some(nonEmptyMessagePage),
+    pot.someLoading(nonEmptyMessagePage),
+    pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
+    pot.someError(nonEmptyMessagePage, "")
+  ];
+  const lastRequests: Array<LastRequestType> = [
+    O.some("all"),
+    O.some("next"),
+    O.some("previous"),
+    O.none
+  ];
+  categories.forEach(category =>
+    lastRequests.forEach(lastRequest =>
+      messagePagePots.forEach(messagePagePot => {
+        const footerIsVisible =
+          O.isSome(lastRequest) &&
+          lastRequest.value === "next" &&
+          isSomeLoadingOrSomeUpdating(messagePagePot);
+        it(`Footer should be ${
+          footerIsVisible ? "visible" : "hidden"
+        }, ${category}, '${
+          O.isSome(lastRequest) ? lastRequest.value : "none"
+        }' lastRequest, ${messagePagePot.kind}`, () => {
+          const state = generateAllPaginatedDataStateForCategory(
+            category,
+            messagePagePot,
+            lastRequest
+          );
+          const shouldShowFooterListComponent =
+            shouldShowFooterListComponentSelector(state, category);
+          expect(shouldShowFooterListComponent).toBe(footerIsVisible);
+        });
+      })
+    )
+  );
+});
+
+describe("messagePagePotFromCategorySelector", () => {
+  it("should return messagePagePot, INBOX category", () => {
     const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(category, pot.none);
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, INBOX, pot.noneLoading", () => {
-    const category: MessageListCategory = "INBOX";
+    const messagePagePot = pot.some({} as MessagePage);
     const state = generateAllPaginatedDataStateForCategory(
       category,
-      pot.noneLoading
+      messagePagePot
     );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, INBOX, pot.noneUpdating", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneUpdating(emptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, INBOX, pot.noneError", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneError("")
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, INBOX, pot.some", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.some(nonEmptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be visible, INBOX, pot.someLoading", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someLoading(nonEmptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(true);
-  });
-  it("Footer should be visible, INBOX, pot.someUpdating", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(true);
-  });
-  it("Footer should be hidden, INBOX, pot.someError", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someError(nonEmptyMessagePage, "")
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, ARCHIVE, pot.none", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(category, pot.none);
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, ARCHIVE, pot.noneLoading", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneLoading
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, ARCHIVE, pot.noneUpdating", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneUpdating(emptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, ARCHIVE, pot.noneError", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneError("")
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be hidden, ARCHIVE, pot.some", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.some(nonEmptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
-  });
-  it("Footer should be visible, ARCHIVE, pot.someLoading", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someLoading(nonEmptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(true);
-  });
-  it("Footer should be visible, ARCHIVE, pot.someUpdating", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(true);
-  });
-  it("Footer should be hidden, ARCHIVE, pot.someError", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someError(nonEmptyMessagePage, "")
-    );
-    const shouldShowFooterListComponent = shouldShowFooterListComponentSelector(
-      state,
-      category
-    );
-    expect(shouldShowFooterListComponent).toBe(false);
+    const outputMessagePagePot =
+      messagePagePotFromCategorySelector(category)(state);
+    expect(outputMessagePagePot).toStrictEqual(messagePagePot);
   });
 });
 
-describe("nextMessagePageStartingIdForCategorySelector", () => {
-  it("should return undefined, INBOX, pot.none", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(category, pot.none);
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, INBOX, pot.noneLoading", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneLoading
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, INBOX, pot.noneUpdating", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneUpdating(nonEmptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, INBOX, pot.noneError", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneError("")
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, INBOX, pot.some", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.some(nonEmptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toStrictEqual(nonEmptyMessagePage.next);
-  });
-  it("should return undefined, INBOX, pot.someLoading", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someLoading(nonEmptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, INBOX, pot.someUpdating", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, INBOX, pot.someError", () => {
-    const category: MessageListCategory = "INBOX";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someError(nonEmptyMessagePage, "")
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toStrictEqual(nonEmptyMessagePage.next);
-  });
-  it("should return undefined, ARCHIVE, pot.none", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(category, pot.none);
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, ARCHIVE, pot.noneLoading", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneLoading
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, ARCHIVE, pot.noneUpdating", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneUpdating(nonEmptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, ARCHIVE, pot.noneError", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.noneError("")
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, ARCHIVE, pot.some", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.some(nonEmptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toStrictEqual(nonEmptyMessagePage.next);
-  });
-  it("should return undefined, ARCHIVE, pot.someLoading", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someLoading(nonEmptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, ARCHIVE, pot.someUpdating", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someUpdating(nonEmptyMessagePage, emptyMessagePage)
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toBeUndefined();
-  });
-  it("should return undefined, ARCHIVE, pot.someError", () => {
-    const category: MessageListCategory = "ARCHIVE";
-    const state = generateAllPaginatedDataStateForCategory(
-      category,
-      pot.someError(nonEmptyMessagePage, "")
-    );
-    const nextPageStartingId = nextMessagePageStartingIdForCategorySelector(
-      state,
-      category
-    );
-    expect(nextPageStartingId).toStrictEqual(nonEmptyMessagePage.next);
-  });
-});
-
-describe("nextPageLoadingForCategoryHasErrorSelector", () => {
+describe("shouldShowRefreshControllOnListSelector", () => {
   const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
   const messagePagePotData: ReadonlyArray<MessagePagePot> = [
     pot.none,
@@ -2058,9 +1740,11 @@ describe("nextPageLoadingForCategoryHasErrorSelector", () => {
       messageRequests.forEach(messageRequest => {
         // eslint-disable-next-line no-underscore-dangle
         const expectedOutput =
-          messagePagePot.kind === "PotSomeError" &&
+          (messagePagePot.kind === "PotSomeLoading" ||
+            messagePagePot.kind === "PotSomeUpdating") &&
           O.isSome(messageRequest) &&
-          messageRequest.value === "next";
+          (messageRequest.value === "all" ||
+            messageRequest.value === "previous");
         // eslint-disable-next-line no-underscore-dangle
         it(`should return ${expectedOutput}, ${category}, '${
           O.isSome(messageRequest) ? messageRequest.value : "None"
@@ -2070,9 +1754,9 @@ describe("nextPageLoadingForCategoryHasErrorSelector", () => {
             messagePagePot,
             messageRequest
           );
-          const nextPageLoadingHasError =
-            nextPageLoadingForCategoryHasErrorSelector(state, category);
-          expect(nextPageLoadingHasError).toBe(expectedOutput);
+          const shouldShowRefreshControl =
+            shouldShowRefreshControllOnListSelector(state, category);
+          expect(shouldShowRefreshControl).toBe(expectedOutput);
         });
       })
     )
@@ -2111,5 +1795,3 @@ const readonlyEmptyMessageList: ReadonlyArray<UIMessage> = [];
 const emptyMessagePage = {
   page: readonlyEmptyMessageList
 } as MessagePage;
-
-type LastRequestType = O.Option<"previous" | "next" | "all">;

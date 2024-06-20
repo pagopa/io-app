@@ -36,7 +36,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 //     backgroundColor: customVariables.contentPrimaryBackground
 //   },
 //   activeTextStyle: {
-//     ...makeFontStyleObject("SemiBold"),
+//     ...makeFontStyleObject("Semibold"),
 //     fontSize: Platform.OS === "android" ? 16 : undefined,
 //     fontWeight: Platform.OS === "android" ? "normal" : "bold",
 //     color: customVariables.brandPrimary
