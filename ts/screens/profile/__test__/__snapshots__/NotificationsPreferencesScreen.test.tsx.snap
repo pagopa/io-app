@@ -1050,6 +1050,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -2423,6 +2427,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -3798,6 +3806,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -5171,6 +5183,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -6546,6 +6562,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -7919,6 +7939,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -9294,6 +9318,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -10667,6 +10695,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -12042,6 +12074,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -13415,6 +13451,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -14790,6 +14830,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -16163,6 +16207,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -17538,6 +17586,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -18911,6 +18963,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -20286,6 +20342,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -21659,6 +21719,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }
@@ -23034,6 +23098,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >
@@ -24407,6 +24475,10 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
                               },
                             ]
                           }

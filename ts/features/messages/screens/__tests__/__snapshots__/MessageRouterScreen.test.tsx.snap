@@ -505,6 +505,10 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
                             ]
                           }
                         >
@@ -1331,6 +1335,10 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -2345,6 +2353,10 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
                             ]
                           }
                         >
@@ -3172,6 +3184,10 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
                             ]
                           }
                         >
@@ -3998,6 +4014,10 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }

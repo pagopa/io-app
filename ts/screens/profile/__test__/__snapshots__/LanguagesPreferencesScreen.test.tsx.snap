@@ -944,6 +944,10 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
                             ]
                           }
                         >

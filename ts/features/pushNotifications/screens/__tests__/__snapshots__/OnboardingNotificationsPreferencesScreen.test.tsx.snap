@@ -1392,6 +1392,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
                             ]
                           }
                         >
@@ -3001,6 +3005,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -4612,6 +4620,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
                             ]
                           }
                         >
@@ -6221,6 +6233,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -8262,6 +8278,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }

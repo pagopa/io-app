@@ -651,6 +651,10 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
                             ]
                           }
                         >
@@ -1471,6 +1475,10 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
+                              },
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
                               },
                             ]
                           }
