@@ -1,10 +1,5 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-import React, {
-  ComponentProps,
-  ReactElement,
-  useCallback,
-  useMemo
-} from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { SafeAreaView, View } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
@@ -24,10 +19,7 @@ import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomS
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
-
-type IOScrollViewActions = ComponentProps<
-  typeof IOScrollViewWithLargeHeader
->["actions"];
+import { IOScrollViewActions } from "../../components/ui/IOScrollView";
 
 const OnboardingShareDataScreen = (): ReactElement => {
   const dispatch = useIODispatch();
