@@ -182,8 +182,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -200,6 +200,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -250,7 +251,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -1560,8 +1561,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -1578,6 +1579,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -1628,7 +1630,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -2938,8 +2940,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -2956,6 +2958,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -3006,7 +3009,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -4316,8 +4319,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -4334,6 +4337,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -4384,7 +4388,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -5694,8 +5698,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -5712,6 +5716,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -5762,7 +5767,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -7072,8 +7077,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -7090,6 +7095,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -7140,7 +7146,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -8450,8 +8456,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -8468,6 +8474,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -8518,7 +8525,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -9828,8 +9835,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -9846,6 +9853,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -9896,7 +9904,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -11206,8 +11214,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -11224,6 +11232,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -11274,7 +11283,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -12584,8 +12593,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -12602,6 +12611,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -12652,7 +12662,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -13962,8 +13972,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -13980,6 +13990,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -14030,7 +14041,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -15340,8 +15351,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -15358,6 +15369,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -15408,7 +15420,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -16718,8 +16730,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -16736,6 +16748,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -16786,7 +16799,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -18096,8 +18109,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -18114,6 +18127,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -18164,7 +18178,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -19474,8 +19488,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -19492,6 +19506,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -19542,7 +19557,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -20852,8 +20867,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -20870,6 +20885,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -20920,7 +20936,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -22230,8 +22246,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -22248,6 +22264,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -22298,7 +22315,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -23608,8 +23625,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -23626,6 +23643,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
+                            accessible={true}
                             onLayout={[Function]}
                             style={
                               Object {
@@ -23676,7 +23694,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 Object {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
