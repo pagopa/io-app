@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: Più info
+    moreInfo: più info
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -3058,6 +3058,8 @@ features:
   payments:
     title: Pagamenti
     cta: Paga un avviso
+    remoteAlert:
+      cta: Scopri di più
     methods:
       title: Metodi di pagamento
       button: Aggiungi
