@@ -1415,7 +1415,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
@@ -3064,7 +3064,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
@@ -4713,7 +4713,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
@@ -6362,7 +6362,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
@@ -8442,7 +8442,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },

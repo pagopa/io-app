@@ -2465,7 +2465,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
@@ -3334,7 +3334,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },

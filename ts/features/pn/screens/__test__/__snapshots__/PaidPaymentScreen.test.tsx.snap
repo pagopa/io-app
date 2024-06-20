@@ -627,7 +627,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                               {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
+                              {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
