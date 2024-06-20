@@ -1,5 +1,10 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-import React, { ComponentProps, ReactElement, useMemo } from "react";
+import React, {
+  ComponentProps,
+  ReactElement,
+  useCallback,
+  useMemo
+} from "react";
 import { SafeAreaView, View } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
@@ -10,6 +15,8 @@ import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackMixpanelScreen } from "../profile/analytics";
 import {
+  TrackingInfo,
+  trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
 } from "../profile/analytics/mixpanel/mixpanelAnalytics";
@@ -26,10 +33,10 @@ const OnboardingShareDataScreen = (): ReactElement => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const flow = getFlowType(true, isFirstOnBoarding);
 
   const { showAlert } = useOnboardingAbortAlert();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
-    const flow = getFlowType(true, isFirstOnBoarding);
     trackMixpanelDeclined(flow);
     trackMixpanelSetEnabled(false, flow, store.getState()).finally(() => {
       dispatch(setMixpanelEnabled(false));
@@ -39,6 +46,13 @@ const OnboardingShareDataScreen = (): ReactElement => {
   useOnFirstRender(() => {
     trackMixpanelScreen(getFlowType(true, isFirstOnBoarding));
   });
+
+  const handleTrackingAction = useCallback(
+    (info: TrackingInfo) => {
+      trackMixPanelTrackingInfo(flow, info);
+    },
+    [flow]
+  );
 
   const actions = useMemo<IOScrollViewActions>(
     () => ({
@@ -87,7 +101,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
-          <ShareDataComponent />
+          <ShareDataComponent trackAction={handleTrackingAction} />
           <VSpacer size={32} />
           <Banner
             content={I18n.t(

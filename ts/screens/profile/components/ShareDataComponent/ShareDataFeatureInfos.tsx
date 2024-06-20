@@ -4,12 +4,17 @@ import {
   FeatureInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import I18n from "../../../../i18n";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { ioSuppliersUrl } from "../../../../urls";
+import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
+
+export type FeatureProps = {
+  trackAction: (info: TrackingInfo) => void;
+};
 
 const shareDataSecurityMoreLink =
   "https://www.pagopa.it/it/politiche-sulla-sicurezza-delle-informazioni-e-sulla-qualita/";
@@ -23,7 +28,7 @@ const MarkdownBody = () => (
   </>
 );
 
-const AnalyticsFeatureInfo = () => {
+const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
   const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <MarkdownBody />,
     I18n.t("profile.main.privacy.shareData.whyBottomSheet.title"),
@@ -45,12 +50,17 @@ const AnalyticsFeatureInfo = () => {
     []
   );
 
+  const handleOnPress = useCallback(() => {
+    trackAction(TrackingInfo.WHY);
+    present();
+  }, [trackAction, present]);
+
   return (
     <>
       <FeatureInfo
         iconName="analytics"
         actionLabel={I18n.t("profile.main.privacy.shareData.screen.why.cta")}
-        actionOnPress={present}
+        actionOnPress={handleOnPress}
         body={analyticsBody}
       />
       {bottomSheet}
@@ -58,8 +68,9 @@ const AnalyticsFeatureInfo = () => {
   );
 };
 
-const SecurityFeatureInfo = () => {
+const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
   const handleOnPress = () => {
+    trackAction(TrackingInfo.FIND_OUT_MORE);
     openWebUrl(shareDataSecurityMoreLink);
   };
 
@@ -87,8 +98,9 @@ const SecurityFeatureInfo = () => {
   );
 };
 
-const GDPRFeatureInfo = () => {
+const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
   const handleOnPress = () => {
+    trackAction(TrackingInfo.SUPPLIERS);
     openWebUrl(ioSuppliersUrl);
   };
 

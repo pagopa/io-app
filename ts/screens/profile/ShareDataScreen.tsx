@@ -18,6 +18,8 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { useIOStore } from "../../store/hooks";
 import { trackMixpanelScreen } from "./analytics";
 import {
+  TrackingInfo,
+  trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
 } from "./analytics/mixpanel/mixpanelAnalytics";
@@ -45,6 +47,11 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
   useOnFirstRender(() => {
     trackMixpanelScreen(getFlowType(false, false));
   });
+
+  const handleTrackingAction = React.useCallback((info: TrackingInfo) => {
+    const flow = getFlowType(false, false);
+    trackMixPanelTrackingInfo(flow, info);
+  }, []);
 
   const buttonProps: BlockButtonProps = isMixpanelEnabled
     ? {
@@ -101,7 +108,7 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
-          <ShareDataComponent />
+          <ShareDataComponent trackAction={handleTrackingAction} />
         </View>
 
         {bottomSheet}

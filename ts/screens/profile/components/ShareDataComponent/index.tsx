@@ -5,25 +5,28 @@ import { Link } from "../../../../components/core/typography/Link";
 import { privacyUrl } from "../../../../config";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
+import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
 import {
   AnalyticsFeatureInfo,
+  FeatureProps,
   GDPRFeatureInfo,
   SecurityFeatureInfo
 } from "./ShareDataFeatureInfos";
 
-export const ShareDataComponent = memo(() => {
+export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
   const handleOnPress = () => {
+    trackAction(TrackingInfo.TOS);
     openWebUrl(privacyUrl);
   };
 
   return (
     <>
       <VSpacer size={16} />
-      <AnalyticsFeatureInfo />
+      <AnalyticsFeatureInfo trackAction={trackAction} />
       <VSpacer size={24} />
-      <SecurityFeatureInfo />
+      <SecurityFeatureInfo trackAction={trackAction} />
       <VSpacer size={24} />
-      <GDPRFeatureInfo />
+      <GDPRFeatureInfo trackAction={trackAction} />
       <VSpacer size={32} />
       <Body
         accessibilityRole="link"
