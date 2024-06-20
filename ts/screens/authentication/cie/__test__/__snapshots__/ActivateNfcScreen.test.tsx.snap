@@ -336,7 +336,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -358,7 +358,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Enable NFC to continue
                           </Text>
@@ -443,7 +443,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     allowFontScaling={false}
                                     color="grey-700"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -466,7 +466,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     How to do it::
                                   </Text>
@@ -683,7 +683,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Semibold"
                                           font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
@@ -706,7 +706,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Open 'Settings'
                                         </Text>
@@ -921,7 +921,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Semibold"
                                           font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
@@ -944,7 +944,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Search for ‘NFC’ functionality
                                         </Text>
@@ -1097,7 +1097,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                           allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Semibold"
                                           font="TitilliumSansPro"
                                           fontStyle={
                                             Object {
@@ -1120,7 +1120,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Semibold"
                                         >
                                           Turn it on
                                         </Text>
