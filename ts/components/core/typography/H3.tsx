@@ -5,7 +5,7 @@ import { useTypographyFactory } from "./Factory";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 
 // these colors are allowed only when the weight is Semibold
-type AllowedSemiBoldColors = Extract<
+type AllowedSemiboldColors = Extract<
   IOColors,
   | "bluegreyDark"
   | "bluegreyLight"
@@ -31,16 +31,16 @@ type AllowedBoldColors = Extract<
 // all the possible colors
 type AllowedColors =
   | AllowedBoldColors
-  | AllowedSemiBoldColors
+  | AllowedSemiboldColors
   | IOTheme["textHeading-default"];
 
 // all the possible weight
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "Semibold">;
 
 // these are the properties allowed only if weight is undefined or Semibold
-type SemiBoldProps = {
+type SemiboldProps = {
   weight?: Extract<IOFontWeight, "Semibold">;
-  color?: AllowedSemiBoldColors | IOTheme["textHeading-default"];
+  color?: AllowedSemiboldColors | IOTheme["textHeading-default"];
 };
 
 // these are the properties allowed only if weight is Bold
@@ -49,7 +49,7 @@ type BoldProps = {
   color?: AllowedBoldColors | IOTheme["textHeading-default"];
 };
 
-type BoldKindProps = SemiBoldProps | BoldProps;
+type BoldKindProps = SemiboldProps | BoldProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 

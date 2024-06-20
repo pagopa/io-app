@@ -57,18 +57,18 @@ describe("Test Typography Components", () => {
     const h4white = TestRenderer.create(<H4 color={"white"}>Text</H4>).toJSON();
     expect(h4white).toMatchSnapshot();
     // Semibold weight
-    const h4SemiBoldwhite = TestRenderer.create(
+    const h4Semiboldwhite = TestRenderer.create(
       <H4 weight={"Semibold"} color={"white"}>
         Text
       </H4>
     ).toJSON();
-    expect(h4SemiBoldwhite).toMatchSnapshot();
+    expect(h4Semiboldwhite).toMatchSnapshot();
 
     // Semibold default color
-    const h4SemiBoldDefault = TestRenderer.create(
+    const h4SemiboldDefault = TestRenderer.create(
       <H4 weight={"Semibold"}>Text</H4>
     ).toJSON();
-    expect(h4SemiBoldDefault).toMatchSnapshot();
+    expect(h4SemiboldDefault).toMatchSnapshot();
 
     // Regular weight
     // with regular weight, default color is bluegreydark

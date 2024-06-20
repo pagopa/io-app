@@ -11,7 +11,7 @@ type AllowedBoldColors = Extract<
 >;
 
 // these colors are allowed only when the weight is Semibold
-type AllowedSemiBoldColors = Extract<
+type AllowedSemiboldColors = Extract<
   IOColors,
   "white" | "bluegreyDark" | "blue" | "bluegreyLight"
 >;
@@ -25,7 +25,7 @@ type AllowedRegularColors = Extract<
 // all the possible colors
 type AllowedColors =
   | AllowedBoldColors
-  | AllowedSemiBoldColors
+  | AllowedSemiboldColors
   | AllowedRegularColors;
 
 // all the possible weight
@@ -38,9 +38,9 @@ type BoldProps = {
 };
 
 // these are the properties allowed only if weight is undefined or Semibold
-type SemiBoldProps = {
+type SemiboldProps = {
   weight: Extract<IOFontWeight, "Semibold">;
-  color?: AllowedSemiBoldColors;
+  color?: AllowedSemiboldColors;
 };
 
 // these are the properties allowed only if weight is undefined or Semibold
@@ -49,7 +49,7 @@ type RegularProps = {
   color?: AllowedRegularColors;
 };
 
-type BoldKindProps = SemiBoldProps | BoldProps | RegularProps;
+type BoldKindProps = SemiboldProps | BoldProps | RegularProps;
 
 export type OwnProps = ExternalTypographyProps<BoldKindProps>;
 

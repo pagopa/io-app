@@ -5,7 +5,7 @@ import { ExternalTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
 // these colors are allowed only when the weight is Semibold
-type AllowedSemiBoldColors = Extract<
+type AllowedSemiboldColors = Extract<
   IOColors,
   "bluegreyDark" | "bluegrey" | "bluegreyLight" | "blue" | "white" | "red"
 >;
@@ -23,15 +23,15 @@ type AllowedRegularColors = Extract<
 >;
 
 // all the possible colors
-type AllowedColors = AllowedSemiBoldColors | AllowedRegularColors;
+type AllowedColors = AllowedSemiboldColors | AllowedRegularColors;
 
 // all the possible weight
 type AllowedWeight = Extract<IOFontWeight, "Semibold" | "Regular">;
 
 // these are the properties allowed only if weight is undefined or Semibold
-type SemiBoldProps = {
+type SemiboldProps = {
   weight?: Extract<IOFontWeight, "Semibold">;
-  color?: AllowedSemiBoldColors;
+  color?: AllowedSemiboldColors;
 };
 
 // these are the properties allowed only if weight is Bold
@@ -40,7 +40,7 @@ type RegularProps = {
   color?: AllowedRegularColors;
 };
 
-type BoldKindProps = SemiBoldProps | RegularProps;
+type BoldKindProps = SemiboldProps | RegularProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
