@@ -419,12 +419,12 @@ profile:
           profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Privacy e Condizioni d’uso"
           cta:
             shareData: "Share"
-            dontShareData: "Don’t share data"
+            dontShareData: Non condividere i dati
             dontShare: Non ora
           confirmToast: "Preferences updated!"
         alert:
-          title: "You are not giving IO consent to collect your usage data"
-          body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
+          title: "Hai scelto di non \ncondividere i tuoi dati"
+          body: Se confermi,  non saremo in grado di fornirti assistenza mirata perché potrebbero mancarci i dati necessari per risolvere il problema.
         whyBottomSheet:
           title: "Perché raccogliamo i dati?"
           body: "Non raccogliamo dati per finalità di marketing.  \n\nUsiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per **fornirti un servizio migliore** e **assisterti in caso di necessità.**"

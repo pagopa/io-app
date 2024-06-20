@@ -386,11 +386,7 @@ profile:
         screen:
           cta:
             shareData: "Daten freigeben"
-            dontShareData: "Daten nicht freigeben"
           confirmToast: "Einstellungen aktualisiert!"
-        alert:
-          title: "Du gibst IO nicht die Erlaubnis, deine Nutzungsdaten zu sammeln."
-          body: "Wenn du diese Option bestätigen, kann es sein, dass dem IO-Support-Team bei technischen Problemen nicht alle Daten zur Verfügung stehen, um diese zu lösen."
         securityBottomSheet:
           title: "Was ist eine Pseudonymisierung?"
           body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
