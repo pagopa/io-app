@@ -135,7 +135,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
             <>
               <VSpacer size={16} />
               <H5
-                weight={props.isExpired ? "SemiBold" : "Regular"}
+                weight={props.isExpired ? "Semibold" : "Regular"}
                 color={props.isExpired ? "red" : "bluegreyDark"}
                 testID={"expirationDate"}
               >
