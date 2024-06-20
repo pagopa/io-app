@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.63.0-rc.1](https://github.com/pagopa/io-app/compare/2.63.0-rc.0...2.63.0-rc.1) (2024-06-20)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-327](https://pagopa.atlassian.net/browse/IOAPPX-327)] Remove NDEF as NFC format for iOS ([#5883](https://github.com/pagopa/io-app/issues/5883)) ([d166e7f](https://github.com/pagopa/io-app/commit/d166e7f189273bf30bb61483e107ccddfff0d5ec)), closes [/github.com/pagopa/io-cie-ios-sdk/blob/b7c63653d85eb28ff81841b89f99dceb9c64026d/ciesdk/iociesdkios/CIEIDSdk.swift#L133](https://github.com/pagopa//github.com/pagopa/io-cie-ios-sdk/blob/b7c63653d85eb28ff81841b89f99dceb9c64026d/ciesdk/iociesdkios/CIEIDSdk.swift/issues/L133)
+
 ## [2.63.0-rc.0](https://github.com/pagopa/io-app/compare/2.62.0-rc.2...2.63.0-rc.0) (2024-06-19)
 
 
