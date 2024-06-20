@@ -46,7 +46,7 @@ export const DSListItems = () => {
     <DesignSystemScreen title="List Items">
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemNav
@@ -55,7 +55,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemInfoCopy
@@ -64,7 +64,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemInfo
@@ -73,7 +73,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemHeader
@@ -82,7 +82,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemAction
@@ -91,7 +91,7 @@ export const DSListItems = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemTransaction
@@ -102,7 +102,7 @@ export const DSListItems = () => {
 
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         NativeBase lookalikes (not NativeBase)
@@ -122,7 +122,7 @@ export const DSListItems = () => {
 
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ListItemComponent (NativeBase)
@@ -215,7 +215,7 @@ export const DSListItems = () => {
 
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         Derivated from ListItem (NativeBase)
@@ -236,7 +236,7 @@ export const DSListItems = () => {
       </DSComponentViewerBox>
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         Misc
@@ -257,7 +257,7 @@ export const DSListItems = () => {
 
       <H2
         color={"bluegrey"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         Native (Not NativeBase)

@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as Either from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
@@ -22,7 +22,7 @@ import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
-import { foldK } from "../../../../utils/pot";
+import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
 
 export type MessagePage = {
@@ -33,10 +33,13 @@ export type MessagePage = {
 
 export type MessagePagePot = pot.Pot<MessagePage, string>;
 
+export type LastRequestValues = "previous" | "next" | "all";
+export type LastRequestType = O.Option<LastRequestValues>;
+
 type Collection = {
   data: MessagePagePot;
   /** persist the last action type occurred */
-  lastRequest: O.Option<"previous" | "next" | "all">;
+  lastRequest: LastRequestType;
 };
 
 export type MigrationStatus = O.Option<
@@ -576,16 +579,7 @@ export const allArchiveSelector = (
 export const messagesByCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) =>
-  pipe(state, allPaginatedSelector, items =>
-    pipe(
-      category,
-      messageListCategoryFoldK(
-        () => items.inbox.data,
-        () => items.archive.data
-      )
-    )
-  );
+) => pipe(state, messagePagePotFromCategorySelector(category));
 
 /**
  * Return the list of Inbox messages currently available.
@@ -629,7 +623,7 @@ export const isLoadingInboxNextPage = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "next" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -643,7 +637,7 @@ export const isLoadingInboxPreviousPage = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "previous" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -658,7 +652,7 @@ export const isReloadingInbox = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "all" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -683,7 +677,7 @@ export const isReloadingArchive = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "all" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -697,7 +691,7 @@ export const isLoadingArchiveNextPage = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "next" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -711,7 +705,7 @@ export const isLoadingArchivePreviousPage = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "previous" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -734,14 +728,12 @@ export const messageListForCategorySelector = (
   category: MessageListCategory
 ) =>
   pipe(
-    state.entities.messages.allPaginated,
-    allPaginated =>
-      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox,
-    messageCollection => messageCollection.data,
+    state,
+    messagePagePotFromCategorySelector(category),
     foldK(
       () => emptyMessageArray,
-      () => undefined,
-      _ => undefined,
+      constUndefined,
+      constUndefined,
       _ => emptyMessageArray,
       messagePage => messagePage.page,
       messagePage => messagePage.page,
@@ -754,29 +746,85 @@ export const emptyListReasonSelector = (
   state: GlobalState,
   category: MessageListCategory
 ): "noData" | "error" | "notEmpty" =>
-  pipe(state.entities.messages.allPaginated, allPaginated =>
-    pipe(
-      category,
-      messageListCategoryFoldK(
-        () => allPaginated.inbox,
-        () => allPaginated.archive
-      ),
-      messageCollection => messageCollection.data,
-      foldK(
-        () => "noData",
-        () => "notEmpty",
-        () => "notEmpty",
-        () => "error",
-        reasonFromMessagePageContainer,
-        reasonFromMessagePageContainer,
-        (container, _) => reasonFromMessagePageContainer(container),
-        (container, _) => reasonFromMessagePageContainer(container)
-      )
+  pipe(
+    state,
+    messagePagePotFromCategorySelector(category),
+    foldK(
+      () => "noData",
+      () => "notEmpty",
+      () => "notEmpty",
+      () => "error",
+      reasonFromMessagePageContainer,
+      reasonFromMessagePageContainer,
+      (container, _) => reasonFromMessagePageContainer(container),
+      (container, _) => reasonFromMessagePageContainer(container)
     )
   );
+
+export const shouldShowFooterListComponentSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messageCollectionFromCategory(category),
+    messagePagePotByLastRequest(nextLastRequestSet),
+    O.map(isSomeLoadingOrSomeUpdating),
+    O.getOrElse(constFalse)
+  );
+
+export const shouldShowRefreshControllOnListSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messageCollectionFromCategory(category),
+    messagePagePotByLastRequest(allAndPreviousLastRequestSet),
+    O.map(isSomeLoadingOrSomeUpdating),
+    O.getOrElse(constFalse)
+  );
+
+export const messagePagePotFromCategorySelector =
+  (category: MessageListCategory) => (state: GlobalState) =>
+    pipe(
+      state,
+      messageCollectionFromCategory(category),
+      messageCollection => messageCollection.data
+    );
+
+const messageCollectionFromCategory =
+  (category: MessageListCategory) => (state: GlobalState) =>
+    pipe(state.entities.messages.allPaginated, allPaginated =>
+      pipe(
+        category,
+        messageListCategoryFoldK(
+          () => allPaginated.inbox,
+          () => allPaginated.archive
+        )
+      )
+    );
 
 const reasonFromMessagePageContainer = (
   container: MessagePage
 ): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
+
+const messagePagePotByLastRequest =
+  (lastRequestValues: Set<LastRequestValues>) =>
+  (messageCollection: Collection) =>
+    pipe(
+      messageCollection.lastRequest,
+      O.filter(lastRequest => lastRequestValues.has(lastRequest)),
+      O.fold(
+        () => O.none,
+        () => O.some(messageCollection.data)
+      )
+    );
+
+const nextLastRequestSet = new Set<LastRequestValues>(["next"]);
+const allAndPreviousLastRequestSet = new Set<LastRequestValues>([
+  "all",
+  "previous"
+]);
 
 export default reducer;
