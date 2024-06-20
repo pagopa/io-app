@@ -130,7 +130,7 @@ exports[`EmptyListComponent matches the snapshot 1`] = `
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
     Your message list is empty.
   </Text>
