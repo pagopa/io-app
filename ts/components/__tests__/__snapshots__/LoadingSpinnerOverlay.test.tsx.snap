@@ -234,7 +234,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
           allowFontScaling={false}
           color="bluegreyDark"
           defaultColor="bluegreyDark"
-          defaultWeight="SemiBold"
+          defaultWeight="Semibold"
           font="TitilliumSansPro"
           fontStyle={
             Object {
@@ -259,7 +259,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
           This is the loading caption
         </Text>
@@ -649,7 +649,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
           allowFontScaling={false}
           color="bluegreyDark"
           defaultColor="bluegreyDark"
-          defaultWeight="SemiBold"
+          defaultWeight="Semibold"
           font="TitilliumSansPro"
           fontStyle={
             Object {
@@ -674,7 +674,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
           Wait a few seconds..
         </Text>

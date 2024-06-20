@@ -234,7 +234,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
           allowFontScaling={false}
           color="bluegreyDark"
           defaultColor="bluegreyDark"
-          defaultWeight="SemiBold"
+          defaultWeight="Semibold"
           font="TitilliumSansPro"
           fontStyle={
             Object {
@@ -259,7 +259,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
               },
             ]
           }
-          weight="SemiBold"
+          weight="Semibold"
         >
           Wait a few seconds..
         </Text>

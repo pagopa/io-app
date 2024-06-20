@@ -411,7 +411,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 allowFontScaling={false}
                                 color="bluegreyDark"
                                 defaultColor="bluegreyDark"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -436,7 +436,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 Loading document...
                               </Text>
