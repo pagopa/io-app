@@ -16,7 +16,7 @@ type AllowedColors =
   | PartialAllowedColors
   | IOColorsStatusForeground
   | IOTheme["textHeading-default"];
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Semibold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
