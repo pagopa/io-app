@@ -13,12 +13,12 @@ type PartialAllowedColors = Extract<
   "blue" | "bluegrey" | "bluegreyDark" | "white" | "red"
 >;
 type AllowedColors = PartialAllowedColors | IOColorsStatusForeground;
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "Semibold">;
 type LabelProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 > & { fontSize?: FontSize };
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 
 /**
  * Typography component to render `Label` text with font size {@link fontSize} and fontFamily {@link fontName}.

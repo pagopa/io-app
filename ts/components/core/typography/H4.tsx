@@ -10,8 +10,8 @@ type AllowedBoldColors = Extract<
   "bluegreyDark" | "blue" | "white" | "greenLight"
 >;
 
-// these colors are allowed only when the weight is SemiBold
-type AllowedSemiBoldColors = Extract<
+// these colors are allowed only when the weight is Semibold
+type AllowedSemiboldColors = Extract<
   IOColors,
   "white" | "bluegreyDark" | "blue" | "bluegreyLight"
 >;
@@ -25,11 +25,11 @@ type AllowedRegularColors = Extract<
 // all the possible colors
 type AllowedColors =
   | AllowedBoldColors
-  | AllowedSemiBoldColors
+  | AllowedSemiboldColors
   | AllowedRegularColors;
 
 // all the possible weight
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold" | "Regular">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Semibold" | "Regular">;
 
 // these are the properties allowed only if weight is Bold or undefined
 type BoldProps = {
@@ -37,23 +37,23 @@ type BoldProps = {
   color?: AllowedBoldColors;
 };
 
-// these are the properties allowed only if weight is undefined or SemiBold
-type SemiBoldProps = {
-  weight: Extract<IOFontWeight, "SemiBold">;
-  color?: AllowedSemiBoldColors;
+// these are the properties allowed only if weight is undefined or Semibold
+type SemiboldProps = {
+  weight: Extract<IOFontWeight, "Semibold">;
+  color?: AllowedSemiboldColors;
 };
 
-// these are the properties allowed only if weight is undefined or SemiBold
+// these are the properties allowed only if weight is undefined or Semibold
 type RegularProps = {
   weight: Extract<IOFontWeight, "Regular">;
   color?: AllowedRegularColors;
 };
 
-type BoldKindProps = SemiBoldProps | BoldProps | RegularProps;
+type BoldKindProps = SemiboldProps | BoldProps | RegularProps;
 
 export type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 export const h4FontSize = 16;
 export const h4LineHeight = 22;
 
@@ -74,7 +74,7 @@ export const calculateH4WeightColor = (
       ? color
       : newWeight === "Bold"
       ? "bluegreyDark"
-      : newWeight === "SemiBold"
+      : newWeight === "Semibold"
       ? "white"
       : "bluegreyDark";
   return {

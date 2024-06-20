@@ -5,7 +5,7 @@ exports[`Test Typography Components Body Snapshot 1`] = `
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -20,7 +20,7 @@ exports[`Test Typography Components Body Snapshot 1`] = `
       },
       Object {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -37,7 +37,7 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 26,
@@ -52,7 +52,7 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -69,7 +69,7 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
   color="white"
   defaultColor="bluegreyDark"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 26,
@@ -84,7 +84,7 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -101,7 +101,7 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 20,
@@ -116,7 +116,7 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -131,7 +131,7 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
 exports[`Test Typography Components H3 Snapshot 1`] = `
 <Text
   color="bluegreyDark"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 18,
@@ -146,13 +146,13 @@ exports[`Test Typography Components H3 Snapshot 1`] = `
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
   weightColorFactory={[Function]}
 >
   Text
@@ -162,7 +162,7 @@ exports[`Test Typography Components H3 Snapshot 1`] = `
 exports[`Test Typography Components H3 Snapshot 2`] = `
 <Text
   color="bluegreyLight"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 18,
@@ -177,13 +177,13 @@ exports[`Test Typography Components H3 Snapshot 2`] = `
       },
       Object {
         "color": "#CCD4DC",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
   weightColorFactory={[Function]}
 >
   Text
@@ -193,7 +193,7 @@ exports[`Test Typography Components H3 Snapshot 2`] = `
 exports[`Test Typography Components H3 Snapshot 3`] = `
 <Text
   color="white"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 18,
@@ -208,13 +208,13 @@ exports[`Test Typography Components H3 Snapshot 3`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
   weightColorFactory={[Function]}
 >
   Text
@@ -224,7 +224,7 @@ exports[`Test Typography Components H3 Snapshot 3`] = `
 exports[`Test Typography Components H3 Snapshot 4`] = `
 <Text
   color="white"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 18,
@@ -239,7 +239,7 @@ exports[`Test Typography Components H3 Snapshot 4`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -255,7 +255,7 @@ exports[`Test Typography Components H3 Snapshot 4`] = `
 exports[`Test Typography Components H3 Snapshot 5`] = `
 <Text
   color="white"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 18,
@@ -270,7 +270,7 @@ exports[`Test Typography Components H3 Snapshot 5`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -286,7 +286,7 @@ exports[`Test Typography Components H3 Snapshot 5`] = `
 exports[`Test Typography Components H4 Snapshot 1`] = `
 <Text
   color="bluegreyDark"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -301,7 +301,7 @@ exports[`Test Typography Components H4 Snapshot 1`] = `
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -317,7 +317,7 @@ exports[`Test Typography Components H4 Snapshot 1`] = `
 exports[`Test Typography Components H4 Snapshot 2`] = `
 <Text
   color="blue"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -332,7 +332,7 @@ exports[`Test Typography Components H4 Snapshot 2`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -348,7 +348,7 @@ exports[`Test Typography Components H4 Snapshot 2`] = `
 exports[`Test Typography Components H4 Snapshot 3`] = `
 <Text
   color="white"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -363,7 +363,7 @@ exports[`Test Typography Components H4 Snapshot 3`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -379,7 +379,7 @@ exports[`Test Typography Components H4 Snapshot 3`] = `
 exports[`Test Typography Components H4 Snapshot 4`] = `
 <Text
   color="white"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -394,13 +394,13 @@ exports[`Test Typography Components H4 Snapshot 4`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
   weightColorFactory={[Function]}
 >
   Text
@@ -410,7 +410,7 @@ exports[`Test Typography Components H4 Snapshot 4`] = `
 exports[`Test Typography Components H4 Snapshot 5`] = `
 <Text
   color="white"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -425,13 +425,13 @@ exports[`Test Typography Components H4 Snapshot 5`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
   weightColorFactory={[Function]}
 >
   Text
@@ -441,7 +441,7 @@ exports[`Test Typography Components H4 Snapshot 5`] = `
 exports[`Test Typography Components H4 Snapshot 6`] = `
 <Text
   color="bluegreyDark"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -456,7 +456,7 @@ exports[`Test Typography Components H4 Snapshot 6`] = `
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -472,7 +472,7 @@ exports[`Test Typography Components H4 Snapshot 6`] = `
 exports[`Test Typography Components H4 Snapshot 7`] = `
 <Text
   color="bluegrey"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -487,7 +487,7 @@ exports[`Test Typography Components H4 Snapshot 7`] = `
       },
       Object {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -503,7 +503,7 @@ exports[`Test Typography Components H4 Snapshot 7`] = `
 exports[`Test Typography Components H4 Snapshot 8`] = `
 <Text
   color="bluegreyLight"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -518,7 +518,7 @@ exports[`Test Typography Components H4 Snapshot 8`] = `
       },
       Object {
         "color": "#CCD4DC",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -534,7 +534,7 @@ exports[`Test Typography Components H4 Snapshot 8`] = `
 exports[`Test Typography Components H4 Snapshot 9`] = `
 <Text
   color="white"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -549,7 +549,7 @@ exports[`Test Typography Components H4 Snapshot 9`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -566,8 +566,8 @@ exports[`Test Typography Components H5 Snapshot 1`] = `
 <Text
   color="bluegreyDark"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -580,13 +580,13 @@ exports[`Test Typography Components H5 Snapshot 1`] = `
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
 >
   Text
 </Text>
@@ -596,8 +596,8 @@ exports[`Test Typography Components H5 Snapshot 2`] = `
 <Text
   color="bluegrey"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -610,13 +610,13 @@ exports[`Test Typography Components H5 Snapshot 2`] = `
       },
       Object {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
 >
   Text
 </Text>
@@ -626,8 +626,8 @@ exports[`Test Typography Components H5 Snapshot 3`] = `
 <Text
   color="blue"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -640,13 +640,13 @@ exports[`Test Typography Components H5 Snapshot 3`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
 >
   Text
 </Text>
@@ -656,8 +656,8 @@ exports[`Test Typography Components H5 Snapshot 4`] = `
 <Text
   color="white"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -670,13 +670,13 @@ exports[`Test Typography Components H5 Snapshot 4`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
 >
   Text
 </Text>
@@ -686,8 +686,8 @@ exports[`Test Typography Components H5 Snapshot 5`] = `
 <Text
   color="bluegreyDark"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -700,7 +700,7 @@ exports[`Test Typography Components H5 Snapshot 5`] = `
       },
       Object {
         "color": "#17324D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -716,8 +716,8 @@ exports[`Test Typography Components H5 Snapshot 6`] = `
 <Text
   color="bluegrey"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -730,7 +730,7 @@ exports[`Test Typography Components H5 Snapshot 6`] = `
       },
       Object {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -746,8 +746,8 @@ exports[`Test Typography Components H5 Snapshot 7`] = `
 <Text
   color="blue"
   defaultColor="bluegreyDark"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -760,7 +760,7 @@ exports[`Test Typography Components H5 Snapshot 7`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "400",
       },
@@ -777,7 +777,7 @@ exports[`Test Typography Components Label Snapshot 1`] = `
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -790,7 +790,7 @@ exports[`Test Typography Components Label Snapshot 1`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -807,7 +807,7 @@ exports[`Test Typography Components Label Snapshot 2`] = `
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -820,7 +820,7 @@ exports[`Test Typography Components Label Snapshot 2`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -837,7 +837,7 @@ exports[`Test Typography Components Label Snapshot 3`] = `
   color="bluegrey"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -850,7 +850,7 @@ exports[`Test Typography Components Label Snapshot 3`] = `
       },
       Object {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -867,7 +867,7 @@ exports[`Test Typography Components Label Snapshot 4`] = `
   color="white"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -880,7 +880,7 @@ exports[`Test Typography Components Label Snapshot 4`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -897,7 +897,7 @@ exports[`Test Typography Components LabelSmall Snapshot 1`] = `
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -912,7 +912,7 @@ exports[`Test Typography Components LabelSmall Snapshot 1`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -929,7 +929,7 @@ exports[`Test Typography Components LabelSmall Snapshot 2`] = `
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -944,7 +944,7 @@ exports[`Test Typography Components LabelSmall Snapshot 2`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -961,7 +961,7 @@ exports[`Test Typography Components LabelSmall Snapshot 3`] = `
   color="bluegrey"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -976,7 +976,7 @@ exports[`Test Typography Components LabelSmall Snapshot 3`] = `
       },
       Object {
         "color": "#475A6D",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -993,7 +993,7 @@ exports[`Test Typography Components LabelSmall Snapshot 4`] = `
   color="red"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -1008,7 +1008,7 @@ exports[`Test Typography Components LabelSmall Snapshot 4`] = `
       },
       Object {
         "color": "#C02927",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -1025,7 +1025,7 @@ exports[`Test Typography Components LabelSmall Snapshot 5`] = `
   color="white"
   defaultColor="blue"
   defaultWeight="Bold"
-  font="TitilliumWeb"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 14,
@@ -1040,7 +1040,7 @@ exports[`Test Typography Components LabelSmall Snapshot 5`] = `
       },
       Object {
         "color": "#FFFFFF",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "700",
       },
@@ -1056,8 +1056,8 @@ exports[`Test Typography Components Link Snapshot 1`] = `
 <Text
   color="blue"
   defaultColor="blue"
-  defaultWeight="SemiBold"
-  font="TitilliumWeb"
+  defaultWeight="Semibold"
+  font="TitilliumSansPro"
   fontStyle={
     Object {
       "fontSize": 16,
@@ -1072,13 +1072,13 @@ exports[`Test Typography Components Link Snapshot 1`] = `
       },
       Object {
         "color": "#0073E6",
-        "fontFamily": "Titillium Web",
+        "fontFamily": "Titillium Sans Pro",
         "fontStyle": "normal",
         "fontWeight": "600",
       },
     ]
   }
-  weight="SemiBold"
+  weight="Semibold"
 >
   Text
 </Text>

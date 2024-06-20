@@ -600,8 +600,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -620,13 +620,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                         },
                                         Object {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -635,7 +635,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
                                       Object {
@@ -654,7 +654,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                         },
                                         Object {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -677,7 +677,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -696,7 +696,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -709,7 +709,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -725,13 +725,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -740,7 +740,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 12,
@@ -755,7 +755,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -770,7 +770,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -786,7 +786,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -912,7 +912,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND,   read mes
                                             "textTransform": "uppercase",
                                           },
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -1631,8 +1631,8 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -1651,13 +1651,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                         },
                                         Object {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -1666,7 +1666,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
                                       Object {
@@ -1685,7 +1685,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                         },
                                         Object {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -1708,7 +1708,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -1727,7 +1727,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -1740,7 +1740,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -1756,13 +1756,13 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -1771,7 +1771,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 12,
@@ -1786,7 +1786,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1801,7 +1801,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -1817,7 +1817,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1998,7 +1998,7 @@ exports[`WrappedMessageListItem should match snapshot,     from SEND, unread mes
                                             "textTransform": "uppercase",
                                           },
                                           Object {
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
@@ -2717,8 +2717,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -2737,13 +2737,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                         },
                                         Object {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -2752,7 +2752,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
                                       Object {
@@ -2771,7 +2771,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                         },
                                         Object {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -2794,7 +2794,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -2813,7 +2813,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -2826,7 +2826,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -2842,13 +2842,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -2857,7 +2857,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 12,
@@ -2872,7 +2872,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -2887,7 +2887,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -2903,7 +2903,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND,   read mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -3533,8 +3533,8 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -3553,13 +3553,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                         },
                                         Object {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -3568,7 +3568,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
                                       Object {
@@ -3587,7 +3587,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                         },
                                         Object {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -3610,7 +3610,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
-                                    font="TitilliumWeb"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 16,
@@ -3629,7 +3629,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                         },
                                         Object {
                                           "color": "#475A6D",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
                                         },
@@ -3642,7 +3642,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -3658,13 +3658,13 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -3673,7 +3673,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 12,
@@ -3688,7 +3688,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -3703,7 +3703,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
                                         Object {
@@ -3719,7 +3719,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, unread mes
                                           },
                                           Object {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },

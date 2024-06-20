@@ -344,8 +344,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -360,13 +360,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             1
                           </Text>
@@ -375,7 +375,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -390,7 +390,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -465,8 +465,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -481,13 +481,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Depositata
                           </Text>
@@ -503,7 +503,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -518,7 +518,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -555,8 +555,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -571,13 +571,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             3
                           </Text>
@@ -586,7 +586,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -601,7 +601,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -674,8 +674,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -690,13 +690,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Annullata
                           </Text>
@@ -712,7 +712,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -727,7 +727,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -764,8 +764,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -780,13 +780,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             6
                           </Text>
@@ -795,7 +795,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -810,7 +810,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -883,8 +883,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -899,13 +899,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Consegnata
                           </Text>
@@ -921,7 +921,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -936,7 +936,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -973,8 +973,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -989,13 +989,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             9
                           </Text>
@@ -1004,7 +1004,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1019,7 +1019,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1092,8 +1092,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1108,13 +1108,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Invio in corso
                           </Text>
@@ -1130,7 +1130,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1145,7 +1145,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1182,8 +1182,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1198,13 +1198,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             11
                           </Text>
@@ -1213,7 +1213,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1228,7 +1228,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1301,8 +1301,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1317,13 +1317,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Perfezionata per decorrenza termini
                           </Text>
@@ -1339,7 +1339,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1354,7 +1354,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1391,8 +1391,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1407,13 +1407,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             14
                           </Text>
@@ -1422,7 +1422,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1437,7 +1437,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1510,8 +1510,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1526,13 +1526,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Destinatario irreperibile
                           </Text>
@@ -1548,7 +1548,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1563,7 +1563,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1600,8 +1600,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1616,13 +1616,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             15
                           </Text>
@@ -1631,7 +1631,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1646,7 +1646,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1719,8 +1719,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1735,13 +1735,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Avvenuto accesso
                           </Text>
@@ -1757,7 +1757,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1772,7 +1772,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1809,8 +1809,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1825,13 +1825,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             18
                           </Text>
@@ -1840,7 +1840,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1855,7 +1855,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1928,8 +1928,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1944,13 +1944,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Pagata
                           </Text>
@@ -1966,7 +1966,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -1981,7 +1981,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2018,8 +2018,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2034,13 +2034,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             21
                           </Text>
@@ -2049,7 +2049,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2064,7 +2064,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2137,8 +2137,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2153,13 +2153,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             REFUSED
                           </Text>
@@ -2175,7 +2175,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2190,7 +2190,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2227,8 +2227,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2243,13 +2243,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             24
                           </Text>
@@ -2258,7 +2258,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2273,7 +2273,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2346,8 +2346,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2362,13 +2362,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             IN VALIDATION
                           </Text>
@@ -2384,7 +2384,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2399,7 +2399,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2436,8 +2436,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2452,13 +2452,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             27
                           </Text>
@@ -2467,7 +2467,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2482,7 +2482,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2555,8 +2555,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2571,13 +2571,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Depositata
                           </Text>
@@ -2593,7 +2593,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2608,7 +2608,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2645,8 +2645,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2661,13 +2661,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             30
                           </Text>
@@ -2676,7 +2676,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2691,7 +2691,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2766,8 +2766,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2782,13 +2782,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Annullata
                           </Text>
@@ -2804,7 +2804,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 12,
@@ -2819,7 +2819,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 Object {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
