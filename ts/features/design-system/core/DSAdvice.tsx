@@ -51,7 +51,7 @@ export const DSAdvice = () => (
     {renderBanner()}
 
     <VSpacer size={40} />
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+    <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
       Legacy components
     </H2>
     <AdviceComponent
@@ -110,7 +110,7 @@ export const DSAdvice = () => (
 
 const renderFeatureInfo = () => (
   <>
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+    <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
       FeatureInfo
     </H2>
     <DSComponentViewerBox name="FeatureInfo · with Icon">
@@ -167,7 +167,7 @@ const renderBanner = () => {
 
   return (
     <>
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
         Banner
       </H2>
       {bannerBackgroundColours.map(color => (

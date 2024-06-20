@@ -5,11 +5,11 @@
  
 ## Fonts
 
-The application uses the font _Titillium Sans Pro_. Fonts are handled differently than Android and iOS. To use the font, `TitilliumSansPro-SemiBoldItalic` example, you must apply the following properties for Android:
+The application uses the font _Titillium Sans Pro_. Fonts are handled differently than Android and iOS. To use the font, `TitilliumSansPro-SemiboldItalic` example, you must apply the following properties for Android:
 
 ```css
 {
-  fontFamily: 'TitilliumSansPro-SemiBoldItalic'
+  fontFamily: 'TitilliumSansPro-SemiboldItalic'
 }
 ```
 

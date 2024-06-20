@@ -110,7 +110,7 @@ const LegacyAttachmentItem = (props: LegacyMessageAttachmentProps) => {
         <View style={styles.middleSection}>
           <H5
             color={"bluegrey"}
-            weight={"SemiBold"}
+            weight={"Semibold"}
             ellipsizeMode={"middle"}
             numberOfLines={2}
           >
