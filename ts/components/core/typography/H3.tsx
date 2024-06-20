@@ -4,8 +4,8 @@ import { IOFontFamily, IOFontWeight } from "../fonts";
 import { useTypographyFactory } from "./Factory";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 
-// these colors are allowed only when the weight is SemiBold
-type AllowedSemiBoldColors = Extract<
+// these colors are allowed only when the weight is Semibold
+type AllowedSemiboldColors = Extract<
   IOColors,
   | "bluegreyDark"
   | "bluegreyLight"
@@ -31,16 +31,16 @@ type AllowedBoldColors = Extract<
 // all the possible colors
 type AllowedColors =
   | AllowedBoldColors
-  | AllowedSemiBoldColors
+  | AllowedSemiboldColors
   | IOTheme["textHeading-default"];
 
 // all the possible weight
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Semibold">;
 
-// these are the properties allowed only if weight is undefined or SemiBold
-type SemiBoldProps = {
-  weight?: Extract<IOFontWeight, "SemiBold">;
-  color?: AllowedSemiBoldColors | IOTheme["textHeading-default"];
+// these are the properties allowed only if weight is undefined or Semibold
+type SemiboldProps = {
+  weight?: Extract<IOFontWeight, "Semibold">;
+  color?: AllowedSemiboldColors | IOTheme["textHeading-default"];
 };
 
 // these are the properties allowed only if weight is Bold
@@ -49,7 +49,7 @@ type BoldProps = {
   color?: AllowedBoldColors | IOTheme["textHeading-default"];
 };
 
-type BoldKindProps = SemiBoldProps | BoldProps;
+type BoldKindProps = SemiboldProps | BoldProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
@@ -68,11 +68,11 @@ export const calculateH3WeightColor = (
   weight?: AllowedWeight,
   color?: AllowedColors
 ): RequiredTypographyProps<AllowedWeight, AllowedColors> => {
-  const newWeight = weight ?? "SemiBold";
+  const newWeight = weight ?? "Semibold";
   const newColor =
     color !== undefined
       ? color
-      : newWeight === "SemiBold"
+      : newWeight === "Semibold"
       ? "bluegreyDark"
       : "white";
   return {
@@ -83,7 +83,7 @@ export const calculateH3WeightColor = (
 
 /**
  * Typography component to render `H3` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `SemiBold`, color: `bluegreyDark`
+ * default values(if not defined) are weight: `Semibold`, color: `bluegreyDark`
  * @param props
  * @constructor
  */

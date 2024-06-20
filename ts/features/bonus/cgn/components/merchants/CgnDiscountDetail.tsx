@@ -100,7 +100,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                   />
                   <HSpacer size={8} />
                   <H5
-                    weight={"SemiBold"}
+                    weight={"Semibold"}
                     color={"bluegrey"}
                     testID={"category-name"}
                   >

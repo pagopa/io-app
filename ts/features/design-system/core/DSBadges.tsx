@@ -48,7 +48,7 @@ export const DSBadges = () => (
 
     <VSpacer size={24} />
 
-    <H4 weight="SemiBold" color="bluegreyDark">
+    <H4 weight="Semibold" color="bluegreyDark">
       DiscountValueBox (CGN)
     </H4>
     <VSpacer size={16} />
@@ -62,7 +62,7 @@ export const DSBadges = () => (
 
     <H3>Notifications</H3>
     <VSpacer size={16} />
-    <H4 weight="SemiBold" color="bluegreyDark">
+    <H4 weight="Semibold" color="bluegreyDark">
       CustomBadge
     </H4>
     <VSpacer size={16} />
