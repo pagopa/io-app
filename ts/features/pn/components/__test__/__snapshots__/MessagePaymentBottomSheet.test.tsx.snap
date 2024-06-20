@@ -788,7 +788,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -804,7 +804,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -819,7 +819,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -835,13 +835,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Uno due tre
                                     </Text>
@@ -861,8 +861,8 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       allowFontScaling={false}
                                       color="blue"
                                       defaultColor="black"
-                                      defaultWeight="SemiBold"
-                                      font="TitilliumWeb"
+                                      defaultWeight="Semibold"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 18,
@@ -878,13 +878,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       1.99 €
                                     </Text>
@@ -1016,7 +1016,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1032,7 +1032,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1047,7 +1047,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1063,13 +1063,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  20
                                     </Text>
@@ -1115,7 +1115,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1256,7 +1256,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1272,7 +1272,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1287,7 +1287,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1303,13 +1303,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  30
                                     </Text>
@@ -1355,7 +1355,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1496,7 +1496,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1512,7 +1512,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1527,7 +1527,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1543,13 +1543,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  40
                                     </Text>
@@ -1595,7 +1595,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1736,7 +1736,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1752,7 +1752,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -1767,7 +1767,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1783,13 +1783,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  50
                                     </Text>
@@ -1835,7 +1835,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -1976,7 +1976,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -1992,7 +1992,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -2007,7 +2007,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -2023,13 +2023,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  60
                                     </Text>
@@ -2075,7 +2075,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
@@ -2216,7 +2216,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -2232,7 +2232,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
                                           },
@@ -2247,7 +2247,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       color="bluegrey"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
-                                      font="TitilliumWeb"
+                                      font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
                                           "fontSize": 14,
@@ -2263,13 +2263,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                           },
                                           Object {
                                             "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
+                                            "fontFamily": "Titillium Sans Pro",
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       0123  4567  8912  3456  70
                                     </Text>
@@ -2315,7 +2315,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "textTransform": "uppercase",
                                             },
                                             Object {
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },

@@ -468,8 +468,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -484,13 +484,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             You have a new message
                           </Text>
@@ -499,7 +499,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 14,
@@ -514,7 +514,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1007,8 +1007,8 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1023,13 +1023,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             You have a notice due tomorrow
                           </Text>
@@ -1038,7 +1038,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 14,
@@ -1053,7 +1053,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1546,8 +1546,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -1562,13 +1562,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Comune di Ipazia
                           </Text>
@@ -1577,7 +1577,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 14,
@@ -1592,7 +1592,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2085,8 +2085,8 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
-                            font="TitilliumWeb"
+                            defaultWeight="Semibold"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 18,
@@ -2101,13 +2101,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             You have a notice due soon
                           </Text>
@@ -2116,7 +2116,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             color="black"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 14,
@@ -2131,7 +2131,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 },
                                 Object {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },

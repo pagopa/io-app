@@ -22,7 +22,7 @@ export const EmptyListComponent = (props: Props) => (
     <VSpacer size={16} />
     <Pictogram name={props.pictogram} />
     <VSpacer size={24} />
-    <Body weight="SemiBold">{props.title}</Body>
+    <Body weight="Semibold">{props.title}</Body>
     {props.subtitle && (
       <>
         <VSpacer size={24} />

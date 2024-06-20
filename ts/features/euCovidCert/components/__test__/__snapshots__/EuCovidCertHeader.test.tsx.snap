@@ -21,8 +21,8 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 24,
@@ -37,14 +37,14 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
           },
           Object {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
         ]
       }
       testID="EuCovidCertHeaderTitle"
-      weight="SemiBold"
+      weight="Semibold"
     >
       title
     </Text>
@@ -52,8 +52,8 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       allowFontScaling={false}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 22,
@@ -68,14 +68,14 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
           },
           Object {
             "color": "#17324D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },
         ]
       }
       testID="EuCovidCertHeaderSubTitle"
-      weight="SemiBold"
+      weight="Semibold"
     >
       subtitle
     </Text>

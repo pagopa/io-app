@@ -22,7 +22,7 @@ type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 >;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 export const h1FontSize = 26;
 export const h1LineHeight = 32;
 export const h1DefaultColor: AllowedColors = "bluegreyDark";

@@ -11,7 +11,7 @@ type AllowedWeight = Extract<IOFontWeight, "Regular">;
 
 type AllowedColors = Extract<IOColors, "black">;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 const fontSize = 12;
 
 type DepartmentLabelProps = Omit<
