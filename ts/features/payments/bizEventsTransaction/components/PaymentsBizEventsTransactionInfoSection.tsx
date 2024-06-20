@@ -20,6 +20,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
 import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
+import { InfoTransactionView } from "../../../../../definitions/pagopa/biz-events/InfoTransactionView";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: TransactionDetailResponse;
@@ -79,7 +80,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
                 <>
                   <ListItemInfo
                     label={I18n.t("transaction.details.info.executedBy")}
-                    value={`${transactionInfo.payer.name}\n(${transactionInfo.payer.taxCode})`}
+                    value={getPayerInfoLabel(transactionInfo.payer)}
                   />
                   <Divider />
                 </>
@@ -176,6 +177,20 @@ const PaymentsBizEventsTransactionInfoSection = ({
       </View>
     </>
   );
+};
+
+const getPayerInfoLabel = (payer: InfoTransactionView["payer"]): string => {
+  if (!payer) {
+    return "";
+  }
+
+  const name = payer.name ? payer.name : "";
+  const taxCode = payer.taxCode ? `(${payer.taxCode})` : "";
+
+  const payerInfo =
+    name && taxCode ? `${name}\n${taxCode}` : `${name}${taxCode}`;
+
+  return payerInfo.trim();
 };
 
 const renderPaymentMethod = (walletInfo: WalletInfo) => {

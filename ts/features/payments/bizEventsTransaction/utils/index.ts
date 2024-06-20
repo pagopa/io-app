@@ -38,7 +38,8 @@ export const groupTransactionsByMonth = (
 
 // This function formats the text of the amount that is a string composed by "1000.00" in the format "1.000,00 €" allowing only two decimal digits
 export const formatAmountText = (amount: string): string => {
-  const amountNumber = parseFloat(amount);
+  const normalizedAmount = amount.replace(",", ".");
+  const amountNumber = parseFloat(normalizedAmount);
   return amountNumber.toLocaleString("it-IT", {
     style: "currency",
     currency: "EUR",

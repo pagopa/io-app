@@ -69,13 +69,19 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
     return null;
   };
 
-  const calculateTotalAmount = () => {
-    if (transactionInfo?.amount && transactionInfo?.fee) {
-      return (
-        _.toNumber(transactionInfo.amount) + _.toNumber(transactionInfo.fee)
-      ).toString();
+  const calculateTotalAmount = (): string | undefined => {
+    if (!transactionInfo || !transactionInfo.amount || !transactionInfo.fee) {
+      return undefined;
     }
-    return transactionInfo?.amount;
+
+    const amountString = transactionInfo.amount.replace(",", ".");
+    const feeString = transactionInfo.fee.replace(",", ".");
+
+    const amount = parseFloat(amountString);
+    const fee = parseFloat(feeString);
+    const total = amount + fee;
+
+    return total.toFixed(2);
   };
 
   return (
