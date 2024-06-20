@@ -17,11 +17,14 @@ type ScrollValues = React.ComponentProps<
 type CommonProps = {
   title: string;
   backAccessibilityLabel?: string;
+  backTestID?: string;
   goBack?: () => void;
   canGoBack?: boolean;
   headerShown?: boolean;
   transparent?: boolean;
   scrollValues?: ScrollValues;
+  variant?: "neutral" | "contrast";
+  backgroundColor?: string;
 };
 
 type NoAdditionalActions = {
@@ -63,6 +66,7 @@ type HeaderProps = React.ComponentProps<typeof HeaderSecondLevel>;
 export const useHeaderSecondLevel = ({
   title,
   backAccessibilityLabel,
+  backTestID,
   contextualHelp,
   contextualHelpMarkdown,
   faqCategories,
@@ -73,7 +77,9 @@ export const useHeaderSecondLevel = ({
   secondAction,
   thirdAction,
   transparent = false,
-  scrollValues
+  scrollValues,
+  variant,
+  backgroundColor
 }: HeaderSecondLevelHookProps) => {
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
@@ -88,6 +94,7 @@ export const useHeaderSecondLevel = ({
           title,
           backAccessibilityLabel:
             backAccessibilityLabel ?? I18n.t("global.buttons.back"),
+          backTestID,
           goBack: goBack ?? navigation.goBack
         }
       : { title };
@@ -136,6 +143,7 @@ export const useHeaderSecondLevel = ({
     canGoBack,
     title,
     backAccessibilityLabel,
+    backTestID,
     goBack,
     navigation.goBack,
     supportRequest,
@@ -150,6 +158,8 @@ export const useHeaderSecondLevel = ({
         <HeaderSecondLevel
           scrollValues={scrollValues}
           transparent={transparent}
+          variant={variant}
+          backgroundColor={backgroundColor}
           {...headerComponentProps}
         />
       ),
@@ -161,6 +171,8 @@ export const useHeaderSecondLevel = ({
     headerShown,
     navigation,
     transparent,
-    scrollValues
+    scrollValues,
+    variant,
+    backgroundColor
   ]);
 };

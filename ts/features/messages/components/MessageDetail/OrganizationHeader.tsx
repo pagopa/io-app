@@ -4,7 +4,8 @@ import {
   Avatar,
   IOSpacingScale,
   IOStyles,
-  LabelSmall
+  LabelSmall,
+  LabelSmallAlt
 } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -52,19 +53,13 @@ export const OrganizationHeader = ({
   return (
     <View style={styles.item}>
       <View style={IOStyles.flex}>
-        <LabelSmall fontSize="regular" color="grey-700">
-          {organizationName}
-        </LabelSmall>
-        <LabelSmall
-          fontSize="regular"
-          color="blueIO-500"
-          onPress={navigateToServiceDetails}
-        >
+        <LabelSmallAlt color="grey-700">{organizationName}</LabelSmallAlt>
+        <LabelSmall color="blueIO-500" onPress={navigateToServiceDetails}>
           {serviceName}
         </LabelSmall>
       </View>
       <View style={styles.itemAvatar}>
-        <Avatar logoUri={logoUri} size="small" shape="circle" />
+        <Avatar logoUri={logoUri} size="small" />
       </View>
     </View>
   );

@@ -190,10 +190,16 @@ const mapUserWalletToRadioItem = (
       startImage
     };
   } else if (details.maskedEmail !== undefined) {
+    const details = method.details as UIWalletInfoDetails;
+    const description =
+      details.pspBusinessName && details.maskedEmail
+        ? `${details.pspBusinessName} · ${details.maskedEmail}`
+        : undefined;
     return {
       id: method.walletId,
-      value: "PayPal",
-      startImage
+      value: I18n.t("wallet.payment.methodType.fastPayPalPayment"),
+      startImage,
+      description
     };
   } else if (details.maskedNumber !== undefined) {
     return {

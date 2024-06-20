@@ -158,3 +158,12 @@ Created on **16/01/2023**
   An Event has an Id property which type may be a long but the library deals only with Java's signed int32.
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
+
+### react-native+0.70.15
+
+Created on **24/05/2024**
+
+#### Reason:
+- This patch implements the readAsArrayBuffer function in react-native by allowing code-gen to autogenerate
+  API call responses that have a Blob. this is a known issue that the meta team have not yet provided direct support,
+  as already indicated in [this issue](https://github.com/facebook/react-native/issues/34402)

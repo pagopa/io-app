@@ -25,7 +25,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
   >
     <Text
       color="bluegrey"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -41,7 +41,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
           },
           Object {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -50,7 +50,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       weight="Regular"
       weightColorFactory={[Function]}
     >
-      Organization's Fiscal Code
+      Institution's Fiscal Code
     </Text>
     <View
       style={
@@ -62,7 +62,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
     <Text
       color="blue"
       ellipsizeMode="tail"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -83,7 +83,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
           },
           Object {
             "color": "#0073E6",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "600",
           },

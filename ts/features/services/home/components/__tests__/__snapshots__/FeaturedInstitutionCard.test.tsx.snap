@@ -448,7 +448,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   color="hanPurple-850"
                                   defaultColor="black"
                                   defaultWeight="SemiBold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 18,
@@ -465,7 +465,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       },
                                       Object {
                                         "color": "#1A0744",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -944,7 +944,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   color="hanPurple-850"
                                   defaultColor="black"
                                   defaultWeight="SemiBold"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 18,
@@ -961,7 +961,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       },
                                       Object {
                                         "color": "#1A0744",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },

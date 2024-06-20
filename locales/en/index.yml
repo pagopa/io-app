@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Perché?"
   you: "YOU"
   id: "ID"
   badges:
@@ -156,6 +157,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    consent: "Consenti"
     deny: "Deny"
     share: Share
     delete: Delete
@@ -484,7 +486,7 @@ profile:
     list:
       biometric_recognition:
         title: Biometric recognition
-        subtitle: Use your fingerprint or your face
+        subtitle: Use your fingerprint or your face.
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
@@ -505,7 +507,12 @@ profile:
         alert:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
+        toast:
+          success:
+            title: You've switched the app language
         not_selected: Not selected
+        banner:
+          button: Learn more
       notifications:
         title: Push notifications
         subtitle: Allow previews and reminders
@@ -613,14 +620,14 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
-  cie_errors: 
-    error_22: 
+  cie_errors:
+    error_22:
       title: You haven't agreed to share your data
       subtitle: To enter, you must agree to share some data
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
-    generic: 
+    generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
   cie:
@@ -629,13 +636,22 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      apduNotSupported: "The operating system doesn't support the reading of your CIE. For further details, please contact your device manufacturer."
+      apduNotSupported: The operating system doesn't support the reading of the Electronic Identity Card. Try using SPID to enter the app.
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      enableNfcTitle: Enable NFC
-      enableNfcHeader: Check NFC
-      enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+      title: Enable NFC to continue
+      subtitle: To enable IO to read your CIE, activate NFC from your device's settings.
+      listItemTitle: "How to do it::"
+      action: Open Settings
+      listItemLabel1: Step 1
+      listItemValue1: Open 'Settings'
+      listItemLabel2: Step 2
+      listItemValue2: Search for ‘NFC’ functionality
+      listItemLabel3: Step 3
+      listItemValue3: Turn it on
+      activeNfcAlert: Activate NFC to enable IO to read your CIE!
+      activeNFCAlertButton: Enable NFC
     pin:
       accessibility:
         placeholderLabel: PIN of Electronic Identity Card
@@ -665,13 +681,12 @@ authentication:
       content: !include cie/temporary_blocked_cie.md
       button: "Load/open CieID"
     card:
-      headerTitle: Login with CIE
-      titleiOS: Hold the card still
-      title: Hold the card again
-      layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: The sensor is located on top of the device.
+      title: Hold your CIE on the back of your phone
+      titleiOS: Place the CIE on your phone, on top.
+      layCardMessageHeader: If the reading doesn't start, move the card to different places and wait a few seconds until you feel a vibration.
+      layCardMessageHeaderiOS: If the card is not read, move it to different places and wait a few seconds.
       layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
-      cieCardValid: Ok, your card is valid! You can remove it.
+      cieCardValid: Done!
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
@@ -679,7 +694,7 @@ authentication:
         readingInstructions: Keep your electronic ID card on the top of the iPhone.
         moreTags: More cards have been identified. Please bring one card at a time.
         readingInProgress: "READING IN PROGRESS\nHold the card still for a few seconds..."
-        readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
+        readingSuccess: "Done!"
         invalidCard: It seems that this card is not an Electronic Identity Card (CIE).
         tagLost: You removed the card too soon.
         cardLocked: The CIE PIN is blocked.
@@ -687,16 +702,15 @@ authentication:
         wrongPin2AttemptLeft: Wrong PIN
         genericError: Something went wrong! Please try again.
       error:
-        readerCardLostTitle: Hold the card again for a few seconds
-        readerCardLostTitleiOS: You removed the card too soon.
-        readerCardLostHeader: We have not yet finished reading the card data.
-        readerCardLostHeaderiOS: We have not yet finished reading the card data. Please try again.
-        onTagLost: You removed the card too soon. Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+        readerCardLostTitle: You removed the card too soon.
+        onTagLost: Place the card on the back of the device again.
         tryAgain: Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!
         generic: Something did not work as expected while we read your CIE.
         unknownCardTitle: Unknown card
-        unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
+        unknownCardContent: The card used does not seem to be an Electronic Identity Card.
         unknownCardHelpLink: What is the Electronic Identity Card?
+        genericErrorTitle: We could not retrieve the data from the card
+        genericErrorSubtitle: If you've had the problem a few times, give it a few minutes and try again.
     dataUsageConsent:
       retryCTA: Enter
   spid: SPID
@@ -883,18 +897,30 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_pin.md
   pin:
     headerTitle: IO Settings
-    title: Unlock code
-    subTitle: It's a six-digit code you'll use to login and authorize some in-app operations. If supported by your device, you can replace it with biometric authentication.
+    title: Create an unlock code
+    subTitle: It's a six-digit code you'll use to login and authorize some in-app operations.
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
-    tutorial: You can change the code at any time under Profile > Security
     errors:
-      invalid: The code is not valid
+      invalid:
+        title: Too easy!
+        description: Choose a code that is hard to guess and doesn't contain a single repeated number (e.g. 000000) or a list of ordered numbers (e.g. 123456 or 654321).
+        cta: Choose another code
       match: The code doesn’t match
     policy:
-      headerTitle: "Choose a code that's hard to guess and doesn't contain:"
-      first: repeated numbers (e.g. 000000)
-      second: a number sequence (e.g. 123456 or 654321)
+      title: How to choose the code?
+      description: It's a six-digit code you'll use to login and authorize some in-app operations.
+      bulletListTitle: "Choose a code that's hard to guess and doesn't contain::"
+      firstItem: a single repeated number (e.g. 000000)
+      secondItem: a list of ordered numbers (e.g. 123456 or 654321)
+    success:
+      message: Done!
+  pinConfirmation:
+    title: Confirm unlock code
+    errors:
+      match:
+        title: The code you enter is different than the first one
+        cta: Try again
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -1707,10 +1733,13 @@ wallet:
       title: Vuoi interrompere l'operazione?
       confirm: Sì, interrompi
       cancel: No, torna indietro
+    methodType:
+      fastPayPalPayment: Pagamento veloce con PayPal
     methodSelection:
       header: Seleziona un metodo
       yourMethods: Saved
       otherMethods: All methods
+      latestMethod: Recently used
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
@@ -1844,7 +1873,6 @@ messages:
     one: You have 1 message
   tab:
     inbox: Inbox
-    deadlines: Expiring
     archive: Archived
   contentTitle: Messages
   refresh: Pull down to refresh
@@ -1915,10 +1943,6 @@ messages:
     emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
-  deadlines:
-    emptyMessage:
-      title: You haven't any scheduled deadline.
-      subtitle: Use the button above to check out past deadlines.
   pagination:
     migration:
       started: Please wait, we are updating the Messages section.
@@ -2117,6 +2141,7 @@ services:
         title: Featured Institutions
     institutions:
       title: National
+    searchLink: Search all available local services
   institution:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2124,7 +2149,16 @@ services:
       back: "Back"
       retry: "Retry"
     header:
-      subtitle: "{{count}} available services"
+      subtitlePlural: "{{count}} available services"
+      subtitleSingular: "{{count}} available service"
+  search:
+    input:
+      placeholder: "Search for a national or local institution"
+      placeholderShort: "Search for an institution"
+      cancel: "Cancel"
+      clear: "Clear"
+    emptyState:
+      title: "Enter the name of an institution,\nnational or local"
   details:
     failure:
       title: "There is a temporary problem. Please try again"
@@ -2144,7 +2178,7 @@ services:
       phone: "Contact the institution"
       email: "Send email"
       pec: "Send PEC"
-      fiscalCode: "Organization's fiscal code"
+      fiscalCode: "Institution's fiscal code"
       address: "Address"
       serviceId: "Service ID"
     tosAndPrivacy:
@@ -2152,9 +2186,9 @@ services:
       tosLink: "Terms and conditions"
       privacyLink: "Privacy information"
 serviceDetail:
-  fiscalCode: "Organization's fiscal code"
-  fiscalCodeAccessibility: "Organization's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
+  fiscalCode: "Institution's fiscal code"
+  fiscalCodeAccessibility: "Institution's fiscal code"
+  fiscalCodeAccessibilityCopy: "Copy Institution's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -2206,7 +2240,7 @@ identification:
       button: Did you forget the
       code: unlock code
       button_short: Change the unlock code
-      subtitle: Set a new 6-digit code
+      subtitle: Set a new 6-digit code.
     confirmValid: Correct unlock code
   forgetCode:
     confirmTitle: Did you forget the unlock code?
@@ -3029,6 +3063,8 @@ features:
   payments:
     title: Payments
     cta: Paga un avviso
+    remoteAlert:
+      cta: Scopri di più
     methods:
       title: Metodi di pagamento
       button: Aggiungi
@@ -3038,7 +3074,23 @@ features:
       status:
         expired: Scaduta
     transactions:
-      title: Storico operazioni
+      showLegacyTransactions: Mostra precedenti
+      legacy:
+        empty:
+          title: Nessuna ricevuta trovata
+          body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
+        banner:
+          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          action: Scopri di più
+        title: Operazioni precedenti
+        bottomSheet:
+          title: Dove trovo la ricevuta di pagamento?
+          noticeHeading: Avvisi pagati di recente
+          noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
+          allNoticesHeading: Tutti gli altri avvisi
+          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+      multiplePayment: Pagamento multiplo
+      title: Ricevute pagoPA
       button: Vedi tutte
       empty:
         title: Qui vedrai le tue ricevute pagoPA
@@ -3046,13 +3098,29 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: PagoPA Receipt
+        shareButton: Save or share
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
+    details:
+      pspAlert:
+        description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
+        action: "Cosa significa?"
+        title: "Cosa significa?"
+        explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “Pagamento veloce con PayPal”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
   itWallet:
     card:
-      eid:
-        label: Identità Digitale
+      status:
         expired: Non valida
+        expiring: In scadenza
         pending: In lavorazione
-        digital: Versione digitale
+      label:
+        eid: Identità Digitale
+        mdl: Patente di Guida
+        dc: Carta Europea della Disabilità
+        ts: Tessera Sanitaria
+      digital: Versione digitale
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3132,10 +3200,7 @@ features:
         secondaryAction: Ho fatto
     issuance:
       credentialPreview:
-        title: "Ecco un’anteprima della tua tessera"
-        subtitle:
-          "Prima di aggiungerla, verifica che tutte le informazioni siano
-          corrette."
+        title: "{{credential}}: ecco l'anteprima"
         banner:
           title: "Qualcosa non torna?"
           content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
@@ -3150,6 +3215,29 @@ features:
         toast:
           success: "Tessera aggiunta!"
           failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
+        actions:
+          primary: Aggiungi al portafoglio
+          secondary: Annulla
+      success:
+        title: "Hai aggiunto\nIdentità Digitale!"
+        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+    unsupportedDevice:
+      text: Starting from 02.07.2024 your device may no longer be compatible with IO.
+      moreInfo: More info
+    presentation:
+      credentialDetails:
+        personalDataTitle: "Personal data"
+        documentDataTitle: "Document data"
+        lastUpdated: "Last updated on {{lastUpdateTime}}"
+        hiddenClaim: "Hidden"
+        status:
+          valid: Valid
+          expired: Expired
+        actions:
+          removeFromWallet: "Remove from Wallet"
+          requestAssistance: "Something wrong? Contact {{authSource}}"
+          showClaimValues: "Show claim values"
+          hideClaimValues: "Hide claim values"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3234,8 +3322,8 @@ idpay:
         subtitle: Attendi qualche secondo
   code:
     reset:
-      title: Codice ID Pay
-      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+      title: ID Pay code
+      body: The code to authorise payments made with your electronic identity card.
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3740,6 +3828,8 @@ bonusCard:
   removed: Rimossa
 transaction:
   details:
+    error:
+      title: É stato riscontrato un errore
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
@@ -3750,12 +3840,21 @@ transaction:
       pspName: Gestore della transazione (PSP)
       dateAndHour: Data e ora
       transactionId: ID transazione
+      paymentMethod: Metodo di pagamento
+      authCode: Codice autorizzativo
+      rrn: RRN
+      executedBy: Eseguito da
+      headedTo: Intestato a
+      alert:
+        content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
       amount: Importo
       creditor: Ente creditore
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+      noticeCode: Codice avviso
+      taxCode: Codice Fiscale Ente
 permissionRequest:
   gallery:
     title: Consenti a IO di accedere alle tue foto
@@ -3774,3 +3873,28 @@ permissionRequest:
         2: Seleziona “IO”
         3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
+FIMS:
+  loadingScreen:
+    abort:
+      title: "Operazione annullata"
+    consents:
+      title: "Attendi qualche secondo"
+    in-app-browser:
+      title: "Ti stiamo indirizzando al servizio"
+      subtitle: "Attendi qualche secondo"
+  consentsScreen:
+    title: "Consenti la condivisione dei tuoi dati"
+    subtitle: "Autorizza IO a trasmettere a "
+    subtitle2: " i dati necessari per la tua autenticazione su "
+    requiredData: "Dati richiesti"
+    privacy1: "Per maggiori informazioni, leggi "
+    privacyCta: "l’Informativa sulla Privacy "
+    bottomSheet:
+      title: "Accedi a servizi di terze parti tramite IO"
+      body: "Per consentirti di accedere al servizio esterno senza autenticarti
+        nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente
+        che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le
+        finalità indicate dall’ente e consultabili nell’ "
+      bodyPrivacy: "Informativa sulla
+        Privacy."

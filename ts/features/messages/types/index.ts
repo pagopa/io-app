@@ -31,6 +31,7 @@ export type UIMessage = WithUIMessageId<{
   serviceId: ServiceId;
   serviceName: string;
   organizationName: string;
+  organizationFiscalCode: string;
   title: string;
   timeToLive?: TimeToLiveSeconds;
   hasPrecondition: boolean;

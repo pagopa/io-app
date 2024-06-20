@@ -1,0 +1,339 @@
+{
+    "issuerConf": {
+        "federation_entity": {
+            "organization_name": "Istituto Poligrafico e Zecca di Stato",
+            "homepage_uri": "https://api.eudi-wallet-it-pid-provider.it/ci",
+            "policy_uri": "https://api.eudi-wallet-it-pid-provider.it/ci",
+            "logo_uri": "https://api.eudi-wallet-it-pid-provider.it/public/logo.svg",
+            "tos_uri": "https://api.eudi-wallet-it-pid-provider.it/ci"
+        },
+        "openid_credential_issuer": {
+            "credentials_supported": [
+                {
+                    "cryptographic_suites_supported": [
+                        "RS256"
+                    ],
+                    "cryptographic_binding_methods_supported": [
+                        "jwk"
+                    ],
+                    "display": [
+                        {
+                            "background_color": "#12107c",
+                            "name": "PID Provider italiano",
+                            "logo": {
+                                "alt_text": "logo",
+                                "url": "https://api.eudi-wallet-it-pid-provider.it/public/logo.svg"
+                            },
+                            "text_color": "#FFFFFF",
+                            "locale": "it-IT"
+                        },
+                        {
+                            "background_color": "#12107c",
+                            "name": "Italian PID Provider",
+                            "logo": {
+                                "alt_text": "logo",
+                                "url": "https://api.eudi-wallet-it-pid-provider.it/public/logo.svg"
+                            },
+                            "text_color": "#FFFFFF",
+                            "locale": "en-US"
+                        }
+                    ],
+                    "format": "vc+sd-jwt",
+                    "credential_definition": {
+                        "credentialSubject": {
+                            "place_of_birth": {
+                                "display": [
+                                    {
+                                        "name": "Luogo di Nascita",
+                                        "locale": "it-IT"
+                                    },
+                                    {
+                                        "name": "Place of Birth",
+                                        "locale": "en-US"
+                                    }
+                                ],
+                                "mandatory": true
+                            },
+                            "birthdate": {
+                                "display": [
+                                    {
+                                        "name": "Data di Nascita",
+                                        "locale": "it-IT"
+                                    },
+                                    {
+                                        "name": "Date of Birth",
+                                        "locale": "en-US"
+                                    }
+                                ],
+                                "mandatory": true
+                            },
+                            "unique_id": {
+                                "display": [
+                                    {
+                                        "name": "Identificativo univoco",
+                                        "locale": "it-IT"
+                                    },
+                                    {
+                                        "name": "Unique Identifier",
+                                        "locale": "en-US"
+                                    }
+                                ],
+                                "mandatory": true
+                            },
+                            "tax_id_code": {
+                                "display": [
+                                    {
+                                        "name": "Codice Fiscale",
+                                        "locale": "it-IT"
+                                    },
+                                    {
+                                        "name": "Tax ID Number",
+                                        "locale": "en-US"
+                                    }
+                                ],
+                                "mandatory": true
+                            },
+                            "given_name": {
+                                "display": [
+                                    {
+                                        "name": "Nome",
+                                        "locale": "it-IT"
+                                    },
+                                    {
+                                        "name": "First Name",
+                                        "locale": "en-US"
+                                    }
+                                ],
+                                "mandatory": true
+                            },
+                            "family_name": {
+                                "display": [
+                                    {
+                                        "name": "Cognome",
+                                        "locale": "it-IT"
+                                    },
+                                    {
+                                        "name": "Family Name",
+                                        "locale": "en-US"
+                                    }
+                                ],
+                                "mandatory": true
+                            }
+                        },
+                        "type": [
+                            "PersonIdentificationData"
+                        ]
+                    },
+                    "id": "api.eudi-wallet-it-pid-provider.it"
+                }
+            ],
+            "pushed_authorization_request_endpoint": "https://api.eudi-wallet-it-pid-provider.it/as/par",
+            "dpop_signing_alg_values_supported": [
+                "RS256"
+            ],
+            "jwks": {
+                "keys": [
+                    {
+                        "kty": "RSA",
+                        "e": "AQAB",
+                        "use": "sig",
+                        "n": "w4wEivQmGFZ04_ucwCqDihZcygppZfPa7KYA2D88mZz_JHLPsyip7LqSloB6xln1gp1UQREGiutv10FHvn3TXVj5P6pj7xp88nWZVaRpGKeGXgWxzzB4DcPv4Wykk5p2kkeezMYsspFM22YyVVD0tWBKbaJyFqEI60QrtXws1jXOv5KGX8DW0BryjNB5x1_QHWrASYzEPaybApgweioWWdxVjzkinLRX_G93xqU_3973vd_ysrfv5hSh5R5AiBP5S1iuC1MA2Ftv98etbv8iQ_zKy-Epk8JPI9VS9qqfgx0kKUjtaTSaT_TNtanv-bye8WDXE0-ik6DOScfEMS00Ww",
+                        "kid": "eNN-g5i6CnLKcltQBp6abbioGMbzM6muW3vuxw6uh88"
+                    },
+                    {
+                        "kty": "RSA",
+                        "e": "AQAB",
+                        "use": "enc",
+                        "n": "p-n2ZWylS5LH-_bPnMLbza4EGezv-onhkXoPxrvRqx_aEaxikwP_8jIhmLCYad0JKMTB_rRiNuH3-bzly1tq9-YxtUadzNybUknvAyPW4KQ_cx1RKv4w7kqBk-rKYaStUoZL70xJa_vfnnLQ1aosDmpIyzYGhy5SEvvxUHI4GX_7p-aec-ejdLGvb2d1tWrN7mXWSZSMOAI51ktHDFUm2FvUkQWt_7d-KqMbej3g-F8GobKdIiFC9sOWeTW5xhR100dvRpSsY-NrEKJ3qlNOGQiXydqcBmvQkuGT_S_q_p3ButRWawn4h6xkf5TIZbvZ6Gtkd1hXRXb1kuRts7gVow",
+                        "kid": "hXHZQOEOkgQRwIVM9aUNOcQWHW1UQI9vQQsWIB2gjNE"
+                    }
+                ]
+            },
+            "credential_issuer": "api.eudi-wallet-it-pid-provider.it",
+            "authorization_endpoint": "https://api.eudi-wallet-it-pid-provider.it/authorize",
+            "token_endpoint": "https://api.eudi-wallet-it-pid-provider.it/token",
+            "credential_endpoint": "https://api.eudi-wallet-it-pid-provider.it/credential"
+        }
+    },
+    "keyTag": "ITW_PID_KEY_TAG",
+    "credential": "eyJ0eXAiOiJ2YytzZC1qd3QiLCJ0cnVzdF9jaGFpbiI6WyJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0k2SW1WdWRHbDBlUzF6ZEdGMFpXMWxiblFyYW5kMElpd2lhMmxrSWpvaWVGRjRSRXA1VWtJeFdqVmhURE55TTFkVll6UkNSbTl5Y1RWNWVraElSVlU1ZUhndFJHdzBYMGxMUlNKOS5leUp6ZFdJaU9pSm9kSFJ3Y3pvdkwyRndhUzVsZFdScExYZGhiR3hsZEMxcGRDMXdhV1F0Y0hKdmRtbGtaWEl1YVhRdlkya2lMQ0p0WlhSaFpHRjBZU0k2ZXlKdmNHVnVhV1JmWTNKbFpHVnVkR2xoYkY5cGMzTjFaWElpT25zaVkzSmxaR1Z1ZEdsaGJITmZjM1Z3Y0c5eWRHVmtJanBiZXlKamNubHdkRzluY21Gd2FHbGpYM04xYVhSbGMxOXpkWEJ3YjNKMFpXUWlPbHNpVWxNeU5UWWlYU3dpWTNKNWNIUnZaM0poY0docFkxOWlhVzVrYVc1blgyMWxkR2h2WkhOZmMzVndjRzl5ZEdWa0lqcGJJbXAzYXlKZExDSmthWE53YkdGNUlqcGJleUppWVdOclozSnZkVzVrWDJOdmJHOXlJam9pSXpFeU1UQTNZeUlzSW01aGJXVWlPaUpRU1VRZ1VISnZkbWxrWlhJZ2FYUmhiR2xoYm04aUxDSnNiMmR2SWpwN0ltRnNkRjkwWlhoMElqb2liRzluYnlJc0luVnliQ0k2SW1oMGRIQnpPaTh2WVhCcExtVjFaR2t0ZDJGc2JHVjBMV2wwTFhCcFpDMXdjbTkyYVdSbGNpNXBkQzl3ZFdKc2FXTXZiRzluYnk1emRtY2lmU3dpZEdWNGRGOWpiMnh2Y2lJNklpTkdSa1pHUmtZaUxDSnNiMk5oYkdVaU9pSnBkQzFKVkNKOUxIc2lZbUZqYTJkeWIzVnVaRjlqYjJ4dmNpSTZJaU14TWpFd04yTWlMQ0p1WVcxbElqb2lTWFJoYkdsaGJpQlFTVVFnVUhKdmRtbGtaWElpTENKc2IyZHZJanA3SW1Gc2RGOTBaWGgwSWpvaWJHOW5ieUlzSW5WeWJDSTZJbWgwZEhCek9pOHZZWEJwTG1WMVpHa3RkMkZzYkdWMExXbDBMWEJwWkMxd2NtOTJhV1JsY2k1cGRDOXdkV0pzYVdNdmJHOW5ieTV6ZG1jaWZTd2lkR1Y0ZEY5amIyeHZjaUk2SWlOR1JrWkdSa1lpTENKc2IyTmhiR1VpT2lKbGJpMVZVeUo5WFN3aVptOXliV0YwSWpvaWRtTXJjMlF0YW5kMElpd2lZM0psWkdWdWRHbGhiRjlrWldacGJtbDBhVzl1SWpwN0ltTnlaV1JsYm5ScFlXeFRkV0pxWldOMElqcDdJbkJzWVdObFgyOW1YMkpwY25Sb0lqcDdJbVJwYzNCc1lYa2lPbHQ3SW01aGJXVWlPaUpNZFc5bmJ5QmthU0JPWVhOamFYUmhJaXdpYkc5allXeGxJam9pYVhRdFNWUWlmU3g3SW01aGJXVWlPaUpRYkdGalpTQnZaaUJDYVhKMGFDSXNJbXh2WTJGc1pTSTZJbVZ1TFZWVEluMWRMQ0p0WVc1a1lYUnZjbmtpT25SeWRXVjlMQ0ppYVhKMGFHUmhkR1VpT25zaVpHbHpjR3hoZVNJNlczc2libUZ0WlNJNklrUmhkR0VnWkdrZ1RtRnpZMmwwWVNJc0lteHZZMkZzWlNJNkltbDBMVWxVSW4wc2V5SnVZVzFsSWpvaVJHRjBaU0J2WmlCQ2FYSjBhQ0lzSW14dlkyRnNaU0k2SW1WdUxWVlRJbjFkTENKdFlXNWtZWFJ2Y25raU9uUnlkV1Y5TENKMWJtbHhkV1ZmYVdRaU9uc2laR2x6Y0d4aGVTSTZXM3NpYm1GdFpTSTZJa2xrWlc1MGFXWnBZMkYwYVhadklIVnVhWFp2WTI4aUxDSnNiMk5oYkdVaU9pSnBkQzFKVkNKOUxIc2libUZ0WlNJNklsVnVhWEYxWlNCSlpHVnVkR2xtYVdWeUlpd2liRzlqWVd4bElqb2laVzR0VlZNaWZWMHNJbTFoYm1SaGRHOXllU0k2ZEhKMVpYMHNJblJoZUY5cFpGOWpiMlJsSWpwN0ltUnBjM0JzWVhraU9sdDdJbTVoYldVaU9pSkRiMlJwWTJVZ1JtbHpZMkZzWlNJc0lteHZZMkZzWlNJNkltbDBMVWxVSW4wc2V5SnVZVzFsSWpvaVZHRjRJRWxFSUU1MWJXSmxjaUlzSW14dlkyRnNaU0k2SW1WdUxWVlRJbjFkTENKdFlXNWtZWFJ2Y25raU9uUnlkV1Y5TENKbmFYWmxibDl1WVcxbElqcDdJbVJwYzNCc1lYa2lPbHQ3SW01aGJXVWlPaUpPYjIxbElpd2liRzlqWVd4bElqb2lhWFF0U1ZRaWZTeDdJbTVoYldVaU9pSkdhWEp6ZENCT1lXMWxJaXdpYkc5allXeGxJam9pWlc0dFZWTWlmVjBzSW0xaGJtUmhkRzl5ZVNJNmRISjFaWDBzSW1aaGJXbHNlVjl1WVcxbElqcDdJbVJwYzNCc1lYa2lPbHQ3SW01aGJXVWlPaUpEYjJkdWIyMWxJaXdpYkc5allXeGxJam9pYVhRdFNWUWlmU3g3SW01aGJXVWlPaUpHWVcxcGJIa2dUbUZ0WlNJc0lteHZZMkZzWlNJNkltVnVMVlZUSW4xZExDSnRZVzVrWVhSdmNua2lPblJ5ZFdWOWZTd2lkSGx3WlNJNld5SlFaWEp6YjI1SlpHVnVkR2xtYVdOaGRHbHZia1JoZEdFaVhYMHNJbWxrSWpvaVlYQnBMbVYxWkdrdGQyRnNiR1YwTFdsMExYQnBaQzF3Y205MmFXUmxjaTVwZENKOVhTd2ljSFZ6YUdWa1gyRjFkR2h2Y21sNllYUnBiMjVmY21WeGRXVnpkRjlsYm1Sd2IybHVkQ0k2SW1oMGRIQnpPaTh2WVhCcExtVjFaR2t0ZDJGc2JHVjBMV2wwTFhCcFpDMXdjbTkyYVdSbGNpNXBkQzloY3k5d1lYSWlMQ0prY0c5d1gzTnBaMjVwYm1kZllXeG5YM1poYkhWbGMxOXpkWEJ3YjNKMFpXUWlPbHNpVWxNeU5UWWlYU3dpYW5kcmN5STZleUpyWlhseklqcGJleUpyZEhraU9pSlNVMEVpTENKbElqb2lRVkZCUWlJc0luVnpaU0k2SW5OcFp5SXNJbTRpT2lKM05IZEZhWFpSYlVkR1dqQTBYM1ZqZDBOeFJHbG9XbU41WjNCd1dtWlFZVGRMV1VFeVJEZzRiVnA2WDBwSVRGQnplV2x3TjB4eFUyeHZRalo0Ykc0eFozQXhWVkZTUlVkcGRYUjJNVEJHU0hadU0xUllWbW8xVURad2FqZDRjRGc0YmxkYVZtRlNjRWRMWlVkWVoxZDRlbnBDTkVSalVIWTBWM2xyYXpWd01tdHJaV1Y2VFZsemMzQkdUVEl5V1hsV1ZrUXdkRmRDUzJKaFNubEdjVVZKTmpCUmNuUllkM014YWxoUGRqVkxSMWc0UkZjd1FuSjVhazVDTlhneFgxRklWM0pCVTFsNlJWQmhlV0pCY0dkM1pXbHZWMWRrZUZacWVtdHBia3hTV0Y5SE9UTjRjVlZmTXprM00zWmtYM2x6Y21aMk5XaFRhRFZTTlVGcFFsQTFVekZwZFVNeFRVRXlSblIyT1RobGRHSjJPR2xSWDNwTGVTMUZjR3M0U2xCSk9WWlRPWEZ4Wm1kNE1HdExWV3AwWVZSVFlWUmZWRTUwWVc1MkxXSjVaVGhYUkZoRk1DMXBhelpFVDFOalprVk5VekF3VjNjaUxDSnJhV1FpT2lKbFRrNHRaelZwTmtOdVRFdGpiSFJSUW5BMllXSmlhVzlIVFdKNlRUWnRkVmN6ZG5WNGR6WjFhRGc0SW4wc2V5SnJkSGtpT2lKU1UwRWlMQ0psSWpvaVFWRkJRaUlzSW5WelpTSTZJbVZ1WXlJc0ltNGlPaUp3TFc0eVdsZDViRk0xVEVndFgySlFiazFNWW5waE5FVkhaWHAyTFc5dWFHdFliMUI0Y25aU2NYaGZZVVZoZUdscmQxQmZPR3BKYUcxTVExbGhaREJLUzAxVVFsOXlVbWxPZFVnekxXSjZiSGt4ZEhFNUxWbDRkRlZoWkhwT2VXSlZhMjUyUVhsUVZ6UkxVVjlqZURGU1MzWTBkemRyY1VKckxYSkxXV0ZUZEZWdldrdzNNSGhLWVY5MlptNXVURkV4WVc5elJHMXdTWGw2V1Vkb2VUVlRSWFoyZUZWSVNUUkhXRjgzY0MxaFpXTXRaV3BrVEVkMllqSmtNWFJYY2s0M2JWaFhVMXBUVFU5QlNUVXhhM1JJUkVaVmJUSkdkbFZyVVZkMFh6ZGtMVXR4VFdKbGFqTm5MVVk0UjI5aVMyUkphVVpET1hOUFYyVlVWelY0YUZJeE1EQmtkbEp3VTNOWkxVNXlSVXRLTTNGc1RrOUhVV2xZZVdSeFkwSnRkbEZyZFVkVVgxTmZjVjl3TTBKMWRGSlhZWGR1TkdnMmVHdG1OVlJKV21KMldqWkhkR3RrTVdoWVVsaGlNV3QxVW5Sek4yZFdiM2NpTENKcmFXUWlPaUpvV0VoYVVVOUZUMnRuVVZKM1NWWk5PV0ZWVGs5alVWZElWekZWVVVrNWRsRlJjMWRKUWpKbmFrNUZJbjFkZlN3aVkzSmxaR1Z1ZEdsaGJGOXBjM04xWlhJaU9pSmhjR2t1WlhWa2FTMTNZV3hzWlhRdGFYUXRjR2xrTFhCeWIzWnBaR1Z5TG1sMElpd2lZWFYwYUc5eWFYcGhkR2x2Ymw5bGJtUndiMmx1ZENJNkltaDBkSEJ6T2k4dllYQnBMbVYxWkdrdGQyRnNiR1YwTFdsMExYQnBaQzF3Y205MmFXUmxjaTVwZEM5aGRYUm9iM0pwZW1VaUxDSjBiMnRsYmw5bGJtUndiMmx1ZENJNkltaDBkSEJ6T2k4dllYQnBMbVYxWkdrdGQyRnNiR1YwTFdsMExYQnBaQzF3Y205MmFXUmxjaTVwZEM5MGIydGxiaUlzSW1OeVpXUmxiblJwWVd4ZlpXNWtjRzlwYm5RaU9pSm9kSFJ3Y3pvdkwyRndhUzVsZFdScExYZGhiR3hsZEMxcGRDMXdhV1F0Y0hKdmRtbGtaWEl1YVhRdlkzSmxaR1Z1ZEdsaGJDSjlMQ0ptWldSbGNtRjBhVzl1WDJWdWRHbDBlU0k2ZXlKb2IyMWxjR0ZuWlY5MWNta2lPaUpvZEhSd2N6b3ZMMkZ3YVM1bGRXUnBMWGRoYkd4bGRDMXBkQzF3YVdRdGNISnZkbWxrWlhJdWFYUXZZMmtpTENKc2IyZHZYM1Z5YVNJNkltaDBkSEJ6T2k4dllYQnBMbVYxWkdrdGQyRnNiR1YwTFdsMExYQnBaQzF3Y205MmFXUmxjaTVwZEM5d2RXSnNhV012Ykc5bmJ5NXpkbWNpTENKdmNtZGhibWw2WVhScGIyNWZibUZ0WlNJNklrbHpkR2wwZFhSdklGQnZiR2xuY21GbWFXTnZJR1VnV21WalkyRWdaR2tnVTNSaGRHOGlMQ0owYjNOZmRYSnBJam9pYUhSMGNITTZMeTloY0drdVpYVmthUzEzWVd4c1pYUXRhWFF0Y0dsa0xYQnliM1pwWkdWeUxtbDBMMk5wSWl3aWNHOXNhV041WDNWeWFTSTZJbWgwZEhCek9pOHZZWEJwTG1WMVpHa3RkMkZzYkdWMExXbDBMWEJwWkMxd2NtOTJhV1JsY2k1cGRDOWphU0o5ZlN3aWFuZHJjeUk2ZXlKclpYbHpJanBiZXlKcmRIa2lPaUpTVTBFaUxDSmxJam9pUVZGQlFpSXNJbUZzWnlJNklsSlRNalUySWl3aWJpSTZJbkZ5UkhaRExWQm9ZamRUYUhKc05XVmllRkkwTWw5cWNsWkhTMWhMV2xJeVZrc3pXa3RaTkhCRWEySktUMDlXU2tReWNHNU9Xbmx4UTIxSVJrMDFOVzF3VGxCakxWRjJiRXhVY2pKR1FXbFpNRTB4WHpsRVVWTTVObXcxUWtsTWFrSkJiWFpyWjFsNmJtUnVaa2RDU0daRFNXSkNiRTlTZG1kS2N6RkdWbEJVVW5OcFVHdHpiMHA2TFZkVVN6VndVVk5JVUdwRlVYSkJTbWhqVnpKbE9XbzRRMTlOVm5sNWVXbFNjMFJrVFdJMWRsa3liamhaVkVOM2JVZDJSa2xmUm5kc1YxZHRlazQ1VjJGT05FeHFlWEpvUzBOQllWQk1RV3BNVjFreVZIRnFUbGRvVlMxcFR6Tk5MVEp4WVd4ZlVGQTBYMU42UkZoUU0xQmFSRFZxUTFsdVEwOXhObFEyTjJGRmVUQldWalk1ZWtwVWJYSjBRWFpoU3pnNFdFOVdUR1l0VjJaRE56WktiRmwzWjNKV2J6UkJOREpNVkVwamJtUXpiRGQ2Uldzd1FTMU1RV2wwVVd4WGJFeFJNVEZJTWxGVE1sOVpkeUlzSW10cFpDSTZJbmhSZUVSS2VWSkNNVm8xWVV3emNqTlhWV00wUWtadmNuRTFlWHBJU0VWVk9YaDRMVVJzTkY5SlMwVWlmVjE5TENKcGMzTWlPaUpvZEhSd2N6b3ZMMkZ3YVM1bGRXUnBMWGRoYkd4bGRDMXBkQzF3YVdRdGNISnZkbWxrWlhJdWFYUXZZMmtpTENKaGRYUm9iM0pwZEhsZmFHbHVkSE1pT2xzaWFIUjBjSE02THk5a1pXMXZMbVpsWkdWeVlYUnBiMjR1WlhWa2FTNTNZV3hzWlhRdVpHVjJaV3h2Y0dWeWN5NXBkR0ZzYVdFdWFYUWlYU3dpWlhod0lqb3hOelUxTXpZMU5ERXpMQ0pwWVhRaU9qRTNNVFU1TkRVME1UTjkuS3hkMi1yYWNJbTNZRTNpU0JySVFSblBwU3RoV1Jma3hRa2l2UndpUnpseUgtVzdPUGxIYWZwcjl5T3lMWE5Rc1NCLUE1VVJrTTI4OGM0Tm51QnRCZmtMQks0QXBTTnVCU21RWXozRENTR0tpRnBxS2d3QWdsSlFKYnc2blo1T2swSzg5NEptUG9WMlV2S29vTzN1NjF4bWhkQmhjUnZUSzV4UVoyN21nVFdpZ1ZKZ1RFV2ZYZ1d0U0daOFN3UjRoNnhPRG9LemNUYU1yQTRXYnd4UWVDdWZ6Zk5vWGtIVktNazNYZ05qWW1NOF8tMUpoLTdER05laDFNcVVjVTVDSjdHUzMxaHBWUnYwVWlyQ21JWDhxV243YVlGT3NRbnhXLXpRc0FMbmRqd2FwYlRNc3phcHhhMkhQTFVzLTBpSXF6NEF6aEtkcGhNSm82eFRNR204Y0ZBIiwiZXlKMGVYQWlPaUpsYm5ScGRIa3RjM1JoZEdWdFpXNTBLMnAzZENJc0ltRnNaeUk2SWxKVE1qVTJJaXdpYTJsa0lqb2lOR05QVkRVM2VHTm1kbUl6ZWpscVlXdFZjbXBZUnpNNVRETmpiekI2T1VKTFh6VnNTMHQ0VkhsMFVTSjkuZXlKbGVIQWlPakUzTVRZd01UQXlNVE1zSW1saGRDSTZNVGN4TlRrek9ESXhNeXdpYVhOeklqb2lhSFIwY0hNNkx5OWtaVzF2TG1abFpHVnlZWFJwYjI0dVpYVmthUzUzWVd4c1pYUXVaR1YyWld4dmNHVnljeTVwZEdGc2FXRXVhWFFpTENKemRXSWlPaUpvZEhSd2N6b3ZMMkZ3YVM1bGRXUnBMWGRoYkd4bGRDMXBkQzF3YVdRdGNISnZkbWxrWlhJdWFYUXZZMmtpTENKcWQydHpJanA3SW10bGVYTWlPbHQ3SW10MGVTSTZJbEpUUVNJc0ltVWlPaUpCVVVGQ0lpd2lZV3huSWpvaVVsTXlOVFlpTENKdUlqb2ljWEpFZGtNdFVHaGlOMU5vY213MVpXSjRValF5WDJweVZrZExXRXRhVWpKV1N6TmFTMWswY0VScllrcFBUMVpLUkRKd2JrNWFlWEZEYlVoR1RUVTFiWEJPVUdNdFVYWnNURlJ5TWtaQmFWa3dUVEZmT1VSUlV6azJiRFZDU1V4cVFrRnRkbXRuV1hwdVpHNW1SMEpJWmtOSllrSnNUMUoyWjBwek1VWldVRlJTYzJsUWEzTnZTbm90VjFSTE5YQlJVMGhRYWtWUmNrRkthR05YTW1VNWFqaERYMDFXZVhsNWFWSnpSR1JOWWpWMldUSnVPRmxVUTNkdFIzWkdTVjlHZDJ4WFYyMTZUamxYWVU0MFRHcDVjbWhMUTBGaFVFeEJha3hYV1RKVWNXcE9WMmhWTFdsUE0wMHRNbkZoYkY5UVVEUmZVM3BFV0ZBelVGcEVOV3BEV1c1RFQzRTJWRFkzWVVWNU1GWldOamw2U2xSdGNuUkJkbUZMT0RoWVQxWk1aaTFYWmtNM05rcHNXWGRuY2xadk5FRTBNa3hVU21OdVpETnNOM3BGYXpCQkxVeEJhWFJSYkZkc1RGRXhNVWd5VVZNeVgxbDNJaXdpYTJsa0lqb2llRkY0UkVwNVVrSXhXalZoVEROeU0xZFZZelJDUm05eWNUVjVla2hJUlZVNWVIZ3RSR3cwWDBsTFJTSjlYWDBzSW0xbGRHRmtZWFJoWDNCdmJHbGplU0k2ZXlKdmNHVnVhV1JmWTNKbFpHVnVkR2xoYkY5cGMzTjFaWElpT25zaVkyOXVkR0ZqZEhNaU9uc2lZV1JrSWpwYkltbHdlbk56ZG1sc2RYQndiMEJuYldGcGJDNWpiMjBpWFgxOWZTd2ljMjkxY21ObFgyVnVaSEJ2YVc1MElqb2lhSFIwY0hNNkx5OWtaVzF2TG1abFpHVnlZWFJwYjI0dVpYVmthUzUzWVd4c1pYUXVaR1YyWld4dmNHVnljeTVwZEdGc2FXRXVhWFF2Wm1WMFkyZ2lMQ0owY25WemRGOXRZWEpyY3lJNlczc2lhV1FpT2lKb2RIUndjem92TDJSbGJXOHVabVZrWlhKaGRHbHZiaTVsZFdScExuZGhiR3hsZEM1a1pYWmxiRzl3WlhKekxtbDBZV3hwWVM1cGRDOWxiblJwZEhrdmNHbGtYM0J5YjNacFpHVnlJaXdpZEhKMWMzUmZiV0Z5YXlJNkltVjVTakJsV0VGcFQybEtNR051Vm5wa1F6RjBXVmhLY2tzeWNETmtRMGx6U1cxR2MxcDVTVFpKYkVwVVRXcFZNa2xwZDJsaE1teHJTV3B2YVU1SFRsQldSRlV6WlVkT2JXUnRTWHBsYW14eFdWZDBWbU50Y0ZsU2VrMDFWRVJPYW1KNlFqWlBWVXBNV0hwV2MxTXdkRFJXU0d3d1ZWTktPUzVsZVVwd1l6Tk5hVTlwU205a1NGSjNZM3B2ZGt3eVVteGlWemgxV20xV2ExcFlTbWhrUjJ4MlltazFiR1JYVW5CTWJtUm9Za2Q0YkdSRE5XdGFXRnBzWWtjNWQxcFlTbnBNYld3d1dWZDRjRmxUTlhCa1EwbHpTVzVPTVZscFNUWkpiV2d3WkVoQ2VrOXBPSFpaV0VKd1RHMVdNVnBIYTNSa01rWnpZa2RXTUV4WGJEQk1XRUp3V2tNeGQyTnRPVEpoVjFKc1kyazFjR1JET1dwaFUwbHpTVzFzYUdSRFNUWk5WR040VGxScmVrOUVTWGhOZVhkcFlWZFJhVTlwU205a1NGSjNZM3B2ZGt3eVVteGlWemgxV20xV2ExcFlTbWhrUjJ4MlltazFiR1JYVW5CTWJtUm9Za2Q0YkdSRE5XdGFXRnBzWWtjNWQxcFlTbnBNYld3d1dWZDRjRmxUTlhCa1F6bHNZbTVTY0dSSWEzWmpSMnhyV0ROQ2VXSXpXbkJhUjFaNVNXNHdMa2RvZVhOaVF6VllOSE5YTjFOVmRIaERZMVpQUm1sM01VeFZhWGxuVHpSelZHNUlRbUZVTVZWdWMydGhTMWRrWDNoM1VrOUdUM0JsUmpSMVZHdENaVzVqU2pORllWSnpjRlZQVjBKb1dEZHVRekE1V1RCZlJFeDFOMVYwUlMwdE9FRlJPWFpPTmxoNFdrbzJRVVZJVEhoSlMwZG1MV1Z1V1MxZlVGQnhSell5VjJwNlNESlBNVk5GTjFSWU9YUjFkWEpZTTNwc1MwNDBhazFMWVcxQ05uSlZkR3MwVmpOb2EwRnlUMGxHUVZoWVpXODRjRkZvV1d0bU9UbFVaMnRzYkY5S2VVSkpjMkpIU21ZdFFsbFpSVzFwYkZBMFMxZDBUMWxXUlVvMVluUllOMVptTVRsaFJsRmFSRUpCTjBodk5Fa3hPQzFTT0doWFRqWm5kRzFHYWpaSU5HRk5MUzA1WjAxcFFWbHBZbGxNZUVKWU9FcDJkazlNV1hWNGRrVlFWbmxPU1d0TFJrUTJhVzFITkdzeE9YY3hOV3gwVlZZMVdtaERNSFJOVmtWSGNrdGhTbFZxZGtjNE5rdGZOMlY2T1RReFJFaEpkeUo5WFgwLlRUYWZOSWhKUGMyd2dxRjY3WUVfaV9QbXJYVXNINGRfd2RaQThPcXdJMFg1Yy0xeExMd1hyTVVzQ3NUd2h2dFczeUFLOWdvVkkyOERGWjhfYTBtOUZCTVo1QXIxM21jeXdCZjZaRV83aWlZV01rTndDUVFJYXVodlkwT2JveWpRYVF5SHNWTDJRbk1XR3lIdXoyRm5pQ3lfMjREXzMyWjFGREdhZnpxQ1lKajhOa2M2Q1lfTi1lQjRsOEJvMm9jM3NLNU41SUdBc1lJWk9HRmgwNVc1QXJPSEd3XzhTSTB6MGttMkhTb0ZNblNsMmd6bjZCRHRSSU1RQ21LS3NHWDhEQjJWRUhNSnhoWVJjTjRjZjU4UnozLTVqaUV0WGhJTXlWOXhRUE8wcTNncjZkZnIyLUVuM2I3TDBSM2c1QWZoNkNvQnhmTzBXOGhpck51RUJHenlqUSJdLCJhbGciOiJSUzI1NiIsImtpZCI6ImVOTi1nNWk2Q25MS2NsdFFCcDZhYmJpb0dNYnpNNm11VzN2dXh3NnVoODgifQ.eyJzdWIiOiJQRmE5VXBqNDlnVDZqUWVIeVVpc2NSdFBFQkZUTVNpODUyLW5WTVFGamtnIiwidmVyaWZpZWRfY2xhaW1zIjp7ImNsYWltcyI6eyJfc2QiOlsiMWxHNUJ3Q1MxOWtQV3k4cTZjY0RPTDlOY3k5MUx2c2l5cWNyNDBSTmZ3SSIsIjREMEdZRmRJVVlTd0JhNVcwN1l5U29ITjRUX05uTHd6S055bWd0aVdOZDgiLCJBN0dnZmVBWERiVW8yb05qbVVOOHZQOXlkVjhiNTZQZ3JyMnhzNHhaaEZFIiwiZmVIOXNuaFFjaUZsYjZoWFRJVWhSLWRSVzRVdS1XSVFzUXRwQmEzMWJ3NCIsIm5sVzB0eWk1aF9taTVVRFk3RnU2SEF5amFxU19kQlJYY3U0MnV6R1A2SzAiLCJ6dlBWT3IwWFA4N2lmN0pvUG1KaEs2VGdFZkNGNExfaGlDU2Nqalg2dHpFIl19LCJ2ZXJpZmljYXRpb24iOnsiYXNzdXJhbmNlX2xldmVsIjoiaGlnaCIsInRydXN0X2ZyYW1ld29yayI6ImVpZGFzIiwiX3NkIjpbIlI1TmUtVWhZY3ZEN0VfQm84cWRTVG1rWkxPMEZaRkw0S0lHVExfY0MwSUUiXX19LCJfc2RfYWxnIjoic2hhLTI1NiIsImlzcyI6Imh0dHBzOi8vYXBpLmV1ZGktd2FsbGV0LWl0LXBpZC1wcm92aWRlci5pdCIsImNuZiI6eyJqd2siOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsImtpZCI6IlBGYTlVcGo0OWdUNmpRZUh5VWlzY1J0UEVCRlRNU2k4NTItblZNUUZqa2ciLCJ4IjoiWjBrR3VrSHZkb3dfWjRzMnY1bkhXc201SnUtTWpVMHAxaUVsd1g2dEU4RSIsInkiOiJyQ0NnVnVBT0V2bUZoRzFsMzBfZ0p0Ri1oeXFMMGQ0ZkpwUHN0Ukc3eTY0In19LCJleHAiOjE3NDc0NzQyMTMsInR5cGUiOiJQZXJzb25JZGVudGlmaWNhdGlvbkRhdGEiLCJpYXQiOjE3MTU5MzgyMTMsImp0aSI6InVybjp1dWlkOjQ4OGRhYzQ2LTdmNmQtNGVhNC05NTY5LTVhYzk4Zjk3N2NmZCIsInN0YXR1cyI6Imh0dHBzOi8vYXBpLmV1ZGktd2FsbGV0LWl0LXBpZC1wcm92aWRlci5pdC9zdGF0dXMifQ.scvnjAUSUHdSAojQTB2R4u-lWbPksi4JrMkSoXbKXNTmV8NfC6BNr4MrFMUI_erGVwBqXn2HdVUQxRCwevGPbG0vdz520d1ElIAGKR0set6jj9ze8BEd-QPdzI-K0Brj9pvvzEh90nnELzQI8dTflDwJWgi9oCRgBBcYscGWMd7ARbtGlAyqgmk845cxSe1MKwgb3BPzLsF3h3yHfiWKrkD1lCwB5qItDQHA80Dq5peyaRpfMSl_rR1sSSeribcUGxSobB0AgFPMjJ3_n66lRpAsAMtXRLEF1hYau056SBzVgk1alo5gulvwl9f9rQBSk2b1aDcdx9BBYLneKCkZUw~WyJWY29abUJ5VUwycnBEV0FCRzhBN1FnIiwiZ2l2ZW5fbmFtZSIsIkNhc2ltaXJhIl0~WyJveVljdEl2WTZFRHpvZTRYdEFPTkVBIiwiZmFtaWx5X25hbWUiLCJTYXZvaWEiXQ~WyI4WkFBZlJ2VTNnbTVDQ0cxam0yaXF3IiwiYmlydGhkYXRlIiwiMTk5MS0wMS0wNiJd~WyJHc3FfbDJGTzJqTUs5YUs5UGN4WWp3IiwidGF4X2lkX251bWJlciIsIlRBTU1SQTgwQTQxSDUwMUkiXQ~WyJVYXlHM0pVU1h3XzF0ZHhfRENqeUx3IiwicGxhY2Vfb2ZfYmlydGgiLHsiY291bnRyeSI6IklUIiwibG9jYWxpdHkiOiJSb21lIn1d~WyJrdlE0ZE5yOHFTekdCNGZNSC1QaXVnIiwidW5pcXVlX2lkIiwiaWRBTlBSIl0~WyJZVVAyQUZvQ09jSUFNNVVoR0NjZkR3IiwiZXZpZGVuY2UiLFt7InR5cGUiOiJlbGVjdHJvbmljX3JlY29yZCIsInJlY29yZCI6eyJ0eXBlIjoiaHR0cHM6Ly9ldWRpLndhbGxldC5jaWUuZ292Lml0Iiwic291cmNlIjp7Im9yZ2FuaXphdGlvbl9uYW1lIjoiTWluaXN0ZXJvIGRlbGxcdTAwMjdJbnRlcm5vIiwib3JnYW5pemF0aW9uX2lkIjoidXJuOmV1ZGk6aXQ6b3JnYW5pemF0aW9uX2lkOmlwYV9jb2RlOm1faXQiLCJjb3VudHJ5X2NvZGUiOiJJVCJ9fX1dXQ",
+    "format": "vc+sd-jwt",
+    "parsedCredential": {
+        "place_of_birth": {
+            "mandatory": true,
+            "value": {
+                "country": "IT",
+                "locality": "Rome"
+            },
+            "name": {
+                "it-IT": "Luogo di Nascita",
+                "en-US": "Place of Birth"
+            }
+        },
+        "birthdate": {
+            "mandatory": true,
+            "value": "1991-01-06",
+            "name": {
+                "it-IT": "Data di Nascita",
+                "en-US": "Date of Birth"
+            }
+        },
+        "unique_id": {
+            "mandatory": true,
+            "value": "idANPR",
+            "name": {
+                "it-IT": "Identificativo univoco",
+                "en-US": "Unique Identifier"
+            }
+        },
+        "tax_id_code": {
+            "mandatory": true,
+            "name": {
+                "it-IT": "Codice Fiscale",
+                "en-US": "Tax ID Number"
+            }
+        },
+        "given_name": {
+            "mandatory": true,
+            "value": "Casimira",
+            "name": {
+                "it-IT": "Nome",
+                "en-US": "First Name"
+            }
+        },
+        "family_name": {
+            "mandatory": true,
+            "value": "Savoia",
+            "name": {
+                "it-IT": "Cognome",
+                "en-US": "Family Name"
+            }
+        },
+        "tax_id_number": {
+            "value": "TAMMRA80A41H501I",
+            "mandatory": false,
+            "name": "tax_id_number"
+        },
+        "evidence": {
+            "value": [
+                {
+                    "type": "electronic_record",
+                    "record": {
+                        "type": "https://eudi.wallet.cie.gov.it",
+                        "source": {
+                            "organization_name": "Ministero dell'Interno",
+                            "organization_id": "urn:eudi:it:organization_id:ipa_code:m_it",
+                            "country_code": "IT"
+                        }
+                    }
+                }
+            ],
+            "mandatory": false,
+            "name": "evidence"
+        }
+    },
+    "credentialConfigurationSchema": {
+        "place_of_birth": {
+            "display": [
+                {
+                    "name": "Luogo di Nascita",
+                    "locale": "it-IT"
+                },
+                {
+                    "name": "Place of Birth",
+                    "locale": "en-US"
+                }
+            ],
+            "mandatory": true
+        },
+        "birthdate": {
+            "display": [
+                {
+                    "name": "Data di Nascita",
+                    "locale": "it-IT"
+                },
+                {
+                    "name": "Date of Birth",
+                    "locale": "en-US"
+                }
+            ],
+            "mandatory": true
+        },
+        "unique_id": {
+            "display": [
+                {
+                    "name": "Identificativo univoco",
+                    "locale": "it-IT"
+                },
+                {
+                    "name": "Unique Identifier",
+                    "locale": "en-US"
+                }
+            ],
+            "mandatory": true
+        },
+        "tax_id_code": {
+            "display": [
+                {
+                    "name": "Codice Fiscale",
+                    "locale": "it-IT"
+                },
+                {
+                    "name": "Tax ID Number",
+                    "locale": "en-US"
+                }
+            ],
+            "mandatory": true
+        },
+        "given_name": {
+            "display": [
+                {
+                    "name": "Nome",
+                    "locale": "it-IT"
+                },
+                {
+                    "name": "First Name",
+                    "locale": "en-US"
+                }
+            ],
+            "mandatory": true
+        },
+        "family_name": {
+            "display": [
+                {
+                    "name": "Cognome",
+                    "locale": "it-IT"
+                },
+                {
+                    "name": "Family Name",
+                    "locale": "en-US"
+                }
+            ],
+            "mandatory": true
+        }
+    },
+    "displayData": {
+        "title": "Identità digitale",
+        "icon": "archive",
+        "incoming": false,
+        "textColor": "white",
+        "firstLine": [
+            "given_name",
+            "family_name"
+        ],
+        "secondLine": [
+            "tax_id_number"
+        ],
+        "order": [
+            "given_name",
+            "family_name",
+            "birthdate",
+            "place_of_birth",
+            "unique_id",
+            "tax_id_number",
+            "tax_id_code",
+            "evidence"
+        ]
+    },
+    "credentialType": "PersonIdentificationData"
+}

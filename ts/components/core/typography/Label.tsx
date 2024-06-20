@@ -18,7 +18,7 @@ type LabelProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 > & { fontSize?: FontSize };
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 
 /**
  * Typography component to render `Label` text with font size {@link fontSize} and fontFamily {@link fontName}.

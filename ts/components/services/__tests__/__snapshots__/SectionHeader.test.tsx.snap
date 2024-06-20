@@ -80,7 +80,7 @@ exports[`SectionHeader component should match the snapshot 1`] = `
   <Text
     accessibilityRole="header"
     color="bluegrey"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -95,7 +95,7 @@ exports[`SectionHeader component should match the snapshot 1`] = `
         },
         Object {
           "color": "#475A6D",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },

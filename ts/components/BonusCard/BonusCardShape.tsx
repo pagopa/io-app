@@ -2,13 +2,13 @@ import { IOColors } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Circle, ClipPath, Defs, Rect, Svg } from "react-native-svg";
-import { useSelector } from "react-redux";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { useIOSelector } from "../../store/hooks";
 
 const CIRCLE_MASK_SIZE = 32;
 
 const BonusCardShape = () => {
-  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   return (
     <View style={styles.container}>

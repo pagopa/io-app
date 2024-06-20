@@ -127,7 +127,6 @@ import {
   watchProfileUpsertRequestsSaga
 } from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
-import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -310,11 +309,8 @@ export function* initializeApplicationSaga(
     backendClient.deleteUserDataProcessingRequest
   );
 
-  // Load visible services and service details from backend when requested
-  yield* fork(watchLoadServicesSaga, backendClient);
-
   // Start watching for services actions
-  yield* fork(watchServicesSaga, sessionToken);
+  yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga, backendClient, sessionToken);
