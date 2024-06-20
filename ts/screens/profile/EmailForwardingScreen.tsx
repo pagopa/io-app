@@ -125,7 +125,7 @@ class EmailForwardingScreenClass extends React.Component<Props, State> {
             <View style={IOStyles.horizontalContentPadding}>
               <Body>
                 <Body>{I18n.t("send_email_messages.subtitle")}</Body>
-                <Body weight="SemiBold">{` ${this.props.userEmail}`}</Body>
+                <Body weight="Semibold">{` ${this.props.userEmail}`}</Body>
                 <Body>{I18n.t("global.symbols.question")}</Body>
               </Body>
             </View>

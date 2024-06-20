@@ -15,13 +15,14 @@ import {
 import { messageListForCategorySelector } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
 import {
-  getLoadNextPageMessagesActionIfNeeded,
+  getLoadNextPageMessagesActionIfAllowed,
   messageListItemHeight
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
 import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
+import { CustomRefreshControl } from "./CustomRefreshControl";
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -41,6 +42,7 @@ export const MessageList = ({ category }: MessageListProps) => {
   const dispatch = useIODispatch();
   const safeAreaFrame = useSafeAreaFrame();
   const safeAreaInsets = useSafeAreaInsets();
+
   const messageList = useIOSelector(state =>
     messageListForCategorySelector(state, category)
   );
@@ -58,7 +60,7 @@ export const MessageList = ({ category }: MessageListProps) => {
   const onEndReachedCallback = useCallback(
     ({ distanceFromEnd }: { distanceFromEnd: number }) => {
       const state = store.getState();
-      const loadNextPageMessages = getLoadNextPageMessagesActionIfNeeded(
+      const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
         state,
         category,
         distanceFromEnd
@@ -88,6 +90,7 @@ export const MessageList = ({ category }: MessageListProps) => {
         }
       }}
       ListFooterComponent={<Footer category={category} />}
+      refreshControl={<CustomRefreshControl category={category} />}
       onEndReached={onEndReachedCallback}
       onEndReachedThreshold={0.1}
       testID={`message_list_${category.toLowerCase()}`}

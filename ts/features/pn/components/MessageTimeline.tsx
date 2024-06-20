@@ -92,10 +92,10 @@ const PnMessageTimelineItem = (props: ItemProps) => (
       />
     </View>
     <View style={styles.details}>
-      <LabelSmall fontSize="regular" color="bluegrey" weight="SemiBold">
+      <LabelSmall fontSize="regular" color="bluegrey" weight="Semibold">
         {props.time}
       </LabelSmall>
-      <Body color="bluegreyDark" weight="SemiBold">
+      <Body color="bluegreyDark" weight="Semibold">
         {props.text}
       </Body>
     </View>

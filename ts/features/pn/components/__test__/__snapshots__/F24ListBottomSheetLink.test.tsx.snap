@@ -518,7 +518,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -541,7 +541,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         0
                                       </Text>
@@ -746,7 +746,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -769,7 +769,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         1
                                       </Text>
@@ -974,7 +974,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -997,7 +997,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         2
                                       </Text>
@@ -1202,7 +1202,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1225,7 +1225,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         3
                                       </Text>
@@ -1430,7 +1430,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1453,7 +1453,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         4
                                       </Text>
@@ -1658,7 +1658,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1681,7 +1681,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         5
                                       </Text>
@@ -1886,7 +1886,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1909,7 +1909,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         6
                                       </Text>
@@ -2114,7 +2114,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2137,7 +2137,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         7
                                       </Text>
@@ -2342,7 +2342,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2365,7 +2365,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         8
                                       </Text>
@@ -2570,7 +2570,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2593,7 +2593,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         9
                                       </Text>
@@ -3736,7 +3736,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                         allowFontScaling={false}
                                         color="blueIO-500"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
+                                        defaultWeight="Semibold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3759,7 +3759,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         0
                                       </Text>

@@ -34,7 +34,7 @@ Array [
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     Discount code
