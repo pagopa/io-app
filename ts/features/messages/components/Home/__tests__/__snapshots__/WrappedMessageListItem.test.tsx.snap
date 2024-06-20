@@ -2838,7 +2838,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2864,7 +2864,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -2969,7 +2969,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
@@ -3775,7 +3775,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -3801,7 +3801,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
@@ -3906,7 +3906,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
+                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
