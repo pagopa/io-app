@@ -1,5 +1,12 @@
 import * as React from "react";
-import { StyleSheet, Pressable, SafeAreaView, View, Text } from "react-native";
+import {
+  StyleSheet,
+  Pressable,
+  SafeAreaView,
+  View,
+  Text,
+  Platform
+} from "react-native";
 import { connect } from "react-redux";
 import { useState } from "react";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -27,7 +34,7 @@ const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 const styles = StyleSheet.create({
   versionContainer: {
     ...StyleSheet.absoluteFillObject,
-    top: -8,
+    top: Platform.OS === "android" ? 0 : -8,
     justifyContent: "flex-start",
     alignItems: "center",
     zIndex: 1000
@@ -35,7 +42,7 @@ const styles = StyleSheet.create({
   versionText: {
     fontSize: 12,
     color: IOColors["grey-850"],
-    ...makeFontStyleObject("SemiBold")
+    ...makeFontStyleObject("Semibold")
   },
   screenDebugText: {
     fontSize: 12,

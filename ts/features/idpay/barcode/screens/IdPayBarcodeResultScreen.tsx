@@ -149,7 +149,7 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
             <LabelSmall weight="Regular" color="black">
               {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
             </LabelSmall>
-            <LabelSmall weight="SemiBold" color="black">
+            <LabelSmall weight="Semibold" color="black">
               {formatNumberCurrencyCents(barcode.residualBudgetCents)}
             </LabelSmall>
           </View>

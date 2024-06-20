@@ -120,7 +120,7 @@ const LegacyModuleAttachmentContent = ({
         <Icon name={formatMap[format]} size={ICON_SIZE} color="blue" />
       </View>
       <View style={IOStyles.flex}>
-        <LabelSmall numberOfLines={1} weight="SemiBold" color="bluegrey">
+        <LabelSmall numberOfLines={1} weight="Semibold" color="bluegrey">
           {title}
         </LabelSmall>
         {subtitle && (
