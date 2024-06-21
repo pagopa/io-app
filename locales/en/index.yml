@@ -490,24 +490,24 @@ profile:
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
-    subtitle: Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
+        subtitle: These settings allow you to customise your IO experience
     contextualHelpTitle: Your preferences
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       wip: In progress
       digitalDomicile: Digital domicile
       service_contact: 
-        title: Gestione servizi
-        subtitle: Scegli chi può contattarti
+        title: Use of services
+        subtitle: Choose who can contact you
       send_email_messages:
-        title: Inoltro dei messaggi via email
-        subtitle: Ricevi un’anteprima dei messaggi
+        title: Forwarding messages by email
+        subtitle: Receive message previews
       language: 
-        title: Lingua
-        subtitle: Scegli la lingua
+        title: Language
+        subtitle: Choose language
       preferred_calendar:
-        title: Calendario preferito
-        description: Seleziona un calendario
+        title: Favourite calendar
+        description: Select calendar
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
