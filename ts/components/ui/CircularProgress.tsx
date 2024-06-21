@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, ColorValue } from "react-native";
 import Animated, {
-  Easing,
   useAnimatedProps,
-  useSharedValue,
-  withTiming
+  useSharedValue
 } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 
@@ -39,13 +37,7 @@ export const CircularProgress = ({
   }, [progress, progressSharedValue]);
 
   const animatedProps = useAnimatedProps(() => ({
-    strokeDashoffset: withTiming(
-      CIRCLE_LENGTH * (1 - progressSharedValue.value),
-      {
-        duration: 750,
-        easing: Easing.inOut(Easing.poly(4))
-      }
-    )
+    strokeDashoffset: CIRCLE_LENGTH * (1 - progressSharedValue.value)
   }));
 
   return (
