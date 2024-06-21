@@ -23,6 +23,8 @@ import {
   isStrictSomeError
 } from "../../../../utils/pot";
 
+export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
+
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
 ): ActionType<typeof reloadAllMessages.request> | undefined =>
@@ -77,8 +79,7 @@ export const getLoadServiceDetailsActionIfNeeded = (
 
 export const getLoadNextPageMessagesActionIfAllowed = (
   state: GlobalState,
-  category: MessageListCategory,
-  messageListDistanceFromEnd: number
+  category: MessageListCategory
 ): ActionType<typeof loadNextPageMessages.request> | undefined => {
   const allPaginated = state.entities.messages.allPaginated;
 
@@ -90,15 +91,17 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   }
 
   // Check that there are more pages to load
-  const { messagePagePot, lastRequest } =
+  const { messagePagePot, lastRequest, lastRequestDate } =
     category === "INBOX"
       ? {
           messagePagePot: inboxData,
-          lastRequest: allPaginated.inbox.lastRequest
+          lastRequest: allPaginated.inbox.lastRequest,
+          lastRequestDate: allPaginated.inbox.lastRequestDate
         }
       : {
           messagePagePot: archiveData,
-          lastRequest: allPaginated.archive.lastRequest
+          lastRequest: allPaginated.archive.lastRequest,
+          lastRequestDate: allPaginated.archive.lastRequestDate
         };
   const nextMessagePageStartingId = isSomeOrSomeError(messagePagePot)
     ? messagePagePot.value.next
@@ -109,14 +112,22 @@ export const getLoadNextPageMessagesActionIfAllowed = (
 
   // If there was an error in the last more-pages-loading, we prevent
   // the page from reloading continuosly when the server endpoint keeps
-  // replying with an error. In such case we block the call and let the user
-  // scroll a bit up and then down if she wants to try another reload
+  // replying with an error. In such case we block the call and wait for
+  // a little bit before the request can be sent again
   if (isStrictSomeError(messagePagePot)) {
+    // Make sure not to block the request if the error happened on
+    // another one (like the pull to refresh)
     const lastRequestValue = O.isSome(lastRequest)
       ? lastRequest.value
       : undefined;
-    if (lastRequestValue === "next" && messageListDistanceFromEnd < 1) {
-      return undefined;
+    if (lastRequestValue === "next") {
+      const millisecondsAfterLastError =
+        new Date().getTime() - lastRequestDate.getTime();
+      if (
+        millisecondsAfterLastError < nextPageLoadingWaitMillisecondsGenerator()
+      ) {
+        return undefined;
+      }
     }
   }
 

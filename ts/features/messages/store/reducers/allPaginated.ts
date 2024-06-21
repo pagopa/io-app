@@ -42,6 +42,7 @@ type Collection = {
   data: MessagePagePot;
   /** persist the last action type occurred */
   lastRequest: LastRequestType;
+  lastRequestDate: Date;
 };
 
 export type MigrationStatus = O.Option<
@@ -68,8 +69,8 @@ export type AllPaginated = {
 };
 
 const INITIAL_STATE: AllPaginated = {
-  archive: { data: pot.none, lastRequest: O.none },
-  inbox: { data: pot.none, lastRequest: O.none },
+  archive: { data: pot.none, lastRequest: O.none, lastRequestDate: new Date() },
+  inbox: { data: pot.none, lastRequest: O.none, lastRequestDate: new Date() },
   migration: O.none,
   shownCategory: "INBOX"
 };
@@ -157,7 +158,8 @@ const reduceReloadAll = (
           ...state,
           archive: {
             data: pot.toLoading(state.archive.data),
-            lastRequest: O.some("all")
+            lastRequest: O.some("all"),
+            lastRequestDate: new Date()
           }
         };
       }
@@ -165,7 +167,8 @@ const reduceReloadAll = (
         ...state,
         inbox: {
           data: pot.toLoading(state.inbox.data),
-          lastRequest: O.some("all")
+          lastRequest: O.some("all"),
+          lastRequestDate: new Date()
         }
       };
     }
@@ -180,7 +183,8 @@ const reduceReloadAll = (
               previous: action.payload.pagination.previous,
               next: action.payload.pagination.next
             }),
-            lastRequest: O.none
+            lastRequest: O.none,
+            lastRequestDate: new Date()
           }
         };
       }
@@ -192,7 +196,8 @@ const reduceReloadAll = (
             previous: action.payload.pagination.previous,
             next: action.payload.pagination.next
           }),
-          lastRequest: O.none
+          lastRequest: O.none,
+          lastRequestDate: new Date()
         }
       };
     }
@@ -203,7 +208,8 @@ const reduceReloadAll = (
           ...state,
           archive: {
             data: pot.toError(state.archive.data, action.payload.error.message),
-            lastRequest: state.archive.lastRequest
+            lastRequest: state.archive.lastRequest,
+            lastRequestDate: new Date()
           }
         };
       }
@@ -211,7 +217,8 @@ const reduceReloadAll = (
         ...state,
         inbox: {
           data: pot.toError(state.inbox.data, action.payload.error.message),
-          lastRequest: state.inbox.lastRequest
+          lastRequest: state.inbox.lastRequest,
+          lastRequestDate: new Date()
         }
       };
 
@@ -231,7 +238,8 @@ const reduceLoadNextPage = (
           ...state,
           archive: {
             data: pot.toLoading(state.archive.data),
-            lastRequest: O.some("next")
+            lastRequest: O.some("next"),
+            lastRequestDate: new Date()
           }
         };
       }
@@ -239,7 +247,8 @@ const reduceLoadNextPage = (
         ...state,
         inbox: {
           data: pot.toLoading(state.inbox.data),
-          lastRequest: O.some("next")
+          lastRequest: O.some("next"),
+          lastRequestDate: new Date()
         }
       };
 
@@ -266,13 +275,21 @@ const reduceLoadNextPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: { data: getNextData(state.archive), lastRequest: O.none }
+          archive: {
+            data: getNextData(state.archive),
+            lastRequest: O.none,
+            lastRequestDate: new Date()
+          }
         };
       }
 
       return {
         ...state,
-        inbox: { data: getNextData(state.inbox), lastRequest: O.none }
+        inbox: {
+          data: getNextData(state.inbox),
+          lastRequest: O.none,
+          lastRequestDate: new Date()
+        }
       };
 
     case getType(loadNextPageMessages.failure):
@@ -281,7 +298,8 @@ const reduceLoadNextPage = (
           ...state,
           archive: {
             data: pot.toError(state.inbox.data, action.payload.error.message),
-            lastRequest: state.archive.lastRequest
+            lastRequest: state.archive.lastRequest,
+            lastRequestDate: new Date()
           }
         };
       }
@@ -289,7 +307,8 @@ const reduceLoadNextPage = (
         ...state,
         inbox: {
           data: pot.toError(state.inbox.data, action.payload.error.message),
-          lastRequest: state.inbox.lastRequest
+          lastRequest: state.inbox.lastRequest,
+          lastRequestDate: new Date()
         }
       };
 
@@ -309,7 +328,8 @@ const reduceLoadPreviousPage = (
           ...state,
           archive: {
             data: pot.toLoading(state.archive.data),
-            lastRequest: O.some("previous")
+            lastRequest: O.some("previous"),
+            lastRequestDate: new Date()
           }
         };
       }
@@ -317,7 +337,8 @@ const reduceLoadPreviousPage = (
         ...state,
         inbox: {
           data: pot.toLoading(state.inbox.data),
-          lastRequest: O.some("previous")
+          lastRequest: O.some("previous"),
+          lastRequestDate: new Date()
         }
       };
 
@@ -346,13 +367,21 @@ const reduceLoadPreviousPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: { data: getNextData(state.archive), lastRequest: O.none }
+          archive: {
+            data: getNextData(state.archive),
+            lastRequest: O.none,
+            lastRequestDate: new Date()
+          }
         };
       }
 
       return {
         ...state,
-        inbox: { data: getNextData(state.inbox), lastRequest: O.none }
+        inbox: {
+          data: getNextData(state.inbox),
+          lastRequest: O.none,
+          lastRequestDate: new Date()
+        }
       };
 
     case getType(loadPreviousPageMessages.failure):
@@ -361,7 +390,8 @@ const reduceLoadPreviousPage = (
           ...state,
           archive: {
             data: pot.toError(state.archive.data, action.payload.error.message),
-            lastRequest: state.archive.lastRequest
+            lastRequest: state.archive.lastRequest,
+            lastRequestDate: new Date()
           }
         };
       }
@@ -369,7 +399,8 @@ const reduceLoadPreviousPage = (
         ...state,
         inbox: {
           data: pot.toError(state.inbox.data, action.payload.error.message),
-          lastRequest: state.inbox.lastRequest
+          lastRequest: state.inbox.lastRequest,
+          lastRequestDate: new Date()
         }
       };
 
@@ -874,13 +905,13 @@ const messagePotToToastReportableErrorOrUndefined = (
   pipe(
     messagePagePot,
     foldK(
-      () => undefined,
-      () => undefined,
-      _ => undefined,
-      _ => undefined,
-      _ => undefined,
-      _ => undefined,
-      (_currentValue, _newValue) => undefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
       (_value, errorString) => errorString
     )
   );

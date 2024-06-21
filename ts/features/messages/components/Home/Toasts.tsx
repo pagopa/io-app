@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
 import {
+  archiveMessagesErrorMessageSelector,
   inboxMessagesErrorMessageSelector,
   latestMessageOperationToastTypeSelector,
   latestMessageOperationTranslationKeySelector
@@ -45,17 +46,19 @@ export const Toasts = () => {
   const inboxErrorMessage = useIOSelector(inboxMessagesErrorMessageSelector);
   useEffect(() => {
     if (inboxErrorMessage) {
-      toast.error(inboxErrorMessage);
+      toast.error(I18n.t("global.genericError"));
     }
   }, [inboxErrorMessage, toast]);
 
   // Handling of archive messages errors. Be aware that any
   // error that happens when the list is empty is not displayed
   // with a Toast but with the EmptyList component
-  const archiveErrorMessage = useIOSelector(inboxMessagesErrorMessageSelector);
+  const archiveErrorMessage = useIOSelector(
+    archiveMessagesErrorMessageSelector
+  );
   useEffect(() => {
     if (archiveErrorMessage) {
-      toast.error(archiveErrorMessage);
+      toast.error(I18n.t("global.genericError"));
     }
   }, [archiveErrorMessage, toast]);
 
