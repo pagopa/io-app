@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.63.0-rc.2](https://github.com/pagopa/io-app/compare/2.63.0-rc.1...2.63.0-rc.2) (2024-06-21)
+
+
+### Features
+
+* [[IOCOM-1412](https://pagopa.atlassian.net/browse/IOCOM-1412)] Support for pagoPA logo above service logo on message cell ([#5873](https://github.com/pagopa/io-app/issues/5873)) ([e994d64](https://github.com/pagopa/io-app/commit/e994d6438317d0b367c4ed66835a0c0cd5294430))
+* [[IOCOM-1539](https://pagopa.atlassian.net/browse/IOCOM-1539)] Profile screen, Push notification preferences, IOScrollViewLargeHeader instead of RNavScreenWithLargeHeader ([#5872](https://github.com/pagopa/io-app/issues/5872)) ([b68b2e1](https://github.com/pagopa/io-app/commit/b68b2e1d3befc00870201a8163397cfee685006e))
+* [[IOCOM-833](https://pagopa.atlassian.net/browse/IOCOM-833)] Pull to refresh, new messages' home ([#5867](https://github.com/pagopa/io-app/issues/5867)) ([7c60e47](https://github.com/pagopa/io-app/commit/7c60e4739e88072b927d62fee0f68713cfacc676))
+* [[IOPID-1547](https://pagopa.atlassian.net/browse/IOPID-1547)] New DS on SPID errors ([#5885](https://github.com/pagopa/io-app/issues/5885)) ([5d01415](https://github.com/pagopa/io-app/commit/5d01415e963268e0d03e241583d1ec8e07b88d1f))
+
+
+### Bug Fixes
+
+* [[IOBP-706](https://pagopa.atlassian.net/browse/IOBP-706)] Payment Method management regression ([#5881](https://github.com/pagopa/io-app/issues/5881)) ([79c0f42](https://github.com/pagopa/io-app/commit/79c0f42ddd0c199f138b6dd09ca2461263419d91))
+* **Cross:** [[IOAPPX-326](https://pagopa.atlassian.net/browse/IOAPPX-326)] Fix bug on Android when using `SemiBold` font weight ([#5878](https://github.com/pagopa/io-app/issues/5878)) ([169813a](https://github.com/pagopa/io-app/commit/169813acdc0228731d93f56e1f71efe1044403bc))
+
+
+### Chores
+
+* [[IOBP-648](https://pagopa.atlassian.net/browse/IOBP-648)] Add new payments platform session token authentication ([#5852](https://github.com/pagopa/io-app/issues/5852)) ([1214abb](https://github.com/pagopa/io-app/commit/1214abbd7173f4ce10563377141264a6dea2b503))
+* [[IOBP-707](https://pagopa.atlassian.net/browse/IOBP-707)] Add filters to disabled payment methods ([#5880](https://github.com/pagopa/io-app/issues/5880)) ([9dab799](https://github.com/pagopa/io-app/commit/9dab799aec99d5799744e090a5fcb7ba5ee17ed5))
+* [[IOCOM-1514](https://pagopa.atlassian.net/browse/IOCOM-1514)] Message list scroll on top upon Message Tab tap ([#5871](https://github.com/pagopa/io-app/issues/5871)) ([346d7ea](https://github.com/pagopa/io-app/commit/346d7eae00a7036a9e45bb2c295be16335a7d16a))
+* [[IOCOM-1547](https://pagopa.atlassian.net/browse/IOCOM-1547)] FIMS implicit code flow support ([#5884](https://github.com/pagopa/io-app/issues/5884)) ([c21ba26](https://github.com/pagopa/io-app/commit/c21ba2632ed5971ccc31ae07703e8efcad5cb287))
+
 ## [2.63.0-rc.1](https://github.com/pagopa/io-app/compare/2.63.0-rc.0...2.63.0-rc.1) (2024-06-20)
 
 
