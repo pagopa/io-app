@@ -1946,7 +1946,8 @@ messages:
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
     calendarPermDenied:
-      title: "It seems calendar permissions has been denied"
+      title: Non possiamo accedere
+      description: Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.
       ok: "Enable permissions"
       cancel: "Cancel"
     errors:

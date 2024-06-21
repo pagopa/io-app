@@ -1769,7 +1769,6 @@ messages:
     reminderRemoveFailure: "Fehler beim Entfernen der Erinnerung, bitte versuche es erneut"
     preferenceCalendarSelect: "Wähle deinen Standardkalender"
     calendarPermDenied:
-      title: "Die Berechtigung zum Zugriff auf den Kalender wurde offenbar verweigert"
       ok: "Berechtigungen freigeben"
       cancel: "Abbrechen"
     errors:
