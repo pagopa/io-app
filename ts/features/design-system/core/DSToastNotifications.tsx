@@ -10,7 +10,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSToastNotifications = () => (
   <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
-    <H3 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+    <H3 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
       Events
     </H3>
 
@@ -68,7 +68,7 @@ export const DSToastNotifications = () => (
 
     <H3
       color={"bluegrey"}
-      weight={"SemiBold"}
+      weight={"Semibold"}
       style={{ marginTop: 32, marginBottom: 16 }}
     >
       Component
