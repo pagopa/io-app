@@ -137,16 +137,9 @@ const CieConsentDataUsageScreen = () => {
 
   useEffect(() => {
     if (hasError) {
-      if (errorCode === "1002") {
-        navigation.navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.UNLOCK_ACCESS_SCREEN,
-          params: { authLevel: "L2" }
-        });
-        return;
-      }
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTH_ERROR_SCREEN,
-        params: { errorCode }
+        params: { errorCode, authMethod: "CIE", authLevel: "L2" }
       });
     }
   }, [errorCode, hasError, navigation]);
