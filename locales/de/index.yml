@@ -456,7 +456,6 @@ profile:
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
-    subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
     contextualHelpTitle: "Deine Einstellungen"
     list:
       wip: "In Bearbeitung"
