@@ -9,7 +9,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
-import ActivateNfcScreen from "../ActivateNfcScreen";
+import ActivateNfcScreen from "../../cie/ActivateNfcScreen";
 
 // Mock the openNFCSettings function
 jest.mock("../../../../utils/cie", () => ({

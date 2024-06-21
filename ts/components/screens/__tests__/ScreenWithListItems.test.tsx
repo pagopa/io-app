@@ -66,7 +66,7 @@ describe("ScreenWithListItems", () => {
             style: {
               textAlign: "center"
             },
-            weight: "SemiBold"
+            weight: "Semibold"
           }
         ]
       };

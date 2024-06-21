@@ -145,7 +145,7 @@ export const TransactionsList = (props: Props) => {
     <ScrollView scrollEnabled={false} style={styles.scrollView}>
       <View>
         <View style={styles.subHeaderContent}>
-          <H3 weight={"SemiBold"} color={"bluegreyDark"}>
+          <H3 weight={"Semibold"} color={"bluegreyDark"}>
             {I18n.t("wallet.latestTransactions")}
           </H3>
         </View>

@@ -87,7 +87,7 @@ const getTosFooter = (
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
                 <LabelLink
-                  weight={"SemiBold"}
+                  weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
                 >
