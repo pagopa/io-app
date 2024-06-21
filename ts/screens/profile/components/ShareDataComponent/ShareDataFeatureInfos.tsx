@@ -4,13 +4,16 @@ import {
   FeatureInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
+import { View } from "react-native";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../../../i18n";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { ioSuppliersUrl } from "../../../../urls";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 export type FeatureProps = {
   trackAction: (info: TrackingInfo) => void;
@@ -20,24 +23,47 @@ const shareDataSecurityMoreLink =
   "https://www.pagopa.it/it/politiche-sulla-sicurezza-delle-informazioni-e-sulla-qualita/";
 
 const MarkdownBody = () => (
-  <>
+  <View
+    accessible
+    // Necessary because `LegacyMarkdown` component truncates the content into separate blocks.
+    accessibilityLabel={
+      I18n.t("profile.main.privacy.shareData.whyBottomSheet.body").replace(
+        /\*/g,
+        ""
+      ) // It removes all '*' characters associated with Markdown syntax.
+    }
+  >
     <VSpacer size={16} />
-    <LegacyMarkdown avoidTextSelection>
-      {I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
-    </LegacyMarkdown>
-  </>
+    <View
+      accessible={false}
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+    >
+      <LegacyMarkdown>
+        {I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
+      </LegacyMarkdown>
+    </View>
+  </View>
 );
 
 const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
+  const bodyRef = useRef<View>(null);
   const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <MarkdownBody />,
     I18n.t("profile.main.privacy.shareData.whyBottomSheet.title"),
-    350
+    250,
+    undefined,
+    () => {
+      // When the bottom sheet is dismissed, the accessibility focus shifts to the body component of `FeatureInfo`.
+      // This workaround is implemented to maintain semantic order and prevent disruptions.
+      // Ideally, the accessibility focus should return to the element that triggered the bottom sheet's display. However, implementing this solution currently isn't feasible.
+      setAccessibilityFocus(bodyRef, 300 as Millisecond);
+    }
   );
 
   const analyticsBody = useMemo(
     () => (
-      <Body>
+      <Body ref={bodyRef}>
         {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
         <Label color="info-850">
           {I18n.t("profile.main.privacy.shareData.screen.why.description.two")}
