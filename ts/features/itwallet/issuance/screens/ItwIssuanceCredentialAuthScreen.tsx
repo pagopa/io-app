@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Body,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
@@ -16,17 +15,39 @@ import React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
+import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import ItwMarkdown from "../../discovery/components/ItwMarkdown";
+import {
+  ItwRequestedClaimsList,
+  RequiredClaim
+} from "../components/ItwRequiredClaimsList";
+
+const mockedClaims: ReadonlyArray<RequiredClaim> = [
+  {
+    name: "{Given_Name}",
+    source: "{Credential.Name}"
+  },
+  {
+    name: "{Family_name}",
+    source: "{Credential.Name}"
+  },
+  {
+    name: "{Tax_id_number}",
+    source: "{Credential.Name}"
+  }
+];
 
 const ItwIssuanceCredentialAuthScreen = () => {
   const navigation = useIONavigation();
+  const credential = ItwCredentialsMocks.mdl;
 
   const handleClosePress = () => {
     navigation.pop();
   };
 
-  const handleContinue = () => {
+  const handleContinuePress = () => {
     navigation.pop();
   };
 
@@ -51,51 +72,47 @@ const ItwIssuanceCredentialAuthScreen = () => {
           />
         </View>
         <VSpacer size={24} />
-        <H2>Tessera Sanitaria: dati necessari</H2>
-        <Body color="grey-700">
-          Saranno condivisi con{" "}
-          <Body weight="Bold" color="grey-700">
-            Istituto Poligrafico e Zecca dello Stato
-          </Body>{" "}
-          per il rilascio della credenziale
-        </Body>
-        <VSpacer size={24} />
+        <H2>
+          {I18n.t("features.itWallet.issuance.credentialAuth.title", {
+            credentialName: credential.displayData.title
+          })}
+        </H2>
+        <ItwMarkdown
+          content={I18n.t(
+            "features.itWallet.issuance.credentialAuth.subtitle",
+            {
+              organization: "Istituto Poligrafico e Zecca"
+            }
+          )}
+        />
+        <VSpacer size={8} />
         <ListItemHeader
-          label="Dati richiesti"
+          label={I18n.t(
+            "features.itWallet.issuance.credentialAuth.requiredClaims"
+          )}
           iconName="security"
           iconColor="grey-700"
         />
-        <ItwRequestedClaimsList
-          claims={[
-            {
-              name: "{Given_Name}",
-              source: "{Credential.Name}"
-            },
-            {
-              name: "{Family_name}",
-              source: "{Credential.Name}"
-            },
-            {
-              name: "{Tax_id_number}",
-              source: "{Credential.Name}"
-            }
-          ]}
-        />
+        <ItwRequestedClaimsList claims={mockedClaims} />
         <VSpacer size={24} />
         <FeatureInfo
           iconName="fornitori"
-          body="I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy."
+          body={I18n.t(
+            "features.itWallet.issuance.credentialAuth.disclaimer.0"
+          )}
         />
         <VSpacer size={24} />
         <FeatureInfo
           iconName="trashcan"
-          body="I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale."
+          body={I18n.t(
+            "features.itWallet.issuance.credentialAuth.disclaimer.1"
+          )}
         />
         <VSpacer size={32} />
         <LabelSmall weight="Regular" color="grey-700">
-          Per maggiori informazioni, leggi{" "}
+          {I18n.t("features.itWallet.issuance.credentialAuth.tos.0")}{" "}
           <LabelLink fontSize="small" onPress={handleTosLinkPress}>
-            l’informativa Privacy e i Termini e Condizioni d’uso
+            {I18n.t("features.itWallet.issuance.credentialAuth.tos.1")}
           </LabelLink>
         </LabelSmall>
       </ContentWrapper>
@@ -104,11 +121,11 @@ const ItwIssuanceCredentialAuthScreen = () => {
         actions={{
           type: "TwoButtons",
           primary: {
-            label: "Continua",
-            onPress: handleContinue
+            label: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress
           },
           secondary: {
-            label: "Annulla",
+            label: I18n.t("global.buttons.cancel"),
             onPress: handleClosePress
           }
         }}

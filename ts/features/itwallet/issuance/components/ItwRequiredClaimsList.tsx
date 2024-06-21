@@ -9,17 +9,18 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "../../../../i18n";
 
-type RequestedClaim = {
+export type RequiredClaim = {
   name: string;
   source: string;
 };
 
 type Props = {
-  claims: ReadonlyArray<RequestedClaim>;
+  claims: ReadonlyArray<RequiredClaim>;
 };
 
-const ItwRequestedClaimsList = ({ claims }: Props) => (
+const ItwRequiredClaimsList = ({ claims }: Props) => (
   <View style={styles.container}>
     {pipe(
       claims,
@@ -30,10 +31,11 @@ const ItwRequestedClaimsList = ({ claims }: Props) => (
           <View style={styles.dataItem}>
             <View>
               <H6>{name}</H6>
-              <LabelSmall
-                weight="Regular"
-                color="grey-700"
-              >{`Fornito da ${source}`}</LabelSmall>
+              <LabelSmall weight="Regular" color="grey-700">
+                {I18n.t("features.itWallet.generic.dataSource.single", {
+                  credentialSource: source
+                })}
+              </LabelSmall>
             </View>
             <Icon name="checkTickBig" size={24} color="grey-300" />
           </View>
@@ -57,4 +59,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ItwRequestedClaimsList };
+export { ItwRequiredClaimsList as ItwRequestedClaimsList };
