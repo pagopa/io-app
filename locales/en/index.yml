@@ -622,23 +622,23 @@ authentication:
     expiredCardHelp: How to renew your Electronic Identity Card?
   auth_errors:
     error_19:
-      title: Hai effettuato troppi tentativi di accesso
-      subtitle: Hai inserito troppe volte un nome utente o password non corretti. Verifica i dati di accesso e riprova fra qualche minuto, o contatta il tuo fornitore di identità SPID per modificare le tue credenziali.
+      title: You’ve made too many access attempts
+      subtitle: It looks like you've entered the wrong username or password too many times. Please check your login details and try again in a few minutes, or contact your SPID identity provider to change your credentials.
     error_20:
-      title: Non è stato possibile accedere
-      subtitle: Per motivi di sicurezza, devi utilizzare un’identità con un livello di sicurezza superiore. Per avere più informazioni, contatta il tuo fornitore di identità SPID.
+      title: Could not be logged in
+      subtitle: For security reasons, you'll need to use an identity with a higher level of security. For more information, contact your SPID identity provider.
     error_21:
-      title: È passato troppo tempo
-      subtitle: "È passato troppo tempo da quando hai iniziato l'accesso: riparti dall'inizio."
+      title: Too much time
+      subtitle: "Too much time has passed since you started logging in: start again from the beginning."
     error_22:
       title: You haven't agreed to share your data
       subtitle: To enter, you must agree to share some data
     error_23:
-      title: Identità sospesa o revocata
-      subtitle: La tua identità SPID risulta sospesa o revocata. Per maggiori informazioni, contatta il tuo fornitore di identità SPID.
+      title: Suspended or revoked identity
+      subtitle: Your SPID identity has been suspended or revoked. For more information, please contact your SPID identity provider.
     error_25:
-      title: Hai annullato l’accesso
-      subtitle: Per entrare, riprova quando vuoi.
+      title: You've cancelled your login
+      subtitle: To log in, try again anytime.
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
