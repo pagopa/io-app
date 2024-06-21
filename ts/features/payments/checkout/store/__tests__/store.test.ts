@@ -8,7 +8,6 @@ import { PaymentsCheckoutState } from "../reducers";
 
 const INITIAL_STATE: PaymentsCheckoutState = {
   currentStep: 1,
-  sessionToken: pot.none,
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,
