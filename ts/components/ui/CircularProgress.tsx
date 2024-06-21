@@ -1,0 +1,114 @@
+import React, { useEffect } from "react";
+import { StyleSheet, View, ColorValue } from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedProps,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
+import Svg, { Circle } from "react-native-svg";
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+
+type CircularProgressProps = {
+  progress: number;
+  size: number;
+  radius?: number;
+  strokeColor: ColorValue;
+  strokeBgColor: ColorValue;
+  strokeWidth: number;
+  children?: React.ReactNode;
+};
+
+export const CircularProgress = ({
+  size,
+  progress,
+  radius = size / 2,
+  strokeWidth,
+  strokeColor,
+  strokeBgColor,
+  children
+}: CircularProgressProps) => {
+  const progressSharedValue = useSharedValue(0);
+
+  const CIRCLE_LENGTH = 2 * Math.PI * radius;
+
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    progressSharedValue.value = progress / 100;
+  }, [progress, progressSharedValue]);
+
+  const animatedProps = useAnimatedProps(() => ({
+    strokeDashoffset: withTiming(
+      CIRCLE_LENGTH * (1 - progressSharedValue.value),
+      {
+        duration: 750,
+        easing: Easing.inOut(Easing.poly(4))
+      }
+    )
+  }));
+
+  return (
+    <View style={styles.circularProgressWrapper}>
+      <View
+        style={{
+          width: size,
+          height: size,
+          transform: [{ rotateZ: "270deg" }]
+        }}
+      >
+        <Svg
+          width={size}
+          height={size}
+          viewBox={`0 0 ${size} ${size}`}
+          fill="none"
+        >
+          {/* Circle Background */}
+          <Circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius - strokeWidth / 2}
+            stroke={strokeBgColor}
+            strokeWidth={strokeWidth}
+          />
+          {/* Active circle (animated) */}
+          <AnimatedCircle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius - strokeWidth / 2}
+            stroke={strokeColor}
+            strokeWidth={strokeWidth}
+            strokeDasharray={CIRCLE_LENGTH}
+            animatedProps={animatedProps}
+            strokeLinecap={"round"}
+          />
+        </Svg>
+      </View>
+      <View
+        style={[
+          styles.childrenWrapper,
+          {
+            width: (radius - strokeWidth) * 2,
+            height: (radius - strokeWidth) * 2,
+            borderRadius: radius - strokeWidth
+          }
+        ]}
+      >
+        {children}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  circularProgressWrapper: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  childrenWrapper: {
+    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute"
+  }
+});

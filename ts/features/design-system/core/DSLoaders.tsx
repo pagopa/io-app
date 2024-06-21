@@ -1,19 +1,27 @@
-import * as React from "react";
 import {
   H3,
   IOColors,
   LoadingSpinner,
+  Pictogram,
   ProgressLoader,
   VSpacer,
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { View, StyleSheet } from "react-native";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
+import ProgressCircle from "react-native-progress-circle";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 import I18n from "../../../i18n";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { CircularProgress } from "../../../components/ui/CircularProgress";
+
+// Image dimension
+const imgDimension = 188;
+const progressThreshold = 60;
+const circleBorderWidth = 3;
 
 const styles = StyleSheet.create({
   spinnerOuter: {
@@ -26,6 +34,15 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     marginBottom: 16
+  },
+  imgWrapper: {
+    height: imgDimension + 30,
+    width: imgDimension + 30,
+    paddingStart: 15,
+    paddingTop: 25
+  },
+  flexStart: {
+    justifyContent: "flex-start"
   }
 });
 
@@ -81,6 +98,44 @@ const ProgressLoaderViewerBox = () => {
     </View>
   );
 };
+
+const ProgressCircleViewerBox = () => (
+  <>
+    <View style={{ alignSelf: "center" }} accessible={false}>
+      <View style={styles.flexStart}>
+        <ProgressCircle
+          percent={80}
+          radius={imgDimension / 2}
+          borderWidth={circleBorderWidth}
+          // color={
+          //   this.props.readingState === ReadingState.error
+          //     ? IOColors.greyLight
+          //     : this.props.circleColor
+          // }
+          shadowColor={IOColors.greyLight}
+          bgColor={IOColors.white}
+        >
+          <View style={styles.imgWrapper}>
+            <Pictogram size={"100%"} name={"nfcScaniOS"} />
+          </View>
+        </ProgressCircle>
+      </View>
+    </View>
+    <VSpacer />
+    <CircularProgress
+      radius={imgDimension / 2}
+      progress={10}
+      size={imgDimension}
+      strokeWidth={circleBorderWidth}
+      strokeBgColor={IOColors.greyLight}
+      strokeColor={IOColors.blue}
+    >
+      <View style={styles.imgWrapper}>
+        <Pictogram size={"100%"} name={"nfcScaniOS"} />
+      </View>
+    </CircularProgress>
+  </>
+);
 
 export const DSLoaders = () => {
   const theme = useIOTheme();
@@ -149,6 +204,9 @@ export const DSLoaders = () => {
       <ProgressLoaderViewerBox />
 
       <VSpacer />
+
+      <H3>ProgressCircle</H3>
+      <ProgressCircleViewerBox />
     </DesignSystemScreen>
   );
 };
