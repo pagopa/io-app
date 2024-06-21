@@ -9,7 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
-import ProgressCircle from "react-native-progress-circle";
+import { CircularProgress } from "../ui/CircularProgress";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -29,7 +29,7 @@ type State = Readonly<{
 }>;
 
 // Image dimension
-const imgDimension = 188;
+const imgSize = 188;
 const progressThreshold = 60;
 const circleBorderWidth = 3;
 
@@ -37,20 +37,11 @@ const styles = StyleSheet.create({
   imgContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: imgDimension
-  },
-  img: {
-    overflow: "hidden",
-    backgroundColor: IOColors.white,
-    height: imgDimension,
-    width: imgDimension,
-    borderRadius: imgDimension / 2,
-    justifyContent: "center",
-    alignItems: "center"
+    height: imgSize
   },
   imgWrapper: {
-    height: imgDimension + 30,
-    width: imgDimension + 30,
+    height: imgSize + 30,
+    width: imgSize + 30,
     paddingStart: 15,
     paddingTop: 25
   },
@@ -163,28 +154,26 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     return (
       <View style={styles.imgContainer} accessible={false}>
         <View style={styles.flexStart}>
-          <ProgressCircle
-            percent={
+          <CircularProgress
+            size={imgSize}
+            radius={imgSize / 2}
+            progress={
               this.props.readingState === ReadingState.completed
                 ? 100
                 : this.state.progressBarValue
             }
-            radius={imgDimension / 2}
-            borderWidth={circleBorderWidth}
-            color={
+            strokeWidth={circleBorderWidth}
+            strokeColor={
               this.props.readingState === ReadingState.error
                 ? IOColors.greyLight
                 : this.props.circleColor
             }
-            shadowColor={IOColors.greyLight}
-            bgColor={IOColors.greyLight}
+            strokeBgColor={IOColors.greyLight}
           >
-            <View style={styles.img}>
-              <View style={styles.imgWrapper}>
-                <Pictogram size={"100%"} name={this.props.pictogramName} />
-              </View>
+            <View style={styles.imgWrapper}>
+              <Pictogram size={"100%"} name={this.props.pictogramName} />
             </View>
-          </ProgressCircle>
+          </CircularProgress>
         </View>
       </View>
     );

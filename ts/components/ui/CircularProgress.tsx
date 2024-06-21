@@ -13,7 +13,7 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 type CircularProgressProps = {
   progress: number;
   size: number;
-  radius?: number;
+  radius: number;
   strokeColor: ColorValue;
   strokeBgColor: ColorValue;
   strokeWidth: number;
