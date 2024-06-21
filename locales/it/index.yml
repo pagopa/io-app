@@ -1946,9 +1946,9 @@ messages:
     reminderRemoveFailure: "Errore durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
     calendarPermDenied:
-      title: Non possiamo accedere
+      title: Consenti l'accesso
       description: Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.
-      ok: "Abilita i permessi"
+      ok: "Consenti l'accesso"
       cancel: "Annulla"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
