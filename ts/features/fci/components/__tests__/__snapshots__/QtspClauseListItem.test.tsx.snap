@@ -341,7 +341,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             allowFontScaling={false}
                             color="bluegreyDark"
                             defaultColor="bluegreyDark"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -363,13 +363,13 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             <Text
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="black"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -400,7 +400,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               allowFontScaling={false}
                               color="blue"
                               defaultColor="blue"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -425,7 +425,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               QUADRO E - AUTOCERTIFICAZIONE E SOTTOSCRIZIONE DA PARTE DEL TITOLARE.
                             </Text>
@@ -433,7 +433,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="black"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -595,7 +595,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -620,7 +620,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             />
                           </View>
                         </View>

@@ -90,7 +90,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               allowFontScaling={false}
               color="black"
               defaultColor="black"
-              defaultWeight="Semibold"
+              defaultWeight="SemiBold"
               font="TitilliumSansPro"
               fontStyle={
                 Object {
@@ -115,7 +115,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   },
                 ]
               }
-              weight="Semibold"
+              weight="SemiBold"
             >
               Clause title 1
             </Text>
@@ -222,7 +222,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       allowFontScaling={false}
       color="blue"
       defaultColor="blue"
-      defaultWeight="Semibold"
+      defaultWeight="SemiBold"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -248,7 +248,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         ]
       }
       testID="SignatureFieldItemDetailTestID"
-      weight="Semibold"
+      weight="SemiBold"
     >
       See on document
     </Text>

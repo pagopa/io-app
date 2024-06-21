@@ -145,7 +145,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     allowFontScaling={false}
     color="black"
     defaultColor="black"
-    defaultWeight="Semibold"
+    defaultWeight="SemiBold"
     font="TitilliumSansPro"
     fontStyle={
       Object {
@@ -167,7 +167,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         },
       ]
     }
-    weight="Semibold"
+    weight="SemiBold"
   >
     Documento 1 di 2
   </Text>
@@ -295,7 +295,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     allowFontScaling={false}
     color="black"
     defaultColor="black"
-    defaultWeight="Semibold"
+    defaultWeight="SemiBold"
     font="TitilliumSansPro"
     fontStyle={
       Object {
@@ -320,7 +320,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         },
       ]
     }
-    weight="Semibold"
+    weight="SemiBold"
   >
     Pagina 1 di 2
   </Text>

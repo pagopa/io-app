@@ -651,10 +651,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               Object {
                                 "backgroundColor": "#FFFFFF",
                               },
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
-                              },
                             ]
                           }
                         >
@@ -1379,7 +1375,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1404,7 +1400,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               There is a temporary problem, please try again.
                             </Text>
@@ -1475,10 +1471,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }

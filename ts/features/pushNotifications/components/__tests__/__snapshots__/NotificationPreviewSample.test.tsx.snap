@@ -468,7 +468,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -486,7 +486,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
-                                  "fontWeight": "600",
+                                  "fontWeight": undefined,
                                 },
                               ]
                             }
@@ -1007,7 +1007,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1025,7 +1025,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
-                                  "fontWeight": "600",
+                                  "fontWeight": undefined,
                                 },
                               ]
                             }
@@ -1546,7 +1546,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1564,7 +1564,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
-                                  "fontWeight": "600",
+                                  "fontWeight": undefined,
                                 },
                               ]
                             }
@@ -2085,7 +2085,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             allowFontScaling={false}
                             color="black"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2103,7 +2103,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
-                                  "fontWeight": "600",
+                                  "fontWeight": undefined,
                                 },
                               ]
                             }

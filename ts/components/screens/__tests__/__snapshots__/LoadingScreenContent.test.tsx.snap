@@ -539,7 +539,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -564,7 +564,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Test Content Title
                             </Text>
@@ -1131,7 +1131,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1156,7 +1156,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Test Content Title
                             </Text>
@@ -1718,7 +1718,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1743,7 +1743,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Test Content Title
                             </Text>
@@ -2307,7 +2307,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2332,7 +2332,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Test Content Title
                             </Text>

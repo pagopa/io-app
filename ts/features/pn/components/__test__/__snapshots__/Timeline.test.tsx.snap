@@ -344,7 +344,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -366,7 +366,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             1
                           </Text>
@@ -465,7 +465,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -487,7 +487,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Depositata
                           </Text>
@@ -555,7 +555,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -577,7 +577,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             3
                           </Text>
@@ -674,7 +674,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -696,7 +696,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Annullata
                           </Text>
@@ -764,7 +764,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -786,7 +786,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             6
                           </Text>
@@ -883,7 +883,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -905,7 +905,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Consegnata
                           </Text>
@@ -973,7 +973,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -995,7 +995,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             9
                           </Text>
@@ -1092,7 +1092,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1114,7 +1114,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Invio in corso
                           </Text>
@@ -1182,7 +1182,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1204,7 +1204,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             11
                           </Text>
@@ -1301,7 +1301,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1323,7 +1323,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Perfezionata per decorrenza termini
                           </Text>
@@ -1391,7 +1391,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1413,7 +1413,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             14
                           </Text>
@@ -1510,7 +1510,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1532,7 +1532,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Destinatario irreperibile
                           </Text>
@@ -1600,7 +1600,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1622,7 +1622,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             15
                           </Text>
@@ -1719,7 +1719,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1741,7 +1741,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Avvenuto accesso
                           </Text>
@@ -1809,7 +1809,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1831,7 +1831,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             18
                           </Text>
@@ -1928,7 +1928,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1950,7 +1950,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Pagata
                           </Text>
@@ -2018,7 +2018,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2040,7 +2040,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             21
                           </Text>
@@ -2137,7 +2137,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2159,7 +2159,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             REFUSED
                           </Text>
@@ -2227,7 +2227,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2249,7 +2249,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             24
                           </Text>
@@ -2346,7 +2346,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2368,7 +2368,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             IN VALIDATION
                           </Text>
@@ -2436,7 +2436,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2458,7 +2458,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             27
                           </Text>
@@ -2555,7 +2555,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2577,7 +2577,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Depositata
                           </Text>
@@ -2645,7 +2645,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2667,7 +2667,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             30
                           </Text>
@@ -2766,7 +2766,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2788,7 +2788,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             Annullata
                           </Text>

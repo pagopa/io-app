@@ -340,7 +340,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="Semibold"
+                            defaultWeight="SemiBold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -362,7 +362,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                                 },
                               ]
                             }
-                            weight="Semibold"
+                            weight="SemiBold"
                           >
                             #### organization_name ####
                           </Text>

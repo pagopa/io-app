@@ -832,7 +832,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="Semibold"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -855,7 +855,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
+                                        weight="SemiBold"
                                       >
                                         0180  1198  8086  4794  97
                                       </Text>
@@ -1780,7 +1780,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="Semibold"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1803,7 +1803,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
+                                        weight="SemiBold"
                                       >
                                         0180  1198  8086  4794  97
                                       </Text>
@@ -1969,7 +1969,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="Semibold"
+                                        defaultWeight="SemiBold"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1992,7 +1992,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
+                                        weight="SemiBold"
                                       >
                                         00000000009
                                       </Text>

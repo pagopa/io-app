@@ -447,7 +447,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   allowFontScaling={false}
                                   color="hanPurple-850"
                                   defaultColor="black"
-                                  defaultWeight="Semibold"
+                                  defaultWeight="SemiBold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -471,7 +471,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
+                                  weight="SemiBold"
                                 >
                                   ### Institution ###
                                 </Text>
@@ -943,7 +943,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   allowFontScaling={false}
                                   color="hanPurple-850"
                                   defaultColor="black"
-                                  defaultWeight="Semibold"
+                                  defaultWeight="SemiBold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -967,7 +967,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
+                                  weight="SemiBold"
                                 >
                                   ### Institution ###
                                 </Text>

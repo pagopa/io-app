@@ -234,7 +234,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   allowFontScaling={false}
                                   color="black"
                                   defaultColor="black"
-                                  defaultWeight="Semibold"
+                                  defaultWeight="SemiBold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -256,7 +256,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
+                                  weight="SemiBold"
                                 >
                                   Favourite language
                                 </Text>
@@ -404,7 +404,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             allowFontScaling={false}
                                             color="black"
                                             defaultColor="black"
-                                            defaultWeight="Semibold"
+                                            defaultWeight="SemiBold"
                                             font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
@@ -429,7 +429,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 },
                                               ]
                                             }
-                                            weight="Semibold"
+                                            weight="SemiBold"
                                           >
                                             Italian
                                           </Text>
@@ -600,7 +600,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             allowFontScaling={false}
                                             color="black"
                                             defaultColor="black"
-                                            defaultWeight="Semibold"
+                                            defaultWeight="SemiBold"
                                             font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
@@ -625,7 +625,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 },
                                               ]
                                             }
-                                            weight="Semibold"
+                                            weight="SemiBold"
                                           >
                                             English
                                           </Text>
@@ -796,7 +796,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             allowFontScaling={false}
                                             color="black"
                                             defaultColor="black"
-                                            defaultWeight="Semibold"
+                                            defaultWeight="SemiBold"
                                             font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
@@ -821,7 +821,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 },
                                               ]
                                             }
-                                            weight="Semibold"
+                                            weight="SemiBold"
                                           >
                                             German
                                           </Text>
@@ -943,10 +943,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
                               },
                             ]
                           }

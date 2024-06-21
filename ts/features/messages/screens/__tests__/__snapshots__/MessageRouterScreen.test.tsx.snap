@@ -403,7 +403,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -428,7 +428,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Loading message details
                             </Text>
@@ -504,10 +504,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -1234,7 +1230,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1259,7 +1255,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Loading message details
                             </Text>
@@ -1335,10 +1331,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -2064,7 +2056,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2089,7 +2081,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               There is a temporary problem, please try again.
                             </Text>
@@ -2352,10 +2344,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3082,7 +3070,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -3107,7 +3095,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Loading message details
                             </Text>
@@ -3183,10 +3171,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }
@@ -3913,7 +3897,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -3938,7 +3922,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               Loading message details
                             </Text>
@@ -4014,10 +3998,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               Object {},
                               Object {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
                               },
                             ]
                           }

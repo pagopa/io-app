@@ -831,7 +831,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                         "color": "#475A6D",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": undefined,
                                       },
                                     ]
                                   }
@@ -893,7 +893,7 @@ The sender can edit the information in a dynamic message only
                                         "color": "#475A6D",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": undefined,
                                       },
                                     ]
                                   }

@@ -47,7 +47,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           allowFontScaling={false}
           color="blueItalia-850"
           defaultColor="black"
-          defaultWeight="Semibold"
+          defaultWeight="SemiBold"
           ellipsizeMode="tail"
           font="TitilliumSansPro"
           fontStyle={
@@ -74,7 +74,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
               },
             ]
           }
-          weight="Semibold"
+          weight="SemiBold"
         >
           18 app
         </Text>
@@ -142,7 +142,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
         allowFontScaling={false}
         color="black"
         defaultColor="black"
-        defaultWeight="Semibold"
+        defaultWeight="SemiBold"
         font="TitilliumSansPro"
         fontStyle={
           Object {
@@ -164,7 +164,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             },
           ]
         }
-        weight="Semibold"
+        weight="SemiBold"
       >
         Disponibile
       </Text>
@@ -172,7 +172,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
         allowFontScaling={false}
         color="blueItalia-500"
         defaultColor="bluegreyDark"
-        defaultWeight="Semibold"
+        defaultWeight="SemiBold"
         font="TitilliumSansPro"
         fontStyle={
           Object {
@@ -194,7 +194,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             },
           ]
         }
-        weight="Semibold"
+        weight="SemiBold"
       >
         9,999.00 €
       </Text>
@@ -203,7 +203,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
       allowFontScaling={false}
       color="blueItalia-850"
       defaultColor="black"
-      defaultWeight="Semibold"
+      defaultWeight="SemiBold"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -225,7 +225,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           },
         ]
       }
-      weight="Semibold"
+      weight="SemiBold"
     >
       Valida fino al 12/23
     </Text>

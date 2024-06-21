@@ -378,7 +378,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, auto 
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
-          "fontWeight": "600",
+          "fontWeight": undefined,
         },
       ]
     }
@@ -563,7 +563,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, cente
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
-          "fontWeight": "600",
+          "fontWeight": undefined,
         },
       ]
     }
@@ -748,7 +748,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, defau
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
-          "fontWeight": "600",
+          "fontWeight": undefined,
         },
       ]
     }
@@ -933,7 +933,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, justi
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
-          "fontWeight": "600",
+          "fontWeight": undefined,
         },
       ]
     }
@@ -1118,7 +1118,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, left 
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
-          "fontWeight": "600",
+          "fontWeight": undefined,
         },
       ]
     }
@@ -1303,7 +1303,7 @@ exports[`ComposedBodyFromArray should match snapshot, multiple items body, right
           "color": "#475A6D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
-          "fontWeight": "600",
+          "fontWeight": undefined,
         },
       ]
     }

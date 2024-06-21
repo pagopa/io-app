@@ -519,7 +519,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 allowFontScaling={false}
                                 color="black"
                                 defaultColor="black"
-                                defaultWeight="Semibold"
+                                defaultWeight="SemiBold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -541,7 +541,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                weight="Semibold"
+                                weight="SemiBold"
                               >
                                 Enable push notifications not to miss important messages!
                               </Text>
@@ -593,7 +593,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="Semibold"
+                                defaultWeight="SemiBold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -615,7 +615,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                weight="Semibold"
+                                weight="SemiBold"
                               >
                                 Here's how:
                               </Text>
@@ -870,7 +870,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       allowFontScaling={false}
                                       color="black"
                                       defaultColor="black"
-                                      defaultWeight="Semibold"
+                                      defaultWeight="SemiBold"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -893,7 +893,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
+                                      weight="SemiBold"
                                     >
                                       Go to "Settings"
                                     </Text>
@@ -1094,7 +1094,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       allowFontScaling={false}
                                       color="black"
                                       defaultColor="black"
-                                      defaultWeight="Semibold"
+                                      defaultWeight="SemiBold"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -1117,7 +1117,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
+                                      weight="SemiBold"
                                     >
                                       Select "Notifications"
                                     </Text>
@@ -1270,7 +1270,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       allowFontScaling={false}
                                       color="black"
                                       defaultColor="black"
-                                      defaultWeight="Semibold"
+                                      defaultWeight="SemiBold"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -1293,7 +1293,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
+                                      weight="SemiBold"
                                     >
                                       Enable "Allow Notifications"
                                     </Text>

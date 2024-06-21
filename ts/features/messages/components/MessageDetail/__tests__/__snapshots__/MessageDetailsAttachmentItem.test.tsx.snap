@@ -382,7 +382,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               allowFontScaling={false}
                               color="blueIO-500"
                               defaultColor="black"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -405,7 +405,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               1
                             </Text>
@@ -1052,7 +1052,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               allowFontScaling={false}
                               color="blueIO-500"
                               defaultColor="black"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1075,7 +1075,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               1
                             </Text>
@@ -1605,7 +1605,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               allowFontScaling={false}
                               color="blueIO-500"
                               defaultColor="black"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1628,7 +1628,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               A PDF File
                             </Text>
@@ -2165,7 +2165,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               allowFontScaling={false}
                               color="blueIO-500"
                               defaultColor="black"
-                              defaultWeight="Semibold"
+                              defaultWeight="SemiBold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2188,7 +2188,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   },
                                 ]
                               }
-                              weight="Semibold"
+                              weight="SemiBold"
                             >
                               A PDF File
                             </Text>
