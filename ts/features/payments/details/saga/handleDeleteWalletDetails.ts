@@ -1,7 +1,7 @@
-import { call, put } from "typed-redux-saga/macro";
+/* eslint-disable sonarjs/cognitive-complexity */
+import { put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../types/utils";
 import {
   paymentsDeleteMethodAction,
   paymentsGetMethodDetailsAction
@@ -9,9 +9,9 @@ import {
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
 import { mapWalletIdToCardKey } from "../../common/utils";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -19,18 +19,20 @@ import { mapWalletIdToCardKey } from "../../common/utils";
  * @param action
  */
 export function* handleDeleteWalletDetails(
-  deleteWalletById: WalletClient["deleteWalletById"],
+  deleteWalletById: WalletClient["deleteIOPaymentWalletById"],
   action: ActionType<(typeof paymentsDeleteMethodAction)["request"]>
 ) {
   try {
-    const deleteWalletRequest = deleteWalletById({
-      walletId: action.payload.walletId
-    });
-    const deleteWalletResult = (yield* call(
-      withRefreshApiCall,
-      deleteWalletRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof deleteWalletById>;
+    const deleteWalletResult = yield* withPaymentsSessionToken(
+      deleteWalletById,
+      paymentsDeleteMethodAction.failure,
+      action,
+      {
+        walletId: action.payload.walletId
+      },
+      "pagoPAPlatformSessionToken"
+    );
+
     if (E.isRight(deleteWalletResult)) {
       if (deleteWalletResult.right.status === 204) {
         yield* put(
@@ -47,8 +49,8 @@ export function* handleDeleteWalletDetails(
         }
         return;
       }
-      // not handled error codes (401 is handled by withRefreshApiCall)
       if (deleteWalletResult.right.status !== 401) {
+        // The 401 status is handled by the withPaymentsSessionToken
         const failureAction = paymentsDeleteMethodAction.failure({
           ...getGenericError(
             new Error(`response status code ${deleteWalletResult.right.status}`)
