@@ -10,7 +10,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import ProgressCircle from "react-native-progress-circle";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 import I18n from "../../../i18n";
@@ -20,7 +19,6 @@ import { CircularProgress } from "../../../components/ui/CircularProgress";
 
 // Image dimension
 const imgDimension = 188;
-const progressThreshold = 60;
 const circleBorderWidth = 3;
 
 const styles = StyleSheet.create({
@@ -40,9 +38,6 @@ const styles = StyleSheet.create({
     width: imgDimension + 30,
     paddingStart: 15,
     paddingTop: 25
-  },
-  flexStart: {
-    justifyContent: "flex-start"
   }
 });
 
@@ -99,42 +94,19 @@ const ProgressLoaderViewerBox = () => {
   );
 };
 
-const ProgressCircleViewerBox = () => (
-  <>
-    <View style={{ alignSelf: "center" }} accessible={false}>
-      <View style={styles.flexStart}>
-        <ProgressCircle
-          percent={80}
-          radius={imgDimension / 2}
-          borderWidth={circleBorderWidth}
-          // color={
-          //   this.props.readingState === ReadingState.error
-          //     ? IOColors.greyLight
-          //     : this.props.circleColor
-          // }
-          shadowColor={IOColors.greyLight}
-          bgColor={IOColors.white}
-        >
-          <View style={styles.imgWrapper}>
-            <Pictogram size={"100%"} name={"nfcScaniOS"} />
-          </View>
-        </ProgressCircle>
-      </View>
+const CircularProgressViewerBox = () => (
+  <CircularProgress
+    radius={imgDimension / 2}
+    progress={10}
+    size={imgDimension}
+    strokeWidth={circleBorderWidth}
+    strokeBgColor={IOColors.greyLight}
+    strokeColor={IOColors.blue}
+  >
+    <View style={styles.imgWrapper}>
+      <Pictogram size={"100%"} name={"nfcScaniOS"} />
     </View>
-    <VSpacer />
-    <CircularProgress
-      radius={imgDimension / 2}
-      progress={10}
-      size={imgDimension}
-      strokeWidth={circleBorderWidth}
-      strokeBgColor={IOColors.greyLight}
-      strokeColor={IOColors.blue}
-    >
-      <View style={styles.imgWrapper}>
-        <Pictogram size={"100%"} name={"nfcScaniOS"} />
-      </View>
-    </CircularProgress>
-  </>
+  </CircularProgress>
 );
 
 export const DSLoaders = () => {
@@ -205,8 +177,8 @@ export const DSLoaders = () => {
 
       <VSpacer />
 
-      <H3>ProgressCircle</H3>
-      <ProgressCircleViewerBox />
+      <H3>CircularProgress (CIE Card Reading)</H3>
+      <CircularProgressViewerBox />
     </DesignSystemScreen>
   );
 };
