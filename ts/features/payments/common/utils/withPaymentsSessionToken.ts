@@ -39,14 +39,14 @@ export function* withPaymentsSessionToken<T>(
   // eslint-disable-next-line functional/no-let
   let requestFunction: Promise<Validation<TypeofApiResponse<T>>>;
 
-  // If token is missing, dispatch failure action and return a dummy function
+  // If token is missing, dispatch failure action
   if (sessionToken === undefined) {
     yield* put(
       failureAction({
         ...getGenericError(new Error(`Missing session token`))
       })
     );
-    requestFunction = apiFunction(requestBody as TypeofApiParams<T>);
+    throw new Error("Missing session token and failure action dispatched");
   } else if (tokenKey === undefined) {
     // If the token key is missing, call the api function without the token
     requestFunction = apiFunction(requestBody as TypeofApiParams<T>);
