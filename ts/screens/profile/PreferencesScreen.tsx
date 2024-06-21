@@ -3,7 +3,7 @@
  * preferences about notifications, calendar, services, messages and languages
  */
 import React, { ComponentProps, useCallback } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
   IOVisualCostants,
@@ -14,6 +14,9 @@ import I18n from "../../i18n";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
+import { requestWriteCalendarPermission } from "../../utils/permission";
+import { checkAndRequestPermission } from "../../utils/calendar";
+import { openAppSettings } from "../../utils/appSettings";
 
 type PreferencesNavListItem = {
   value: string;
@@ -61,6 +64,45 @@ const PreferencesScreen = () => {
     });
   }, []);
 
+  const checkPermissionThenGoCalendar = async () => {
+    await requestWriteCalendarPermission({
+      title: I18n.t("permissionRationale.calendar.title"),
+      message: I18n.t("permissionRationale.calendar.message"),
+      buttonPositive: I18n.t("global.buttons.choose")
+    });
+
+    void checkAndRequestPermission()
+      .then(calendarPermission => {
+        if (calendarPermission.authorized) {
+          navigateToCalendarPreferenceScreen();
+        } else if (!calendarPermission.asked) {
+          // Authorized is false (denied, restricted or undetermined)
+          // If the user denied permission previously (not in this session)
+          // prompt an alert to inform that his calendar permissions could have been turned off
+          Alert.alert(
+            I18n.t("global.genericAlert"),
+            I18n.t("messages.cta.calendarPermDenied.title"),
+            [
+              {
+                text: I18n.t("messages.cta.calendarPermDenied.cancel"),
+                style: "cancel"
+              },
+              {
+                text: I18n.t("messages.cta.calendarPermDenied.ok"),
+                style: "default",
+                onPress: () => {
+                  // open app settings to turn on the calendar permissions
+                  openAppSettings();
+                }
+              }
+            ],
+            { cancelable: true }
+          );
+        }
+      })
+      .catch();
+  };
+
   const preferencesNavListItems: ReadonlyArray<PreferencesNavListItem> = [
     {
       // Notifications
@@ -74,7 +116,7 @@ const PreferencesScreen = () => {
       description: I18n.t(
         "profile.preferences.list.preferred_calendar.description"
       ),
-      onPress: navigateToCalendarPreferenceScreen
+      onPress: checkPermissionThenGoCalendar
     },
     {
       // Service Contacts
@@ -99,17 +141,23 @@ const PreferencesScreen = () => {
   ];
 
   const renderPreferencesNavItem = ({
-    item: { value, description, onPress, testID }
-  }: ListRenderItemInfo<PreferencesNavListItem>) => (
+    item: { value, description, onPress, testID, condition }
+  }: ListRenderItemInfo<PreferencesNavListItem>) => {
     // If condition is either true or undefined, render the item
-    <ListItemNav
-      accessibilityLabel={`${value} ${description}`}
-      value={value}
-      description={description}
-      onPress={onPress}
-      testID={testID}
-    />
-  );
+    if (condition !== false) {
+      return (
+        <ListItemNav
+          accessibilityLabel={`${value} ${description}`}
+          value={value}
+          description={description}
+          onPress={onPress}
+          testID={testID}
+        />
+      );
+    } else {
+      return null;
+    }
+  };
   const filteredPreferencesNavListItems = preferencesNavListItems.filter(
     item => item.condition !== false
   );
