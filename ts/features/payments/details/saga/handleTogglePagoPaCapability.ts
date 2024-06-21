@@ -1,25 +1,24 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import { call, put, select } from "typed-redux-saga/macro";
+import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { WalletApplication } from "../../../../../definitions/pagopa/walletv3/WalletApplication";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { WalletClient } from "../../common/api/client";
 import {
   paymentsGetMethodDetailsAction,
   paymentsTogglePagoPaCapabilityAction
 } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to toggle the Wallet pagopa capability
  */
 export function* handleTogglePagoPaCapability(
-  updateWalletApplicationsById: WalletClient["updateWalletApplicationsById"],
+  updateWalletApplicationsById: WalletClient["updateIOPaymentWalletApplicationsById"],
   action: ActionType<(typeof paymentsTogglePagoPaCapabilityAction)["request"]>
 ) {
   try {
@@ -34,17 +33,18 @@ export function* handleTogglePagoPaCapability(
       status: updatePagoPaApplicationStatus(application)
     }));
 
-    const updateWalletPagoPaApplicationRequest = updateWalletApplicationsById({
-      walletId: action.payload.walletId,
-      body: {
-        applications: updatedApplications as Array<WalletApplication>
-      }
-    });
-    const updateWalletResult = (yield* call(
-      withRefreshApiCall,
-      updateWalletPagoPaApplicationRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof updateWalletApplicationsById>;
+    const updateWalletResult = yield* withPaymentsSessionToken(
+      updateWalletApplicationsById,
+      paymentsTogglePagoPaCapabilityAction.failure,
+      action,
+      {
+        walletId: action.payload.walletId,
+        body: {
+          applications: updatedApplications as Array<WalletApplication>
+        }
+      },
+      "pagoPAPlatformSessionToken"
+    );
     if (E.isRight(updateWalletResult)) {
       if (updateWalletResult.right.status === 204) {
         // handled success
