@@ -620,10 +620,25 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
-  cie_errors:
+  auth_errors:
+    error_19:
+      title: Hai effettuato troppi tentativi di accesso
+      subtitle: Hai inserito troppe volte un nome utente o password non corretti. Verifica i dati di accesso e riprova fra qualche minuto, o contatta il tuo fornitore di identità SPID per modificare le tue credenziali.
+    error_20:
+      title: Non è stato possibile accedere
+      subtitle: Per motivi di sicurezza, devi utilizzare un’identità con un livello di sicurezza superiore. Per avere più informazioni, contatta il tuo fornitore di identità SPID.
+    error_21:
+      title: È passato troppo tempo
+      subtitle: "È passato troppo tempo da quando hai iniziato l'accesso: riparti dall'inizio."
     error_22:
       title: Non hai dato il consenso all’invio dei dati
       subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
+    error_23:
+      title: Identità sospesa o revocata
+      subtitle: La tua identità SPID risulta sospesa o revocata. Per maggiori informazioni, contatta il tuo fornitore di identità SPID.
+    error_25:
+      title: Hai annullato l’accesso
+      subtitle: Per entrare, riprova quando vuoi.
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni

@@ -62,11 +62,12 @@ const getImageState = (
 ) => {
   switch (typeof backgroundLogoUri) {
     case "number":
-      return addCacheTimestampToUri(backgroundLogoUri as ImageURISource);
+      return backgroundLogoUri;
     case "object":
       if (Array.isArray(backgroundLogoUri)) {
         return addCacheTimestampToUri(backgroundLogoUri[0]);
-      } // eslint-disable-next-line no-fallthrough
+      }
+      return addCacheTimestampToUri(backgroundLogoUri as ImageURISource);
     default:
       return undefined;
   }
