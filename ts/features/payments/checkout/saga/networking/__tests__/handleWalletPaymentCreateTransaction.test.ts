@@ -8,10 +8,8 @@ import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsCreateTransactionAction } from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
 describe("Test handleWalletPaymentCreateTransaction saga", () => {
   const newTransactionPayload: NewTransactionRequest = {
@@ -45,13 +43,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockNewTransaction(),
-        paymentsCreateTransactionAction.request(newTransactionPayload)
-      )
       .next(E.right({ status: 200, value: newTransactionResponse }))
       .put(paymentsCreateTransactionAction.success(newTransactionResponse))
       .next()
@@ -69,13 +61,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockNewTransaction(),
-        paymentsCreateTransactionAction.request(newTransactionPayload)
-      )
       .next(E.right({ status: 400, value: undefined }))
       .put(
         paymentsCreateTransactionAction.failure(
@@ -97,13 +83,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockNewTransaction(),
-        paymentsCreateTransactionAction.request(newTransactionPayload)
-      )
       .next(E.left([]))
       .put(
         paymentsCreateTransactionAction.failure({

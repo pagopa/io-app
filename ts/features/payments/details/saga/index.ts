@@ -21,20 +21,20 @@ export function* watchPaymentsMethodDetailsSaga(
   yield* takeLatest(
     paymentsGetMethodDetailsAction.request,
     handleGetWalletDetails,
-    walletClient.getWalletById
+    walletClient.getIOPaymentWalletById
   );
 
   // handle the request of delete a wallet
   yield* takeLatest(
     paymentsDeleteMethodAction.request,
     handleDeleteWalletDetails,
-    walletClient.deleteWalletById
+    walletClient.deleteIOPaymentWalletById
   );
 
   // handle request to a wallet
   yield* takeLatest(
     paymentsTogglePagoPaCapabilityAction.request,
     handleTogglePagoPaCapability,
-    walletClient.updateWalletApplicationsById
+    walletClient.updateIOPaymentWalletApplicationsById
   );
 }
