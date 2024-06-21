@@ -24,9 +24,8 @@ import { isGestureEnabled } from "../utils/navigation";
 import CieUnexpectedErrorScreen from "../screens/authentication/cie/CieUnexpectedErrorScreen";
 import CieExtendedApduNotSupportedScreen from "../screens/authentication/cie/CieExtendedApduNotSupportedScreen";
 import CieWrongCardScreen from "../screens/authentication/cie/CieWrongCardScreen";
-import CieAuthErrorScreen from "../screens/authentication/cie/CieAuthErrorScreen";
-import UnlockAccessScreen from "../screens/authentication/UnlockAccessScreen";
 import ActivateNfcScreen from "../screens/authentication/cie/ActivateNfcScreen";
+import AuthErrorScreen from "../screens/authentication/AuthErrorScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -142,12 +141,7 @@ const AuthenticationStackNavigator = () => (
 
       <Stack.Screen
         name={ROUTES.AUTH_ERROR_SCREEN}
-        component={CieAuthErrorScreen}
-      />
-
-      <Stack.Screen
-        name={ROUTES.UNLOCK_ACCESS_SCREEN}
-        component={UnlockAccessScreen}
+        component={AuthErrorScreen}
       />
 
       <Stack.Screen
