@@ -501,7 +501,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -519,7 +519,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
-                                    "fontWeight": undefined,
+                                    "fontWeight": "600",
                                   },
                                 ]
                               }
@@ -1074,7 +1074,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1092,7 +1092,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
-                                    "fontWeight": undefined,
+                                    "fontWeight": "600",
                                   },
                                 ]
                               }
@@ -1647,7 +1647,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1665,7 +1665,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
-                                    "fontWeight": undefined,
+                                    "fontWeight": "600",
                                   },
                                 ]
                               }
@@ -2220,7 +2220,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               allowFontScaling={false}
                               color="black"
                               defaultColor="black"
-                              defaultWeight="SemiBold"
+                              defaultWeight="Semibold"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2238,7 +2238,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
-                                    "fontWeight": undefined,
+                                    "fontWeight": "600",
                                   },
                                 ]
                               }
