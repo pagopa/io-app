@@ -490,7 +490,7 @@ profile:
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
-        subtitle: These settings allow you to customise your IO experience
+    subtitle: These settings allow you to customise your IO experience
     contextualHelpTitle: Your preferences
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
@@ -1946,9 +1946,9 @@ messages:
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
     calendarPermDenied:
-      title: Non possiamo accedere
-      description: Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.
-      ok: "Enable permissions"
+      title: Enable access
+      description: We do not have access to your calendar. Please enable access to continue.
+      ok: "Enable access"
       cancel: "Cancel"
     errors:
       fetchCalendars: Error fetching calendars
