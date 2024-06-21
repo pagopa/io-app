@@ -82,14 +82,14 @@ export const WrappedMessageListItem = ({
       badgeText={badgeText}
       badgeVariant={badgeVariant}
       doubleAvatar={doubleAvatar}
+      formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}
       onLongPress={() => undefined}
       onPress={onPressCallback}
+      organizationName={organizationName}
       serviceLogos={serviceLogoUriSources}
       serviceName={serviceName}
-      organizationName={organizationName}
-      formattedDate={messageDate}
       testID={`wrapped_message_list_item_${index}`}
     />
   );

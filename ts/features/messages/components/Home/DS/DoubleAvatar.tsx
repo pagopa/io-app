@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Image,
   ImageRequireSource,
@@ -25,6 +25,7 @@ type DoubleAvatarProps = {
 };
 
 const avatarContainerSize: IOIconSizeScale = 30;
+const avatarDoubleRadiusSizeSmall: number = 6;
 const internalSpaceDefaultSize: number = 3;
 const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
@@ -53,6 +54,24 @@ const styles = StyleSheet.create({
   }
 });
 
+const getImageState = (
+  backgroundLogoUri?:
+    | ImageRequireSource
+    | ImageURISource
+    | ReadonlyArray<ImageURISource>
+) => {
+  switch (typeof backgroundLogoUri) {
+    case "number":
+      return addCacheTimestampToUri(backgroundLogoUri as ImageURISource);
+    case "object":
+      if (Array.isArray(backgroundLogoUri)) {
+        return addCacheTimestampToUri(backgroundLogoUri[0]);
+      } // eslint-disable-next-line no-fallthrough
+    default:
+      return undefined;
+  }
+};
+
 /**
  * DoubleAvatar component is used to display the background logo of an organization, with a fixed pagoPA icon on top. It accepts the following props:
  * - `backgroundLogoUri`: the uri of the image to display. If not provided, a placeholder icon will be displayed. It can be a single uri or an array of uris, in which case the first one that is available will be used.
@@ -63,15 +82,11 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
   const theme = useIOTheme();
   const indexValue = React.useRef<number>(0);
 
-  const [imageSource, setImageSource] = React.useState(
-    backgroundLogoUri === undefined
-      ? undefined
-      : Array.isArray(backgroundLogoUri)
-      ? addCacheTimestampToUri(backgroundLogoUri[0])
-      : typeof backgroundLogoUri === "number"
-      ? backgroundLogoUri
-      : addCacheTimestampToUri(backgroundLogoUri as ImageURISource)
+  const imageInitialState = useCallback(
+    () => getImageState(backgroundLogoUri),
+    [backgroundLogoUri]
   );
+  const [imageSource, setImageSource] = React.useState(imageInitialState);
 
   const onError = () => {
     if (
@@ -97,7 +112,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
           {
             height: avatarContainerSize,
             width: avatarContainerSize,
-            borderRadius: IOVisualCostants.avatarRadiusSizeSmall,
+            borderRadius: avatarDoubleRadiusSizeSmall,
             backgroundColor:
               imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
             padding:
@@ -121,8 +136,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
               styles.avatarInnerWrapper,
               {
                 borderRadius:
-                  IOVisualCostants.avatarRadiusSizeSmall -
-                  internalSpaceDefaultSize
+                  avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
               }
             ]}
           >
@@ -142,7 +156,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
           {
             height: avatarContainerSize,
             width: avatarContainerSize,
-            borderRadius: IOVisualCostants.avatarRadiusSizeSmall,
+            borderRadius: avatarDoubleRadiusSizeSmall,
             backgroundColor:
               imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
             padding: 0,
@@ -156,8 +170,7 @@ export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
             styles.avatarInnerWrapper,
             {
               borderRadius:
-                IOVisualCostants.avatarRadiusSizeSmall -
-                internalSpaceDefaultSize
+                avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
             }
           ]}
         >
