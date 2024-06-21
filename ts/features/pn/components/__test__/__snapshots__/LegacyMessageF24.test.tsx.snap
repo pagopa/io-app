@@ -1090,7 +1090,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     invoice.pdf
                                   </Text>

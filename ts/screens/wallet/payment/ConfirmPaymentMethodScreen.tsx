@@ -446,7 +446,7 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
                 accessibilityLabel={`${paymentReason}, ${formattedSingleAmount}`}
                 accessible
               >
-                <H4 weight="SemiBold" color="bluegreyDark" numberOfLines={1}>
+                <H4 weight="Semibold" color="bluegreyDark" numberOfLines={1}>
                   {paymentReason}
                 </H4>
 
@@ -526,7 +526,7 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
                       )} `}
                     </LabelSmall>
 
-                    <LabelSmall weight="SemiBold">
+                    <LabelSmall weight="Semibold">
                       {I18n.t(
                         "wallet.onboarding.paypal.paymentCheckout.privacyTerms"
                       )}

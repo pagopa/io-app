@@ -36,7 +36,7 @@ const Countdown = (props: CountdownProps) => {
         <VSpacer size={8} />
         <Body weight="Regular" style={{ textAlign: "center" }} color="black">
           {I18n.t("email.newvalidate.countdowntext")}{" "}
-          <Body weight="SemiBold" color="black">
+          <Body weight="Semibold" color="black">
             {timerCount}s
           </Body>
         </Body>

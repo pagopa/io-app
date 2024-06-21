@@ -120,7 +120,7 @@ const WalletPaymentPickPspScreen = () => {
         <Body>{I18n.t("wallet.payment.psp.description")}</Body>
         <Body>
           {I18n.t("wallet.payment.psp.taxDescription")}{" "}
-          <Body weight="SemiBold">
+          <Body weight="Semibold">
             {I18n.t("wallet.payment.psp.taxDescriptionBold")}
           </Body>
         </Body>

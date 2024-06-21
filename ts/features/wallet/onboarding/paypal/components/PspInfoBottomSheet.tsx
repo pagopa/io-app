@@ -65,7 +65,7 @@ const getItem = (props: Props) => [
           accessibilityRole="button"
           onPress={() => props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)}
         >
-          <Link weight={"SemiBold"}>
+          <Link weight={"Semibold"}>
             {I18n.t(
               "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1",
               { psp: props.pspName }

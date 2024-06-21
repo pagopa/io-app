@@ -33,7 +33,7 @@ const AppVersion = ({ onPress, testID }: AppVersion) => {
       accessibilityLabel={appVersionText}
     >
       <View style={[styles.versionButton, IOStyles.row, IOStyles.alignCenter]}>
-        <LabelSmall numberOfLines={1} weight="SemiBold" color="grey-650">
+        <LabelSmall numberOfLines={1} weight="Semibold" color="grey-650">
           {appVersionText}
         </LabelSmall>
       </View>
