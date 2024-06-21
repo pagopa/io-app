@@ -36,7 +36,8 @@ import reducer, {
   shouldShowFooterListComponentSelector,
   LastRequestType,
   messagePagePotFromCategorySelector,
-  shouldShowRefreshControllOnListSelector
+  shouldShowRefreshControllOnListSelector,
+  isPaymentMessageWithPaidNoticeSelector
 } from "../allPaginated";
 import { pageSize } from "../../../../../config";
 import { UIMessage } from "../../../types";
@@ -46,6 +47,8 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
 import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
+import { PaymentByRptIdState } from "../../../../../store/reducers/entities/payments";
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -1761,6 +1764,128 @@ describe("shouldShowRefreshControllOnListSelector", () => {
       })
     )
   );
+});
+
+describe("isPaymentMessageWithPaidNoticeSelector", () => {
+  it("should return 'false' for GENERIC category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "GENERIC"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for EU_COVID_CERT category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "EU_COVID_CERT"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for LEGAL_MESSAGE category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "LEGAL_MESSAGE"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for SEND category", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PN"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for PAYMENT category, unmatching rptId", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667799"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'false' for PAYMENT category, matching rptId, undefined value", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": undefined
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667799"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(false);
+  });
+  it("should return 'true' for PAYMENT category, matching rptId, 'DUPLICATED' value", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": { kind: "DUPLICATED" }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667788"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(true);
+  });
+  it("should return 'true' for PAYMENT category, matching rptId, 'COMPLETED' value", () => {
+    const state = {
+      entities: {
+        paymentByRptId: {
+          "00123456789001122334455667788": {
+            kind: "COMPLETED",
+            transactionId: undefined
+          }
+        } as PaymentByRptIdState
+      }
+    } as GlobalState;
+    const category = {
+      tag: "PAYMENT",
+      rptId: "00123456789001122334455667788"
+    } as MessageCategory;
+    const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
+    expect(isPaid).toBe(true);
+  });
 });
 
 const generateAllPaginatedDataStateForCategory = (
