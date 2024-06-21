@@ -4,7 +4,7 @@ import Animated, {
   useAnimatedProps,
   useSharedValue
 } from "react-native-reanimated";
-import Svg, { Circle } from "react-native-svg";
+import Svg, { Circle, G } from "react-native-svg";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -42,19 +42,13 @@ export const CircularProgress = ({
 
   return (
     <View style={styles.circularProgressWrapper}>
-      <View
-        style={{
-          width: size,
-          height: size,
-          transform: [{ rotateZ: "270deg" }]
-        }}
+      <Svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        fill="none"
       >
-        <Svg
-          width={size}
-          height={size}
-          viewBox={`0 0 ${size} ${size}`}
-          fill="none"
-        >
+        <G rotation="-90" origin={`${size / 2}, ${size / 2}`}>
           {/* Circle Background */}
           <Circle
             cx={size / 2}
@@ -74,8 +68,8 @@ export const CircularProgress = ({
             animatedProps={animatedProps}
             strokeLinecap={"round"}
           />
-        </Svg>
-      </View>
+        </G>
+      </Svg>
       <View
         style={[
           styles.childrenWrapper,
