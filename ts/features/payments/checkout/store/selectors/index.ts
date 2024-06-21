@@ -10,16 +10,6 @@ export const selectWalletPaymentCurrentStep = createSelector(
   state => state.currentStep
 );
 
-export const selectWalletPaymentSessionTokenPot = createSelector(
-  selectPaymentsCheckoutState,
-  state => state.sessionToken
-);
-
-export const selectWalletPaymentSessionToken = createSelector(
-  selectWalletPaymentSessionTokenPot,
-  pot.toUndefined
-);
-
 export const walletPaymentRptIdSelector = createSelector(
   selectPaymentsCheckoutState,
   state => state.rptId

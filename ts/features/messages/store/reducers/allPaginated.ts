@@ -1,10 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  constFalse,
-  constTrue,
-  constUndefined,
-  pipe
-} from "fp-ts/lib/function";
+import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as Either from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
@@ -27,7 +22,7 @@ import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
-import { foldK } from "../../../../utils/pot";
+import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
 
 export type MessagePage = {
@@ -38,10 +33,13 @@ export type MessagePage = {
 
 export type MessagePagePot = pot.Pot<MessagePage, string>;
 
+export type LastRequestValues = "previous" | "next" | "all";
+export type LastRequestType = O.Option<LastRequestValues>;
+
 type Collection = {
   data: MessagePagePot;
   /** persist the last action type occurred */
-  lastRequest: O.Option<"previous" | "next" | "all">;
+  lastRequest: LastRequestType;
 };
 
 export type MigrationStatus = O.Option<
@@ -581,7 +579,7 @@ export const allArchiveSelector = (
 export const messagesByCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) => pipe(state, messagePagePotFromCategory(category));
+) => pipe(state, messagePagePotFromCategorySelector(category));
 
 /**
  * Return the list of Inbox messages currently available.
@@ -625,7 +623,7 @@ export const isLoadingInboxNextPage = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "next" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -639,7 +637,7 @@ export const isLoadingInboxPreviousPage = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "previous" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -654,7 +652,7 @@ export const isReloadingInbox = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "all" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -679,7 +677,7 @@ export const isReloadingArchive = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "all" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -693,7 +691,7 @@ export const isLoadingArchiveNextPage = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "next" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -707,7 +705,7 @@ export const isLoadingArchivePreviousPage = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "previous" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -731,7 +729,7 @@ export const messageListForCategorySelector = (
 ) =>
   pipe(
     state,
-    messagePagePotFromCategory(category),
+    messagePagePotFromCategorySelector(category),
     foldK(
       () => emptyMessageArray,
       constUndefined,
@@ -750,7 +748,7 @@ export const emptyListReasonSelector = (
 ): "noData" | "error" | "notEmpty" =>
   pipe(
     state,
-    messagePagePotFromCategory(category),
+    messagePagePotFromCategorySelector(category),
     foldK(
       () => "noData",
       () => "notEmpty",
@@ -769,62 +767,25 @@ export const shouldShowFooterListComponentSelector = (
 ) =>
   pipe(
     state,
-    messagePagePotFromCategory(category),
-    foldK(
-      constFalse,
-      constFalse,
-      constFalse,
-      constFalse,
-      constFalse,
-      constTrue,
-      constTrue,
-      constFalse
-    )
+    messageCollectionFromCategory(category),
+    messagePagePotByLastRequest(nextLastRequestSet),
+    O.map(isSomeLoadingOrSomeUpdating),
+    O.getOrElse(constFalse)
   );
 
-export const nextMessagePageStartingIdForCategorySelector = (
-  state: GlobalState,
-  category: MessageListCategory
-) =>
-  pipe(
-    state,
-    messagePagePotFromCategory(category),
-    foldK(
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      messagePage => messagePage.next,
-      constUndefined,
-      constUndefined,
-      (messagePage, _) => messagePage.next
-    )
-  );
-
-export const nextPageLoadingForCategoryHasErrorSelector = (
+export const shouldShowRefreshControllOnListSelector = (
   state: GlobalState,
   category: MessageListCategory
 ) =>
   pipe(
     state,
     messageCollectionFromCategory(category),
-    messageCollection =>
-      pipe(
-        messageCollection.lastRequest,
-        O.filter(lastRequest => lastRequest === "next"),
-        O.fold(
-          () => O.none,
-          () => O.some(messageCollection.data)
-        )
-      ),
-    O.map(
-      messagePagePot =>
-        pot.isSome(messagePagePot) && pot.isError(messagePagePot)
-    ),
-    O.getOrElse(() => false)
+    messagePagePotByLastRequest(allAndPreviousLastRequestSet),
+    O.map(isSomeLoadingOrSomeUpdating),
+    O.getOrElse(constFalse)
   );
 
-const messagePagePotFromCategory =
+export const messagePagePotFromCategorySelector =
   (category: MessageListCategory) => (state: GlobalState) =>
     pipe(
       state,
@@ -847,5 +808,23 @@ const messageCollectionFromCategory =
 const reasonFromMessagePageContainer = (
   container: MessagePage
 ): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
+
+const messagePagePotByLastRequest =
+  (lastRequestValues: Set<LastRequestValues>) =>
+  (messageCollection: Collection) =>
+    pipe(
+      messageCollection.lastRequest,
+      O.filter(lastRequest => lastRequestValues.has(lastRequest)),
+      O.fold(
+        () => O.none,
+        () => O.some(messageCollection.data)
+      )
+    );
+
+const nextLastRequestSet = new Set<LastRequestValues>(["next"]);
+const allAndPreviousLastRequestSet = new Set<LastRequestValues>([
+  "all",
+  "previous"
+]);
 
 export default reducer;
