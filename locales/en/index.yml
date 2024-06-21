@@ -622,10 +622,25 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
-  cie_errors:
+  auth_errors:
+    error_19:
+      title: You’ve made too many access attempts
+      subtitle: It looks like you've entered the wrong username or password too many times. Please check your login details and try again in a few minutes, or contact your SPID identity provider to change your credentials.
+    error_20:
+      title: Could not be logged in
+      subtitle: For security reasons, you'll need to use an identity with a higher level of security. For more information, contact your SPID identity provider.
+    error_21:
+      title: Too much time
+      subtitle: "Too much time has passed since you started logging in: start again from the beginning."
     error_22:
       title: You haven't agreed to share your data
       subtitle: To enter, you must agree to share some data
+    error_23:
+      title: Suspended or revoked identity
+      subtitle: Your SPID identity has been suspended or revoked. For more information, please contact your SPID identity provider.
+    error_25:
+      title: You've cancelled your login
+      subtitle: To log in, try again anytime.
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old

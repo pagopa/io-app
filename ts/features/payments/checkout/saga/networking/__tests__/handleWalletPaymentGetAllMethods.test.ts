@@ -6,11 +6,9 @@ import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa
 import { PaymentMethodsResponse } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsGetPaymentMethodsAction } from "../../../store/actions/networking";
 import { handleWalletPaymentGetAllMethods } from "../handleWalletPaymentGetAllMethods";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
 describe("Test handleWalletPaymentGetAllMethods saga", () => {
   const T_SESSION_TOKEN = "ABCD";
@@ -44,13 +42,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       paymentsGetPaymentMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetAllPaymentMethods(),
-        paymentsGetPaymentMethodsAction.request()
-      )
       .next(E.right({ status: 200, value: getAllPaymentMethodsResponse }))
       .put(
         paymentsGetPaymentMethodsAction.success(getAllPaymentMethodsResponse)
@@ -70,13 +62,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       paymentsGetPaymentMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetAllPaymentMethods(),
-        paymentsGetPaymentMethodsAction.request()
-      )
       .next(E.right({ status: 400, value: undefined }))
       .put(
         paymentsGetPaymentMethodsAction.failure(
@@ -98,13 +84,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       paymentsGetPaymentMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetAllPaymentMethods(),
-        paymentsGetPaymentMethodsAction.request()
-      )
       .next(E.left([]))
       .put(
         paymentsGetPaymentMethodsAction.failure({
