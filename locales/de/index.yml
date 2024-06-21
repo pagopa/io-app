@@ -1893,7 +1893,6 @@ biometric_recognition:
   needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
 send_email_messages:
   title: "Mitteilungen mittels E-Mail weiterleiten"
-  subtitle: "Möchtest du, dass IO den Inhalt von Mitteilungen per E-Mail weiterleitet an"
   options:
     disable_all:
       label: "Für alle Dienste deaktivieren"
