@@ -33,7 +33,6 @@ import {
   visibleServicesSelector
 } from "../../store/reducers/entities/services/visibleServices";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.email.forward.contextualHelpTitle",
@@ -157,28 +156,27 @@ const EmailForwardingScreen = () => {
   }, [IOToast, profile, prevProfile, setCustomEmailChannelEnabled]);
 
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading}>
-      <IOScrollViewWithLargeHeader
-        title={{ label: I18n.t("send_email_messages.title") }}
-        description={
-          (
-            <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
-          ) as unknown as string
-        }
-        headerActionsProp={{ showHelp: true }}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        canGoback={true}
-      >
-        <ContentWrapper>
-          <ListItemSwitch
-            label={I18n.t("send_email_messages.switch.title")}
-            description={I18n.t("send_email_messages.switch.subtitle")}
-            onSwitchValueChange={handleSwitchValueChange}
-            value={isEmailEnabled}
-          />
-        </ContentWrapper>
-      </IOScrollViewWithLargeHeader>
-    </LoadingSpinnerOverlay>
+    <IOScrollViewWithLargeHeader
+      title={{ label: I18n.t("send_email_messages.title") }}
+      description={
+        (
+          <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
+        ) as unknown as string
+      }
+      headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      canGoback={true}
+    >
+      <ContentWrapper>
+        <ListItemSwitch
+          label={I18n.t("send_email_messages.switch.title")}
+          description={I18n.t("send_email_messages.switch.subtitle")}
+          onSwitchValueChange={handleSwitchValueChange}
+          value={isEmailEnabled}
+          isLoading={isLoading}
+        />
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
