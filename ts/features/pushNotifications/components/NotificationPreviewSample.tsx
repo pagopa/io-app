@@ -77,7 +77,7 @@ export const NotificationPreviewSample = ({
       <Icon color="blueIO-450" name="productIOApp" />
       <HSpacer />
       <View style={IOStyles.flex}>
-        <H6 weight="SemiBold">{I18n.t(titleKey)}</H6>
+        <H6 weight="Semibold">{I18n.t(titleKey)}</H6>
         <Label fontSize="small" weight="Regular">
           {I18n.t(messageKey)}
         </Label>

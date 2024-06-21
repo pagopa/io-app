@@ -482,7 +482,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -498,7 +498,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                       },
                                       Object {
                                         "color": "#475A6D",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -673,7 +673,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                               color="bluegreyDark"
                               defaultColor="blue"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -695,7 +695,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -707,7 +707,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                 color="bluegreyDark"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -722,7 +722,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                     },
                                     Object {
                                       "color": "#17324D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -803,7 +803,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 14,
@@ -818,7 +818,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                             Object {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
                                             },
@@ -832,8 +832,8 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
-                                        font="TitilliumWeb"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 18,
@@ -849,13 +849,13 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                             Object {
                                               "color": "#0073E6",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         0180  1198  8086  4794  97
                                       </Text>
@@ -1430,7 +1430,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                   color="bluegrey"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
-                                  font="TitilliumWeb"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 16,
@@ -1446,7 +1446,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                       },
                                       Object {
                                         "color": "#475A6D",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                       },
@@ -1621,7 +1621,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                               color="bluegreyDark"
                               defaultColor="blue"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -1643,7 +1643,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -1655,7 +1655,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                 color="bluegreyDark"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1670,7 +1670,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                     },
                                     Object {
                                       "color": "#17324D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1751,7 +1751,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 14,
@@ -1766,7 +1766,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                             Object {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
                                             },
@@ -1780,8 +1780,8 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
-                                        font="TitilliumWeb"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 18,
@@ -1797,13 +1797,13 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                             Object {
                                               "color": "#0073E6",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         0180  1198  8086  4794  97
                                       </Text>
@@ -1940,7 +1940,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 14,
@@ -1955,7 +1955,7 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                             Object {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
                                             },
@@ -1969,8 +1969,8 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                         allowFontScaling={false}
                                         color="blue"
                                         defaultColor="black"
-                                        defaultWeight="SemiBold"
-                                        font="TitilliumWeb"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 18,
@@ -1986,13 +1986,13 @@ exports[`LegacyPaidPaymentScreen should render with back button, title, help but
                                             },
                                             Object {
                                               "color": "#0073E6",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         00000000009
                                       </Text>

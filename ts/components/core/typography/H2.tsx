@@ -16,13 +16,13 @@ type AllowedColors =
   | PartialAllowedColors
   | IOColorsStatusForeground
   | IOTheme["textHeading-default"];
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Semibold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 >;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 export const h2FontSize = 20;
 export const h2LineHeight = 24;
 export const h2DefaultColor: AllowedColors = "bluegreyDark";

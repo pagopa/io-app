@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -7,18 +7,24 @@ import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import {
   ClaimDisplayFormat,
   ClaimValue,
+  DateClaimConfig,
   DrivingPrivilegesClaim,
   DrivingPrivilegesClaimType,
   EvidenceClaim,
   ImageClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  PlainTextClaim
+  PlainTextClaim,
+  dateClaimsConfig,
+  previewDateClaimsConfig
 } from "../utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { getExpireStatus } from "../../../../utils/dates";
+
+const HIDDEN_CLAIM = "******";
 
 /**
  * Component which renders a place of birth type claim.
@@ -57,28 +63,63 @@ const PlainTextClaimItem = ({
     <ListItemInfo
       label={label}
       value={claim}
-      accessibilityLabel={`${label} ${claim}`}
+      accessibilityLabel={`${label} ${
+        claim === HIDDEN_CLAIM
+          ? I18n.t(
+              "features.itWallet.presentation.credentialDetails.hiddenClaim"
+            )
+          : claim
+      }`}
     />
     <Divider />
   </>
 );
 
 /**
- * Component which renders a date type claim.
+ * Component which renders a date type claim with an optional icon and expiration badge.
  * @param label - the label of the claim
  * @param claim - the value of the claim
  */
-const DateClaimItem = ({ label, claim }: { label: string; claim: Date }) => {
+const DateClaimItem = ({
+  label,
+  claim,
+  iconVisible,
+  expirationBadgeVisible
+}: {
+  label: string;
+  claim: Date;
+} & DateClaimConfig) => {
   const value = localeDateFormat(
     claim,
     I18n.t("global.dateFormats.shortFormat")
   );
+
+  const endElement: ListItemInfo["endElement"] = useMemo(() => {
+    if (!expirationBadgeVisible) {
+      return;
+    }
+    const isExpired = getExpireStatus(claim) === "EXPIRED";
+    return {
+      type: "badge",
+      componentProps: {
+        variant: isExpired ? "error" : "success",
+        text: I18n.t(
+          `features.itWallet.presentation.credentialDetails.status.${
+            isExpired ? "expired" : "valid"
+          }`
+        )
+      }
+    };
+  }, [expirationBadgeVisible, claim]);
+
   return (
     <View key={`${label}-${value}`}>
       <ListItemInfo
         label={label}
         value={value}
+        icon={iconVisible ? "calendar" : undefined}
         accessibilityLabel={`${label} ${value}`}
+        endElement={endElement}
       />
       <Divider />
     </View>
@@ -239,17 +280,35 @@ const DrivingPrivilegesClaimItem = ({
  * It renders a different component based on the type of the claim.
  * @param claim - the claim to render
  */
-export const ItwCredentialClaim = ({ claim }: { claim: ClaimDisplayFormat }) =>
+export const ItwCredentialClaim = ({
+  claim,
+  hidden,
+  isPreview
+}: {
+  claim: ClaimDisplayFormat;
+  hidden?: boolean;
+  isPreview?: boolean;
+}) =>
   pipe(
     claim.value,
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
-      decoded => {
+      _decoded => {
+        const decoded = hidden ? HIDDEN_CLAIM : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (DateFromString.is(decoded)) {
-          return <DateClaimItem label={claim.label} claim={decoded} />;
+          const dateClaimProps = isPreview
+            ? previewDateClaimsConfig
+            : dateClaimsConfig[claim.id];
+          return (
+            <DateClaimItem
+              label={claim.label}
+              claim={decoded}
+              {...dateClaimProps}
+            />
+          );
         } else if (EvidenceClaim.is(decoded)) {
           return (
             <EvidenceClaimItem

@@ -301,7 +301,7 @@ export const MessageDetailsStickyFooter = ({
       style={[
         IOStyles.footer,
         styles.container,
-        { paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom }
+        { paddingBottom: safeAreaInsets.bottom }
       ]}
     >
       {foldFooterData(

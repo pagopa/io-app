@@ -1,6 +1,5 @@
 import {
   Body,
-  GradientScrollView,
   LabelLink,
   ListItemHeader,
   ModuleCheckout,
@@ -30,6 +29,7 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import {
   walletPaymentSelectedPaymentMethodIdOptionSelector,
+  walletPaymentSelectedPaymentMethodManagementOptionSelector,
   walletPaymentSelectedPaymentMethodOptionSelector,
   walletPaymentSelectedWalletIdOptionSelector,
   walletPaymentSelectedWalletOptionSelector
@@ -44,6 +44,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
@@ -55,6 +56,9 @@ const WalletPaymentConfirmScreen = () => {
   );
   const selectedPaymentMethodIdOption = useIOSelector(
     walletPaymentSelectedPaymentMethodIdOptionSelector
+  );
+  const selectedPaymentMethodManagement = useIOSelector(
+    walletPaymentSelectedPaymentMethodManagementOptionSelector
   );
 
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
@@ -70,6 +74,9 @@ const WalletPaymentConfirmScreen = () => {
       O.map(({ paymentDetail, paymentMethodId, selectedPsp, transaction }) => {
         // In case of guest payment walletId could be undefined
         const walletId = O.toUndefined(selectedWalletIdOption);
+        const paymentMethodManagement = O.toUndefined(
+          selectedPaymentMethodManagement
+        );
         const isAllCCP = pipe(
           transaction.payments[0],
           O.fromNullable,
@@ -83,7 +90,8 @@ const WalletPaymentConfirmScreen = () => {
           isAllCCP,
           transactionId: transaction.transactionId,
           walletId,
-          paymentMethodId
+          paymentMethodId,
+          paymentMethodManagement
         });
       })
     );
@@ -134,19 +142,22 @@ const WalletPaymentConfirmScreen = () => {
   );
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
-          totalAmount,
-          true,
-          "right"
-        )}`,
-        accessibilityLabel: `${I18n.t(
-          "payment.confirm.pay"
-        )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
-        onPress: handleStartPaymentAuthorization,
-        disabled: isLoading,
-        loading: isLoading
+    <IOScrollView
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
+            totalAmount,
+            true,
+            "right"
+          )}`,
+          accessibilityLabel: `${I18n.t(
+            "payment.confirm.pay"
+          )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
+          onPress: handleStartPaymentAuthorization,
+          disabled: isLoading,
+          loading: isLoading
+        }
       }}
     >
       <ListItemHeader
@@ -178,7 +189,7 @@ const WalletPaymentConfirmScreen = () => {
           {I18n.t("payment.confirm.termsAndConditionsLink")}
         </LabelLink>
       </Body>
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

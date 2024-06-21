@@ -15,7 +15,7 @@ type PartialAllowedColors = Extract<
   | "grey-200"
 >;
 type AllowedColors = PartialAllowedColors | IOTheme["textBody-tertiary"];
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "Semibold">;
 type FontSize = "regular" | "small";
 type AllowedFontSize = { fontSize?: FontSize };
 type OwnProps = ExternalTypographyProps<
@@ -23,7 +23,7 @@ type OwnProps = ExternalTypographyProps<
 > &
   AllowedFontSize;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 
 const fontSizeMapping: Record<FontSize, number> = { regular: 14, small: 12 };
 const lineHeightMapping: Record<FontSize, number> = { regular: 21, small: 18 };

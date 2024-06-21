@@ -45,7 +45,7 @@ export const IdPayBarcodeExpireProgressBar = ({
         <LabelSmall weight="Regular" color="black">
           {I18n.t("idpay.barCode.resultScreen.success.expiresIn")}
         </LabelSmall>
-        <LabelSmall weight="SemiBold" color="black">
+        <LabelSmall weight="Semibold" color="black">
           {formattedSecondsToExpiration}
         </LabelSmall>
       </View>

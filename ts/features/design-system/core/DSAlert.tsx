@@ -20,7 +20,7 @@ export const DSAlert = () => {
   return (
     <DesignSystemScreen title={"Alert"}>
       {/* Content only */}
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
         Content only
       </H2>
       <Alert
@@ -55,7 +55,7 @@ export const DSAlert = () => {
 
       <VSpacer size={40} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
         Title + Content
       </H2>
 
@@ -104,7 +104,7 @@ export const DSAlert = () => {
 
       <VSpacer size={40} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
         Content + Action
       </H2>
 
@@ -157,7 +157,7 @@ export const DSAlert = () => {
       <VSpacer size={40} />
 
       {/* Full width */}
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
         Full width
       </H2>
       <DSFullWidthComponent>
@@ -221,7 +221,7 @@ export const DSAlert = () => {
 
       <VSpacer size={40} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2 color={"bluegrey"} weight={"Semibold"} style={{ marginBottom: 16 }}>
         Legacy components
       </H2>
       <DSFullWidthComponent>

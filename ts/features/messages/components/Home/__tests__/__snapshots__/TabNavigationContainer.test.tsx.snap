@@ -506,8 +506,8 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -522,13 +522,13 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                         Object {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Inbox
                                   </Text>
@@ -673,8 +673,8 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     allowFontScaling={false}
                                     color="blue"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -689,13 +689,13 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                         Object {
                                           "color": "#0073E6",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Archived
                                   </Text>
@@ -1237,8 +1237,8 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     allowFontScaling={false}
                                     color="blue"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -1253,13 +1253,13 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                         Object {
                                           "color": "#0073E6",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Inbox
                                   </Text>
@@ -1404,8 +1404,8 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
-                                    font="TitilliumWeb"
+                                    defaultWeight="Semibold"
+                                    font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
                                         "fontSize": 14,
@@ -1420,13 +1420,13 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                         Object {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Web",
+                                          "fontFamily": "Titillium Sans Pro",
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Archived
                                   </Text>

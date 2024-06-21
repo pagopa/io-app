@@ -15,7 +15,7 @@ export const DSStepper = () => {
   return (
     <DesignSystemScreen title={"Stepper"} noMargin>
       <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
-        <H3 color={theme["textHeading-default"]} weight={"SemiBold"}>
+        <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
           Stepper
         </H3>
       </View>

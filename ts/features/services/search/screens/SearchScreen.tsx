@@ -1,15 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Platform, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
-  ContentWrapper,
   Divider,
+  IOSpacingScale,
   IOStyles,
   IOToast,
   SearchInput,
+  SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { Institution } from "../../../../../definitions/services/Institution";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
@@ -23,13 +26,16 @@ import { ListItemSearchInstitution } from "../../common/components/ListItemSearc
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../../common/analytics";
 
-const MIN_QUERY_LENGTH: number = 3;
+const INPUT_PADDING: IOSpacingScale = 16;
 const LIST_ITEM_HEIGHT: number = 70;
+const MIN_QUERY_LENGTH: number = 3;
 
 export const SearchScreen = () => {
+  const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
+  const searchInputRef = useRef<SearchInputRef>(null);
   const [query, setQuery] = useState<string>("");
 
   const {
@@ -43,6 +49,12 @@ export const SearchScreen = () => {
   } = useInstitutionsFetcher();
 
   useOnFirstRender(() => analytics.trackSearchPage());
+
+  useFocusEffect(
+    useCallback(() => {
+      searchInputRef.current?.focus();
+    }, [])
+  );
 
   useEffect(() => {
     if (isError) {
@@ -58,10 +70,7 @@ export const SearchScreen = () => {
     [dispatch, navigation]
   );
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true
-  });
+  const handleCancel = useCallback(() => navigation.goBack(), [navigation]);
 
   const handleChangeText = (text: string) => {
     setQuery(text);
@@ -145,18 +154,28 @@ export const SearchScreen = () => {
 
   return (
     <>
-      <ContentWrapper>
+      <View
+        style={[
+          {
+            marginTop: insets.top,
+            paddingVertical: INPUT_PADDING
+          },
+          IOStyles.horizontalContentPadding
+        ]}
+      >
         <SearchInput
-          autoFocus
-          accessibilityLabel={I18n.t("services.search.input.placeholder")}
+          accessibilityLabel={I18n.t("services.search.input.placeholderShort")}
+          autoFocus={true}
           cancelButtonLabel={I18n.t("services.search.input.cancel")}
           clearAccessibilityLabel={I18n.t("services.search.input.clear")}
+          keepCancelVisible={true}
+          onCancel={handleCancel}
           onChangeText={handleChangeText}
-          placeholder={I18n.t("services.search.input.placeholder")}
+          placeholder={I18n.t("services.search.input.placeholderShort")}
+          ref={searchInputRef}
           value={query}
         />
-        <VSpacer />
-      </ContentWrapper>
+      </View>
       <FlashList
         ItemSeparatorComponent={() => <Divider />}
         contentContainerStyle={IOStyles.horizontalContentPadding}
@@ -168,6 +187,10 @@ export const SearchScreen = () => {
         onEndReachedThreshold={0.1}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
+        keyboardDismissMode={Platform.select({
+          ios: "interactive",
+          default: "on-drag"
+        })}
         keyboardShouldPersistTaps="handled"
       />
     </>

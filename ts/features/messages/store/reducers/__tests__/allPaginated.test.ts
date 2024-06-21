@@ -32,7 +32,11 @@ import reducer, {
   messageListForCategorySelector,
   MessagePage,
   messagesByCategorySelector,
-  emptyListReasonSelector
+  emptyListReasonSelector,
+  shouldShowFooterListComponentSelector,
+  LastRequestType,
+  messagePagePotFromCategorySelector,
+  shouldShowRefreshControllOnListSelector
 } from "../allPaginated";
 import { pageSize } from "../../../../../config";
 import { UIMessage } from "../../../types";
@@ -41,6 +45,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
+import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -1653,16 +1658,128 @@ describe("emptyListReasonSelector", () => {
   });
 });
 
+describe("shouldShowFooterListComponentSelector", () => {
+  const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  const messagePagePots: Array<MessagePagePot> = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(emptyMessagePage),
+    pot.noneError(""),
+    pot.some(nonEmptyMessagePage),
+    pot.someLoading(nonEmptyMessagePage),
+    pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
+    pot.someError(nonEmptyMessagePage, "")
+  ];
+  const lastRequests: Array<LastRequestType> = [
+    O.some("all"),
+    O.some("next"),
+    O.some("previous"),
+    O.none
+  ];
+  categories.forEach(category =>
+    lastRequests.forEach(lastRequest =>
+      messagePagePots.forEach(messagePagePot => {
+        const footerIsVisible =
+          O.isSome(lastRequest) &&
+          lastRequest.value === "next" &&
+          isSomeLoadingOrSomeUpdating(messagePagePot);
+        it(`Footer should be ${
+          footerIsVisible ? "visible" : "hidden"
+        }, ${category}, '${
+          O.isSome(lastRequest) ? lastRequest.value : "none"
+        }' lastRequest, ${messagePagePot.kind}`, () => {
+          const state = generateAllPaginatedDataStateForCategory(
+            category,
+            messagePagePot,
+            lastRequest
+          );
+          const shouldShowFooterListComponent =
+            shouldShowFooterListComponentSelector(state, category);
+          expect(shouldShowFooterListComponent).toBe(footerIsVisible);
+        });
+      })
+    )
+  );
+});
+
+describe("messagePagePotFromCategorySelector", () => {
+  it("should return messagePagePot, INBOX category", () => {
+    const category: MessageListCategory = "INBOX";
+    const messagePagePot = pot.some({} as MessagePage);
+    const state = generateAllPaginatedDataStateForCategory(
+      category,
+      messagePagePot
+    );
+    const outputMessagePagePot =
+      messagePagePotFromCategorySelector(category)(state);
+    expect(outputMessagePagePot).toStrictEqual(messagePagePot);
+  });
+});
+
+describe("shouldShowRefreshControllOnListSelector", () => {
+  const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  const messagePagePotData: ReadonlyArray<MessagePagePot> = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(nonEmptyMessagePage),
+    pot.noneError(""),
+    pot.some(nonEmptyMessagePage),
+    pot.someLoading(nonEmptyMessagePage),
+    pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
+    pot.someError(nonEmptyMessagePage, "")
+  ];
+  const messageRequests: ReadonlyArray<LastRequestType> = [
+    O.some("next"),
+    O.some("previous"),
+    O.some("all"),
+    O.none
+  ];
+
+  categories.forEach(category =>
+    messagePagePotData.forEach(messagePagePot =>
+      messageRequests.forEach(messageRequest => {
+        // eslint-disable-next-line no-underscore-dangle
+        const expectedOutput =
+          (messagePagePot.kind === "PotSomeLoading" ||
+            messagePagePot.kind === "PotSomeUpdating") &&
+          O.isSome(messageRequest) &&
+          (messageRequest.value === "all" ||
+            messageRequest.value === "previous");
+        // eslint-disable-next-line no-underscore-dangle
+        it(`should return ${expectedOutput}, ${category}, '${
+          O.isSome(messageRequest) ? messageRequest.value : "None"
+        }' lastRequest, ${messagePagePot.kind}`, () => {
+          const state = generateAllPaginatedDataStateForCategory(
+            category,
+            messagePagePot,
+            messageRequest
+          );
+          const shouldShowRefreshControl =
+            shouldShowRefreshControllOnListSelector(state, category);
+          expect(shouldShowRefreshControl).toBe(expectedOutput);
+        });
+      })
+    )
+  );
+});
+
 const generateAllPaginatedDataStateForCategory = (
   category: MessageListCategory,
-  data: MessagePagePot
+  data: MessagePagePot,
+  lastRequest: LastRequestType = O.none
 ): GlobalState =>
   ({
     entities: {
       messages: {
         allPaginated: {
-          inbox: category === "INBOX" ? { data } : { data: pot.none },
-          archive: category === "ARCHIVE" ? { data } : { data: pot.none }
+          inbox:
+            category === "INBOX"
+              ? { data, lastRequest }
+              : { data: pot.none, lastRequest: O.none },
+          archive:
+            category === "ARCHIVE"
+              ? { data, lastRequest }
+              : { data: pot.none, lastRequest: O.none }
         }
       }
     }
@@ -1670,7 +1787,8 @@ const generateAllPaginatedDataStateForCategory = (
 
 const readonlyNonEmptyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
 const nonEmptyMessagePage = {
-  page: readonlyNonEmptyMessageList
+  page: readonlyNonEmptyMessageList,
+  next: "01J06J748BP0MS9FZRPZV8DWCC"
 } as MessagePage;
 
 const readonlyEmptyMessageList: ReadonlyArray<UIMessage> = [];

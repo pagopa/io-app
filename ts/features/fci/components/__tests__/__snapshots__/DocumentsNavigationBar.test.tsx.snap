@@ -145,8 +145,8 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     allowFontScaling={false}
     color="black"
     defaultColor="black"
-    defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -161,13 +161,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         },
         Object {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
     Documento 1 di 2
   </Text>
@@ -295,8 +295,8 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     allowFontScaling={false}
     color="black"
     defaultColor="black"
-    defaultWeight="SemiBold"
-    font="TitilliumWeb"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 18,
@@ -314,13 +314,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         },
         Object {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
     Pagina 1 di 2
   </Text>

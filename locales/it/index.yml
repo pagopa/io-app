@@ -81,7 +81,7 @@ global:
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
-    moreInfo: Più info
+    moreInfo: più info
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
@@ -507,6 +507,9 @@ profile:
         alert:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
+        toast:
+          success:
+            title: Hai cambiato lingua
         not_selected: Non selezionato
         banner:
           button: Scopri di più
@@ -617,10 +620,25 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
-  cie_errors:
+  auth_errors:
+    error_19:
+      title: Hai effettuato troppi tentativi di accesso
+      subtitle: Hai inserito troppe volte un nome utente o password non corretti. Verifica i dati di accesso e riprova fra qualche minuto, o contatta il tuo fornitore di identità SPID per modificare le tue credenziali.
+    error_20:
+      title: Non è stato possibile accedere
+      subtitle: Per motivi di sicurezza, devi utilizzare un’identità con un livello di sicurezza superiore. Per avere più informazioni, contatta il tuo fornitore di identità SPID.
+    error_21:
+      title: È passato troppo tempo
+      subtitle: "È passato troppo tempo da quando hai iniziato l'accesso: riparti dall'inizio."
     error_22:
       title: Non hai dato il consenso all’invio dei dati
       subtitle: Per accedere, è necessario acconsentire all’invio di alcuni dati.
+    error_23:
+      title: Identità sospesa o revocata
+      subtitle: La tua identità SPID risulta sospesa o revocata. Per maggiori informazioni, contatta il tuo fornitore di identità SPID.
+    error_25:
+      title: Hai annullato l’accesso
+      subtitle: Per entrare, riprova quando vuoi.
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni
@@ -2151,6 +2169,7 @@ services:
   search:
     input:
       placeholder: "Cerca un ente nazionale o locale"
+      placeholderShort: "Cerca un ente"
       cancel: "Annulla"
       clear: "Cancella"
     emptyState:
@@ -3059,6 +3078,8 @@ features:
   payments:
     title: Pagamenti
     cta: Paga un avviso
+    remoteAlert:
+      cta: Scopri di più
     methods:
       title: Metodi di pagamento
       button: Aggiungi
@@ -3068,6 +3089,21 @@ features:
       status:
         expired: Scaduta
     transactions:
+      showLegacyTransactions: Mostra precedenti
+      legacy:
+        empty:
+          title: Nessuna ricevuta trovata
+          body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
+        banner:
+          content: Stiamo generando le ricevute di pagamento in formato PDF.
+          action: Scopri di più
+        title: Operazioni precedenti
+        bottomSheet:
+          title: Dove trovo la ricevuta di pagamento?
+          noticeHeading: Avvisi pagati di recente
+          noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
+          allNoticesHeading: Tutti gli altri avvisi
+          allNoticesBody: Per ottenere le ricevute di operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3077,6 +3113,17 @@ features:
       status:
         failure: FALLITA
         success: ""
+      receipt:
+        title: Ricevuta PagoPA
+        shareButton: Salva o condividi 
+        error: Impossibile scaricare la ricevuta, riprova più tardi.
+        download: Scarica ricevuta
+    details:
+      pspAlert:
+        description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
+        action: "Cosa significa?"
+        title: "Cosa significa?"
+        explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “Pagamento veloce con PayPal”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
   itWallet:
     card:
       status:
@@ -3192,6 +3239,20 @@ features:
     unsupportedDevice:
       text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
       moreInfo: Scopri perchè
+    presentation:
+      credentialDetails:
+        personalDataTitle: "Dati personali"
+        documentDataTitle: "Dati documento"
+        lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        hiddenClaim: "Nascosto"
+        status:
+          valid: Valida
+          expired: Scaduta
+        actions:
+          removeFromWallet: "Rimuovi dal Portafoglio"
+          requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
+          showClaimValues: "Mostra gli attributi del documento"
+          hideClaimValues: "Nascondi gli attributi del documento"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3799,6 +3860,8 @@ transaction:
       rrn: RRN
       executedBy: Eseguito da
       headedTo: Intestato a
+      alert:
+        content: Rivolgiti all’Ente Creditore se hai bisogno della ricevuta.
     operation:
       amount: Importo
       creditor: Ente creditore
