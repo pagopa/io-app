@@ -1,41 +1,27 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsDeleteTransactionAction } from "../../store/actions/networking";
-import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
+import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 
 export function* handleWalletPaymentDeleteTransaction(
-  requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellation"],
+  requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellationForIO"],
   action: ActionType<(typeof paymentsDeleteTransactionAction)["request"]>
 ) {
   try {
-    const sessionToken = yield* getOrFetchWalletSessionToken();
-
-    if (sessionToken === undefined) {
-      yield* put(
-        paymentsDeleteTransactionAction.failure({
-          ...getGenericError(new Error(`Missing session token`))
-        })
+    const requestTransactionUserCancellationResult =
+      yield* withPaymentsSessionToken(
+        requestTransactionUserCancellation,
+        paymentsDeleteTransactionAction.failure,
+        action,
+        {
+          transactionId: action.payload
+        },
+        "pagoPAPlatformSessionToken"
       );
-      return;
-    }
-
-    const requestTransactionUserCancellationRequest =
-      requestTransactionUserCancellation({
-        transactionId: action.payload,
-        eCommerceSessionToken: sessionToken
-      });
-
-    const requestTransactionUserCancellationResult = (yield* call(
-      withRefreshApiCall,
-      requestTransactionUserCancellationRequest,
-      action
-    )) as SagaCallReturnType<typeof requestTransactionUserCancellation>;
 
     if (E.isLeft(requestTransactionUserCancellationResult)) {
       yield* put(
@@ -55,7 +41,7 @@ export function* handleWalletPaymentDeleteTransaction(
     if (requestTransactionUserCancellationResult.right.status === 202) {
       yield* put(paymentsDeleteTransactionAction.success());
     } else if (requestTransactionUserCancellationResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+      // The 401 status is handled by the withPaymentsSessionToken
       yield* put(
         paymentsDeleteTransactionAction.failure({
           ...getGenericError(
