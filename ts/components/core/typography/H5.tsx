@@ -4,8 +4,8 @@ import { IOFontFamily, IOFontWeight } from "../fonts";
 import { ExternalTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-// these colors are allowed only when the weight is SemiBold
-type AllowedSemiBoldColors = Extract<
+// these colors are allowed only when the weight is Semibold
+type AllowedSemiboldColors = Extract<
   IOColors,
   "bluegreyDark" | "bluegrey" | "bluegreyLight" | "blue" | "white" | "red"
 >;
@@ -23,15 +23,15 @@ type AllowedRegularColors = Extract<
 >;
 
 // all the possible colors
-type AllowedColors = AllowedSemiBoldColors | AllowedRegularColors;
+type AllowedColors = AllowedSemiboldColors | AllowedRegularColors;
 
 // all the possible weight
-type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Regular">;
+type AllowedWeight = Extract<IOFontWeight, "Semibold" | "Regular">;
 
-// these are the properties allowed only if weight is undefined or SemiBold
-type SemiBoldProps = {
-  weight?: Extract<IOFontWeight, "SemiBold">;
-  color?: AllowedSemiBoldColors;
+// these are the properties allowed only if weight is undefined or Semibold
+type SemiboldProps = {
+  weight?: Extract<IOFontWeight, "Semibold">;
+  color?: AllowedSemiboldColors;
 };
 
 // these are the properties allowed only if weight is Bold
@@ -40,18 +40,18 @@ type RegularProps = {
   color?: AllowedRegularColors;
 };
 
-type BoldKindProps = SemiBoldProps | RegularProps;
+type BoldKindProps = SemiboldProps | RegularProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumSansPro";
 export const h5FontSize = 14;
 export const h5DefaultColor: AllowedColors = "bluegreyDark";
-export const h5DefaultWeight: AllowedWeight = "SemiBold";
+export const h5DefaultWeight: AllowedWeight = "Semibold";
 
 /**
  * Typography component to render `H5` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `SemiBold`, color: `bluegreyDark`
+ * default values(if not defined) are weight: `Semibold`, color: `bluegreyDark`
  * @param props
  * @constructor
  */

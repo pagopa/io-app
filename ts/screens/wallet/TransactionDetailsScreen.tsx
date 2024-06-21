@@ -200,7 +200,7 @@ class TransactionDetailsScreen extends React.Component<
         <View style={[IOStyles.flex, IOStyles.selfCenter]}>
           <Body>{label}</Body>
         </View>
-        <Body color="bluegreyDark" weight="SemiBold" selectable={true}>
+        <Body color="bluegreyDark" weight="Semibold" selectable={true}>
           {value}
         </Body>
       </View>
@@ -311,7 +311,7 @@ class TransactionDetailsScreen extends React.Component<
             </View>
           ) : (
             data.paymentMethodBrand && (
-              <Body weight="SemiBold">{data.paymentMethodBrand}</Body>
+              <Body weight="Semibold">{data.paymentMethodBrand}</Body>
             )
           )}
 
@@ -325,7 +325,7 @@ class TransactionDetailsScreen extends React.Component<
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
             </Body>
             <View style={IOStyles.rowSpaceBetween}>
-              <Body weight="SemiBold">{data.idTransaction}</Body>
+              <Body weight="Semibold">{data.idTransaction}</Body>
               <CopyButtonComponent textToCopy={data.idTransaction.toString()} />
             </View>
           </View>

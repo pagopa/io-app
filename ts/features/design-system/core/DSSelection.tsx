@@ -67,7 +67,7 @@ export const DSSelection = () => (
     {/* SwitchLabel */}
     {renderAnimatedSwitch()}
     {/* Legacy components */}
-    <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
+    <H2 weight={"Semibold"} style={{ marginBottom: 16, marginTop: 16 }}>
       Legacy components
     </H2>
     <H4>{"<CheckBox />"}</H4>

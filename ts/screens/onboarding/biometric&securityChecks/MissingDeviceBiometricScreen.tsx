@@ -79,7 +79,7 @@ const MissingDeviceBiometricScreen = () => {
         >
           <Body>
             {I18n.t("onboarding.biometric.available.body.infoStart") + " "}
-            <Body weight="SemiBold">
+            <Body weight="Semibold">
               {I18n.t("onboarding.biometric.available.body.biometricType") +
                 " "}
             </Body>

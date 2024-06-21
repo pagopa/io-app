@@ -190,7 +190,7 @@ const DocumentWithSignature = (props: Props) => {
     >
       <View style={[IOStyles.horizontalContentPadding, styles.header]}>
         <HSpacer />
-        <H5 weight={"SemiBold"} color={"bluegrey"} style={styles.headerTitle}>
+        <H5 weight={"Semibold"} color={"bluegrey"} style={styles.headerTitle}>
           {I18n.t("messagePDFPreview.title")}
         </H5>
         <IconButton
