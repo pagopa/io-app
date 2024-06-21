@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CieReadingCardAnimation extends React.PureComponent<
+export default class CieCardReadingAnimation extends React.PureComponent<
   Props,
   State
 > {
