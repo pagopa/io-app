@@ -1953,7 +1953,7 @@ messages:
   archive:
     emptyMessage:
       title: "Il tuo archivio è vuoto"
-      subtitle: "Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente.\nI messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca."
+      subtitle: "Tieni premuto su un messaggio per spostarlo in archivio. I messaggi archiviati verranno conservati e saranno disponibili nei risultati di ricerca."
   inbox:
     emptyMessage:
       title: Non hai ancora ricevuto alcun messaggio
