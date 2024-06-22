@@ -79,7 +79,8 @@ export const getLoadServiceDetailsActionIfNeeded = (
 
 export const getLoadNextPageMessagesActionIfAllowed = (
   state: GlobalState,
-  category: MessageListCategory
+  category: MessageListCategory,
+  comparisonTimeInCaseOfError: Date
 ): ActionType<typeof loadNextPageMessages.request> | undefined => {
   const allPaginated = state.entities.messages.allPaginated;
 
@@ -91,17 +92,15 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   }
 
   // Check that there are more pages to load
-  const { messagePagePot, lastRequest, lastRequestDate } =
+  const { messagePagePot, lastRequest } =
     category === "INBOX"
       ? {
           messagePagePot: inboxData,
-          lastRequest: allPaginated.inbox.lastRequest,
-          lastRequestDate: allPaginated.inbox.lastRequestDate
+          lastRequest: allPaginated.inbox.lastRequest
         }
       : {
           messagePagePot: archiveData,
-          lastRequest: allPaginated.archive.lastRequest,
-          lastRequestDate: allPaginated.archive.lastRequestDate
+          lastRequest: allPaginated.archive.lastRequest
         };
   const nextMessagePageStartingId = isSomeOrSomeError(messagePagePot)
     ? messagePagePot.value.next
@@ -122,7 +121,8 @@ export const getLoadNextPageMessagesActionIfAllowed = (
       : undefined;
     if (lastRequestValue === "next") {
       const millisecondsAfterLastError =
-        new Date().getTime() - lastRequestDate.getTime();
+        comparisonTimeInCaseOfError.getTime() -
+        messagePagePot.error.time.getTime();
       if (
         millisecondsAfterLastError < nextPageLoadingWaitMillisecondsGenerator()
       ) {

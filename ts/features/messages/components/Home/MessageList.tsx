@@ -63,7 +63,8 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         const state = store.getState();
         const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
           state,
-          category
+          category,
+          new Date()
         );
         if (loadNextPageMessages) {
           dispatch(loadNextPageMessages);
