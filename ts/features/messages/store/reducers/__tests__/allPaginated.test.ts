@@ -46,6 +46,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
 import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
+import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -1715,6 +1716,13 @@ describe("messagePagePotFromCategorySelector", () => {
     const outputMessagePagePot =
       messagePagePotFromCategorySelector(category)(state);
     expect(outputMessagePagePot).toStrictEqual(messagePagePot);
+  });
+});
+
+describe("nextPageLoadingWaitMillisecondsGenerator", () => {
+  it("should return 2 seconds", () => {
+    const waitMilliseconds = nextPageLoadingWaitMillisecondsGenerator();
+    expect(waitMilliseconds).toBe(2000);
   });
 });
 
