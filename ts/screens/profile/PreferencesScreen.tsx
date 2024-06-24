@@ -38,31 +38,31 @@ const PreferencesScreen = () => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_SERVICES
     });
-  }, []);
+  }, [navigation]);
 
   const navigateToEmailForwardingPreferenceScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
     });
-  }, []);
+  }, [navigation]);
 
   const navigateToCalendarPreferenceScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_CALENDAR
     });
-  }, []);
+  }, [navigation]);
 
   const navigateToLanguagePreferenceScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_LANGUAGE
     });
-  }, []);
+  }, [navigation]);
 
   const navigateToNotificationPreferenceScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
     });
-  }, []);
+  }, [navigation]);
 
   const checkPermissionThenGoCalendar = async () => {
     await requestWriteCalendarPermission({
