@@ -423,7 +423,7 @@ profile:
             dontShare: Not now
           confirmToast: "Preferences updated!"
         alert:
-          title: "You've opted not /nto share your data."
+          title: "You've opted not \nto share your data."
           body: If you confirm, we won't be able to give you the targeted help you need because we might not have the data we need to solve the problem.
         whyBottomSheet:
           title: "Why do we collect data?"
