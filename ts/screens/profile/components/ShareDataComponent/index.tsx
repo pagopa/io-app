@@ -29,6 +29,7 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
       <GDPRFeatureInfo trackAction={trackAction} />
       <VSpacer size={32} />
       <Body
+        accessibilityRole="link"
         accessibilityLabel={`${I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}${I18n.t(
