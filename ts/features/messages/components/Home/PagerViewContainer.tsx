@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect } from "react";
-import { NativeSyntheticEvent } from "react-native";
+import React, { useCallback, useEffect, useRef } from "react";
+import { pipe } from "fp-ts/lib/function";
+import { FlatList, NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { setShownMessageCategoryAction } from "../../store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
+import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
+import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
+import { foldK as foldMessageListCategory } from "../../types/messageListCategory";
 import { MessageList } from "./MessageList";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
@@ -16,8 +20,26 @@ import {
 export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
+  const archiveFlatListRef = useRef<FlatList>(null);
+  const inboxFlatListRef = useRef<FlatList>(null);
+
   const initialPageIndex = getMessagesViewPagerInitialPageIndex(
     store.getState()
+  );
+
+  const onTabPressedCallback = useCallback(
+    () =>
+      pipe(
+        store.getState(),
+        shownMessageCategorySelector,
+        foldMessageListCategory(
+          () => inboxFlatListRef,
+          () => archiveFlatListRef
+        ),
+        flatListRef =>
+          flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
+      ),
+    [store]
   );
   const dispatchReloadAllMessagesIfNeeded = useCallback(
     (state: GlobalState) => {
@@ -57,6 +79,7 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
     },
     [dispatch, dispatchReloadAllMessagesIfNeeded, store]
   );
+  useTabItemPressWhenScreenActive(onTabPressedCallback, false);
   useEffect(() => {
     // Upon first component rendering, the PagerView's onPageSelected
     // callback is not called, so we must dispatch the reload action
@@ -64,6 +87,7 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
     const state = store.getState();
     dispatchReloadAllMessagesIfNeeded(state);
   }, [dispatchReloadAllMessagesIfNeeded, store]);
+
   return (
     <PagerView
       initialPage={initialPageIndex}
@@ -71,8 +95,16 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
       ref={ref}
       style={IOStyles.flex}
     >
-      <MessageList key={`message_list_inbox`} category={"INBOX"} />
-      <MessageList key={`message_list_category`} category={"ARCHIVE"} />
+      <MessageList
+        category={"INBOX"}
+        key={`message_list_inbox`}
+        ref={inboxFlatListRef}
+      />
+      <MessageList
+        category={"ARCHIVE"}
+        key={`message_list_category`}
+        ref={archiveFlatListRef}
+      />
     </PagerView>
   );
 });
