@@ -1,5 +1,6 @@
 import { SectionListData } from "react-native";
 import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
+import { InfoTransactionView } from "../../../../../definitions/pagopa/biz-events/InfoTransactionView";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -40,6 +41,9 @@ export const groupTransactionsByMonth = (
 export const formatAmountText = (amount: string): string => {
   const normalizedAmount = amount.replace(",", ".");
   const amountNumber = parseFloat(normalizedAmount);
+  if (isNaN(amountNumber)) {
+    return "";
+  }
   return amountNumber.toLocaleString("it-IT", {
     style: "currency",
     currency: "EUR",
@@ -54,4 +58,47 @@ export const byteArrayToBase64 = (byteArray: Uint8Array): string => {
 
   // Convert Buffer to Base64 string
   return buffer.toString("base64");
+};
+
+/**
+ * Function that returns the payer info label formatted as "name\n(taxCode)"
+ */
+export const getPayerInfoLabel = (
+  payer: InfoTransactionView["payer"]
+): string => {
+  if (!payer) {
+    return "";
+  }
+
+  const name = payer.name ? payer.name.trim() : "";
+  const taxCode = payer.taxCode ? `(${payer.taxCode.trim()})` : "";
+
+  const payerInfo =
+    name && taxCode ? `${name}\n${taxCode}` : `${name}${taxCode}`;
+
+  return payerInfo.trim();
+};
+
+/**
+ * Function that calculates the total amount of a transaction by summing the amount and the fee
+ */
+export const calculateTotalAmount = (
+  transactionInfo?: InfoTransactionView
+): string | undefined => {
+  if (!transactionInfo || !transactionInfo.amount || !transactionInfo.fee) {
+    return undefined;
+  }
+
+  const amountString = transactionInfo.amount.replace(",", ".");
+  const feeString = transactionInfo.fee.replace(",", ".");
+
+  if (isNaN(parseFloat(amountString)) || isNaN(parseFloat(feeString))) {
+    return undefined;
+  }
+
+  const amount = parseFloat(amountString);
+  const fee = parseFloat(feeString);
+  const total = amount + fee;
+
+  return total.toFixed(2);
 };
