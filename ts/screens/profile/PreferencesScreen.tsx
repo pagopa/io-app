@@ -20,7 +20,6 @@ import { openAppSettings } from "../../utils/appSettings";
 
 type PreferencesNavListItem = {
   value: string;
-  condition?: boolean;
 } & Pick<
   ComponentProps<typeof ListItemNav>,
   "description" | "testID" | "onPress"
@@ -141,25 +140,15 @@ const PreferencesScreen = () => {
   ];
 
   const renderPreferencesNavItem = ({
-    item: { value, description, onPress, testID, condition }
-  }: ListRenderItemInfo<PreferencesNavListItem>) => {
-    // If condition is either true or undefined, render the item
-    if (condition !== false) {
-      return (
-        <ListItemNav
-          accessibilityLabel={`${value} ${description}`}
-          value={value}
-          description={description}
-          onPress={onPress}
-          testID={testID}
-        />
-      );
-    } else {
-      return null;
-    }
-  };
-  const filteredPreferencesNavListItems = preferencesNavListItems.filter(
-    item => item.condition !== false
+    item: { value, description, onPress, testID }
+  }: ListRenderItemInfo<PreferencesNavListItem>) => (
+    <ListItemNav
+      accessibilityLabel={`${value} ${description}`}
+      value={value}
+      description={description}
+      onPress={onPress}
+      testID={testID}
+    />
   );
 
   return (
@@ -180,7 +169,7 @@ const PreferencesScreen = () => {
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
-        data={filteredPreferencesNavListItems}
+        data={preferencesNavListItems}
         renderItem={renderPreferencesNavItem}
         ItemSeparatorComponent={() => <Divider />}
       />
