@@ -973,7 +973,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Profilo &gt; Privacy e Condizioni d’uso
+                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -2586,7 +2586,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Profilo &gt; Privacy e Condizioni d’uso
+                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -4200,7 +4200,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Profilo &gt; Privacy e Condizioni d’uso
+                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -5814,7 +5814,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                   weight="Regular"
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Profilo &gt; Privacy e Condizioni d’uso
+                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -7722,7 +7722,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   }
                                   weight="Regular"
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Profilo &gt; Privacy e Condizioni d’uso
+                                  You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
