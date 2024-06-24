@@ -1,14 +1,12 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getPaymentsBizEventsReceiptAction } from "../store/actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { TransactionClient } from "../../common/api/client";
-import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/handleWalletPaymentNewSessionToken";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { byteArrayToBase64 } from "../utils";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to get the transaction receipt pdf from the biz events API
@@ -19,27 +17,16 @@ export function* handleGetBizEventsTransactionReceipt(
   getTransactionReceipt: TransactionClient["getPDFReceipt"],
   action: ActionType<(typeof getPaymentsBizEventsReceiptAction)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
-
-  if (sessionToken === undefined) {
-    yield* put(
-      getPaymentsBizEventsReceiptAction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
-    return;
-  }
-  const getTransactionReceiptRequest = getTransactionReceipt({
-    Authorization: sessionToken,
-    "event-id": action.payload.transactionId
-  });
-
   try {
-    const getTransactionReceiptResult = (yield* call(
-      withRefreshApiCall,
-      getTransactionReceiptRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof getTransactionReceipt>;
+    const getTransactionReceiptResult = yield* withPaymentsSessionToken(
+      getTransactionReceipt,
+      getPaymentsBizEventsReceiptAction.failure,
+      action,
+      {
+        "event-id": action.payload.transactionId
+      },
+      "Authorization"
+    );
 
     if (E.isLeft(getTransactionReceiptResult)) {
       yield* put(
@@ -59,7 +46,8 @@ export function* handleGetBizEventsTransactionReceipt(
       action.payload.onSuccess?.();
       yield* put(getPaymentsBizEventsReceiptAction.success(base64File));
     } else if (getTransactionReceiptResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+
       action.payload.onError?.();
       yield* put(
         getPaymentsBizEventsReceiptAction.failure({
