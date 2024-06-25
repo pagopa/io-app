@@ -28,9 +28,9 @@ import {
 import {
   notHasValidPaymentMethodsSelector,
   walletPaymentAllMethodsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
-  walletPaymentSelectedWalletIdOptionSelector,
-  walletPaymentUserWalletsSelector
+  walletPaymentSelectedWalletIdOptionSelector
 } from "../store/selectors/paymentMethods";
 import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import {
@@ -56,7 +56,9 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
-  const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
+  const userWalletsPots = useIOSelector(
+    walletPaymentEnabledUserWalletsSelector
+  );
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const isTransactionAlreadyActivated = useIOSelector(
     walletPaymentIsTransactionActivatedSelector
