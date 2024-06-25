@@ -4,12 +4,13 @@
  */
 import {
   IOColors,
+  IOPictogramSizeScale,
   IOPictograms,
   Pictogram
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
-import ProgressCircle from "react-native-progress-circle";
+import { CircularProgress } from "../ui/CircularProgress";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -29,37 +30,20 @@ type State = Readonly<{
 }>;
 
 // Image dimension
-const imgDimension = 188;
+const imgSize: IOPictogramSizeScale = 180;
 const progressThreshold = 60;
 const circleBorderWidth = 3;
 
 const styles = StyleSheet.create({
-  imgContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: imgDimension
-  },
-  img: {
-    overflow: "hidden",
-    backgroundColor: IOColors.white,
-    height: imgDimension,
-    width: imgDimension,
-    borderRadius: imgDimension / 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  imgWrapper: {
-    height: imgDimension + 30,
-    width: imgDimension + 30,
+  imgTranslated: {
+    height: imgSize + 30,
+    width: imgSize + 30,
     paddingStart: 15,
     paddingTop: 25
-  },
-  flexStart: {
-    justifyContent: "flex-start"
   }
 });
 
-export default class CieReadingCardAnimation extends React.PureComponent<
+export default class CieCardReadingAnimation extends React.PureComponent<
   Props,
   State
 > {
@@ -161,31 +145,29 @@ export default class CieReadingCardAnimation extends React.PureComponent<
 
   public render() {
     return (
-      <View style={styles.imgContainer} accessible={false}>
-        <View style={styles.flexStart}>
-          <ProgressCircle
-            percent={
-              this.props.readingState === ReadingState.completed
-                ? 100
-                : this.state.progressBarValue
-            }
-            radius={imgDimension / 2}
-            borderWidth={circleBorderWidth}
-            color={
-              this.props.readingState === ReadingState.error
-                ? IOColors.greyLight
-                : this.props.circleColor
-            }
-            shadowColor={IOColors.greyLight}
-            bgColor={IOColors.greyLight}
-          >
-            <View style={styles.img}>
-              <View style={styles.imgWrapper}>
-                <Pictogram size={"100%"} name={this.props.pictogramName} />
-              </View>
-            </View>
-          </ProgressCircle>
-        </View>
+      <View style={{ alignSelf: "center" }} accessible={false}>
+        <CircularProgress
+          size={imgSize}
+          radius={imgSize / 2}
+          progress={
+            this.props.readingState === ReadingState.completed
+              ? 100
+              : this.state.progressBarValue
+          }
+          strokeWidth={circleBorderWidth}
+          strokeColor={
+            this.props.readingState === ReadingState.error
+              ? IOColors.greyLight
+              : this.props.circleColor
+          }
+          strokeBgColor={IOColors.greyLight}
+        >
+          {/* Use a `View` to translate the Pictogram to simulate the
+          `Bleed` variant effect */}
+          <View style={styles.imgTranslated}>
+            <Pictogram size={"100%"} name={this.props.pictogramName} />
+          </View>
+        </CircularProgress>
       </View>
     );
   }

@@ -13019,11 +13019,6 @@ react-native-permissions@^4.0.0:
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-4.0.0.tgz#64eb341993b0d317fb753104bc72f911d253d613"
   integrity sha512-VWdETvRVf5WWLOKxle88UtB+LNQR99LvWOkg8C/azNTYLhuAqeSI+SYll+og/A0TIepeTsxnBrtX/YNB3hNQ0w==
 
-react-native-progress-circle@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-progress-circle/-/react-native-progress-circle-2.1.0.tgz#62bdf31c76962d10c5c14446b61ff7d05cf0d0ec"
-  integrity sha512-VP0s92bgbTMQy4hQzPU4LlGyFj3z5u7i1HYFG8/yzXXfGkX1cxKS4xOlE+OTaObWC99w7Bodi3h8R7En2nQPYw==
-
 react-native-push-notification@^8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#a41d20c70ea5a7709417e96261b225461f8dc73a"
