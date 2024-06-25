@@ -1,8 +1,5 @@
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-
 export type Start = {
   type: "start";
-  credentialType: CredentialType;
 };
 
 export type AcceptTos = {
@@ -18,38 +15,38 @@ export type AddToWallet = {
   type: "add-to-wallet";
 };
 
-export type ConfirmIdentity = {
-  type: "confirm-identity";
-};
-
 export type GoToWallet = {
   type: "go-to-wallet";
+};
+
+export type AddNewCredential = {
+  type: "add-new-credential";
 };
 
 export type RequestAssistance = {
   type: "request-assistance";
 };
 
-export type Back = {
-  type: "back";
+export type Retry = {
+  type: "retry";
 };
 
-export type Next = {
-  type: "next";
+export type Back = {
+  type: "back";
 };
 
 export type Close = {
   type: "close";
 };
 
-export type Events =
+export type EidIssuanceEvents =
   | Start
   | AcceptTos
   | SelectIdentificationMode
   | AddToWallet
-  | ConfirmIdentity
   | GoToWallet
+  | AddNewCredential
   | RequestAssistance
+  | Retry
   | Back
-  | Next
   | Close;

@@ -2,9 +2,7 @@
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-export const createIdentificationActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
-) => {
+export default (navigation: ReturnType<typeof useIONavigation>) => {
   const navigateToIdentificationModeScreen = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION

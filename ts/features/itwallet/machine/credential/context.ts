@@ -4,7 +4,6 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 export type Context = {
   credentialType: CredentialType | undefined;
   walletAttestation: string | undefined;
-  userToken: string | undefined;
   eid: StoredCredential | undefined;
   credential: StoredCredential | undefined;
 };
@@ -12,7 +11,6 @@ export type Context = {
 export const InitialContext: Context = {
   credentialType: undefined,
   walletAttestation: undefined,
-  userToken: undefined,
   eid: undefined,
   credential: undefined
 };

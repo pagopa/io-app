@@ -14,7 +14,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
@@ -22,7 +22,7 @@ import { itwIsNfcEnabledSelector } from "../store/selectors";
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
@@ -64,6 +64,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
+      goBack={() => machineRef.send({ type: "back" })}
     >
       <ContentWrapper>
         <ListItemHeader

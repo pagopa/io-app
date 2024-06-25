@@ -11,12 +11,12 @@ import {
 } from "../../common/utils/itwErrorsUtils";
 import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { ItwCredentialPreviewScreenContent } from "../components/ItwCredentialPreviewScreenContent";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const eidOption = O.some(ItwCredentialsMocks.eid);
 
   const handleStoreCredentialSuccess = () => {

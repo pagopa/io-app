@@ -8,10 +8,7 @@ import { ItwIdentificationNfcInstructionsScreen } from "../identification/screen
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
-import {
-  ItWalletIssuanceMachineContext,
-  ItWalletIssuanceMachineProvider
-} from "../machine/provider";
+import { ItWalletIssuanceMachineProvider } from "../machine/provider";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -20,20 +17,9 @@ const Stack = createStackNavigator<ItwParamsList>();
 
 export const ItwStackNavigator = () => (
   <ItWalletIssuanceMachineProvider>
-    <InnerNavigator />
-  </ItWalletIssuanceMachineProvider>
-);
-
-const InnerNavigator = () => {
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
-
-  return (
     <Stack.Navigator
       initialRouteName={ITW_ROUTES.DISCOVERY.INFO}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
-      screenListeners={{
-        beforeRemove: () => machineRef.send({ type: "back" })
-      }}
     >
       {/* DISCOVERY */}
       <Stack.Screen
@@ -77,5 +63,5 @@ const InnerNavigator = () => {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-  );
-};
+  </ItWalletIssuanceMachineProvider>
+);

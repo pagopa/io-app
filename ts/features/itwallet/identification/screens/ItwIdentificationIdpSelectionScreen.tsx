@@ -17,15 +17,15 @@ import {
   idps as idpsFallback
 } from "../../../../utils/idps";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
-import { Tags } from "../../machine/tags";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwTags } from "../../machine/tags";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = useSelector(
     machineRef.getSnapshot().children.identificationMachine,
-    snap => snap?.hasTag(Tags.Loading)
+    snap => snap?.hasTag(ItwTags.Loading)
   );
 
   const idps = useIOSelector(idpsRemoteValueSelector);

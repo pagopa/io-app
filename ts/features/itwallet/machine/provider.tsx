@@ -1,46 +1,56 @@
 import { createActorContext } from "@xstate5/react";
 import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { createIdentificationActionsImplementation } from "./identification/actions";
-import { createIdentificationActorsImplementation } from "./identification/actors";
+import createCredentialIssuanceActionsImplementation from "./credential/actions";
+import createCredentialIssuanceActorsImplementation from "./credential/actors";
+import { itwCredentialIssuanceMachine } from "./credential/machine";
+import createEidIssuanceActionsImplementation from "./eid/actions";
+import createEidIssuanceActorsImplementation from "./eid/actors";
+import { itwEidIssuanceMachine } from "./eid/machine";
+import createIdentificationActionsImplementation from "./identification/actions";
+import createIdentificationActorsImplementation from "./identification/actors";
 import { itwIdentificationMachine } from "./identification/machine";
-import { createIssuanceActionsImplementation } from "./issuance/actions";
-import { createIssuanceActorsImplementation } from "./issuance/actors";
-import { itwIssuanceMachine } from "./issuance/machine";
 
 type Props = {
   children: JSX.Element;
 };
 
-export const ItWalletIssuanceMachineContext =
-  createActorContext(itwIssuanceMachine);
+export const ItwEidIssuanceMachineContext = createActorContext(
+  itwEidIssuanceMachine
+);
+
+export const ItwCredentialIssuanceMachineContext = createActorContext(
+  itwCredentialIssuanceMachine
+);
 
 export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
 
-  const identificationActions =
-    createIdentificationActionsImplementation(navigation);
-  const identificationActors = createIdentificationActorsImplementation();
-
   const identificationMachine = itwIdentificationMachine.provide({
-    actors: identificationActors,
-    actions: identificationActions
+    actions: createIdentificationActionsImplementation(navigation),
+    actors: createIdentificationActorsImplementation()
   });
 
-  const issuanceActions = createIssuanceActionsImplementation(navigation);
-  const issuanceActors = createIssuanceActorsImplementation();
-
-  const issuanceMachine = itwIssuanceMachine.provide({
-    actions: issuanceActions,
+  const eidIssuanceMachine = itwEidIssuanceMachine.provide({
+    actions: createEidIssuanceActionsImplementation(navigation),
     actors: {
-      ...issuanceActors,
+      ...createEidIssuanceActorsImplementation(),
       identificationMachine
     }
   });
 
+  const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
+    actions: createCredentialIssuanceActionsImplementation(navigation),
+    actors: createCredentialIssuanceActorsImplementation()
+  });
+
   return (
-    <ItWalletIssuanceMachineContext.Provider logic={issuanceMachine}>
-      {props.children}
-    </ItWalletIssuanceMachineContext.Provider>
+    <ItwEidIssuanceMachineContext.Provider logic={eidIssuanceMachine}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={credentialIssuanceMachine}
+      >
+        {props.children}
+      </ItwCredentialIssuanceMachineContext.Provider>
+    </ItwEidIssuanceMachineContext.Provider>
   );
 };

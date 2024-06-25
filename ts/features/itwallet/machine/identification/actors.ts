@@ -4,7 +4,7 @@ import { fromPromise } from "xstate5";
 import { LocalIdpsFallback } from "../../../../utils/idps";
 import { getIdpLoginUri } from "../../../../utils/login";
 
-export const createIdentificationActorsImplementation = () => {
+export default () => {
   const showSpidIdentificationWebView = fromPromise<string, LocalIdpsFallback>(
     async ({ input }) =>
       openAuthenticationSession(getIdpLoginUri(input.id, 2), "iologin")
