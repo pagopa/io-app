@@ -2078,10 +2078,10 @@ biometric_recognition:
   needed_to_disable: Recognition required to disable
 send_email_messages:
   title: Forward messages by email
-  subtitle: Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo
+  subtitle: You want IO to forward message previews to
   switch:
-    title: Invia un’anteprima via email
-    subtitle: Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente.
+    title: Email a preview
+    subtitle: You will get a preview of the message at your email address if the service allows.
 services:
   accessibility:
     edit: Edit services setup
