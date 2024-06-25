@@ -194,8 +194,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -263,7 +263,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -1609,8 +1609,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -1678,7 +1678,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -3024,8 +3024,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -3093,7 +3093,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -4439,8 +4439,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -4508,7 +4508,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -5854,8 +5854,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -5923,7 +5923,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -7269,8 +7269,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -7338,7 +7338,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -8684,8 +8684,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -8753,7 +8753,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -10099,8 +10099,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -10168,7 +10168,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -11514,8 +11514,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -11583,7 +11583,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -12929,8 +12929,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -12998,7 +12998,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -14344,8 +14344,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -14413,7 +14413,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -15759,8 +15759,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -15828,7 +15828,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -17174,8 +17174,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -17243,7 +17243,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -18589,8 +18589,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -18658,7 +18658,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -20004,8 +20004,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -20073,7 +20073,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -21419,8 +21419,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -21488,7 +21488,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -22834,8 +22834,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -22903,7 +22903,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
@@ -24249,8 +24249,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         collapsable={false}
                         contentContainerStyle={
                           {
-                            "flexGrow": 1,
-                            "paddingBottom": 0,
+                            "paddingBottom": 56,
+                            "paddingHorizontal": 0,
                           }
                         }
                         decelerationRate="normal"
@@ -24318,7 +24318,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <View
                               style={
                                 {
-                                  "height": 16,
+                                  "height": 4,
                                 }
                               }
                             />
