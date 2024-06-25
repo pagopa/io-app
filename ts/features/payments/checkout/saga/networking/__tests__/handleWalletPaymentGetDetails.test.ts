@@ -5,9 +5,7 @@ import { PaymentRequestsGetResponse } from "../../../../../../../definitions/pag
 import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsGetPaymentDetailsAction } from "../../../store/actions/networking";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 import { handleWalletPaymentGetDetails } from "../handleWalletPaymentGetDetails";
 
 describe("Test handleWalletPaymentGetDetails saga", () => {
@@ -28,13 +26,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetPaymentRequestInfo(),
-        paymentsGetPaymentDetailsAction.request(rptId)
-      )
       .next(E.right({ status: 200, value: getPaymentRequestInfoResponse }))
       .put(
         paymentsGetPaymentDetailsAction.success(getPaymentRequestInfoResponse)
@@ -54,13 +46,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetPaymentRequestInfo(),
-        paymentsGetPaymentDetailsAction.request(rptId)
-      )
       .next(E.right({ status: 400, value: undefined }))
       .put(
         paymentsGetPaymentDetailsAction.failure(
@@ -82,13 +68,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetPaymentRequestInfo(),
-        paymentsGetPaymentDetailsAction.request(rptId)
-      )
       .next(E.left([]))
       .put(
         paymentsGetPaymentDetailsAction.failure({

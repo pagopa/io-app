@@ -34,7 +34,7 @@ exports[`PspRadioItem match snapshot 1`] = `
       ]
     }
     testID="pspNameTestID"
-    weight="SemiBold"
+    weight="Semibold"
     weightColorFactory={[Function]}
   >
     PayTipper
@@ -520,7 +520,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                     accessible={true}
                     color="blue"
                     defaultColor="blue"
-                    defaultWeight="SemiBold"
+                    defaultWeight="Semibold"
                     focusable={true}
                     font="TitilliumSansPro"
                     fontStyle={
@@ -550,7 +550,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                         },
                       ]
                     }
-                    weight="SemiBold"
+                    weight="Semibold"
                   >
                     PayTipper’s Terms and Conditions and Privacy Policy apply
                   </Text>

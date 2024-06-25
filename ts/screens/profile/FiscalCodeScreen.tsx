@@ -69,7 +69,7 @@ const FiscalCodeScreen = () => {
             style={styles.box}
             testID="barcode-box"
           >
-            <LabelSmall weight="SemiBold" color="black">
+            <LabelSmall weight="Semibold" color="black">
               {nameSurname}
             </LabelSmall>
             <Barcode
