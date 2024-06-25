@@ -394,38 +394,40 @@ profile:
           title: "Share usage data"
           description: "Help the IO team to monitor the functioning of the app"
         screen:
-          title: "Your usage data"
-          description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
+          title: "Your data on IO"
+          description: Sharing your data helps us improve your experience and provide you with targeted assistance.
           why:
             description:
-              one: "IO collects only the information "
-              two: "necessary "
-              three: "to monitor and improve the provided services."
-            cta: "Why?"
+              one: "We only collect "
+              two: "the data we need "
+              three: "to monitor how the app is working and to make the services we offer better."
+            cta: "Why we collect data"
           security:
             description:
-              one: "We take security measures to protect your data."
-            cta: "Learn more"
+              one: "We take data security seriously "
+              two: "and have measures in place to protect "
+              three: your data.
+            cta: How we keep data safe
           gdpr:
             description:
-              one: "The IO team works with other providers in accordance with "
-              two: "GDPR regulations."
-            cta: "See our providers"
+              one: "We only work with suppliers who process data "
+              two: "in a transparent and secure way."
+            cta: "Who are the suppliers"
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in Profile > Preferences"
+          profileSettings: "You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
           cta:
             shareData: "Share"
-            dontShareData: "Don’t share data"
-            dontShare: "Don’t share"
+            dontShareData: Please don't share data
+            dontShare: Not now
           confirmToast: "Preferences updated!"
         alert:
-          title: "You are not giving IO consent to collect your usage data"
-          body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
+          title: "You've opted not \nto share your data."
+          body: If you confirm, we won't be able to give you the targeted help you need because we might not have the data we need to solve the problem.
         whyBottomSheet:
-          title: "For what purposes do we collect information?"
-          body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
+          title: "Why do we collect data?"
+          body: "We do not collect data for marketing purposes. \n\nWe use tools that allow us to record data on how you use the app, to **provide you with a better service** and **assist you if needed**."
         securityBottomSheet:
           title: "What does pseudonymisation mean?"
           body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."

@@ -394,38 +394,40 @@ profile:
           title: "Condividi i dati di utilizzo"
           description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
         screen:
-          title: "I tuoi dati di utilizzo"
-          description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
+          title: "I tuoi dati su IO"
+          description: Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.
           why:
             description:
-              one: "IO raccoglie solo le informazioni "
-              two: "necessarie "
-              three: "per il funzionamento e il miglioramento dei servizi offerti."
-            cta: "Perché?"
+              one: "Usiamo "
+              two: "solo i dati necessari "
+              three: "a monitorare il funzionamento dell’app e a migliorare i servizi offerti."
+            cta: "Perché raccogliamo i dati"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
-            cta: "Scopri di più"
+              one: "Adottiamo misure di sicurezza per "
+              two: "proteggere "
+              three: i tuoi dati.
+            cta: Come proteggiamo i dati
           gdpr:
             description:
-              one: "Il team di IO collabora con fornitori in conformità con le "
-              two: "norme previste dal GDPR."
-            cta: "Vedi elenco fornitori"
+              one: "Collaboriamo solo con fornitori che trattano i dati in modo "
+              two: "trasparente e sicuro."
+            cta: "Chi sono i fornitori"
           additionalInformation:
-            description: "Per maggiori informazioni, leggi "
-            cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze"
+            description: "Per maggiori informazioni, leggi l'"
+            cta: "Informativa Privacy e i Termini e Condizioni d’uso"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Privacy e Condizioni d’uso"
           cta:
             shareData: "Condividi"
-            dontShareData: "Non condividere dati"
-            dontShare: "Non condividere"
+            dontShareData: Non condividere i dati
+            dontShare: Non ora
           confirmToast: "Preferenze aggiornate!"
         alert:
-          title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
-          body: "Se confermi quest’opzione, in caso di problemi tecnici, il team di supporto di IO potrebbe non avere tutti i dati necessari a risolverli."
+          title: "Hai scelto di non \ncondividere i tuoi dati"
+          body: Se confermi,  non saremo in grado di fornirti assistenza mirata perché potrebbero mancarci i dati necessari per risolvere il problema.
         whyBottomSheet:
-          title: "Per quali finalità raccogliamo informazioni?"
-          body: "**IO non raccoglie dati per finalità di marketing.**  \nUtilizziamo strumenti che ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+          title: "Perché raccogliamo i dati?"
+          body: "Non raccogliamo dati per finalità di marketing.  \n\nUsiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per **fornirti un servizio migliore** e **assisterti in caso di necessità.**"
         securityBottomSheet:
           title: "Cos’è la pseudonimizzazione?"
           body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
