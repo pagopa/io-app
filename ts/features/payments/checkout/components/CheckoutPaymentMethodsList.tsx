@@ -21,9 +21,9 @@ import { selectPaymentMethodAction } from "../store/actions/orchestration";
 import { walletPaymentAmountSelector } from "../store/selectors";
 import {
   walletPaymentAllMethodsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
-  walletPaymentSelectedWalletIdOptionSelector,
-  walletPaymentUserWalletsSelector
+  walletPaymentSelectedWalletIdOptionSelector
 } from "../store/selectors/paymentMethods";
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 
@@ -36,7 +36,7 @@ const CheckoutPaymentMethodsList = () => {
 
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);
-  const userWallets = useIOSelector(walletPaymentUserWalletsSelector);
+  const userWallets = useIOSelector(walletPaymentEnabledUserWalletsSelector);
 
   const selectedUserWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector

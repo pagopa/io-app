@@ -30,9 +30,9 @@ import {
 import { connect } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
-import CieReadingCardAnimation, {
+import CieCardReadingAnimation, {
   ReadingState
-} from "../../../components/cie/CieReadingCardAnimation";
+} from "../../../components/cie/CieCardReadingAnimation";
 import { Body } from "../../../components/core/typography/Body";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { getCieUatEndpoint } from "../../../features/cieLogin/utils/endpoints";
@@ -564,7 +564,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           contentContainerStyle={styles.contentContainer}
         >
           <ContentWrapper>
-            <CieReadingCardAnimation
+            <CieCardReadingAnimation
               pictogramName={getPictogramName(this.state.readingState)}
               readingState={this.state.readingState}
               circleColor={this.props.blueColorName}

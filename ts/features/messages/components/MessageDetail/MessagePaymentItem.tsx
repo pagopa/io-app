@@ -41,6 +41,7 @@ import {
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
+import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
@@ -187,8 +188,13 @@ export const MessagePaymentItem = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
 
+  // Checks if the new wallet section is enabled
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewPaymentSectionEnabledSelector
+  );
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(
+      isNewWalletSectionEnabled,
       messageId,
       rptId,
       isError(paymentStatusForUI),
@@ -202,6 +208,7 @@ export const MessagePaymentItem = ({
   }, [
     canNavigateToPayment,
     dispatch,
+    isNewWalletSectionEnabled,
     isPNPayment,
     messageId,
     paymentAmount,

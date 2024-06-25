@@ -8,7 +8,6 @@ import { ButtonSolid } from "@pagopa/io-app-design-system";
 import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../../../definitions/backend/PaymentNoticeNumber";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
-
 import I18n from "../../../../i18n";
 import { TransactionSummaryScreenNavigationParams } from "../../../../screens/wallet/payment/TransactionSummaryScreen";
 import {
@@ -23,6 +22,7 @@ import {
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../../../../utils/payment";
+import { usePagoPaPayment } from "../../../payments/checkout/hooks/usePagoPaPayment";
 
 type OwnProps = {
   organizationFiscalCode: OrganizationFiscalCode;
@@ -56,14 +56,22 @@ const PaymentButton = ({
   messageId
 }: Props) => {
   const dispatch = useIODispatch();
+  const { isNewWalletSectionEnabled, startPaymentFlowWithRptId } =
+    usePagoPaPayment();
   const handleOnPress = () => {
-    const amount = getAmountFromPaymentAmount(paymentAmount);
-
     const rptId = getRptIdFromNoticeNumber(
       organizationFiscalCode,
       noticeNumber
     );
-
+    if (isNewWalletSectionEnabled) {
+      if (O.isSome(rptId)) {
+        startPaymentFlowWithRptId(rptId.value, {
+          startOrigin: "message"
+        });
+      }
+      return;
+    }
+    const amount = getAmountFromPaymentAmount(paymentAmount);
     if (O.isSome(amount) && O.isSome(rptId)) {
       // TODO: optimize the management of the payment initialization
       if (isEmailValidated && isPagoPaSupported) {
