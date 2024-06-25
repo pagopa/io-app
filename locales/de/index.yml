@@ -297,8 +297,7 @@ profile:
   logout:
     menulabel: "IO beenden"
     alertTitle: "Möchtest du wirklich beenden?"
-    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
-    loading: "Abmeldung läuft..."
+    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren." 
     exit: "Beenden"
   errors:
     load: "Fehler beim Laden des Profils"

@@ -304,7 +304,7 @@ profile:
     menulabel: Esci da IO
     alertTitle: Vuoi davvero uscire?
     alertMessage: Al prossimo accesso sarà necessario autenticarti con CIE o SPID.
-    loading: Logout in corso...
+    loading: Stai uscendo da IO
     exit: Esci
   errors:
     load: Errore nel caricamento del profilo
