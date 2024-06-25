@@ -29,3 +29,8 @@ export const walletPaymentOnSuccessActionSelector = createSelector(
   selectPaymentsCheckoutState,
   state => state.onSuccess
 );
+
+export const walletPaymentStartOriginSelector = createSelector(
+  selectPaymentsCheckoutState,
+  state => state.startOrigin
+);

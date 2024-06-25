@@ -87,13 +87,16 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         organizationFiscalCode: inputState.fiscalCode
       }),
       O.chain(flow(RptId.decode, O.fromEither)),
-      O.map(rptId => {
+      O.map((rptId: RptId) => {
         // Removes the manual input screen from the stack
         navigation.popToTop();
         navigation.pop();
         // Navigate to the payment details screen (payment verification)
         if (isNewWalletSectionEnabled) {
-          startPaymentFlowWithRptId(rptId, { onSuccess: "showTransaction" });
+          startPaymentFlowWithRptId(rptId, {
+            onSuccess: "showTransaction",
+            startOrigin: "manual_insertion"
+          });
         } else {
           dispatch(paymentInitializeState());
           navigation.navigate(ROUTES.WALLET_NAVIGATOR, {

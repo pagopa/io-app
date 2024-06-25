@@ -21,7 +21,7 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps, useLayoutEffect } from "react";
+import React, { ComponentProps, useEffect, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
@@ -47,11 +47,17 @@ import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDe
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
-import { walletPaymentDetailsSelector } from "../store/selectors";
+import {
+  walletPaymentDetailsSelector,
+  walletPaymentStartOriginSelector
+} from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { formatPaymentNoticeNumber } from "../../common/utils";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
+
+import * as analytics from "../analytics";
+import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -119,7 +125,23 @@ const WalletPaymentDetailContent = ({
   payment
 }: WalletPaymentDetailContentProps) => {
   const dispatch = useIODispatch();
+  const savedPaymentMethodsPot = useIOSelector(
+    paymentsWalletUserMethodsSelector
+  );
+  const paymentStartOrigin = useIOSelector(walletPaymentStartOriginSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  useEffect(() => {
+    analytics.trackPaymentSummaryInfoScreen({
+      amount: formatNumberAmount(centsToAmount(payment.amount), true, "right"),
+      expiration_date: payment.dueDate,
+      organization_name: payment.paName,
+      saved_payment_method: pot.getOrElse(savedPaymentMethodsPot, []).length,
+      service_name: cleanTransactionDescription(payment.description),
+      data_entry: paymentStartOrigin,
+      first_time_opening: "yes"
+    });
+  }, [payment, savedPaymentMethodsPot, paymentStartOrigin]);
 
   useLayoutEffect(() => {
     navigation.setOptions({

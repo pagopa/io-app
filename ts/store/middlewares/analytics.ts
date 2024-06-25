@@ -107,6 +107,7 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../../features/pushNotifications/store/actions/notifications";
+import { trackPaymentsAction } from "../../features/payments/checkout/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
@@ -405,6 +406,7 @@ export const actionTracking =
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);
+      void trackPaymentsAction(mixpanel)(action);
     }
     return next(action);
   };
