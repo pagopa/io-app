@@ -24,17 +24,11 @@ import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import {
-  VisibleServicesState,
-  visibleServicesSelector
-} from "../../store/reducers/entities/services/visibleServices";
-import {
-  ProfileState,
   isEmailEnabledSelector,
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { getProfileChannelsforServicesList } from "../../utils/profile";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 type OwnProps = {
@@ -167,10 +161,7 @@ class EmailForwardingScreenClass extends React.Component<Props, State> {
                   this.setState(
                     { isCustomChannelEnabledChoice: false, isLoading: true },
                     () => {
-                      this.props.disableOrEnableAllEmailNotifications(
-                        this.props.visibleServicesId,
-                        this.props.potProfile
-                      );
+                      this.props.disableOrEnableAllEmailNotifications();
                     }
                   );
                 }
@@ -209,15 +200,6 @@ class EmailForwardingScreenClass extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potVisibleServices: VisibleServicesState =
-    visibleServicesSelector(state);
-  const visibleServicesId = pot.getOrElse(
-    pot.map(potVisibleServices, services =>
-      services.map(service => service.service_id)
-    ),
-    []
-  );
-
   const potProfile = profileSelector(state);
   // const potIsCustomEmailChannelEnabled = isCustomEmailChannelEnabledSelector(
   //   state
@@ -240,29 +222,18 @@ const mapStateToProps = (state: GlobalState) => {
     isLoading: pot.isLoading(potProfile) || pot.isUpdating(potProfile),
     isEmailEnabled: isEmailEnabledSelector(state),
     isCustomEmailChannelEnabled,
-    visibleServicesId,
     userEmail
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  disableOrEnableAllEmailNotifications: (
-    servicesId: ReadonlyArray<string>,
-    profile: ProfileState
-  ) => {
-    const newBlockedChannels = getProfileChannelsforServicesList(
-      servicesId,
-      profile,
-      true,
-      "EMAIL"
-    );
+  disableOrEnableAllEmailNotifications: () =>
     dispatch(
       profileUpsert.request({
-        blocked_inbox_or_channels: newBlockedChannels,
+        blocked_inbox_or_channels: {},
         is_email_enabled: true
       })
-    );
-  },
+    ),
   setCustomEmailChannelEnabled: (customEmailChannelEnabled: boolean) => {
     dispatch(customEmailChannelSetEnabled(customEmailChannelEnabled));
   },
