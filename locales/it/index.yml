@@ -957,21 +957,36 @@ onboarding:
     headerTitle: Configura IO
     available:
       title: Attiva il riconoscimento biometrico
-      settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
+      settings: Puoi modificare la tua scelta in ogni momento da Profilo > Sicurezza
       body:
+        text: Potrai usare il tuo volto o impronta digitale al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti in modo più rapido e sicuro.
         infoStart: Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo
         biometricType: volto o impronta digitale,
         infoEnd: in modo più rapido e sicuro.
         enrolledText: Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
         notEnrolled:
-          text: Per usarlo, vai alle impostazioni del tuo dispositivo e configuralo. Poi attivalo su IO in Profilo > Sicurezza.
+          text: Per farlo, devi prima configurarlo nelle impostazioni di sistema del tuo dispositivo.
+          label: Come fare
+          step1: 
+            label: Step 1
+            value: Vai alle impostazioni del tuo dispositivo
+          step2: 
+            label: Step 2
+            value: Configura il volto o l’impronta
+          step3: 
+            label: Step 3
+            value: Attivalo su IO in Profilo > Sicurezza
     unavailable:
       title: Proteggi il tuo dispositivo
+      subtitle: IO ti invia comunicazioni che ti riguardano personalmente. Assicurati che solo tu possa accedere all’app impostando un codice o un segno per sbloccare il dispositivo.
       body:
-        firstInfoStart: Io ti invia le comunicazioni che ti riguardano
-        firstInfoEnd: personalmente.
-        secondInfoStart: Proteggi il tuo dispositivo da accessi indesiderati e assicurati che solo tu possa accedere all'app. Per farlo, vai alle impostazioni del tuo dispositivo, imposta un
-        secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
+        label: Come fare
+        step1: 
+          label: Step 1
+          value: Vai alle impostazioni del tuo dispositivo
+        step2: 
+          label: Step 2
+          value: Imposta un codice o un segno per sbloccare il dispositivo
   shareData:
     title: Configura IO
   thankYouPage:
