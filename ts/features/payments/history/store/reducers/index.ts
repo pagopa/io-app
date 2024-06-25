@@ -15,7 +15,10 @@ import {
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction
 } from "../../../checkout/store/actions/networking";
-import { initPaymentStateAction, selectPaymentMethodAction } from "../../../checkout/store/actions/orchestration";
+import {
+  initPaymentStateAction,
+  selectPaymentMethodAction
+} from "../../../checkout/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailure";
 import { PaymentHistory } from "../../types";
 import {
@@ -92,17 +95,25 @@ const reducer = (
         )
       });
     case getType(selectPaymentMethodAction):
-      const paymentMethodName = action.payload.userWallet?.details?.type || action.payload.paymentMethod?.name;
+      const paymentMethodName =
+        action.payload.userWallet?.details?.type ||
+        action.payload.paymentMethod?.name;
       return updatePaymentHistory(state, {
         selectedPaymentMethod: paymentMethodName
       });
     case getType(paymentsGetPaymentUserMethodsAction.success):
     case getType(getPaymentsWalletUserMethods.success):
+      const unavailablePaymentMethods = action.payload.wallets?.filter(wallet =>
+        wallet.applications.find(
+          app => app.name === "PAGOPA" && app.status !== "ENABLED"
+        )
+      );
       return {
         ...state,
         ongoingPayment: {
           ...state.ongoingPayment,
-          savedPaymentMethods: action.payload.wallets
+          savedPaymentMethods: action.payload.wallets,
+          savedPaymentMethodsUnavailable: unavailablePaymentMethods
         }
       };
     case getType(differentProfileLoggedIn):

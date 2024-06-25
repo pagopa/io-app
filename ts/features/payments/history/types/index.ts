@@ -13,7 +13,9 @@ export type PaymentHistory = {
   startedAt?: Date;
   lookupId?: string;
   savedPaymentMethods?: ReadonlyArray<WalletInfo | EcommerceWalletInfo>;
-  savedPaymentMethodsUnavailable?: ReadonlyArray<WalletInfo>;
+  savedPaymentMethodsUnavailable?: ReadonlyArray<
+    WalletInfo | EcommerceWalletInfo
+  >;
   selectedPaymentMethod?: string;
   verifiedData?: PaymentRequestsGetResponse;
   transaction?: NewTransactionResponse;

@@ -38,6 +38,8 @@ const useWalletPaymentGoBackHandler = () => {
         attempt: paymentOngoingHistory?.attempt,
         saved_payment_method:
           paymentOngoingHistory?.savedPaymentMethods?.length,
+        saved_payment_method_unavailable:
+          paymentOngoingHistory?.savedPaymentMethodsUnavailable?.length,
         expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
       });
       dispatch(paymentsDeleteTransactionAction.request(transactionId));
@@ -54,6 +56,8 @@ const useWalletPaymentGoBackHandler = () => {
         attempt: paymentOngoingHistory?.attempt,
         saved_payment_method:
           paymentOngoingHistory?.savedPaymentMethods?.length,
+        saved_payment_method_unavailable:
+          paymentOngoingHistory?.savedPaymentMethodsUnavailable?.length,
         expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
       });
     };

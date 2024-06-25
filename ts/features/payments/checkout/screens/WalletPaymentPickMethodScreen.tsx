@@ -199,7 +199,7 @@ const WalletPaymentPickMethodScreen = () => {
         saved_payment_method:
           paymentOngoingHistory?.savedPaymentMethods?.length,
         saved_payment_method_unavailable:
-          paymentOngoingHistory?.savedPaymentMethods?.length, // TODO: filter the unavailable payment methods
+          paymentOngoingHistory?.savedPaymentMethodsUnavailable?.length,
         last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
         expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
       });
