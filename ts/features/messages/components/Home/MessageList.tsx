@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
-import { FlatList, StyleSheet } from "react-native";
-import { Divider } from "@pagopa/io-app-design-system";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import { Divider, IOColors } from "@pagopa/io-app-design-system";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
@@ -12,17 +12,20 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { messageListForCategorySelector } from "../../store/reducers/allPaginated";
+import {
+  messageListForCategorySelector,
+  shouldShowRefreshControllOnListSelector
+} from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
 import {
   getLoadNextPageMessagesActionIfAllowed,
+  getReloadAllMessagesActionForRefreshIfAllowed,
   messageListItemHeight
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
 import { MessageListItemSkeleton } from "./DS/MessageListItemSkeleton";
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
-import { CustomRefreshControl } from "./CustomRefreshControl";
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -47,6 +50,9 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
     const messageList = useIOSelector(state =>
       messageListForCategorySelector(state, category)
     );
+    const isRefreshing = useIOSelector(state =>
+      shouldShowRefreshControllOnListSelector(state, category)
+    );
     const loadingList = useMemo(() => {
       const listHeight =
         safeAreaFrame.height -
@@ -58,6 +64,14 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
       return [...Array(count).keys()];
     }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
+    const onRefreshCallback = useCallback(() => {
+      const state = store.getState();
+      const reloadAllMessagesAction =
+        getReloadAllMessagesActionForRefreshIfAllowed(state, category);
+      if (reloadAllMessagesAction) {
+        dispatch(reloadAllMessagesAction);
+      }
+    }, [category, dispatch, store]);
     const onEndReachedCallback = useCallback(
       _ => {
         const state = store.getState();
@@ -93,7 +107,15 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
           }
         }}
         ListFooterComponent={<Footer category={category} />}
-        refreshControl={<CustomRefreshControl category={category} />}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefreshCallback}
+            tintColor={IOColors["blueIO-500"]}
+            colors={[IOColors["blueIO-500"]]}
+            testID={`custom_refresh_control_${category.toLowerCase()}`}
+          />
+        }
         onEndReached={onEndReachedCallback}
         onEndReachedThreshold={0.1}
         testID={`message_list_${category.toLowerCase()}`}
