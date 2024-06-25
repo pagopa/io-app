@@ -482,272 +482,216 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                               </View>
                             </View>
                           </View>
-                          <RCTScrollView
-                            ItemSeparatorComponent={[Function]}
-                            collapsable={false}
-                            data={
-                              Array [
-                                Object {
-                                  "label": "Item 1",
-                                  "testID": "item-1",
-                                  "value": "Value 1",
-                                },
-                                Object {
-                                  "label": "Item 2",
-                                  "testID": "item-2",
-                                  "value": "Value 2",
-                                },
-                              ]
-                            }
-                            getItem={[Function]}
-                            getItemCount={[Function]}
-                            handlerTag={2}
-                            handlerType="NativeViewGestureHandler"
-                            keyExtractor={[Function]}
-                            onContentSizeChange={[Function]}
-                            onGestureHandlerEvent={[Function]}
-                            onGestureHandlerStateChange={[Function]}
-                            onLayout={[Function]}
-                            onMomentumScrollBegin={[Function]}
-                            onMomentumScrollEnd={[Function]}
-                            onScroll={[Function]}
-                            onScrollBeginDrag={[Function]}
-                            onScrollEndDrag={[Function]}
-                            removeClippedSubviews={false}
-                            renderItem={[Function]}
-                            renderScrollComponent={[Function]}
-                            scrollEnabled={false}
-                            scrollEventThrottle={50}
-                            stickyHeaderIndices={Array []}
-                            viewabilityConfigCallbackPairs={Array []}
-                            waitFor={
-                              Array [
-                                Object {
-                                  "current": null,
-                                },
-                                Object {
-                                  "current": null,
-                                },
-                              ]
-                            }
-                          >
+                          <View>
                             <View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                accessibilityLabel="Item 1; Value 1"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-1"
                               >
                                 <View
-                                  accessibilityLabel="Item 1; Value 1"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-1"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 1
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 1
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 1
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 1
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#D2D6E3",
-                                      "height": 0.5,
-                                    }
-                                  }
-                                />
                               </View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#D2D6E3",
+                                    "height": 0.5,
+                                  }
+                                }
+                              />
+                            </View>
+                            <View>
+                              <View
+                                accessibilityLabel="Item 2; Value 2"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-2"
                               >
                                 <View
-                                  accessibilityLabel="Item 2; Value 2"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-2"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 2
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 2
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 2
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 2
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
                               </View>
                             </View>
-                          </RCTScrollView>
+                          </View>
                         </View>
                       </RCTScrollView>
                       <View
@@ -1277,7 +1221,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={5}
+                handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1377,44 +1321,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             }
                             weight="Semibold"
                           />
-                          <RCTScrollView
-                            ItemSeparatorComponent={[Function]}
-                            collapsable={false}
-                            data={Array []}
-                            getItem={[Function]}
-                            getItemCount={[Function]}
-                            handlerTag={6}
-                            handlerType="NativeViewGestureHandler"
-                            keyExtractor={[Function]}
-                            onContentSizeChange={[Function]}
-                            onGestureHandlerEvent={[Function]}
-                            onGestureHandlerStateChange={[Function]}
-                            onLayout={[Function]}
-                            onMomentumScrollBegin={[Function]}
-                            onMomentumScrollEnd={[Function]}
-                            onScroll={[Function]}
-                            onScrollBeginDrag={[Function]}
-                            onScrollEndDrag={[Function]}
-                            removeClippedSubviews={false}
-                            renderItem={[Function]}
-                            renderScrollComponent={[Function]}
-                            scrollEnabled={false}
-                            scrollEventThrottle={50}
-                            stickyHeaderIndices={Array []}
-                            viewabilityConfigCallbackPairs={Array []}
-                            waitFor={
-                              Array [
-                                Object {
-                                  "current": null,
-                                },
-                                Object {
-                                  "current": null,
-                                },
-                              ]
-                            }
-                          >
-                            <View />
-                          </RCTScrollView>
+                          <View />
                         </View>
                       </RCTScrollView>
                       <View
@@ -1944,7 +1851,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={3}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2226,272 +2133,216 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               </View>
                             </View>
                           </View>
-                          <RCTScrollView
-                            ItemSeparatorComponent={[Function]}
-                            collapsable={false}
-                            data={
-                              Array [
-                                Object {
-                                  "label": "Item 1",
-                                  "testID": "item-1",
-                                  "value": "Value 1",
-                                },
-                                Object {
-                                  "label": "Item 2",
-                                  "testID": "item-2",
-                                  "value": "Value 2",
-                                },
-                              ]
-                            }
-                            getItem={[Function]}
-                            getItemCount={[Function]}
-                            handlerTag={4}
-                            handlerType="NativeViewGestureHandler"
-                            keyExtractor={[Function]}
-                            onContentSizeChange={[Function]}
-                            onGestureHandlerEvent={[Function]}
-                            onGestureHandlerStateChange={[Function]}
-                            onLayout={[Function]}
-                            onMomentumScrollBegin={[Function]}
-                            onMomentumScrollEnd={[Function]}
-                            onScroll={[Function]}
-                            onScrollBeginDrag={[Function]}
-                            onScrollEndDrag={[Function]}
-                            removeClippedSubviews={false}
-                            renderItem={[Function]}
-                            renderScrollComponent={[Function]}
-                            scrollEnabled={false}
-                            scrollEventThrottle={50}
-                            stickyHeaderIndices={Array []}
-                            viewabilityConfigCallbackPairs={Array []}
-                            waitFor={
-                              Array [
-                                Object {
-                                  "current": null,
-                                },
-                                Object {
-                                  "current": null,
-                                },
-                              ]
-                            }
-                          >
+                          <View>
                             <View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                accessibilityLabel="Item 1; Value 1"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-1"
                               >
                                 <View
-                                  accessibilityLabel="Item 1; Value 1"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-1"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 1
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 1
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 1
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 1
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#D2D6E3",
-                                      "height": 0.5,
-                                    }
-                                  }
-                                />
                               </View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#D2D6E3",
+                                    "height": 0.5,
+                                  }
+                                }
+                              />
+                            </View>
+                            <View>
+                              <View
+                                accessibilityLabel="Item 2; Value 2"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-2"
                               >
                                 <View
-                                  accessibilityLabel="Item 2; Value 2"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-2"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 2
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 2
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 2
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 2
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
                               </View>
                             </View>
-                          </RCTScrollView>
+                          </View>
                         </View>
                       </RCTScrollView>
                       <View
