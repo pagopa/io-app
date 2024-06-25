@@ -71,7 +71,7 @@ Object {
     "messageGetStatus": Object {
       "status": "idle",
     },
-    "messagePrecondition": Object {
+    "legacyMessagePrecondition": Object {
       "content": Object {
         "kind": "undefined",
       },

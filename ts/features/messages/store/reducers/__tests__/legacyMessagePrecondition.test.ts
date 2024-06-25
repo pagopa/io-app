@@ -25,10 +25,10 @@ const mockThirdPartyMessagePrecondition: ThirdPartyMessagePrecondition = {
 
 const message = toUIMessage(message_1);
 
-describe("messagePrecondition", () => {
+describe("legacyMessagePrecondition", () => {
   it("The initial state should have the messageId undefined and the content as remoteUndefined", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.entities.messages.messagePrecondition).toStrictEqual({
+    expect(globalState.entities.messages.legacyMessagePrecondition).toStrictEqual({
       messageId: O.none,
       content: remoteUndefined
     });
@@ -44,7 +44,7 @@ describe("messagePrecondition", () => {
       })
     );
     expect(
-      store.getState().entities.messages.messagePrecondition
+      store.getState().entities.messages.legacyMessagePrecondition
     ).toStrictEqual({
       messageId: O.some(action.payload.id),
       content: remoteLoading
@@ -59,7 +59,7 @@ describe("messagePrecondition", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          messagePrecondition: {
+          legacyMessagePrecondition: {
             messageId: O.some(message.id),
             content: remoteLoading
           }
@@ -72,7 +72,7 @@ describe("messagePrecondition", () => {
       getMessagePrecondition.success(mockThirdPartyMessagePrecondition)
     );
     expect(
-      store.getState().entities.messages.messagePrecondition
+      store.getState().entities.messages.legacyMessagePrecondition
     ).toStrictEqual({
       messageId: O.some(message.id),
       content: remoteReady(action.payload)
@@ -87,7 +87,7 @@ describe("messagePrecondition", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          messagePrecondition: {
+          legacyMessagePrecondition: {
             messageId: O.some(message.id),
             content: remoteLoading
           }
@@ -100,7 +100,7 @@ describe("messagePrecondition", () => {
       getMessagePrecondition.failure(new Error("Error load remote content"))
     );
     expect(
-      store.getState().entities.messages.messagePrecondition
+      store.getState().entities.messages.legacyMessagePrecondition
     ).toStrictEqual({
       messageId: O.some(message.id),
       content: remoteError(action.payload)
@@ -115,7 +115,7 @@ describe("messagePrecondition", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          messagePrecondition: {
+          legacyMessagePrecondition: {
             messageId: O.some(message.id),
             content: remoteReady(mockThirdPartyMessagePrecondition)
           }
@@ -126,7 +126,7 @@ describe("messagePrecondition", () => {
     const store = createStore(appReducer, finalState as any);
     store.dispatch(clearMessagePrecondition());
     expect(
-      store.getState().entities.messages.messagePrecondition
+      store.getState().entities.messages.legacyMessagePrecondition
     ).toStrictEqual({
       messageId: O.none,
       content: remoteUndefined

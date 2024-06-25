@@ -10,7 +10,7 @@ import {
   getMessagePrecondition,
   clearMessagePrecondition
 } from "../store/actions";
-import { messagePreconditionSelector } from "../store/reducers/messagePrecondition";
+import { legacyMessagePreconditionSelector } from "../store/reducers/legacyMessagePrecondition";
 import { RemoteValue, fold } from "../../../common/model/RemoteValue";
 import I18n from "../../../i18n";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
@@ -94,7 +94,7 @@ export const useMessageOpening = () => {
   const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
 
   const { messageId: maybeMessageId, content } = useIOSelector(
-    messagePreconditionSelector
+    legacyMessagePreconditionSelector
   );
   const [isContentLoadCompleted, setIsContentLoadCompleted] =
     React.useState<boolean>(false);

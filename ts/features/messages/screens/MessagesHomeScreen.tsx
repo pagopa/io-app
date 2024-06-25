@@ -5,6 +5,7 @@ import { IOStyles } from "@pagopa/io-app-design-system";
 import { PagerViewContainer } from "../components/Home/PagerViewContainer";
 import { TabNavigationContainer } from "../components/Home/TabNavigationContainer";
 import { Toasts } from "../components/Home/Toasts";
+import { Preconditions } from "../components/Home/Preconditions";
 
 export const MessagesHomeScreen = () => {
   const pagerViewRef = useRef<PagerView>(null);
@@ -13,6 +14,7 @@ export const MessagesHomeScreen = () => {
       <Toasts />
       <TabNavigationContainer pagerViewRef={pagerViewRef} />
       <PagerViewContainer ref={pagerViewRef} />
+      <Preconditions />
     </View>
   );
 };

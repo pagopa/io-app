@@ -1,4 +1,7 @@
 import React, { useCallback, useMemo } from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
+import { useIODispatch } from "../../../../store/hooks";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
@@ -7,6 +10,10 @@ import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
+import {
+  toNextMessagePreconditionStatus,
+  toScheduledPayload
+} from "../../store/actions/preconditions";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
@@ -19,6 +26,7 @@ export const WrappedMessageListItem = ({
   index,
   message
 }: WrappedMessageListItemProps) => {
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
@@ -48,19 +56,29 @@ export const WrappedMessageListItem = ({
     [message]
   );
 
-  const onPressCallback = useCallback(() => {
-    if (message.category.tag === SENDTagEnum.PN || message.hasPrecondition) {
-      // TODO preconditions IOCOM-840
-      return;
-    }
-    navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-      screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
-      params: {
-        messageId: message.id,
-        fromNotification: false
-      }
-    });
-  }, [message, navigation]);
+  const onPressCallback = useCallback(
+    () =>
+      pipe(
+        message.hasPrecondition,
+        B.fold(
+          () =>
+            navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+              screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+              params: {
+                messageId: message.id,
+                fromNotification: false
+              }
+            }),
+          () =>
+            pipe(
+              toScheduledPayload(message.id, message.category.tag),
+              toNextMessagePreconditionStatus,
+              dispatch
+            )
+        )
+      ),
+    [dispatch, message, navigation]
+  );
 
   return (
     <MessageListItem
