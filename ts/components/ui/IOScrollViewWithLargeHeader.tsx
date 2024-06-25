@@ -119,7 +119,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
               <Body color="grey-700">{description}</Body>
             ) : (
               <ComposedBodyFromArray body={description} textAlign="left" />
-              // This left alignement si by default, it can be overwrite
+              // This left alignement si by default, it can be overwritten
               // from the style inside the "description" array.
             )}
           </ContentWrapper>
