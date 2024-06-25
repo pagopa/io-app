@@ -59,7 +59,7 @@ const TrialSystemPlayground = () => {
         <H3>{"Sperimentazione di IT-Wallet"}</H3>
         <VSpacer />
         <View style={styles.row}>
-          <Body color="black" weight="SemiBold">
+          <Body color="black" weight="Semibold">
             {"Stato attuale: "}
           </Body>
           <Body color="black" weight="Bold">
