@@ -63,9 +63,6 @@ const ProfileStackNavigator = () => (
       component={ServicesPreferenceScreen}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
       name={ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING}
       component={EmailForwardingScreen}
     />
