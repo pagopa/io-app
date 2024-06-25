@@ -12,6 +12,9 @@ export type PaymentAnalyticsProps = {
   saved_payment_method: number;
   amount: string;
   expiration_date: string;
+  attempt: number;
+  saved_payment_method_unavailable: number;
+  last_used_payment_method: string;
 };
 
 export const trackPaymentSummaryInfoScreen = (
@@ -42,6 +45,17 @@ export const trackPaymentSummaryAmountInfo = (
   void mixpanelTrack(
     "PAYMENT_AMOUNT_INFO",
     buildEventProperties("UX", "action", {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentMethodSelection = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_METHOD_SELECTION",
+    buildEventProperties("UX", "screen_view", {
       ...props
     })
   );

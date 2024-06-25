@@ -40,6 +40,8 @@ import {
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import * as analytics from "../analytics";
+import { centsToAmount } from "../../../../utils/stringBuilder";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -73,6 +75,23 @@ const WalletPaymentPickMethodScreen = () => {
       dispatch(paymentsGetPaymentUserMethodsAction.request());
     }, [dispatch])
   );
+
+  useEffect(() => {
+    if (pot.isSome(paymentDetailsPot)) {
+      const paymentDetails = paymentDetailsPot.value;
+      const savedPaymentMethods = pot.getOrElse(userWalletsPots, []);
+      analytics.trackPaymentMethodSelection({
+        // attempt: paymentDetails.attempt,
+        organization_name: paymentDetails.paName,
+        service_name: paymentDetails.description,
+        amount: centsToAmount(paymentDetails.amount).toString(),
+        saved_payment_method: savedPaymentMethods.length,
+        saved_payment_method_unavailable: savedPaymentMethods.length, // TODO: filter the unavailable payment methods
+        last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
+        expiration_date: paymentDetails.dueDate
+      });
+    }
+  }, [paymentDetailsPot, userWalletsPots]);
 
   // If the user doesn't have any onboarded payment method and the backend doesn't return any payment method as guest ..
   // .. we redirect the user to the outcome screen with an outcome that allow the user to start the onboarding process of a new payment method.
