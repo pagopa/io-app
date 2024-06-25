@@ -41,7 +41,12 @@ import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import * as analytics from "../analytics";
-import { centsToAmount } from "../../../../utils/stringBuilder";
+import {
+  centsToAmount,
+  formatNumberAmount
+} from "../../../../utils/stringBuilder";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { selectOngoingPaymentHistory } from "../../history/store/selectors";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -60,6 +65,8 @@ const WalletPaymentPickMethodScreen = () => {
     notHasValidPaymentMethodsSelector
   );
 
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
   );
@@ -76,22 +83,31 @@ const WalletPaymentPickMethodScreen = () => {
     }, [dispatch])
   );
 
-  useEffect(() => {
-    if (pot.isSome(paymentDetailsPot)) {
-      const paymentDetails = paymentDetailsPot.value;
+  useOnFirstRender(
+    () => {
       const savedPaymentMethods = pot.getOrElse(userWalletsPots, []);
       analytics.trackPaymentMethodSelection({
         // attempt: paymentDetails.attempt,
-        organization_name: paymentDetails.paName,
-        service_name: paymentDetails.description,
-        amount: centsToAmount(paymentDetails.amount).toString(),
+        organization_name: paymentOngoingHistory?.verifiedData?.paName,
+        service_name: paymentOngoingHistory?.serviceName,
+        amount: paymentOngoingHistory?.verifiedData?.amount
+          ? formatNumberAmount(
+              centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
+              true,
+              "right"
+            )
+          : undefined,
         saved_payment_method: savedPaymentMethods.length,
         saved_payment_method_unavailable: savedPaymentMethods.length, // TODO: filter the unavailable payment methods
         last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
-        expiration_date: paymentDetails.dueDate
+        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
       });
-    }
-  }, [paymentDetailsPot, userWalletsPots]);
+    },
+    () =>
+      !pot.isLoading(userWalletsPots) &&
+      pot.isSome(userWalletsPots) &&
+      !!paymentOngoingHistory
+  );
 
   // If the user doesn't have any onboarded payment method and the backend doesn't return any payment method as guest ..
   // .. we redirect the user to the outcome screen with an outcome that allow the user to start the onboarding process of a new payment method.

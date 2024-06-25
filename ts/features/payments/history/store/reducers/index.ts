@@ -44,6 +44,7 @@ const reducer = (
         ...state,
         ongoingPayment: {
           startOrigin: action.payload.startOrigin,
+          serviceName: action.payload.serviceName,
           startedAt: new Date(),
           lookupId: getLookUpId()
         }

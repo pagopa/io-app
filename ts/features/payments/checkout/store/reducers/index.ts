@@ -33,7 +33,6 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-import { PaymentStartOrigin } from "../../../../../store/actions/wallet/payment";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -52,7 +51,6 @@ export type PaymentsCheckoutState = {
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
   onSuccess?: OnPaymentSuccessAction;
-  startOrigin?: PaymentStartOrigin;
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
@@ -77,8 +75,7 @@ const reducer = (
     case getType(initPaymentStateAction):
       return {
         ...INITIAL_STATE,
-        onSuccess: action.payload.onSuccess,
-        startOrigin: action.payload.startOrigin
+        onSuccess: action.payload.onSuccess
       };
 
     case getType(walletPaymentSetCurrentStep):

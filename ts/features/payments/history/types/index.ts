@@ -16,4 +16,5 @@ export type PaymentHistory = {
   failure?: WalletPaymentFailure;
   success?: true;
   attempt?: number;
+  serviceName?: string;
 };

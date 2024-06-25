@@ -13,6 +13,7 @@ export type OnPaymentSuccessAction = "showHome" | "showTransaction";
 export type PaymentInitStateParams = {
   startOrigin?: PaymentStartOrigin;
   onSuccess?: OnPaymentSuccessAction;
+  serviceName?: string;
 };
 
 /**
