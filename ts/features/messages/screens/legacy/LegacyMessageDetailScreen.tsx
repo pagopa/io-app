@@ -36,7 +36,7 @@ import { UIMessageId } from "../../types";
 import {
   serviceByIdPotSelector,
   serviceMetadataByIdSelector
-} from "../../../services/details/store/reducers/servicesById";
+} from "../../../services/details/store/reducers";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

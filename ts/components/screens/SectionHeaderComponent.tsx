@@ -2,7 +2,6 @@
  * A component to render a custom section header
  * TODO: use the same component for:
  *  - message list https://www.pivotaltracker.com/story/show/165716236
- *  - service lists https://www.pivotaltracker.com/story/show/166792020
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";

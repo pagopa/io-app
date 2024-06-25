@@ -3,7 +3,6 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
-import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { Action, createStore } from "redux";
 import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../../../definitions/backend/ServicePublic";
@@ -16,7 +15,6 @@ import {
   sessionExpired
 } from "../../../../../../store/actions/authentication";
 import { loadServiceDetail } from "../../actions/details";
-import { removeServiceTuples } from "../../../../../../store/actions/services";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../../utils/tests";
@@ -26,7 +24,7 @@ import {
   serviceByIdSelector,
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
-} from "../servicesById";
+} from "..";
 
 const serviceId = "serviceId" as ServiceId;
 
@@ -42,7 +40,7 @@ describe("serviceById reducer", () => {
   it("should have initial state", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
 
-    expect(state.entities.services.byId).toStrictEqual({});
+    expect(state.features.services.details.byId).toStrictEqual({});
   });
 
   it("should handle loadServiceDetail action", () => {
@@ -51,12 +49,12 @@ describe("serviceById reducer", () => {
 
     store.dispatch(loadServiceDetail.request(serviceId));
 
-    expect(store.getState().entities.services.byId).toStrictEqual({
+    expect(store.getState().features.services.details.byId).toStrictEqual({
       serviceId: pot.noneLoading
     });
 
     store.dispatch(loadServiceDetail.success(service));
-    expect(store.getState().entities.services.byId).toStrictEqual({
+    expect(store.getState().features.services.details.byId).toStrictEqual({
       serviceId: pot.some(service)
     });
 
@@ -66,7 +64,7 @@ describe("serviceById reducer", () => {
     };
 
     store.dispatch(loadServiceDetail.failure(tError));
-    expect(store.getState().entities.services.byId).toStrictEqual({
+    expect(store.getState().features.services.details.byId).toStrictEqual({
       serviceId: pot.someError(service, new Error("load failed"))
     });
   });
@@ -83,7 +81,7 @@ describe("serviceById reducer", () => {
       appReducer,
       sequenceOfActions
     );
-    expect(state.entities.services.byId).toEqual({});
+    expect(state.features.services.details.byId).toEqual({});
   });
 
   it("should handle sessionExpired action", () => {
@@ -98,36 +96,7 @@ describe("serviceById reducer", () => {
       appReducer,
       sequenceOfActions
     );
-    expect(state.entities.services.byId).toEqual({});
-  });
-
-  it("should handle removeServiceTuples action", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadServiceDetail.success({ ...service, service_id: "s1" as ServiceId }),
-      loadServiceDetail.success({ ...service, service_id: "s2" as ServiceId }),
-      loadServiceDetail.success({ ...service, service_id: "s3" as ServiceId }),
-      loadServiceDetail.success({ ...service, service_id: "s4" as ServiceId }),
-      loadServiceDetail.success({ ...service, service_id: "s5" as ServiceId }),
-      removeServiceTuples([
-        Tuple2("s2", "FSCLCD"),
-        Tuple2("s3", "FSCLCD"),
-        // Not existing serviceId
-        Tuple2("s6", "FSCLCD")
-      ])
-    ];
-
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-
-    expect(state.entities.services.byId).toEqual({
-      s1: pot.some({ ...service, service_id: "s1" as ServiceId }),
-      s4: pot.some({ ...service, service_id: "s4" as ServiceId }),
-      s5: pot.some({ ...service, service_id: "s5" as ServiceId })
-    });
+    expect(state.features.services.details.byId).toEqual({});
   });
 });
 
