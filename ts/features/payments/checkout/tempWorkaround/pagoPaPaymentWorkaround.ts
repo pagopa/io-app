@@ -19,6 +19,7 @@ type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 
 /**
  * This is a temporary workaround
+ * [IOCOM-1558](https://pagopa.atlassian.net/browse/IOCOM-1558)
  */
 export const startPaymentFlowWithRptIdWorkaround = (
   rptId: PagoPaRptId,
@@ -41,6 +42,7 @@ export const startPaymentFlowWithRptIdWorkaround = (
 
 /**
  * This is a temporary workaround
+ * [IOCOM-1558](https://pagopa.atlassian.net/browse/IOCOM-1558)
  */
 const initPaymentStateWorkaround = (
   params: PagoPaPaymentParams,
@@ -49,6 +51,10 @@ const initPaymentStateWorkaround = (
   dispatch(initPaymentStateAction(params));
 };
 
+/**
+ * This is a temporary workaround
+ * [IOCOM-1558](https://pagopa.atlassian.net/browse/IOCOM-1558)
+ */
 const startPaymentFlowWorkaround = (
   rptId: RptId,
   dispatch: Dispatch<Action>,
