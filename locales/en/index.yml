@@ -490,17 +490,24 @@ profile:
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
-    subtitle: These settings allow you to customize the IO app experience.
+    subtitle: These settings allow you to customise your IO experience
     contextualHelpTitle: Your preferences
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
-      service_contact: Use of services
       wip: In progress
-      language: Language
       digitalDomicile: Digital domicile
+      service_contact: 
+        title: Use of services
+        subtitle: Choose who can contact you
+      send_email_messages:
+        title: Forwarding messages by email
+        subtitle: Receive message previews
+      language: 
+        title: Language
+        subtitle: Choose language
       preferred_calendar:
-        title: Default Calendar
-        not_selected: Not selected
+        title: Favourite calendar
+        description: Select calendar
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
@@ -1939,8 +1946,9 @@ messages:
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
     calendarPermDenied:
-      title: "It seems calendar permissions has been denied"
-      ok: "Enable permissions"
+      title: Enable access
+      description: We do not have access to your calendar. Please enable access to continue.
+      ok: "Enable access"
       cancel: "Cancel"
     errors:
       fetchCalendars: Error fetching calendars
