@@ -50,7 +50,12 @@ describe("MessagesInbox component", () => {
     it("should render the error component", () => {
       const { component } = renderComponent(
         { ListEmptyComponent, filter },
-        { inbox: { data: pot.noneError("paura, eh?"), lastRequest: O.none } }
+        {
+          inbox: {
+            data: pot.noneError({ reason: "paura, eh?", time: new Date() }),
+            lastRequest: O.none
+          }
+        }
       );
       expect(
         component.getByText(I18n.t("messages.loadingErrorTitle"))
