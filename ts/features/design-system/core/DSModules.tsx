@@ -45,7 +45,7 @@ export const DSModules = () => {
     <DesignSystemScreen title="Modules">
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleAttachment
@@ -56,7 +56,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModulePaymentNotice
@@ -67,7 +67,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleCheckout
@@ -78,7 +78,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ModuleCredential
@@ -89,7 +89,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16, marginTop: 16 }}
       >
         ModuleNavigation
@@ -100,7 +100,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonExtendedOutline
@@ -111,7 +111,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleIDP

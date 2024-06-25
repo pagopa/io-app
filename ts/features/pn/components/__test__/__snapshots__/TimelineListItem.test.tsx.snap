@@ -529,7 +529,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -551,7 +551,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   28
                                 </Text>
@@ -650,7 +650,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -672,7 +672,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Pagata
                                 </Text>
@@ -740,7 +740,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -762,7 +762,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   25
                                 </Text>
@@ -859,7 +859,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -881,7 +881,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Consegnata
                                 </Text>
@@ -949,7 +949,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -971,7 +971,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   23
                                 </Text>
@@ -1068,7 +1068,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1090,7 +1090,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Invio in corso
                                 </Text>
@@ -1158,7 +1158,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1180,7 +1180,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   20
                                 </Text>
@@ -1277,7 +1277,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1299,7 +1299,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   REFUSED
                                 </Text>
@@ -1367,7 +1367,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1389,7 +1389,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   18
                                 </Text>
@@ -1486,7 +1486,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1508,7 +1508,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Depositata
                                 </Text>
@@ -1576,7 +1576,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1598,7 +1598,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   13
                                 </Text>
@@ -1695,7 +1695,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1717,7 +1717,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   IN VALIDATION
                                 </Text>
@@ -1785,7 +1785,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1807,7 +1807,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   10
                                 </Text>
@@ -1904,7 +1904,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -1926,7 +1926,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Annullata
                                 </Text>
@@ -1994,7 +1994,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -2016,7 +2016,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   07
                                 </Text>
@@ -2113,7 +2113,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -2135,7 +2135,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Destinatario irreperibile
                                 </Text>
@@ -2203,7 +2203,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -2225,7 +2225,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   03
                                 </Text>
@@ -2322,7 +2322,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -2344,7 +2344,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Perfezionata per decorrenza termini
                                 </Text>
@@ -2412,7 +2412,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -2434,7 +2434,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   01
                                 </Text>
@@ -2533,7 +2533,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -2555,7 +2555,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Avvenuto accesso
                                 </Text>
@@ -3143,7 +3143,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3165,7 +3165,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   28
                                 </Text>
@@ -3264,7 +3264,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3286,7 +3286,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Pagata
                                 </Text>
@@ -3354,7 +3354,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3376,7 +3376,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   25
                                 </Text>
@@ -3473,7 +3473,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3495,7 +3495,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Consegnata
                                 </Text>
@@ -3563,7 +3563,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3585,7 +3585,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   23
                                 </Text>
@@ -3682,7 +3682,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3704,7 +3704,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Invio in corso
                                 </Text>
@@ -3772,7 +3772,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3794,7 +3794,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   20
                                 </Text>
@@ -3891,7 +3891,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -3913,7 +3913,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   REFUSED
                                 </Text>
@@ -3981,7 +3981,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4003,7 +4003,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   18
                                 </Text>
@@ -4100,7 +4100,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4122,7 +4122,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Depositata
                                 </Text>
@@ -4190,7 +4190,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4212,7 +4212,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   13
                                 </Text>
@@ -4309,7 +4309,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4331,7 +4331,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   IN VALIDATION
                                 </Text>
@@ -4399,7 +4399,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4421,7 +4421,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   10
                                 </Text>
@@ -4518,7 +4518,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4540,7 +4540,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Annullata
                                 </Text>
@@ -4608,7 +4608,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4630,7 +4630,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   07
                                 </Text>
@@ -4727,7 +4727,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4749,7 +4749,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Destinatario irreperibile
                                 </Text>
@@ -4817,7 +4817,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4839,7 +4839,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   03
                                 </Text>
@@ -4936,7 +4936,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -4958,7 +4958,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Perfezionata per decorrenza termini
                                 </Text>
@@ -5026,7 +5026,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -5048,7 +5048,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   01
                                 </Text>
@@ -5147,7 +5147,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   allowFontScaling={false}
                                   color="grey-700"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -5169,7 +5169,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   Avvenuto accesso
                                 </Text>
