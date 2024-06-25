@@ -323,12 +323,20 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "paddingBottom": 104,
+                            "paddingBottom": 56,
                             "paddingHorizontal": 24,
                           }
                         }
+                        decelerationRate="normal"
                         onScroll={[Function]}
-                        scrollEventThrottle={16}
+                        scrollEventThrottle={8}
+                        snapToEnd={false}
+                        snapToOffsets={
+                          Array [
+                            0,
+                            0,
+                          ]
+                        }
                         style={Object {}}
                       >
                         <View>
@@ -474,284 +482,233 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                               </View>
                             </View>
                           </View>
-                          <RCTScrollView
-                            ItemSeparatorComponent={[Function]}
-                            collapsable={false}
-                            data={
-                              Array [
-                                Object {
-                                  "label": "Item 1",
-                                  "testID": "item-1",
-                                  "value": "Value 1",
-                                },
-                                Object {
-                                  "label": "Item 2",
-                                  "testID": "item-2",
-                                  "value": "Value 2",
-                                },
-                              ]
-                            }
-                            getItem={[Function]}
-                            getItemCount={[Function]}
-                            handlerTag={2}
-                            handlerType="NativeViewGestureHandler"
-                            keyExtractor={[Function]}
-                            onContentSizeChange={[Function]}
-                            onGestureHandlerEvent={[Function]}
-                            onGestureHandlerStateChange={[Function]}
-                            onLayout={[Function]}
-                            onMomentumScrollBegin={[Function]}
-                            onMomentumScrollEnd={[Function]}
-                            onScroll={[Function]}
-                            onScrollBeginDrag={[Function]}
-                            onScrollEndDrag={[Function]}
-                            removeClippedSubviews={false}
-                            renderItem={[Function]}
-                            renderScrollComponent={[Function]}
-                            scrollEnabled={false}
-                            scrollEventThrottle={50}
-                            stickyHeaderIndices={Array []}
-                            viewabilityConfigCallbackPairs={Array []}
-                            waitFor={
-                              Array [
-                                Object {
-                                  "current": null,
-                                },
-                                Object {
-                                  "current": null,
-                                },
-                              ]
-                            }
-                          >
+                          <View>
                             <View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                accessibilityLabel="Item 1; Value 1"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-1"
                               >
                                 <View
-                                  accessibilityLabel="Item 1; Value 1"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-1"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 1
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 1
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 1
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 1
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#D2D6E3",
-                                      "height": 0.5,
-                                    }
-                                  }
-                                />
                               </View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#D2D6E3",
+                                    "height": 0.5,
+                                  }
+                                }
+                              />
+                            </View>
+                            <View>
+                              <View
+                                accessibilityLabel="Item 2; Value 2"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-2"
                               >
                                 <View
-                                  accessibilityLabel="Item 2; Value 2"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-2"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 2
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 2
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 2
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 2
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
                               </View>
                             </View>
-                          </RCTScrollView>
+                          </View>
                         </View>
                       </RCTScrollView>
                       <View
                         pointerEvents="box-none"
                         style={
-                          Object {
-                            "bottom": 0,
-                            "height": 168,
-                            "paddingBottom": 24,
-                            "position": "absolute",
-                            "width": "100%",
-                          }
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "justifyContent": "flex-end",
+                              "position": "absolute",
+                              "width": "100%",
+                            },
+                            Object {
+                              "height": 120,
+                              "paddingBottom": 24,
+                            },
+                          ]
                         }
                       >
                         <View
@@ -766,116 +723,107 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 "top": 0,
                               },
                               false,
-                              Object {
-                                "opacity": 1,
-                              },
                             ]
                           }
                         >
-                          <BVLinearGradient
-                            colors={
-                              Array [
-                                16777215,
-                                33554431,
-                                83886079,
-                                150994943,
-                                268435455,
-                                385875967,
-                                520093695,
-                                687865855,
-                                855638015,
-                                1056964607,
-                                1258291199,
-                                1476395007,
-                                1711276031,
-                                1946157055,
-                                2214592511,
-                                2466250751,
-                                2751463423,
-                                3036676095,
-                                3338665983,
-                                3640655871,
-                                3959422975,
-                                4294967295,
-                              ]
-                            }
-                            endPoint={
-                              Object {
-                                "x": 0.5,
-                                "y": 1,
-                              }
-                            }
-                            locations={
-                              Array [
-                                0,
-                                0.047619047619047616,
-                                0.09523809523809523,
-                                0.14285714285714285,
-                                0.19047619047619047,
-                                0.23809523809523808,
-                                0.2857142857142857,
-                                0.3333333333333333,
-                                0.38095238095238093,
-                                0.42857142857142855,
-                                0.47619047619047616,
-                                0.5238095238095237,
-                                0.5714285714285714,
-                                0.6190476190476191,
-                                0.6666666666666666,
-                                0.7142857142857142,
-                                0.7619047619047619,
-                                0.8095238095238095,
-                                0.8571428571428571,
-                                0.9047619047619047,
-                                0.9523809523809523,
-                                1,
-                              ]
-                            }
-                            startPoint={
-                              Object {
-                                "x": 0.5,
-                                "y": 0,
-                              }
-                            }
+                          <View
                             style={
-                              Object {
-                                "height": 92.4,
-                              }
+                              Array [
+                                Object {
+                                  "opacity": undefined,
+                                },
+                                false,
+                              ]
                             }
-                          />
+                          >
+                            <BVLinearGradient
+                              colors={
+                                Array [
+                                  16777215,
+                                  218103807,
+                                  419430399,
+                                  620756991,
+                                  822083583,
+                                  1040187391,
+                                  1241513983,
+                                  1442840575,
+                                  1644167167,
+                                  1845493759,
+                                  2046820351,
+                                  2264924159,
+                                  2466250751,
+                                  2667577343,
+                                  2868903935,
+                                  3070230527,
+                                  3271557119,
+                                  3489660927,
+                                  3690987519,
+                                  3892314111,
+                                  4093640703,
+                                  4294967295,
+                                ]
+                              }
+                              endPoint={
+                                Object {
+                                  "x": 0.5,
+                                  "y": 1,
+                                }
+                              }
+                              locations={
+                                Array [
+                                  0,
+                                  0.047619047619047616,
+                                  0.09523809523809523,
+                                  0.14285714285714285,
+                                  0.19047619047619047,
+                                  0.23809523809523808,
+                                  0.2857142857142857,
+                                  0.3333333333333333,
+                                  0.38095238095238093,
+                                  0.42857142857142855,
+                                  0.47619047619047616,
+                                  0.5238095238095237,
+                                  0.5714285714285714,
+                                  0.6190476190476191,
+                                  0.6666666666666666,
+                                  0.7142857142857142,
+                                  0.7619047619047619,
+                                  0.8095238095238095,
+                                  0.8571428571428571,
+                                  0.9047619047619047,
+                                  0.9523809523809523,
+                                  1,
+                                ]
+                              }
+                              startPoint={
+                                Object {
+                                  "x": 0.5,
+                                  "y": 0,
+                                }
+                              }
+                              style={
+                                Object {
+                                  "height": 99.6,
+                                }
+                              }
+                            />
+                          </View>
                           <View
                             style={
                               Object {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 75.60000000000001,
+                                "height": 20.4,
                               }
                             }
                           />
                         </View>
                         <View
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                              },
-                              Object {
-                                "height": 24,
-                              },
-                            ]
-                          }
-                        />
-                        <View
+                          onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
                             Object {
-                              "flex": 1,
                               "flexShrink": 0,
-                              "justifyContent": "flex-end",
                               "paddingHorizontal": 24,
                               "width": "100%",
                             }
@@ -1273,7 +1221,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={5}
+                handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1328,12 +1276,20 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "paddingBottom": 104,
+                            "paddingBottom": 56,
                             "paddingHorizontal": 24,
                           }
                         }
+                        decelerationRate="normal"
                         onScroll={[Function]}
-                        scrollEventThrottle={16}
+                        scrollEventThrottle={8}
+                        snapToEnd={false}
+                        snapToOffsets={
+                          Array [
+                            0,
+                            0,
+                          ]
+                        }
                         style={Object {}}
                       >
                         <View>
@@ -1365,56 +1321,24 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             }
                             weight="Semibold"
                           />
-                          <RCTScrollView
-                            ItemSeparatorComponent={[Function]}
-                            collapsable={false}
-                            data={Array []}
-                            getItem={[Function]}
-                            getItemCount={[Function]}
-                            handlerTag={6}
-                            handlerType="NativeViewGestureHandler"
-                            keyExtractor={[Function]}
-                            onContentSizeChange={[Function]}
-                            onGestureHandlerEvent={[Function]}
-                            onGestureHandlerStateChange={[Function]}
-                            onLayout={[Function]}
-                            onMomentumScrollBegin={[Function]}
-                            onMomentumScrollEnd={[Function]}
-                            onScroll={[Function]}
-                            onScrollBeginDrag={[Function]}
-                            onScrollEndDrag={[Function]}
-                            removeClippedSubviews={false}
-                            renderItem={[Function]}
-                            renderScrollComponent={[Function]}
-                            scrollEnabled={false}
-                            scrollEventThrottle={50}
-                            stickyHeaderIndices={Array []}
-                            viewabilityConfigCallbackPairs={Array []}
-                            waitFor={
-                              Array [
-                                Object {
-                                  "current": null,
-                                },
-                                Object {
-                                  "current": null,
-                                },
-                              ]
-                            }
-                          >
-                            <View />
-                          </RCTScrollView>
+                          <View />
                         </View>
                       </RCTScrollView>
                       <View
                         pointerEvents="box-none"
                         style={
-                          Object {
-                            "bottom": 0,
-                            "height": 168,
-                            "paddingBottom": 24,
-                            "position": "absolute",
-                            "width": "100%",
-                          }
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "justifyContent": "flex-end",
+                              "position": "absolute",
+                              "width": "100%",
+                            },
+                            Object {
+                              "height": 120,
+                              "paddingBottom": 24,
+                            },
+                          ]
                         }
                       >
                         <View
@@ -1429,116 +1353,107 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                 "top": 0,
                               },
                               false,
-                              Object {
-                                "opacity": 1,
-                              },
                             ]
                           }
                         >
-                          <BVLinearGradient
-                            colors={
-                              Array [
-                                16777215,
-                                33554431,
-                                83886079,
-                                150994943,
-                                268435455,
-                                385875967,
-                                520093695,
-                                687865855,
-                                855638015,
-                                1056964607,
-                                1258291199,
-                                1476395007,
-                                1711276031,
-                                1946157055,
-                                2214592511,
-                                2466250751,
-                                2751463423,
-                                3036676095,
-                                3338665983,
-                                3640655871,
-                                3959422975,
-                                4294967295,
-                              ]
-                            }
-                            endPoint={
-                              Object {
-                                "x": 0.5,
-                                "y": 1,
-                              }
-                            }
-                            locations={
-                              Array [
-                                0,
-                                0.047619047619047616,
-                                0.09523809523809523,
-                                0.14285714285714285,
-                                0.19047619047619047,
-                                0.23809523809523808,
-                                0.2857142857142857,
-                                0.3333333333333333,
-                                0.38095238095238093,
-                                0.42857142857142855,
-                                0.47619047619047616,
-                                0.5238095238095237,
-                                0.5714285714285714,
-                                0.6190476190476191,
-                                0.6666666666666666,
-                                0.7142857142857142,
-                                0.7619047619047619,
-                                0.8095238095238095,
-                                0.8571428571428571,
-                                0.9047619047619047,
-                                0.9523809523809523,
-                                1,
-                              ]
-                            }
-                            startPoint={
-                              Object {
-                                "x": 0.5,
-                                "y": 0,
-                              }
-                            }
+                          <View
                             style={
-                              Object {
-                                "height": 92.4,
-                              }
+                              Array [
+                                Object {
+                                  "opacity": undefined,
+                                },
+                                false,
+                              ]
                             }
-                          />
+                          >
+                            <BVLinearGradient
+                              colors={
+                                Array [
+                                  16777215,
+                                  218103807,
+                                  419430399,
+                                  620756991,
+                                  822083583,
+                                  1040187391,
+                                  1241513983,
+                                  1442840575,
+                                  1644167167,
+                                  1845493759,
+                                  2046820351,
+                                  2264924159,
+                                  2466250751,
+                                  2667577343,
+                                  2868903935,
+                                  3070230527,
+                                  3271557119,
+                                  3489660927,
+                                  3690987519,
+                                  3892314111,
+                                  4093640703,
+                                  4294967295,
+                                ]
+                              }
+                              endPoint={
+                                Object {
+                                  "x": 0.5,
+                                  "y": 1,
+                                }
+                              }
+                              locations={
+                                Array [
+                                  0,
+                                  0.047619047619047616,
+                                  0.09523809523809523,
+                                  0.14285714285714285,
+                                  0.19047619047619047,
+                                  0.23809523809523808,
+                                  0.2857142857142857,
+                                  0.3333333333333333,
+                                  0.38095238095238093,
+                                  0.42857142857142855,
+                                  0.47619047619047616,
+                                  0.5238095238095237,
+                                  0.5714285714285714,
+                                  0.6190476190476191,
+                                  0.6666666666666666,
+                                  0.7142857142857142,
+                                  0.7619047619047619,
+                                  0.8095238095238095,
+                                  0.8571428571428571,
+                                  0.9047619047619047,
+                                  0.9523809523809523,
+                                  1,
+                                ]
+                              }
+                              startPoint={
+                                Object {
+                                  "x": 0.5,
+                                  "y": 0,
+                                }
+                              }
+                              style={
+                                Object {
+                                  "height": 99.6,
+                                }
+                              }
+                            />
+                          </View>
                           <View
                             style={
                               Object {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 75.60000000000001,
+                                "height": 20.4,
                               }
                             }
                           />
                         </View>
                         <View
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                              },
-                              Object {
-                                "height": 24,
-                              },
-                            ]
-                          }
-                        />
-                        <View
+                          onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
                             Object {
-                              "flex": 1,
                               "flexShrink": 0,
-                              "justifyContent": "flex-end",
                               "paddingHorizontal": 24,
                               "width": "100%",
                             }
@@ -1936,7 +1851,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
               <View
                 collapsable={false}
                 forwardedRef={[Function]}
-                handlerTag={3}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1991,12 +1906,20 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                         collapsable={false}
                         contentContainerStyle={
                           Object {
-                            "paddingBottom": 104,
+                            "paddingBottom": 56,
                             "paddingHorizontal": 24,
                           }
                         }
+                        decelerationRate="normal"
                         onScroll={[Function]}
-                        scrollEventThrottle={16}
+                        scrollEventThrottle={8}
+                        snapToEnd={false}
+                        snapToOffsets={
+                          Array [
+                            0,
+                            0,
+                          ]
+                        }
                         style={Object {}}
                       >
                         <View>
@@ -2210,284 +2133,233 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               </View>
                             </View>
                           </View>
-                          <RCTScrollView
-                            ItemSeparatorComponent={[Function]}
-                            collapsable={false}
-                            data={
-                              Array [
-                                Object {
-                                  "label": "Item 1",
-                                  "testID": "item-1",
-                                  "value": "Value 1",
-                                },
-                                Object {
-                                  "label": "Item 2",
-                                  "testID": "item-2",
-                                  "value": "Value 2",
-                                },
-                              ]
-                            }
-                            getItem={[Function]}
-                            getItemCount={[Function]}
-                            handlerTag={4}
-                            handlerType="NativeViewGestureHandler"
-                            keyExtractor={[Function]}
-                            onContentSizeChange={[Function]}
-                            onGestureHandlerEvent={[Function]}
-                            onGestureHandlerStateChange={[Function]}
-                            onLayout={[Function]}
-                            onMomentumScrollBegin={[Function]}
-                            onMomentumScrollEnd={[Function]}
-                            onScroll={[Function]}
-                            onScrollBeginDrag={[Function]}
-                            onScrollEndDrag={[Function]}
-                            removeClippedSubviews={false}
-                            renderItem={[Function]}
-                            renderScrollComponent={[Function]}
-                            scrollEnabled={false}
-                            scrollEventThrottle={50}
-                            stickyHeaderIndices={Array []}
-                            viewabilityConfigCallbackPairs={Array []}
-                            waitFor={
-                              Array [
-                                Object {
-                                  "current": null,
-                                },
-                                Object {
-                                  "current": null,
-                                },
-                              ]
-                            }
-                          >
+                          <View>
                             <View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                accessibilityLabel="Item 1; Value 1"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-1"
                               >
                                 <View
-                                  accessibilityLabel="Item 1; Value 1"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-1"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 1
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 1
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 1
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 1
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#D2D6E3",
-                                      "height": 0.5,
-                                    }
-                                  }
-                                />
                               </View>
                               <View
-                                onLayout={[Function]}
-                                style={null}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#D2D6E3",
+                                    "height": 0.5,
+                                  }
+                                }
+                              />
+                            </View>
+                            <View>
+                              <View
+                                accessibilityLabel="Item 2; Value 2"
+                                accessible={true}
+                                style={
+                                  Object {
+                                    "marginHorizontal": -24,
+                                    "paddingHorizontal": 24,
+                                    "paddingVertical": 12,
+                                  }
+                                }
+                                testID="item-2"
                               >
                                 <View
-                                  accessibilityLabel="Item 2; Value 2"
-                                  accessible={true}
                                   style={
                                     Object {
-                                      "marginHorizontal": -24,
-                                      "paddingHorizontal": 24,
-                                      "paddingVertical": 12,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                     }
                                   }
-                                  testID="item-2"
                                 >
                                   <View
                                     style={
                                       Object {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
+                                        "flex": 1,
                                       }
                                     }
                                   >
                                     <View
-                                      style={
-                                        Object {
-                                          "flex": 1,
-                                        }
-                                      }
+                                      accessibilityElementsHidden={false}
+                                      accessible={true}
+                                      importantForAccessibility="yes"
                                     >
-                                      <View
-                                        accessibilityElementsHidden={false}
-                                        accessible={true}
-                                        importantForAccessibility="yes"
-                                      >
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="grey-700"
-                                          defaultColor="blue"
-                                          defaultWeight="Bold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="grey-700"
+                                        defaultColor="blue"
+                                        defaultWeight="Bold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          }
+                                        }
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 14,
                                               "lineHeight": 21,
-                                            }
+                                            },
+                                            Object {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                            },
+                                          ]
+                                        }
+                                        weight="Regular"
+                                      >
+                                        Item 2
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        color="black"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
+                                        fontStyle={
+                                          Object {
+                                            "fontSize": 18,
+                                            "lineHeight": 25,
                                           }
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 14,
-                                                "lineHeight": 21,
-                                              },
-                                              Object {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                              },
-                                            ]
-                                          }
-                                          weight="Regular"
-                                        >
-                                          Item 2
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={false}
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="Semibold"
-                                          font="TitilliumSansPro"
-                                          fontStyle={
+                                        }
+                                        numberOfLines={2}
+                                        style={
+                                          Array [
                                             Object {
                                               "fontSize": 18,
                                               "lineHeight": 25,
-                                            }
-                                          }
-                                          numberOfLines={2}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 18,
-                                                "lineHeight": 25,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
-                                          }
-                                          weight="Semibold"
-                                        >
-                                          Value 2
-                                        </Text>
-                                      </View>
+                                            },
+                                            Object {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                            },
+                                          ]
+                                        }
+                                        weight="Semibold"
+                                      >
+                                        Value 2
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
                               </View>
                             </View>
-                          </RCTScrollView>
+                          </View>
                         </View>
                       </RCTScrollView>
                       <View
                         pointerEvents="box-none"
                         style={
-                          Object {
-                            "bottom": 0,
-                            "height": 168,
-                            "paddingBottom": 24,
-                            "position": "absolute",
-                            "width": "100%",
-                          }
+                          Array [
+                            Object {
+                              "bottom": 0,
+                              "justifyContent": "flex-end",
+                              "position": "absolute",
+                              "width": "100%",
+                            },
+                            Object {
+                              "height": 120,
+                              "paddingBottom": 24,
+                            },
+                          ]
                         }
                       >
                         <View
@@ -2502,116 +2374,107 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 "top": 0,
                               },
                               false,
-                              Object {
-                                "opacity": 1,
-                              },
                             ]
                           }
                         >
-                          <BVLinearGradient
-                            colors={
-                              Array [
-                                16777215,
-                                33554431,
-                                83886079,
-                                150994943,
-                                268435455,
-                                385875967,
-                                520093695,
-                                687865855,
-                                855638015,
-                                1056964607,
-                                1258291199,
-                                1476395007,
-                                1711276031,
-                                1946157055,
-                                2214592511,
-                                2466250751,
-                                2751463423,
-                                3036676095,
-                                3338665983,
-                                3640655871,
-                                3959422975,
-                                4294967295,
-                              ]
-                            }
-                            endPoint={
-                              Object {
-                                "x": 0.5,
-                                "y": 1,
-                              }
-                            }
-                            locations={
-                              Array [
-                                0,
-                                0.047619047619047616,
-                                0.09523809523809523,
-                                0.14285714285714285,
-                                0.19047619047619047,
-                                0.23809523809523808,
-                                0.2857142857142857,
-                                0.3333333333333333,
-                                0.38095238095238093,
-                                0.42857142857142855,
-                                0.47619047619047616,
-                                0.5238095238095237,
-                                0.5714285714285714,
-                                0.6190476190476191,
-                                0.6666666666666666,
-                                0.7142857142857142,
-                                0.7619047619047619,
-                                0.8095238095238095,
-                                0.8571428571428571,
-                                0.9047619047619047,
-                                0.9523809523809523,
-                                1,
-                              ]
-                            }
-                            startPoint={
-                              Object {
-                                "x": 0.5,
-                                "y": 0,
-                              }
-                            }
+                          <View
                             style={
-                              Object {
-                                "height": 92.4,
-                              }
+                              Array [
+                                Object {
+                                  "opacity": undefined,
+                                },
+                                false,
+                              ]
                             }
-                          />
+                          >
+                            <BVLinearGradient
+                              colors={
+                                Array [
+                                  16777215,
+                                  218103807,
+                                  419430399,
+                                  620756991,
+                                  822083583,
+                                  1040187391,
+                                  1241513983,
+                                  1442840575,
+                                  1644167167,
+                                  1845493759,
+                                  2046820351,
+                                  2264924159,
+                                  2466250751,
+                                  2667577343,
+                                  2868903935,
+                                  3070230527,
+                                  3271557119,
+                                  3489660927,
+                                  3690987519,
+                                  3892314111,
+                                  4093640703,
+                                  4294967295,
+                                ]
+                              }
+                              endPoint={
+                                Object {
+                                  "x": 0.5,
+                                  "y": 1,
+                                }
+                              }
+                              locations={
+                                Array [
+                                  0,
+                                  0.047619047619047616,
+                                  0.09523809523809523,
+                                  0.14285714285714285,
+                                  0.19047619047619047,
+                                  0.23809523809523808,
+                                  0.2857142857142857,
+                                  0.3333333333333333,
+                                  0.38095238095238093,
+                                  0.42857142857142855,
+                                  0.47619047619047616,
+                                  0.5238095238095237,
+                                  0.5714285714285714,
+                                  0.6190476190476191,
+                                  0.6666666666666666,
+                                  0.7142857142857142,
+                                  0.7619047619047619,
+                                  0.8095238095238095,
+                                  0.8571428571428571,
+                                  0.9047619047619047,
+                                  0.9523809523809523,
+                                  1,
+                                ]
+                              }
+                              startPoint={
+                                Object {
+                                  "x": 0.5,
+                                  "y": 0,
+                                }
+                              }
+                              style={
+                                Object {
+                                  "height": 99.6,
+                                }
+                              }
+                            />
+                          </View>
                           <View
                             style={
                               Object {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 75.60000000000001,
+                                "height": 20.4,
                               }
                             }
                           />
                         </View>
                         <View
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "#FFFFFF",
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                              },
-                              Object {
-                                "height": 24,
-                              },
-                            ]
-                          }
-                        />
-                        <View
+                          onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
                             Object {
-                              "flex": 1,
                               "flexShrink": 0,
-                              "justifyContent": "flex-end",
                               "paddingHorizontal": 24,
                               "width": "100%",
                             }
