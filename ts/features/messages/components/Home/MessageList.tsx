@@ -59,12 +59,12 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
     }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
     const onEndReachedCallback = useCallback(
-      ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      _ => {
         const state = store.getState();
         const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
           state,
           category,
-          distanceFromEnd
+          new Date()
         );
         if (loadNextPageMessages) {
           dispatch(loadNextPageMessages);
