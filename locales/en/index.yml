@@ -2077,16 +2077,6 @@ biometric_recognition:
 send_email_messages:
   title: Forward messages by email
   subtitle: Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo
-  options:
-    disable_all:
-      label: Disable for all services
-      info: You will not receive email messages anymore
-    enable_all:
-      label: Enable for all active services
-      info: Every message will be forwarded to your email, if allowed by the service
-    by_service:
-      label: Select service by service
-      info: You will be able to select from each service settings screen to receive its messages by email as well
   switch:
     title: Invia un’anteprima via email
     subtitle: Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente.
