@@ -1,4 +1,4 @@
-import React, { ComponentProps, useCallback, useMemo } from "react";
+import React, { ComponentProps, useMemo } from "react";
 import {
   Body,
   ButtonLinkProps,
@@ -9,8 +9,7 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { FlatList } from "react-native-gesture-handler";
-import { ListRenderItemInfo } from "react-native";
+import { View } from "react-native";
 import {
   BodyProps,
   ComposedBodyFromArray
@@ -35,6 +34,20 @@ export type PropsScreenWithListItems = {
   isHeaderVisible?: boolean;
 };
 
+const ItemsList = ({ items }: { items: Array<ListItemInfo> }) => (
+  <View>
+    {items.map((item, index) => (
+      <View key={`${item.value}-${index}`}>
+        <ListItemInfo
+          {...item}
+          accessibilityLabel={`${item.label}; ${item.value}`}
+        />
+        {index < items.length - 1 && <Divider />}
+      </View>
+    ))}
+  </View>
+);
+
 const ScreenWithListItems = (props: PropsScreenWithListItems) => {
   const {
     title,
@@ -44,21 +57,6 @@ const ScreenWithListItems = (props: PropsScreenWithListItems) => {
     primaryActionProps,
     secondaryActionProps
   } = props;
-
-  const keyExtractor = useCallback(
-    (item: ListItemInfo, index: number) => `${item.value}-${index}`,
-    []
-  );
-
-  const renderProfileNavItem = useCallback(
-    ({ item }: ListRenderItemInfo<ListItemInfo>) => {
-      const { label, value } = item;
-      const accessibilityLabel = `${label}; ${value}`;
-
-      return <ListItemInfo {...item} accessibilityLabel={accessibilityLabel} />;
-    },
-    []
-  );
 
   const actions = useMemo<IOScrollViewActions>(() => {
     if (secondaryActionProps) {
@@ -94,13 +92,7 @@ const ScreenWithListItems = (props: PropsScreenWithListItems) => {
           <ListItemHeader label={listItemHeaderLabel} />
         </>
       )}
-      <FlatList
-        scrollEnabled={false}
-        keyExtractor={keyExtractor}
-        data={renderItems}
-        ItemSeparatorComponent={Divider}
-        renderItem={renderProfileNavItem}
-      />
+      <ItemsList items={renderItems} />
     </IOScrollView>
   );
 };
