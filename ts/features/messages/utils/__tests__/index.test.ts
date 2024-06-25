@@ -40,6 +40,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const decodeErrorCallback = jest.fn();
     const prenavigationCallback = jest.fn();
     initializeAndNavigateToWalletForPayment(
+      false,
       "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId,
       paymentId,
       false,
@@ -60,6 +61,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const decodeErrorCallback = jest.fn();
     const prenavigationCallback = jest.fn();
     initializeAndNavigateToWalletForPayment(
+      false,
       "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId,
       paymentId,
       false,
@@ -98,6 +100,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const prenavigationCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
+      false,
       messageId,
       paymentId,
       false,
@@ -152,6 +155,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const decodeErrorCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
+      false,
       messageId,
       paymentId,
       false,
@@ -206,6 +210,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const prenavigationCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
+      false,
       messageId,
       paymentId,
       false,
@@ -262,6 +267,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const prenavigationCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
+      false,
       messageId,
       paymentId,
       false,
@@ -318,6 +324,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const prenavigationCallback = jest.fn();
 
     initializeAndNavigateToWalletForPayment(
+      false,
       messageId,
       paymentId,
       true,
