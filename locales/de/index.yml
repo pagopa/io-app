@@ -297,8 +297,7 @@ profile:
   logout:
     menulabel: "IO beenden"
     alertTitle: "Möchtest du wirklich beenden?"
-    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
-    loading: "Abmeldung läuft..."
+    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren." 
     exit: "Beenden"
   errors:
     load: "Fehler beim Laden des Profils"
@@ -770,21 +769,13 @@ onboarding:
     headerTitle: "IO einrichten"
     available:
       title: "Biometrische Erkennung aktiveren"
-      settings: "Du kannst deine Präferenz jederzeit unter Profil > Sicherheit ändern."
       body:
         infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
         biometricType: "mit deinem Gesicht oder Fingerabdruck"
         infoEnd: "auf schnellere und sicherere Weise."
         enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
-        notEnrolled:
-          text: "Um sie zu verwenden, geh zu den Geräteeinstellungen und konfiguriere sie. Aktiviere sie dann auf IO unter Profil > Sicherheit."
     unavailable:
       title: "Schütze dein Gerät"
-      body:
-        firstInfoStart: "IO schickt dir Mitteilungen, die dich"
-        firstInfoEnd: "persönlich betreffen."
-        secondInfoStart: "Schütze dein Gerät vor unerwünschtem Zugriff und stell sicher, dass nur du auf die App zugreifen kannst. Geh dazu in die Einstellungen deines Geräts, leg"
-        secondInfoEnd: "einen Entsperrcode fest oder konfiguriere die biometrische Erkennung."
   shareData:
     title: "IO einrichten"
   thankYouPage:
