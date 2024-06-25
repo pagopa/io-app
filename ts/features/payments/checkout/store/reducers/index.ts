@@ -20,7 +20,6 @@ import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsDeleteTransactionAction,
-  paymentsGetNewSessionTokenAction,
   paymentsGetPaymentDetailsAction,
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
@@ -39,7 +38,6 @@ export const WALLET_PAYMENT_STEP_MAX = 4;
 export type PaymentsCheckoutState = {
   currentStep: WalletPaymentStepEnum;
   rptId?: RptId;
-  sessionToken: pot.Pot<string, NetworkError>;
   paymentDetails: pot.Pot<
     PaymentRequestsGetResponse,
     NetworkError | WalletPaymentFailure
@@ -57,7 +55,6 @@ export type PaymentsCheckoutState = {
 
 const INITIAL_STATE: PaymentsCheckoutState = {
   currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
-  sessionToken: pot.none,
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,
@@ -85,23 +82,6 @@ const reducer = (
       return {
         ...state,
         currentStep: _.clamp(action.payload, 1, WALLET_PAYMENT_STEP_MAX)
-      };
-
-    // eCommerce Session token
-    case getType(paymentsGetNewSessionTokenAction.request):
-      return {
-        ...state,
-        sessionToken: pot.toLoading(state.sessionToken)
-      };
-    case getType(paymentsGetNewSessionTokenAction.success):
-      return {
-        ...state,
-        sessionToken: pot.some(action.payload.sessionToken)
-      };
-    case getType(paymentsGetNewSessionTokenAction.failure):
-      return {
-        ...state,
-        sessionToken: pot.toError(state.sessionToken, action.payload)
       };
 
     // Payment verification and details

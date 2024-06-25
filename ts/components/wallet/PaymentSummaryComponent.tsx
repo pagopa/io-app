@@ -52,7 +52,7 @@ export const PaymentSummaryComponent = (props: Props) => {
           {label}
         </Body>
         <Body
-          weight="SemiBold"
+          weight="Semibold"
           color={props.dark ? "white" : "bluegreyDark"}
           selectable={true}
         >

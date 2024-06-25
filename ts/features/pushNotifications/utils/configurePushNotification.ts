@@ -28,6 +28,7 @@ import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
+import { isLoadingOrUpdating } from "../../../utils/pot";
 
 /**
  * Helper type used to validate the notification payload.
@@ -44,8 +45,18 @@ const NotificationPayload = t.partial({
  * Decide how to refresh the messages based on pagination.
  * It only reloads Inbox since Archive is never changed server-side.
  */
-function handleMessageReload() {
-  const { inbox: cursors } = getCursors(store.getState());
+function handleForegroundMessageReload() {
+  const state = store.getState();
+  // Make sure there are not progressing message loadings
+  const allPaginated = state.entities.messages.allPaginated;
+  if (
+    isLoadingOrUpdating(allPaginated.archive.data) ||
+    isLoadingOrUpdating(allPaginated.inbox.data)
+  ) {
+    return;
+  }
+
+  const { inbox: cursors } = getCursors(state);
   if (pot.isNone(cursors)) {
     // nothing in the collection, refresh
     store.dispatch(reloadAllMessages.request({ pageSize, filter: {} }));
@@ -138,7 +149,7 @@ function configurePushNotifications() {
                     })
                   ),
                 // The App is in foreground so just refresh the messages list
-                () => handleMessageReload()
+                () => handleForegroundMessageReload()
               )
             )
           )

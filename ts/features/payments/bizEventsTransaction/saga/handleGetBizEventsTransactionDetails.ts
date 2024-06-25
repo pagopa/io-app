@@ -1,13 +1,11 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getPaymentsBizEventsTransactionDetailsAction } from "../store/actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { TransactionClient } from "../../common/api/client";
-import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/handleWalletPaymentNewSessionToken";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { SagaCallReturnType } from "../../../../types/utils";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to get the transaction details from the biz events API
@@ -20,27 +18,16 @@ export function* handleGetBizEventsTransactionDetails(
     (typeof getPaymentsBizEventsTransactionDetailsAction)["request"]
   >
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
-
-  if (sessionToken === undefined) {
-    yield* put(
-      getPaymentsBizEventsTransactionDetailsAction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
-    return;
-  }
-  const getTransactionDetailsRequest = getTransactionDetails({
-    Authorization: sessionToken,
-    "transaction-id": action.payload.transactionId
-  });
-
   try {
-    const getTransactionDetailsResult = (yield* call(
-      withRefreshApiCall,
-      getTransactionDetailsRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof getTransactionDetails>;
+    const getTransactionDetailsResult = yield* withPaymentsSessionToken(
+      getTransactionDetails,
+      getPaymentsBizEventsTransactionDetailsAction.failure,
+      action,
+      {
+        "transaction-id": action.payload.transactionId
+      },
+      "Authorization"
+    );
 
     if (E.isLeft(getTransactionDetailsResult)) {
       yield* put(
@@ -60,7 +47,7 @@ export function* handleGetBizEventsTransactionDetails(
         )
       );
     } else if (getTransactionDetailsResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+      // The 401 status is handled by the withPaymentsSessionToken
       yield* put(
         getPaymentsBizEventsTransactionDetailsAction.failure({
           ...getGenericError(

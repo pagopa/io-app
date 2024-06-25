@@ -278,7 +278,7 @@ const EmailValidationSendEmailScreen = () => {
                   ? "email.newvalidemail.subtitle"
                   : "email.newvalidate.subtitle"
               )}{" "}
-              <Body weight="SemiBold">{email}</Body>
+              <Body weight="Semibold">{email}</Body>
             </Body>
           </View>
           <VSpacer size={24} />
