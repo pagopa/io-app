@@ -2078,17 +2078,10 @@ biometric_recognition:
   needed_to_disable: Riconoscimento richiesto per disabilitare
 send_email_messages:
   title: Inoltro dei messaggi via email
-  subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
-  options:
-    disable_all:
-      label: Disabilita per tutti i servizi
-      info: Non riceverai più messaggi via email
-    enable_all:
-      label: Abilita per tutti i servizi attivi
-      info: Ogni messaggio sarà inoltrato alla tua email, se il servizio lo consente
-    by_service:
-      label: Scegli servizio per servizio
-      info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
+  subtitle: Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo
+  switch:
+    title: Invia un’anteprima via email
+    subtitle: Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente.
 services:
   accessibility:
     edit: Modifica l'impostazione dei servizi

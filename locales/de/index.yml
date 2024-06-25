@@ -1858,17 +1858,6 @@ biometric_recognition:
   needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
 send_email_messages:
   title: "Mitteilungen mittels E-Mail weiterleiten"
-  subtitle: "Möchtest du, dass IO den Inhalt von Mitteilungen per E-Mail weiterleitet an"
-  options:
-    disable_all:
-      label: "Für alle Dienste deaktivieren"
-      info: "Du erhältst keine Mitteilung mittels E-Mail mehr"
-    enable_all:
-      label: "Für alle aktiven Dienste aktivieren"
-      info: "Jede Mitteilung wird an deine E-Mail-Adresse weitergeleitet, wenn der Dienst dies zulässt"
-    by_service:
-      label: "Dienst für Dienst auswählen"
-      info: "Du kannst auf der Registerkarte jedes Dienstes wählen, ob du dessen Mitteilungen auch per E-Mail erhalten möchtest"
 services:
   accessibility:
     edit: "Ändere die Einstellung der Dienste"
