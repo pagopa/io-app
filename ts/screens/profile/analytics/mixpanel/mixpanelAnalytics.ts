@@ -3,6 +3,13 @@ import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/prof
 import { GlobalState } from "../../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../../utils/analytics";
 
+export enum TrackingInfo {
+  WHY = "finalità",
+  FIND_OUT_MORE = "sicurezza",
+  SUPPLIERS = "fornitori",
+  TOS = "ToS"
+}
+
 export async function trackMixpanelSetEnabled(
   isEnabled: boolean,
   flow: FlowType,
@@ -29,5 +36,12 @@ export function trackMixpanelDeclined(flow: FlowType) {
   void mixpanelTrack(
     "PREFERENCE_MIXPANEL_DECLINED",
     buildEventProperties("UX", "action", undefined, flow)
+  );
+}
+
+export function trackMixPanelTrackingInfo(flow: FlowType, info: TrackingInfo) {
+  void mixpanelTrack(
+    "TRACKING_INFO",
+    buildEventProperties("UX", "action", { info }, flow)
   );
 }
