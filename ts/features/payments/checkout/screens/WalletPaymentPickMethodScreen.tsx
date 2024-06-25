@@ -46,7 +46,8 @@ import {
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
+import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -65,7 +66,9 @@ const WalletPaymentPickMethodScreen = () => {
     notHasValidPaymentMethodsSelector
   );
 
-  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const paymentOngoingHistory = useIOSelector(
+    selectOngoingPaymentHistorySelector
+  );
 
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -81,32 +84,6 @@ const WalletPaymentPickMethodScreen = () => {
       dispatch(paymentsGetPaymentMethodsAction.request());
       dispatch(paymentsGetPaymentUserMethodsAction.request());
     }, [dispatch])
-  );
-
-  useOnFirstRender(
-    () => {
-      const savedPaymentMethods = pot.getOrElse(userWalletsPots, []);
-      analytics.trackPaymentMethodSelection({
-        // attempt: paymentDetails.attempt,
-        organization_name: paymentOngoingHistory?.verifiedData?.paName,
-        service_name: paymentOngoingHistory?.serviceName,
-        amount: paymentOngoingHistory?.verifiedData?.amount
-          ? formatNumberAmount(
-              centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
-              true,
-              "right"
-            )
-          : undefined,
-        saved_payment_method: savedPaymentMethods.length,
-        saved_payment_method_unavailable: savedPaymentMethods.length, // TODO: filter the unavailable payment methods
-        last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
-      });
-    },
-    () =>
-      !pot.isLoading(userWalletsPots) &&
-      pot.isSome(userWalletsPots) &&
-      !!paymentOngoingHistory
   );
 
   // If the user doesn't have any onboarded payment method and the backend doesn't return any payment method as guest ..
@@ -204,6 +181,30 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
 
+  useOnFirstRender(
+    () => {
+      analytics.trackPaymentMethodSelection({
+        attempt: paymentOngoingHistory?.attempt,
+        organization_name: paymentOngoingHistory?.verifiedData?.paName,
+        service_name: paymentOngoingHistory?.serviceName,
+        amount: paymentOngoingHistory?.verifiedData?.amount
+          ? formatNumberAmount(
+              centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
+              true,
+              "right"
+            )
+          : undefined,
+        saved_payment_method:
+          paymentOngoingHistory?.savedPaymentMethods?.length,
+        saved_payment_method_unavailable:
+          paymentOngoingHistory?.savedPaymentMethods?.length, // TODO: filter the unavailable payment methods
+        last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
+        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+      });
+    },
+    () => !isLoading && !!paymentOngoingHistory
+  );
+
   React.useEffect(() => {
     if (isError) {
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
@@ -217,7 +218,31 @@ const WalletPaymentPickMethodScreen = () => {
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
+  const getSelectedPaymentMethodFlag = () =>
+    pipe(
+      sequenceT(O.Monad)(selectedPaymentMethodIdOption, selectedWalletIdOption),
+      O.fold(
+        () => "none" as PaymentAnalyticsSelectedMethodFlag,
+        () => "saved" as PaymentAnalyticsSelectedMethodFlag
+      )
+    );
+
   const handleContinue = () => {
+    analytics.trackPaymentMethodSelected({
+      attempt: paymentOngoingHistory?.attempt,
+      organization_name: paymentOngoingHistory?.verifiedData?.paName,
+      service_name: paymentOngoingHistory?.serviceName,
+      amount: paymentOngoingHistory?.verifiedData?.amount
+        ? formatNumberAmount(
+            centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
+            true,
+            "right"
+          )
+        : undefined,
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+      payment_method_selected_flag: getSelectedPaymentMethodFlag()
+    });
     if (isTransactionAlreadyActivated) {
       // If transacion is already activated (for example, when the user returns to this screen to edit the selected
       // method) we can go directly to the next step.

@@ -6,6 +6,7 @@ import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommer
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { WalletClientStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletClientStatus";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { WalletPaymentStepEnum } from "../types";
 
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
@@ -29,10 +30,16 @@ export const getLatestUsedWallet = (
     ),
     RA.reduce<WalletInfo, WalletInfo | undefined>(undefined, (acc, curr) =>
       acc?.clients.IO?.lastUsage &&
-      curr.clients.IO?.lastUsage &&
-      acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
+        curr.clients.IO?.lastUsage &&
+        acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
         ? acc
         : curr
     ),
     O.fromNullable
   );
+
+export const WalletPaymentStepScreenNames = {
+  [WalletPaymentStepEnum.PICK_PAYMENT_METHOD]: "PICK_PAYMENT_METHOD",
+  [WalletPaymentStepEnum.PICK_PSP]: "PICK_PSP",
+  [WalletPaymentStepEnum.CONFIRM_TRANSACTION]: "CONFIRM_TRANSACTION"
+};

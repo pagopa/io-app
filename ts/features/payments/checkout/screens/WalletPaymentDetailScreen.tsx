@@ -54,9 +54,8 @@ import { formatPaymentNoticeNumber } from "../../common/utils";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 
 import * as analytics from "../analytics";
-import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -124,15 +123,13 @@ const WalletPaymentDetailContent = ({
   payment
 }: WalletPaymentDetailContentProps) => {
   const dispatch = useIODispatch();
-  const savedPaymentMethodsPot = useIOSelector(
-    paymentsWalletUserMethodsSelector
+  const paymentOngoingHistory = useIOSelector(
+    selectOngoingPaymentHistorySelector
   );
-  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   useOnFirstRender(
     () => {
-      const userPaymentMethods = pot.getOrElse(savedPaymentMethodsPot, []);
       analytics.trackPaymentSummaryInfoScreen({
         amount: formatNumberAmount(
           centsToAmount(payment.amount),
@@ -141,14 +138,14 @@ const WalletPaymentDetailContent = ({
         ),
         expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
         organization_name: paymentOngoingHistory?.verifiedData?.paName,
-        saved_payment_method: userPaymentMethods.length,
+        saved_payment_method:
+          paymentOngoingHistory?.savedPaymentMethods?.length,
         service_name: paymentOngoingHistory?.serviceName,
         data_entry: paymentOngoingHistory?.startOrigin,
         first_time_opening: "yes"
       });
     },
-    () =>
-      payment && !!paymentOngoingHistory && pot.isSome(savedPaymentMethodsPot)
+    () => payment && !!paymentOngoingHistory
   );
 
   useLayoutEffect(() => {

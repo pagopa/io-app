@@ -12,9 +12,10 @@ import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {
   paymentsCreateTransactionAction,
   paymentsGetPaymentDetailsAction,
-  paymentsGetPaymentTransactionInfoAction
+  paymentsGetPaymentTransactionInfoAction,
+  paymentsGetPaymentUserMethodsAction
 } from "../../../checkout/store/actions/networking";
-import { initPaymentStateAction } from "../../../checkout/store/actions/orchestration";
+import { initPaymentStateAction, selectPaymentMethodAction } from "../../../checkout/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailure";
 import { PaymentHistory } from "../../types";
 import {
@@ -22,6 +23,7 @@ import {
   storePaymentOutcomeToHistory
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
 
 export type PaymentsHistoryState = {
   ongoingPayment?: PaymentHistory;
@@ -43,6 +45,7 @@ const reducer = (
       return {
         ...state,
         ongoingPayment: {
+          savedPaymentMethods: state.ongoingPayment?.savedPaymentMethods,
           startOrigin: action.payload.startOrigin,
           serviceName: action.payload.serviceName,
           startedAt: new Date(),
@@ -88,6 +91,20 @@ const reducer = (
           O.toUndefined
         )
       });
+    case getType(selectPaymentMethodAction):
+      const paymentMethodName = action.payload.userWallet?.details?.type || action.payload.paymentMethod?.name;
+      return updatePaymentHistory(state, {
+        selectedPaymentMethod: paymentMethodName
+      });
+    case getType(paymentsGetPaymentUserMethodsAction.success):
+    case getType(getPaymentsWalletUserMethods.success):
+      return {
+        ...state,
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          savedPaymentMethods: action.payload.wallets
+        }
+      };
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
       return INITIAL_STATE;

@@ -11,9 +11,14 @@ import { paymentsDeleteTransactionAction } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
 
 const useWalletPaymentGoBackHandler = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const paymentOngoingHistory = useIOSelector(
+    selectOngoingPaymentHistorySelector
+  );
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const dispatch = useIODispatch();
 
@@ -29,12 +34,27 @@ const useWalletPaymentGoBackHandler = () => {
     const { transactionId } = transactionPot.value;
 
     const handleConfirmAbort = () => {
+      analytics.trackPaymentMethodSelectionBackExit({
+        attempt: paymentOngoingHistory?.attempt,
+        saved_payment_method:
+          paymentOngoingHistory?.savedPaymentMethods?.length,
+        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+      });
       dispatch(paymentsDeleteTransactionAction.request(transactionId));
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.CANCELED_BY_USER
         }
+      });
+    };
+
+    const handleCancel = () => {
+      analytics.trackPaymentMethodSelectionBackContinue({
+        attempt: paymentOngoingHistory?.attempt,
+        saved_payment_method:
+          paymentOngoingHistory?.savedPaymentMethods?.length,
+        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
       });
     };
 
@@ -47,7 +67,8 @@ const useWalletPaymentGoBackHandler = () => {
         },
         {
           text: I18n.t("wallet.payment.abortDialog.cancel"),
-          style: "cancel"
+          style: "cancel",
+          onPress: handleCancel
         }
       ]);
     };
