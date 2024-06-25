@@ -46,6 +46,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
 import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
+import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -746,7 +747,6 @@ describe("allPaginated reducer", () => {
       action: failure
     }))
     .forEach(({ initialState, action }) => {
-      const expectedState = pot.noneError(defaultRequestError.error.message);
       describe(`when a ${action.type} failure is sent`, () => {
         it(`preserves the existing lastRequest: ${initialState.inbox.lastRequest}`, () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
@@ -754,9 +754,12 @@ describe("allPaginated reducer", () => {
           );
         });
         it("returns the error", () => {
-          expect(reducer(initialState, action).inbox.data).toEqual(
-            expectedState
-          );
+          const output = reducer(initialState, action).inbox.data;
+          const errorReason = pot.isError(output)
+            ? output.error.reason
+            : undefined;
+          expect(pot.isError(output)).toBe(true);
+          expect(errorReason).toBe(defaultRequestError.error.message);
         });
       });
     });
@@ -978,7 +981,7 @@ describe("isLoadingOrUpdatingInbox selector", () => {
       expectedReturn: false
     },
     {
-      inbox: pot.noneError(""),
+      inbox: pot.noneError({ reason: "", time: new Date() }),
       expectedReturn: false
     },
     {
@@ -992,7 +995,7 @@ describe("isLoadingOrUpdatingInbox selector", () => {
         {
           page: []
         },
-        ""
+        { reason: "", time: new Date() }
       ),
       expectedReturn: false
     },
@@ -1408,7 +1411,7 @@ describe("messageListForCategorySelector", () => {
     it(`for ${category} category, data pot.noneError, should return emptyMessageArray reference`, () => {
       const state = generateAllPaginatedDataStateForCategory(
         category,
-        pot.noneError("")
+        pot.noneError({ reason: "", time: new Date() })
       );
       const messageList = messageListForCategorySelector(state, category);
       expect(messageList).toBe(emptyMessageArray);
@@ -1440,7 +1443,7 @@ describe("messageListForCategorySelector", () => {
     it(`for ${category} category, data pot.someError, should return the message list`, () => {
       const state = generateAllPaginatedDataStateForCategory(
         category,
-        pot.someError(nonEmptyMessagePage, "")
+        pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
       );
       const messageList = messageListForCategorySelector(state, category);
       expect(messageList).toBe(readonlyNonEmptyMessageList);
@@ -1494,7 +1497,7 @@ describe("emptyListReasonSelector", () => {
   it("should return 'error' for INBOX category when inbox message collection is pot.noneError", () => {
     const state = generateAllPaginatedDataStateForCategory(
       "INBOX",
-      pot.noneError("")
+      pot.noneError({ reason: "", time: new Date() })
     );
     const reason = emptyListReasonSelector(state, "INBOX");
     expect(reason).toBe("error");
@@ -1550,7 +1553,7 @@ describe("emptyListReasonSelector", () => {
   it("should return 'noData' for INBOX category when inbox message collection is pot.someError with no data", () => {
     const state = generateAllPaginatedDataStateForCategory(
       "INBOX",
-      pot.someError(emptyMessagePage, "")
+      pot.someError(emptyMessagePage, { reason: "", time: new Date() })
     );
     const reason = emptyListReasonSelector(state, "INBOX");
     expect(reason).toBe("noData");
@@ -1558,7 +1561,7 @@ describe("emptyListReasonSelector", () => {
   it("should return 'notEmpty' for INBOX category when inbox message collection is pot.someError with data", () => {
     const state = generateAllPaginatedDataStateForCategory(
       "INBOX",
-      pot.someError(nonEmptyMessagePage, "")
+      pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
     );
     const reason = emptyListReasonSelector(state, "INBOX");
     expect(reason).toBe("notEmpty");
@@ -1587,7 +1590,7 @@ describe("emptyListReasonSelector", () => {
   it("should return 'error' for ARCHIVE category when inbox message collection is pot.noneError", () => {
     const state = generateAllPaginatedDataStateForCategory(
       "ARCHIVE",
-      pot.noneError("")
+      pot.noneError({ reason: "", time: new Date() })
     );
     const reason = emptyListReasonSelector(state, "ARCHIVE");
     expect(reason).toBe("error");
@@ -1643,7 +1646,7 @@ describe("emptyListReasonSelector", () => {
   it("should return 'noData' for ARCHIVE category when inbox message collection is pot.someError with no data", () => {
     const state = generateAllPaginatedDataStateForCategory(
       "ARCHIVE",
-      pot.someError(emptyMessagePage, "")
+      pot.someError(emptyMessagePage, { reason: "", time: new Date() })
     );
     const reason = emptyListReasonSelector(state, "ARCHIVE");
     expect(reason).toBe("noData");
@@ -1651,7 +1654,7 @@ describe("emptyListReasonSelector", () => {
   it("should return 'notEmpty' for ARCHIVE category when inbox message collection is pot.someError with data", () => {
     const state = generateAllPaginatedDataStateForCategory(
       "ARCHIVE",
-      pot.someError(nonEmptyMessagePage, "")
+      pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
     );
     const reason = emptyListReasonSelector(state, "ARCHIVE");
     expect(reason).toBe("notEmpty");
@@ -1664,11 +1667,11 @@ describe("shouldShowFooterListComponentSelector", () => {
     pot.none,
     pot.noneLoading,
     pot.noneUpdating(emptyMessagePage),
-    pot.noneError(""),
+    pot.noneError({ reason: "", time: new Date() }),
     pot.some(nonEmptyMessagePage),
     pot.someLoading(nonEmptyMessagePage),
     pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
-    pot.someError(nonEmptyMessagePage, "")
+    pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
   ];
   const lastRequests: Array<LastRequestType> = [
     O.some("all"),
@@ -1716,17 +1719,24 @@ describe("messagePagePotFromCategorySelector", () => {
   });
 });
 
+describe("nextPageLoadingWaitMillisecondsGenerator", () => {
+  it("should return 2 seconds", () => {
+    const waitMilliseconds = nextPageLoadingWaitMillisecondsGenerator();
+    expect(waitMilliseconds).toBe(2000);
+  });
+});
+
 describe("shouldShowRefreshControllOnListSelector", () => {
   const categories: ReadonlyArray<MessageListCategory> = ["INBOX", "ARCHIVE"];
   const messagePagePotData: ReadonlyArray<MessagePagePot> = [
     pot.none,
     pot.noneLoading,
     pot.noneUpdating(nonEmptyMessagePage),
-    pot.noneError(""),
+    pot.noneError({ reason: "", time: new Date() }),
     pot.some(nonEmptyMessagePage),
     pot.someLoading(nonEmptyMessagePage),
     pot.someUpdating(nonEmptyMessagePage, emptyMessagePage),
-    pot.someError(nonEmptyMessagePage, "")
+    pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
   ];
   const messageRequests: ReadonlyArray<LastRequestType> = [
     O.some("next"),
