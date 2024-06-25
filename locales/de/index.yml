@@ -427,16 +427,12 @@ profile:
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
-    subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
     contextualHelpTitle: "Deine Einstellungen"
     list:
       wip: "In Bearbeitung"
-      language: "Sprache"
       digitalDomicile: "Digitales Domizil"
-      service_contact: "Dienste verwalten"
       preferred_calendar:
         title: "Bevorzugter Kalender"
-        not_selected: "Nicht ausgewählt"
       preferred_language:
         title: "Bevorzugte Sprache"
         subtitle: "In welcher Sprache möchtest du die App nutzen?"
@@ -1744,7 +1740,6 @@ messages:
     reminderRemoveFailure: "Fehler beim Entfernen der Erinnerung, bitte versuche es erneut"
     preferenceCalendarSelect: "Wähle deinen Standardkalender"
     calendarPermDenied:
-      title: "Die Berechtigung zum Zugriff auf den Kalender wurde offenbar verweigert"
       ok: "Berechtigungen freigeben"
       cancel: "Abbrechen"
     errors:
