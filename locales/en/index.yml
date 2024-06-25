@@ -955,36 +955,36 @@ onboarding:
     headerTitle: Configure IO
     available:
       title: Enable biometric recognition
-      settings: Puoi modificare la tua scelta in ogni momento da Profilo > Sicurezza
+      settings: You can always change your choice in Profile > Security
       body:
-        text: Potrai usare il tuo volto o impronta digitale al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti in modo più rapido e sicuro.
-        infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorizeoperations and payments with your
+        text: You can use your face or fingerprint to enter instead of the unlock code. This will let you access the app and authorise operation and payments more easily and safely.
+        infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorize operations and payments with your
         biometricType: face or fingerprint
         infoEnd: more quickly and securely.
         enrolledText: The biometric information is stored in your phone's memory. it will not be disclosed in any way to IO systems or stored anywhere else.
         notEnrolled:
-          text: Per farlo, devi prima configurarlo nelle impostazioni di sistema del tuo dispositivo.
-          label: Come fare
+          text: You need to configure this in your device settings.
+          label: How to
           step1: 
             label: Step 1
-            value: Vai alle impostazioni del tuo dispositivo
+            value: Go to your device settings
           step2: 
             label: Step 2
-            value: Configura il volto o l’impronta
+            value: Set up face or fingerprint
           step3: 
             label: Step 3
-            value: Attivalo su IO in Profilo > Sicurezza
+            value: Enable it in IO under Profile > Security
     unavailable:
       title: Protect your device
-      subtitle: IO ti invia comunicazioni che ti riguardano personalmente. Assicurati che solo tu possa accedere all’app impostando un codice o un segno per sbloccare il dispositivo.
+      subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
       body:
-        label: Come fare
+        label: How to
         step1: 
           label: Step 1
-          value: Vai alle impostazioni del tuo dispositivo
+          value: Go to your device settings
         step2: 
           label: Step 2
-          value: Imposta un codice o un segno per sbloccare il dispositivo
+          value: Set a code or sign to unlock the device
   shareData:
     title: "Configure IO"
   thankYouPage:
