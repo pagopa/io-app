@@ -33,7 +33,7 @@ describe("MessageList", () => {
     });
     jest
       .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
-      .mockImplementation((_state, category, _messageListDistanceFromEnd) =>
+      .mockImplementation((_state, category) =>
         category === expectedCategory ? expectedAction : undefined
       );
 
@@ -55,7 +55,7 @@ describe("MessageList", () => {
     });
     jest
       .spyOn(homeUtils, "getLoadNextPageMessagesActionIfAllowed")
-      .mockImplementation((_state, category, _messageListDistanceFromEnd) =>
+      .mockImplementation((_state, category) =>
         category === expectedCategory ? undefined : unexpectedAction
       );
 
