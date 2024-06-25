@@ -490,17 +490,24 @@ profile:
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
-    subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO.
+    subtitle: Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       wip: In elaborazione
-      language: Lingua
       digitalDomicile: Domicilio digitale
-      service_contact: Gestione servizi
+      service_contact: 
+        title: Gestione servizi
+        subtitle: Scegli chi può contattarti
+      send_email_messages:
+        title: Inoltro dei messaggi via email
+        subtitle: Ricevi un’anteprima dei messaggi
+      language: 
+        title: Lingua
+        subtitle: Scegli la lingua
       preferred_calendar:
         title: Calendario preferito
-        not_selected: Non Selezionato
+        description: Seleziona un calendario
       preferred_language:
         title: Lingua preferita
         subtitle: In quale lingua vuoi usare l'applicazione?
@@ -1939,8 +1946,9 @@ messages:
     reminderRemoveFailure: "Errore durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
     calendarPermDenied:
-      title: "Sembra che i permessi per accedere al calendario siano stati negati"
-      ok: "Abilita i permessi"
+      title: Consenti l'accesso
+      description: Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.
+      ok: "Consenti l'accesso"
       cancel: "Annulla"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
