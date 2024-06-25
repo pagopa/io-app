@@ -216,8 +216,25 @@ const WalletPaymentDetailContent = ({
     componentProps: {
       icon: "info",
       accessibilityLabel: "info",
-      onPress: amountInfoBottomSheet.present
+      onPress: () => {
+        amountInfoBottomSheet.present();
+        analytics.trackPaymentSummaryAmountInfo({
+          amount,
+          organization_name: payment.paName,
+          service_name: description
+        });
+      }
     }
+  };
+
+  const handleOnCopy = (text: string) => {
+    clipboardSetStringWithFeedback(text);
+    analytics.trackPaymentSummaryNoticeCopy({
+      code: text,
+      organization_name: payment.paName,
+      service_name: description,
+      expiration_date: dueDate
+    });
   };
 
   return (
@@ -262,9 +279,7 @@ const WalletPaymentDetailContent = ({
         label={I18n.t("payment.noticeCode")}
         accessibilityLabel={I18n.t("payment.noticeCode")}
         value={formattedPaymentNoticeNumber}
-        onPress={() =>
-          clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
-        }
+        onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
       />
       <Divider />
       <ListItemInfoCopy
@@ -272,7 +287,7 @@ const WalletPaymentDetailContent = ({
         label={I18n.t("wallet.firstTransactionSummary.entityCode")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
         value={organizationFiscalCode}
-        onPress={() => clipboardSetStringWithFeedback(organizationFiscalCode)}
+        onPress={() => handleOnCopy(organizationFiscalCode)}
       />
       {amountInfoBottomSheet.bottomSheet}
     </GradientScrollView>
