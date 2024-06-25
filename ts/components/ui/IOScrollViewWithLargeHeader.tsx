@@ -16,6 +16,10 @@ import {
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
+import {
+  BodyProps,
+  ComposedBodyFromArray
+} from "../core/typography/ComposedBodyFromArray";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
@@ -28,7 +32,7 @@ type Props = {
   children: React.ReactNode;
   actions?: ComponentProps<typeof IOScrollView>["actions"];
   title: LargeHeaderTitleProps;
-  description?: string;
+  description?: string | Array<BodyProps>;
   goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
   canGoback?: boolean;
@@ -111,10 +115,15 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         {description && (
           <ContentWrapper>
             <VSpacer size={4} />
-            <Body color="grey-700">{description}</Body>
+            {typeof description === "string" ? (
+              <Body color="grey-700">{description}</Body>
+            ) : (
+              <ComposedBodyFromArray body={description} textAlign="left" />
+              // This left alignement si by default, it can be overwrite
+              // from the style inside the "description" array.
+            )}
           </ContentWrapper>
         )}
-
         <VSpacer size={16} />
 
         {children}

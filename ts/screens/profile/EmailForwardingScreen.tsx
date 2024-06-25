@@ -13,10 +13,7 @@ import {
 import _ from "lodash";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../../components/core/typography/ComposedBodyFromArray";
+import { BodyProps } from "../../components/core/typography/ComposedBodyFromArray";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   ProfileState,
@@ -158,11 +155,7 @@ const EmailForwardingScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       title={{ label: I18n.t("send_email_messages.title") }}
-      description={
-        (
-          <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
-        ) as unknown as string
-      }
+      description={bodyPropsArray}
       headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}
       canGoback={true}
