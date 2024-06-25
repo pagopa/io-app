@@ -5,15 +5,19 @@ import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pago
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { WalletClientStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletClientStatus";
+import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
 
 export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
-  method.methodManagement === PaymentMethodManagementTypeEnum.ONBOARDABLE ||
-  method.methodManagement === PaymentMethodManagementTypeEnum.NOT_ONBOARDABLE ||
-  method.methodManagement ===
-    PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT;
+  [
+    PaymentMethodManagementTypeEnum.ONBOARDABLE,
+    PaymentMethodManagementTypeEnum.NOT_ONBOARDABLE,
+    PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT,
+    PaymentMethodManagementTypeEnum.REDIRECT
+  ].includes(method.methodManagement) &&
+  method.status === PaymentMethodStatusEnum.ENABLED;
 
 export const getLatestUsedWallet = (
   wallets: ReadonlyArray<WalletInfo>

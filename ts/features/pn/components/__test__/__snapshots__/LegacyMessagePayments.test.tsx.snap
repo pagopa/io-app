@@ -806,7 +806,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                               <Text
                                 color="bluegreyDark"
                                 defaultColor="bluegreyDark"
-                                defaultWeight="SemiBold"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -950,7 +950,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     n1
                                   </Text>
@@ -1191,7 +1191,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     n2
                                   </Text>
@@ -1432,7 +1432,7 @@ exports[`LegacyMessagePayments component Should match the snapshot for a cancell
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     n3
                                   </Text>

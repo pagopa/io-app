@@ -50,7 +50,7 @@ export const DSLogos = () => {
     <DesignSystemScreen title={"Logos"}>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Avatar
@@ -61,7 +61,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Payment Networks (Small)
@@ -72,7 +72,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Payment Networks (Big)
@@ -83,7 +83,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Banks (Extended)
@@ -94,7 +94,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Payment Networks (Card)

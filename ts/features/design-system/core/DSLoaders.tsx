@@ -90,7 +90,7 @@ export const DSLoaders = () => {
       {/* Present in the main Messages screen */}
       <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={styles.sectionTitle}
       >
         Activity Indicator
@@ -116,7 +116,7 @@ export const DSLoaders = () => {
 
       <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={styles.sectionTitle}
       >
         Loading Indicator
@@ -127,7 +127,7 @@ export const DSLoaders = () => {
 
       <H3
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={styles.sectionTitle}
       >
         Loading Spinner
