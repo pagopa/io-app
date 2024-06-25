@@ -45,7 +45,7 @@ const getNavigator = (): React.RefObject<
 
 // NavigationParams
 // This definition comes from react-navigation navigate definition.
-type NavigationParams<T extends keyof AppParamsList> = T extends unknown
+export type NavigationParams<T extends keyof AppParamsList> = T extends unknown
   ? // This condition checks if the params are optional,
     // which means it's either undefined or a union with undefined
     undefined extends AppParamsList[T]
