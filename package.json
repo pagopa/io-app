@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.63.0-rc.1",
+  "version": "2.63.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.33/definitions.yml",
@@ -19,9 +19,10 @@
   "services_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_services_app_backend.yaml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/openapi/generated/api_fast_login.yaml",
-  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.35.1/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
-  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.35.1/src/domains/ecommerce-app/api/ecommerce-io/v1/_openapi.json.tpl",
-  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-infra/0a6784276fd43aaff7709dd90e0d379e77326f28/src/domains/bizevents-app/api/transaction-service/v1/_openapi-jwt.json.tpl",
+  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/pay-wallet-app/api/io-payment-wallet/v1/_openapi.json.tpl",
+  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl",
+  "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/0.1.37/openapi/openapi_io_patch.json",
+  "pagopa_api_platform": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl",
   "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/features/add-openapi-trial-service/api_trial_system.yaml",
   "private": true,
   "scripts": {
@@ -83,7 +84,8 @@
     "generate:pagopa-walletv3-api": "rimraf definitions/pagopa/walletv3 && mkdir -p definitions/pagopa/walletv3 && gen-api-models --api-spec $npm_package_pagopa_api_walletv3 --out-dir ./definitions/pagopa/walletv3 --no-strict --response-decoders --request-types --client",
     "generate:pagopa-ecommerce-api": "rimraf definitions/pagopa/ecommerce && mkdir -p definitions/pagopa/ecommerce && gen-api-models --api-spec $npm_package_pagopa_api_ecommerce --out-dir ./definitions/pagopa/ecommerce --no-strict --response-decoders --request-types --client",
     "generate:pagopa-biz-events-api": "rimraf definitions/pagopa/biz-events && mkdir -p definitions/pagopa/biz-events && gen-api-models --api-spec $npm_package_pagopa_api_biz_events --out-dir ./definitions/pagopa/biz-events --no-strict --response-decoders --request-types --client",
-    "generate:payments": "npm-run-all generate:pagopa-walletv3-api generate:pagopa-ecommerce-api generate:pagopa-biz-events-api",
+    "generate:pagopa-platform-api": "rimraf definitions/pagopa/platform && mkdir -p definitions/pagopa/platform && gen-api-models --api-spec $npm_package_pagopa_api_platform --out-dir ./definitions/pagopa/platform --no-strict --response-decoders --request-types --client",
+    "generate:payments": "npm-run-all generate:pagopa-walletv3-api generate:pagopa-ecommerce-api generate:pagopa-biz-events-api generate:pagopa-platform-api",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
@@ -260,7 +262,7 @@
     "@types/validator": "^9.4.2",
     "@types/xml2js": "^0.4.11",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
-    "@typescript-eslint/parser": "^5.9.1",
+    "@typescript-eslint/parser": "^7.13.0",
     "@xstate/cli": "^0.3.3",
     "abortcontroller-polyfill": "1.7.3",
     "babel-jest": "^29.2.1",
@@ -301,7 +303,7 @@
     "rn-nodeify": "^10.0.1",
     "standard-version": "^8.0.2",
     "ts-node": "^7.0.1",
-    "typescript": "^4.9.5"
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=16"
