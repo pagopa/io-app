@@ -1,21 +1,22 @@
-import React, { useCallback } from "react";
+import React, { ComponentProps, useMemo } from "react";
 import {
   Body,
   ButtonLinkProps,
   ButtonSolidProps,
   Divider,
-  GradientScrollView,
   H2,
   ListItemHeader,
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { FlatList } from "react-native-gesture-handler";
-import { ListRenderItemInfo } from "react-native";
+import { View } from "react-native";
 import {
   BodyProps,
   ComposedBodyFromArray
 } from "../core/typography/ComposedBodyFromArray";
+import { IOScrollView } from "../ui/IOScrollView";
+
+type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];
 
 export type PropsScreenWithListItems = {
   title?: string;
@@ -33,6 +34,20 @@ export type PropsScreenWithListItems = {
   isHeaderVisible?: boolean;
 };
 
+const ItemsList = ({ items }: { items: Array<ListItemInfo> }) => (
+  <View>
+    {items.map((item, index) => (
+      <View key={`${item.value}-${index}`}>
+        <ListItemInfo
+          {...item}
+          accessibilityLabel={`${item.label}; ${item.value}`}
+        />
+        {index < items.length - 1 && <Divider />}
+      </View>
+    ))}
+  </View>
+);
+
 const ScreenWithListItems = (props: PropsScreenWithListItems) => {
   const {
     title,
@@ -43,26 +58,23 @@ const ScreenWithListItems = (props: PropsScreenWithListItems) => {
     secondaryActionProps
   } = props;
 
-  const keyExtractor = useCallback(
-    (item: ListItemInfo, index: number) => `${item.value}-${index}`,
-    []
-  );
+  const actions = useMemo<IOScrollViewActions>(() => {
+    if (secondaryActionProps) {
+      return {
+        type: "TwoButtons",
+        primary: primaryActionProps,
+        secondary: secondaryActionProps
+      };
+    }
 
-  const renderProfileNavItem = useCallback(
-    ({ item }: ListRenderItemInfo<ListItemInfo>) => {
-      const { label, value } = item;
-      const accessibilityLabel = `${label}; ${value}`;
-
-      return <ListItemInfo {...item} accessibilityLabel={accessibilityLabel} />;
-    },
-    []
-  );
+    return {
+      type: "SingleButton",
+      primary: primaryActionProps
+    };
+  }, [primaryActionProps, secondaryActionProps]);
 
   return (
-    <GradientScrollView
-      primaryActionProps={primaryActionProps}
-      secondaryActionProps={secondaryActionProps}
-    >
+    <IOScrollView actions={actions}>
       <H2>{title}</H2>
       {subtitle && (
         <>
@@ -80,14 +92,8 @@ const ScreenWithListItems = (props: PropsScreenWithListItems) => {
           <ListItemHeader label={listItemHeaderLabel} />
         </>
       )}
-      <FlatList
-        scrollEnabled={false}
-        keyExtractor={keyExtractor}
-        data={renderItems}
-        ItemSeparatorComponent={Divider}
-        renderItem={renderProfileNavItem}
-      />
-    </GradientScrollView>
+      <ItemsList items={renderItems} />
+    </IOScrollView>
   );
 };
 
