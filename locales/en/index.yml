@@ -304,7 +304,7 @@ profile:
     menulabel: Logout from IO
     alertTitle: Do you want to logout?
     alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
-    loading: Stai uscendo da IO
+    loading: You're leaving IO
     exit: Exit
   errors:
     load: Error loading the profile
