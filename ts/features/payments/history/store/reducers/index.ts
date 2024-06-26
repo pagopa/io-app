@@ -30,7 +30,10 @@ import {
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
 import { getPspFlagType } from "../../../checkout/utils";
-import { centsToAmount, formatNumberAmount } from "../../../../../utils/stringBuilder";
+import {
+  centsToAmount,
+  formatNumberAmount
+} from "../../../../../utils/stringBuilder";
 
 export type PaymentsHistoryState = {
   ongoingPayment?: PaymentHistory;
@@ -140,7 +143,10 @@ const reducer = (
         ongoingPayment: {
           ...state.ongoingPayment,
           selectedPsp: action.payload,
-          selectedPspFlag: getPspFlagType(action.payload, state.ongoingPayment?.pspList)
+          selectedPspFlag: getPspFlagType(
+            action.payload,
+            state.ongoingPayment?.pspList
+          )
         }
       };
     case getType(differentProfileLoggedIn):

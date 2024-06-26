@@ -26,25 +26,39 @@ export function* handleWalletPaymentCreateTransaction(
       if (action.payload.onError) {
         action.payload.onError();
       } else {
-        yield* put(paymentsCreateTransactionAction.failure({
-          ...getGenericError(new Error(readablePrivacyReport(newTransactionResult.left)))
-        }));
+        yield* put(
+          paymentsCreateTransactionAction.failure({
+            ...getGenericError(
+              new Error(readablePrivacyReport(newTransactionResult.left))
+            )
+          })
+        );
       }
       return;
     }
     const status = newTransactionResult.right.status;
     if (status === 200) {
-      yield* put(paymentsCreateTransactionAction.success(newTransactionResult.right.value));
+      yield* put(
+        paymentsCreateTransactionAction.success(
+          newTransactionResult.right.value
+        )
+      );
     } else if (status === 400) {
       if (action.payload.onError) {
         action.payload.onError();
       } else {
-        yield* put(paymentsCreateTransactionAction.failure({
-          ...getGenericError(new Error(`Error: ${status}`))
-        }));
+        yield* put(
+          paymentsCreateTransactionAction.failure({
+            ...getGenericError(new Error(`Error: ${status}`))
+          })
+        );
       }
     } else {
-      yield* put(paymentsCreateTransactionAction.failure(newTransactionResult.right.value));
+      yield* put(
+        paymentsCreateTransactionAction.failure(
+          newTransactionResult.right.value
+        )
+      );
     }
   } catch (e) {
     yield* put(

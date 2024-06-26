@@ -8,7 +8,10 @@ import { WalletClientStatusEnum } from "../../../../../definitions/pagopa/wallet
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { WalletPaymentStepEnum } from "../types";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentAnalyticsPhase, PaymentAnalyticsSelectedPspFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
+import {
+  PaymentAnalyticsPhase,
+  PaymentAnalyticsSelectedPspFlag
+} from "../types/PaymentAnalyticsSelectedMethodFlag";
 
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
@@ -32,8 +35,8 @@ export const getLatestUsedWallet = (
     ),
     RA.reduce<WalletInfo, WalletInfo | undefined>(undefined, (acc, curr) =>
       acc?.clients.IO?.lastUsage &&
-        curr.clients.IO?.lastUsage &&
-        acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
+      curr.clients.IO?.lastUsage &&
+      acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
         ? acc
         : curr
     ),
@@ -46,7 +49,10 @@ export const WalletPaymentStepScreenNames = {
   [WalletPaymentStepEnum.CONFIRM_TRANSACTION]: "CONFIRM_TRANSACTION"
 };
 
-export const getPspFlagType = (psp: Bundle, pspList?: ReadonlyArray<Bundle>): PaymentAnalyticsSelectedPspFlag => {
+export const getPspFlagType = (
+  psp: Bundle,
+  pspList?: ReadonlyArray<Bundle>
+): PaymentAnalyticsSelectedPspFlag => {
   if (!pspList) {
     return "none";
   }
@@ -57,7 +63,11 @@ export const getPspFlagType = (psp: Bundle, pspList?: ReadonlyArray<Bundle>): Pa
     return "unique";
   }
   const cheaperPsp = pspList.reduce((acc, curr) => {
-    if (acc.taxPayerFee && curr.taxPayerFee && acc.taxPayerFee < curr.taxPayerFee) {
+    if (
+      acc.taxPayerFee &&
+      curr.taxPayerFee &&
+      acc.taxPayerFee < curr.taxPayerFee
+    ) {
       return acc;
     }
     return curr;
@@ -65,7 +75,9 @@ export const getPspFlagType = (psp: Bundle, pspList?: ReadonlyArray<Bundle>): Pa
   return cheaperPsp.idBundle === psp.idBundle ? "cheaper" : "none";
 };
 
-export const getPaymentPhaseFromStep = (step: WalletPaymentStepEnum): PaymentAnalyticsPhase => {
+export const getPaymentPhaseFromStep = (
+  step: WalletPaymentStepEnum
+): PaymentAnalyticsPhase => {
   switch (step) {
     case WalletPaymentStepEnum.PICK_PAYMENT_METHOD:
       return "verifica";
