@@ -20,13 +20,13 @@ export function* watchPaymentsOnboardingSaga(
   yield* takeLatest(
     paymentsStartOnboardingAction.request,
     handleStartWalletOnboarding,
-    walletClient.createWallet
+    walletClient.createIOPaymentWallet
   );
 
   // handle the request of get list of payment methods available into onboarding
   yield* takeLatest(
     paymentsOnboardingGetMethodsAction.request,
     handleGetPaymentMethods,
-    walletClient.getAllPaymentMethods
+    walletClient.getAllPaymentMethodsForIO
   );
 }

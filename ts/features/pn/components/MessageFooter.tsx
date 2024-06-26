@@ -19,6 +19,7 @@ import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { shouldUseBottomSheetForPayments } from "../utils";
+import { isNewPaymentSectionEnabledSelector } from "../../../store/reducers/backendStatus";
 
 const styles = StyleSheet.create({
   container: {
@@ -58,6 +59,10 @@ export const MessageFooter = ({
   const canNavigateToPayment = useIOSelector(state =>
     canNavigateToPaymentFromMessageSelector(state)
   );
+  // Checks if the new wallet section is enabled
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewPaymentSectionEnabledSelector
+  );
   const onFooterPressCallback = useCallback(() => {
     if (shouldUseBottomSheetForPayments(false, payments)) {
       trackPNShowAllPayments();
@@ -66,6 +71,7 @@ export const MessageFooter = ({
       const firstPayment = payments[0];
       const paymentId = getRptIdStringFromPayment(firstPayment);
       initializeAndNavigateToWalletForPayment(
+        isNewWalletSectionEnabled,
         messageId,
         paymentId,
         false,
@@ -79,6 +85,7 @@ export const MessageFooter = ({
   }, [
     canNavigateToPayment,
     dispatch,
+    isNewWalletSectionEnabled,
     messageId,
     payments,
     presentPaymentsBottomSheetRef,

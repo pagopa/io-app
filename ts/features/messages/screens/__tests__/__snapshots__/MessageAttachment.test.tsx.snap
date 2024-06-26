@@ -221,16 +221,18 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             }
                           >
                             <View
+                              accessibilityHint="Wait for the content load"
+                              accessibilityLabel="Loading"
                               accessibilityRole="progressbar"
                               accessible={true}
                               importantForAccessibility="no-hide-descendants"
                               style={
                                 Object {
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 48,
+                                  "width": 48,
                                 }
                               }
-                              testID="LoadingSpinnerTestID"
+                              testID="refreshIndicator"
                             >
                               <View
                                 collapsable={false}
@@ -247,11 +249,11 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={48}
+                                  bbWidth={48}
                                   fill="none"
                                   focusable={false}
-                                  height={24}
+                                  height={48}
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -263,14 +265,14 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       },
                                       Object {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 48,
+                                        "width": 48,
                                       },
                                     ]
                                   }
-                                  vbHeight={24}
-                                  vbWidth={24}
-                                  width={24}
+                                  vbHeight={48}
+                                  vbWidth={48}
+                                  width={48}
                                 >
                                   <RNSVGGroup
                                     fill={null}
@@ -328,10 +330,10 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                           "strokeWidth",
                                         ]
                                       }
-                                      strokeWidth={3}
+                                      strokeWidth={5}
                                     >
                                       <RNSVGPath
-                                        d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                        d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
                                         fill={
                                           Object {
                                             "payload": 4278190080,
@@ -351,7 +353,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                         }
                                       />
                                       <RNSVGPath
-                                        d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                        d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
                                         fill={
                                           Object {
                                             "payload": 4278190080,
@@ -371,7 +373,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                         }
                                       />
                                       <RNSVGPath
-                                        d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                        d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
                                         fill={
                                           Object {
                                             "payload": 4278190080,
@@ -406,14 +408,15 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             >
                               <Text
                                 accessible={true}
-                                color="bluegrey"
-                                defaultColor="bluegrey"
-                                defaultWeight="Regular"
+                                allowFontScaling={false}
+                                color="bluegreyDark"
+                                defaultColor="bluegreyDark"
+                                defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
+                                    "fontSize": 24,
+                                    "lineHeight": 34,
                                   }
                                 }
                                 style={
@@ -422,18 +425,18 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       "textAlign": "center",
                                     },
                                     Object {
-                                      "fontSize": 16,
-                                      "lineHeight": 24,
+                                      "fontSize": 24,
+                                      "lineHeight": 34,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#17324D",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Loading document...
                               </Text>

@@ -1,6 +1,5 @@
 import {
   Body,
-  GradientScrollView,
   LabelLink,
   ListItemHeader,
   ModuleCheckout,
@@ -45,6 +44,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
@@ -69,37 +69,31 @@ const WalletPaymentConfirmScreen = () => {
         paymentDetail: pot.toOption(paymentDetailsPot),
         paymentMethodId: selectedPaymentMethodIdOption,
         selectedPsp: selectedPspOption,
-        transaction: pot.toOption(transactionPot),
-        paymentMethodManagement: selectedPaymentMethodManagement
+        transaction: pot.toOption(transactionPot)
       }),
-      O.map(
-        ({
-          paymentDetail,
+      O.map(({ paymentDetail, paymentMethodId, selectedPsp, transaction }) => {
+        // In case of guest payment walletId could be undefined
+        const walletId = O.toUndefined(selectedWalletIdOption);
+        const paymentMethodManagement = O.toUndefined(
+          selectedPaymentMethodManagement
+        );
+        const isAllCCP = pipe(
+          transaction.payments[0],
+          O.fromNullable,
+          O.chainNullableK(payment => payment.isAllCCP),
+          O.getOrElse(() => false)
+        );
+        startPaymentAuthorizaton({
+          paymentAmount: paymentDetail.amount as AmountEuroCents,
+          paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
+          pspId: selectedPsp.idPsp ?? "",
+          isAllCCP,
+          transactionId: transaction.transactionId,
+          walletId,
           paymentMethodId,
-          selectedPsp,
-          transaction,
           paymentMethodManagement
-        }) => {
-          // In case of guest payment walletId could be undefined
-          const walletId = O.toUndefined(selectedWalletIdOption);
-          const isAllCCP = pipe(
-            transaction.payments[0],
-            O.fromNullable,
-            O.chainNullableK(payment => payment.isAllCCP),
-            O.getOrElse(() => false)
-          );
-          startPaymentAuthorizaton({
-            paymentAmount: paymentDetail.amount as AmountEuroCents,
-            paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
-            pspId: selectedPsp.idPsp ?? "",
-            isAllCCP,
-            transactionId: transaction.transactionId,
-            walletId,
-            paymentMethodId,
-            paymentMethodManagement
-          });
-        }
-      )
+        });
+      })
     );
 
   const handleAuthorizationOutcome = React.useCallback(
@@ -148,19 +142,22 @@ const WalletPaymentConfirmScreen = () => {
   );
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
-          totalAmount,
-          true,
-          "right"
-        )}`,
-        accessibilityLabel: `${I18n.t(
-          "payment.confirm.pay"
-        )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
-        onPress: handleStartPaymentAuthorization,
-        disabled: isLoading,
-        loading: isLoading
+    <IOScrollView
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
+            totalAmount,
+            true,
+            "right"
+          )}`,
+          accessibilityLabel: `${I18n.t(
+            "payment.confirm.pay"
+          )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
+          onPress: handleStartPaymentAuthorization,
+          disabled: isLoading,
+          loading: isLoading
+        }
       }}
     >
       <ListItemHeader
@@ -192,7 +189,7 @@ const WalletPaymentConfirmScreen = () => {
           {I18n.t("payment.confirm.termsAndConditionsLink")}
         </LabelLink>
       </Body>
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

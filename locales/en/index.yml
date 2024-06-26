@@ -304,7 +304,7 @@ profile:
     menulabel: Logout from IO
     alertTitle: Do you want to logout?
     alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
-    loading: Logout in progress...
+    loading: You're leaving IO
     exit: Exit
   errors:
     load: Error loading the profile
@@ -394,38 +394,40 @@ profile:
           title: "Share usage data"
           description: "Help the IO team to monitor the functioning of the app"
         screen:
-          title: "Your usage data"
-          description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
+          title: "Your data on IO"
+          description: Sharing your data helps us improve your experience and provide you with targeted assistance.
           why:
             description:
-              one: "IO collects only the information "
-              two: "necessary "
-              three: "to monitor and improve the provided services."
-            cta: "Why?"
+              one: "We only collect "
+              two: "the data we need "
+              three: "to monitor how the app is working and to make the services we offer better."
+            cta: "Why we collect data"
           security:
             description:
-              one: "We take security measures to protect your data."
-            cta: "Learn more"
+              one: "We take data security seriously "
+              two: "and have measures in place to protect "
+              three: your data.
+            cta: How we keep data safe
           gdpr:
             description:
-              one: "The IO team works with other providers in accordance with "
-              two: "GDPR regulations."
-            cta: "See our providers"
+              one: "We only work with suppliers who process data "
+              two: "in a transparent and secure way."
+            cta: "Who are the suppliers"
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in Profile > Preferences"
+          profileSettings: "You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
           cta:
             shareData: "Share"
-            dontShareData: "Don’t share data"
-            dontShare: "Don’t share"
+            dontShareData: Please don't share data
+            dontShare: Not now
           confirmToast: "Preferences updated!"
         alert:
-          title: "You are not giving IO consent to collect your usage data"
-          body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
+          title: "You've opted not \nto share your data."
+          body: If you confirm, we won't be able to give you the targeted help you need because we might not have the data we need to solve the problem.
         whyBottomSheet:
-          title: "For what purposes do we collect information?"
-          body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
+          title: "Why do we collect data?"
+          body: "We do not collect data for marketing purposes. \n\nWe use tools that allow us to record data on how you use the app, to **provide you with a better service** and **assist you if needed**."
         securityBottomSheet:
           title: "What does pseudonymisation mean?"
           body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."
@@ -490,17 +492,24 @@ profile:
         needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
-    subtitle: These settings allow you to customize the IO app experience.
+    subtitle: These settings allow you to customise your IO experience
     contextualHelpTitle: Your preferences
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
-      service_contact: Use of services
       wip: In progress
-      language: Language
       digitalDomicile: Digital domicile
+      service_contact: 
+        title: Use of services
+        subtitle: Choose who can contact you
+      send_email_messages:
+        title: Forwarding messages by email
+        subtitle: Receive message previews
+      language: 
+        title: Language
+        subtitle: Choose language
       preferred_calendar:
-        title: Default Calendar
-        not_selected: Not selected
+        title: Favourite calendar
+        description: Select calendar
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
@@ -620,10 +629,25 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
-  cie_errors:
+  auth_errors:
+    error_19:
+      title: You’ve made too many access attempts
+      subtitle: It looks like you've entered the wrong username or password too many times. Please check your login details and try again in a few minutes, or contact your SPID identity provider to change your credentials.
+    error_20:
+      title: Could not be logged in
+      subtitle: For security reasons, you'll need to use an identity with a higher level of security. For more information, contact your SPID identity provider.
+    error_21:
+      title: Too much time
+      subtitle: "Too much time has passed since you started logging in: start again from the beginning."
     error_22:
       title: You haven't agreed to share your data
       subtitle: To enter, you must agree to share some data
+    error_23:
+      title: Suspended or revoked identity
+      subtitle: Your SPID identity has been suspended or revoked. For more information, please contact your SPID identity provider.
+    error_25:
+      title: You've cancelled your login
+      subtitle: To log in, try again anytime.
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
@@ -933,19 +957,34 @@ onboarding:
       title: Enable biometric recognition
       settings: You can always change your choice in Profile > Security
       body:
-        infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorizeoperations and payments with your
+        text: You can use your face or fingerprint to enter instead of the unlock code. This will let you access the app and authorise operation and payments more easily and safely.
+        infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorize operations and payments with your
         biometricType: face or fingerprint
         infoEnd: more quickly and securely.
         enrolledText: The biometric information is stored in your phone's memory. it will not be disclosed in any way to IO systems or stored anywhere else.
         notEnrolled:
-          text: To use it, go to your device settings and configure it. Then activate it on IO under Profile > Security.
+          text: You need to configure this in your device settings.
+          label: How to
+          step1: 
+            label: Step 1
+            value: Go to your device settings
+          step2: 
+            label: Step 2
+            value: Set up face or fingerprint
+          step3: 
+            label: Step 3
+            value: Enable it in IO under Profile > Security
     unavailable:
       title: Protect your device
+      subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
       body:
-        firstInfoStart: IO sends you communications that concern you
-        firstInfoEnd: personally.
-        secondInfoStart: Protect your device from unwanted access and make sure that only you can access the app. To do this, go to your device settings, set an
-        secondInfoEnd: unlock code or configure biometric recognition.
+        label: How to
+        step1: 
+          label: Step 1
+          value: Go to your device settings
+        step2: 
+          label: Step 2
+          value: Set a code or sign to unlock the device
   shareData:
     title: "Configure IO"
   thankYouPage:
@@ -1924,8 +1963,9 @@ messages:
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
     calendarPermDenied:
-      title: "It seems calendar permissions has been denied"
-      ok: "Enable permissions"
+      title: Enable access
+      description: We do not have access to your calendar. Please enable access to continue.
+      ok: "Enable access"
       cancel: "Cancel"
     errors:
       fetchCalendars: Error fetching calendars
@@ -2053,17 +2093,10 @@ biometric_recognition:
   needed_to_disable: Recognition required to disable
 send_email_messages:
   title: Forward messages by email
-  subtitle: Do you want IO to forward messages contents by email to
-  options:
-    disable_all:
-      label: Disable for all services
-      info: You will not receive email messages anymore
-    enable_all:
-      label: Enable for all active services
-      info: Every message will be forwarded to your email, if allowed by the service
-    by_service:
-      label: Select service by service
-      info: You will be able to select from each service settings screen to receive its messages by email as well
+  subtitle: You want IO to forward message previews to
+  switch:
+    title: Email a preview
+    subtitle: You will get a preview of the message at your email address if the service allows.
 services:
   accessibility:
     edit: Edit services setup
