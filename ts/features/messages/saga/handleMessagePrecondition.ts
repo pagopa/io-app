@@ -19,36 +19,46 @@ import {
 } from "../store/actions/preconditions";
 import { scheduledStatePayloadSelector } from "../store/reducers/messagePrecondition";
 import { UIMessageId } from "../types";
+import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 
-  export function* handleMessagePrecondition(
-    getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
-    action: ActionType<typeof getMessagePrecondition.request> | ActionType<typeof retrievingDataPreconditionStatusAction>
-  ) {
-    yield* race({
-      response: call(
-        messagePreconditionWorker,
-        getThirdPartyMessagePrecondition(),
-        action
-      ),
-      cancel: take(clearMessagePrecondition)
-    });
-  }
+export function* handleMessagePrecondition(
+  getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
+  action:
+    | ActionType<typeof getMessagePrecondition.request>
+    | ActionType<typeof retrievingDataPreconditionStatusAction>
+) {
+  yield* race({
+    response: call(
+      messagePreconditionWorker,
+      getThirdPartyMessagePrecondition(),
+      action
+    ),
+    cancel: take(clearMessagePrecondition)
+  });
+}
 
 function* messagePreconditionWorker(
   getThirdPartyMessagePrecondition: ReturnType<
     BackendClient["getThirdPartyMessagePrecondition"]
   >,
-  action: ActionType<typeof getMessagePrecondition.request> | ActionType<typeof retrievingDataPreconditionStatusAction>
+  action:
+    | ActionType<typeof getMessagePrecondition.request>
+    | ActionType<typeof retrievingDataPreconditionStatusAction>
 ) {
-  const messageIdAndCategoryTag = yield* call(getMessageIdAndCategoryTag, action);
+  const messageIdAndCategoryTag = yield* call(
+    getMessageIdAndCategoryTag,
+    action
+  );
   try {
     if (!messageIdAndCategoryTag) {
-      throw Error("Unable to get `messageId` or `categoryTag`"); 
+      throw Error("Unable to get `messageId` or `categoryTag`");
     }
 
     const result = (yield* call(
       withRefreshApiCall,
-      getThirdPartyMessagePrecondition({ id: messageIdAndCategoryTag.messageId }),
+      getThirdPartyMessagePrecondition({
+        id: messageIdAndCategoryTag.messageId
+      }),
       action
     )) as unknown as SagaCallReturnType<
       typeof getThirdPartyMessagePrecondition
@@ -58,7 +68,11 @@ function* messagePreconditionWorker(
       if (result.right.status === 200) {
         const content = result.right.value;
         yield* put(getMessagePrecondition.success(content));
-        yield* put(loadingContentPreconditionStatusAction(toLoadingContentPayload(content)));
+        yield* put(
+          loadingContentPreconditionStatusAction(
+            toLoadingContentPayload(content)
+          )
+        );
         return;
       }
       throw Error(`response status ${result.right.status}`);
@@ -66,16 +80,29 @@ function* messagePreconditionWorker(
       throw Error(readableReport(result.left));
     }
   } catch (e) {
-    trackDisclaimerLoadError(messageIdAndCategoryTag?.categoryTag ?? "UNKNOWN");
+    const categoryTag = messageIdAndCategoryTag?.categoryTag;
+    if (categoryTag) {
+      trackDisclaimerLoadError(categoryTag);
+    }
     yield* put(getMessagePrecondition.failure(convertUnknownToError(e)));
-    yield* put(errorPreconditionStatusAction(toErrorPayload(`${convertUnknownToError(e)}`)));
+    yield* put(
+      errorPreconditionStatusAction(
+        toErrorPayload(`${convertUnknownToError(e)}`)
+      )
+    );
   }
 }
 
-function* getMessageIdAndCategoryTag(
-  action: ActionType<typeof getMessagePrecondition.request> | ActionType<typeof retrievingDataPreconditionStatusAction>
-): Generator<ReduxSagaEffect, { messageId: UIMessageId, categoryTag: string } | undefined, any> {
-  if (action.type === getType(getMessagePrecondition.request)){ 
+export function* getMessageIdAndCategoryTag(
+  action:
+    | ActionType<typeof getMessagePrecondition.request>
+    | ActionType<typeof retrievingDataPreconditionStatusAction>
+): Generator<
+  ReduxSagaEffect,
+  { messageId: UIMessageId; categoryTag: MessageCategory["tag"] } | undefined,
+  any
+> {
+  if (action.type === getType(getMessagePrecondition.request)) {
     return {
       messageId: action.payload.id,
       categoryTag: action.payload.categoryTag

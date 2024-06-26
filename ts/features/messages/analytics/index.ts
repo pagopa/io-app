@@ -159,7 +159,7 @@ export function trackUxConversion(tag: MessageCategory["tag"]) {
   );
 }
 
-export function trackDisclaimerLoadError(tag: string) {
+export function trackDisclaimerLoadError(tag: MessageCategory["tag"]) {
   void mixpanelTrack(
     `${S.toUpperCase(tag)}_DISCLAIMER_LOAD_ERROR`,
     buildEventProperties("TECH", undefined)

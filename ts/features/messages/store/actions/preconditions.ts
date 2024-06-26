@@ -21,7 +21,7 @@ export type NPSRetrievingData = {
 export type NPSScheduled = {
   nextStatus: "scheduled";
   messageId: UIMessageId;
-  categoryTag: string;
+  categoryTag: MessageCategory["tag"];
 };
 export type NPSShown = {
   nextStatus: "shown";
@@ -48,7 +48,7 @@ export const toRetrievingDataPayload = (): NPSRetrievingData => ({
 });
 export const toScheduledPayload = (
   messageId: UIMessageId,
-  categoryTag: string
+  categoryTag: MessageCategory["tag"]
 ): NPSScheduled => ({
   nextStatus: "scheduled",
   messageId,

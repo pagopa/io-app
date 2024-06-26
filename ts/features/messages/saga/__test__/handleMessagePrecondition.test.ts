@@ -2,12 +2,12 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { UIMessageId } from "../../types";
-import { testMessagePreconditionWorker } from "../handleMessagePrecondition";
+import { getMessageIdAndCategoryTag, testMessagePreconditionWorker } from "../handleMessagePrecondition";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { BackendClient } from "../../../../api/__mocks__/backend";
-import { getMessagePrecondition } from "../../store/actions/preconditions";
+import { errorPreconditionStatusAction, getMessagePrecondition, loadingContentPreconditionStatusAction, toErrorPayload, toLoadingContentPayload } from "../../store/actions/preconditions";
 
 const messagePreconditionWorker = testMessagePreconditionWorker!;
 
@@ -30,6 +30,8 @@ describe("messagePreconditionWorker", () => {
       getMessagePrecondition.request(action)
     )
       .next()
+      .call(getMessageIdAndCategoryTag, getMessagePrecondition.request(action))
+      .next({ messageId: action.id, categoryTag: action.categoryTag })
       .call(
         withRefreshApiCall,
         BackendClient.getThirdPartyMessagePrecondition(action),
@@ -37,6 +39,8 @@ describe("messagePreconditionWorker", () => {
       )
       .next(E.right({ status: 200, value: mockResponseSuccess }))
       .put(getMessagePrecondition.success(mockResponseSuccess))
+      .next()
+      .put(loadingContentPreconditionStatusAction(toLoadingContentPayload(mockResponseSuccess)))
       .next()
       .isDone();
   });
@@ -50,6 +54,8 @@ describe("messagePreconditionWorker", () => {
       getMessagePrecondition.request(action)
     )
       .next()
+      .call(getMessageIdAndCategoryTag, getMessagePrecondition.request(action))
+      .next({ messageId: action.id, categoryTag: action.categoryTag })
       .call(
         withRefreshApiCall,
         BackendClient.getThirdPartyMessagePrecondition(action),
@@ -57,6 +63,8 @@ describe("messagePreconditionWorker", () => {
       )
       .next(E.right({ status: 500, value: `response status ${500}` }))
       .put(getMessagePrecondition.failure(new Error(`response status ${500}`)))
+      .next()
+      .put(errorPreconditionStatusAction(toErrorPayload(`Error: response status ${500}`)))
       .next()
       .isDone();
   });
@@ -70,8 +78,12 @@ describe("messagePreconditionWorker", () => {
       getMessagePrecondition.request(action)
     )
       .next()
+      .call(getMessageIdAndCategoryTag, getMessagePrecondition.request(action))
+      .next({ messageId: action.id, categoryTag: action.categoryTag })
       .next(E.left([]))
       .put(getMessagePrecondition.failure(new Error()))
+      .next()
+      .put(errorPreconditionStatusAction(toErrorPayload(`Error`)))
       .next()
       .isDone();
   });

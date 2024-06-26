@@ -21,12 +21,13 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus";
 import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
 // MPS stands for Message Precondition Status
 type MPSError = {
   state: "error";
   messageId: UIMessageId;
-  categoryTag: string;
+  categoryTag: MessageCategory["tag"];
   reason: string;
 };
 type MPSIdle = {
@@ -35,23 +36,23 @@ type MPSIdle = {
 type MPSLoadingContent = {
   state: "loadingContent";
   messageId: UIMessageId;
-  categoryTag: string;
+  categoryTag: MessageCategory["tag"];
   content: ThirdPartyMessagePrecondition;
 };
 type MPSRetrievingData = {
   state: "retrievingData";
   messageId: UIMessageId;
-  categoryTag: string;
+  categoryTag: MessageCategory["tag"];
 };
 type MPSScheduled = {
   state: "scheduled";
   messageId: UIMessageId;
-  categoryTag: string;
+  categoryTag: MessageCategory["tag"];
 };
 type MPSShown = {
   state: "shown";
   messageId: UIMessageId;
-  categoryTag: string;
+  categoryTag: MessageCategory["tag"];
   content: ThirdPartyMessagePrecondition;
 };
 type MPSUpdateRequired = {
@@ -177,7 +178,7 @@ export const preconditionReducer = (
 
 const toError = (
   messageId: UIMessageId,
-  categoryTag: string,
+  categoryTag: MessageCategory["tag"],
   reason: string
 ): MPSError => ({
   state: "error",
@@ -190,7 +191,7 @@ const toIdle = (): MPSIdle => ({
 });
 const toLoadingContent = (
   messageId: UIMessageId,
-  categoryTag: string,
+  categoryTag: MessageCategory["tag"],
   content: ThirdPartyMessagePrecondition
 ): MPSLoadingContent => ({
   state: "loadingContent",
@@ -200,7 +201,7 @@ const toLoadingContent = (
 });
 const toRetrievingData = (
   messageId: UIMessageId,
-  categoryTag: string
+  categoryTag: MessageCategory["tag"]
 ): MPSRetrievingData => ({
   state: "retrievingData",
   messageId,
@@ -208,7 +209,7 @@ const toRetrievingData = (
 });
 const toScheduled = (
   messageId: UIMessageId,
-  categoryTag: string
+  categoryTag: MessageCategory["tag"]
 ): MPSScheduled => ({
   state: "scheduled",
   messageId,
@@ -216,7 +217,7 @@ const toScheduled = (
 });
 const toShown = (
   messageId: UIMessageId,
-  categoryTag: string,
+  categoryTag: MessageCategory["tag"],
   content: ThirdPartyMessagePrecondition
 ): MPSShown => ({
   state: "shown",
@@ -288,18 +289,22 @@ export const shouldPresentPreconditionsBottomSheetSelector = (
   state: GlobalState
 ) => state.entities.messages.precondition.state === "scheduled";
 
-export const scheduledStatePayloadSelector = (state: GlobalState) => pipe(
-  state.entities.messages.precondition,
-  foldPreconditionStatus(
-    constUndefined,
-    constUndefined,
-    constUndefined,
-    constUndefined,
-    scheduledState => ({ messageId: scheduledState.messageId, categoryTag: scheduledState.categoryTag }),
-    constUndefined,
-    constUndefined,
-  )
-);
+export const scheduledStatePayloadSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      scheduledState => ({
+        messageId: scheduledState.messageId,
+        categoryTag: scheduledState.categoryTag
+      }),
+      constUndefined,
+      constUndefined
+    )
+  );
 
 export const preconditionsRequireAppUpdateSelector = (state: GlobalState) =>
   pipe(
@@ -343,6 +348,90 @@ export const preconditionsTitleSelector = (state: GlobalState) =>
       constUndefined,
       constUndefined,
       shownStatus => shownStatus.content.title,
+      constUndefined
+    )
+  );
+
+export const preconditionsContentSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      _ => "error" as const,
+      constUndefined,
+      _ => "content" as const,
+      _ => "loading" as const,
+      constUndefined,
+      _ => "content" as const,
+      _ => "update" as const
+    )
+  );
+
+export const preconditionsContentMarkdownSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      constUndefined,
+      constUndefined,
+      loadingContentStatus => loadingContentStatus.content.markdown,
+      constUndefined,
+      constUndefined,
+      shownStatus => shownStatus.content.markdown,
+      constUndefined
+    )
+  );
+
+export const isShownPreconditionStatusSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      constFalse,
+      constFalse,
+      constFalse,
+      constFalse,
+      constFalse,
+      constTrue,
+      constFalse
+    )
+  );
+
+export const preconditionsFooterSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      _ => "view" as const,
+      constUndefined,
+      _ => "view" as const,
+      _ => "view" as const,
+      constUndefined,
+      _ => "content" as const,
+      _ => "update" as const
+    )
+  );
+
+export const preconditionsCategoryTagSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      errorStatus => errorStatus.categoryTag,
+      constUndefined,
+      loadingContentStatus => loadingContentStatus.categoryTag,
+      retrievingDataStatus => retrievingDataStatus.categoryTag,
+      scheduledStatus => scheduledStatus.categoryTag,
+      shownStatus => shownStatus.categoryTag,
+      constUndefined
+    )
+  );
+
+export const preconditionsMessageIdSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      errorStatus => errorStatus.messageId,
+      constUndefined,
+      loadingContentStatus => loadingContentStatus.messageId,
+      retrievingDataStatus => retrievingDataStatus.messageId,
+      scheduledStatus => scheduledStatus.messageId,
+      shownStatus => shownStatus.messageId,
       constUndefined
     )
   );
