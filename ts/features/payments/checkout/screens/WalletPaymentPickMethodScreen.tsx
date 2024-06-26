@@ -46,10 +46,6 @@ import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import * as analytics from "../analytics";
-import {
-  centsToAmount,
-  formatNumberAmount
-} from "../../../../utils/stringBuilder";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
 import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
@@ -205,13 +201,7 @@ const WalletPaymentPickMethodScreen = () => {
         attempt: paymentOngoingHistory?.attempt,
         organization_name: paymentOngoingHistory?.verifiedData?.paName,
         service_name: paymentOngoingHistory?.serviceName,
-        amount: paymentOngoingHistory?.verifiedData?.amount
-          ? formatNumberAmount(
-              centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
-              true,
-              "right"
-            )
-          : undefined,
+        amount: paymentOngoingHistory?.formattedAmount,
         saved_payment_method:
           paymentOngoingHistory?.savedPaymentMethods?.length,
         saved_payment_method_unavailable:
@@ -250,13 +240,7 @@ const WalletPaymentPickMethodScreen = () => {
       attempt: paymentOngoingHistory?.attempt,
       organization_name: paymentOngoingHistory?.verifiedData?.paName,
       service_name: paymentOngoingHistory?.serviceName,
-      amount: paymentOngoingHistory?.verifiedData?.amount
-        ? formatNumberAmount(
-            centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
-            true,
-            "right"
-          )
-        : undefined,
+      amount: paymentOngoingHistory?.formattedAmount,
       expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
       payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
       payment_method_selected_flag: getSelectedPaymentMethodFlag()

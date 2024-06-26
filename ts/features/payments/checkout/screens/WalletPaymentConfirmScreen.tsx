@@ -10,6 +10,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { useFocusEffect } from "@react-navigation/native";
 import { default as React } from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import I18n from "../../../../i18n";
@@ -26,7 +27,10 @@ import { WalletPaymentTotalAmount } from "../components/WalletPaymentTotalAmount
 import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
-import { walletPaymentDetailsSelector } from "../store/selectors";
+import {
+  selectWalletPaymentCurrentStep,
+  walletPaymentDetailsSelector
+} from "../store/selectors";
 import {
   walletPaymentSelectedPaymentMethodIdOptionSelector,
   walletPaymentSelectedPaymentMethodManagementOptionSelector,
@@ -45,12 +49,15 @@ import {
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import * as analytics from "../analytics";
+import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
   );
@@ -59,6 +66,9 @@ const WalletPaymentConfirmScreen = () => {
   );
   const selectedPaymentMethodManagement = useIOSelector(
     walletPaymentSelectedPaymentMethodManagementOptionSelector
+  );
+  const paymentOngoingHistory = useIOSelector(
+    selectOngoingPaymentHistorySelector
   );
 
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
@@ -125,6 +135,26 @@ const WalletPaymentConfirmScreen = () => {
       handleAuthorizationOutcome(WalletPaymentOutcomeEnum.GENERIC_ERROR);
     }
   }, [isError, handleAuthorizationOutcome]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (currentStep !== WalletPaymentStepEnum.CONFIRM_TRANSACTION) {
+        return;
+      }
+      analytics.trackPaymentSummaryScreen({
+        attempt: paymentOngoingHistory?.attempt,
+        organization_name: paymentOngoingHistory?.verifiedData?.paName,
+        service_name: paymentOngoingHistory?.serviceName,
+        amount: paymentOngoingHistory?.formattedAmount,
+        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+        saved_payment_method:
+          paymentOngoingHistory?.savedPaymentMethods?.length,
+        selected_psp_flag: paymentOngoingHistory?.selectedPspFlag
+      });
+      // should be called only when the current step is the confirm screen
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentStep])
+  );
 
   const totalAmount = pipe(
     sequenceS(O.Monad)({

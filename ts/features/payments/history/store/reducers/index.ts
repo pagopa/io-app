@@ -10,6 +10,7 @@ import { clearCache } from "../../../../../store/actions/profile";
 import { Action } from "../../../../../store/actions/types";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {
+  paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsGetPaymentDetailsAction,
   paymentsGetPaymentTransactionInfoAction,
@@ -17,7 +18,8 @@ import {
 } from "../../../checkout/store/actions/networking";
 import {
   initPaymentStateAction,
-  selectPaymentMethodAction
+  selectPaymentMethodAction,
+  selectPaymentPspAction
 } from "../../../checkout/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailure";
 import { PaymentHistory } from "../../types";
@@ -27,6 +29,8 @@ import {
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
+import { getPspFlagType } from "../../../checkout/utils";
+import { centsToAmount, formatNumberAmount } from "../../../../../utils/stringBuilder";
 
 export type PaymentsHistoryState = {
   ongoingPayment?: PaymentHistory;
@@ -69,7 +73,12 @@ const reducer = (
         ...state,
         ongoingPayment: {
           ...state.ongoingPayment,
-          verifiedData: action.payload
+          verifiedData: action.payload,
+          formattedAmount: formatNumberAmount(
+            centsToAmount(action.payload.amount),
+            true,
+            "right"
+          )
         }
       };
     case getType(storeNewPaymentAttemptAction):
@@ -114,6 +123,24 @@ const reducer = (
           ...state.ongoingPayment,
           savedPaymentMethods: action.payload.wallets,
           savedPaymentMethodsUnavailable: unavailablePaymentMethods
+        }
+      };
+    case getType(paymentsCalculatePaymentFeesAction.success):
+      return {
+        ...state,
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          selectedPsp: undefined,
+          pspList: action.payload.bundles
+        }
+      };
+    case getType(selectPaymentPspAction):
+      return {
+        ...state,
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          selectedPsp: action.payload,
+          selectedPspFlag: getPspFlagType(action.payload, state.ongoingPayment?.pspList)
         }
       };
     case getType(differentProfileLoggedIn):

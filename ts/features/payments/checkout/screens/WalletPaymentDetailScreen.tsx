@@ -131,11 +131,7 @@ const WalletPaymentDetailContent = ({
   useOnFirstRender(
     () => {
       analytics.trackPaymentSummaryInfoScreen({
-        amount: formatNumberAmount(
-          centsToAmount(payment.amount),
-          true,
-          "right"
-        ),
+        amount: paymentOngoingHistory?.formattedAmount,
         expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
         organization_name: paymentOngoingHistory?.verifiedData?.paName,
         saved_payment_method:

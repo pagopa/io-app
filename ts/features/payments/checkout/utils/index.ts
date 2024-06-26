@@ -7,6 +7,8 @@ import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletIn
 import { WalletClientStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletClientStatus";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { WalletPaymentStepEnum } from "../types";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { PaymentAnalyticsSelectedPspFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
 
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
@@ -42,4 +44,23 @@ export const WalletPaymentStepScreenNames = {
   [WalletPaymentStepEnum.PICK_PAYMENT_METHOD]: "PICK_PAYMENT_METHOD",
   [WalletPaymentStepEnum.PICK_PSP]: "PICK_PSP",
   [WalletPaymentStepEnum.CONFIRM_TRANSACTION]: "CONFIRM_TRANSACTION"
+};
+
+export const getPspFlagType = (psp: Bundle, pspList?: ReadonlyArray<Bundle>): PaymentAnalyticsSelectedPspFlag => {
+  if (!pspList) {
+    return "none";
+  }
+  if (psp.onUs) {
+    return "customer";
+  }
+  if (pspList.length === 1) {
+    return "unique";
+  }
+  const cheaperPsp = pspList.reduce((acc, curr) => {
+    if (acc.taxPayerFee && curr.taxPayerFee && acc.taxPayerFee < curr.taxPayerFee) {
+      return acc;
+    }
+    return curr;
+  });
+  return cheaperPsp.idBundle === psp.idBundle ? "cheaper" : "none";
 };

@@ -6,6 +6,8 @@ import { WalletInfo as EcommerceWalletInfo } from "../../../../../definitions/pa
 import { PaymentStartOrigin } from "../../checkout/types";
 import { WalletPaymentOutcomeEnum } from "../../checkout/types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../../checkout/types/WalletPaymentFailure";
+import { PaymentAnalyticsSelectedPspFlag } from "../../checkout/types/PaymentAnalyticsSelectedMethodFlag";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 
 export type PaymentHistory = {
   startOrigin?: PaymentStartOrigin;
@@ -16,8 +18,12 @@ export type PaymentHistory = {
   savedPaymentMethodsUnavailable?: ReadonlyArray<
     WalletInfo | EcommerceWalletInfo
   >;
+  pspList?: ReadonlyArray<Bundle>;
+  selectedPsp?: Bundle;
+  selectedPspFlag?: PaymentAnalyticsSelectedPspFlag;
   selectedPaymentMethod?: string;
   verifiedData?: PaymentRequestsGetResponse;
+  formattedAmount?: string;
   transaction?: NewTransactionResponse;
   outcome?: WalletPaymentOutcomeEnum;
   failure?: WalletPaymentFailure;

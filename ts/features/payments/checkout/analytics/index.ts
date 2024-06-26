@@ -3,7 +3,7 @@ import { mixpanel, mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
 import { Action } from "../../../../store/actions/types";
-import { PaymentAnalyticsPspFlag, PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
+import { PaymentAnalyticsPreselectedPspFlag, PaymentAnalyticsSelectedMethodFlag, PaymentAnalyticsSelectedPspFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
 
 export type PaymentAnalyticsProps = {
   data_entry: string;
@@ -18,7 +18,8 @@ export type PaymentAnalyticsProps = {
   last_used_payment_method: string;
   payment_method_selected: string;
   payment_method_selected_flag: PaymentAnalyticsSelectedMethodFlag;
-  preselected_psp_flag: PaymentAnalyticsPspFlag;
+  preselected_psp_flag: PaymentAnalyticsPreselectedPspFlag;
+  selected_psp_flag: PaymentAnalyticsSelectedPspFlag;
 };
 
 export const trackPaymentSummaryInfoScreen = (
@@ -129,6 +130,30 @@ export const trackPaymentFeeSelection = (
   console.log("PAYMENT_FEE_SELECTION", props);
   void mixpanelTrack(
     "PAYMENT_FEE_SELECTION",
+    buildEventProperties("UX", "screen_view", {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentFeeSelected = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  console.log("PAYMENT_FEE_SELECTED", props);
+  void mixpanelTrack(
+    "PAYMENT_FEE_SELECTED",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentSummaryScreen = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  console.log("PAYMENT_SUMMARY", props);
+  void mixpanelTrack(
+    "PAYMENT_SUMMARY",
     buildEventProperties("UX", "screen_view", {
       ...props
     })

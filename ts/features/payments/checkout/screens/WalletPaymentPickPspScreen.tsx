@@ -16,11 +16,7 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  centsToAmount,
-  formatNumberAmount,
-  formatNumberCentsToAmount
-} from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { getSortedPspList } from "../../common/utils";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
@@ -100,13 +96,7 @@ const WalletPaymentPickPspScreen = () => {
         attempt: paymentOngoingHistory?.attempt,
         organization_name: paymentOngoingHistory?.verifiedData?.paName,
         service_name: paymentOngoingHistory?.serviceName,
-        amount: paymentOngoingHistory?.verifiedData?.amount
-          ? formatNumberAmount(
-              centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
-              true,
-              "right"
-            )
-          : undefined,
+        amount: paymentOngoingHistory?.formattedAmount,
         expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
         payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
         preselected_psp_flag: preSelectedPsp ? "customer" : "none"
@@ -133,6 +123,15 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   const handleContinue = () => {
+    analytics.trackPaymentFeeSelected({
+      attempt: paymentOngoingHistory?.attempt,
+      organization_name: paymentOngoingHistory?.verifiedData?.paName,
+      service_name: paymentOngoingHistory?.serviceName,
+      amount: paymentOngoingHistory?.formattedAmount,
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
+      selected_psp_flag: paymentOngoingHistory?.selectedPspFlag
+    });
     dispatch(
       walletPaymentSetCurrentStep(WalletPaymentStepEnum.CONFIRM_TRANSACTION)
     );
