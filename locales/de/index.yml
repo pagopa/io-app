@@ -342,9 +342,6 @@ profile:
             continue: "Weiter"
             return: "Zurück"
             cancel: "Löschung abbrechen"
-        info:
-          body: "Du kannst jederzeit von deinem Recht auf Löschung deines IO-Profils Gebrauch machen.\n\nWir informieren dich darüber, dass die Löschung deines Kontos endgültig ist und innerhalb von 30 Tagen nach Anfrage erfolgt.\n\nWenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App vorgenommen hast, nicht mehr wiederherstellen.\nBitte beachte auch, dass die über die IO-App erhaltene Boni oder Rabatte nicht mehr zugänglich sind.\n\nDu kannst dich jederzeit erneut für die IO-App registrieren, indem du eine neue Registrierung mittels SPID oder CIE durchführst."
-          cta: "Weiter"
         details:
           body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
           question: "Was ist der Grund für die Löschung?"

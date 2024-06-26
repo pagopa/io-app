@@ -351,8 +351,16 @@ profile:
             return: Return
             cancel: Cancel the deletion
         info:
-          body: "You can exercise your right to have your IO profile deleted at any time\n\nWe inform you that the deletion of your account is final and will take place within 30 days of the request.\n\nIf you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.\n\nWe also point out that any bonuses or discounts obtained through the IO app will no longer be accessible.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE."
-          cta: Continue
+          title: Elimina il tuo profilo
+          description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
+          banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
+          body: 
+            p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
+            p2: 
+              firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
+              lastPart: non saranno più accessibili.
+            p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
+          cta: Procedi con l’eliminazione
         details:
           body: "We would like to know why you are deleting your account, in order to improve in the future. You can also proceed directly with the deletion by clicking on the button below."
           question: What is the reason for the cancellation?
