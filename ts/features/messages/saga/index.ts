@@ -24,7 +24,7 @@ import {
 } from "../store/actions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
 import { BackendClient } from "../../../api/backend";
-import { getMessagePrecondition } from "../store/actions/preconditions";
+import { getMessagePrecondition, retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
@@ -82,7 +82,7 @@ export function* watchMessagesSaga(
   );
 
   yield* takeLatest(
-    getMessagePrecondition.request,
+    [getMessagePrecondition.request, retrievingDataPreconditionStatusAction],
     handleMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );

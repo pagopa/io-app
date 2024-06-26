@@ -15,8 +15,14 @@ import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblem
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
   clearMessagePrecondition,
+  errorPreconditionStatusAction,
   getMessagePrecondition,
-  toNextMessagePreconditionStatus
+  idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
+  retrievingDataPreconditionStatusAction,
+  scheduledPreconditionStatusAction,
+  shownPreconditionStatusAction,
+  updateRequiredPreconditionStatusAction
 } from "./preconditions";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
@@ -317,7 +323,13 @@ export type MessagesActions = ActionType<
   | typeof cancelPreviousAttachmentDownload
   | typeof clearRequestedAttachmentDownload
   | typeof removeCachedAttachment
-  | typeof toNextMessagePreconditionStatus
+  | typeof errorPreconditionStatusAction
+  | typeof idlePreconditionStatusAction
+  | typeof loadingContentPreconditionStatusAction
+  | typeof retrievingDataPreconditionStatusAction
+  | typeof scheduledPreconditionStatusAction
+  | typeof shownPreconditionStatusAction
+  | typeof updateRequiredPreconditionStatusAction
   | typeof getMessagePrecondition
   | typeof clearMessagePrecondition
   | typeof getMessageDataAction

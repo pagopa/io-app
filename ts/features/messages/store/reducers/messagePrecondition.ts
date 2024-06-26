@@ -1,19 +1,22 @@
-import { constFalse, constTrue, constUndefined, pipe } from "fp-ts/lib/function";
+import {
+  constFalse,
+  constTrue,
+  constUndefined,
+  pipe
+} from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import { getType } from "typesafe-actions";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageId } from "../../types";
 import {
-  NPSError,
-  NPSIdle,
-  NPSLoadingContent,
-  NPSRetrievingData,
-  NPSScheduled,
-  NPSShown,
-  NPSUpdateRequired,
-  NextPreconditionStatus,
-  toNextMessagePreconditionStatus
+  errorPreconditionStatusAction,
+  idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
+  retrievingDataPreconditionStatusAction,
+  scheduledPreconditionStatusAction,
+  shownPreconditionStatusAction,
+  updateRequiredPreconditionStatusAction
 } from "../actions/preconditions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus";
@@ -56,13 +59,13 @@ type MPSUpdateRequired = {
 };
 
 export type MessagePreconditionStatus =
+  | MPSError
   | MPSIdle
-  | MPSScheduled
-  | MPSUpdateRequired
-  | MPSRetrievingData
   | MPSLoadingContent
+  | MPSRetrievingData
+  | MPSScheduled
   | MPSShown
-  | MPSError;
+  | MPSUpdateRequired;
 
 const INITIAL_STATE: MPSIdle = {
   state: "idle"
@@ -73,145 +76,101 @@ export const preconditionReducer = (
   action: Action
 ): MessagePreconditionStatus => {
   switch (action.type) {
-    case getType(toNextMessagePreconditionStatus): {
-      const nextPreconditionStatus = action.payload;
-      return pipe(
-        state,
-        foldPreconditionStatus(
-          errorStatus =>
-            pipe(
-              // Error status
-              nextPreconditionStatus,
-              foldNextPreconditionStatus(
-                _ => state,
-                _ => toIdle(), // From Error to Idle
-                _ => state,
-                _ =>
-                  toRetrievingData(
-                    errorStatus.messageId,
-                    errorStatus.categoryTag
-                  ), // From Error to Retrieving Data
-                _ => state,
-                _ => state,
-                _ => state
-              )
-            ),
-          _ =>
-            pipe(
-              // Idle Status
-              nextPreconditionStatus,
-              foldNextPreconditionStatus(
-                _ => state,
-                _ => state,
-                _ => state,
-                _ => state,
-                nextScheduled =>
-                  toScheduled(
-                    nextScheduled.messageId,
-                    nextScheduled.categoryTag
-                  ), // From Idle to Scheduled
-                _ => state,
-                _ => toUpdateRequired() // From Idle to Update Required
-              )
-            ),
-          _ =>
-            pipe(
-              // Loading Content status
-              nextPreconditionStatus,
-              foldNextPreconditionStatus(
-                nextError =>
-                  toError(
-                    nextError.messageId,
-                    nextError.categoryTag,
-                    nextError.reason
-                  ), // From Loading Content to Error
-                _ => state,
-                _ => state,
-                _ => state,
-                _ => state,
-                nextShown =>
-                  toShown(
-                    nextShown.messageId,
-                    nextShown.categoryTag,
-                    nextShown.content
-                  ), // From Loading Content to Shown
-                _ => state
-              )
-            ),
-          _ =>
-            pipe(
-              // Retrieving Data status
-              nextPreconditionStatus,
-              foldNextPreconditionStatus(
-                nextError =>
-                  toError(
-                    nextError.messageId,
-                    nextError.categoryTag,
-                    nextError.reason
-                  ), // From Retrieving Data to Error
-                _ => state,
-                nextLoadingContent =>
-                  toLoadingContent(
-                    nextLoadingContent.messageId,
-                    nextLoadingContent.categoryTag,
-                    nextLoadingContent.content
-                  ), // From Retrieving Data to Loading Content
-                _ => state,
-                _ => state,
-                _ => state,
-                _ => state
-              )
-            ),
-          scheduledStatus =>
-            pipe(
-              // Scheduled status
-              nextPreconditionStatus,
-              foldNextPreconditionStatus(
-                _ => state,
-                _ => state,
-                _ => state,
-                _ =>
-                  toRetrievingData(
-                    scheduledStatus.messageId,
-                    scheduledStatus.categoryTag
-                  ), // From Scheduled to Retrieving Data
-                _ => state,
-                _ => state,
-                _ => toUpdateRequired() // From Scheduled to Update Required
-              )
-            ),
-          _ =>
-            pipe(
-              // Shown status
-              nextPreconditionStatus,
-              foldNextPreconditionStatus(
-                _ => state,
-                _ => toIdle(), // From Shown to Idle
-                _ => state,
-                _ => state,
-                _ => state,
-                _ => state,
-                _ => state
-              )
-            ),
-          // eslint-disable-next-line sonarjs/no-identical-functions
-          _ =>
-            pipe(
-              // Update Required status
-              nextPreconditionStatus,
-              foldNextPreconditionStatus(
-                _ => state,
-                _ => toIdle(), // From Udpate Required to Idle
-                _ => state,
-                _ => state,
-                _ => state,
-                _ => state,
-                _ => state
-              )
-            )
-        )
-      );
-    }
+    case getType(errorPreconditionStatusAction):
+      return foldPreconditionStatus(
+        () => state,
+        () => state,
+        loadingContentStatus =>
+          toError(
+            loadingContentStatus.messageId,
+            loadingContentStatus.categoryTag,
+            action.payload.reason
+          ), // From Loading Content to Error
+        retrievingDataStatus =>
+          toError(
+            retrievingDataStatus.messageId,
+            retrievingDataStatus.categoryTag,
+            action.payload.reason
+          ), // From Retrieving Data to Error
+        () => state,
+        () => state,
+        () => state
+      )(state);
+    case getType(idlePreconditionStatusAction):
+      return foldPreconditionStatus(
+        () => toIdle(), // From Error to Idle
+        () => state,
+        () => state,
+        () => state,
+        () => state,
+        () => toIdle(), // From Shown to Idle
+        () => toIdle() // From Update Required to Idle
+      )(state);
+    case getType(loadingContentPreconditionStatusAction):
+      return foldPreconditionStatus(
+        () => state,
+        () => state,
+        () => state,
+        retrievingDataStatus =>
+          toLoadingContent(
+            retrievingDataStatus.messageId,
+            retrievingDataStatus.categoryTag,
+            action.payload.content
+          ), // From Retrieving Data to Loading Content
+        () => state,
+        () => state,
+        () => state
+      )(state);
+    case getType(retrievingDataPreconditionStatusAction):
+      return foldPreconditionStatus(
+        errorStatus =>
+          toRetrievingData(errorStatus.messageId, errorStatus.categoryTag), // From Error to Retrieving Data
+        () => state,
+        () => state,
+        () => state,
+        scheduledStatus =>
+          toRetrievingData(
+            scheduledStatus.messageId,
+            scheduledStatus.categoryTag
+          ), // From Scheduled to Retrieving Data
+        () => state,
+        () => state
+      )(state);
+    case getType(scheduledPreconditionStatusAction):
+      return foldPreconditionStatus(
+        () => state,
+        () => toScheduled(action.payload.messageId, action.payload.categoryTag), // From Idle to Scheduled
+        () => state,
+        () => state,
+        () => state,
+        () => state,
+        () => state
+      )(state);
+    case getType(shownPreconditionStatusAction):
+      return foldPreconditionStatus(
+        () => state,
+        () => state,
+        loadingContentStatus =>
+          toShown(
+            loadingContentStatus.messageId,
+            loadingContentStatus.categoryTag,
+            loadingContentStatus.content
+          ), // From Loading Content to Shown
+        () => state,
+        () => state,
+        () => state,
+        () => state
+      )(state);
+    case getType(updateRequiredPreconditionStatusAction):
+      return foldPreconditionStatus(
+        () => state,
+        () => state,
+        () => state,
+        () => state,
+        () => toUpdateRequired(), // From Scheduled to Update Required,
+        () => state,
+        () => state
+      )(state);
   }
   return state;
 };
@@ -269,7 +228,7 @@ const toUpdateRequired = (): MPSUpdateRequired => ({
   state: "updateRequired"
 });
 
-const foldNextPreconditionStatus =
+/* const foldNextPreconditionStatus =
   <A>(
     onError: (status: NPSError) => A,
     onIdle: (status: NPSIdle) => A,
@@ -295,9 +254,9 @@ const foldNextPreconditionStatus =
         return onUpdateRequired(nextPreconditionStatus);
     }
     return onIdle(nextPreconditionStatus);
-  };
+  }; */
 
-const foldPreconditionStatus =
+export const foldPreconditionStatus =
   <A>(
     onError: (status: MPSError) => A,
     onIdle: (status: MPSIdle) => A,
@@ -329,7 +288,20 @@ export const shouldPresentPreconditionsBottomSheetSelector = (
   state: GlobalState
 ) => state.entities.messages.precondition.state === "scheduled";
 
-export const preconditionsRequireAppUpdateSelector = (state: GlobalState) => 
+export const scheduledStatePayloadSelector = (state: GlobalState) => pipe(
+  state.entities.messages.precondition,
+  foldPreconditionStatus(
+    constUndefined,
+    constUndefined,
+    constUndefined,
+    constUndefined,
+    scheduledState => ({ messageId: scheduledState.messageId, categoryTag: scheduledState.categoryTag }),
+    constUndefined,
+    constUndefined,
+  )
+);
+
+export const preconditionsRequireAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.precondition,
     foldPreconditionStatus(
@@ -337,31 +309,40 @@ export const preconditionsRequireAppUpdateSelector = (state: GlobalState) =>
       constFalse,
       constFalse,
       constFalse,
-      scheduled => pipe(
-        scheduled.categoryTag === SENDTagEnum.PN,
-        B.fold(
-          constFalse,
-          () => pipe(
-            state,
-            isPnAppVersionSupportedSelector
-          )
-        )
-      ),
+      scheduled =>
+        pipe(
+          scheduled.categoryTag === SENDTagEnum.PN,
+          B.fold(constFalse, () => pipe(state, isPnAppVersionSupportedSelector))
+        ),
       constFalse,
       constTrue
-    ),
+    )
   );
 
-export const preconditionTitleContentSelector = (state: GlobalState) =>
+export const preconditionsTitleContentSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.precondition,
     foldPreconditionStatus(
       () => "empty" as const,
       constUndefined,
-      () => "title" as const,
+      () => "header" as const,
       () => "loading" as const,
       constUndefined,
-      () => "title" as const,
+      () => "header" as const,
       () => "empty" as const
+    )
+  );
+
+export const preconditionsTitleSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.precondition,
+    foldPreconditionStatus(
+      constUndefined,
+      constUndefined,
+      loadingContentStatus => loadingContentStatus.content.title,
+      constUndefined,
+      constUndefined,
+      shownStatus => shownStatus.content.title,
+      constUndefined
     )
   );

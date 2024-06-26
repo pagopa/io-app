@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import { Text, View } from "react-native";
-import { constUndefined, pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   useIODispatch,
@@ -13,10 +11,12 @@ import {
   shouldPresentPreconditionsBottomSheetSelector
 } from "../../store/reducers/messagePrecondition";
 import {
-  toNextMessagePreconditionStatus,
+  retrievingDataPreconditionStatusAction,
   toRetrievingDataPayload,
-  toUpdateRequiredPayload
+  toUpdateRequiredPayload,
+  updateRequiredPreconditionStatusAction
 } from "../../store/actions/preconditions";
+import { PreconditionsTitle } from "./PreconditionsTitle";
 
 export const Preconditions = () => {
   const dispatch = useIODispatch();
@@ -24,7 +24,7 @@ export const Preconditions = () => {
   const onDismissCallback = useCallback(() => undefined, []);
   const modal = useIOBottomSheetModal({
     snapPoint: [500],
-    title: <PreconditionsBottomSheetTitle />,
+    title: <PreconditionsTitle />,
     component: <PreconditionsBottomSheetContent />,
     footer: <PreconditionsBottomSheetFooter />,
     onDismiss: onDismissCallback
@@ -38,27 +38,28 @@ export const Preconditions = () => {
       modal.present();
       const state = store.getState();
       const requiresAppUpdate = preconditionsRequireAppUpdateSelector(state);
-      const payload = requiresAppUpdate
-        ? toUpdateRequiredPayload()
-        : toRetrievingDataPayload();
-      dispatch(toNextMessagePreconditionStatus(payload));
+      if (requiresAppUpdate) {
+        dispatch(
+          updateRequiredPreconditionStatusAction(toUpdateRequiredPayload())
+        );
+      } else {
+        dispatch(
+          retrievingDataPreconditionStatusAction(toRetrievingDataPayload())
+        );
+      }
     }
   }, [dispatch, modal, shouldPresentBottomSheet, store]);
   return modal.bottomSheet;
 };
 
-const PreconditionsBottomSheetContent = () => {
-  return (
-    <View>
-      <Text>The text</Text>
-    </View>
-  );
-};
+const PreconditionsBottomSheetContent = () => (
+  <View>
+    <Text>The text</Text>
+  </View>
+);
 
-const PreconditionsBottomSheetFooter = () => {
-  return (
-    <View>
-      <Text>The text</Text>
-    </View>
-  );
-};
+const PreconditionsBottomSheetFooter = () => (
+  <View>
+    <Text>The texta</Text>
+  </View>
+);

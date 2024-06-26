@@ -11,7 +11,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
 import {
-  toNextMessagePreconditionStatus,
+  scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../store/actions/preconditions";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
@@ -72,7 +72,7 @@ export const WrappedMessageListItem = ({
           () =>
             pipe(
               toScheduledPayload(message.id, message.category.tag),
-              toNextMessagePreconditionStatus,
+              scheduledPreconditionStatusAction,
               dispatch
             )
         )

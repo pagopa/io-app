@@ -4,60 +4,43 @@ import { UIMessageId, WithUIMessageId } from "../../types";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
 // NPS stands for Next Precondition Status
-export type NPSScheduled = {
-  nextStatus: "scheduled";
-  messageId: UIMessageId;
-  categoryTag: string;
-};
-export type NPSUpdateRequired = {
-  nextStatus: "updateRequired";
-};
-export type NPSRetrievingData = {
-  nextStatus: "retrievingData";
+export type NPSError = {
+  nextStatus: "error";
+  reason: string;
 };
 export type NPSIdle = {
   nextStatus: "idle";
 };
 export type NPSLoadingContent = {
   nextStatus: "loadingContent";
-  messageId: UIMessageId;
-  categoryTag: string;
   content: ThirdPartyMessagePrecondition;
 };
-export type NPSError = {
-  nextStatus: "error";
+export type NPSRetrievingData = {
+  nextStatus: "retrievingData";
+};
+export type NPSScheduled = {
+  nextStatus: "scheduled";
   messageId: UIMessageId;
   categoryTag: string;
-  reason: string;
 };
 export type NPSShown = {
   nextStatus: "shown";
-  messageId: UIMessageId;
-  categoryTag: string;
-  content: ThirdPartyMessagePrecondition;
+};
+export type NPSUpdateRequired = {
+  nextStatus: "updateRequired";
 };
 
-export const toErrorPayload = (
-  messageId: UIMessageId,
-  categoryTag: string,
-  reason: string
-): NPSError => ({
+export const toErrorPayload = (reason: string): NPSError => ({
   nextStatus: "error",
-  messageId,
-  categoryTag,
   reason
 });
 export const toIdlePayload = (): NPSIdle => ({
   nextStatus: "idle"
 });
 export const toLoadingContentPayload = (
-  messageId: UIMessageId,
-  categoryTag: string,
   content: ThirdPartyMessagePrecondition
 ): NPSLoadingContent => ({
   nextStatus: "loadingContent",
-  messageId,
-  categoryTag,
   content
 });
 export const toRetrievingDataPayload = (): NPSRetrievingData => ({
@@ -71,32 +54,34 @@ export const toScheduledPayload = (
   messageId,
   categoryTag
 });
-export const toShownPayload = (
-  messageId: UIMessageId,
-  categoryTag: string,
-  content: ThirdPartyMessagePrecondition
-): NPSShown => ({
-  nextStatus: "shown",
-  messageId,
-  categoryTag,
-  content
+export const toShownPayload = (): NPSShown => ({
+  nextStatus: "shown"
 });
 export const toUpdateRequiredPayload = (): NPSUpdateRequired => ({
   nextStatus: "updateRequired"
 });
 
-export type NextPreconditionStatus =
-  | NPSScheduled
-  | NPSUpdateRequired
-  | NPSRetrievingData
-  | NPSIdle
-  | NPSLoadingContent
-  | NPSError
-  | NPSShown;
-
-export const toNextMessagePreconditionStatus = createStandardAction(
-  "TO_NEXT_MESSAGE_PRECONDITION_STATUS"
-)<NextPreconditionStatus>();
+export const errorPreconditionStatusAction = createStandardAction(
+  "TO_ERROR_PRECONDITION_STATUS"
+)<NPSError>();
+export const idlePreconditionStatusAction = createStandardAction(
+  "TO_IDLE_PRECONDITION_STATUS"
+)<NPSIdle>();
+export const loadingContentPreconditionStatusAction = createStandardAction(
+  "TO_LOADING_CONTENT_PRECONDITION_STATUS"
+)<NPSLoadingContent>();
+export const retrievingDataPreconditionStatusAction = createStandardAction(
+  "TO_RETRIEVING_DATA_PRECONDITION_STATUS"
+)<NPSRetrievingData>();
+export const scheduledPreconditionStatusAction = createStandardAction(
+  "TO_SCHEDULED_PRECONDITION_STATUS"
+)<NPSScheduled>();
+export const shownPreconditionStatusAction = createStandardAction(
+  "TO_SHOWN_PRECONDITION_STATUS"
+)<NPSShown>();
+export const updateRequiredPreconditionStatusAction = createStandardAction(
+  "TO_UPDATE_REQUIRED_PRECONDITION_STATUS"
+)<NPSUpdateRequired>();
 
 export const getMessagePrecondition = createAsyncAction(
   "GET_MESSAGE_PRECONDITION_REQUEST",
