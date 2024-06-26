@@ -138,21 +138,31 @@ const WalletPaymentOutcomeScreen = () => {
   });
 
   const trackOutcomeScreen = () => {
-    switch (outcome) {
-      case WalletPaymentOutcomeEnum.SUCCESS:
-        analytics.trackPaymentSuccess({
-          attempt: paymentOngoingHistory?.attempt,
-          organization_name: paymentOngoingHistory?.serviceName,
-          service_name: paymentOngoingHistory?.serviceName,
-          amount: paymentOngoingHistory?.formattedAmount,
-          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-          payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
-          saved_payment_method:
-            paymentOngoingHistory?.savedPaymentMethods?.length,
-          selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
-          data_entry: paymentOngoingHistory?.startOrigin
-        });
+    if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
+      analytics.trackPaymentOutcomeSuccess({
+        attempt: paymentOngoingHistory?.attempt,
+        organization_name: paymentOngoingHistory?.verifiedData?.paName,
+        service_name: paymentOngoingHistory?.serviceName,
+        amount: paymentOngoingHistory?.formattedAmount,
+        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+        payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+        saved_payment_method:
+          paymentOngoingHistory?.savedPaymentMethods?.length,
+        selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
+        data_entry: paymentOngoingHistory?.startOrigin
+      });
+      return;
     }
+    analytics.trackPaymentOutcomeFailure(outcome, {
+      organization_name: paymentOngoingHistory?.verifiedData?.paName,
+      service_name: paymentOngoingHistory?.serviceName,
+      attempt: paymentOngoingHistory?.attempt,
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      payment_phase:
+        outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
+          ? "pagamento"
+          : undefined
+    });
   };
 
   const getPropsForOutcome = (): OperationResultScreenContentProps => {

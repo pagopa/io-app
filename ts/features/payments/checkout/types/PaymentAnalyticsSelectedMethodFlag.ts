@@ -5,3 +5,5 @@ export type PaymentAnalyticsPreselectedPspFlag = "none" | "cheaper" | "customer"
 export type PaymentAnalyticsSelectedPspFlag = PaymentAnalyticsPreselectedPspFlag | "unique";
 
 export type PaymentAnalyticsEditingType = "payment_method" | "psp";
+
+export type PaymentAnalyticsPhase = "verifica" | "attiva" | "pagamento";
