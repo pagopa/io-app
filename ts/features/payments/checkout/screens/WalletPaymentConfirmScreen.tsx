@@ -93,6 +93,20 @@ const WalletPaymentConfirmScreen = () => {
           O.chainNullableK(payment => payment.isAllCCP),
           O.getOrElse(() => false)
         );
+
+        analytics.trackPaymentConversion({
+          attempt: paymentOngoingHistory?.attempt,
+          organization_name: paymentOngoingHistory?.verifiedData?.paName,
+          service_name: paymentOngoingHistory?.serviceName,
+          amount: paymentOngoingHistory?.formattedAmount,
+          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+          payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+          saved_payment_method:
+            paymentOngoingHistory?.savedPaymentMethods?.length,
+          selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
+          data_entry: paymentOngoingHistory?.startOrigin
+        });
+
         startPaymentAuthorizaton({
           paymentAmount: paymentDetail.amount as AmountEuroCents,
           paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
@@ -232,11 +246,22 @@ const SelectedPaymentMethodModuleCheckout = () => {
   const selectedPaymentMethodOption = useIOSelector(
     walletPaymentSelectedPaymentMethodOptionSelector
   );
+  const paymentOngoingHistory = useIOSelector(
+    selectOngoingPaymentHistorySelector
+  );
 
-  const handleOnPress = () =>
+  const handleOnPress = () => {
+    analytics.trackPaymentSummaryEditing({
+      payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
+      editing: "payment_method"
+    });
     dispatch(
       walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
     );
+  };
 
   if (O.isSome(selectedWalletOption) && selectedWalletOption.value.details) {
     const details = selectedWalletOption.value.details;
@@ -277,7 +302,9 @@ const SelectedPspModuleCheckout = () => {
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
-
+  const paymentOngoingHistory = useIOSelector(
+    selectOngoingPaymentHistorySelector
+  );
   const pspList = pot.getOrElse(pspListPot, []);
   const pspBusinessName = pipe(
     selectedPspOption,
@@ -291,6 +318,17 @@ const SelectedPspModuleCheckout = () => {
     O.getOrElse(() => 0)
   );
 
+  const handleOnPress = () => {
+    analytics.trackPaymentSummaryEditing({
+      payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
+      editing: "psp"
+    });
+    dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));
+  };
+
   return (
     <ModuleCheckout
       ctaText={
@@ -298,9 +336,7 @@ const SelectedPspModuleCheckout = () => {
       }
       title={formatNumberCentsToAmount(taxFee, true, "right")}
       subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspBusinessName}`}
-      onPress={() =>
-        dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP))
-      }
+      onPress={handleOnPress}
     />
   );
 };
