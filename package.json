@@ -24,7 +24,7 @@
   "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl",
   "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/0.1.37/openapi/openapi_io_patch.json",
   "pagopa_api_platform": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl",
-  "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/features/add-openapi-trial-service/api_trial_system.yaml",
+  "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_trial_system.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
