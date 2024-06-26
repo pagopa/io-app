@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
@@ -23,28 +22,30 @@ export function* handleWalletPaymentCreateTransaction(
       "pagoPAPlatformSessionToken"
     );
 
-    yield* put(
-      pipe(
-        newTransactionResult,
-        E.fold(
-          error =>
-            paymentsCreateTransactionAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-          ({ status, value }) => {
-            if (status === 200) {
-              return paymentsCreateTransactionAction.success(value);
-            } else if (status === 400) {
-              return paymentsCreateTransactionAction.failure({
-                ...getGenericError(new Error(`Error: ${status}`))
-              });
-            } else {
-              return paymentsCreateTransactionAction.failure(value);
-            }
-          }
-        )
-      )
-    );
+    if (E.isLeft(newTransactionResult)) {
+      if (action.payload.onError) {
+        action.payload.onError();
+      } else {
+        yield* put(paymentsCreateTransactionAction.failure({
+          ...getGenericError(new Error(readablePrivacyReport(newTransactionResult.left)))
+        }));
+      }
+      return;
+    }
+    const status = newTransactionResult.right.status;
+    if (status === 200) {
+      yield* put(paymentsCreateTransactionAction.success(newTransactionResult.right.value));
+    } else if (status === 400) {
+      if (action.payload.onError) {
+        action.payload.onError();
+      } else {
+        yield* put(paymentsCreateTransactionAction.failure({
+          ...getGenericError(new Error(`Error: ${status}`))
+        }));
+      }
+    } else {
+      yield* put(paymentsCreateTransactionAction.failure(newTransactionResult.right.value));
+    }
   } catch (e) {
     yield* put(
       paymentsCreateTransactionAction.failure({ ...getNetworkError(e) })

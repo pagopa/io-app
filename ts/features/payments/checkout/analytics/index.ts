@@ -112,6 +112,16 @@ export const trackPaymentMethodSelectionBackContinue = (props: Partial<PaymentAn
   );
 };
 
+export const trackPaymentMethodVerificaFatalError = (props: Partial<PaymentAnalyticsProps>) => {
+  console.log("PAYMENT_VERIFICA_FATAL_ERROR", props);
+  void mixpanelTrack(
+    "PAYMENT_VERIFICA_FATAL_ERROR",
+    buildEventProperties("KO", undefined, {
+      ...props
+    })
+  );
+};
+
 export const trackPaymentsAction =
   (mp: NonNullable<typeof mixpanel>) =>
     (action: Action): void => {

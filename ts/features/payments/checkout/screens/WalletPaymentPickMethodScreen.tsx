@@ -1,4 +1,9 @@
-import { GradientScrollView, H2, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  GradientScrollView,
+  H2,
+  VSpacer,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
@@ -52,6 +57,7 @@ import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalyticsSel
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const toast = useIOToast();
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
@@ -107,6 +113,16 @@ const WalletPaymentPickMethodScreen = () => {
       });
     }
   }, [notHasValidPaymentMethods, paymentDetailsPot, navigation, dispatch]);
+
+  const handleOnTransactionCreationError = () => {
+    toast.error(I18n.t("features.payments.errors.transactionCreationError"));
+    analytics.trackPaymentMethodVerificaFatalError({
+      organization_name: paymentOngoingHistory?.verifiedData?.paName,
+      service_name: paymentOngoingHistory?.serviceName,
+      attempt: paymentOngoingHistory?.attempt,
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+    });
+  };
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(
@@ -257,7 +273,8 @@ const WalletPaymentPickMethodScreen = () => {
             paymentsCreateTransactionAction.request({
               paymentNotices: [
                 { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-              ]
+              ],
+              onError: handleOnTransactionCreationError
             })
           );
           setWaitingTransactionActivation(true);
