@@ -1,6 +1,6 @@
 import { URL as PolyfillURL } from "react-native-url-polyfill";
-import { mixpanelTrack } from "../../../mixpanel";
-import { buildEventProperties } from "../../../utils/analytics";
+import { mixpanelTrack } from "../../../../mixpanel";
+import { buildEventProperties } from "../../../../utils/analytics";
 
 export const buildAbsoluteUrl = (
   redirect: string | undefined = undefined,
