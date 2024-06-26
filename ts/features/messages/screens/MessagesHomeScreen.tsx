@@ -4,11 +4,13 @@ import PagerView from "react-native-pager-view";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { PagerViewContainer } from "../components/Home/PagerViewContainer";
 import { TabNavigationContainer } from "../components/Home/TabNavigationContainer";
+import { Toasts } from "../components/Home/Toasts";
 
 export const MessagesHomeScreen = () => {
   const pagerViewRef = useRef<PagerView>(null);
   return (
     <View style={IOStyles.flex}>
+      <Toasts />
       <TabNavigationContainer pagerViewRef={pagerViewRef} />
       <PagerViewContainer ref={pagerViewRef} />
     </View>

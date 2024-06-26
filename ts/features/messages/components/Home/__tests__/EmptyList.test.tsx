@@ -45,7 +45,10 @@ describe("EmptyList", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, INBOX   category, pot.noneError", () => {
-    const component = renderComponent("INBOX", pot.noneError(""));
+    const component = renderComponent(
+      "INBOX",
+      pot.noneError({ reason: "", time: new Date() })
+    );
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, INBOX   category, pot.some, empty data", () => {
@@ -90,14 +93,14 @@ describe("EmptyList", () => {
   it("should match snapshot, INBOX   category, pot.someError, empty data", () => {
     const component = renderComponent(
       "INBOX",
-      pot.someError(emptyMessagePagePot, "")
+      pot.someError(emptyMessagePagePot, { reason: "", time: new Date() })
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, INBOX   category, pot.someError, non-empty data", () => {
     const component = renderComponent(
       "INBOX",
-      pot.someError(nonEmptyMessagePagePot, "")
+      pot.someError(nonEmptyMessagePagePot, { reason: "", time: new Date() })
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -117,7 +120,10 @@ describe("EmptyList", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, ARCHIVE category, pot.noneError", () => {
-    const component = renderComponent("ARCHIVE", pot.noneError(""));
+    const component = renderComponent(
+      "ARCHIVE",
+      pot.noneError({ reason: "", time: new Date() })
+    );
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, ARCHIVE category, pot.some, empty data", () => {
@@ -162,19 +168,22 @@ describe("EmptyList", () => {
   it("should match snapshot, ARCHIVE category, pot.someError, empty data", () => {
     const component = renderComponent(
       "ARCHIVE",
-      pot.someError(emptyMessagePagePot, "")
+      pot.someError(emptyMessagePagePot, { reason: "", time: new Date() })
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, ARCHIVE category, pot.someError, non-empty data", () => {
     const component = renderComponent(
       "ARCHIVE",
-      pot.someError(nonEmptyMessagePagePot, "")
+      pot.someError(nonEmptyMessagePagePot, { reason: "", time: new Date() })
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("when displaying INBOX, pot.noneError, should dispatch reloadAllMessages.request on 'reload' button tap", () => {
-    const component = renderComponent("INBOX", pot.noneError(""));
+    const component = renderComponent(
+      "INBOX",
+      pot.noneError({ reason: "", time: new Date() })
+    );
     const inboxRetryButton = component.getByTestId("home_emptyList_retry");
     expect(inboxRetryButton).toBeDefined();
     fireEvent.press(inboxRetryButton);
@@ -186,7 +195,10 @@ describe("EmptyList", () => {
     );
   });
   it("when displaying ARCHIVE, pot.noneError, should dispatch reloadAllMessages.request on 'reload' button tap", () => {
-    const component = renderComponent("ARCHIVE", pot.noneError(""));
+    const component = renderComponent(
+      "ARCHIVE",
+      pot.noneError({ reason: "", time: new Date() })
+    );
     const inboxRetryButton = component.getByTestId("home_emptyList_retry");
     expect(inboxRetryButton).toBeDefined();
     fireEvent.press(inboxRetryButton);
