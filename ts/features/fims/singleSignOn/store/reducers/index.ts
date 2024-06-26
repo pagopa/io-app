@@ -3,32 +3,32 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
+import { Action } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction,
   fimsGetRedirectUrlAndOpenIABAction
 } from "../actions";
 import { ConsentData } from "../../types";
-import { isStrictNone } from "../../../../utils/pot";
+import { isStrictNone } from "../../../../../utils/pot";
 
 type FimsFlowStateTags = "consents" | "in-app-browser" | "abort";
 
-export type FimsState = {
+export type FimsSSOState = {
   currentFlowState: FimsFlowStateTags;
   consentsData: pot.Pot<ConsentData, string>; // string -> errMessage
 };
 
-const INITIAL_STATE: FimsState = {
+const INITIAL_STATE: FimsSSOState = {
   currentFlowState: "consents",
   consentsData: pot.none
 };
 
 const reducer = (
-  state: FimsState = INITIAL_STATE,
+  state: FimsSSOState = INITIAL_STATE,
   action: Action
-): FimsState => {
+): FimsSSOState => {
   switch (action.type) {
     case getType(fimsGetConsentsListAction.request):
       return {
@@ -70,7 +70,7 @@ const reducer = (
 };
 
 export const fimsConsentsDataSelector = (state: GlobalState) =>
-  state.features.fims.consentsData;
+  state.features.fims.SSO.consentsData;
 
 export const fimsPartialAbortUrl = (state: GlobalState) =>
   pipe(state, fimsConsentsDataSelector, abortUrlFromConsentsPot, O.toUndefined);
@@ -86,16 +86,16 @@ const abortUrlFromConsentsPot = (consentsPot: pot.Pot<ConsentData, string>) =>
 export const fimsErrorStateSelector = (state: GlobalState) =>
   // this selector will be used to map the error message
   // once we have a clear error mapping
-  pot.isError(state.features.fims.consentsData)
-    ? state.features.fims.consentsData.error
+  pot.isError(state.features.fims.SSO.consentsData)
+    ? state.features.fims.SSO.consentsData.error
     : undefined;
 
 export const fimsLoadingStateSelector = (state: GlobalState) =>
   pipe(
-    state.features.fims.currentFlowState,
+    state.features.fims.SSO.currentFlowState,
     foldFimsFlowStateK(
       consentsState =>
-        pipe(state.features.fims.consentsData, consentsPot =>
+        pipe(state.features.fims.SSO.consentsData, consentsPot =>
           pipe(
             pot.isLoading(consentsPot) || isStrictNone(consentsPot),
             B.fold(
