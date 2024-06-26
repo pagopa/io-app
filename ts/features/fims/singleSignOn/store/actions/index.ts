@@ -30,7 +30,7 @@ export const fimsCancelOrAbortAction = createStandardAction(
   "FIMS_CANCEL_OR_ABORT"
 )();
 
-export type FimsActions =
+export type FimsSSOActions =
   | ActionType<typeof fimsGetConsentsListAction>
   | ActionType<typeof fimsGetRedirectUrlAndOpenIABAction>
   | ActionType<typeof fimsCancelOrAbortAction>;

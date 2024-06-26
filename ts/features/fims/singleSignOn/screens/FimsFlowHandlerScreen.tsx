@@ -4,30 +4,30 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
 import { View } from "react-native";
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { FimsParamsList } from "../navigation";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { FimsSSOParamsList } from "../navigation";
 import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction
-} from "../store/actions";
+} from "../store/actions/";
 import {
   fimsConsentsDataSelector,
   fimsErrorStateSelector,
   fimsLoadingStateSelector
 } from "../store/reducers";
 import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
-  FimsParamsList,
-  "FIMS_CONSENTS"
+  FimsSSOParamsList,
+  "FIMS_SSO_CONSENTS"
 >;
 
 export const FimsFlowHandlerScreen = (
