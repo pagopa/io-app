@@ -185,6 +185,18 @@ export const trackPaymentConversion = (
   );
 };
 
+export const trackPaymentSuccess = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  console.log("PAYMENT_UX_SUCCESS", props);
+  void mixpanelTrack(
+    "PAYMENT_UX_SUCCESS",
+    buildEventProperties("UX", "screen_view", {
+      ...props
+    })
+  );
+};
+
 export const trackPaymentsAction =
   (mp: NonNullable<typeof mixpanel>) =>
     (action: Action): void => {

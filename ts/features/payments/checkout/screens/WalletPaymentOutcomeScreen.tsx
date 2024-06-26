@@ -26,6 +26,9 @@ import {
 } from "../types/PaymentOutcomeEnum";
 import ROUTES from "../../../../navigation/routes";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import * as analytics from "../analytics";
+import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -46,6 +49,9 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const onSuccessAction = useIOSelector(walletPaymentOnSuccessActionSelector);
   const profileEmailOption = useIOSelector(profileEmailSelector);
+  const paymentOngoingHistory = useIOSelector(
+    selectOngoingPaymentHistorySelector
+  );
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -126,6 +132,28 @@ const WalletPaymentOutcomeScreen = () => {
         );
       }
     };
+
+  useOnFirstRender(() => {
+    trackOutcomeScreen();
+  });
+
+  const trackOutcomeScreen = () => {
+    switch (outcome) {
+      case WalletPaymentOutcomeEnum.SUCCESS:
+        analytics.trackPaymentSuccess({
+          attempt: paymentOngoingHistory?.attempt,
+          organization_name: paymentOngoingHistory?.serviceName,
+          service_name: paymentOngoingHistory?.serviceName,
+          amount: paymentOngoingHistory?.formattedAmount,
+          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+          payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+          saved_payment_method:
+            paymentOngoingHistory?.savedPaymentMethods?.length,
+          selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
+          data_entry: paymentOngoingHistory?.startOrigin
+        });
+    }
+  };
 
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
