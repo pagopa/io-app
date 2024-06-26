@@ -8,6 +8,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { FooterStackButton } from "../../common/components/FooterStackButton";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import ItwMarkdown from "../components/ItwMarkdown";
+import { ItwTags } from "../../machine/tags";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -17,6 +18,9 @@ import ItwMarkdown from "../components/ItwMarkdown";
  */
 const ItwDiscoveryInfoScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(snap =>
+    snap.hasTag(ItwTags.Loading)
+  );
 
   useOnFirstRender(() => {
     machineRef.send({ type: "start" });
@@ -38,7 +42,8 @@ const ItwDiscoveryInfoScreen = () => {
             accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: () => {
               machineRef.send({ type: "accept-tos" });
-            }
+            },
+            loading: isLoading
           }}
           secondaryActionProps={{
             label: I18n.t("global.buttons.cancel"),

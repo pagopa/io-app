@@ -88,7 +88,7 @@ export const itwEidIssuanceMachine = setup({
               target: "WalletAttestationRetrieval"
             },
             onError: {
-              target: "#itwIssuanceMachine.Failure"
+              target: "#itwEidIssuanceMachine.Failure"
             }
           }
         },
@@ -103,10 +103,10 @@ export const itwEidIssuanceMachine = setup({
               actions: assign(({ event }) => ({
                 walletAttestation: event.output
               })),
-              target: "#itwIssuanceMachine.UserIdentification"
+              target: "#itwEidIssuanceMachine.UserIdentification"
             },
             onError: {
-              target: "#itwIssuanceMachine.Failure"
+              target: "#itwEidIssuanceMachine.Failure"
             }
           }
         }
