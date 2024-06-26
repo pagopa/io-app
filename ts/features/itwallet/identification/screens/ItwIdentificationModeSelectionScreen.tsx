@@ -27,12 +27,6 @@ export const ItwIdentificationModeSelectionScreen = () => {
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(itwNfcIsEnabled.request());
-    }, [dispatch])
-  );
-
   const isCieSupported = React.useMemo(
     () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
     [isCieSupportedPot]
@@ -44,7 +38,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    machineRef.send({ type: "identification.select-mode", mode: 0 });
+    machineRef.send({ type: "select-identification-mode", mode: "spid" });
   };
 
   const handleCiePinPress = () => {
@@ -61,10 +55,15 @@ export const ItwIdentificationModeSelectionScreen = () => {
     Alert.alert("Not implemented");
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(itwNfcIsEnabled.request());
+    }, [dispatch])
+  );
+
   return (
     <IOScrollViewWithLargeHeader
       title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
-      goBack={() => machineRef.send({ type: "back" })}
     >
       <ContentWrapper>
         <ListItemHeader

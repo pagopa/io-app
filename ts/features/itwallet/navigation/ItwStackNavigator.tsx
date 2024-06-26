@@ -8,7 +8,11 @@ import { ItwIdentificationNfcInstructionsScreen } from "../identification/screen
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
-import { ItWalletIssuanceMachineProvider } from "../machine/provider";
+import {
+  ItWalletIssuanceMachineProvider,
+  ItwCredentialIssuanceMachineContext,
+  ItwEidIssuanceMachineContext
+} from "../machine/provider";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -17,9 +21,28 @@ const Stack = createStackNavigator<ItwParamsList>();
 
 export const ItwStackNavigator = () => (
   <ItWalletIssuanceMachineProvider>
+    <InnerNavigator />
+  </ItWalletIssuanceMachineProvider>
+);
+
+const InnerNavigator = () => {
+  const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const credentialIssuanceMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
+
+  return (
     <Stack.Navigator
       initialRouteName={ITW_ROUTES.DISCOVERY.INFO}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
+      screenListeners={{
+        beforeRemove: () => {
+          // Read more on https://reactnavigation.org/docs/preventing-going-back/
+          // Whenever we have a back navigation action we send a "back" event to the machine.
+          // Since the back event is accepted only by specific states, we can safely send a back event to each machine
+          eidIssuanceMachineRef.send({ type: "back" });
+          credentialIssuanceMachineRef.send({ type: "back" });
+        }
+      }}
     >
       {/* DISCOVERY */}
       <Stack.Screen
@@ -63,5 +86,5 @@ export const ItwStackNavigator = () => (
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-  </ItWalletIssuanceMachineProvider>
-);
+  );
+};

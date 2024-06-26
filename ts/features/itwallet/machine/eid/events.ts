@@ -1,14 +1,13 @@
+import { LocalIdpsFallback } from "../../../../utils/idps";
+
+type IdentificationMode = "spid" | "ciePin" | "cieId";
+
 export type Start = {
   type: "start";
 };
 
 export type AcceptTos = {
   type: "accept-tos";
-};
-
-export type SelectIdentificationMode = {
-  type: "select-identification-mode";
-  mode: number;
 };
 
 export type AddToWallet = {
@@ -27,6 +26,16 @@ export type RequestAssistance = {
   type: "request-assistance";
 };
 
+export type SelectIdentificationMode = {
+  type: "select-identification-mode";
+  mode: IdentificationMode;
+};
+
+export type SelectSpidIdp = {
+  type: "select-spid-idp";
+  idp: LocalIdpsFallback;
+};
+
 export type Retry = {
   type: "retry";
 };
@@ -43,6 +52,7 @@ export type EidIssuanceEvents =
   | Start
   | AcceptTos
   | SelectIdentificationMode
+  | SelectSpidIdp
   | AddToWallet
   | GoToWallet
   | AddNewCredential

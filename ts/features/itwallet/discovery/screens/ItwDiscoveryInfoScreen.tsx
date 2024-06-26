@@ -4,10 +4,10 @@ import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenW
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { FooterStackButton } from "../../common/components/FooterStackButton";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import ItwMarkdown from "../components/ItwMarkdown";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 /**
  * This is the screen that shows the information about the discovery process

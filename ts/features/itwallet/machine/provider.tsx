@@ -4,12 +4,9 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import createCredentialIssuanceActionsImplementation from "./credential/actions";
 import createCredentialIssuanceActorsImplementation from "./credential/actors";
 import { itwCredentialIssuanceMachine } from "./credential/machine";
-import createEidIssuanceActionsImplementation from "./eid/actions";
-import createEidIssuanceActorsImplementation from "./eid/actors";
+import { createEidIssuanceActionsImplementation } from "./eid/actions";
+import { createEidIssuanceActorsImplementation } from "./eid/actors";
 import { itwEidIssuanceMachine } from "./eid/machine";
-import createIdentificationActionsImplementation from "./identification/actions";
-import createIdentificationActorsImplementation from "./identification/actors";
-import { itwIdentificationMachine } from "./identification/machine";
 
 type Props = {
   children: JSX.Element;
@@ -26,17 +23,9 @@ export const ItwCredentialIssuanceMachineContext = createActorContext(
 export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
 
-  const identificationMachine = itwIdentificationMachine.provide({
-    actions: createIdentificationActionsImplementation(navigation),
-    actors: createIdentificationActorsImplementation()
-  });
-
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     actions: createEidIssuanceActionsImplementation(navigation),
-    actors: {
-      ...createEidIssuanceActorsImplementation(),
-      identificationMachine
-    }
+    actors: createEidIssuanceActorsImplementation()
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({

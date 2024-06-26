@@ -1,7 +1,6 @@
-import { assign, forwardTo, fromPromise, setup } from "xstate5";
+import { assertEvent, assign, fromPromise, setup } from "xstate5";
+import { LocalIdpsFallback } from "../../../../utils/idps";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { Events as IdentificationEvents } from "../identification/events";
-import { itwIdentificationMachine } from "../identification/machine";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -12,14 +11,13 @@ const notImplemented = () => {
 
 export const itwEidIssuanceMachine = setup({
   types: {
-    children: {} as {
-      identificationMachine: "identificationMachine";
-    },
     context: {} as Context,
-    events: {} as EidIssuanceEvents | IdentificationEvents
+    events: {} as EidIssuanceEvents
   },
   actions: {
     navigateToTosScreen: notImplemented,
+    navigateToIdentificationModeScreen: notImplemented,
+    navigateToIdpSelectionScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -32,17 +30,21 @@ export const itwEidIssuanceMachine = setup({
   },
   actors: {
     registerWalletInstance: fromPromise<string>(notImplemented),
-    requestEid: fromPromise<StoredCredential, string | undefined>(
+    showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
       notImplemented
     ),
-    identificationMachine: itwIdentificationMachine
-  }
+    requestEid: fromPromise<StoredCredential, string | undefined>(
+      notImplemented
+    )
+  },
+  guards: {}
 }).createMachine({
   id: "itwEidIssuanceMachine",
   context: InitialContext,
   initial: "Idle",
   states: {
     Idle: {
+      description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
           target: "TosAcceptance"
@@ -50,6 +52,8 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     TosAcceptance: {
+      description:
+        "Display of the ToS to the user who must accept in order to proceed with the issuance of the eID",
       entry: "navigateToTosScreen",
       on: {
         "accept-tos": {
@@ -63,7 +67,7 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "registerWalletInstance",
         onDone: {
-          target: "Identification",
+          target: "UserIdentification",
           actions: "storeWalletAttestation"
         },
         onError: {
@@ -71,31 +75,74 @@ export const itwEidIssuanceMachine = setup({
         }
       }
     },
-    Identification: {
+    UserIdentification: {
       description:
-        "User identification flow. Once we get the user token we can continue to the eid issuance",
-      invoke: {
-        id: "identificationMachine",
-        src: "identificationMachine",
-        systemId: "identificationMachine",
-        onDone: {
-          actions: assign(({ event }) => ({
-            userToken: event.output.token
-          })),
-          target: "#itwEidIssuanceMachine.Issuance"
+        "User identification flow. Once we get the user token we can continue to the eID issuance",
+      initial: "ModeSelection",
+      states: {
+        ModeSelection: {
+          entry: "navigateToIdentificationModeScreen",
+          on: {
+            "select-identification-mode": [
+              {
+                guard: ({ event }) => event.mode === "spid",
+                target: "Spid"
+              },
+              {
+                guard: ({ event }) => event.mode === "ciePin",
+                target: "CiePin"
+              },
+              {
+                guard: ({ event }) => event.mode === "cieId",
+                target: "CieId"
+              }
+            ],
+            back: "#itwEidIssuanceMachine.TosAcceptance"
+          }
         },
-        onError: {
-          target: "#itwEidIssuanceMachine.Failure"
+        Spid: {
+          initial: "IdpSelection",
+          states: {
+            IdpSelection: {
+              entry: "navigateToIdpSelectionScreen",
+              on: {
+                "select-spid-idp": {
+                  target: "IdpIdentification"
+                },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                }
+              }
+            },
+            IdpIdentification: {
+              tags: [ItwTags.Loading],
+              invoke: {
+                input: ({ event }) => {
+                  assertEvent(event, "select-spid-idp");
+                  return event.idp;
+                },
+                src: "showSpidIdentificationWebView",
+                onDone: {
+                  actions: assign(({ event }) => ({ userToken: event.output })),
+                  target: "#itwEidIssuanceMachine.UserIdentification.Completed"
+                }
+              }
+            }
+          }
+        },
+        CiePin: {
+          // TODO
+        },
+        CieId: {
+          // TODO
+        },
+        Completed: {
+          type: "final"
         }
       },
-      on: {
-        back: {
-          target: "TosAcceptance"
-        },
-        // Every "identification" event is forwared to the identiciation machine
-        "identification.*": {
-          actions: forwardTo("identificationMachine")
-        }
+      onDone: {
+        target: "Issuance"
       }
     },
     Issuance: {
@@ -135,7 +182,7 @@ export const itwEidIssuanceMachine = setup({
         "add-new-credential": {
           actions: "navigateToCredentialCatalog"
         },
-        close: {
+        "go-to-wallet": {
           actions: "navigateToWallet"
         }
       }
