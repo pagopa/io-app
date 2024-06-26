@@ -1,17 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { View, ListRenderItemInfo, SectionList } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { connect } from "react-redux";
 import { ButtonSolid } from "@pagopa/io-app-design-system";
+import _ from "lodash";
 import ListItemComponent from "../components/screens/ListItemComponent";
 import I18n from "../i18n";
-import { preferredCalendarSaveSuccess } from "../store/actions/persistedPreferences";
-import { Dispatch } from "../store/actions/types";
-import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { convertLocalCalendarName } from "../utils/calendar";
+import { useIOSelector } from "../store/hooks";
+import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 import { Body } from "./core/typography/Body";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import SectionHeaderComponent from "./screens/SectionHeaderComponent";
@@ -28,18 +27,6 @@ type OwnProps = {
   onCalendarsLoaded: () => void;
   lastListItem?: React.ReactNode;
   onCalendarRemove?: () => void;
-};
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
-
-type State = {
-  calendarsByAccount: pot.Pot<CalendarsByAccount, ResourceError>;
-};
-
-const INITIAL_STATE: State = {
-  calendarsByAccount: pot.none
 };
 
 type FetchError = {
@@ -74,18 +61,17 @@ const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
 /**
  * Allows the user to select one of the device available Calendars
  */
-class CalendarsListContainer extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = INITIAL_STATE;
-  }
+const CalendarsListContainer = (props: OwnProps) => {
+  const [calendarsByAccount, setCalendarsByAccount] = useState<
+    pot.Pot<CalendarsByAccount, ResourceError>
+  >(pot.none);
+  const defaultCalendar = useIOSelector(preferredCalendarSelector, _.isEqual);
 
-  private renderSectionHeader = (info: { section: any }): React.ReactNode => (
+  const renderSectionHeader = (info: { section: any }): React.ReactNode => (
     <SectionHeaderComponent sectionHeader={info.section.title} />
   );
 
-  private renderListItem = ({ item }: ListRenderItemInfo<Calendar>) => {
-    const { defaultCalendar } = this.props;
+  const renderListItem = ({ item }: ListRenderItemInfo<Calendar>) => {
     const isDefaultCalendar = defaultCalendar && item.id === defaultCalendar.id;
     return (
       <ListItemComponent
@@ -95,9 +81,9 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
         iconSize={12}
         iconName={isDefaultCalendar ? "checkTickBig" : undefined}
         onPress={() =>
-          isDefaultCalendar && this.props.onCalendarRemove
-            ? this.props.onCalendarRemove()
-            : this.props.onCalendarSelected(item)
+          isDefaultCalendar && props.onCalendarRemove
+            ? props.onCalendarRemove()
+            : props.onCalendarSelected(item)
         }
         accessible={true}
         accessibilityRole={"radio"}
@@ -110,45 +96,9 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
     );
   };
 
-  public render() {
-    const { calendarsByAccount } = this.state;
-    const { defaultCalendar } = this.props;
+  const fetchCalendars = useCallback(() => {
+    setCalendarsByAccount(pot.noneLoading);
 
-    return (
-      <React.Fragment>
-        {pot.isError(calendarsByAccount) && (
-          <React.Fragment>
-            <Body>{mapResourceErrorToMessage(calendarsByAccount.error)}</Body>
-            <ButtonSolid
-              onPress={this.fetchCalendars}
-              label={I18n.t("global.buttons.retry")}
-              accessibilityLabel={I18n.t("global.buttons.retry")}
-            />
-          </React.Fragment>
-        )}
-        <View style={{ paddingHorizontal: customVariables.contentPadding }}>
-          {pot.isSome(calendarsByAccount) && (
-            <SectionList
-              extraData={{ defaultCalendar }}
-              sections={calendarsByAccount.value}
-              renderSectionHeader={this.renderSectionHeader}
-              renderItem={this.renderListItem}
-            />
-          )}
-          <EdgeBorderComponent />
-        </View>
-      </React.Fragment>
-    );
-  }
-
-  public componentDidMount() {
-    this.fetchCalendars();
-  }
-
-  private fetchCalendars = () => {
-    this.setState({
-      calendarsByAccount: pot.noneLoading
-    });
     // Fetch user calendars.
     RNCalendarEvents.findCalendars()
       .then(calendars => {
@@ -158,13 +108,8 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
             calendars.filter(calendar => calendar.allowsModifications)
           )
         );
-
-        this.setState(
-          {
-            calendarsByAccount: organizedCalendars
-          },
-          () => this.props.onCalendarsLoaded()
-        );
+        setCalendarsByAccount(organizedCalendars);
+        props.onCalendarsLoaded();
       })
       .catch(_ => {
         const fetchError: FetchError = {
@@ -174,30 +119,40 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
           ReadonlyArray<CalendarByAccount>,
           ResourceError
         > = pot.toError(pot.none, fetchError);
-        this.setState(
-          {
-            calendarsByAccount
-          },
-          () => this.props.onCalendarsLoaded()
-        );
+        setCalendarsByAccount(calendarsByAccount);
+        props.onCalendarsLoaded();
       });
-  };
-}
+  }, [props]);
 
-const mapStateToProps = (state: GlobalState) => ({
-  defaultCalendar: state.persistedPreferences.preferredCalendar
-});
+  useEffect(() => {
+    fetchCalendars();
+  }, [fetchCalendars]);
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  preferredCalendarSaveSuccess: (calendar: Calendar) =>
-    dispatch(
-      preferredCalendarSaveSuccess({
-        preferredCalendar: calendar
-      })
-    )
-});
+  return (
+    <React.Fragment>
+      {pot.isError(calendarsByAccount) && (
+        <React.Fragment>
+          <Body>{mapResourceErrorToMessage(calendarsByAccount.error)}</Body>
+          <ButtonSolid
+            onPress={fetchCalendars}
+            label={I18n.t("global.buttons.retry")}
+            accessibilityLabel={I18n.t("global.buttons.retry")}
+          />
+        </React.Fragment>
+      )}
+      <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+        {pot.isSome(calendarsByAccount) && (
+          <SectionList
+            extraData={{ defaultCalendar }}
+            sections={calendarsByAccount.value}
+            renderSectionHeader={renderSectionHeader}
+            renderItem={renderListItem}
+          />
+        )}
+        <EdgeBorderComponent />
+      </View>
+    </React.Fragment>
+  );
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CalendarsListContainer);
+export default CalendarsListContainer;
