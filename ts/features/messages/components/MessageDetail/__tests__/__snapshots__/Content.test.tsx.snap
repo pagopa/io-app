@@ -25,7 +25,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -40,7 +40,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
           Object {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -54,7 +54,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       color="bluegrey"
       defaultColor="blue"
       defaultWeight="Bold"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -71,7 +71,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
           Object {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "700",
           },
@@ -98,7 +98,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -113,7 +113,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
           Object {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -127,7 +127,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       color="bluegrey"
       defaultColor="blue"
       defaultWeight="Bold"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -144,7 +144,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
           Object {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "700",
           },
@@ -171,7 +171,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
-      font="TitilliumWeb"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -186,7 +186,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
           Object {
             "color": "#475A6D",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
           },
@@ -200,8 +200,8 @@ exports[`MessageDetailData component when service's contact detail are not defin
       accessibilityRole="link"
       color="blue"
       defaultColor="blue"
-      defaultWeight="SemiBold"
-      font="TitilliumWeb"
+      defaultWeight="Semibold"
+      font="TitilliumSansPro"
       fontStyle={
         Object {
           "fontSize": 16,
@@ -221,7 +221,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           },
           Object {
             "color": "#0073E6",
-            "fontFamily": "Titillium Web",
+            "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
             "fontWeight": "700",
           },

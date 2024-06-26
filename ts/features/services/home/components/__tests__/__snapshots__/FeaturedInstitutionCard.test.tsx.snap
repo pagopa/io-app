@@ -447,8 +447,8 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   allowFontScaling={false}
                                   color="hanPurple-850"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
-                                  font="TitilliumWeb"
+                                  defaultWeight="Semibold"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 18,
@@ -465,13 +465,13 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       },
                                       Object {
                                         "color": "#1A0744",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   ### Institution ###
                                 </Text>
@@ -943,8 +943,8 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   allowFontScaling={false}
                                   color="hanPurple-850"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
-                                  font="TitilliumWeb"
+                                  defaultWeight="Semibold"
+                                  font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
                                       "fontSize": 18,
@@ -961,13 +961,13 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       },
                                       Object {
                                         "color": "#1A0744",
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   ### Institution ###
                                 </Text>

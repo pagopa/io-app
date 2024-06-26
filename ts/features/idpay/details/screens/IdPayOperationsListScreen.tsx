@@ -95,7 +95,7 @@ export const IdPayOperationsListScreen = () => {
       () => (
         <Placeholder.Box animate="fade" height={18} width={70} radius={4} />
       ),
-      dateString => <Body weight="SemiBold">{dateString}</Body>
+      dateString => <Body weight="Semibold">{dateString}</Body>
     )
   );
 

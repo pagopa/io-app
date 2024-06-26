@@ -46,7 +46,7 @@ const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
     E.getOrElse(() => "-")
   );
   const percentage = (
-    <H5 weight={"SemiBold"} color={"white"}>
+    <H5 weight={"Semibold"} color={"white"}>
       {PERCENTAGE_SYMBOL}
     </H5>
   );

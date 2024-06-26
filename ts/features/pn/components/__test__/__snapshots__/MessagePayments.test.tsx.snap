@@ -765,8 +765,8 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -782,13 +782,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -861,7 +861,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -877,7 +877,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -892,7 +892,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -908,30 +908,25 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345610
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -965,7 +960,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1107,7 +1102,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1123,7 +1118,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1138,7 +1133,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1154,30 +1149,25 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345620
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1211,7 +1201,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1353,7 +1343,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1369,7 +1359,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1384,7 +1374,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1400,30 +1390,25 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345630
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1457,7 +1442,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1599,7 +1584,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1615,7 +1600,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1630,7 +1615,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1646,30 +1631,25 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345640
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1703,7 +1683,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -1845,7 +1825,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1861,7 +1841,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -1876,7 +1856,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -1892,30 +1872,25 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345650
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -1949,7 +1924,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2091,7 +2066,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2107,7 +2082,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -2122,7 +2097,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2138,30 +2113,25 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345660
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -2195,7 +2165,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2337,7 +2307,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2353,7 +2323,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -2368,7 +2338,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -2384,30 +2354,25 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345670
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -2441,7 +2406,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2965,8 +2930,8 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -2982,13 +2947,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -3061,7 +3026,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3077,7 +3042,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3092,7 +3057,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3108,30 +3073,25 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345610
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -3165,7 +3125,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -3307,7 +3267,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3323,7 +3283,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3338,7 +3298,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3354,30 +3314,25 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345620
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -3411,7 +3366,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -3553,7 +3508,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3569,7 +3524,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3584,7 +3539,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3600,30 +3555,25 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345630
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -3657,7 +3607,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -3799,7 +3749,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3815,7 +3765,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -3830,7 +3780,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -3846,30 +3796,25 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345640
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -3903,7 +3848,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -4045,7 +3990,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4061,7 +4006,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -4076,7 +4021,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4092,30 +4037,25 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345650
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -4149,7 +4089,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -4291,7 +4231,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4307,7 +4247,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -4322,7 +4262,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4338,30 +4278,25 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345660
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -4395,7 +4330,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -4537,7 +4472,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4553,7 +4488,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -4568,7 +4503,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -4584,30 +4519,25 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 01234567890012345678912345670
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -4641,7 +4571,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -5496,8 +5426,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -5513,13 +5443,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -5584,7 +5514,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5600,7 +5530,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -5615,7 +5545,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5631,30 +5561,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -5662,14 +5587,15 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -5678,13 +5604,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -5816,7 +5742,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5832,7 +5758,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -5847,7 +5773,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -5863,30 +5789,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -5920,7 +5841,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -6061,7 +5982,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6077,7 +5998,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -6092,7 +6013,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6108,30 +6029,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -6165,7 +6081,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -6306,7 +6222,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6322,7 +6238,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -6337,7 +6253,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6353,30 +6269,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -6410,7 +6321,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -6551,7 +6462,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6567,7 +6478,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -6582,7 +6493,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -6598,30 +6509,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -6655,7 +6561,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -7179,8 +7085,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -7196,13 +7102,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -7267,7 +7173,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7283,7 +7189,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7298,7 +7204,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7314,30 +7220,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -7345,14 +7246,15 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -7361,13 +7263,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -7499,7 +7401,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7515,7 +7417,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7530,7 +7432,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7546,30 +7448,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -7603,7 +7500,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -7744,7 +7641,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7760,7 +7657,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -7775,7 +7672,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -7791,30 +7688,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -7848,7 +7740,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -7989,7 +7881,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8005,7 +7897,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -8020,7 +7912,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8036,30 +7928,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -8093,7 +7980,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -8234,7 +8121,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8250,7 +8137,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -8265,7 +8152,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8281,30 +8168,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -8338,7 +8220,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -8862,8 +8744,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -8879,13 +8761,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -8950,7 +8832,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8966,7 +8848,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -8981,7 +8863,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -8997,30 +8879,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -9028,14 +8905,15 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -9044,13 +8922,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -9182,7 +9060,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9198,7 +9076,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9213,7 +9091,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9229,30 +9107,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -9286,7 +9159,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -9427,7 +9300,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9443,7 +9316,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9458,7 +9331,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9474,30 +9347,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -9531,7 +9399,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -9672,7 +9540,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9688,7 +9556,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9703,7 +9571,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9719,30 +9587,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -9776,7 +9639,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -9917,7 +9780,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9933,7 +9796,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -9948,7 +9811,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -9964,30 +9827,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -10021,7 +9879,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -10180,7 +10038,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -10653,8 +10511,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -10670,13 +10528,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -10741,7 +10599,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -10757,7 +10615,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -10772,7 +10630,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -10788,30 +10646,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -10819,14 +10672,15 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -10835,13 +10689,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -10973,7 +10827,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -10989,7 +10843,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -11004,7 +10858,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11020,30 +10874,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  20
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -11077,7 +10926,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11218,7 +11067,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11234,7 +11083,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -11249,7 +11098,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11265,30 +11114,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  30
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -11322,7 +11166,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11463,7 +11307,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11479,7 +11323,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -11494,7 +11338,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11510,30 +11354,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  40
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -11567,7 +11406,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11708,7 +11547,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11724,7 +11563,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -11739,7 +11578,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -11755,30 +11594,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 0123  4567  8912  3456  50
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <View
@@ -11812,7 +11646,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -11971,7 +11805,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -12444,8 +12278,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -12461,13 +12295,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -12532,7 +12366,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -12548,7 +12382,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -12563,7 +12397,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -12579,30 +12413,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -12610,14 +12439,15 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -12626,13 +12456,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>
@@ -13147,8 +12977,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
@@ -13164,13 +12994,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Avvisi pagoPA
                               </Text>
@@ -13235,7 +13065,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -13251,7 +13081,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
                                     },
@@ -13266,7 +13096,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="bluegrey"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
-                                font="TitilliumWeb"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 14,
@@ -13282,30 +13112,25 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#475A6D",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 hendrerit orci id dolor consectetur
                               </Text>
                             </View>
                             <View
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "flex-end",
-                                    "marginLeft": 12,
-                                  },
-                                  Object {
-                                    "flexShrink": 1,
-                                  },
-                                ]
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginLeft": 12,
+                                }
                               }
                             >
                               <Text
@@ -13313,14 +13138,15 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={false}
                                 color="blue"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                numberOfLines={1}
                                 style={
                                   Array [
                                     Object {
@@ -13329,13 +13155,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     },
                                     Object {
                                       "color": "#0073E6",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="SemiBold"
+                                weight="Semibold"
                               >
                                 1.99 €
                               </Text>

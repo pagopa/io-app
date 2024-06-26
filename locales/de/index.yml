@@ -297,8 +297,7 @@ profile:
   logout:
     menulabel: "IO beenden"
     alertTitle: "Möchtest du wirklich beenden?"
-    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
-    loading: "Abmeldung läuft..."
+    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren." 
     exit: "Beenden"
   errors:
     load: "Fehler beim Laden des Profils"
@@ -384,38 +383,9 @@ profile:
           title: "Freigabe von Nutzungsdaten"
           description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
         screen:
-          title: "Deine Nutzungsdaten"
-          description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App und erlaube, im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
-          why:
-            description:
-              one: "IO sammelt nur die für das Funktionieren der angebotenen Dienste "
-              two: "notwendigen Daten"
-              three: "."
-            cta: "Warum?"
-          security:
-            description:
-              one: "Wir ergreifen Sicherheitsmaßnahmen zum Schutz deiner Daten."
-            cta: "Erfahre mehr"
-          gdpr:
-            description:
-              one: "Das IO-Team arbeitet mit Dienstleistern in "
-              two: "Übereinstimmung mit dem GDPR zusammen."
-            cta: "Siehe Liste der Dienstleister"
-          additionalInformation:
-            description: "Für weitere Informationen lies bitte die "
-            cta: "Datenschutzbestimmungen und Nutzungsbedingungen"
-          profileSettings: "Du kannst diese Einstellung jederzeit unter Profil > Einstellungen ändern."
           cta:
             shareData: "Daten freigeben"
-            dontShareData: "Daten nicht freigeben"
-            dontShare: "Nicht freigeben"
           confirmToast: "Einstellungen aktualisiert!"
-        alert:
-          title: "Du gibst IO nicht die Erlaubnis, deine Nutzungsdaten zu sammeln."
-          body: "Wenn du diese Option bestätigen, kann es sein, dass dem IO-Support-Team bei technischen Problemen nicht alle Daten zur Verfügung stehen, um diese zu lösen."
-        whyBottomSheet:
-          title: "Für welche Zwecke sammeln wir Informationen?"
-          body: "**IO sammelt keine Daten für Marketingzwecke.** \nWir verwenden Tools, die es uns ermöglichen, Daten über deine Nutzung der App aufzuzeichnen, um dir einen besseren Service zu bieten und dich bei Problemen zu unterstützen."
         securityBottomSheet:
           title: "Was ist eine Pseudonymisierung?"
           body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
@@ -456,16 +426,12 @@ profile:
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
-    subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
     contextualHelpTitle: "Deine Einstellungen"
     list:
       wip: "In Bearbeitung"
-      language: "Sprache"
       digitalDomicile: "Digitales Domizil"
-      service_contact: "Dienste verwalten"
       preferred_calendar:
         title: "Bevorzugter Kalender"
-        not_selected: "Nicht ausgewählt"
       preferred_language:
         title: "Bevorzugte Sprache"
         subtitle: "In welcher Sprache möchtest du die App nutzen?"
@@ -803,21 +769,13 @@ onboarding:
     headerTitle: "IO einrichten"
     available:
       title: "Biometrische Erkennung aktiveren"
-      settings: "Du kannst deine Präferenz jederzeit unter Profil > Sicherheit ändern."
       body:
         infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
         biometricType: "mit deinem Gesicht oder Fingerabdruck"
         infoEnd: "auf schnellere und sicherere Weise."
         enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
-        notEnrolled:
-          text: "Um sie zu verwenden, geh zu den Geräteeinstellungen und konfiguriere sie. Aktiviere sie dann auf IO unter Profil > Sicherheit."
     unavailable:
       title: "Schütze dein Gerät"
-      body:
-        firstInfoStart: "IO schickt dir Mitteilungen, die dich"
-        firstInfoEnd: "persönlich betreffen."
-        secondInfoStart: "Schütze dein Gerät vor unerwünschtem Zugriff und stell sicher, dass nur du auf die App zugreifen kannst. Geh dazu in die Einstellungen deines Geräts, leg"
-        secondInfoEnd: "einen Entsperrcode fest oder konfiguriere die biometrische Erkennung."
   shareData:
     title: "IO einrichten"
   thankYouPage:
@@ -1773,7 +1731,6 @@ messages:
     reminderRemoveFailure: "Fehler beim Entfernen der Erinnerung, bitte versuche es erneut"
     preferenceCalendarSelect: "Wähle deinen Standardkalender"
     calendarPermDenied:
-      title: "Die Berechtigung zum Zugriff auf den Kalender wurde offenbar verweigert"
       ok: "Berechtigungen freigeben"
       cancel: "Abbrechen"
     errors:
@@ -1893,17 +1850,6 @@ biometric_recognition:
   needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
 send_email_messages:
   title: "Mitteilungen mittels E-Mail weiterleiten"
-  subtitle: "Möchtest du, dass IO den Inhalt von Mitteilungen per E-Mail weiterleitet an"
-  options:
-    disable_all:
-      label: "Für alle Dienste deaktivieren"
-      info: "Du erhältst keine Mitteilung mittels E-Mail mehr"
-    enable_all:
-      label: "Für alle aktiven Dienste aktivieren"
-      info: "Jede Mitteilung wird an deine E-Mail-Adresse weitergeleitet, wenn der Dienst dies zulässt"
-    by_service:
-      label: "Dienst für Dienst auswählen"
-      info: "Du kannst auf der Registerkarte jedes Dienstes wählen, ob du dessen Mitteilungen auch per E-Mail erhalten möchtest"
 services:
   accessibility:
     edit: "Ändere die Einstellung der Dienste"

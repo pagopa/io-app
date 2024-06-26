@@ -410,8 +410,8 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                               allowFontScaling={false}
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
-                              defaultWeight="SemiBold"
-                              font="TitilliumWeb"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 24,
@@ -429,13 +429,13 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                   },
                                   Object {
                                     "color": "#17324D",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               Questo avviso è stato già pagato!
                             </Text>
@@ -534,7 +534,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                         defaultColor="white"
                                         defaultWeight="Bold"
                                         ellipsizeMode="tail"
-                                        font="TitilliumWeb"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
                                             "fontSize": 16,
@@ -553,7 +553,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                             },
                                             Object {
                                               "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
                                             },
@@ -589,10 +589,12 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                           style={
                             Array [
                               Object {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              Object {
                                 "borderBottomWidth": 1,
+                                "borderColor": "rgba(232,235,241,0)",
+                              },
+                              Object {},
+                              Object {
+                                "backgroundColor": "#FFFFFF",
                               },
                               Object {
                                 "backgroundColor": "#FFFFFF",
@@ -754,7 +756,10 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                       "textAlign": "center",
                                     },
                                     Object {
-                                      "fontFamily": "Titillium Web",
+                                      "color": "#0E0F13",
+                                    },
+                                    Object {
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                     },

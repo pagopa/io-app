@@ -1,6 +1,5 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useSelector } from "@xstate5/react";
 import React from "react";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
@@ -17,15 +16,14 @@ import {
   idps as idpsFallback
 } from "../../../../utils/idps";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
-import { Tags } from "../../machine/tags";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwTags } from "../../machine/tags";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
-  const isLoading = useSelector(
-    machineRef.getSnapshot().children.identificationMachine,
-    snap => snap?.hasTag(Tags.Loading)
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(snap =>
+    snap.hasTag(ItwTags.Loading)
   );
 
   const idps = useIOSelector(idpsRemoteValueSelector);
@@ -41,7 +39,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   );
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
-    machineRef.send({ type: "identification.select-spid-idp", idp });
+    machineRef.send({ type: "select-spid-idp", idp });
   };
 
   if (isLoading) {

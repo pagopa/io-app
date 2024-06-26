@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
-import * as Either from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import {
@@ -22,8 +23,9 @@ import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";
-import { foldK } from "../../../../utils/pot";
+import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
+import { TranslationKeys } from "../../../../../locales/locales";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -31,12 +33,20 @@ export type MessagePage = {
   next?: string;
 };
 
-export type MessagePagePot = pot.Pot<MessagePage, string>;
+export type MessageError = {
+  reason: string;
+  time: Date;
+};
+
+export type MessagePagePot = pot.Pot<MessagePage, MessageError>;
+
+export type LastRequestValues = "previous" | "next" | "all";
+export type LastRequestType = O.Option<LastRequestValues>;
 
 type Collection = {
   data: MessagePagePot;
   /** persist the last action type occurred */
-  lastRequest: O.Option<"previous" | "next" | "all">;
+  lastRequest: LastRequestType;
 };
 
 export type MigrationStatus = O.Option<
@@ -57,10 +67,7 @@ export type MessageOperationFailure = {
 export type AllPaginated = {
   archive: Collection;
   inbox: Collection;
-  latestMessageOperation?: Either.Either<
-    MessageOperationFailure,
-    MessageOperation
-  >;
+  latestMessageOperation?: E.Either<MessageOperationFailure, MessageOperation>;
   migration: MigrationStatus;
   shownCategory: MessageListCategory;
 };
@@ -200,7 +207,10 @@ const reduceReloadAll = (
         return {
           ...state,
           archive: {
-            data: pot.toError(state.archive.data, action.payload.error.message),
+            data: pot.toError(state.archive.data, {
+              reason: action.payload.error.message,
+              time: new Date()
+            }),
             lastRequest: state.archive.lastRequest
           }
         };
@@ -208,7 +218,10 @@ const reduceReloadAll = (
       return {
         ...state,
         inbox: {
-          data: pot.toError(state.inbox.data, action.payload.error.message),
+          data: pot.toError(state.inbox.data, {
+            reason: action.payload.error.message,
+            time: new Date()
+          }),
           lastRequest: state.inbox.lastRequest
         }
       };
@@ -264,13 +277,19 @@ const reduceLoadNextPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: { data: getNextData(state.archive), lastRequest: O.none }
+          archive: {
+            data: getNextData(state.archive),
+            lastRequest: O.none
+          }
         };
       }
 
       return {
         ...state,
-        inbox: { data: getNextData(state.inbox), lastRequest: O.none }
+        inbox: {
+          data: getNextData(state.inbox),
+          lastRequest: O.none
+        }
       };
 
     case getType(loadNextPageMessages.failure):
@@ -278,7 +297,10 @@ const reduceLoadNextPage = (
         return {
           ...state,
           archive: {
-            data: pot.toError(state.inbox.data, action.payload.error.message),
+            data: pot.toError(state.inbox.data, {
+              reason: action.payload.error.message,
+              time: new Date()
+            }),
             lastRequest: state.archive.lastRequest
           }
         };
@@ -286,7 +308,10 @@ const reduceLoadNextPage = (
       return {
         ...state,
         inbox: {
-          data: pot.toError(state.inbox.data, action.payload.error.message),
+          data: pot.toError(state.inbox.data, {
+            reason: action.payload.error.message,
+            time: new Date()
+          }),
           lastRequest: state.inbox.lastRequest
         }
       };
@@ -344,13 +369,19 @@ const reduceLoadPreviousPage = (
       if (action.payload.filter.getArchived) {
         return {
           ...state,
-          archive: { data: getNextData(state.archive), lastRequest: O.none }
+          archive: {
+            data: getNextData(state.archive),
+            lastRequest: O.none
+          }
         };
       }
 
       return {
         ...state,
-        inbox: { data: getNextData(state.inbox), lastRequest: O.none }
+        inbox: {
+          data: getNextData(state.inbox),
+          lastRequest: O.none
+        }
       };
 
     case getType(loadPreviousPageMessages.failure):
@@ -358,7 +389,10 @@ const reduceLoadPreviousPage = (
         return {
           ...state,
           archive: {
-            data: pot.toError(state.archive.data, action.payload.error.message),
+            data: pot.toError(state.archive.data, {
+              reason: action.payload.error.message,
+              time: new Date()
+            }),
             lastRequest: state.archive.lastRequest
           }
         };
@@ -366,7 +400,10 @@ const reduceLoadPreviousPage = (
       return {
         ...state,
         inbox: {
-          data: pot.toError(state.inbox.data, action.payload.error.message),
+          data: pot.toError(state.inbox.data, {
+            reason: action.payload.error.message,
+            time: new Date()
+          }),
           lastRequest: state.inbox.lastRequest
         }
       };
@@ -503,7 +540,7 @@ const reduceUpsertMessageStatusAttributes = (
               ...state,
               archive: remove(message, state.archive),
               inbox: insert(message, state.inbox),
-              latestMessageOperation: Either.left({
+              latestMessageOperation: E.left({
                 operation: "archive",
                 error: action.payload.error
               })
@@ -513,7 +550,7 @@ const reduceUpsertMessageStatusAttributes = (
               ...state,
               archive: insert(message, state.archive),
               inbox: remove(message, state.inbox),
-              latestMessageOperation: Either.left({
+              latestMessageOperation: E.left({
                 operation: "restore",
                 error: action.payload.error
               })
@@ -529,7 +566,7 @@ const reduceUpsertMessageStatusAttributes = (
       if (update.tag === "bulk" || update.tag === "archiving") {
         return {
           ...state,
-          latestMessageOperation: Either.right(
+          latestMessageOperation: E.right(
             update.isArchived ? "archive" : "restore"
           )
         };
@@ -576,16 +613,7 @@ export const allArchiveSelector = (
 export const messagesByCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) =>
-  pipe(state, allPaginatedSelector, items =>
-    pipe(
-      category,
-      messageListCategoryFoldK(
-        () => items.inbox.data,
-        () => items.archive.data
-      )
-    )
-  );
+) => pipe(state, messagePagePotFromCategorySelector(category));
 
 /**
  * Return the list of Inbox messages currently available.
@@ -629,7 +657,7 @@ export const isLoadingInboxNextPage = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "next" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -643,7 +671,7 @@ export const isLoadingInboxPreviousPage = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "previous" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -658,7 +686,7 @@ export const isReloadingInbox = createSelector(
     pipe(
       inbox.lastRequest,
       O.map(_ => _ === "all" && pot.isLoading(inbox.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -683,7 +711,7 @@ export const isReloadingArchive = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "all" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -697,7 +725,7 @@ export const isLoadingArchiveNextPage = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "next" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -711,7 +739,7 @@ export const isLoadingArchivePreviousPage = createSelector(
     pipe(
       archive.lastRequest,
       O.map(_ => _ === "previous" && pot.isLoading(archive.data)),
-      O.getOrElse(() => false)
+      O.getOrElse(constFalse)
     )
 );
 
@@ -734,14 +762,12 @@ export const messageListForCategorySelector = (
   category: MessageListCategory
 ) =>
   pipe(
-    state.entities.messages.allPaginated,
-    allPaginated =>
-      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox,
-    messageCollection => messageCollection.data,
+    state,
+    messagePagePotFromCategorySelector(category),
     foldK(
       () => emptyMessageArray,
-      () => undefined,
-      _ => undefined,
+      constUndefined,
+      constUndefined,
       _ => emptyMessageArray,
       messagePage => messagePage.page,
       messagePage => messagePage.page,
@@ -754,29 +780,162 @@ export const emptyListReasonSelector = (
   state: GlobalState,
   category: MessageListCategory
 ): "noData" | "error" | "notEmpty" =>
-  pipe(state.entities.messages.allPaginated, allPaginated =>
-    pipe(
-      category,
-      messageListCategoryFoldK(
-        () => allPaginated.inbox,
-        () => allPaginated.archive
-      ),
-      messageCollection => messageCollection.data,
-      foldK(
-        () => "noData",
-        () => "notEmpty",
-        () => "notEmpty",
-        () => "error",
-        reasonFromMessagePageContainer,
-        reasonFromMessagePageContainer,
-        (container, _) => reasonFromMessagePageContainer(container),
-        (container, _) => reasonFromMessagePageContainer(container)
-      )
+  pipe(
+    state,
+    messagePagePotFromCategorySelector(category),
+    foldK(
+      () => "noData",
+      () => "notEmpty",
+      () => "notEmpty",
+      () => "error",
+      reasonFromMessagePageContainer,
+      reasonFromMessagePageContainer,
+      (container, _) => reasonFromMessagePageContainer(container),
+      (container, _) => reasonFromMessagePageContainer(container)
     )
   );
+
+export const shouldShowFooterListComponentSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messageCollectionFromCategory(category),
+    messagePagePotByLastRequest(nextLastRequestSet),
+    O.map(isSomeLoadingOrSomeUpdating),
+    O.getOrElse(constFalse)
+  );
+
+export const shouldShowRefreshControllOnListSelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messageCollectionFromCategory(category),
+    messagePagePotByLastRequest(allAndPreviousLastRequestSet),
+    O.map(isSomeLoadingOrSomeUpdating),
+    O.getOrElse(constFalse)
+  );
+
+export const messagePagePotFromCategorySelector =
+  (category: MessageListCategory) => (state: GlobalState) =>
+    pipe(
+      state,
+      messageCollectionFromCategory(category),
+      messageCollection => messageCollection.data
+    );
+
+const messageCollectionFromCategory =
+  (category: MessageListCategory) => (state: GlobalState) =>
+    pipe(state.entities.messages.allPaginated, allPaginated =>
+      pipe(
+        category,
+        messageListCategoryFoldK(
+          () => allPaginated.inbox,
+          () => allPaginated.archive
+        )
+      )
+    );
 
 const reasonFromMessagePageContainer = (
   container: MessagePage
 ): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
+
+export const latestMessageOperationTranslationKeySelector = (
+  state: GlobalState
+): TranslationKeys | undefined =>
+  pipe(
+    state.entities.messages.allPaginated.latestMessageOperation,
+    O.fromNullable,
+    O.map(latestMessageOperation =>
+      pipe(
+        latestMessageOperation,
+        E.fold(
+          failure =>
+            pipe(
+              failure.operation === "archive",
+              B.fold(
+                () => "messages.operations.restore.failure" as const,
+                () => "messages.operations.archive.failure" as const
+              )
+            ),
+          successOperation =>
+            pipe(
+              successOperation === "archive",
+              B.fold(
+                () => "messages.operations.restore.success" as const,
+                () => "messages.operations.archive.success" as const
+              )
+            )
+        )
+      )
+    ),
+    O.toUndefined
+  );
+
+export const latestMessageOperationToastTypeSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.allPaginated.latestMessageOperation,
+    O.fromNullable,
+    O.map(latestMessageOperation =>
+      pipe(
+        latestMessageOperation,
+        E.fold(
+          _ => "error" as const,
+          _ => "success" as const
+        )
+      )
+    ),
+    O.toUndefined
+  );
+
+export const inboxMessagesErrorReasonSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.allPaginated.inbox.data,
+    messagePotToToastReportableErrorOrUndefined
+  );
+
+export const archiveMessagesErrorReasonSelector = (state: GlobalState) =>
+  pipe(
+    state.entities.messages.allPaginated.archive.data,
+    messagePotToToastReportableErrorOrUndefined
+  );
+
+const messagePotToToastReportableErrorOrUndefined = (
+  messagePagePot: MessagePagePot
+) =>
+  pipe(
+    messagePagePot,
+    foldK(
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      (_value, messageError) => messageError.reason
+    )
+  );
+
+const messagePagePotByLastRequest =
+  (lastRequestValues: Set<LastRequestValues>) =>
+  (messageCollection: Collection) =>
+    pipe(
+      messageCollection.lastRequest,
+      O.filter(lastRequest => lastRequestValues.has(lastRequest)),
+      O.fold(
+        () => O.none,
+        () => O.some(messageCollection.data)
+      )
+    );
+
+const nextLastRequestSet = new Set<LastRequestValues>(["next"]);
+const allAndPreviousLastRequestSet = new Set<LastRequestValues>([
+  "all",
+  "previous"
+]);
 
 export default reducer;

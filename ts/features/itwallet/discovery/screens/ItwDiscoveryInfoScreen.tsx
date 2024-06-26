@@ -6,8 +6,7 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { FooterStackButton } from "../../common/components/FooterStackButton";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import ItwMarkdown from "../components/ItwMarkdown";
 
 /**
@@ -17,10 +16,10 @@ import ItwMarkdown from "../components/ItwMarkdown";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   useOnFirstRender(() => {
-    machineRef.send({ type: "start", credentialType: CredentialType.PID });
+    machineRef.send({ type: "start" });
   });
 
   useHeaderSecondLevel({

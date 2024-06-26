@@ -417,9 +417,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -428,7 +434,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -443,7 +449,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -885,9 +891,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -896,7 +908,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -911,7 +923,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1353,9 +1365,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -1364,7 +1382,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -1379,7 +1397,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -1821,9 +1839,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -1832,7 +1856,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -1847,7 +1871,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2289,9 +2313,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -2300,7 +2330,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -2315,7 +2345,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -2757,9 +2787,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -2768,7 +2804,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -2783,7 +2819,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -3225,9 +3261,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -3236,7 +3278,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -3251,7 +3293,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -3693,9 +3735,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -3704,7 +3752,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -3719,7 +3767,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },
@@ -4161,9 +4209,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         </View>
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "marginTop": -5,
+                              },
+                              Object {
+                                "flex": 1,
+                                "marginBottom": -4,
+                              },
+                            ]
                           }
                         >
                           <Text
@@ -4172,7 +4226,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
-                            font="TitilliumWeb"
+                            font="TitilliumSansPro"
                             fontStyle={
                               Object {
                                 "fontSize": 16,
@@ -4187,7 +4241,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                                 Object {
                                   "color": "#614C15",
-                                  "fontFamily": "Titillium Web",
+                                  "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
                                 },

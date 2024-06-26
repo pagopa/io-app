@@ -432,9 +432,15 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           </View>
                           <View
                             style={
-                              Object {
-                                "flex": 1,
-                              }
+                              Array [
+                                Object {
+                                  "marginTop": -5,
+                                },
+                                Object {
+                                  "flex": 1,
+                                  "marginBottom": -4,
+                                },
+                              ]
                             }
                           >
                             <Text
@@ -443,7 +449,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               color="warning-850"
                               defaultColor="black"
                               defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
                                   "fontSize": 16,
@@ -458,7 +464,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                   },
                                   Object {
                                     "color": "#614C15",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
                                   },
@@ -481,7 +487,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",

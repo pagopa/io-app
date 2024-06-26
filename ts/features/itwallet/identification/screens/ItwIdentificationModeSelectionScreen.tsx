@@ -14,7 +14,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
@@ -22,16 +22,10 @@ import { itwIsNfcEnabledSelector } from "../store/selectors";
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(itwNfcIsEnabled.request());
-    }, [dispatch])
-  );
 
   const isCieSupported = React.useMemo(
     () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
@@ -44,7 +38,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    machineRef.send({ type: "identification.select-mode", mode: 0 });
+    machineRef.send({ type: "select-identification-mode", mode: "spid" });
   };
 
   const handleCiePinPress = () => {
@@ -60,6 +54,12 @@ export const ItwIdentificationModeSelectionScreen = () => {
   const handleCieIdPress = () => {
     Alert.alert("Not implemented");
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(itwNfcIsEnabled.request());
+    }, [dispatch])
+  );
 
   return (
     <IOScrollViewWithLargeHeader

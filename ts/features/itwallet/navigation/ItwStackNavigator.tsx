@@ -9,10 +9,12 @@ import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssua
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import {
-  ItWalletIssuanceMachineContext,
-  ItWalletIssuanceMachineProvider
+  ItWalletIssuanceMachineProvider,
+  ItwCredentialIssuanceMachineContext,
+  ItwEidIssuanceMachineContext
 } from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
+import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -25,14 +27,22 @@ export const ItwStackNavigator = () => (
 );
 
 const InnerNavigator = () => {
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const credentialIssuanceMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
 
   return (
     <Stack.Navigator
       initialRouteName={ITW_ROUTES.DISCOVERY.INFO}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
-        beforeRemove: () => machineRef.send({ type: "back" })
+        beforeRemove: () => {
+          // Read more on https://reactnavigation.org/docs/preventing-going-back/
+          // Whenever we have a back navigation action we send a "back" event to the machine.
+          // Since the back event is accepted only by specific states, we can safely send a back event to each machine
+          eidIssuanceMachineRef.send({ type: "back" });
+          credentialIssuanceMachineRef.send({ type: "back" });
+        }
       }}
     >
       <Stack.Screen
@@ -71,6 +81,13 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.RESULT}
         component={ItwIssuanceEidResultScreen}
+        options={{ headerShown: false }}
+      />
+
+      {/* CREDENTIAL PRESENTATION */}
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
+        component={ItwPresentationEidDetailScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

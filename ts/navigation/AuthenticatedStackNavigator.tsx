@@ -3,6 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import React from "react";
+import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
@@ -78,6 +79,7 @@ import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavig
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/navigation";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
+import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -144,9 +146,25 @@ const AuthenticatedStackNavigator = () => {
       />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
         component={ServicesNavigator}
       />
+      {/* This screen is outside the ServicesNavigator to change gesture and transion behaviour. */}
+      <Stack.Screen
+        name={SERVICES_ROUTES.SEARCH}
+        component={SearchScreen}
+        options={{
+          ...hideHeaderOptions,
+          gestureEnabled: false,
+          ...Platform.select({
+            ios: {
+              animationEnabled: false
+            },
+            default: undefined
+          })
+        }}
+      />
+
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
         options={hideHeaderOptions}

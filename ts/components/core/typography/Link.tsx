@@ -5,20 +5,20 @@ import { useTypographyFactory } from "./Factory";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 
 type AllowedColors = IOColors;
-type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Bold">;
+type AllowedWeight = Extract<IOFontWeight, "Semibold" | "Bold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 >;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "TitilliumSansPro";
 const fontSize = 16;
 export const linkDefaultColor: AllowedColors = "blue";
-export const linkDefaultWeight: AllowedWeight = "SemiBold";
+export const linkDefaultWeight: AllowedWeight = "Semibold";
 
 /**
  * Typography component to render `Link` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `SemiBold`, color: `blue`
+ * default values(if not defined) are weight: `Semibold`, color: `blue`
  * @param props`
  * @constructor
  */
