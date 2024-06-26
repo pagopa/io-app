@@ -118,6 +118,21 @@ const WalletPaymentOutcomeScreen = () => {
     onPress: handleContactSupport
   };
 
+  const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["action"] =
+    {
+      label: I18n.t("global.buttons.close"),
+      accessibilityLabel: I18n.t("global.buttons.close"),
+      onPress: () => {
+        analytics.trackPaymentMethodErrorExit({
+          organization_name: paymentOngoingHistory?.verifiedData?.paName,
+          service_name: paymentOngoingHistory?.serviceName,
+          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
+          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+        });
+        handleClose();
+      }
+    };
+
   const onboardPaymentMethodAction: OperationResultScreenContentProps["action"] =
     {
       label: I18n.t(
@@ -127,6 +142,12 @@ const WalletPaymentOutcomeScreen = () => {
         "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
       ),
       onPress: () => {
+        analytics.trackPaymentMethodErrorContinue({
+          organization_name: paymentOngoingHistory?.verifiedData?.paName,
+          service_name: paymentOngoingHistory?.serviceName,
+          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
+          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+        });
         navigation.replace(
           PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
           {
@@ -290,7 +311,7 @@ const WalletPaymentOutcomeScreen = () => {
             "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
           ),
           action: onboardPaymentMethodAction,
-          secondaryAction: closeFailureAction
+          secondaryAction: onboardPaymentMethodCloseAction
         };
     }
   };

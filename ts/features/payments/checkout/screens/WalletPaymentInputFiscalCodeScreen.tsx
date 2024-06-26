@@ -44,6 +44,8 @@ import {
 } from "../../common/utils/validation";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../analytics";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -121,6 +123,10 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         focusTextInput();
       }, navigateToTransactionSummary)
     );
+
+  useOnFirstRender(() => {
+    analytics.trackPaymentOrganizationDataEntry();
+  });
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>

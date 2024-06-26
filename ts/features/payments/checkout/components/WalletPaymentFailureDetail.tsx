@@ -30,6 +30,13 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const handleContactSupport = () => {
+    analytics.trackPaymentErrorHelp({
+      error: failure.faultCodeCategory,
+      organization_name: paymentOngoingHistory?.verifiedData?.paName,
+      service_name: paymentOngoingHistory?.serviceName,
+      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+    });
     supportModal.present();
   };
 
@@ -49,7 +56,8 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     pictogram: "umbrellaNew",
     title: I18n.t("wallet.payment.failure.GENERIC_ERROR.title"),
     subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
-    action: closeAction
+    action: closeAction,
+    secondaryAction: contactSupportAction
   };
 
   const getPropsFromFailure = ({
