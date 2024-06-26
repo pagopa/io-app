@@ -5,28 +5,28 @@ import {
   FimsFlowHandlerScreenRouteParams
 } from "../screens/FimsFlowHandlerScreen";
 
-export const FIMS_ROUTES = {
-  MAIN: "FIMS_MAIN",
-  CONSENTS: "FIMS_CONSENTS"
+export const FIMS_SSO_ROUTES = {
+  MAIN: "FIMS_SSO_MAIN",
+  CONSENTS: "FIMS_SSO_CONSENTS"
 } as const;
 
-export type FimsParamsList = {
-  [FIMS_ROUTES.MAIN]: undefined;
-  [FIMS_ROUTES.CONSENTS]: FimsFlowHandlerScreenRouteParams;
+export type FimsSSOParamsList = {
+  [FIMS_SSO_ROUTES.MAIN]: undefined;
+  [FIMS_SSO_ROUTES.CONSENTS]: FimsFlowHandlerScreenRouteParams;
 };
 
-const Stack = createStackNavigator<FimsParamsList>();
+const Stack = createStackNavigator<FimsSSOParamsList>();
 
-export const FimsNavigator = () => (
+export const FimsSSONavigator = () => (
   <Stack.Navigator
-    initialRouteName={FIMS_ROUTES.MAIN}
+    initialRouteName={FIMS_SSO_ROUTES.MAIN}
     // Make sure to disable gestures in order to prevent
     // the user from going back by swiping and thus not
     // calling the custom cancel logic
     screenOptions={{ gestureEnabled: false, headerShown: true }}
   >
     <Stack.Screen
-      name={FIMS_ROUTES.CONSENTS}
+      name={FIMS_SSO_ROUTES.CONSENTS}
       component={FimsFlowHandlerScreen}
     />
   </Stack.Navigator>

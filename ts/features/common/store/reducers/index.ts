@@ -19,7 +19,7 @@ import {
   fastLoginReducer
 } from "../../../fastLogin/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
-import fimsReducer, { FimsState } from "../../../fims/store/reducers";
+import fimsReducer, { FimsState } from "../../../fims/common/store/reducer";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
 import itWalletReducer, {
   ItWalletState
