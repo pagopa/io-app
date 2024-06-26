@@ -1,13 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { getMessagePrecondition } from "../../store/actions";
 import { UIMessageId } from "../../types";
 import { testMessagePreconditionWorker } from "../handleMessagePrecondition";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { BackendClient } from "../../../../api/__mocks__/backend";
+import { getMessagePrecondition } from "../../store/actions/preconditions";
 
 const messagePreconditionWorker = testMessagePreconditionWorker!;
 

@@ -301,11 +301,10 @@ export const isPnEnabledSelector = (state: GlobalState) =>
 /**
  * Return false if the app needs to be updated in order to use PN.
  */
-export const isPnSupportedSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
+export const isPnAppVersionSupportedSelector = (state: GlobalState) =>
     pipe(
-      backendStatus,
+      state,
+      backendStatusSelector,
       O.map(bs =>
         isVersionSupported(
           Platform.OS === "ios"
@@ -315,8 +314,7 @@ export const isPnSupportedSelector = createSelector(
         )
       ),
       O.getOrElse(() => false)
-    )
-);
+    );
 
 /**
  * Return the minimum app version required to use PN.

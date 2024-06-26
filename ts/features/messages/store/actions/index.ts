@@ -6,18 +6,18 @@ import {
 } from "typesafe-actions";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import {
-  UIMessage,
-  UIMessageDetails,
-  UIMessageId,
-} from "../../types";
+import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import { MessagesStatus } from "../reducers/messagesStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
-import { clearMessagePrecondition, getMessagePrecondition, toNextMessagePreconditionStatus } from "./preconditions";
+import {
+  clearMessagePrecondition,
+  getMessagePrecondition,
+  toNextMessagePreconditionStatus
+} from "./preconditions";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 

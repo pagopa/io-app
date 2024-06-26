@@ -1,11 +1,26 @@
 import React, { useCallback, useEffect } from "react";
 import { Text, View } from "react-native";
+import { constUndefined, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { shouldPresentPreconditionsBottomSheetSelector } from "../../store/reducers/messagePrecondition";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
+import {
+  preconditionsRequireAppUpdateSelector,
+  shouldPresentPreconditionsBottomSheetSelector
+} from "../../store/reducers/messagePrecondition";
+import {
+  toNextMessagePreconditionStatus,
+  toRetrievingDataPayload,
+  toUpdateRequiredPayload
+} from "../../store/actions/preconditions";
 
 export const Preconditions = () => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
   const onDismissCallback = useCallback(() => undefined, []);
   const modal = useIOBottomSheetModal({
     snapPoint: [500],
@@ -17,21 +32,19 @@ export const Preconditions = () => {
   const shouldPresentBottomSheet = useIOSelector(
     shouldPresentPreconditionsBottomSheetSelector
   );
+
   useEffect(() => {
     if (shouldPresentBottomSheet) {
       modal.present();
-      // TODO next action dispatch(toNextMessagePreconditionStatus(to));
+      const state = store.getState();
+      const requiresAppUpdate = preconditionsRequireAppUpdateSelector(state);
+      const payload = requiresAppUpdate
+        ? toUpdateRequiredPayload()
+        : toRetrievingDataPayload();
+      dispatch(toNextMessagePreconditionStatus(payload));
     }
-  }, [dispatch, modal, shouldPresentBottomSheet]);
+  }, [dispatch, modal, shouldPresentBottomSheet, store]);
   return modal.bottomSheet;
-};
-
-const PreconditionsBottomSheetTitle = () => {
-  return (
-    <View>
-      <Text>The text</Text>
-    </View>
-  );
 };
 
 const PreconditionsBottomSheetContent = () => {

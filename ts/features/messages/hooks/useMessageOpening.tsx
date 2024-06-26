@@ -6,20 +6,16 @@ import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { UIMessage } from "../types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  getMessagePrecondition,
-  clearMessagePrecondition
-} from "../store/actions";
 import { legacyMessagePreconditionSelector } from "../store/reducers/legacyMessagePrecondition";
 import { RemoteValue, fold } from "../../../common/model/RemoteValue";
 import I18n from "../../../i18n";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { trackDisclaimerOpened } from "../analytics";
 import {
-  isPnSupportedSelector,
+  isPnAppVersionSupportedSelector,
   pnMinAppVersionSelector
 } from "../../../store/reducers/backendStatus";
-import { MessageFeedback } from "../components/Home/legacy/MessageFeedback";
+import { MessageFeedback } from "../components/PreconditionBottomSheet/MessageFeedback";
 import { openAppStoreUrl } from "../../../utils/url";
 import {
   PreconditionHeader,
@@ -32,6 +28,10 @@ import {
 import { PreconditionFooter } from "../components/PreconditionBottomSheet/PreconditionFooter";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import {
+  clearMessagePrecondition,
+  getMessagePrecondition
+} from "../store/actions/preconditions";
 
 const renderPreconditionHeader = (
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>
@@ -90,7 +90,7 @@ export const useMessageOpening = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
-  const pnSupported = useIOSelector(isPnSupportedSelector);
+  const pnSupported = useIOSelector(isPnAppVersionSupportedSelector);
   const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
 
   const { messageId: maybeMessageId, content } = useIOSelector(

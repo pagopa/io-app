@@ -14,8 +14,6 @@ export type NPSUpdateRequired = {
 };
 export type NPSRetrievingData = {
   nextStatus: "retrievingData";
-  messageId: UIMessageId;
-  categoryTag: string;
 };
 export type NPSIdle = {
   nextStatus: "idle";
@@ -39,7 +37,11 @@ export type NPSShown = {
   content: ThirdPartyMessagePrecondition;
 };
 
-export const toErrorPayload = (messageId: UIMessageId, categoryTag: string, reason: string): NPSError => ({
+export const toErrorPayload = (
+  messageId: UIMessageId,
+  categoryTag: string,
+  reason: string
+): NPSError => ({
   nextStatus: "error",
   messageId,
   categoryTag,
@@ -48,23 +50,32 @@ export const toErrorPayload = (messageId: UIMessageId, categoryTag: string, reas
 export const toIdlePayload = (): NPSIdle => ({
   nextStatus: "idle"
 });
-export const toLoadingContentPayload = (messageId: UIMessageId, categoryTag: string, content: ThirdPartyMessagePrecondition): NPSLoadingContent => ({
+export const toLoadingContentPayload = (
+  messageId: UIMessageId,
+  categoryTag: string,
+  content: ThirdPartyMessagePrecondition
+): NPSLoadingContent => ({
   nextStatus: "loadingContent",
   messageId,
   categoryTag,
   content
 });
-export const toRetrievingDataPayload = (messageId: UIMessageId, categoryTag: string): NPSRetrievingData => ({
-  nextStatus: "retrievingData",
-  messageId,
-  categoryTag
+export const toRetrievingDataPayload = (): NPSRetrievingData => ({
+  nextStatus: "retrievingData"
 });
-export const toScheduledPayload = (messageId: UIMessageId, categoryTag: string): NPSScheduled => ({
+export const toScheduledPayload = (
+  messageId: UIMessageId,
+  categoryTag: string
+): NPSScheduled => ({
   nextStatus: "scheduled",
   messageId,
   categoryTag
 });
-export const toShownPayload = (messageId: UIMessageId, categoryTag: string, content: ThirdPartyMessagePrecondition): NPSShown => ({
+export const toShownPayload = (
+  messageId: UIMessageId,
+  categoryTag: string,
+  content: ThirdPartyMessagePrecondition
+): NPSShown => ({
   nextStatus: "shown",
   messageId,
   categoryTag,
@@ -74,10 +85,18 @@ export const toUpdateRequiredPayload = (): NPSUpdateRequired => ({
   nextStatus: "updateRequired"
 });
 
-export type NextPreconditionStatus = NPSScheduled | NPSUpdateRequired | NPSRetrievingData
-| NPSIdle | NPSLoadingContent | NPSError | NPSShown;
+export type NextPreconditionStatus =
+  | NPSScheduled
+  | NPSUpdateRequired
+  | NPSRetrievingData
+  | NPSIdle
+  | NPSLoadingContent
+  | NPSError
+  | NPSShown;
 
-export const toNextMessagePreconditionStatus = createStandardAction("TO_NEXT_MESSAGE_PRECONDITION_STATUS")<NextPreconditionStatus>();
+export const toNextMessagePreconditionStatus = createStandardAction(
+  "TO_NEXT_MESSAGE_PRECONDITION_STATUS"
+)<NextPreconditionStatus>();
 
 export const getMessagePrecondition = createAsyncAction(
   "GET_MESSAGE_PRECONDITION_REQUEST",

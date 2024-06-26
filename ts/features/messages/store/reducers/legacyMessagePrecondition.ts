@@ -3,7 +3,10 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { getMessagePrecondition, clearMessagePrecondition } from "../actions";
+import {
+  clearMessagePrecondition,
+  getMessagePrecondition
+} from "../actions/preconditions";
 import {
   RemoteValue,
   remoteError,

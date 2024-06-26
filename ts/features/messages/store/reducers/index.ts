@@ -17,7 +17,10 @@ import {
 } from "./legacyMessagePrecondition";
 import { MessageGetStatus, messageGetStatusReducer } from "./messageGetStatus";
 import { MultiplePaymentState, paymentsReducer } from "./payments";
-import { MessagePreconditionStatus, preconditionReducer } from "./messagePrecondition";
+import {
+  MessagePreconditionStatus,
+  preconditionReducer
+} from "./messagePrecondition";
 
 export type MessagesState = Readonly<{
   allPaginated: AllPaginated;
@@ -40,7 +43,7 @@ const reducer = combineReducers<MessagesState, Action>({
   legacyMessagePrecondition: legacyMessagePreconditionReducer,
   messageGetStatus: messageGetStatusReducer,
   payments: paymentsReducer,
-  precondition: preconditionReducer,
+  precondition: preconditionReducer
 });
 
 export default reducer;
