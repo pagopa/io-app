@@ -1,31 +1,41 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MessageListCategory } from "../../../types/messageListCategory";
-import {
-  MessagePage,
-  MessagePagePot
-} from "../../../store/reducers/allPaginated";
+import * as allPaginated from "../../../store/reducers/allPaginated";
 import {
   accessibilityLabelForMessageItem,
   getInitialReloadAllMessagesActionIfNeeded,
+  getLoadNextPageMessagesActionIfAllowed,
   getLoadServiceDetailsActionIfNeeded,
   getMessagesViewPagerInitialPageIndex,
+  getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
   messageListItemHeight,
-  messageViewPageIndexToListCategory
+  messageViewPageIndexToListCategory,
+  nextPageLoadingWaitMillisecondsGenerator
 } from "../homeUtils";
 import { pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
-import { reloadAllMessages } from "../../../store/actions";
+import {
+  loadNextPageMessages,
+  reloadAllMessages
+} from "../../../store/actions";
 import { UIMessage } from "../../../types";
 import { format } from "../../../../../utils/dates";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
+import {
+  isLoadingOrUpdating,
+  isSomeOrSomeError,
+  isStrictSome,
+  isStrictSomeError
+} from "../../../../../utils/pot";
 
 const createGlobalState = (
-  archiveData: MessagePagePot,
-  inboxData: MessagePagePot,
+  archiveData: allPaginated.MessagePagePot,
+  inboxData: allPaginated.MessagePagePot,
   shownCategory: MessageListCategory
 ) =>
   ({
@@ -59,7 +69,7 @@ const checkReturnedAction = (action?: Action, getArchived: boolean = false) => {
 describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   it("should return reloadAllMessages.request when showing inbox with pot.none inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       pot.none,
       "INBOX"
     );
@@ -69,7 +79,7 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing inbox with pot.noneLoading inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       pot.noneLoading,
       "INBOX"
     );
@@ -79,8 +89,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing inbox with pot.noneUpdating inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
-      pot.noneUpdating({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
+      pot.noneUpdating({} as allPaginated.MessagePage),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -89,8 +99,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing inbox with pot.noneError inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
-      pot.noneError(""),
+      pot.some({} as allPaginated.MessagePage),
+      pot.noneError({ reason: "", time: new Date() }),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -99,8 +109,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing inbox with pot.some inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
-      pot.some({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -109,8 +119,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing inbox with pot.someLoading inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
-      pot.someLoading({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
+      pot.someLoading({} as allPaginated.MessagePage),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -119,8 +129,11 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing inbox with pot.someUpdating inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
-      pot.someUpdating({} as MessagePage, {} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
+      pot.someUpdating(
+        {} as allPaginated.MessagePage,
+        {} as allPaginated.MessagePage
+      ),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -129,8 +142,11 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing inbox with pot.someError inbox", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
-      pot.someError({} as MessagePage, ""),
+      pot.some({} as allPaginated.MessagePage),
+      pot.someError({} as allPaginated.MessagePage, {
+        reason: "",
+        time: new Date()
+      }),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -141,7 +157,7 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   it("should return reloadAllMessages.request when showing archive with pot.none archive", () => {
     const globalState = createGlobalState(
       pot.none,
-      pot.some({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -151,7 +167,7 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   it("should return undefined when showing archive with pot.noneLoading archive", () => {
     const globalState = createGlobalState(
       pot.noneLoading,
-      pot.some({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -160,8 +176,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.noneUpdating archive", () => {
     const globalState = createGlobalState(
-      pot.noneUpdating({} as MessagePage),
-      pot.some({} as MessagePage),
+      pot.noneUpdating({} as allPaginated.MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -170,8 +186,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.noneError archive", () => {
     const globalState = createGlobalState(
-      pot.noneError(""),
-      pot.some({} as MessagePage),
+      pot.noneError({ reason: "", time: new Date() }),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -180,8 +196,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.some archive", () => {
     const globalState = createGlobalState(
-      pot.some({} as MessagePage),
-      pot.some({} as MessagePage),
+      pot.some({} as allPaginated.MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -190,8 +206,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.someLoading archive", () => {
     const globalState = createGlobalState(
-      pot.someLoading({} as MessagePage),
-      pot.some({} as MessagePage),
+      pot.someLoading({} as allPaginated.MessagePage),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -200,8 +216,11 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.someUpdating archive", () => {
     const globalState = createGlobalState(
-      pot.someUpdating({} as MessagePage, {} as MessagePage),
-      pot.some({} as MessagePage),
+      pot.someUpdating(
+        {} as allPaginated.MessagePage,
+        {} as allPaginated.MessagePage
+      ),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -210,8 +229,11 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.someError archive", () => {
     const globalState = createGlobalState(
-      pot.someError({} as MessagePage, ""),
-      pot.some({} as MessagePage),
+      pot.someError({} as allPaginated.MessagePage, {
+        reason: "",
+        time: new Date()
+      }),
+      pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
     const reloadAllMessagesRequest =
@@ -538,4 +560,198 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
     );
     expect(loadServiceDetailRequestAction).toStrictEqual(expectedOutput);
   });
+});
+
+describe("getLoadNextPageMessagesActionIfNeeded", () => {
+  const nextValues = [undefined, "01J0KB1T5XVKHERASERQ01CG4J"];
+  const generatePots = (
+    errorTime: Date = new Date(2024, 1, 1, 9, 30, 0, 0),
+    nextValue?: string
+  ) => [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating({ page: [], next: nextValue }),
+    pot.noneError({ reason: "", time: errorTime }),
+    pot.some({ page: [], next: nextValue }),
+    pot.someLoading({ page: [], next: nextValue }),
+    pot.someUpdating(
+      { page: [], next: nextValue },
+      { page: [], next: nextValue }
+    ),
+    pot.someError(
+      { page: [], next: nextValue },
+      { reason: "", time: errorTime }
+    )
+  ];
+  const lastRequestValues = [
+    O.none,
+    O.some("next"),
+    O.some("previous"),
+    O.some("all")
+  ];
+  const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
+
+  const computeExpectedLoadNextPageMessagesValue = (
+    state: GlobalState,
+    category: MessageListCategory,
+    timeOfCheck: Date
+  ) => {
+    // This method is the human-unreadable logic of the `getLoadNextPageMessagesActionIfAllowed` method
+    // Check that one instead to filter out the case where the loadNextPageMessages.request action is returned.
+    const allPaginated = state.entities.messages.allPaginated;
+    const selectedCollection =
+      category === "ARCHIVE" ? allPaginated.archive : allPaginated.inbox;
+    const oppositeCollection =
+      category === "ARCHIVE" ? allPaginated.inbox : allPaginated.archive;
+    const selectedCollectionNextValue = isSomeOrSomeError(
+      selectedCollection.data
+    )
+      ? selectedCollection.data.value.next
+      : undefined;
+
+    const canLoadNextMessages =
+      !pot.isLoading(oppositeCollection.data) &&
+      !pot.isUpdating(oppositeCollection.data) &&
+      ((isStrictSome(selectedCollection.data) &&
+        !!selectedCollectionNextValue) ||
+        (isStrictSomeError(selectedCollection.data) &&
+          !!selectedCollectionNextValue &&
+          (O.isNone(selectedCollection.lastRequest) ||
+            selectedCollection.lastRequest.value !== "next" ||
+            timeOfCheck.getTime() -
+              selectedCollection.data.error.time.getTime() >
+              nextPageLoadingWaitMillisecondsGenerator())));
+    return canLoadNextMessages
+      ? loadNextPageMessages.request({
+          pageSize,
+          cursor: selectedCollectionNextValue,
+          filter: { getArchived: category === "ARCHIVE" }
+        })
+      : undefined;
+  };
+  const timeOfCheck = new Date(2024, 1, 1, 9, 30, 30, 0);
+  const errorTimes = [
+    new Date(2024, 1, 1, 9, 30, 29, 0),
+    new Date(2024, 1, 1, 9, 30, 27, 0)
+  ];
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+  generatePots().forEach(oppositeCategoryData =>
+    errorTimes.forEach(errorTime =>
+      nextValues.forEach(selectedCategoryNextValue =>
+        generatePots(errorTime, selectedCategoryNextValue).forEach(
+          selectedCategoryData =>
+            lastRequestValues.forEach(selectedCategoryLastRequestValue =>
+              categories.forEach(selectedCategory => {
+                const state = {
+                  entities: {
+                    messages: {
+                      allPaginated: {
+                        inbox: {
+                          data:
+                            selectedCategory === "INBOX"
+                              ? selectedCategoryData
+                              : oppositeCategoryData,
+                          lastRequest:
+                            selectedCategory === "INBOX"
+                              ? selectedCategoryLastRequestValue
+                              : O.none
+                        },
+                        archive: {
+                          data:
+                            selectedCategory === "ARCHIVE"
+                              ? selectedCategoryData
+                              : oppositeCategoryData,
+                          lastRequest:
+                            selectedCategory === "ARCHIVE"
+                              ? selectedCategoryLastRequestValue
+                              : O.none
+                        }
+                      }
+                    }
+                  }
+                } as GlobalState;
+                const expectedOutput = computeExpectedLoadNextPageMessagesValue(
+                  state,
+                  selectedCategory,
+                  timeOfCheck
+                );
+                it(`Should return '${
+                  expectedOutput ? "loadNextPageMessages.request" : "undefined"
+                }' for '${selectedCategory}' with state '${
+                  selectedCategoryData.kind
+                }' where next page index is '${selectedCategoryNextValue}' and lastRequest value is '${
+                  O.isSome(selectedCategoryLastRequestValue)
+                    ? selectedCategoryLastRequestValue.value
+                    : "None"
+                }' (time from last error is ${
+                  timeOfCheck.getTime() - errorTime.getTime()
+                } milliseconds), opposite category state '${
+                  oppositeCategoryData.kind
+                }'`, () => {
+                  const loadNextPageMessageAction =
+                    getLoadNextPageMessagesActionIfAllowed(
+                      state,
+                      selectedCategory,
+                      timeOfCheck
+                    );
+                  expect(loadNextPageMessageAction).toStrictEqual(
+                    expectedOutput
+                  );
+                });
+              })
+            )
+        )
+      )
+    )
+  );
+});
+
+describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
+  const pots = [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating({ page: [] }),
+    pot.noneError(""),
+    pot.some({ page: [] }),
+    pot.someLoading({ page: [] }),
+    pot.someUpdating({ page: [] }, { page: [] }),
+    pot.someError({ page: [] }, "")
+  ];
+  const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
+  categories.forEach(category =>
+    pots.forEach(inboxPot =>
+      pots.forEach(archivePot => {
+        const expectedOutput =
+          !isLoadingOrUpdating(inboxPot) && !isLoadingOrUpdating(archivePot)
+            ? reloadAllMessages.request({
+                pageSize,
+                filter: { getArchived: category === "ARCHIVE" }
+              })
+            : undefined;
+        it(`should return '${
+          expectedOutput ? "reloadAllMessages.request" : "undefined"
+        }' for category '${category}', where inbox state is '${
+          inboxPot.kind
+        }' and archive state is '${archivePot.kind}'`, () => {
+          const state = {
+            entities: {
+              messages: {
+                allPaginated: {
+                  archive: {
+                    data: archivePot
+                  },
+                  inbox: {
+                    data: inboxPot
+                  }
+                }
+              }
+            }
+          } as GlobalState;
+          const reloadAllMessagesAction =
+            getReloadAllMessagesActionForRefreshIfAllowed(state, category);
+          expect(reloadAllMessagesAction).toStrictEqual(expectedOutput);
+        });
+      })
+    )
+  );
 });

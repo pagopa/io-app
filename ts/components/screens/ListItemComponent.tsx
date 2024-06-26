@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   listItemText: {
     fontSize: 18,
     lineHeight: 24,
-    ...makeFontStyleObject("SemiBold", undefined, "TitilliumSansPro")
+    ...makeFontStyleObject("Semibold", undefined, "TitilliumSansPro")
   },
   spacingBase: {
     paddingTop: 6,

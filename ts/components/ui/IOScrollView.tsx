@@ -41,7 +41,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { WithTestID } from "../../types/WithTestID";
 
-type IOScrollViewActions =
+export type IOScrollViewActions =
   | {
       type: "SingleButton";
       primary: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;

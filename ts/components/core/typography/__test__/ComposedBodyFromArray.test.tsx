@@ -93,7 +93,7 @@ describe("ComposedBodyFromArray", () => {
     },
     {
       text: " weights",
-      weight: "SemiBold"
+      weight: "Semibold"
     }
   ] as Array<BodyProps>;
 });

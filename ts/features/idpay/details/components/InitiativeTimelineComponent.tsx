@@ -85,7 +85,7 @@ const TimelineHeaderComponent = (props: { onShowMorePress?: () => void }) => (
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H3>
-    <Body weight="SemiBold" color="blue" onPress={props.onShowMorePress}>
+    <Body weight="Semibold" color="blue" onPress={props.onShowMorePress}>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
       )}

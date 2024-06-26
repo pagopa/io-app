@@ -51,7 +51,7 @@ const InformationRow = ({
         numberOfLines={1}
         ellipsizeMode="tail"
         color={"blue"}
-        weight={"SemiBold"}
+        weight={"Semibold"}
       >
         {value}
       </H4>
