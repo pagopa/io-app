@@ -15,16 +15,16 @@ import {
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { ReduxSagaEffect } from "../../../types/utils";
+import { ReduxSagaEffect } from "../../../../types/utils";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
-import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
-import { LollipopConfig } from "../../lollipop";
+import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
+import { LollipopConfig } from "../../../lollipop";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
-} from "../../lollipop/store/reducers/lollipop";
-import { generateKeyInfo } from "../../lollipop/saga";
-import { lollipopRequestInit } from "../../lollipop/utils/fetch";
+} from "../../../lollipop/store/reducers/lollipop";
+import { generateKeyInfo } from "../../../lollipop/saga";
+import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { buildAbsoluteUrl, logToMixPanel } from "./sagaUtils";
 import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
 
