@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
 
 const isAndroid = Platform.OS === "android";
 
-export const RefreshIndicator: React.FunctionComponent = () => {
+export const RefreshIndicator = (props: { testID?: string }) => {
   const activityIndicator = (
     <ActivityIndicator
       size={isAndroid ? 24 : "large"}
       color={isAndroid ? variables.brandPrimary : undefined}
-      testID={"refreshIndicator"}
+      testID={props.testID ?? "refreshIndicator"}
     />
   );
   return isAndroid ? (
