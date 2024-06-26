@@ -27,24 +27,28 @@ export const ZendeskStackNavigator = () => (
       component={ZendeskPanicMode}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ZENDESK_ROUTES.ASK_PERMISSIONS}
       component={ZendeskAskPermissions}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ZENDESK_ROUTES.CHOOSE_CATEGORY}
       component={ZendeskChooseCategory}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
+      name={ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY}
+      component={ZendeskChooseSubCategory}
+    />
+    <Stack.Screen
+      options={{ headerShown: true }}
       name={ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS}
       component={ZendeskAskSeeReportsPermissions}
     />
     <Stack.Screen
       name={ZENDESK_ROUTES.SEE_REPORTS_ROUTERS}
       component={ZendeskSeeReportsRouters}
-    />
-    <Stack.Screen
-      name={ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY}
-      component={ZendeskChooseSubCategory}
     />
   </Stack.Navigator>
 );

@@ -4,7 +4,9 @@ import {
   H2,
   HeaderSecondLevel,
   IOStyles,
-  VSpacer
+  LabelSmallAlt,
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React, { ComponentProps, forwardRef, useState } from "react";
@@ -16,24 +18,28 @@ import {
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
+import { WithTestID } from "../../types/WithTestID";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
   label: string;
   accessibilityLabel?: string;
   testID?: string;
+  section?: string;
 };
 
-type Props = {
-  children: React.ReactNode;
-  actions?: ComponentProps<typeof IOScrollView>["actions"];
-  title: LargeHeaderTitleProps;
-  description?: string;
-  goBack?: BackProps["goBack"];
-  headerActionsProp?: HeaderActionProps;
-  canGoback?: boolean;
-  excludeEndContentMargin?: boolean;
-} & SupportRequestParams;
+type Props = WithTestID<
+  {
+    children: React.ReactNode;
+    actions?: ComponentProps<typeof IOScrollView>["actions"];
+    title: LargeHeaderTitleProps;
+    description?: string;
+    goBack?: BackProps["goBack"];
+    headerActionsProp?: HeaderActionProps;
+    canGoback?: boolean;
+    excludeEndContentMargin?: boolean;
+  } & SupportRequestParams
+>;
 
 /**
  * Special `IOScrollView` screen with a large title that is hidden by a transition when
@@ -53,13 +59,15 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelpMarkdown,
       faqCategories,
       headerActionsProp = {},
-      excludeEndContentMargin
+      excludeEndContentMargin,
+      testID
     },
     ref
   ) => {
     const [titleHeight, setTitleHeight] = useState(0);
 
     const navigation = useNavigation();
+    const theme = useIOTheme();
 
     const getTitleHeight = (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
@@ -92,6 +100,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         snapOffset={titleHeight}
         includeContentMargins={false}
         excludeEndContentMargin={excludeEndContentMargin}
+        testID={testID}
       >
         <View
           ref={ref}
@@ -99,10 +108,16 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
+          {title.section && (
+            <LabelSmallAlt color={theme["textBody-tertiary"]}>
+              {title.section}
+            </LabelSmallAlt>
+          )}
           <H2
             testID={title.testID}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
+            color={theme["textHeading-default"]}
           >
             {title.label}
           </H2>
