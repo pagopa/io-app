@@ -28,7 +28,7 @@ import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/notifications";
 import { GlobalState } from "../reducers/types";
 import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
-import { FimsActions } from "../../features/fims/store/actions";
+import { FimsActions } from "../../features/fims/common/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";

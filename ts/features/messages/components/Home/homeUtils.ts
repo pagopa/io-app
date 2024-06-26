@@ -23,6 +23,8 @@ import {
   isStrictSomeError
 } from "../../../../utils/pot";
 
+export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
+
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
 ): ActionType<typeof reloadAllMessages.request> | undefined =>
@@ -78,7 +80,7 @@ export const getLoadServiceDetailsActionIfNeeded = (
 export const getLoadNextPageMessagesActionIfAllowed = (
   state: GlobalState,
   category: MessageListCategory,
-  messageListDistanceFromEnd: number
+  comparisonTimeInCaseOfError: Date
 ): ActionType<typeof loadNextPageMessages.request> | undefined => {
   const allPaginated = state.entities.messages.allPaginated;
 
@@ -109,14 +111,23 @@ export const getLoadNextPageMessagesActionIfAllowed = (
 
   // If there was an error in the last more-pages-loading, we prevent
   // the page from reloading continuosly when the server endpoint keeps
-  // replying with an error. In such case we block the call and let the user
-  // scroll a bit up and then down if she wants to try another reload
+  // replying with an error. In such case we block the call and wait for
+  // a little bit before the request can be sent again
   if (isStrictSomeError(messagePagePot)) {
+    // Make sure not to block the request if the error happened on
+    // another one (like the pull to refresh)
     const lastRequestValue = O.isSome(lastRequest)
       ? lastRequest.value
       : undefined;
-    if (lastRequestValue === "next" && messageListDistanceFromEnd < 1) {
-      return undefined;
+    if (lastRequestValue === "next") {
+      const millisecondsAfterLastError =
+        comparisonTimeInCaseOfError.getTime() -
+        messagePagePot.error.time.getTime();
+      if (
+        millisecondsAfterLastError < nextPageLoadingWaitMillisecondsGenerator()
+      ) {
+        return undefined;
+      }
     }
   }
 

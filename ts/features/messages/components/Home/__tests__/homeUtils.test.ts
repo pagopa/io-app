@@ -13,7 +13,8 @@ import {
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
   messageListItemHeight,
-  messageViewPageIndexToListCategory
+  messageViewPageIndexToListCategory,
+  nextPageLoadingWaitMillisecondsGenerator
 } from "../homeUtils";
 import { pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
@@ -99,7 +100,7 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   it("should return undefined when showing inbox with pot.noneError inbox", () => {
     const globalState = createGlobalState(
       pot.some({} as allPaginated.MessagePage),
-      pot.noneError(""),
+      pot.noneError({ reason: "", time: new Date() }),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -142,7 +143,10 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   it("should return undefined when showing inbox with pot.someError inbox", () => {
     const globalState = createGlobalState(
       pot.some({} as allPaginated.MessagePage),
-      pot.someError({} as allPaginated.MessagePage, ""),
+      pot.someError({} as allPaginated.MessagePage, {
+        reason: "",
+        time: new Date()
+      }),
       "INBOX"
     );
     const reloadAllMessagesRequest =
@@ -182,7 +186,7 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.noneError archive", () => {
     const globalState = createGlobalState(
-      pot.noneError(""),
+      pot.noneError({ reason: "", time: new Date() }),
       pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
@@ -225,7 +229,10 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   });
   it("should return undefined when showing archive with pot.someError archive", () => {
     const globalState = createGlobalState(
-      pot.someError({} as allPaginated.MessagePage, ""),
+      pot.someError({} as allPaginated.MessagePage, {
+        reason: "",
+        time: new Date()
+      }),
       pot.some({} as allPaginated.MessagePage),
       "ARCHIVE"
     );
@@ -577,18 +584,24 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
 
 describe("getLoadNextPageMessagesActionIfNeeded", () => {
   const nextValues = [undefined, "01J0KB1T5XVKHERASERQ01CG4J"];
-  const generatePots = (nextValue?: string) => [
+  const generatePots = (
+    errorTime: Date = new Date(2024, 1, 1, 9, 30, 0, 0),
+    nextValue?: string
+  ) => [
     pot.none,
     pot.noneLoading,
     pot.noneUpdating({ page: [], next: nextValue }),
-    pot.noneError(""),
+    pot.noneError({ reason: "", time: errorTime }),
     pot.some({ page: [], next: nextValue }),
     pot.someLoading({ page: [], next: nextValue }),
     pot.someUpdating(
       { page: [], next: nextValue },
       { page: [], next: nextValue }
     ),
-    pot.someError({ page: [], next: nextValue }, "")
+    pot.someError(
+      { page: [], next: nextValue },
+      { reason: "", time: errorTime }
+    )
   ];
   const lastRequestValues = [
     O.none,
@@ -601,7 +614,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
   const computeExpectedLoadNextPageMessagesValue = (
     state: GlobalState,
     category: MessageListCategory,
-    messageListDistanceFromBottom: number
+    timeOfCheck: Date
   ) => {
     // This method is the human-unreadable logic of the `getLoadNextPageMessagesActionIfAllowed` method
     // Check that one instead to filter out the case where the loadNextPageMessages.request action is returned.
@@ -615,6 +628,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
     )
       ? selectedCollection.data.value.next
       : undefined;
+
     const canLoadNextMessages =
       !pot.isLoading(oppositeCollection.data) &&
       !pot.isUpdating(oppositeCollection.data) &&
@@ -624,7 +638,9 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
           !!selectedCollectionNextValue &&
           (O.isNone(selectedCollection.lastRequest) ||
             selectedCollection.lastRequest.value !== "next" ||
-            messageListDistanceFromBottom > 0)));
+            timeOfCheck.getTime() -
+              selectedCollection.data.error.time.getTime() >
+              nextPageLoadingWaitMillisecondsGenerator())));
     return canLoadNextMessages
       ? loadNextPageMessages.request({
           pageSize,
@@ -633,71 +649,77 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
         })
       : undefined;
   };
+  const timeOfCheck = new Date(2024, 1, 1, 9, 30, 30, 0);
+  const errorTimes = [
+    new Date(2024, 1, 1, 9, 30, 29, 0),
+    new Date(2024, 1, 1, 9, 30, 27, 0)
+  ];
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  nextValues.forEach(inboxNextValue =>
-    generatePots(inboxNextValue).forEach(inboxData =>
-      lastRequestValues.forEach(inboxLastRequestValue =>
-        nextValues.forEach(archiveNextValue =>
-          generatePots(archiveNextValue).forEach(archiveData =>
-            lastRequestValues.forEach(archiveLastRequestValue => {
-              const state = {
-                entities: {
-                  messages: {
-                    allPaginated: {
-                      inbox: {
-                        data: inboxData,
-                        lastRequest: inboxLastRequestValue
-                      },
-                      archive: {
-                        data: archiveData,
-                        lastRequest: archiveLastRequestValue
+  generatePots().forEach(oppositeCategoryData =>
+    errorTimes.forEach(errorTime =>
+      nextValues.forEach(selectedCategoryNextValue =>
+        generatePots(errorTime, selectedCategoryNextValue).forEach(
+          selectedCategoryData =>
+            lastRequestValues.forEach(selectedCategoryLastRequestValue =>
+              categories.forEach(selectedCategory => {
+                const state = {
+                  entities: {
+                    messages: {
+                      allPaginated: {
+                        inbox: {
+                          data:
+                            selectedCategory === "INBOX"
+                              ? selectedCategoryData
+                              : oppositeCategoryData,
+                          lastRequest:
+                            selectedCategory === "INBOX"
+                              ? selectedCategoryLastRequestValue
+                              : O.none
+                        },
+                        archive: {
+                          data:
+                            selectedCategory === "ARCHIVE"
+                              ? selectedCategoryData
+                              : oppositeCategoryData,
+                          lastRequest:
+                            selectedCategory === "ARCHIVE"
+                              ? selectedCategoryLastRequestValue
+                              : O.none
+                        }
                       }
                     }
                   }
-                }
-              } as GlobalState;
-              categories.forEach(category =>
-                [0, 1].forEach(messageListDistance => {
-                  const expectedOutput =
-                    computeExpectedLoadNextPageMessagesValue(
+                } as GlobalState;
+                const expectedOutput = computeExpectedLoadNextPageMessagesValue(
+                  state,
+                  selectedCategory,
+                  timeOfCheck
+                );
+                it(`Should return '${
+                  expectedOutput ? "loadNextPageMessages.request" : "undefined"
+                }' for '${selectedCategory}' with state '${
+                  selectedCategoryData.kind
+                }' where next page index is '${selectedCategoryNextValue}' and lastRequest value is '${
+                  O.isSome(selectedCategoryLastRequestValue)
+                    ? selectedCategoryLastRequestValue.value
+                    : "None"
+                }' (time from last error is ${
+                  timeOfCheck.getTime() - errorTime.getTime()
+                } milliseconds), opposite category state '${
+                  oppositeCategoryData.kind
+                }'`, () => {
+                  const loadNextPageMessageAction =
+                    getLoadNextPageMessagesActionIfAllowed(
                       state,
-                      category,
-                      messageListDistance
+                      selectedCategory,
+                      timeOfCheck
                     );
-                  // eslint-disable-next-line no-underscore-dangle
-                  it(`Should return '${
+                  expect(loadNextPageMessageAction).toStrictEqual(
                     expectedOutput
-                      ? "loadNextPageMessages.request"
-                      : "undefined"
-                  }' for '${category}' with state '${
-                    category === "ARCHIVE" ? archiveData.kind : inboxData.kind
-                  }' where next page index is '${
-                    category === "ARCHIVE" ? archiveNextValue : inboxNextValue
-                  }' and lastRequest value is '${
-                    category === "ARCHIVE"
-                      ? O.isSome(archiveLastRequestValue)
-                        ? archiveLastRequestValue.value
-                        : "None"
-                      : O.isSome(inboxLastRequestValue)
-                      ? inboxLastRequestValue.value
-                      : "None"
-                  }' (messageListDistance is ${messageListDistance}), opposite category state '${
-                    category === "ARCHIVE" ? inboxData.kind : archiveData.kind
-                  }' (opposite 'lastRequest' and 'next page index' values not logged for concision)`, () => {
-                    const loadNextPageMessageAction =
-                      getLoadNextPageMessagesActionIfAllowed(
-                        state,
-                        category,
-                        messageListDistance
-                      );
-                    expect(loadNextPageMessageAction).toStrictEqual(
-                      expectedOutput
-                    );
-                  });
-                })
-              );
-            })
-          )
+                  );
+                });
+              })
+            )
         )
       )
     )

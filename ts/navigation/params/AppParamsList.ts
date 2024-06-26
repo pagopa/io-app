@@ -17,7 +17,10 @@ import { FciParamsList } from "../../features/fci/navigation/params";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FimsLegacyParamsList } from "../../features/fimsLegacy/navigation/params";
 import FIMS_LEGACY_ROUTES from "../../features/fimsLegacy/navigation/routes";
-import { FIMS_ROUTES, FimsParamsList } from "../../features/fims/navigation";
+import {
+  FIMS_SSO_ROUTES,
+  FimsSSOParamsList
+} from "../../features/fims/singleSignOn/navigation";
 import { IdPayBarcodeParamsList } from "../../features/idpay/barcode/navigation/params";
 import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/routes";
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
@@ -104,7 +107,7 @@ export type AppParamsList = {
   [UADONATION_ROUTES.WEBVIEW]: NavigatorScreenParams<UAWebviewScreenNavigationParams>;
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
   [FIMS_LEGACY_ROUTES.MAIN]: NavigatorScreenParams<FimsLegacyParamsList>;
-  [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
+  [FIMS_SSO_ROUTES.MAIN]: NavigatorScreenParams<FimsSSOParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
