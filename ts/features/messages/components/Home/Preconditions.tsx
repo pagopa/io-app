@@ -11,7 +11,7 @@ import {
   shouldPresentPreconditionsBottomSheetSelector
 } from "../../store/reducers/messagePrecondition";
 import {
-  clearMessagePrecondition,
+  clearLegacyMessagePrecondition,
   idlePreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   toIdlePayload,
@@ -28,7 +28,7 @@ export const Preconditions = () => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const onDismissCallback = useCallback(() => {
-    dispatch(clearMessagePrecondition());
+    dispatch(clearLegacyMessagePrecondition());
     dispatch(idlePreconditionStatusAction(toIdlePayload()));
   }, [dispatch]);
   const modal = useIOBottomSheetModal({

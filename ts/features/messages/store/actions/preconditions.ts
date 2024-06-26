@@ -83,7 +83,7 @@ export const updateRequiredPreconditionStatusAction = createStandardAction(
   "TO_UPDATE_REQUIRED_PRECONDITION_STATUS"
 )<NPSUpdateRequired>();
 
-export const getMessagePrecondition = createAsyncAction(
+export const getLegacyMessagePrecondition = createAsyncAction(
   "GET_MESSAGE_PRECONDITION_REQUEST",
   "GET_MESSAGE_PRECONDITION_SUCCESS",
   "GET_MESSAGE_PRECONDITION_FAILURE"
@@ -93,6 +93,6 @@ export const getMessagePrecondition = createAsyncAction(
   Error
 >();
 
-export const clearMessagePrecondition = createStandardAction(
+export const clearLegacyMessagePrecondition = createStandardAction(
   "CLEAR_MESSAGE_PRECONDITION"
 )<void>();

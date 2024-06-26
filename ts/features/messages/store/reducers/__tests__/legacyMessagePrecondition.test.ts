@@ -14,8 +14,8 @@ import { message_1 } from "../../../__mocks__/message";
 import { toUIMessage } from "../transformers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
-  clearMessagePrecondition,
-  getMessagePrecondition
+  clearLegacyMessagePrecondition,
+  getLegacyMessagePrecondition
 } from "../../actions/preconditions";
 
 const mockThirdPartyMessagePrecondition: ThirdPartyMessagePrecondition = {
@@ -40,7 +40,7 @@ describe("legacyMessagePrecondition", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     const action = store.dispatch(
-      getMessagePrecondition.request({
+      getLegacyMessagePrecondition.request({
         id: message.id,
         categoryTag: TagEnumPN.PN
       })
@@ -71,7 +71,7 @@ describe("legacyMessagePrecondition", () => {
 
     const store = createStore(appReducer, finalState as any);
     const action = store.dispatch(
-      getMessagePrecondition.success(mockThirdPartyMessagePrecondition)
+      getLegacyMessagePrecondition.success(mockThirdPartyMessagePrecondition)
     );
     expect(
       store.getState().entities.messages.legacyMessagePrecondition
@@ -99,7 +99,9 @@ describe("legacyMessagePrecondition", () => {
 
     const store = createStore(appReducer, finalState as any);
     const action = store.dispatch(
-      getMessagePrecondition.failure(new Error("Error load remote content"))
+      getLegacyMessagePrecondition.failure(
+        new Error("Error load remote content")
+      )
     );
     expect(
       store.getState().entities.messages.legacyMessagePrecondition
@@ -126,7 +128,7 @@ describe("legacyMessagePrecondition", () => {
     };
 
     const store = createStore(appReducer, finalState as any);
-    store.dispatch(clearMessagePrecondition());
+    store.dispatch(clearLegacyMessagePrecondition());
     expect(
       store.getState().entities.messages.legacyMessagePrecondition
     ).toStrictEqual({

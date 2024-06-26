@@ -9,13 +9,13 @@ import {
   preconditionsContentSelector
 } from "../../store/reducers/messagePrecondition";
 import I18n from "../../../../i18n";
-import { MessageFeedback } from "../PreconditionBottomSheet/MessageFeedback";
 import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus";
 import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import {
   shownPreconditionStatusAction,
   toShownPayload
 } from "../../store/actions/preconditions";
+import { MessageFeedback } from "./PreconditionsFeedback";
 
 const styles = StyleSheet.create({
   container: {

@@ -15,22 +15,22 @@ import {
   isPnAppVersionSupportedSelector,
   pnMinAppVersionSelector
 } from "../../../store/reducers/backendStatus";
-import { MessageFeedback } from "../components/PreconditionBottomSheet/MessageFeedback";
+import { MessageFeedback } from "../components/Home/PreconditionsFeedback";
 import { openAppStoreUrl } from "../../../utils/url";
 import {
-  PreconditionHeader,
-  PreconditionHeaderSkeleton
-} from "../components/PreconditionBottomSheet/PreconditionHeader";
+  LegacyPreconditionHeader,
+  LegacyPreconditionHeaderSkeleton
+} from "../components/PreconditionBottomSheet/LegacyPreconditionHeader";
 import {
-  PreconditionContent,
-  PreconditionContentSkeleton
-} from "../components/PreconditionBottomSheet/PreconditionContent";
-import { PreconditionFooter } from "../components/PreconditionBottomSheet/PreconditionFooter";
+  LegacyPreconditionContent,
+  LegacyPreconditionContentSkeleton
+} from "../components/PreconditionBottomSheet/LegacyPreconditionContent";
+import { LegacyPreconditionFooter } from "../components/PreconditionBottomSheet/LegacyPreconditionFooter";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import {
-  clearMessagePrecondition,
-  getMessagePrecondition
+  clearLegacyMessagePrecondition,
+  getLegacyMessagePrecondition
 } from "../store/actions/preconditions";
 
 const renderPreconditionHeader = (
@@ -39,8 +39,8 @@ const renderPreconditionHeader = (
   fold(
     content,
     constNull,
-    () => <PreconditionHeaderSkeleton />,
-    ({ title }) => <PreconditionHeader title={title} />,
+    () => <LegacyPreconditionHeaderSkeleton />,
+    ({ title }) => <LegacyPreconditionHeader title={title} />,
     () => <View />
   );
 
@@ -51,9 +51,9 @@ const renderPreconditionContent = (
   fold(
     content,
     constNull,
-    () => <PreconditionContentSkeleton />,
+    () => <LegacyPreconditionContentSkeleton />,
     ({ markdown }) => (
-      <PreconditionContent
+      <LegacyPreconditionContent
         markdown={markdown}
         onLoadEnd={() => onLoadEnd(true)}
       />
@@ -78,7 +78,7 @@ const renderPreconditionFooter = (
   }
 
   return (
-    <PreconditionFooter
+    <LegacyPreconditionFooter
       messageId={messageId}
       onDismiss={() => onDismiss()}
       navigationAction={navigationAction}
@@ -86,7 +86,7 @@ const renderPreconditionFooter = (
   );
 };
 
-export const useMessageOpening = () => {
+export const useLegacyMessageOpening = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
@@ -183,7 +183,7 @@ export const useMessageOpening = () => {
 
     return () => {
       setIsContentLoadCompleted(false);
-      dispatch(clearMessagePrecondition());
+      dispatch(clearLegacyMessagePrecondition());
     };
   };
 
@@ -203,7 +203,7 @@ export const useMessageOpening = () => {
 
     trackDisclaimerOpened(message.category.tag);
     dispatch(
-      getMessagePrecondition.request({
+      getLegacyMessagePrecondition.request({
         id: message.id,
         categoryTag: message.category.tag
       })

@@ -14,9 +14,9 @@ import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/P
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
-  clearMessagePrecondition,
+  clearLegacyMessagePrecondition,
   errorPreconditionStatusAction,
-  getMessagePrecondition,
+  getLegacyMessagePrecondition,
   idlePreconditionStatusAction,
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
@@ -330,8 +330,8 @@ export type MessagesActions = ActionType<
   | typeof scheduledPreconditionStatusAction
   | typeof shownPreconditionStatusAction
   | typeof updateRequiredPreconditionStatusAction
-  | typeof getMessagePrecondition
-  | typeof clearMessagePrecondition
+  | typeof getLegacyMessagePrecondition
+  | typeof clearLegacyMessagePrecondition
   | typeof getMessageDataAction
   | typeof cancelGetMessageDataAction
   | typeof resetGetMessageDataAction
