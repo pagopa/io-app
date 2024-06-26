@@ -128,7 +128,6 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "deprecated-react-native-prop-types": "^2.3.0",
     "detox": "^19.9.2",
     "eslint-plugin-react-native": "^4.0.0",
     "fp-ts": "^2.12.1",
