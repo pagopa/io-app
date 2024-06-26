@@ -4,7 +4,7 @@ import {
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
 import { call, select } from "typed-redux-saga/macro";
-import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
+import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
 import { fimsPartialAbortUrl } from "../store/reducers";
 import { buildAbsoluteUrl, logToMixPanel } from "./sagaUtils";
 import { handleFimsResourcesDeallocation } from "./handleFimsResourcesDeallocation";
