@@ -215,6 +215,14 @@ export const trackServiceDetailsUserExit = (
     buildEventProperties("UX", "exit", props)
   );
 
+export const trackServicesCgnStartRequest = (service_id: string) =>
+  void mixpanelTrack(
+    "SERVICES_CGN_START_REQUEST",
+    buildEventProperties("UX", "action", {
+      service_id
+    })
+  );
+
 export const trackSpecialServiceStatusChanged = (
   props: SpecialServiceStatusChangedType
 ) =>

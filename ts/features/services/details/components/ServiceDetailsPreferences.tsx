@@ -91,7 +91,7 @@ export const ServiceDetailsPreferences = ({
         service_id: serviceId
       });
     },
-    () => !!serviceMetadataInfo && !!servicePreferenceResponseSuccess
+    () => !!servicePreferenceResponseSuccess
   );
 
   useEffect(() => {

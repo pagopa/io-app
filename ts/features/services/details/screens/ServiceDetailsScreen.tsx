@@ -108,7 +108,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
         service_name: service?.service_name ?? ""
       });
     },
-    () => !!service && !!serviceMetadataInfo
+    () => !!service
   );
 
   useEffect(() => {

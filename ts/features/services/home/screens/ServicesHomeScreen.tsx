@@ -10,6 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import React, { useCallback, useEffect, useRef } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Institution } from "../../../../../definitions/services/Institution";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
@@ -52,10 +53,13 @@ export const ServicesHomeScreen = () => {
     refresh
   } = useInstitutionsFetcher();
 
-  useOnFirstRender(() => {
-    analytics.trackServicesHome();
-    fetchPage(0);
-  });
+  useOnFirstRender(() => fetchPage(0));
+
+  useFocusEffect(
+    useCallback(() => {
+      analytics.trackServicesHome();
+    }, [])
+  );
 
   useTabItemPressWhenScreenActive(
     () => flatListRef.current?.scrollToOffset({ offset: 0, animated: true }),
