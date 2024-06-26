@@ -8,7 +8,7 @@ import { WalletClientStatusEnum } from "../../../../../definitions/pagopa/wallet
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { WalletPaymentStepEnum } from "../types";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentAnalyticsSelectedPspFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
+import { PaymentAnalyticsPhase, PaymentAnalyticsSelectedPspFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
 
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
@@ -63,4 +63,17 @@ export const getPspFlagType = (psp: Bundle, pspList?: ReadonlyArray<Bundle>): Pa
     return curr;
   });
   return cheaperPsp.idBundle === psp.idBundle ? "cheaper" : "none";
+};
+
+export const getPaymentPhaseFromStep = (step: WalletPaymentStepEnum): PaymentAnalyticsPhase => {
+  switch (step) {
+    case WalletPaymentStepEnum.PICK_PAYMENT_METHOD:
+      return "verifica";
+    case WalletPaymentStepEnum.PICK_PSP:
+      return "attiva";
+    case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
+      return "pagamento";
+    default:
+      return "pagamento";
+  }
 };

@@ -17,6 +17,7 @@ import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackB
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import {
+  selectWalletPaymentCurrentStep,
   walletPaymentDetailsSelector,
   walletPaymentOnSuccessActionSelector
 } from "../store/selectors";
@@ -29,6 +30,7 @@ import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 import * as analytics from "../analytics";
 import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { getPaymentPhaseFromStep } from "../utils";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -52,6 +54,7 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentOngoingHistory = useIOSelector(
     selectOngoingPaymentHistorySelector
   );
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -160,7 +163,7 @@ const WalletPaymentOutcomeScreen = () => {
       expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
-          ? "pagamento"
+          ? getPaymentPhaseFromStep(currentStep)
           : undefined
     });
   };

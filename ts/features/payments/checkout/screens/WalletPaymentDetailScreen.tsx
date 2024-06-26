@@ -79,6 +79,13 @@ const WalletPaymentDetailScreen = () => {
     }, [dispatch, rptId])
   );
 
+  useOnFirstRender(
+    () => {
+      analytics.trackPaymentSummaryLoading();
+    },
+    () => pot.isLoading(paymentDetailsPot)
+  );
+
   if (pot.isError(paymentDetailsPot)) {
     const failure = pipe(
       paymentDetailsPot.error,
@@ -128,21 +135,17 @@ const WalletPaymentDetailContent = ({
   );
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  useOnFirstRender(
-    () => {
-      analytics.trackPaymentSummaryInfoScreen({
-        amount: paymentOngoingHistory?.formattedAmount,
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-        organization_name: paymentOngoingHistory?.verifiedData?.paName,
-        saved_payment_method:
-          paymentOngoingHistory?.savedPaymentMethods?.length,
-        service_name: paymentOngoingHistory?.serviceName,
-        data_entry: paymentOngoingHistory?.startOrigin,
-        first_time_opening: "yes"
-      });
-    },
-    () => payment && !!paymentOngoingHistory
-  );
+  useOnFirstRender(() => {
+    analytics.trackPaymentSummaryInfoScreen({
+      amount: paymentOngoingHistory?.formattedAmount,
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      organization_name: paymentOngoingHistory?.verifiedData?.paName,
+      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
+      service_name: paymentOngoingHistory?.serviceName,
+      data_entry: paymentOngoingHistory?.startOrigin,
+      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no"
+    });
+  });
 
   useLayoutEffect(() => {
     navigation.setOptions({

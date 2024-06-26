@@ -11,6 +11,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import * as analytics from "../analytics";
+import { useIOSelector } from "../../../../store/hooks";
+import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 type Props = {
   failure: WalletPaymentFailure;
@@ -19,6 +23,7 @@ type Props = {
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
 
   const handleClose = () => {
     navigation.pop();
@@ -116,6 +121,17 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const contentProps = getPropsFromFailure(failure);
+
+  useOnFirstRender(() => {
+    analytics.trackPaymentRequestFailure(failure, {
+      organization_name: paymentOngoingHistory?.verifiedData?.paName,
+      service_name: paymentOngoingHistory?.serviceName,
+      data_entry: paymentOngoingHistory?.startOrigin,
+      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
+      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      payment_phase: "verifica"
+    });
+  });
 
   return (
     <>

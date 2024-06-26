@@ -5,6 +5,7 @@ import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
 import { Action } from "../../../../store/actions/types";
 import { PaymentAnalyticsEditingType, PaymentAnalyticsPhase, PaymentAnalyticsPreselectedPspFlag, PaymentAnalyticsSelectedMethodFlag, PaymentAnalyticsSelectedPspFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
 export type PaymentAnalyticsProps = {
   data_entry: string;
@@ -56,13 +57,41 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (outcome: WalletPaymen
   }
 };
 
+export const getPaymentAnalyticsEventFromRequestFailure = (falure: WalletPaymentFailure) => {
+  switch (falure.faultCodeCategory) {
+    case "PAYMENT_UNAVAILABLE":
+      return "PAYMENT_TECHNICAL_ERROR";
+    case "PAYMENT_DATA_ERROR":
+      return "PAYMENT_DATA_ERROR";
+    case "DOMAIN_UNKNOWN":
+      return "PAYMENT_ORGANIZATION_ERROR";
+    case "PAYMENT_ONGOING":
+      return "PAYMENT_ONGOING_ERROR";
+    case "PAYMENT_EXPIRED":
+      return "PAYMENT_EXPIRED_ERROR";
+    case "PAYMENT_CANCELED":
+      return "PAYMENT_CANCELED_ERROR";
+    case "PAYMENT_DUPLICATED":
+      return "PAYMENT_ALREADY_PAID_ERROR";
+    case "PAYMENT_UNKNOWN":
+      return "PAYMENT_NOT_FOUND_ERROR";
+    default:
+      return "PAYMENT_GENERIC_ERROR";
+  }
+};
+
+export const trackPaymentSummaryLoading = () => {
+  console.log("PAYMENT_SUMMARY_LOADING");
+  void mixpanelTrack("PAYMENT_SUMMARY_LOADING", buildEventProperties("UX", "screen_view"));
+};
+
 
 export const trackPaymentSummaryInfoScreen = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
-  console.log("PAYMENT_VERIFICA_LOADING", props);
+  console.log("PAYMENT_SUMMARY_INFO_SCREEN", props);
   void mixpanelTrack(
-    "PAYMENT_VERIFICA_LOADING",
+    "PAYMENT_SUMMARY_INFO_SCREEN",
     buildEventProperties("UX", "screen_view", {
       ...props
     })
@@ -238,6 +267,19 @@ export const trackPaymentOutcomeFailure = (
   console.log(getPaymentAnalyticsEventFromFailureOutcome(outcome), props);
   void mixpanelTrack(
     getPaymentAnalyticsEventFromFailureOutcome(outcome),
+    buildEventProperties("KO", undefined, {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentRequestFailure = (
+  failure: WalletPaymentFailure,
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  console.log(getPaymentAnalyticsEventFromRequestFailure(failure), props);
+  void mixpanelTrack(
+    getPaymentAnalyticsEventFromRequestFailure(failure),
     buildEventProperties("KO", undefined, {
       ...props
     })
