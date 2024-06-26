@@ -8,6 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -15,7 +16,11 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import {
+  centsToAmount,
+  formatNumberAmount,
+  formatNumberCentsToAmount
+} from "../../../../utils/stringBuilder";
 import { getSortedPspList } from "../../common/utils";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
@@ -30,15 +35,20 @@ import {
 } from "../store/selectors/psps";
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import { selectWalletPaymentCurrentStep } from "../store/selectors";
 
 const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
   const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
 
   const isLoading = pot.isLoading(pspListPot);
   const isError = pot.isError(pspListPot);
@@ -75,6 +85,36 @@ const WalletPaymentPickPspScreen = () => {
       });
     }
   }, [isError, navigation]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (
+        !pot.isSome(pspListPot) ||
+        pot.isLoading(pspListPot) ||
+        currentStep !== WalletPaymentStepEnum.PICK_PSP
+      ) {
+        return;
+      }
+      const preSelectedPsp = O.toUndefined(selectedPspOption);
+      analytics.trackPaymentFeeSelection({
+        attempt: paymentOngoingHistory?.attempt,
+        organization_name: paymentOngoingHistory?.verifiedData?.paName,
+        service_name: paymentOngoingHistory?.serviceName,
+        amount: paymentOngoingHistory?.verifiedData?.amount
+          ? formatNumberAmount(
+              centsToAmount(paymentOngoingHistory?.verifiedData?.amount),
+              true,
+              "right"
+            )
+          : undefined,
+        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+        payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+        preselected_psp_flag: preSelectedPsp ? "customer" : "none"
+      });
+      // only need to run when the pspList changes
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pspListPot])
+  );
 
   const handlePspSelection = React.useCallback(
     (bundleId: string) => {

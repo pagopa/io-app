@@ -3,7 +3,7 @@ import { mixpanel, mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
 import { Action } from "../../../../store/actions/types";
-import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
+import { PaymentAnalyticsPspFlag, PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
 
 export type PaymentAnalyticsProps = {
   data_entry: string;
@@ -18,6 +18,7 @@ export type PaymentAnalyticsProps = {
   last_used_payment_method: string;
   payment_method_selected: string;
   payment_method_selected_flag: PaymentAnalyticsSelectedMethodFlag;
+  preselected_psp_flag: PaymentAnalyticsPspFlag;
 };
 
 export const trackPaymentSummaryInfoScreen = (
@@ -117,6 +118,18 @@ export const trackPaymentMethodVerificaFatalError = (props: Partial<PaymentAnaly
   void mixpanelTrack(
     "PAYMENT_VERIFICA_FATAL_ERROR",
     buildEventProperties("KO", undefined, {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentFeeSelection = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  console.log("PAYMENT_FEE_SELECTION", props);
+  void mixpanelTrack(
+    "PAYMENT_FEE_SELECTION",
+    buildEventProperties("UX", "screen_view", {
       ...props
     })
   );
