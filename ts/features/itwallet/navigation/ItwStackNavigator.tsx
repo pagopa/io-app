@@ -13,6 +13,8 @@ import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPrese
 import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
 import { ItwCieConsentDataUsageScreen } from "../identification/screens/cie/ItwCieConsentDataUsageScreen";
 import { ItwCieCardReaderScreenWrapper } from "../identification/screens/cie/ItwCieCardReaderScreenWrapper";
+import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
+import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -55,6 +57,14 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.CONSENT_DATA_USAGE}
       component={ItwCieConsentDataUsageScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN}
+      component={ItwCieWrongCiePinScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD}
+      component={ItwCieWrongCardScreen}
     />
     {/* ISSUANCE */}
     <Stack.Screen

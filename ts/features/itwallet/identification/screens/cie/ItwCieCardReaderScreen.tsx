@@ -303,11 +303,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
         this.setError({
-          eventReason: event.event
-          /* navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_WRONG_CARD_SCREEN
-            }) */
+          eventReason: event.event,
+          navigation: () =>
+            this.props.navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD
+            })
         });
         break;
       case "AUTHENTICATION_ERROR":
@@ -339,15 +339,15 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_CARD_PIN_LOCKED":
       case "ON_PIN_ERROR":
         this.setError({
-          eventReason: event.event
-          /* navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_WRONG_PIN_SCREEN,
+          eventReason: event.event,
+          navigation: () =>
+            this.props.navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN,
               params: {
                 remainingCount:
                   event.event === "ON_CARD_PIN_LOCKED" ? 0 : event.attemptsLeft
               }
-            }) */
+            })
         });
         break;
 

@@ -1,5 +1,6 @@
 import { CieCardReaderScreenNavigationParams } from "../identification/screens/cie/ItwCieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../identification/screens/cie/ItwCieConsentDataUsageScreen";
+import { CieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -19,6 +20,8 @@ export type ItwParamsList = {
     .CARD_READER_SCREEN]: CieCardReaderScreenNavigationParams;
   [ITW_ROUTES.ISSUANCE.EID_CIE
     .CONSENT_DATA_USAGE]: CieConsentDataUsageScreenNavigationParams;
+  [ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN]: CieWrongCiePinScreenNavigationParams;
+  [ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD]: undefined;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION.EID_DETAIL]: undefined;
 };
