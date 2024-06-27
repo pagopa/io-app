@@ -32,7 +32,7 @@ import {
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import * as analytics from "../analytics";
-import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { selectWalletPaymentCurrentStep } from "../store/selectors";
 
 const WalletPaymentPickPspScreen = () => {
@@ -44,7 +44,7 @@ const WalletPaymentPickPspScreen = () => {
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
-  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const isLoading = pot.isLoading(pspListPot);
   const isError = pot.isError(pspListPot);
@@ -93,12 +93,12 @@ const WalletPaymentPickPspScreen = () => {
       }
       const preSelectedPsp = O.toUndefined(selectedPspOption);
       analytics.trackPaymentFeeSelection({
-        attempt: paymentOngoingHistory?.attempt,
-        organization_name: paymentOngoingHistory?.verifiedData?.paName,
-        service_name: paymentOngoingHistory?.serviceName,
-        amount: paymentOngoingHistory?.formattedAmount,
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-        payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+        payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
         preselected_psp_flag: preSelectedPsp ? "customer" : "none"
       });
       // only need to run when the pspList changes
@@ -124,13 +124,13 @@ const WalletPaymentPickPspScreen = () => {
 
   const handleContinue = () => {
     analytics.trackPaymentFeeSelected({
-      attempt: paymentOngoingHistory?.attempt,
-      organization_name: paymentOngoingHistory?.verifiedData?.paName,
-      service_name: paymentOngoingHistory?.serviceName,
-      amount: paymentOngoingHistory?.formattedAmount,
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
-      selected_psp_flag: paymentOngoingHistory?.selectedPspFlag
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
     });
     dispatch(
       walletPaymentSetCurrentStep(WalletPaymentStepEnum.CONFIRM_TRANSACTION)

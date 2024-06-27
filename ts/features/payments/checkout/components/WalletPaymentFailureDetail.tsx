@@ -13,7 +13,7 @@ import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupport
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import * as analytics from "../analytics";
 import { useIOSelector } from "../../../../store/hooks";
-import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
-  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const handleClose = () => {
     navigation.pop();
@@ -32,10 +32,10 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const handleContactSupport = () => {
     analytics.trackPaymentErrorHelp({
       error: failure.faultCodeCategory,
-      organization_name: paymentOngoingHistory?.verifiedData?.paName,
-      service_name: paymentOngoingHistory?.serviceName,
-      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
     });
     supportModal.present();
   };
@@ -132,11 +132,11 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
 
   useOnFirstRender(() => {
     analytics.trackPaymentRequestFailure(failure, {
-      organization_name: paymentOngoingHistory?.verifiedData?.paName,
-      service_name: paymentOngoingHistory?.serviceName,
-      data_entry: paymentOngoingHistory?.startOrigin,
-      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      data_entry: paymentAnalyticsData?.startOrigin,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       payment_phase: "verifica"
     });
   });

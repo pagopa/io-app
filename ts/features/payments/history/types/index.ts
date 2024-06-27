@@ -6,7 +6,7 @@ import { WalletInfo as EcommerceWalletInfo } from "../../../../../definitions/pa
 import { PaymentStartOrigin } from "../../checkout/types";
 import { WalletPaymentOutcomeEnum } from "../../checkout/types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../../checkout/types/WalletPaymentFailure";
-import { PaymentAnalyticsSelectedPspFlag } from "../../checkout/types/PaymentAnalyticsSelectedMethodFlag";
+import { PaymentAnalyticsSelectedPspFlag } from "../../checkout/types/PaymentAnalytics";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 
 export type PaymentHistory = {

@@ -12,13 +12,11 @@ import { walletPaymentTransactionSelector } from "../store/selectors/transaction
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import * as analytics from "../analytics";
-import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const useWalletPaymentGoBackHandler = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const paymentOngoingHistory = useIOSelector(
-    selectOngoingPaymentHistorySelector
-  );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const dispatch = useIODispatch();
 
@@ -35,12 +33,11 @@ const useWalletPaymentGoBackHandler = () => {
 
     const handleConfirmAbort = () => {
       analytics.trackPaymentMethodSelectionBackExit({
-        attempt: paymentOngoingHistory?.attempt,
-        saved_payment_method:
-          paymentOngoingHistory?.savedPaymentMethods?.length,
+        attempt: paymentAnalyticsData?.attempt,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
         saved_payment_method_unavailable:
-          paymentOngoingHistory?.savedPaymentMethodsUnavailable?.length,
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+          paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
       });
       dispatch(paymentsDeleteTransactionAction.request(transactionId));
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
@@ -53,12 +50,11 @@ const useWalletPaymentGoBackHandler = () => {
 
     const handleCancel = () => {
       analytics.trackPaymentMethodSelectionBackContinue({
-        attempt: paymentOngoingHistory?.attempt,
-        saved_payment_method:
-          paymentOngoingHistory?.savedPaymentMethods?.length,
+        attempt: paymentAnalyticsData?.attempt,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
         saved_payment_method_unavailable:
-          paymentOngoingHistory?.savedPaymentMethodsUnavailable?.length,
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+          paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
       });
     };
 

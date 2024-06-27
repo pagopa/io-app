@@ -34,8 +34,10 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../../utils/stringBuilder";
+import { PaymentAnalyticsData } from "../../../checkout/types/PaymentAnalytics";
 
 export type PaymentsHistoryState = {
+  analyticsData?: PaymentAnalyticsData;
   ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
 };
@@ -54,10 +56,13 @@ const reducer = (
     case getType(initPaymentStateAction):
       return {
         ...state,
-        ongoingPayment: {
-          savedPaymentMethods: state.ongoingPayment?.savedPaymentMethods,
+        analyticsData: {
+          savedPaymentMethods: state.analyticsData?.savedPaymentMethods,
           startOrigin: action.payload.startOrigin,
-          serviceName: action.payload.serviceName,
+          serviceName: action.payload.serviceName
+        },
+        ongoingPayment: {
+          startOrigin: action.payload.startOrigin,
           startedAt: new Date(),
           lookupId: getLookUpId()
         }
@@ -65,6 +70,10 @@ const reducer = (
     case getType(paymentsGetPaymentDetailsAction.request):
       return {
         ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          attempt: getPaymentAttemptByRptId(state, action.payload)
+        },
         ongoingPayment: {
           ...state.ongoingPayment,
           rptId: action.payload,
@@ -74,14 +83,18 @@ const reducer = (
     case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
-        ongoingPayment: {
-          ...state.ongoingPayment,
+        analyticsData: {
+          ...state.analyticsData,
           verifiedData: action.payload,
           formattedAmount: formatNumberAmount(
             centsToAmount(action.payload.amount),
             true,
             "right"
           )
+        },
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          verifiedData: action.payload
         }
       };
     case getType(storeNewPaymentAttemptAction):
@@ -110,9 +123,13 @@ const reducer = (
       const paymentMethodName =
         action.payload.userWallet?.details?.type ||
         action.payload.paymentMethod?.name;
-      return updatePaymentHistory(state, {
-        selectedPaymentMethod: paymentMethodName
-      });
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          selectedPaymentMethod: paymentMethodName
+        }
+      };
     case getType(paymentsGetPaymentUserMethodsAction.success):
     case getType(getPaymentsWalletUserMethods.success):
       const unavailablePaymentMethods = action.payload.wallets?.filter(wallet =>
@@ -122,8 +139,8 @@ const reducer = (
       );
       return {
         ...state,
-        ongoingPayment: {
-          ...state.ongoingPayment,
+        analyticsData: {
+          ...state.analyticsData,
           savedPaymentMethods: action.payload.wallets,
           savedPaymentMethodsUnavailable: unavailablePaymentMethods
         }
@@ -131,8 +148,8 @@ const reducer = (
     case getType(paymentsCalculatePaymentFeesAction.success):
       return {
         ...state,
-        ongoingPayment: {
-          ...state.ongoingPayment,
+        analyticsData: {
+          ...state.analyticsData,
           selectedPsp: undefined,
           pspList: action.payload.bundles
         }
@@ -140,12 +157,12 @@ const reducer = (
     case getType(selectPaymentPspAction):
       return {
         ...state,
-        ongoingPayment: {
-          ...state.ongoingPayment,
+        analyticsData: {
+          ...state.analyticsData,
           selectedPsp: action.payload,
           selectedPspFlag: getPspFlagType(
             action.payload,
-            state.ongoingPayment?.pspList
+            state.analyticsData?.pspList
           )
         }
       };

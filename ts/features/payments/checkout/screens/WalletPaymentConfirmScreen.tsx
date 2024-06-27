@@ -50,7 +50,7 @@ import {
 } from "../types/PaymentOutcomeEnum";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import * as analytics from "../analytics";
-import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
@@ -67,9 +67,7 @@ const WalletPaymentConfirmScreen = () => {
   const selectedPaymentMethodManagement = useIOSelector(
     walletPaymentSelectedPaymentMethodManagementOptionSelector
   );
-  const paymentOngoingHistory = useIOSelector(
-    selectOngoingPaymentHistorySelector
-  );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
@@ -95,16 +93,16 @@ const WalletPaymentConfirmScreen = () => {
         );
 
         analytics.trackPaymentConversion({
-          attempt: paymentOngoingHistory?.attempt,
-          organization_name: paymentOngoingHistory?.verifiedData?.paName,
-          service_name: paymentOngoingHistory?.serviceName,
-          amount: paymentOngoingHistory?.formattedAmount,
-          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-          payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+          attempt: paymentAnalyticsData?.attempt,
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          service_name: paymentAnalyticsData?.serviceName,
+          amount: paymentAnalyticsData?.formattedAmount,
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+          payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
           saved_payment_method:
-            paymentOngoingHistory?.savedPaymentMethods?.length,
-          selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
-          data_entry: paymentOngoingHistory?.startOrigin
+            paymentAnalyticsData?.savedPaymentMethods?.length,
+          selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+          data_entry: paymentAnalyticsData?.startOrigin
         });
 
         startPaymentAuthorizaton({
@@ -156,14 +154,13 @@ const WalletPaymentConfirmScreen = () => {
         return;
       }
       analytics.trackPaymentSummaryScreen({
-        attempt: paymentOngoingHistory?.attempt,
-        organization_name: paymentOngoingHistory?.verifiedData?.paName,
-        service_name: paymentOngoingHistory?.serviceName,
-        amount: paymentOngoingHistory?.formattedAmount,
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-        saved_payment_method:
-          paymentOngoingHistory?.savedPaymentMethods?.length,
-        selected_psp_flag: paymentOngoingHistory?.selectedPspFlag
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
       });
       // should be called only when the current step is the confirm screen
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -246,16 +243,14 @@ const SelectedPaymentMethodModuleCheckout = () => {
   const selectedPaymentMethodOption = useIOSelector(
     walletPaymentSelectedPaymentMethodOptionSelector
   );
-  const paymentOngoingHistory = useIOSelector(
-    selectOngoingPaymentHistorySelector
-  );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const handleOnPress = () => {
     analytics.trackPaymentSummaryEditing({
-      payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
-      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-      selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
       editing: "payment_method"
     });
     dispatch(
@@ -302,9 +297,7 @@ const SelectedPspModuleCheckout = () => {
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
-  const paymentOngoingHistory = useIOSelector(
-    selectOngoingPaymentHistorySelector
-  );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const pspList = pot.getOrElse(pspListPot, []);
   const pspBusinessName = pipe(
     selectedPspOption,
@@ -320,10 +313,10 @@ const SelectedPspModuleCheckout = () => {
 
   const handleOnPress = () => {
     analytics.trackPaymentSummaryEditing({
-      payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
-      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-      selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
       editing: "psp"
     });
     dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));

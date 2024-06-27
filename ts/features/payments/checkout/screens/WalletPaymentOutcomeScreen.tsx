@@ -28,7 +28,7 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 import * as analytics from "../analytics";
-import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
 
@@ -51,9 +51,7 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const onSuccessAction = useIOSelector(walletPaymentOnSuccessActionSelector);
   const profileEmailOption = useIOSelector(profileEmailSelector);
-  const paymentOngoingHistory = useIOSelector(
-    selectOngoingPaymentHistorySelector
-  );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
   const supportModal = usePaymentFailureSupportModal({
@@ -124,10 +122,10 @@ const WalletPaymentOutcomeScreen = () => {
       accessibilityLabel: I18n.t("global.buttons.close"),
       onPress: () => {
         analytics.trackPaymentMethodErrorExit({
-          organization_name: paymentOngoingHistory?.verifiedData?.paName,
-          service_name: paymentOngoingHistory?.serviceName,
-          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
-          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          service_name: paymentAnalyticsData?.serviceName,
+          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
         handleClose();
       }
@@ -143,10 +141,10 @@ const WalletPaymentOutcomeScreen = () => {
       ),
       onPress: () => {
         analytics.trackPaymentMethodErrorContinue({
-          organization_name: paymentOngoingHistory?.verifiedData?.paName,
-          service_name: paymentOngoingHistory?.serviceName,
-          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
-          expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          service_name: paymentAnalyticsData?.serviceName,
+          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
         navigation.replace(
           PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
@@ -164,24 +162,23 @@ const WalletPaymentOutcomeScreen = () => {
   const trackOutcomeScreen = () => {
     if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
       analytics.trackPaymentOutcomeSuccess({
-        attempt: paymentOngoingHistory?.attempt,
-        organization_name: paymentOngoingHistory?.verifiedData?.paName,
-        service_name: paymentOngoingHistory?.serviceName,
-        amount: paymentOngoingHistory?.formattedAmount,
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-        payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
-        saved_payment_method:
-          paymentOngoingHistory?.savedPaymentMethods?.length,
-        selected_psp_flag: paymentOngoingHistory?.selectedPspFlag,
-        data_entry: paymentOngoingHistory?.startOrigin
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+        payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+        data_entry: paymentAnalyticsData?.startOrigin
       });
       return;
     }
     analytics.trackPaymentOutcomeFailure(outcome, {
-      organization_name: paymentOngoingHistory?.verifiedData?.paName,
-      service_name: paymentOngoingHistory?.serviceName,
-      attempt: paymentOngoingHistory?.attempt,
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      attempt: paymentAnalyticsData?.attempt,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
           ? getPaymentPhaseFromStep(currentStep)

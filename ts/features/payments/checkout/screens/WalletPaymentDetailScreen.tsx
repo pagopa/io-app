@@ -55,7 +55,7 @@ import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 
 import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -130,20 +130,18 @@ const WalletPaymentDetailContent = ({
   payment
 }: WalletPaymentDetailContentProps) => {
   const dispatch = useIODispatch();
-  const paymentOngoingHistory = useIOSelector(
-    selectOngoingPaymentHistorySelector
-  );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   useOnFirstRender(() => {
     analytics.trackPaymentSummaryInfoScreen({
-      amount: paymentOngoingHistory?.formattedAmount,
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-      organization_name: paymentOngoingHistory?.verifiedData?.paName,
-      saved_payment_method: paymentOngoingHistory?.savedPaymentMethods?.length,
-      service_name: paymentOngoingHistory?.serviceName,
-      data_entry: paymentOngoingHistory?.startOrigin,
-      first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no"
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      service_name: paymentAnalyticsData?.serviceName,
+      data_entry: paymentAnalyticsData?.startOrigin,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no"
     });
   });
 

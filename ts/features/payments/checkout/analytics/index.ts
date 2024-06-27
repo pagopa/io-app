@@ -6,7 +6,7 @@ import {
   PaymentAnalyticsPreselectedPspFlag,
   PaymentAnalyticsSelectedMethodFlag,
   PaymentAnalyticsSelectedPspFlag
-} from "../types/PaymentAnalyticsSelectedMethodFlag";
+} from "../types/PaymentAnalytics";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 

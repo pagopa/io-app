@@ -47,8 +47,8 @@ import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { selectOngoingPaymentHistorySelector } from "../../history/store/selectors";
-import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalyticsSelectedMethodFlag";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalytics";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -70,9 +70,7 @@ const WalletPaymentPickMethodScreen = () => {
     notHasValidPaymentMethodsSelector
   );
 
-  const paymentOngoingHistory = useIOSelector(
-    selectOngoingPaymentHistorySelector
-  );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -113,10 +111,10 @@ const WalletPaymentPickMethodScreen = () => {
   const handleOnTransactionCreationError = () => {
     toast.error(I18n.t("features.payments.errors.transactionCreationError"));
     analytics.trackPaymentMethodVerificaFatalError({
-      organization_name: paymentOngoingHistory?.verifiedData?.paName,
-      service_name: paymentOngoingHistory?.serviceName,
-      attempt: paymentOngoingHistory?.attempt,
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      attempt: paymentAnalyticsData?.attempt,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
     });
   };
 
@@ -198,19 +196,18 @@ const WalletPaymentPickMethodScreen = () => {
   useOnFirstRender(
     () => {
       analytics.trackPaymentMethodSelection({
-        attempt: paymentOngoingHistory?.attempt,
-        organization_name: paymentOngoingHistory?.verifiedData?.paName,
-        service_name: paymentOngoingHistory?.serviceName,
-        amount: paymentOngoingHistory?.formattedAmount,
-        saved_payment_method:
-          paymentOngoingHistory?.savedPaymentMethods?.length,
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
         saved_payment_method_unavailable:
-          paymentOngoingHistory?.savedPaymentMethodsUnavailable?.length,
+          paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
         last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
-        expiration_date: paymentOngoingHistory?.verifiedData?.dueDate
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
       });
     },
-    () => !isLoading && !!paymentOngoingHistory
+    () => !isLoading && !!paymentAnalyticsData
   );
 
   React.useEffect(() => {
@@ -237,12 +234,12 @@ const WalletPaymentPickMethodScreen = () => {
 
   const handleContinue = () => {
     analytics.trackPaymentMethodSelected({
-      attempt: paymentOngoingHistory?.attempt,
-      organization_name: paymentOngoingHistory?.verifiedData?.paName,
-      service_name: paymentOngoingHistory?.serviceName,
-      amount: paymentOngoingHistory?.formattedAmount,
-      expiration_date: paymentOngoingHistory?.verifiedData?.dueDate,
-      payment_method_selected: paymentOngoingHistory?.selectedPaymentMethod,
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
       payment_method_selected_flag: getSelectedPaymentMethodFlag()
     });
     if (isTransactionAlreadyActivated) {
