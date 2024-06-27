@@ -498,13 +498,13 @@ profile:
     list:
       wip: In elaborazione
       digitalDomicile: Domicilio digitale
-      service_contact: 
+      service_contact:
         title: Gestione servizi
         subtitle: Scegli chi può contattarti
       send_email_messages:
         title: Inoltro dei messaggi via email
         subtitle: Ricevi un’anteprima dei messaggi
-      language: 
+      language:
         title: Lingua
         subtitle: Scegli la lingua
       preferred_calendar:
@@ -965,13 +965,13 @@ onboarding:
         notEnrolled:
           text: Per farlo, devi prima configurarlo nelle impostazioni di sistema del tuo dispositivo.
           label: Come fare
-          step1: 
+          step1:
             label: Step 1
             value: Vai alle impostazioni del tuo dispositivo
-          step2: 
+          step2:
             label: Step 2
             value: Configura il volto o l’impronta
-          step3: 
+          step3:
             label: Step 3
             value: Attivalo su IO in Profilo > Sicurezza
     unavailable:
@@ -979,10 +979,10 @@ onboarding:
       subtitle: IO ti invia comunicazioni che ti riguardano personalmente. Assicurati che solo tu possa accedere all’app impostando un codice o un segno per sbloccare il dispositivo.
       body:
         label: Come fare
-        step1: 
+        step1:
           label: Step 1
           value: Vai alle impostazioni del tuo dispositivo
-        step2: 
+        step2:
           label: Step 2
           value: Imposta un codice o un segno per sbloccare il dispositivo
   shareData:
@@ -3236,12 +3236,13 @@ features:
         tos:
           0: Per maggiori informazioni, leggi
           1: l’informativa Privacy e i Termini e Condizioni d’uso
+      eidPreview:
+        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        actions:
+          primary: Continua
+          secondary: Annulla
       credentialPreview:
-        title: "{{credential}}: ecco l'anteprima"
-        banner:
-          title: "Qualcosa non torna?"
-          content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
-          actionTitle: "Contatta l'assistenza"
+        title: "{{credential}}: ecco l'anteprima dei tuoi dati"
         bottomSheet:
           about:
             title: "Chi è?"
@@ -3249,9 +3250,6 @@ features:
           data:
             title: "Protezione dei dati"
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
-        toast:
-          success: "Tessera aggiunta!"
-          failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
