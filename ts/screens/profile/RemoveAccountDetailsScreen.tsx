@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, SafeAreaView, View } from "react-native";
+import { Alert, Keyboard, SafeAreaView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { shufflePinPadOnPayment } from "../../config";
@@ -141,6 +141,8 @@ const RemoveAccountDetails = () => {
   );
 
   const handleContinuePress = useCallback(() => {
+    Keyboard.dismiss();
+
     if (hasActiveBonus) {
       Alert.alert(
         I18n.t("profile.main.privacy.removeAccount.alert.activeBonusTitle"),
