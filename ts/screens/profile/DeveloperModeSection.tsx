@@ -15,10 +15,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
@@ -386,6 +386,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: I18n.t("profile.main.trial.titleSection"),
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.TRIALS_SYSTEM_PLAYGROUND
+        })
+    },
+    {
       condition: isIdPayTestEnabled,
       value: "IDPay Onboarding",
       onPress: () =>
@@ -568,6 +575,7 @@ const DeveloperTestEnvironmentSection = ({
         value={isItWalletTestEnabled}
         onSwitchValueChange={onItWalletTestToggle}
       />
+      <Divider />
     </ContentWrapper>
   );
 };
