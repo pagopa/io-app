@@ -333,24 +333,16 @@ profile:
         description: "Dein Konto und deine persönlichen Daten endgültig löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
-          activeBonusTitle: "Aktive Boni"
-          activeBonusDescription: "Es scheint, dass du aktive Boni hast. Wir möchten dich darauf hinweisen, dass die Löschung deines Profils nicht gleichbedeutend mit der Löschung von Boni oder der Abmeldung von Initiativen ist. Um deine Boni zu verwalten, gehe zum Abschnitt Konto, ansonsten wähle “Weiter”"
           oldRequest: "Du hast bereits die Löschung deines Kontos beantragt."
           oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf “Löschung abbrechen”."
           cta:
-            manageBonus: "Boni verwalten"
-            continue: "Weiter"
             return: "Zurück"
             cancel: "Löschung abbrechen"
         details:
-          body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
-          question: "Was ist der Grund für die Löschung?"
           answer_1: "Ich halte IO nicht mehr für nützlich"
           answer_2: "Ich fühle mich in IO nicht sicher"
           answer_3: "Ich habe die App nie benutzt"
           answer_4: "Keiner der oben genannten Punkte"
-          labelOpenAnswer: "Erzähle uns mehr"
-          cta: "Konto löschen"
         success:
           title: "Wir bearbeiten deine Anfrage."
           body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."

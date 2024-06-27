@@ -341,13 +341,13 @@ profile:
         description: Cancella in modo permanente il tuo account e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
-          activeBonusTitle: Bonus attivi
-          activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
+          activeBonusTitle: Elimina il tuo profilo
+          activeBonusDescription: "Sembra che tu abbia aderito ad alcune iniziative presenti su IO. Se elimini il tuo profilo, l’iscrizione a eventuali iniziative a cui hai aderito non verrà cancellata\n\nPer gestirle, vai alla sezione Portafoglio, altrimenti scegli “Elimina”"
           oldRequest: Hai già richiesto la cancellazione del tuo account.
           oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
           cta:
-            manageBonus: Gestisci bonus
-            continue: Continua
+            manageBonus: Vai al portafoglio
+            continue: Elimina Profilo
             return: Indietro
             cancel: Annulla l'eliminazione
         info:
@@ -362,14 +362,15 @@ profile:
             p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
           cta: Procedi con l’eliminazione
         details:
-          body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          question: Qual è il motivo della cancellazione?
+          title: Perché vuoi eliminare il tuo profilo su IO?
+          body: Ci piacerebbe sapere perché stai eliminando il tuo profilo, così da poter migliorare in futuro. Se preferisci non condividere il motivo, salta questo passaggio e premi su “Elimina il tuo profilo”.
+          question: Qual è il motivo?
           answer_1: Non ritengo più utile IO
           answer_2: Non mi sento al sicuro su IO
           answer_3: Non ho mai usato l'app
           answer_4: Nessuno dei precedenti
-          labelOpenAnswer: Dicci di più
-          cta: Elimina Account
+          labelOpenAnswer: Scrivi qui il motivo
+          cta: Elimina il tuo profilo
         success:
           title: Stiamo processando la tua richiesta.
           body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
