@@ -1,4 +1,4 @@
-import { GradientScrollView } from "@pagopa/io-app-design-system";
+import { GradientScrollView, IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import Animated, { Layout } from "react-native-reanimated";
 import { ScrollView } from "react-native";
@@ -32,7 +32,7 @@ const PaymentsHomeScreen = () => {
 
   const AnimatedPaymentsHomeScreenContent = React.useCallback(
     () => (
-      <Animated.View layout={Layout.duration(200)}>
+      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
         <PaymentsHomeScreenContent />
       </Animated.View>
     ),
