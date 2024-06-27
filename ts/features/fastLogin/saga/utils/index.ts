@@ -33,7 +33,7 @@ type RefreshThirdPartyApiCallErrorHandling = {
   skipThrowingError?: boolean;
 };
 
-type RefreshThirdPartyApiCallOptions =
+export type RefreshThirdPartyApiCallOptions =
   | {
       action?: Action;
       errorHandling: never;
@@ -117,13 +117,14 @@ function isSessionInvalid(resultAction: Action) {
   );
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function* withThirdPartyRefreshApiCall<R>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,
-  options: RefreshThirdPartyApiCallOptions
+  options?: RefreshThirdPartyApiCallOptions
 ): SagaIterator<t.Validation<IResponseType<401, any> | R>> {
   const response = yield* call(() => apiCall);
 
-  const { action, errorHandling } = options;
+  const { action, errorHandling } = options ?? {};
   const { errorMessage, skipThrowingError } = errorHandling ?? {};
 
   // BEWARE: we can cast to any only because we know for sure that f will
@@ -154,6 +155,10 @@ export function* withThirdPartyRefreshApiCall<R>(
       // If the session is expired...
       // The checkSessionResult will call handleSessionExpiredSaga
       try {
+        // We save the pending action, if any.
+        if (action) {
+          yield* put(savePendingAction({ pendingAction: action }));
+        }
         // The token refresh flow is started.
         // The refreshSessionToken.request action will be dispatched,
         // and the refreshing flow is started.
