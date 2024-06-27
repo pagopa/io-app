@@ -266,7 +266,7 @@ startup:
   userDeletePendingAlert:
     title: Profile deletion in progress
     message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
-    cta_1: Browse Privacy
+    cta_1: Vai al Profilo
     cta_2: Discard
   contextualHelp:
     title: Startup problems?

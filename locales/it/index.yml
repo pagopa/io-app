@@ -266,7 +266,7 @@ startup:
   userDeletePendingAlert:
     title: Eliminazione profilo in corso
     message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
-    cta_1: Vai a Privacy
+    cta_1: Vai al Profilo
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
