@@ -50,12 +50,12 @@ const ItwPlayground = () => {
     });
   };
 
-  const navigateToIdentification = () => {
+  /*   const navigateToIdentification = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
     });
   };
-
+ */
   const navigateToCredentialDetail = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
