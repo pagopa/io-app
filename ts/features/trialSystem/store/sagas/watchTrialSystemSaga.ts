@@ -3,14 +3,17 @@ import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { SessionToken } from "../../../../types/SessionToken";
 import { TrialSystemClient, createTrialSystemClient } from "../../api/client";
 import { apiUrlPrefix } from "../../../../config";
 import {
   trialSystemActivationStatus,
+  trialSystemActivationStatusReset,
   trialSystemActivationStatusUpsert
 } from "../actions";
 import { getError } from "../../../../utils/errors";
+import I18n from "../../../../i18n";
 
 function* handleTrialSystemActivationStatusUpsert(
   upsertTrialSystemActivationStatus: TrialSystemClient["createSubscription"],
@@ -30,6 +33,7 @@ function* handleTrialSystemActivationStatusUpsert(
       );
     } else if (result.right.status === 201) {
       yield* put(trialSystemActivationStatusUpsert.success(result.right.value));
+      IOToast.success(I18n.t("features.trialSystem.toast.subscribed"));
     } else {
       yield* put(
         trialSystemActivationStatusUpsert.failure({
@@ -37,6 +41,7 @@ function* handleTrialSystemActivationStatusUpsert(
           error: new Error(`response status ${result.right.status}`)
         })
       );
+      IOToast.error(I18n.t("global.genericError"));
     }
   } catch (e) {
     yield* put(
@@ -45,6 +50,7 @@ function* handleTrialSystemActivationStatusUpsert(
         error: getError(e)
       })
     );
+    IOToast.error(I18n.t("global.genericError"));
   }
 }
 
@@ -64,8 +70,17 @@ function* handleTrialSystemActivationStatus(
           error: new Error(readableReport(result.left))
         })
       );
-    } else if (result.right.status === 200) {
+      return;
+    }
+
+    if (result.right.status === 200) {
       yield* put(trialSystemActivationStatus.success(result.right.value));
+      return;
+    }
+
+    if (result.right.status === 404) {
+      yield* put(trialSystemActivationStatusReset(action.payload));
+      return;
     } else {
       yield* put(
         trialSystemActivationStatus.failure({
