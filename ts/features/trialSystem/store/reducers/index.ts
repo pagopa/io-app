@@ -9,6 +9,7 @@ import {
 import { Action } from "../../../../store/actions/types";
 import {
   trialSystemActivationStatus,
+  trialSystemActivationStatusReset,
   trialSystemActivationStatusUpsert
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -40,6 +41,11 @@ export const trialSystemActivationStatusReducer = (
       return {
         ...state,
         [action.payload.trialId]: pot.some(action.payload.state)
+      };
+    case getType(trialSystemActivationStatusReset):
+      return {
+        ...state,
+        [action.payload]: pot.none
       };
     case getType(trialSystemActivationStatusUpsert.failure):
     case getType(trialSystemActivationStatus.failure):

@@ -9,6 +9,7 @@ import { TrialSystemClient, createTrialSystemClient } from "../../api/client";
 import { apiUrlPrefix } from "../../../../config";
 import {
   trialSystemActivationStatus,
+  trialSystemActivationStatusReset,
   trialSystemActivationStatusUpsert
 } from "../actions";
 import { getError } from "../../../../utils/errors";
@@ -69,8 +70,17 @@ function* handleTrialSystemActivationStatus(
           error: new Error(readableReport(result.left))
         })
       );
-    } else if (result.right.status === 200) {
+      return;
+    }
+
+    if (result.right.status === 200) {
       yield* put(trialSystemActivationStatus.success(result.right.value));
+      return;
+    }
+
+    if (result.right.status === 404) {
+      yield* put(trialSystemActivationStatusReset(action.payload));
+      return;
     } else {
       yield* put(
         trialSystemActivationStatus.failure({
