@@ -1,19 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useCallback, useEffect, useState } from "react";
-
-import { View, ListRenderItemInfo, SectionList } from "react-native";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { ButtonSolid } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  ContentWrapper,
+  ListItemHeader,
+  RadioGroup,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import _ from "lodash";
-import ListItemComponent from "../components/screens/ListItemComponent";
 import I18n from "../i18n";
-import customVariables from "../theme/variables";
-import { convertLocalCalendarName } from "../utils/calendar";
 import { useIOSelector } from "../store/hooks";
 import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 import { Body } from "./core/typography/Body";
-import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
-import SectionHeaderComponent from "./screens/SectionHeaderComponent";
 
 type CalendarByAccount = Readonly<{
   title: string;
@@ -25,7 +24,6 @@ type CalendarsByAccount = ReadonlyArray<CalendarByAccount>;
 type OwnProps = {
   onCalendarSelected: (calendar: Calendar) => void;
   onCalendarsLoaded: () => void;
-  lastListItem?: React.ReactNode;
   onCalendarRemove?: () => void;
 };
 
@@ -62,43 +60,17 @@ const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
  * Allows the user to select one of the device available Calendars
  */
 const CalendarsListContainer = (props: OwnProps) => {
+  const { onCalendarSelected, onCalendarsLoaded, onCalendarRemove } = props;
   const [calendarsByAccount, setCalendarsByAccount] = useState<
     pot.Pot<CalendarsByAccount, ResourceError>
   >(pot.none);
   const defaultCalendar = useIOSelector(preferredCalendarSelector, _.isEqual);
-
-  const renderSectionHeader = (info: { section: any }): React.ReactNode => (
-    <SectionHeaderComponent sectionHeader={info.section.title} />
-  );
-
-  const renderListItem = ({ item }: ListRenderItemInfo<Calendar>) => {
-    const isDefaultCalendar = defaultCalendar && item.id === defaultCalendar.id;
-    return (
-      <ListItemComponent
-        key={item.id}
-        title={convertLocalCalendarName(item.title)}
-        hideIcon={!isDefaultCalendar}
-        iconSize={12}
-        iconName={isDefaultCalendar ? "checkTickBig" : undefined}
-        onPress={() =>
-          isDefaultCalendar && props.onCalendarRemove
-            ? props.onCalendarRemove()
-            : props.onCalendarSelected(item)
-        }
-        accessible={true}
-        accessibilityRole={"radio"}
-        accessibilityLabel={`${convertLocalCalendarName(item.title)}, ${
-          isDefaultCalendar
-            ? I18n.t("global.accessibility.active")
-            : I18n.t("global.accessibility.inactive")
-        }`}
-      />
-    );
-  };
+  const [selectedCalendar, setSelectedCalendar] = useState<
+    Calendar | undefined
+  >(defaultCalendar);
 
   const fetchCalendars = useCallback(() => {
     setCalendarsByAccount(pot.noneLoading);
-
     // Fetch user calendars.
     RNCalendarEvents.findCalendars()
       .then(calendars => {
@@ -109,7 +81,7 @@ const CalendarsListContainer = (props: OwnProps) => {
           )
         );
         setCalendarsByAccount(organizedCalendars);
-        props.onCalendarsLoaded();
+        onCalendarsLoaded();
       })
       .catch(_ => {
         const fetchError: FetchError = {
@@ -120,39 +92,80 @@ const CalendarsListContainer = (props: OwnProps) => {
           ResourceError
         > = pot.toError(pot.none, fetchError);
         setCalendarsByAccount(calendarsByAccount);
-        props.onCalendarsLoaded();
+        onCalendarsLoaded();
       });
-  }, [props]);
+  }, [onCalendarsLoaded]);
+
+  const mapData = useCallback(
+    (data: any) =>
+      data.map((item: any) => ({
+        id: item.id,
+        value: item.title,
+        disabled: !item.allowsModifications
+      })),
+    []
+  );
+
+  const onPressRadio = useCallback(
+    (value: string) => {
+      const calendar =
+        pot.isSome(calendarsByAccount) &&
+        calendarsByAccount.value
+          .flatMap(section => section.data)
+          .find(cal => cal.id === value);
+      if (calendar) {
+        const isDefaultCalendar =
+          defaultCalendar && calendar.id === defaultCalendar.id;
+        setSelectedCalendar(calendar);
+        if (isDefaultCalendar && onCalendarRemove) {
+          onCalendarRemove();
+        } else {
+          onCalendarSelected(calendar);
+        }
+      }
+    },
+    [calendarsByAccount, defaultCalendar, onCalendarRemove, onCalendarSelected]
+  );
 
   useEffect(() => {
     fetchCalendars();
   }, [fetchCalendars]);
 
   return (
-    <React.Fragment>
+    <ContentWrapper>
       {pot.isError(calendarsByAccount) && (
-        <React.Fragment>
+        <>
           <Body>{mapResourceErrorToMessage(calendarsByAccount.error)}</Body>
           <ButtonSolid
             onPress={fetchCalendars}
             label={I18n.t("global.buttons.retry")}
             accessibilityLabel={I18n.t("global.buttons.retry")}
           />
-        </React.Fragment>
+        </>
       )}
-      <View style={{ paddingHorizontal: customVariables.contentPadding }}>
-        {pot.isSome(calendarsByAccount) && (
-          <SectionList
-            extraData={{ defaultCalendar }}
-            sections={calendarsByAccount.value}
-            renderSectionHeader={renderSectionHeader}
-            renderItem={renderListItem}
-          />
-        )}
-        <EdgeBorderComponent />
-      </View>
-    </React.Fragment>
+
+      {pot.isSome(calendarsByAccount) && (
+        <>
+          {calendarsByAccount.value.map((section, index) => (
+            <React.Fragment key={index}>
+              <ListItemHeader label={section.title} />
+              <RadioGroup<string>
+                type="radioListItem"
+                key={`radio_group_${index}`}
+                items={mapData(section.data)}
+                selectedItem={selectedCalendar?.id}
+                onPress={onPressRadio}
+              />
+              {/* not show the end spacer if the element is the last */}
+              {index < calendarsByAccount.value.length - 1 && (
+                <VSpacer size={24} />
+              )}
+            </React.Fragment>
+          ))}
+        </>
+      )}
+    </ContentWrapper>
   );
 };
 
-export default CalendarsListContainer;
+export default memo(CalendarsListContainer);
