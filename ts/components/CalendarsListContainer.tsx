@@ -21,7 +21,7 @@ type CalendarByAccount = Readonly<{
 
 type CalendarsByAccount = ReadonlyArray<CalendarByAccount>;
 
-type OwnProps = {
+type Props = {
   onCalendarSelected: (calendar: Calendar) => void;
   onCalendarsLoaded: () => void;
   onCalendarRemove?: () => void;
@@ -59,7 +59,7 @@ const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
 /**
  * Allows the user to select one of the device available Calendars
  */
-const CalendarsListContainer = (props: OwnProps) => {
+const CalendarsListContainer = (props: Props) => {
   const { onCalendarSelected, onCalendarsLoaded, onCalendarRemove } = props;
   const [calendarsByAccount, setCalendarsByAccount] = useState<
     pot.Pot<CalendarsByAccount, ResourceError>
@@ -97,8 +97,8 @@ const CalendarsListContainer = (props: OwnProps) => {
   }, [onCalendarsLoaded]);
 
   const mapData = useCallback(
-    (data: any) =>
-      data.map((item: any) => ({
+    (data: ReadonlyArray<Calendar>) =>
+      data.map((item: Calendar) => ({
         id: item.id,
         value: item.title,
         disabled: !item.allowsModifications
