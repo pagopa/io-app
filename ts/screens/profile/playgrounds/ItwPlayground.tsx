@@ -68,6 +68,12 @@ const ItwPlayground = () => {
     });
   };
 
+  const navigateToCredentialAuth = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH
+    });
+  };
+
   return (
     <ScrollView>
       <ContentWrapper>
@@ -105,8 +111,8 @@ const ItwPlayground = () => {
         <Divider />
         {/* Credential Preview */}
         <ListItemNav
-          value="Credential preview"
-          accessibilityLabel="Credential preview"
+          value="Credential preview (mDL)"
+          accessibilityLabel="Credential preview (mdl) Playground"
           description="Open the credential preview screen"
           onPress={navigateToCredentialPreview}
         />
@@ -117,6 +123,14 @@ const ItwPlayground = () => {
           accessibilityLabel={"Credential detail (eID) Playground"}
           description="Open the eID credential detail screen"
           onPress={navigateToCredentialDetail}
+        />
+        <Divider />
+        {/* Credential auth playground */}
+        <ListItemNav
+          value="Credential auth (mDL)"
+          accessibilityLabel={"Credential auth (mdl) Playground"}
+          description="Open the eID credential detail screen"
+          onPress={navigateToCredentialAuth}
         />
         <Divider />
         <VSpacer />
