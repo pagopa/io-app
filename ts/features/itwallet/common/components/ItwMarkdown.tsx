@@ -29,8 +29,9 @@ interface MarkdownParserProps {
 const rules = {
   paragraph: (node: ASTNode, children: Array<ReactNode>) => (
     <React.Fragment key={node.key}>
+      <VSpacer size={8} />
       <Body>{children}</Body>
-      <VSpacer size={16} />
+      <VSpacer size={24} />
     </React.Fragment>
   ),
   strong: (node: ASTNode, children: Array<ReactNode>) => (
@@ -39,7 +40,10 @@ const rules = {
     </Body>
   ),
   heading1: (node: ASTNode, children: Array<ReactNode>) => (
-    <H1 key={node.key}>{children}</H1>
+    <React.Fragment key={node.key}>
+      <H1>{children}</H1>
+      <VSpacer size={24} />
+    </React.Fragment>
   ),
   heading2: (node: ASTNode, children: Array<ReactNode>) => (
     <H2 key={node.key}>{children}</H2>

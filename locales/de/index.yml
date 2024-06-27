@@ -297,7 +297,7 @@ profile:
   logout:
     menulabel: "IO beenden"
     alertTitle: "Möchtest du wirklich beenden?"
-    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren." 
+    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
     exit: "Beenden"
   errors:
     load: "Fehler beim Laden des Profils"
@@ -542,7 +542,7 @@ authentication:
     genericTitle: "Anmeldung mit CIE"
     cie: "CIE"
     noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
-    nfc:      
+    nfc:
       retry: "Erneut versuchen"
       noNfcConnectionTitle: "Hast du die Karte berührt?"
     pin:
@@ -552,7 +552,7 @@ authentication:
         hint: "Gib in diesem Feld die 8-stellige PIN deiner elektronischen Identitätskarte ein."
       pinCardTitle: "Gib die PIN deiner Identitätskarte ein"
       pinCardHeader: "Anmeldung mit CIE"
-      pinCardContent: "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein."      
+      pinCardContent: "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein."
       alert: "Möchtest du wirklich zurückgehen?"
       subtitleHelp: "Die PIN ist ein 8-stelliger Code."
       subtitleCTA: "Wo finde ich ihn?"
@@ -563,18 +563,18 @@ authentication:
       header: "Anmeldung mit CIE"
       title: "Karte vorübergehend gesperrt"
       button: "Lade / Öffne CieID"
-    card:            
-      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."      
+    card:
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
         readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon."
         moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
-        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."        
+        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
         invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
-        tagLost: "Du hast die Karte zu früh entfernt."        
+        tagLost: "Du hast die Karte zu früh entfernt."
         genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
-      error:       
+      error:
         tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
         generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
         unknownCardTitle: "Unbekannte Karte"
@@ -2328,7 +2328,7 @@ features:
           EFFECTIVE_DATE: "Abgeschlossen wegen Ablaufs der Hinterlegungsfrist"
           UNREACHABLE: "Empfänger nicht auffindbar"
           VIEWED: "Gelesen"
-          PAID: "Bezahlt"         
+          PAID: "Bezahlt"
           REFUSED: "VERWEIGERT"
           IN_VALIDATION: "IN VALIDIERUNG"
         expand: "Vorherigen Status anzeigen"
@@ -2380,8 +2380,8 @@ features:
   itWallet:
     discovery:
       info:
-        title: "Beginne mit deiner Digitalen Identität"
-        content: "Verwende deine SPID- oder CIE-Anmeldedaten, um deine Digitale Identität zu deinem Konto hinzuzufügen. **Dies ist ein notwendiger Schritt, um deine digitalen Dokumente** (z.B. Führerschein) sicher hinzuzufügen.\n### Wissenswertes\nIn Zukunft kannst du die in dem Konto gespeicherte Digitale Identität verwenden, um dich über die IT-Wallet-Funktionalität zu identifizieren. \n\nFür weitere Informationen lies bitte die [Datenschutzrichtlinie]() und die [Nutzungsbedingungen]()."
+        content: "# Attiva IT Wallet \n ###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+        tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
 support:
   ticketList:
     noTicket:

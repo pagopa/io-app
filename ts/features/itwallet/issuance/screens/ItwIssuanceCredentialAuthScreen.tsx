@@ -18,7 +18,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
-import ItwMarkdown from "../../discovery/components/ItwMarkdown";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
   ItwRequestedClaimsList,
   RequiredClaim

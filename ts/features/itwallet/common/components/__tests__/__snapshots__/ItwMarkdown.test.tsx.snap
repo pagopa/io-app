@@ -1,0 +1,633 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItwMarkdown should match snapshot 1`] = `
+<View
+  style={Object {}}
+>
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      Object {
+        "fontSize": 31,
+        "lineHeight": 43,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 31,
+          "lineHeight": 43,
+        },
+        Object {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={Object {}}
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 28,
+            },
+            Object {},
+          ]
+        }
+      >
+        I am a Header 1
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      Object {
+        "fontSize": 28,
+        "lineHeight": 40,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 28,
+          "lineHeight": 40,
+        },
+        Object {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={Object {}}
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 26,
+            },
+            Object {},
+          ]
+        }
+      >
+        I am a Header 2
+      </Text>
+    </Text>
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegreyDark"
+    defaultColor="bluegreyDark"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      Object {
+        "fontSize": 24,
+        "lineHeight": 34,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 24,
+          "lineHeight": 34,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={Object {}}
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 22,
+            },
+            Object {},
+          ]
+        }
+      >
+        I am a Header 3
+      </Text>
+    </Text>
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="bluegreyDark"
+    defaultColor="bluegreyDark"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      Object {
+        "fontSize": 22,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 22,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={Object {}}
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 20,
+            },
+            Object {},
+          ]
+        }
+      >
+        I am a Header 4
+      </Text>
+    </Text>
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      Object {
+        "fontSize": 14,
+        "letterSpacing": 0.5,
+        "lineHeight": 16,
+        "textTransform": "uppercase",
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 14,
+          "letterSpacing": 0.5,
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        },
+        Object {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={Object {}}
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {},
+          ]
+        }
+      >
+        I am a Header 5
+      </Text>
+    </Text>
+  </Text>
+  <Text
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="Semibold"
+    font="TitilliumSansPro"
+    fontStyle={
+      Object {
+        "fontSize": 18,
+        "lineHeight": 25,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 18,
+          "lineHeight": 25,
+        },
+        Object {
+          "color": "#0E0F13",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="Semibold"
+  >
+    <Text
+      style={Object {}}
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+            },
+            Object {},
+          ]
+        }
+      >
+        I am a Header 6
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      Object {
+        "height": 8,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumSansPro"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Sans Pro",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    <Text
+      style={Object {}}
+    >
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        A simple paragraph.
+      </Text>
+      <Text
+        style={Object {}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        Text can be emphasized with 
+      </Text>
+      <Text
+        style={
+          Object {
+            "fontStyle": "italic",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontStyle": "italic",
+              },
+              Object {},
+            ]
+          }
+        >
+          asterisk
+        </Text>
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+         or 
+      </Text>
+      <Text
+        style={
+          Object {
+            "fontStyle": "italic",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontStyle": "italic",
+              },
+              Object {},
+            ]
+          }
+        >
+          underscore
+        </Text>
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        .
+      </Text>
+      <Text
+        style={Object {}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        If you need bold use 
+      </Text>
+      <Text
+        allowFontScaling={false}
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontWeight": "bold",
+              },
+              Object {},
+            ]
+          }
+        >
+          double asterisk
+        </Text>
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        .
+      </Text>
+      <Text
+        style={Object {}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        A worked link to 
+      </Text>
+      <Text
+        accessibilityRole="link"
+        allowFontScaling={false}
+        color="blue"
+        defaultColor="blue"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+            "textDecorationLine": "underline",
+          }
+        }
+        numberOfLines={1}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+              "textDecorationLine": "underline",
+            },
+            Object {
+              "color": "#0073E6",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "textDecorationLine": "underline",
+              },
+              Object {},
+            ]
+          }
+        >
+          Google
+        </Text>
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+         with some text.
+      </Text>
+      <Text
+        style={Object {}}
+      >
+        
+
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+        A malformed link 
+      </Text>
+      <Text
+        accessibilityRole="link"
+        allowFontScaling={false}
+        color="blue"
+        defaultColor="blue"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+            "textDecorationLine": "underline",
+          }
+        }
+        numberOfLines={1}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+              "textDecorationLine": "underline",
+            },
+            Object {
+              "color": "#0073E6",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "textDecorationLine": "underline",
+              },
+              Object {},
+            ]
+          }
+        >
+          Error
+        </Text>
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {},
+            Object {},
+          ]
+        }
+      >
+         that show toast error.
+      </Text>
+    </Text>
+  </Text>
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />
+</View>
+`;
