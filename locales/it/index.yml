@@ -461,6 +461,8 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    trial:
+      titleSection: Partecipa alla sperimentazione
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Abilita ambiente di test per IT Wallet
@@ -3275,6 +3277,9 @@ features:
           requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+  trialSystem:
+    toast:
+      subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
