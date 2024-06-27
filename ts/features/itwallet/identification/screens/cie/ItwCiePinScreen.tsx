@@ -45,7 +45,6 @@ import { cieFlowForDevServerEnabled } from "../../../../../features/cieLogin/uti
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { nfcIsEnabled } from "../../../../../store/actions/cie";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
@@ -56,10 +55,11 @@ import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../../../../../screens/authentication/analytics/cieAnalytics"; // TODO: separate cie analytics?
-import { isNfcEnabledSelector } from "../../../../../store/reducers/cie";
 import { getIdpLoginUri } from "../../../../../utils/login";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { itwNfcIsEnabled } from "../../store/actions";
+import { itwIsNfcEnabledSelector } from "../../store/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -77,7 +77,7 @@ export const ItwCiePinScreen = () => {
   const dispatch = useIODispatch();
 
   const requestNfcEnabledCheck = useCallback(
-    () => dispatch(nfcIsEnabled.request()),
+    () => dispatch(itwNfcIsEnabled.request()),
     [dispatch]
   );
 
@@ -94,7 +94,7 @@ export const ItwCiePinScreen = () => {
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
   );
-  const isEnabled = useIOSelector(isNfcEnabledSelector);
+  const isEnabled = useIOSelector(itwIsNfcEnabledSelector);
   const isNfcEnabled = pot.getOrElse(isEnabled, false);
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
     component: (
@@ -132,10 +132,10 @@ export const ItwCiePinScreen = () => {
             authorizationUri: authUrlGenerated
           });
         } else {
-          /* navigation.navigate(ROUTES.CIE_ACTIVATE_NFC_SCREEN, {
+          navigation.navigate(ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC, {
             ciePin: pin,
             authorizationUri: authUrlGenerated
-          }); */
+          });
         }
       }
       handleAuthenticationOverlayOnClose();

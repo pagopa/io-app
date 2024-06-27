@@ -15,6 +15,7 @@ import { ItwCieConsentDataUsageScreen } from "../identification/screens/cie/ItwC
 import { ItwCieCardReaderScreenWrapper } from "../identification/screens/cie/ItwCieCardReaderScreenWrapper";
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
+import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -65,6 +66,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD}
       component={ItwCieWrongCardScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC}
+      component={ItwActivateNfcScreen}
     />
     {/* ISSUANCE */}
     <Stack.Screen
