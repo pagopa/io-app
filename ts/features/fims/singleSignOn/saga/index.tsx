@@ -9,7 +9,7 @@ import { handleFimsGetConsentsList } from "./handleFimsGetConsentsList";
 import { handleFimsGetRedirectUrlAndOpenIAB } from "./handleFimsGetRedirectUrlAndOpenIAB";
 import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
 
-export function* watchFimsSaga(): SagaIterator {
+export function* watchFimsSSOSaga(): SagaIterator {
   yield* takeLatest(
     fimsGetConsentsListAction.request,
     handleFimsGetConsentsList

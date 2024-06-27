@@ -9,8 +9,8 @@ import {
 } from "@pagopa/io-react-native-http-client";
 import { ConsentData } from "../types";
 import { fimsGetConsentsListAction } from "../store/actions";
-import { fimsTokenSelector } from "../../../store/reducers/authentication";
-import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
+import { fimsTokenSelector } from "../../../../store/reducers/authentication";
+import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
 import { logToMixPanel } from "./sagaUtils";
 
 export function* handleFimsGetConsentsList(
