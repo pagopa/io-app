@@ -332,11 +332,8 @@ profile:
         description: "Dein Konto und deine persönlichen Daten endgültig löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
-          oldRequest: "Du hast bereits die Löschung deines Kontos beantragt."
-          oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf “Löschung abbrechen”."
           cta:
             return: "Zurück"
-            cancel: "Löschung abbrechen"
         details:
           answer_1: "Ich halte IO nicht mehr für nützlich"
           answer_2: "Ich fühle mich in IO nicht sicher"
