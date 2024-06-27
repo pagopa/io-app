@@ -49,9 +49,7 @@ describe("Test Wallet payment history reducers and selectors", () => {
     ).toStrictEqual({
       startOrigin: T_START_ORIGIN,
       lookupId: MOCKED_LOOKUP_ID,
-      startedAt: MOCKED_DATE,
-      savedPaymentMethods: undefined,
-      serviceName: undefined
+      startedAt: MOCKED_DATE
     });
     expect(store.getState().features.payments.history.archive).toStrictEqual(
       []
