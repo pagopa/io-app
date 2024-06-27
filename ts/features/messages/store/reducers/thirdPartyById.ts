@@ -100,7 +100,7 @@ export const thirdPartyMessageAttachments = (
     O.chainNullableK(
       thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
     ),
-    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => [])
+    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => RA.empty)
   );
 
 export const thirdPartyMessageAttachment =
