@@ -1958,7 +1958,6 @@ identification:
     congiunction: "oder"
   title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
-  titleValidation: "Bestätige den Vorgang"
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."

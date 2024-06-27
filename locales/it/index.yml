@@ -2255,7 +2255,7 @@ identification:
     congiunction: o
   title: Ciao {{name}}!
   titleProfileName: Ciao {{profileName}}!
-  titleValidation: Conferma l'operazione
+  titleValidation: Autorizza l'operazione
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
