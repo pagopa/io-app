@@ -12,6 +12,7 @@ import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/Me
 import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
 import { WrappedMessageListItem } from "../WrappedMessageListItem";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -38,14 +39,36 @@ describe("WrappedMessageListItem", () => {
     const component = renderComponent(message);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot, not from SEND, contains payment, unread message", () => {
-    const message = messageGenerator(true, false, false);
-    const component = renderComponent(message);
+  it("should match snapshot, not from SEND, contains unpaid payment, unread message", () => {
+    const message = messageGenerator(
+      true,
+      false,
+      false,
+      "00123456789001122334455667788"
+    );
+    const component = renderComponent(message, "00987654321009922994499667799");
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot, not from SEND, contains payment, read message", () => {
-    const message = messageGenerator(true, false, true);
-    const component = renderComponent(message);
+  it("should match snapshot, not from SEND, contains unpaid payment, read message", () => {
+    const message = messageGenerator(
+      true,
+      false,
+      true,
+      "00123456789001122334455667788"
+    );
+    const component = renderComponent(message, "00987654321009922994499667799");
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, not from SEND, contains paid payment, unread message", () => {
+    const paymentId = "00123456789001122334455667788";
+    const message = messageGenerator(true, false, false, paymentId);
+    const component = renderComponent(message, paymentId);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot, not from SEND, contains paid payment, read message", () => {
+    const paymentId = "00123456789001122334455667788";
+    const message = messageGenerator(true, false, true, paymentId);
+    const component = renderComponent(message, paymentId);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, from SEND, unread message", () => {
@@ -78,7 +101,8 @@ describe("WrappedMessageListItem", () => {
 const messageGenerator = (
   hasPayment: boolean,
   isFromSend: boolean,
-  isRead: boolean
+  isRead: boolean,
+  rptId: string | undefined = undefined
 ): UIMessage =>
   ({
     createdAt: new Date(1990, 0, 2, 3, 4),
@@ -93,17 +117,33 @@ const messageGenerator = (
         ? SENDTagEnum.PN
         : hasPayment
         ? PaymentTagEnum.PAYMENT
-        : TagEnum.GENERIC
+        : TagEnum.GENERIC,
+      rptId
     }
   } as UIMessage);
 
-const renderComponent = (message: UIMessage) => {
+const renderComponent = (
+  message: UIMessage,
+  paymentId: string = "09173824650012345678991378264"
+) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const designSystemState = appReducer(
     initialState,
     preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
   );
-  const store = createStore(appReducer, designSystemState as any);
+  const stateWithPayment = {
+    ...designSystemState,
+    entities: {
+      ...designSystemState.entities,
+      paymentByRptId: {
+        ...designSystemState.entities.paymentByRptId,
+        [paymentId]: {
+          kind: "COMPLETED"
+        }
+      }
+    }
+  } as GlobalState;
+  const store = createStore(appReducer, stateWithPayment as any);
   return renderScreenWithNavigationStoreContext(
     () => <WrappedMessageListItem index={0} message={message} />,
     MESSAGES_ROUTES.MESSAGES_HOME,
