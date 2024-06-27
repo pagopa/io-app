@@ -10,6 +10,9 @@ import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssua
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
+import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
+import { ItwCieConsentDataUsageScreen } from "../identification/screens/cie/ItwCieConsentDataUsageScreen";
+import { ItwCieCardReaderScreenWrapper } from "../identification/screens/cie/ItwCieCardReaderScreenWrapper";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -37,6 +40,21 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
       component={ItwIdentificationIdpSelectionScreen}
+    />
+    {/* ISSUANCE CIE PID */}
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN}
+      component={ItwCiePinScreen}
+      options={{ headerShown: true }}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_CIE.CARD_READER_SCREEN}
+      component={ItwCieCardReaderScreenWrapper}
+    />
+
+    <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_CIE.CONSENT_DATA_USAGE}
+      component={ItwCieConsentDataUsageScreen}
     />
     {/* ISSUANCE */}
     <Stack.Screen

@@ -74,6 +74,12 @@ const ItwPlayground = () => {
     });
   };
 
+  const navigateToEidIssuanceCie = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN
+    });
+  };
+
   return (
     <ScrollView>
       <ContentWrapper>
@@ -90,7 +96,7 @@ const ItwPlayground = () => {
           value="Issuing (eID)"
           accessibilityLabel={"Issuing (eID) Playground"}
           description="Start the issuing flow choosing activation method to activate IT-Wallet and get your digital identity"
-          onPress={navigateToIdentification}
+          onPress={navigateToEidIssuanceCie}
         />
         <Divider />
         {/* Issuing mDL Playground */}
