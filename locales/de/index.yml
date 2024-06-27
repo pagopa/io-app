@@ -343,10 +343,6 @@ profile:
           answer_2: "Ich fühle mich in IO nicht sicher"
           answer_3: "Ich habe die App nie benutzt"
           answer_4: "Keiner der oben genannten Punkte"
-        success:
-          title: "Wir bearbeiten deine Anfrage."
-          body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
-          cta: "Beenden"
       exportData:
         cta: "Kopie deiner Daten anfordern"
         title: "Zugriff auf deine Daten"

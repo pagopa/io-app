@@ -372,9 +372,9 @@ profile:
           labelOpenAnswer: Scrivi qui il motivo
           cta: Elimina il tuo profilo
         success:
-          title: Stiamo processando la tua richiesta.
-          body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
-          cta: Esci
+          title: Abbiamo preso in carico la tua richiesta
+          body: Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
+          cta: Chiudi
       exportData:
         cta: Richiedi copia dei tuoi dati
         title: Accedi ai tuoi dati
