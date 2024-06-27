@@ -17,12 +17,12 @@ import { isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/redu
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { ItWalletIssuanceMachineContext } from "../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const machineRef = ItWalletIssuanceMachineContext.useActorRef();
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
@@ -43,7 +43,7 @@ const WalletCardOnboardingScreen = () => {
   };
 
   const beginCredentialIssuance = (type: CredentialType) => () => {
-    machineRef.send({ type: "start", credentialType: type });
+    machineRef.send({ type: "select-credential", credentialType: type });
   };
 
   return (
