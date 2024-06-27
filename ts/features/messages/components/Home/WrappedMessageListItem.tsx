@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
@@ -14,6 +14,7 @@ import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../store/actions/preconditions";
+import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
@@ -30,6 +31,10 @@ export const WrappedMessageListItem = ({
   const navigation = useIONavigation();
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
+
+  const isPaymentMessageWithPaidNotice = useIOSelector(state =>
+    isPaymentMessageWithPaidNoticeSelector(state, message.category)
+  );
 
   const messageCategoryTag = message.category.tag;
   const doubleAvatar = messageCategoryTag === PaymentTagEnum.PAYMENT;
@@ -50,6 +55,14 @@ export const WrappedMessageListItem = ({
   const badgeText =
     messageCategoryTag === SENDTagEnum.PN
       ? I18n.t("features.pn.details.badge.legalValue")
+      : isPaymentMessageWithPaidNotice
+      ? I18n.t("messages.badge.paid")
+      : undefined;
+  const badgeVariant =
+    messageCategoryTag === SENDTagEnum.PN
+      ? "legalMessage"
+      : isPaymentMessageWithPaidNotice
+      ? "success"
       : undefined;
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message),
@@ -83,16 +96,17 @@ export const WrappedMessageListItem = ({
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
+      badgeText={badgeText}
+      badgeVariant={badgeVariant}
       doubleAvatar={doubleAvatar}
-      serviceName={serviceName}
+      formattedDate={messageDate}
+      isRead={isRead}
       messageTitle={messageTitle}
       onLongPress={() => undefined}
       onPress={onPressCallback}
-      serviceLogos={serviceLogoUriSources}
-      badgeText={badgeText}
-      isRead={isRead}
       organizationName={organizationName}
-      formattedDate={messageDate}
+      serviceLogos={serviceLogoUriSources}
+      serviceName={serviceName}
       testID={`wrapped_message_list_item_${index}`}
     />
   );
