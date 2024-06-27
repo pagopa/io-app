@@ -1,10 +1,14 @@
 import React, { useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { IOListItemVisualParams, VSpacer } from "@pagopa/io-app-design-system";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import {
-  isShownPreconditionStatusSelector,
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
+import {
+  preconditionsCategoryTagSelector,
   preconditionsContentMarkdownSelector,
   preconditionsContentSelector
 } from "../../store/reducers/messagePrecondition";
@@ -12,16 +16,13 @@ import I18n from "../../../../i18n";
 import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus";
 import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import {
+  errorPreconditionStatusAction,
   shownPreconditionStatusAction,
+  toErrorPayload,
   toShownPayload
 } from "../../store/actions/preconditions";
+import { trackDisclaimerLoadError } from "../../analytics";
 import { MessageFeedback } from "./PreconditionsFeedback";
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: IOListItemVisualParams.actionMargin
-  }
-});
 
 export const PreconditionsContent = () => {
   const content = useIOSelector(preconditionsContentSelector);
@@ -40,46 +41,54 @@ export const PreconditionsContent = () => {
 
 const PreconditionsContentMarkdown = () => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
 
-  const isShownPreconditionStatus = useIOSelector(
-    isShownPreconditionStatusSelector
-  );
   const markdown = useIOSelector(preconditionsContentMarkdownSelector);
 
-  const handleOnLoadEnd = useCallback(() => {
+  const onLoadEndCallback = useCallback(() => {
     dispatch(shownPreconditionStatusAction(toShownPayload()));
   }, [dispatch]);
+  const onErrorCallback = useCallback(
+    (anyError: any) => {
+      const state = store.getState();
+      const category = preconditionsCategoryTagSelector(state);
+      if (category) {
+        trackDisclaimerLoadError(category);
+      }
+      dispatch(
+        errorPreconditionStatusAction(
+          toErrorPayload(`Markdown loading failure (${anyError})`)
+        )
+      );
+    },
+    [dispatch, store]
+  );
 
   if (!markdown) {
     return null;
   }
 
   return (
-    <>
-      {!isShownPreconditionStatus && <PreconditionsContentSkeleton />}
-      <View
-        style={[
-          styles.container,
-          {
-            display: isShownPreconditionStatus ? "flex" : "none"
-          }
-        ]}
-      >
-        <MessageMarkdown onLoadEnd={handleOnLoadEnd}>
-          {markdown}
-        </MessageMarkdown>
-      </View>
-    </>
+    <MessageMarkdown
+      loadingLines={7}
+      onLoadEnd={onLoadEndCallback}
+      onError={onErrorCallback}
+    >
+      {markdown}
+    </MessageMarkdown>
   );
 };
 
 const PreconditionsContentError = () => (
-  <MessageFeedback pictogram="umbrella" title={I18n.t("global.genericError")} />
+  <MessageFeedback
+    pictogram="umbrellaNew"
+    title={I18n.t("global.genericError")}
+  />
 );
 
 const PreconditionsContentSkeleton = () => (
-  <View style={styles.container} accessible={false}>
-    {Array.from({ length: 4 }).map((_, i) => (
+  <View accessible={false}>
+    {Array.from({ length: 3 }).map((_, i) => (
       <View key={`pre_content_ske_${i}`}>
         <Placeholder.Box
           width={"100%"}
@@ -111,7 +120,7 @@ const PreconditionsContentUpdate = () => {
   const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
   return (
     <MessageFeedback
-      pictogram="umbrella"
+      pictogram="umbrellaNew"
       title={I18n.t("features.messages.updateBottomSheet.title")}
       subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
         value: pnMinAppVersion

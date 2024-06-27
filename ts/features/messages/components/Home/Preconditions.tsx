@@ -19,23 +19,44 @@ import {
   toUpdateRequiredPayload,
   updateRequiredPreconditionStatusAction
 } from "../../store/actions/preconditions";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { trackDisclaimerOpened } from "../../analytics";
+import { UIMessageId } from "../../types";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PreconditionsTitle } from "./PreconditionsTitle";
 import { PreconditionsContent } from "./PreconditionsContent";
 import { PreconditionsFooter } from "./PreconditionsFooter";
 
 export const Preconditions = () => {
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const onDismissCallback = useCallback(() => {
     dispatch(clearLegacyMessagePrecondition());
     dispatch(idlePreconditionStatusAction(toIdlePayload()));
   }, [dispatch]);
+  const onNavigationCallback = useCallback(
+    (messageId: UIMessageId) => {
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+        params: {
+          messageId,
+          fromNotification: false
+        }
+      });
+    },
+    [navigation]
+  );
   const modal = useIOBottomSheetModal({
     snapPoint: [500],
     title: <PreconditionsTitle />,
     component: <PreconditionsContent />,
-    footer: <PreconditionsFooter onDismiss={() => modal.dismiss()} />,
+    footer: (
+      <PreconditionsFooter
+        onDismiss={() => modal.dismiss()}
+        onNavigation={onNavigationCallback}
+      />
+    ),
     onDismiss: onDismissCallback
   });
   const shouldPresentBottomSheet = useIOSelector(

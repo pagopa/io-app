@@ -17,9 +17,12 @@ import {
   toErrorPayload,
   toLoadingContentPayload
 } from "../store/actions/preconditions";
-import { scheduledStatePayloadSelector } from "../store/reducers/messagePrecondition";
 import { UIMessageId } from "../types";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import {
+  preconditionsCategoryTagSelector,
+  preconditionsMessageIdSelector
+} from "../store/reducers/messagePrecondition";
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
@@ -109,7 +112,14 @@ export function* getMessageIdAndCategoryTag(
     };
   }
 
-  return yield* select(scheduledStatePayloadSelector);
+  const messageId = yield* select(preconditionsMessageIdSelector);
+  const categoryTag = yield* select(preconditionsCategoryTagSelector);
+  return messageId && categoryTag
+    ? {
+        messageId,
+        categoryTag
+      }
+    : undefined;
 }
 
 export const testMessagePreconditionWorker = isTestEnv

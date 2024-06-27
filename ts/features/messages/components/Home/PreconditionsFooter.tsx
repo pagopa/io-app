@@ -10,20 +10,26 @@ import { FooterActions } from "../../../../components/ui/FooterActions";
 import I18n from "../../../../i18n";
 import { openAppStoreUrl } from "../../../../utils/url";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { UIMessageId } from "../../types";
 
 type PreconditionsFooterProps = {
+  onNavigation: (messageId: UIMessageId) => void;
   onDismiss: () => void;
 };
 
 export const PreconditionsFooter = ({
+  onNavigation,
   onDismiss
 }: PreconditionsFooterProps) => {
   const footerContent = useIOSelector(preconditionsFooterSelector);
   switch (footerContent) {
     case "content":
-      return <PreconditionsFooterContent onDismiss={onDismiss} />;
+      return (
+        <PreconditionsFooterContent
+          onNavigation={onNavigation}
+          onDismiss={onDismiss}
+        />
+      );
     case "update":
       return <PreconditionsFooterUpdate onDismiss={onDismiss} />;
     case "view":
@@ -33,10 +39,10 @@ export const PreconditionsFooter = ({
 };
 
 const PreconditionsFooterContent = ({
+  onNavigation,
   onDismiss
 }: PreconditionsFooterProps) => {
   const store = useIOStore();
-  const navigation = useIONavigation();
 
   const onCancelCallback = useCallback(() => {
     const state = store.getState();
@@ -54,35 +60,35 @@ const PreconditionsFooterContent = ({
     }
     const messageId = preconditionsMessageIdSelector(state);
     if (messageId) {
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
-        params: {
-          messageId,
-          fromNotification: false
-        }
-      });
+      onNavigation(messageId);
     }
     onDismiss();
-  }, [navigation, onDismiss, store]);
+  }, [onDismiss, onNavigation, store]);
 
   return (
     <FooterActions
       actions={{
         type: "TwoButtons",
         primary: {
-          label: I18n.t("global.buttons.cancel"),
-          onPress: onCancelCallback
-        },
-        secondary: {
           label: I18n.t("global.buttons.continue"),
           onPress: onContinueCallback
+        },
+        secondary: {
+          label: I18n.t("global.buttons.cancel"),
+          onPress: onCancelCallback
         }
       }}
     />
   );
 };
 
-const PreconditionsFooterUpdate = ({ onDismiss }: PreconditionsFooterProps) => (
+type PreconditionsFooterUpdateProps = {
+  onDismiss: () => void;
+};
+
+const PreconditionsFooterUpdate = ({
+  onDismiss
+}: PreconditionsFooterUpdateProps) => (
   <FooterActions
     actions={{
       type: "TwoButtons",

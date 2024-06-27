@@ -101,8 +101,8 @@ export const preconditionReducer = (
       return foldPreconditionStatus(
         () => toIdle(), // From Error to Idle
         () => state,
-        () => state,
-        () => state,
+        () => toIdle(), // From Loading Content to Idle,
+        () => toIdle(), // From Retrieving Data to Idle,
         () => state,
         () => toIdle(), // From Shown to Idle
         () => toIdle() // From Update Required to Idle
@@ -289,23 +289,6 @@ export const shouldPresentPreconditionsBottomSheetSelector = (
   state: GlobalState
 ) => state.entities.messages.precondition.state === "scheduled";
 
-export const scheduledStatePayloadSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      scheduledState => ({
-        messageId: scheduledState.messageId,
-        categoryTag: scheduledState.categoryTag
-      }),
-      constUndefined,
-      constUndefined
-    )
-  );
-
 export const preconditionsRequireAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.precondition,
@@ -317,7 +300,13 @@ export const preconditionsRequireAppUpdateSelector = (state: GlobalState) =>
       scheduled =>
         pipe(
           scheduled.categoryTag === SENDTagEnum.PN,
-          B.fold(constFalse, () => pipe(state, isPnAppVersionSupportedSelector))
+          B.fold(constFalse, () =>
+            pipe(
+              state,
+              isPnAppVersionSupportedSelector,
+              appVersionSupported => !appVersionSupported
+            )
+          )
         ),
       constFalse,
       constTrue
