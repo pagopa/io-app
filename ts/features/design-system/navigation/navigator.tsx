@@ -31,6 +31,9 @@ import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSFooterActions } from "../core/DSFooterActions";
+import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
+import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
@@ -41,7 +44,15 @@ import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithL
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
+import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
+import { DSLegacyAlert } from "../core/DSLegacyAlert";
+import { DSLegacyBadges } from "../core/DSLegacyBadges";
+import { DSLegacyButtons } from "../core/DSLegacyButtons";
+import { DSLegacyListItems } from "../core/DSLegacyListItems";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
+import { DSLegacySelection } from "../core/DSLegacySelection";
+import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
+import DSListItemScreen from "../core/DSListItemScreen";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -51,20 +62,17 @@ import { DSOTPInput } from "../core/DSOTPInput";
 import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
+import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSSelection } from "../core/DSSelection";
 import { DSStepper } from "../core/DSStepper";
-import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
-import DSListItemScreen from "../core/DSListItemScreen";
-import { DSFooterActions } from "../core/DSFooterActions";
-import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
-import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
+import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -525,6 +533,70 @@ export const DesignSystemNavigator = () => {
           component={DSLegacyPictograms}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
+          component={DSLegacyButtons}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.route}
+          component={DSLegacyTextFields}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.route}
+          component={DSLegacyListItems}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.route}
+          component={DSLegacyBadges}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.route}
+          component={DSLegacySelection}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.ACCORDION.route}
+          component={DSLegacyAccordion}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ACCORDION.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.route}
+          component={DSLegacyAlert}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route}
+          component={DSLegacyAdvice}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.title
           }}
         />
       </Stack.Navigator>

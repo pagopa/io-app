@@ -304,7 +304,7 @@ profile:
     menulabel: Esci da IO
     alertTitle: Vuoi davvero uscire?
     alertMessage: Al prossimo accesso sarà necessario autenticarti con CIE o SPID.
-    loading: Logout in corso...
+    loading: Stai uscendo da IO
     exit: Esci
   errors:
     load: Errore nel caricamento del profilo
@@ -394,38 +394,40 @@ profile:
           title: "Condividi i dati di utilizzo"
           description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
         screen:
-          title: "I tuoi dati di utilizzo"
-          description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
+          title: "I tuoi dati su IO"
+          description: Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.
           why:
             description:
-              one: "IO raccoglie solo le informazioni "
-              two: "necessarie "
-              three: "per il funzionamento e il miglioramento dei servizi offerti."
-            cta: "Perché?"
+              one: "Usiamo "
+              two: "solo i dati necessari "
+              three: "a monitorare il funzionamento dell’app e a migliorare i servizi offerti."
+            cta: "Perché raccogliamo i dati"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
-            cta: "Scopri di più"
+              one: "Adottiamo misure di sicurezza per "
+              two: "proteggere "
+              three: i tuoi dati.
+            cta: Come proteggiamo i dati
           gdpr:
             description:
-              one: "Il team di IO collabora con fornitori in conformità con le "
-              two: "norme previste dal GDPR."
-            cta: "Vedi elenco fornitori"
+              one: "Collaboriamo solo con fornitori che trattano i dati in modo "
+              two: "trasparente e sicuro."
+            cta: "Chi sono i fornitori"
           additionalInformation:
-            description: "Per maggiori informazioni, leggi "
-            cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze"
+            description: "Per maggiori informazioni, leggi l'"
+            cta: "Informativa Privacy e i Termini e Condizioni d’uso"
+          profileSettings: "Puoi modificare la tua scelta in ogni momento da Profilo > Privacy e Condizioni d’uso"
           cta:
             shareData: "Condividi"
-            dontShareData: "Non condividere dati"
-            dontShare: "Non condividere"
+            dontShareData: Non condividere i dati
+            dontShare: Non ora
           confirmToast: "Preferenze aggiornate!"
         alert:
-          title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
-          body: "Se confermi quest’opzione, in caso di problemi tecnici, il team di supporto di IO potrebbe non avere tutti i dati necessari a risolverli."
+          title: "Hai scelto di non \ncondividere i tuoi dati"
+          body: Se confermi,  non saremo in grado di fornirti assistenza mirata perché potrebbero mancarci i dati necessari per risolvere il problema.
         whyBottomSheet:
-          title: "Per quali finalità raccogliamo informazioni?"
-          body: "**IO non raccoglie dati per finalità di marketing.**  \nUtilizziamo strumenti che ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+          title: "Perché raccogliamo i dati?"
+          body: "Non raccogliamo dati per finalità di marketing.  \n\nUsiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per **fornirti un servizio migliore** e **assisterti in caso di necessità.**"
         securityBottomSheet:
           title: "Cos’è la pseudonimizzazione?"
           body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
@@ -490,17 +492,24 @@ profile:
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
-    subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO.
+    subtitle: Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       wip: In elaborazione
-      language: Lingua
       digitalDomicile: Domicilio digitale
-      service_contact: Gestione servizi
+      service_contact: 
+        title: Gestione servizi
+        subtitle: Scegli chi può contattarti
+      send_email_messages:
+        title: Inoltro dei messaggi via email
+        subtitle: Ricevi un’anteprima dei messaggi
+      language: 
+        title: Lingua
+        subtitle: Scegli la lingua
       preferred_calendar:
         title: Calendario preferito
-        not_selected: Non Selezionato
+        description: Seleziona un calendario
       preferred_language:
         title: Lingua preferita
         subtitle: In quale lingua vuoi usare l'applicazione?
@@ -946,21 +955,36 @@ onboarding:
     headerTitle: Configura IO
     available:
       title: Attiva il riconoscimento biometrico
-      settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
+      settings: Puoi modificare la tua scelta in ogni momento da Profilo > Sicurezza
       body:
+        text: Potrai usare il tuo volto o impronta digitale al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti in modo più rapido e sicuro.
         infoStart: Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo
         biometricType: volto o impronta digitale,
         infoEnd: in modo più rapido e sicuro.
         enrolledText: Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
         notEnrolled:
-          text: Per usarlo, vai alle impostazioni del tuo dispositivo e configuralo. Poi attivalo su IO in Profilo > Sicurezza.
+          text: Per farlo, devi prima configurarlo nelle impostazioni di sistema del tuo dispositivo.
+          label: Come fare
+          step1: 
+            label: Step 1
+            value: Vai alle impostazioni del tuo dispositivo
+          step2: 
+            label: Step 2
+            value: Configura il volto o l’impronta
+          step3: 
+            label: Step 3
+            value: Attivalo su IO in Profilo > Sicurezza
     unavailable:
       title: Proteggi il tuo dispositivo
+      subtitle: IO ti invia comunicazioni che ti riguardano personalmente. Assicurati che solo tu possa accedere all’app impostando un codice o un segno per sbloccare il dispositivo.
       body:
-        firstInfoStart: Io ti invia le comunicazioni che ti riguardano
-        firstInfoEnd: personalmente.
-        secondInfoStart: Proteggi il tuo dispositivo da accessi indesiderati e assicurati che solo tu possa accedere all'app. Per farlo, vai alle impostazioni del tuo dispositivo, imposta un
-        secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
+        label: Come fare
+        step1: 
+          label: Step 1
+          value: Vai alle impostazioni del tuo dispositivo
+        step2: 
+          label: Step 2
+          value: Imposta un codice o un segno per sbloccare il dispositivo
   shareData:
     title: Configura IO
   thankYouPage:
@@ -1939,8 +1963,9 @@ messages:
     reminderRemoveFailure: "Errore durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
     calendarPermDenied:
-      title: "Sembra che i permessi per accedere al calendario siano stati negati"
-      ok: "Abilita i permessi"
+      title: Consenti l'accesso
+      description: Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.
+      ok: "Consenti l'accesso"
       cancel: "Annulla"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
@@ -1953,7 +1978,7 @@ messages:
   archive:
     emptyMessage:
       title: "Il tuo archivio è vuoto"
-      subtitle: "Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente.\nI messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca."
+      subtitle: "Tieni premuto su un messaggio per spostarlo in archivio. I messaggi archiviati verranno conservati e saranno disponibili nei risultati di ricerca."
   inbox:
     emptyMessage:
       title: Non hai ancora ricevuto alcun messaggio
@@ -2068,17 +2093,10 @@ biometric_recognition:
   needed_to_disable: Riconoscimento richiesto per disabilitare
 send_email_messages:
   title: Inoltro dei messaggi via email
-  subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
-  options:
-    disable_all:
-      label: Disabilita per tutti i servizi
-      info: Non riceverai più messaggi via email
-    enable_all:
-      label: Abilita per tutti i servizi attivi
-      info: Ogni messaggio sarà inoltrato alla tua email, se il servizio lo consente
-    by_service:
-      label: Scegli servizio per servizio
-      info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
+  subtitle: Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo
+  switch:
+    title: Invia un’anteprima via email
+    subtitle: Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente.
 services:
   accessibility:
     edit: Modifica l'impostazione dei servizi
