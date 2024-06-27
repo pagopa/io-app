@@ -461,6 +461,8 @@ profile:
         title: Warning
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
+    trial:
+      titleSection: Join a trial
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Enable the IT Wallet test environment
@@ -3275,6 +3277,9 @@ features:
           requestAssistance: "Something wrong? Contact {{authSource}}"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
+  trialSystem:
+    toast:
+      subscribed: Done! You will receive a message when the trial period will begin.
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
