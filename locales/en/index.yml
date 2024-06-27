@@ -1565,7 +1565,7 @@ wallet:
         bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
         operationCompleted: Operazione completata!
-        operationError: Disattivazione non riuscita
+        operationError: Operazione non riuscita
     bonus:
       name: Discounts, bonuses and other initiatives
       description: Public initiatives to support Economy, or services related to payments
