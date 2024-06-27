@@ -461,6 +461,8 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    trial:
+      titleSection: Partecipa alla sperimentazione
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Abilita ambiente di test per IT Wallet
@@ -3133,7 +3135,7 @@ features:
         success: ""
       receipt:
         title: Ricevuta PagoPA
-        shareButton: Salva o condividi 
+        shareButton: Salva o condividi
         error: Impossibile scaricare la ricevuta, riprova più tardi.
         download: Scarica ricevuta
     details:
@@ -3158,10 +3160,6 @@ features:
       error:
         title: "C'è un problema sui nostri sistemi"
         body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
-      close: "Chiudi"
-      rp: "Relying Party"
-      trusted: "Trusted"
-      search: "Cerca"
       alert:
         title: "Vuoi interrompere l’operazione?"
         confirm: "Sì, interrompi"
@@ -3169,8 +3167,6 @@ features:
       dataSource:
         multi: "Forniti da {{credentialSource}}"
         single: "Fornito da {{credentialSource}}"
-      credential: "Credenziale"
-      attribute: "Attributo"
       placeholders:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
@@ -3232,6 +3228,16 @@ features:
         primaryAction: Vai alle impostazioni
         secondaryAction: Ho fatto
     issuance:
+      credentialAuth:
+        title: "{{credentialName}}: dati necessari"
+        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della credenziale"
+        requiredClaims: Dati richiesti
+        disclaimer:
+          0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
+          1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
+        tos:
+          0: Per maggiori informazioni, leggi
+          1: l’informativa Privacy e i Termini e Condizioni d’uso
       credentialPreview:
         title: "{{credential}}: ecco l'anteprima"
         banner:
@@ -3271,6 +3277,9 @@ features:
           requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+  trialSystem:
+    toast:
+      subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
