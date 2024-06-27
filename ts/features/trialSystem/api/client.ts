@@ -5,6 +5,7 @@ import { defaultRetryingFetch } from "../../../utils/fetch";
 export const createTrialSystemClient = (baseUrl: string, token: SessionToken) =>
   createClient<"Bearer">({
     baseUrl,
+    basePath: "/api/v1",
     fetchApi: defaultRetryingFetch(),
     withDefaults: op => params =>
       op({
