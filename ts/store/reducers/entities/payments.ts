@@ -58,6 +58,7 @@ export const paymentByRptIdReducer = (
         ...state,
         [action.payload]: {
           kind: "COMPLETED",
+          // The transaction ID is not available with the PM, it will be added when migrated to the NPG that will support it
           transactionId: undefined
         }
       };
