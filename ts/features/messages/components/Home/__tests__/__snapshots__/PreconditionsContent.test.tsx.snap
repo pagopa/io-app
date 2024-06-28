@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PreconditionsContent should match snapshot when content category is 'content' but markdown is defined 1`] = `
+exports[`PreconditionsContent should match snapshot when content category is 'content' and markdown is defined 1`] = `
 <View
   style={
     Object {
