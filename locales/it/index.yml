@@ -461,6 +461,8 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    trial:
+      titleSection: Partecipa alla sperimentazione
     itWallet:
       itWalletTest: IT Wallet
       itWalletTestDescription: Abilita ambiente di test per IT Wallet
@@ -1565,7 +1567,7 @@ wallet:
         bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
         bottomSheetCTA: Scopri i metodi supportati
         operationCompleted: Operazione completata!
-        operationError: Disattivazione non riuscita
+        operationError: Operazione non riuscita
     bonus:
       name: Sconti, bonus e altre iniziative
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1773,7 +1775,7 @@ wallet:
       confirm: Sì, interrompi
       cancel: No, torna indietro
     methodType:
-      fastPayPalPayment: Pagamento veloce con PayPal
+      fastPayPalPayment: PayPal pagamento veloce
     methodSelection:
       header: Seleziona un metodo
       yourMethods: Salvati
@@ -3081,7 +3083,7 @@ features:
         success: ""
       receipt:
         title: Ricevuta PagoPA
-        shareButton: Salva o condividi 
+        shareButton: Salva o condividi
         error: Impossibile scaricare la ricevuta, riprova più tardi.
         download: Scarica ricevuta
     details:
@@ -3089,7 +3091,7 @@ features:
         description: "Per questo metodo è attivo il pagamento veloce con il gestore {{pspBusinessName}}."
         action: "Cosa significa?"
         title: "Cosa significa?"
-        explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “Pagamento veloce con PayPal”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
+        explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
   itWallet:
     card:
       status:
@@ -3106,10 +3108,6 @@ features:
       error:
         title: "C'è un problema sui nostri sistemi"
         body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
-      close: "Chiudi"
-      rp: "Relying Party"
-      trusted: "Trusted"
-      search: "Cerca"
       alert:
         title: "Vuoi interrompere l’operazione?"
         confirm: "Sì, interrompi"
@@ -3117,8 +3115,6 @@ features:
       dataSource:
         multi: "Forniti da {{credentialSource}}"
         single: "Fornito da {{credentialSource}}"
-      credential: "Credenziale"
-      attribute: "Attributo"
       placeholders:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
@@ -3180,6 +3176,16 @@ features:
         primaryAction: Vai alle impostazioni
         secondaryAction: Ho fatto
     issuance:
+      credentialAuth:
+        title: "{{credentialName}}: dati necessari"
+        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della credenziale"
+        requiredClaims: Dati richiesti
+        disclaimer:
+          0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
+          1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
+        tos:
+          0: Per maggiori informazioni, leggi
+          1: l’informativa Privacy e i Termini e Condizioni d’uso
       credentialPreview:
         title: "{{credential}}: ecco l'anteprima"
         banner:
@@ -3219,6 +3225,9 @@ features:
           requestAssistance: "Qualcosa non torna? Contatta {{authSource}}"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+  trialSystem:
+    toast:
+      subscribed: Fatto! Riceverai un messaggio all’avvio della sperimentazione
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
