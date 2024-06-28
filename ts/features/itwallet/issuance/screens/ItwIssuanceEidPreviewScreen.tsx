@@ -11,17 +11,16 @@ import {
 } from "../../common/utils/itwErrorsUtils";
 import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { ItwCredentialPreviewScreenContent } from "../components/ItwCredentialPreviewScreenContent";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const navigation = useIONavigation();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const eidOption = O.some(ItwCredentialsMocks.eid);
 
   const handleStoreCredentialSuccess = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.RESULT
-    });
+    machineRef.send({ type: "add-to-wallet" });
   };
 
   /**
