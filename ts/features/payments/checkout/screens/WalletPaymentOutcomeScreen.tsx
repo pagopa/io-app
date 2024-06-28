@@ -9,7 +9,7 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { profileEmailSelector } from "../../../../store/reducers/profile";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -26,6 +26,9 @@ import {
 } from "../types/PaymentOutcomeEnum";
 import ROUTES from "../../../../navigation/routes";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -39,6 +42,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
 
+  const dispatch = useIODispatch();
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
 
@@ -46,9 +50,19 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const onSuccessAction = useIOSelector(walletPaymentOnSuccessActionSelector);
   const profileEmailOption = useIOSelector(profileEmailSelector);
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
+  });
+
+  useOnFirstRender(() => {
+    if (
+      outcome === WalletPaymentOutcomeEnum.SUCCESS &&
+      paymentOngoingHistory?.rptId
+    ) {
+      dispatch(paymentCompletedSuccess(paymentOngoingHistory.rptId));
+    }
   });
 
   // TODO: This is a workaround to disable swipe back gesture on this screen
