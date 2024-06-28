@@ -26,6 +26,8 @@ import { ITW_ROUTES } from "./routes";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
+const hiddenHeader = { headerShown: false };
+
 export const ItwStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ITW_ROUTES.DISCOVERY.INFO}
@@ -55,15 +57,16 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN}
       component={ItwCiePinScreen}
-      options={{ headerShown: true }}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.CARD_READER_SCREEN}
       component={ItwCieCardReaderScreenWrapper}
+      options={hiddenHeader}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.CONSENT_DATA_USAGE}
       component={ItwCieConsentDataUsageScreen}
+      options={hiddenHeader}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC}
@@ -97,7 +100,7 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
       component={ItwIssuanceEidPreviewScreen}
-      options={{ headerShown: false }}
+      options={hiddenHeader}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH}
@@ -106,19 +109,19 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
       component={ItwIssuanceCredentialPreviewScreen}
-      options={{ headerShown: false }}
+      options={hiddenHeader}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.RESULT}
       component={ItwIssuanceEidResultScreen}
-      options={{ headerShown: false }}
+      options={hiddenHeader}
     />
 
     {/* CREDENTIAL PRESENTATION */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
       component={ItwPresentationEidDetailScreen}
-      options={{ headerShown: false }}
+      options={hiddenHeader}
     />
   </Stack.Navigator>
 );
