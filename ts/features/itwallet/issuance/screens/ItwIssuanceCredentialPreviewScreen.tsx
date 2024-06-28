@@ -75,6 +75,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
             credential: credential.displayData.title
           })
         }}
+        goBack={dismissDialog.show}
       >
         <ContentWrapper>
           <ItwCredentialClaimsList data={credential} isPreview={true} />
