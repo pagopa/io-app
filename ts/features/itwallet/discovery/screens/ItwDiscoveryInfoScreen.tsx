@@ -4,7 +4,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -38,7 +38,7 @@ const ItwDiscoveryInfoScreen = () => {
       <Image
         source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
         accessibilityIgnoresInvertColors={true}
-        style={{ resizeMode: "cover", width: "100%" }}
+        style={styles.hero}
       />
       <VSpacer size={24} />
       <ContentWrapper>
@@ -52,12 +52,16 @@ const ItwDiscoveryInfoScreen = () => {
           primary: {
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => undefined
+            onPress: () => machineRef.send({ type: "accept-tos" })
           }
         }}
       />
     </ForceScrollDownView>
   );
 };
+
+const styles = StyleSheet.create({
+  hero: { resizeMode: "cover", width: "100%" }
+});
 
 export { ItwDiscoveryInfoScreen };
