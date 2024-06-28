@@ -15,7 +15,7 @@ import {
   isPnAppVersionSupportedSelector,
   pnMinAppVersionSelector
 } from "../../../store/reducers/backendStatus";
-import { MessageFeedback } from "../components/Home/PreconditionsFeedback";
+import { PreconditionsFeedback } from "../components/Home/PreconditionsFeedback";
 import { openAppStoreUrl } from "../../../utils/url";
 import {
   LegacyPreconditionHeader,
@@ -59,7 +59,7 @@ const renderPreconditionContent = (
       />
     ),
     () => (
-      <MessageFeedback
+      <PreconditionsFeedback
         pictogram="umbrella"
         title={I18n.t("global.genericError")}
       />
@@ -125,7 +125,7 @@ export const useLegacyMessageOpening = () => {
   const getContentModal = () => {
     if (!pnSupported) {
       return (
-        <MessageFeedback
+        <PreconditionsFeedback
           pictogram="umbrella"
           title={I18n.t("features.messages.updateBottomSheet.title")}
           subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {

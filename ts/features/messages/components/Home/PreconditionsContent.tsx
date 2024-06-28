@@ -22,7 +22,7 @@ import {
   toShownPayload
 } from "../../store/actions/preconditions";
 import { trackDisclaimerLoadError } from "../../analytics";
-import { MessageFeedback } from "./PreconditionsFeedback";
+import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 export const PreconditionsContent = () => {
   const content = useIOSelector(preconditionsContentSelector);
@@ -73,6 +73,7 @@ const PreconditionsContentMarkdown = () => {
       loadingLines={7}
       onLoadEnd={onLoadEndCallback}
       onError={onErrorCallback}
+      testID="preconditions_content_message_markdown"
     >
       {markdown}
     </MessageMarkdown>
@@ -80,7 +81,7 @@ const PreconditionsContentMarkdown = () => {
 };
 
 const PreconditionsContentError = () => (
-  <MessageFeedback
+  <PreconditionsFeedback
     pictogram="umbrellaNew"
     title={I18n.t("global.genericError")}
   />
@@ -119,7 +120,7 @@ const PreconditionsContentSkeleton = () => (
 const PreconditionsContentUpdate = () => {
   const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
   return (
-    <MessageFeedback
+    <PreconditionsFeedback
       pictogram="umbrellaNew"
       title={I18n.t("features.messages.updateBottomSheet.title")}
       subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
