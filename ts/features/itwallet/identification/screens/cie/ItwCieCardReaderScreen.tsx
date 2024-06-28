@@ -313,11 +313,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "AUTHENTICATION_ERROR":
       case "ON_NO_INTERNET_CONNECTION":
         this.setError({
-          eventReason: event.event
-          /* navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_UNEXPECTED_ERROR
-            }) */
+          eventReason: event.event,
+          navigation: () =>
+            this.props.navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.ISSUANCE.EID_CIE.UNEXPECTED_ERROR
+            })
         });
         break;
       case "EXTENDED_APDU_NOT_SUPPORTED":

@@ -22,6 +22,7 @@ export type ItwParamsList = {
     .CONSENT_DATA_USAGE]: CieConsentDataUsageScreenNavigationParams;
   [ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN]: CieWrongCiePinScreenNavigationParams;
   [ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD]: undefined;
+  [ITW_ROUTES.ISSUANCE.EID_CIE.UNEXPECTED_ERROR]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_CIE
     .ACTIVATE_NFC]: CieCardReaderScreenNavigationParams;
   // PRESENTATION

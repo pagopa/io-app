@@ -1,5 +1,9 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  TransitionPresets,
+  createStackNavigator
+} from "@react-navigation/stack";
 import * as React from "react";
+import { Platform } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
@@ -16,6 +20,7 @@ import { ItwCieCardReaderScreenWrapper } from "../identification/screens/cie/Itw
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
 import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
+import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -31,6 +36,7 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.DISCOVERY.INFO}
       component={ItwDiscoveryInfoScreen}
     />
+
     {/* IDENTIFICATION */}
     <Stack.Screen
       name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
@@ -44,6 +50,7 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
       component={ItwIdentificationIdpSelectionScreen}
     />
+
     {/* ISSUANCE CIE PID */}
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.PIN_SCREEN}
@@ -54,23 +61,38 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.ISSUANCE.EID_CIE.CARD_READER_SCREEN}
       component={ItwCieCardReaderScreenWrapper}
     />
-
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.CONSENT_DATA_USAGE}
       component={ItwCieConsentDataUsageScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN}
-      component={ItwCieWrongCiePinScreen}
-    />
-    <Stack.Screen
-      name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD}
-      component={ItwCieWrongCardScreen}
-    />
-    <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_CIE.ACTIVATE_NFC}
       component={ItwActivateNfcScreen}
     />
+    <Stack.Group
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        ...Platform.select({
+          ios: TransitionPresets.ModalSlideFromBottomIOS,
+          default: undefined
+        })
+      }}
+    >
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_PIN}
+        component={ItwCieWrongCiePinScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_CIE.WRONG_CARD}
+        component={ItwCieWrongCardScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_CIE.UNEXPECTED_ERROR}
+        component={ItwCieUnexpectedErrorScreen}
+      />
+    </Stack.Group>
+
     {/* ISSUANCE */}
     <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
