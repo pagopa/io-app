@@ -31,6 +31,7 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
+import { resetDeleteUserDataProcessing } from "../../store/actions/userDataProcessing";
 
 type FooterButtonProps = {
   isLoading: boolean;
@@ -104,7 +105,16 @@ const RemoveAccountDetails = () => {
     if (isError) {
       toast.error(I18n.t("wallet.errors.GENERIC_ERROR"));
     }
-  }, [isError, toast]);
+  }, [dispatch, isError, toast]);
+
+  // eslint-disable-next-line arrow-body-style
+  useEffect(() => {
+    return () => {
+      if (isError) {
+        dispatch(resetDeleteUserDataProcessing());
+      }
+    };
+  }, [dispatch, isError]);
 
   const handleSendMotivation = useCallback(
     (
