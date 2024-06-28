@@ -1567,7 +1567,7 @@ wallet:
         bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
         bottomSheetCTA: Scopri i metodi supportati
         operationCompleted: Operazione completata!
-        operationError: Disattivazione non riuscita
+        operationError: Operazione non riuscita
     bonus:
       name: Sconti, bonus e altre iniziative
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
