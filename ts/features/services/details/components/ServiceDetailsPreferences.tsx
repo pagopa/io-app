@@ -80,7 +80,7 @@ export const ServiceDetailsPreferences = ({
   useOnFirstRender(
     () => {
       analytics.trackServiceDetailsConsent({
-        is_special_service: serviceMetadataInfo?.isSpecialService ?? false,
+        is_special_service: serviceMetadataInfo.isSpecialService,
         main_consent_status:
           servicePreferenceResponseSuccess?.value.inbox ?? false,
         push_consent_status:
@@ -125,7 +125,7 @@ export const ServiceDetailsPreferences = ({
     // this switch is disabled if the current service is a special service.
     // the user can enable the service only using the proper special service flow.
     {
-      disabled: serviceMetadataInfo?.isSpecialService,
+      disabled: serviceMetadataInfo.isSpecialService,
       icon: "message",
       isLoading: isLoadingServicePreference,
       label: I18n.t("services.details.preferences.inbox"),
