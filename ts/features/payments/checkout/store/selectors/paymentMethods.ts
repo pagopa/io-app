@@ -8,6 +8,8 @@ import { getLatestUsedWallet, isValidPaymentMethod } from "../../utils";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationStatus";
 import { WalletApplicationNameEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationName";
+import { UIWalletInfoDetails } from "../../../common/types/UIWalletInfoDetails";
+import { isPaymentMethodExpired } from "../../../common/utils";
 import { selectPaymentsCheckoutState, walletPaymentDetailsSelector } from ".";
 
 export const walletPaymentUserWalletsSelector = createSelector(
@@ -19,13 +21,17 @@ export const walletPaymentEnabledUserWalletsSelector = createSelector(
   walletPaymentUserWalletsSelector,
   userWalletsPot =>
     pot.map(userWalletsPot, userWallets =>
-      userWallets.filter(wallet =>
-        wallet.applications.find(
-          app =>
-            app.name === WalletApplicationNameEnum.PAGOPA &&
-            app.status === WalletApplicationStatusEnum.ENABLED
-        )
-      )
+      userWallets.filter(wallet => {
+        const walletDetails = wallet.details as UIWalletInfoDetails;
+        return (
+          !isPaymentMethodExpired(walletDetails) &&
+          wallet.applications.find(
+            app =>
+              app.name === WalletApplicationNameEnum.PAGOPA &&
+              app.status === WalletApplicationStatusEnum.ENABLED
+          )
+        );
+      })
     )
 );
 
