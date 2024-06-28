@@ -363,17 +363,27 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        style={
+                          {
+                            "flexGrow": 1,
+                          }
+                        }
                         testID="FeaturedServiceCardTestID-pressable"
                       >
                         <View
                           style={
-                            {
-                              "transform": [
-                                {
-                                  "scale": undefined,
-                                },
-                              ],
-                            }
+                            [
+                              {
+                                "transform": [
+                                  {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
                           }
                         >
                           <View
@@ -381,12 +391,12 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                               [
                                 {
                                   "alignItems": "flex-start",
-                                  "aspectRatio": 1,
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
+                                  "flex": 1,
                                   "flexDirection": "column",
                                   "justifyContent": "space-between",
                                   "padding": 16,
@@ -419,10 +429,10 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                     },
                                     {
                                       "backgroundColor": "#FFFFFF",
-                                      "borderRadius": 8,
-                                      "height": 44,
-                                      "padding": 6,
-                                      "width": 44,
+                                      "borderRadius": 12,
+                                      "height": 66,
+                                      "padding": 9,
+                                      "width": 66,
                                     },
                                   ]
                                 }
@@ -436,7 +446,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                         "overflow": "hidden",
                                       },
                                       {
-                                        "borderRadius": 2,
+                                        "borderRadius": 3,
                                       },
                                     ]
                                   }
@@ -463,7 +473,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                             <View
                               style={
                                 {
-                                  "marginTop": 8,
+                                  "marginTop": 16,
                                   "width": "100%",
                                 }
                               }
@@ -880,17 +890,27 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        style={
+                          {
+                            "flexGrow": 1,
+                          }
+                        }
                         testID="FeaturedServiceCardTestID-pressable"
                       >
                         <View
                           style={
-                            {
-                              "transform": [
-                                {
-                                  "scale": undefined,
-                                },
-                              ],
-                            }
+                            [
+                              {
+                                "transform": [
+                                  {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
                           }
                         >
                           <View
@@ -898,12 +918,12 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                               [
                                 {
                                   "alignItems": "flex-start",
-                                  "aspectRatio": 1,
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
+                                  "flex": 1,
                                   "flexDirection": "column",
                                   "justifyContent": "space-between",
                                   "padding": 16,
@@ -939,10 +959,10 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     },
                                     {
                                       "backgroundColor": "#FFFFFF",
-                                      "borderRadius": 8,
-                                      "height": 44,
-                                      "padding": 6,
-                                      "width": 44,
+                                      "borderRadius": 12,
+                                      "height": 66,
+                                      "padding": 9,
+                                      "width": 66,
                                     },
                                   ]
                                 }
@@ -956,7 +976,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                         "overflow": "hidden",
                                       },
                                       {
-                                        "borderRadius": 2,
+                                        "borderRadius": 3,
                                       },
                                     ]
                                   }
@@ -1027,7 +1047,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                             <View
                               style={
                                 {
-                                  "marginTop": 8,
+                                  "marginTop": 16,
                                   "width": "100%",
                                 }
                               }

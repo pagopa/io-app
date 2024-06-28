@@ -363,17 +363,27 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        style={
+                          {
+                            "flexGrow": 1,
+                          }
+                        }
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
                           style={
-                            {
-                              "transform": [
-                                {
-                                  "scale": undefined,
-                                },
-                              ],
-                            }
+                            [
+                              {
+                                "transform": [
+                                  {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
                           }
                         >
                           <View
@@ -885,17 +895,27 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        style={
+                          {
+                            "flexGrow": 1,
+                          }
+                        }
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
                           style={
-                            {
-                              "transform": [
-                                {
-                                  "scale": undefined,
-                                },
-                              ],
-                            }
+                            [
+                              {
+                                "transform": [
+                                  {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
                           }
                         >
                           <View
