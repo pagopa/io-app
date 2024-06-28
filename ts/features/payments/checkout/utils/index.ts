@@ -1,6 +1,7 @@
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import _ from "lodash";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
@@ -62,16 +63,7 @@ export const getPspFlagType = (
   if (pspList.length === 1) {
     return "unique";
   }
-  const cheaperPsp = pspList.reduce((acc, curr) => {
-    if (
-      acc.taxPayerFee &&
-      curr.taxPayerFee &&
-      acc.taxPayerFee < curr.taxPayerFee
-    ) {
-      return acc;
-    }
-    return curr;
-  });
+  const cheaperPsp = _.orderBy(pspList, psp => psp.taxPayerFee)[0];
   return cheaperPsp.idBundle === psp.idBundle ? "cheaper" : "none";
 };
 
