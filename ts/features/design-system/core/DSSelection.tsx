@@ -1,45 +1,30 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
 import {
   AnimatedMessageCheckbox,
   CheckboxLabel,
   Divider,
   HSpacer,
+  IOColors,
+  LabelSmall,
   ListItemCheckbox,
+  ListItemRadioWithAmount,
   ListItemSwitch,
   NativeSwitch,
-  RadioItem,
   RadioGroup,
+  RadioItem,
   SwitchLabel,
-  VSpacer,
-  ListItemRadioWithAmount,
-  LabelSmall,
-  IOColors
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
-import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import * as React from "react";
+import { useState } from "react";
+import { Alert, Text, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly",
-    paddingVertical: 16
-  }
-});
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSSelection = () => (
   <DesignSystemScreen title={"Selection"}>
-    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+    <H2 weight={"Bold"} style={{ marginBottom: 16 }}>
       Checkbox
     </H2>
     {/* CheckboxLabel */}
@@ -66,28 +51,6 @@ export const DSSelection = () => (
     <ListItemSwitchShowroom />
     {/* SwitchLabel */}
     {renderAnimatedSwitch()}
-    {/* Legacy components */}
-    <H2 weight={"Semibold"} style={{ marginBottom: 16, marginTop: 16 }}>
-      Legacy components
-    </H2>
-    <H4>{"<CheckBox />"}</H4>
-    <View style={styles.content}>
-      <CheckBox />
-      <CheckBox checked={true} />
-    </View>
-    <H4>{"<RemoteSwitch />"}</H4>
-    <View style={styles.content}>
-      <RemoteSwitch value={pot.none} />
-      <RemoteSwitch
-        value={pot.noneError(new Error())}
-        onRetry={() => Alert.alert("Retry!")}
-      />
-      <RemoteSwitch value={pot.some(true)} />
-      <RemoteSwitch value={pot.someUpdating(false, true)} />
-      <RemoteSwitch value={pot.some(false)} />
-      <RemoteSwitch value={pot.someUpdating(true, false)} />
-      <VSpacer size={48} />
-    </View>
   </DesignSystemScreen>
 );
 
