@@ -9,8 +9,10 @@ import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { ItwSmallText } from "../../common/components/ItwSmallText";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { ItwSmallText } from "../../common/components/ItwSmallText";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -19,6 +21,12 @@ import ItwMarkdown from "../../common/components/ItwMarkdown";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  useOnFirstRender(() => {
+    machineRef.send({ type: "start" });
+  });
+
   useHeaderSecondLevel({
     title: "",
     contextualHelp: emptyContextualHelp,
@@ -34,14 +42,8 @@ const ItwDiscoveryInfoScreen = () => {
       />
       <VSpacer size={24} />
       <ContentWrapper>
-        {/* Info activation */}
-        <ItwMarkdown
-          content={I18n.t("features.itWallet.discovery.info.content")}
-        />
-        <ItwSmallText>
-          Per maggiori informazioni, leggi l’[informativa Privacy]() e i
-          [Termini e Condizioni d’uso]()
-        </ItwSmallText>
+        <ItwMarkdown content={I18n.t("features.itWallet.discovery.content")} />
+        <ItwSmallText>{I18n.t("features.itWallet.discovery.tos")}</ItwSmallText>
       </ContentWrapper>
       <FooterActions
         fixed={false}
