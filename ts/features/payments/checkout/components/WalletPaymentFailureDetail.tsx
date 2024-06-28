@@ -11,6 +11,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { selectOngoingPaymentHistory } from "../../history/store/selectors";
 
 type Props = {
   failure: WalletPaymentFailure;
@@ -19,6 +23,8 @@ type Props = {
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const dispatch = useIODispatch();
 
   const handleClose = () => {
     navigation.pop();
@@ -114,6 +120,20 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         return genericErrorProps;
     }
   };
+
+  useOnFirstRender(() => {
+    if (
+      paymentOngoingHistory?.rptId &&
+      failure.faultCodeCategory === "PAYMENT_DUPLICATED"
+    ) {
+      dispatch(
+        paymentCompletedSuccess({
+          rptId: paymentOngoingHistory.rptId,
+          kind: "DUPLICATED"
+        })
+      );
+    }
+  });
 
   const contentProps = getPropsFromFailure(failure);
 
