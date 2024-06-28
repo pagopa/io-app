@@ -385,7 +385,7 @@ const expectedSanitized: ReadonlyArray<string> = [
   `&lt;BODY BACKGROUND=”javascript:alert(‘XSS’)”&gt;`,
   `&lt;BODY ONLOAD=alert(‘XSS’)&gt;`,
   `&lt;INPUT TYPE=”IMAGE” SRC=”javascript:alert(‘XSS’);”&gt;`,
-  `<img src>`,
+  `&lt;IMG SRC=”javascript:alert(‘XSS’)”`,
   `&lt;iframe src=http://ha.ckers.org/scriptlet.html &lt;`,
   `javascript:alert("hellox worldss")`,
   `<img src>`,
