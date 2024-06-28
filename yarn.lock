@@ -2045,6 +2045,7 @@
   integrity sha512-PugtgEw8u++zAyBpDpSkR8K1OsT2l8QWp3ECL6bZHFoq9PfHDoKeGFWSuX2Z+Ghy93k1fkKf8tsmqNBv+8dEfQ==
   dependencies:
     "@types/node" ">= 8"
+
 "@pagopa/io-app-design-system@1.39.4":
   version "1.39.4"
   resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.39.4.tgz#494b00b69f0d1330ae14ca99270bceb9b97a7298"
@@ -15964,15 +15965,15 @@ xregexp@2.0.0:
   resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-2.0.0.tgz#52a63e56ca0b84a7f3a5f3d61872f126ad7a5943"
   integrity sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=
 
-xss@^1.0.10:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/xss/-/xss-1.0.15.tgz#96a0e13886f0661063028b410ed1b18670f4e59a"
-  integrity sha512-FVdlVVC67WOIPvfOwhoMETV72f6GbW7aOabBC3WxN/oUdoEMDyLz4OgRv5/gck2ZeNqEQu+Tb0kloovXOfpYVg==
+xss@1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/xss/-/xss-1.0.10.tgz#5cd63a9b147a755a14cb0455c7db8866120eb4d2"
+  integrity sha512-qmoqrRksmzqSKvgqzN0055UFWY7OKx1/9JWeRswwEVX9fCG5jcYRxa/A2DHcmZX6VJvjzHRQ2STeeVcQkrmLSw==
   dependencies:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-"xstate5@npm:xstate@5", xstate@^5.13.0:
+"xstate5@npm:xstate@5":
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
   integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
@@ -15981,6 +15982,11 @@ xstate@^4.29.0, xstate@^4.33.6:
   version "4.35.4"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.4.tgz#87b2a45b6c7e84d820f56378408c6531ca5c4662"
   integrity sha512-mqRBYHhljP1xIItI4xnSQNHEv6CKslSM1cOGmvhmxeoDPAZgNbhSUYAL5N6DZIxRfpYY+M+bSm3mUFHD63iuvg==
+
+xstate@^5.13.0:
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-5.13.0.tgz#7f7092d813a89d94024b083fe23a86b6cf4a323a"
+  integrity sha512-Z0om784N5u8sAzUvQJBa32jiTCIGGF/2ZsmKkerQEqeeUktAeOMK20FIHFUMywC4GcAkNksSvaeX7lwoRNXPEQ==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
