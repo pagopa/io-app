@@ -28,8 +28,11 @@ export const CardPressableBase = ({
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
+      style={{ flexGrow: 1 }}
     >
-      <Animated.View style={animatedScaleStyle}>{children}</Animated.View>
+      <Animated.View style={[animatedScaleStyle, { flexGrow: 1 }]}>
+        {children}
+      </Animated.View>
     </Pressable>
   );
 };
