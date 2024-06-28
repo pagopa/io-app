@@ -11,10 +11,14 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import * as analytics from "../analytics";
-import { useIOSelector } from "../../../../store/hooks";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  selectOngoingPaymentHistory,
+  paymentAnalyticsDataSelector
+} from "../../history/store/selectors";
+import * as analytics from "../analytics";
 
 type Props = {
   failure: WalletPaymentFailure;
@@ -23,6 +27,8 @@ type Props = {
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const dispatch = useIODispatch();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const handleClose = () => {
@@ -131,6 +137,17 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const contentProps = getPropsFromFailure(failure);
 
   useOnFirstRender(() => {
+    if (
+      paymentOngoingHistory?.rptId &&
+      failure.faultCodeCategory === "PAYMENT_DUPLICATED"
+    ) {
+      dispatch(
+        paymentCompletedSuccess({
+          rptId: paymentOngoingHistory.rptId,
+          kind: "DUPLICATED"
+        })
+      );
+    }
     analytics.trackPaymentRequestFailure(failure, {
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
       service_name: paymentAnalyticsData?.serviceName,

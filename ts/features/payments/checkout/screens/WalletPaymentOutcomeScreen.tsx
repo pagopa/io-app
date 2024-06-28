@@ -9,7 +9,7 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { profileEmailSelector } from "../../../../store/reducers/profile";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -28,9 +28,13 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import {
+  paymentAnalyticsDataSelector,
+  selectOngoingPaymentHistory
+} from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -44,6 +48,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
 
+  const dispatch = useIODispatch();
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
 
@@ -51,6 +56,7 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const onSuccessAction = useIOSelector(walletPaymentOnSuccessActionSelector);
   const profileEmailOption = useIOSelector(profileEmailSelector);
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
@@ -156,6 +162,18 @@ const WalletPaymentOutcomeScreen = () => {
     };
 
   useOnFirstRender(() => {
+    const kind =
+      outcome === WalletPaymentOutcomeEnum.SUCCESS
+        ? "COMPLETED"
+        : outcome === WalletPaymentOutcomeEnum.DUPLICATE_ORDER
+        ? "DUPLICATED"
+        : undefined;
+    const rptId = paymentOngoingHistory?.rptId;
+
+    if (kind && rptId) {
+      dispatch(paymentCompletedSuccess({ rptId, kind }));
+    }
+
     trackOutcomeScreen();
   });
 
