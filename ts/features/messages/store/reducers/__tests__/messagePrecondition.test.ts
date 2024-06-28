@@ -23,8 +23,16 @@ import {
 import {
   MessagePreconditionStatus,
   foldPreconditionStatus,
+  isShownPreconditionStatusSelector,
   preconditionReducer,
+  preconditionsCategoryTagSelector,
+  preconditionsContentMarkdownSelector,
+  preconditionsContentSelector,
+  preconditionsFooterSelector,
+  preconditionsMessageIdSelector,
   preconditionsRequireAppUpdateSelector,
+  preconditionsTitleContentSelector,
+  preconditionsTitleSelector,
   shouldPresentPreconditionsBottomSheetSelector,
   toErrorMPS,
   toIdleMPS,
@@ -360,4 +368,180 @@ describe("preconditionsRequireAppUpdateSelector", () => {
       })
     )
   );
+});
+
+describe("preconditionsTitleContentSelector", () => {
+  const expectedOutput = [
+    "empty",
+    undefined,
+    "header",
+    "loading",
+    undefined,
+    "header",
+    "empty"
+  ];
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
+    (status, statusIndex) =>
+      it(`should return '${expectedOutput[statusIndex]}' for status '${status.state}'`, () => {
+        const globalStatus = {
+          entities: {
+            messages: {
+              precondition: status
+            }
+          }
+        } as GlobalState;
+        const titleContent = preconditionsTitleContentSelector(globalStatus);
+        expect(titleContent).toStrictEqual(expectedOutput[statusIndex]);
+      })
+  );
+});
+
+describe("preconditionsTitleSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "loadingContent" || status.state === "shown"
+        ? status.content.title
+        : undefined;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+      const title = preconditionsTitleSelector(globalStatus);
+      expect(title).toStrictEqual(expectedOutput);
+    });
+  });
+});
+
+describe("preconditionsContentSelector", () => {
+  const expectedOutput = [
+    "error",
+    undefined,
+    "content",
+    "loading",
+    undefined,
+    "content",
+    "update"
+  ];
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
+    (status, statusIndex) =>
+      it(`should return '${expectedOutput[statusIndex]}' for status '${status.state}'`, () => {
+        const globalStatus = {
+          entities: {
+            messages: {
+              precondition: status
+            }
+          }
+        } as GlobalState;
+        const contentStatus = preconditionsContentSelector(globalStatus);
+        expect(contentStatus).toStrictEqual(expectedOutput[statusIndex]);
+      })
+  );
+});
+
+describe("preconditionsContentMarkdownSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "loadingContent" || status.state === "shown"
+        ? status.content.markdown
+        : undefined;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+      const content = preconditionsContentMarkdownSelector(globalStatus);
+      expect(content).toStrictEqual(expectedOutput);
+    });
+  });
+});
+
+describe("isShownPreconditionStatusSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput = status.state === "shown";
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+      const isShown = isShownPreconditionStatusSelector(globalStatus);
+      expect(isShown).toStrictEqual(expectedOutput);
+    });
+  });
+});
+
+describe("preconditionsFooterSelector", () => {
+  const expectedOutput = [
+    "view",
+    undefined,
+    "view",
+    "view",
+    undefined,
+    "content",
+    "update"
+  ];
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
+    (status, statusIndex) => {
+      it(`should return '${expectedOutput[statusIndex]}' for status '${status.state}'`, () => {
+        const globalStatus = {
+          entities: {
+            messages: {
+              precondition: status
+            }
+          }
+        } as GlobalState;
+        const footerContent = preconditionsFooterSelector(globalStatus);
+        expect(footerContent).toStrictEqual(expectedOutput[statusIndex]);
+      });
+    }
+  );
+});
+
+describe("preconditionsCategoryTagSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "idle" || status.state === "updateRequired"
+        ? undefined
+        : status.categoryTag;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+      const categoryTag = preconditionsCategoryTagSelector(globalStatus);
+      expect(categoryTag).toStrictEqual(expectedOutput);
+    });
+  });
+});
+
+describe("preconditionsMessageIdSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "idle" || status.state === "updateRequired"
+        ? undefined
+        : status.messageId;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+      const messageId = preconditionsMessageIdSelector(globalStatus);
+      expect(messageId).toStrictEqual(expectedOutput);
+    });
+  });
 });
