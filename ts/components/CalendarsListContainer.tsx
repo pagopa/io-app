@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import {
   ButtonSolid,
@@ -168,4 +168,4 @@ const CalendarsListContainer = (props: Props) => {
   );
 };
 
-export default memo(CalendarsListContainer);
+export default CalendarsListContainer;
