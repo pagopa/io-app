@@ -10,13 +10,8 @@ export const selectPaymentsHistoryArchive = (state: GlobalState) =>
 export const selectOngoingPaymentHistory = (state: GlobalState) =>
   state.features.payments.history.ongoingPayment;
 
-export const selectPaymentAnalyticsData = (state: GlobalState) =>
+export const paymentAnalyticsDataSelector = (state: GlobalState) =>
   state.features.payments.history.analyticsData;
-
-export const paymentAnalyticsDataSelector = createSelector(
-  selectPaymentAnalyticsData,
-  analyticsData => analyticsData
-);
 
 export const selectPaymentAttemptByRptId = (rptId: RptId) =>
   createSelector(selectPaymentsHistoryArchive, archive =>
