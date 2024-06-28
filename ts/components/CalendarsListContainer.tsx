@@ -116,10 +116,11 @@ const CalendarsListContainer = (props: Props) => {
       if (calendar) {
         const isDefaultCalendar =
           defaultCalendar && calendar.id === defaultCalendar.id;
-        setSelectedCalendar(calendar);
         if (isDefaultCalendar && onCalendarRemove) {
           onCalendarRemove();
+          setSelectedCalendar(undefined);
         } else {
+          setSelectedCalendar(calendar);
           onCalendarSelected(calendar);
         }
       }
