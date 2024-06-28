@@ -12,10 +12,6 @@ import { Route, useRoute } from "@react-navigation/native";
 import WebView from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIODispatch } from "../../../../../store/hooks";
-import {
-  loginFailure,
-  loginSuccess
-} from "../../../../../store/actions/authentication"; // TODO: adapt to itwallet
 import { SessionToken } from "../../../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../../../utils/login";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
@@ -25,6 +21,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { itwLoginFailure, itwLoginSuccess } from "../../store/actions";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -53,16 +50,17 @@ export const ItwCieConsentDataUsageScreen = () => {
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
-    (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
+    (token: SessionToken) => dispatch(itwLoginSuccess({ token, idp: "cie" })),
     [dispatch]
   );
 
   const loginFailureDispatch = useCallback(
-    (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
+    (error: Error) => dispatch(itwLoginFailure({ error, idp: "cie" })),
     [dispatch]
   );
 
   const navigateToLandingScreen = useCallback(() => {
+    // TODO: go to correct screen
     /* navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_LANDING
     }); */
