@@ -16,6 +16,11 @@ export type PaymentInitStateParams = {
   onSuccess?: OnPaymentSuccessAction;
 };
 
+export type PaymentCompletedSuccessPayload = {
+  rptId: RptId;
+  kind: "COMPLETED" | "DUPLICATED";
+};
+
 /**
  * Action to initialize the state of a payment, optionally you can specify the route to go back to
  * after the payment is completed or cancelled (default is the popToTop route)
@@ -34,7 +39,7 @@ export const selectPaymentPspAction = createStandardAction(
 
 export const paymentCompletedSuccess = createStandardAction(
   "PAYMENTS_PAYMENT_COMPLETED_SUCCESS"
-)<RptId>();
+)<PaymentCompletedSuccessPayload>();
 
 export type PaymentsCheckoutOrchestrationActions =
   | ActionType<typeof walletPaymentSetCurrentStep>

@@ -57,11 +57,23 @@ const WalletPaymentOutcomeScreen = () => {
   });
 
   useOnFirstRender(() => {
-    if (
-      outcome === WalletPaymentOutcomeEnum.SUCCESS &&
-      paymentOngoingHistory?.rptId
-    ) {
-      dispatch(paymentCompletedSuccess(paymentOngoingHistory.rptId));
+    if (!paymentOngoingHistory?.rptId) {
+      return;
+    }
+    if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
+      dispatch(
+        paymentCompletedSuccess({
+          rptId: paymentOngoingHistory.rptId,
+          kind: "COMPLETED"
+        })
+      );
+    } else if (outcome === WalletPaymentOutcomeEnum.DUPLICATE_ORDER) {
+      dispatch(
+        paymentCompletedSuccess({
+          rptId: paymentOngoingHistory.rptId,
+          kind: "DUPLICATED"
+        })
+      );
     }
   });
 
