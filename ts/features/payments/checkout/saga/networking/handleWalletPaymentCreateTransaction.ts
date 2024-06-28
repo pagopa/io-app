@@ -1,11 +1,26 @@
 import * as E from "fp-ts/lib/Either";
-import { put } from "typed-redux-saga/macro";
+import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { IOToast } from "@pagopa/io-app-design-system";
+import { getNetworkError } from "../../../../../utils/errors";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCreateTransactionAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { paymentAnalyticsDataSelector } from "../../../history/store/selectors";
+import I18n from "../../../../../i18n";
+import * as analytics from "../../analytics";
+
+const handleError = (
+  paymentAnalyticsData: ReturnType<typeof paymentAnalyticsDataSelector>
+) => {
+  IOToast.error(I18n.t("features.payments.errors.transactionCreationError"));
+  analytics.trackPaymentMethodVerificaFatalError({
+    organization_name: paymentAnalyticsData?.verifiedData?.paName,
+    service_name: paymentAnalyticsData?.serviceName,
+    attempt: paymentAnalyticsData?.attempt,
+    expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+  });
+};
 
 export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransactionForIO"],
@@ -22,18 +37,9 @@ export function* handleWalletPaymentCreateTransaction(
       "pagoPAPlatformSessionToken"
     );
 
+    const paymentAnalyticsData = yield* select(paymentAnalyticsDataSelector);
     if (E.isLeft(newTransactionResult)) {
-      if (action.payload.onError) {
-        action.payload.onError();
-      } else {
-        yield* put(
-          paymentsCreateTransactionAction.failure({
-            ...getGenericError(
-              new Error(readablePrivacyReport(newTransactionResult.left))
-            )
-          })
-        );
-      }
+      handleError(paymentAnalyticsData);
       return;
     }
     const status = newTransactionResult.right.status;
@@ -44,15 +50,7 @@ export function* handleWalletPaymentCreateTransaction(
         )
       );
     } else if (status === 400) {
-      if (action.payload.onError) {
-        action.payload.onError();
-      } else {
-        yield* put(
-          paymentsCreateTransactionAction.failure({
-            ...getGenericError(new Error(`Error: ${status}`))
-          })
-        );
-      }
+      handleError(paymentAnalyticsData);
     } else {
       yield* put(
         paymentsCreateTransactionAction.failure(
