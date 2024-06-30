@@ -71,11 +71,13 @@ const PreconditionsFooterContent = ({
         type: "TwoButtons",
         primary: {
           label: I18n.t("global.buttons.continue"),
-          onPress: onContinueCallback
+          onPress: onContinueCallback,
+          testID: "message_preconditions_footer_continue"
         },
         secondary: {
           label: I18n.t("global.buttons.cancel"),
-          onPress: onCancelCallback
+          onPress: onCancelCallback,
+          testID: "message_preconditions_footer_cancel"
         }
       }}
     />
@@ -94,11 +96,13 @@ const PreconditionsFooterUpdate = ({
       type: "TwoButtons",
       primary: {
         label: I18n.t("global.buttons.updateIO"),
-        onPress: () => openAppStoreUrl()
+        onPress: () => openAppStoreUrl(),
+        testID: "message_preconditions_footer_update"
       },
       secondary: {
         label: I18n.t("global.buttons.cancel"),
-        onPress: onDismiss
+        onPress: onDismiss,
+        testID: "message_preconditions_footer_update_cancel"
       }
     }}
   />
