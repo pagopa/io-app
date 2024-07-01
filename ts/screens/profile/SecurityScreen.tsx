@@ -89,7 +89,7 @@ const SecurityScreen = (): React.ReactElement => {
     dispatch(
       identificationRequest(
         true,
-        false,
+        true,
         undefined,
         undefined,
         {
