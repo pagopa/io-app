@@ -86,6 +86,10 @@ import {
 } from "../features/fims/singleSignOn/navigation";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
+import {
+  FIMS_HISTORY_ROUTES,
+  FimsHistoryNavigator
+} from "../features/fims/history/navigation";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -260,6 +264,11 @@ const AuthenticatedStackNavigator = () => {
         name={FIMS_SSO_ROUTES.MAIN}
         options={hideHeaderOptions}
         component={FimsSSONavigator}
+      />
+      <Stack.Screen
+        name={FIMS_HISTORY_ROUTES.MAIN}
+        options={hideHeaderOptions}
+        component={FimsHistoryNavigator}
       />
 
       {cdcEnabled && (
