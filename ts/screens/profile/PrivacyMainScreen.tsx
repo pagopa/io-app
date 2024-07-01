@@ -180,19 +180,22 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     handleUserDataRequestAlert
   ]);
 
-  const isRequestProcessing = (choice: UserDataProcessingChoiceEnum): boolean =>
-    !pot.isLoading(userDataProcessing[choice]) &&
-    !pot.isError(userDataProcessing[choice]) &&
-    pot.getOrElse(
-      pot.map(
-        userDataProcessing[choice],
-        v =>
-          v !== undefined &&
-          v.status !== UserDataProcessingStatusEnum.CLOSED &&
-          v.status !== UserDataProcessingStatusEnum.ABORTED
+  const isRequestProcessing = useCallback(
+    (choice: UserDataProcessingChoiceEnum): boolean =>
+      !pot.isLoading(userDataProcessing[choice]) &&
+      !pot.isError(userDataProcessing[choice]) &&
+      pot.getOrElse(
+        pot.map(
+          userDataProcessing[choice],
+          v =>
+            v !== undefined &&
+            v.status !== UserDataProcessingStatusEnum.CLOSED &&
+            v.status !== UserDataProcessingStatusEnum.ABORTED
+        ),
+        false
       ),
-      false
-    );
+    [userDataProcessing]
+  );
 
   const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = [
     {
@@ -252,17 +255,20 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     }
   ];
 
-  const renderPrivacyNavItem = ({
-    item: { value, description, onPress, topElement, testID }
-  }: ListRenderItemInfo<PrivacyNavListItem>) => (
-    <ListItemNav
-      accessibilityLabel={value}
-      value={value}
-      description={description}
-      onPress={onPress}
-      topElement={topElement}
-      testID={testID}
-    />
+  const renderPrivacyNavItem = useCallback(
+    ({
+      item: { value, description, onPress, topElement, testID }
+    }: ListRenderItemInfo<PrivacyNavListItem>) => (
+      <ListItemNav
+        accessibilityLabel={value}
+        value={value}
+        description={description}
+        onPress={onPress}
+        topElement={topElement}
+        testID={testID}
+      />
+    ),
+    []
   );
 
   return (
