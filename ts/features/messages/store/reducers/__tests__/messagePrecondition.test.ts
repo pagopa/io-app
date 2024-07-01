@@ -1,135 +1,547 @@
-import * as O from "fp-ts/lib/Option";
-import { createStore } from "redux";
+/* eslint-disable sonarjs/no-nested-switch */
+import { ActionType } from "typesafe-actions";
+import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
+import { UIMessageId } from "../../../types";
 import {
-  getMessagePrecondition,
-  clearMessagePrecondition
-} from "../../actions";
-import { appReducer } from "../../../../../store/reducers";
-import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { TagEnum as TagEnumPN } from "../../../../../../definitions/backend/MessageCategoryPN";
-import { applicationChangeState } from "../../../../../store/actions/application";
+  errorPreconditionStatusAction,
+  idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
+  retrievingDataPreconditionStatusAction,
+  scheduledPreconditionStatusAction,
+  shownPreconditionStatusAction,
+  toErrorPayload,
+  toIdlePayload,
+  toLoadingContentPayload,
+  toRetrievingDataPayload,
+  toScheduledPayload,
+  toShownPayload,
+  toUpdateRequiredPayload,
+  updateRequiredPreconditionStatusAction
+} from "../../actions/preconditions";
 import {
-  remoteError,
-  remoteLoading,
-  remoteReady,
-  remoteUndefined
-} from "../../../../../common/model/RemoteValue";
-import { message_1 } from "../../../__mocks__/message";
-import { toUIMessage } from "../transformers";
+  MessagePreconditionStatus,
+  foldPreconditionStatus,
+  isShownPreconditionStatusSelector,
+  preconditionReducer,
+  preconditionsCategoryTagSelector,
+  preconditionsContentMarkdownSelector,
+  preconditionsContentSelector,
+  preconditionsFooterSelector,
+  preconditionsMessageIdSelector,
+  preconditionsRequireAppUpdateSelector,
+  preconditionsTitleContentSelector,
+  preconditionsTitleSelector,
+  shouldPresentPreconditionsBottomSheetSelector,
+  toErrorMPS,
+  toIdleMPS,
+  toLoadingContentMPS,
+  toRetrievingDataMPS,
+  toScheduledMPS,
+  toShownMPS,
+  toUpdateRequiredMPS
+} from "../messagePrecondition";
 import { GlobalState } from "../../../../../store/reducers/types";
+import * as backendStatus from "../../../../../store/reducers/backendStatus";
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 
-const mockThirdPartyMessagePrecondition: ThirdPartyMessagePrecondition = {
-  title: "placeholder_title",
-  markdown: "placeholder_markdown"
+const messageId = "01J1FJADCJ53SN4A11J3TBSKQE" as UIMessageId;
+const categoryTag = TagEnum.GENERIC;
+const errorReason = "An error reason";
+const content = {
+  title: "A title",
+  markdown: "A markdown"
+};
+const messagePreconditionStatusesGenerator = (
+  categoryTag: MessageCategory["tag"]
+) => [
+  toErrorMPS(messageId, categoryTag, errorReason),
+  toIdleMPS(),
+  toLoadingContentMPS(messageId, categoryTag, content),
+  toRetrievingDataMPS(messageId, categoryTag),
+  toScheduledMPS(messageId, categoryTag),
+  toShownMPS(messageId, categoryTag, content),
+  toUpdateRequiredMPS()
+];
+
+const computeExpectedOutput = (
+  fromStatus: MessagePreconditionStatus,
+  withAction: ActionType<
+    | typeof errorPreconditionStatusAction
+    | typeof idlePreconditionStatusAction
+    | typeof loadingContentPreconditionStatusAction
+    | typeof retrievingDataPreconditionStatusAction
+    | typeof scheduledPreconditionStatusAction
+    | typeof shownPreconditionStatusAction
+    | typeof updateRequiredPreconditionStatusAction
+  >
+) => {
+  switch (fromStatus.state) {
+    case "error":
+      switch (withAction.type) {
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
+        case "TO_RETRIEVING_DATA_PRECONDITION_STATUS":
+          return toRetrievingDataMPS(
+            fromStatus.messageId,
+            fromStatus.categoryTag
+          );
+      }
+      break;
+    case "idle":
+      switch (withAction.type) {
+        case "TO_SCHEDULED_PRECONDITION_STATUS":
+          return toScheduledMPS(
+            withAction.payload.messageId,
+            withAction.payload.categoryTag
+          );
+      }
+      break;
+    case "loadingContent":
+      switch (withAction.type) {
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
+        case "TO_ERROR_PRECONDITION_STATUS":
+          return toErrorMPS(
+            fromStatus.messageId,
+            fromStatus.categoryTag,
+            withAction.payload.reason
+          );
+        case "TO_SHOWN_PRECONDITION_STATUS":
+          return toShownMPS(
+            fromStatus.messageId,
+            fromStatus.categoryTag,
+            fromStatus.content
+          );
+      }
+      break;
+    case "retrievingData":
+      switch (withAction.type) {
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
+        case "TO_ERROR_PRECONDITION_STATUS":
+          return toErrorMPS(
+            fromStatus.messageId,
+            fromStatus.categoryTag,
+            withAction.payload.reason
+          );
+        case "TO_LOADING_CONTENT_PRECONDITION_STATUS":
+          return toLoadingContentMPS(
+            fromStatus.messageId,
+            fromStatus.categoryTag,
+            withAction.payload.content
+          );
+      }
+      break;
+    case "scheduled":
+      switch (withAction.type) {
+        case "TO_RETRIEVING_DATA_PRECONDITION_STATUS":
+          return toRetrievingDataMPS(
+            fromStatus.messageId,
+            fromStatus.categoryTag
+          );
+        case "TO_UPDATE_REQUIRED_PRECONDITION_STATUS":
+          return toUpdateRequiredMPS();
+      }
+      break;
+    case "shown":
+    case "updateRequired":
+      switch (withAction.type) {
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
+      }
+      break;
+  }
+  return fromStatus;
 };
 
-const message = toUIMessage(message_1);
+describe("messagePrecondition reducer", () => {
+  const changeStatusActions = [
+    errorPreconditionStatusAction(toErrorPayload(errorReason)),
+    idlePreconditionStatusAction(toIdlePayload()),
+    loadingContentPreconditionStatusAction(toLoadingContentPayload(content)),
+    retrievingDataPreconditionStatusAction(toRetrievingDataPayload()),
+    scheduledPreconditionStatusAction(
+      toScheduledPayload(messageId, categoryTag)
+    ),
+    shownPreconditionStatusAction(toShownPayload()),
+    updateRequiredPreconditionStatusAction(toUpdateRequiredPayload())
+  ];
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(initialStatus =>
+    changeStatusActions.forEach(changeStatusAction => {
+      const expectedStatus = computeExpectedOutput(
+        initialStatus,
+        changeStatusAction
+      );
+      it(`should output '${expectedStatus.state}', starting from '${initialStatus.state}', after receiving action '${changeStatusAction.type}'`, () => {
+        const preconditionStatus = preconditionReducer(
+          initialStatus,
+          changeStatusAction
+        );
+        expect(preconditionStatus).toStrictEqual(expectedStatus);
+      });
+    })
+  );
+});
 
-describe("messagePrecondition", () => {
-  it("The initial state should have the messageId undefined and the content as remoteUndefined", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.entities.messages.messagePrecondition).toStrictEqual({
-      messageId: O.none,
-      content: remoteUndefined
+describe("Message precondition status generators", () => {
+  it("should return proper istance for 'toErrorMPS'", () => {
+    const expectedMPS = {
+      state: "error",
+      messageId,
+      categoryTag,
+      reason: "An error reason"
+    };
+    const mps = toErrorMPS(
+      expectedMPS.messageId,
+      expectedMPS.categoryTag,
+      expectedMPS.reason
+    );
+    expect(mps).toStrictEqual(expectedMPS);
+  });
+  it("should return proper istance for 'toIdleMPS'", () => {
+    const expectedMPS = {
+      state: "idle"
+    };
+    const mps = toIdleMPS();
+    expect(mps).toStrictEqual(expectedMPS);
+  });
+  it("should return proper istance for 'toLoadingContentMPS'", () => {
+    const expectedMPS = {
+      state: "loadingContent",
+      messageId,
+      categoryTag,
+      content: {
+        title: "A title",
+        markdown: "A markdown content"
+      }
+    };
+    const mps = toLoadingContentMPS(
+      expectedMPS.messageId,
+      expectedMPS.categoryTag,
+      expectedMPS.content
+    );
+    expect(mps).toStrictEqual(expectedMPS);
+  });
+  it("should return proper istance for 'toRetrievingDataMPS'", () => {
+    const expectedMPS = {
+      state: "retrievingData",
+      messageId,
+      categoryTag
+    };
+    const mps = toRetrievingDataMPS(
+      expectedMPS.messageId,
+      expectedMPS.categoryTag
+    );
+    expect(mps).toStrictEqual(expectedMPS);
+  });
+  it("should return proper istance for 'toScheduledMPS'", () => {
+    const expectedMPS = {
+      state: "scheduled",
+      messageId,
+      categoryTag
+    };
+    const mps = toScheduledMPS(expectedMPS.messageId, expectedMPS.categoryTag);
+    expect(mps).toStrictEqual(expectedMPS);
+  });
+  it("should return proper istance for 'toShownMPS'", () => {
+    const expectedMPS = {
+      state: "shown",
+      messageId,
+      categoryTag,
+      content
+    };
+    const mps = toShownMPS(
+      expectedMPS.messageId,
+      expectedMPS.categoryTag,
+      expectedMPS.content
+    );
+    expect(mps).toStrictEqual(expectedMPS);
+  });
+  it("should return proper istance for 'toUpdateRequiredMPS'", () => {
+    const expectedMPS = {
+      state: "updateRequired"
+    };
+    const mps = toUpdateRequiredMPS();
+    expect(mps).toStrictEqual(expectedMPS);
+  });
+});
+
+describe("foldPreconditionStatus", () => {
+  const mocks = [
+    jest.fn(),
+    jest.fn(),
+    jest.fn(),
+    jest.fn(),
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  ];
+
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
+    (status, statusIndex) => {
+      afterEach(() => {
+        jest.resetAllMocks();
+        jest.clearAllMocks();
+      });
+      it(`should call function argument at index '${statusIndex}' for status '${status.state}'`, () => {
+        foldPreconditionStatus(
+          mocks[0],
+          mocks[1],
+          mocks[2],
+          mocks[3],
+          mocks[4],
+          mocks[5],
+          mocks[6]
+        )(status);
+        mocks.forEach((mock, mockIndex) => {
+          if (statusIndex === mockIndex) {
+            expect(mock.mock.calls.length).toBe(1);
+            expect(mock.mock.calls[0][0]).toStrictEqual(status);
+          } else {
+            expect(mock.mock.calls.length).toBe(0);
+          }
+        });
+      });
+    }
+  );
+});
+
+describe("shouldPresentPreconditionsBottomSheetSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput = status.state === "scheduled";
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalState = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+
+      const shouldPresent =
+        shouldPresentPreconditionsBottomSheetSelector(globalState);
+      expect(shouldPresent).toBe(expectedOutput);
     });
   });
+});
 
-  it("The messageId should be defined and the content should be remoteLoading if the getMessagePrecondition.request is dispatched", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-    const action = store.dispatch(
-      getMessagePrecondition.request({
-        id: message.id,
-        categoryTag: TagEnumPN.PN
+describe("preconditionsRequireAppUpdateSelector", () => {
+  [
+    TagEnum.GENERIC,
+    TagEnum.EU_COVID_CERT,
+    TagEnum.LEGAL_MESSAGE,
+    PaymentTagEnum.PAYMENT,
+    SENDTagEnum.PN
+  ].forEach(tagEnum =>
+    messagePreconditionStatusesGenerator(tagEnum).forEach(status =>
+      [false, true].forEach(pnAppVersionSupported => {
+        const expectedOutput =
+          status.state === "updateRequired" ||
+          (status.state === "scheduled" &&
+            tagEnum === SENDTagEnum.PN &&
+            !pnAppVersionSupported);
+        afterEach(() => {
+          jest.resetAllMocks();
+          jest.clearAllMocks();
+        });
+        it(`should return '${expectedOutput}' for status '${
+          status.state
+        }', category '${tagEnum}', SEND app version is ${
+          pnAppVersionSupported ? "" : "not"
+        } supported`, () => {
+          const globalState = {
+            entities: {
+              messages: {
+                precondition: status
+              }
+            }
+          } as GlobalState;
+          jest
+            .spyOn(backendStatus, "isPnAppVersionSupportedSelector")
+            .mockImplementation(_ => pnAppVersionSupported);
+          const shouldPresent =
+            preconditionsRequireAppUpdateSelector(globalState);
+          expect(shouldPresent).toBe(expectedOutput);
+        });
       })
-    );
-    expect(
-      store.getState().entities.messages.messagePrecondition
-    ).toStrictEqual({
-      messageId: O.some(action.payload.id),
-      content: remoteLoading
-    });
-  });
+    )
+  );
+});
 
-  it("The messageId should be defined and the content should be remoteReady with action payload as value if the getMessagePrecondition.success is dispatched", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const finalState: GlobalState = {
-      ...globalState,
-      entities: {
-        ...globalState.entities,
-        messages: {
-          ...globalState.entities.messages,
-          messagePrecondition: {
-            messageId: O.some(message.id),
-            content: remoteLoading
+describe("preconditionsTitleContentSelector", () => {
+  const expectedOutput = [
+    "empty",
+    undefined,
+    "header",
+    "loading",
+    undefined,
+    "header",
+    "empty"
+  ];
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
+    (status, statusIndex) =>
+      it(`should return '${expectedOutput[statusIndex]}' for status '${status.state}'`, () => {
+        const globalStatus = {
+          entities: {
+            messages: {
+              precondition: status
+            }
+          }
+        } as GlobalState;
+        const titleContent = preconditionsTitleContentSelector(globalStatus);
+        expect(titleContent).toStrictEqual(expectedOutput[statusIndex]);
+      })
+  );
+});
+
+describe("preconditionsTitleSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "loadingContent" || status.state === "shown"
+        ? status.content.title
+        : undefined;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
           }
         }
-      }
-    };
-
-    const store = createStore(appReducer, finalState as any);
-    const action = store.dispatch(
-      getMessagePrecondition.success(mockThirdPartyMessagePrecondition)
-    );
-    expect(
-      store.getState().entities.messages.messagePrecondition
-    ).toStrictEqual({
-      messageId: O.some(message.id),
-      content: remoteReady(action.payload)
+      } as GlobalState;
+      const title = preconditionsTitleSelector(globalStatus);
+      expect(title).toStrictEqual(expectedOutput);
     });
   });
+});
 
-  it("The messageId should be defined and the content should be remoteError with action payload as value if the getMessagePrecondition.failure is dispatched", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const finalState: GlobalState = {
-      ...globalState,
-      entities: {
-        ...globalState.entities,
-        messages: {
-          ...globalState.entities.messages,
-          messagePrecondition: {
-            messageId: O.some(message.id),
-            content: remoteLoading
+describe("preconditionsContentSelector", () => {
+  const expectedOutput = [
+    "error",
+    undefined,
+    "content",
+    "loading",
+    undefined,
+    "content",
+    "update"
+  ];
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
+    (status, statusIndex) =>
+      it(`should return '${expectedOutput[statusIndex]}' for status '${status.state}'`, () => {
+        const globalStatus = {
+          entities: {
+            messages: {
+              precondition: status
+            }
+          }
+        } as GlobalState;
+        const contentStatus = preconditionsContentSelector(globalStatus);
+        expect(contentStatus).toStrictEqual(expectedOutput[statusIndex]);
+      })
+  );
+});
+
+describe("preconditionsContentMarkdownSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "loadingContent" || status.state === "shown"
+        ? status.content.markdown
+        : undefined;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
           }
         }
-      }
-    };
-
-    const store = createStore(appReducer, finalState as any);
-    const action = store.dispatch(
-      getMessagePrecondition.failure(new Error("Error load remote content"))
-    );
-    expect(
-      store.getState().entities.messages.messagePrecondition
-    ).toStrictEqual({
-      messageId: O.some(message.id),
-      content: remoteError(action.payload)
+      } as GlobalState;
+      const content = preconditionsContentMarkdownSelector(globalStatus);
+      expect(content).toStrictEqual(expectedOutput);
     });
   });
+});
 
-  it("The messageId should be undefined and the content should be remoteUndefined if the clearMessagePrecondition is dispatched", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const finalState: GlobalState = {
-      ...globalState,
-      entities: {
-        ...globalState.entities,
-        messages: {
-          ...globalState.entities.messages,
-          messagePrecondition: {
-            messageId: O.some(message.id),
-            content: remoteReady(mockThirdPartyMessagePrecondition)
+describe("isShownPreconditionStatusSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput = status.state === "shown";
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
           }
         }
-      }
-    };
+      } as GlobalState;
+      const isShown = isShownPreconditionStatusSelector(globalStatus);
+      expect(isShown).toStrictEqual(expectedOutput);
+    });
+  });
+});
 
-    const store = createStore(appReducer, finalState as any);
-    store.dispatch(clearMessagePrecondition());
-    expect(
-      store.getState().entities.messages.messagePrecondition
-    ).toStrictEqual({
-      messageId: O.none,
-      content: remoteUndefined
+describe("preconditionsFooterSelector", () => {
+  const expectedOutput = [
+    "view",
+    undefined,
+    "view",
+    "view",
+    undefined,
+    "content",
+    "update"
+  ];
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
+    (status, statusIndex) => {
+      it(`should return '${expectedOutput[statusIndex]}' for status '${status.state}'`, () => {
+        const globalStatus = {
+          entities: {
+            messages: {
+              precondition: status
+            }
+          }
+        } as GlobalState;
+        const footerContent = preconditionsFooterSelector(globalStatus);
+        expect(footerContent).toStrictEqual(expectedOutput[statusIndex]);
+      });
+    }
+  );
+});
+
+describe("preconditionsCategoryTagSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "idle" || status.state === "updateRequired"
+        ? undefined
+        : status.categoryTag;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+      const categoryTag = preconditionsCategoryTagSelector(globalStatus);
+      expect(categoryTag).toStrictEqual(expectedOutput);
+    });
+  });
+});
+
+describe("preconditionsMessageIdSelector", () => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
+    const expectedOutput =
+      status.state === "idle" || status.state === "updateRequired"
+        ? undefined
+        : status.messageId;
+    it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
+      const globalStatus = {
+        entities: {
+          messages: {
+            precondition: status
+          }
+        }
+      } as GlobalState;
+      const messageId = preconditionsMessageIdSelector(globalStatus);
+      expect(messageId).toStrictEqual(expectedOutput);
     });
   });
 });

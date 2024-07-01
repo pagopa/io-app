@@ -5,12 +5,15 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import customVariables from "../../../../theme/variables";
 import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 
-type Props = {
+type LegacyProps = {
   markdown: string;
   onLoadEnd: () => void;
 };
 
-export const PreconditionContent = ({ markdown, onLoadEnd }: Props) => {
+export const LegacyPreconditionContent = ({
+  markdown,
+  onLoadEnd
+}: LegacyProps) => {
   const [loaded, setLoaded] = React.useState(false);
 
   const handleOnLoadEnd = () => {
@@ -20,7 +23,7 @@ export const PreconditionContent = ({ markdown, onLoadEnd }: Props) => {
 
   return (
     <>
-      {!loaded && <PreconditionContentSkeleton />}
+      {!loaded && <LegacyPreconditionContentSkeleton />}
       <View
         style={{
           display: loaded ? "flex" : "none",
@@ -35,7 +38,7 @@ export const PreconditionContent = ({ markdown, onLoadEnd }: Props) => {
   );
 };
 
-export const PreconditionContentSkeleton = () => (
+export const LegacyPreconditionContentSkeleton = () => (
   <View style={{ marginTop: customVariables.spacerWidth }} accessible={false}>
     {Array.from({ length: 4 }).map((_, i) => (
       <View key={i}>

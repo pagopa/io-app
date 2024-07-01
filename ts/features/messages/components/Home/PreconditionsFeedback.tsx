@@ -27,7 +27,11 @@ type Props = {
   subtitle?: string;
 };
 
-export const MessageFeedback = ({ pictogram, title, subtitle }: Props) => (
+export const PreconditionsFeedback = ({
+  pictogram,
+  title,
+  subtitle
+}: Props) => (
   <View style={styles.container}>
     <Pictogram name={pictogram} size={120} />
     <VSpacer size={24} />

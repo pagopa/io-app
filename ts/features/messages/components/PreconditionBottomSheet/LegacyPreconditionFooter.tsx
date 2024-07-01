@@ -9,7 +9,7 @@ import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import I18n from "../../../../i18n";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
 
-type Props = {
+type LegacyProps = {
   messageId: string;
   onDismiss: () => void;
   navigationAction: (message: UIMessage) => void;
@@ -20,11 +20,11 @@ const foldMessage = (
   callback: (message: UIMessage) => void
 ) => pipe(message, pot.toOption, O.map(callback));
 
-export const PreconditionFooter = ({
+export const LegacyPreconditionFooter = ({
   messageId,
   navigationAction,
   onDismiss
-}: Props) => {
+}: LegacyProps) => {
   const message = useIOSelector(state =>
     getPaginatedMessageById(state, messageId)
   );

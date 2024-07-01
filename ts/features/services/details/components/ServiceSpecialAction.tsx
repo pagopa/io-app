@@ -9,7 +9,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import {
   isCGNEnabledSelector,
   isPnEnabledSelector,
-  isPnSupportedSelector
+  isPnAppVersionSupportedSelector
 } from "../../../../store/reducers/backendStatus";
 import { openAppStoreUrl } from "../../../../utils/url";
 import { CgnServiceCta } from "../../../bonus/cgn/components/CgnServiceCTA";
@@ -64,7 +64,7 @@ export const ServiceSpecialAction = ({
 }: ServiceSpecialActionProps) => {
   const isCGNEnabled = useIOSelector(isCGNEnabledSelector);
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
-  const isPnSupported = useIOSelector(isPnSupportedSelector);
+  const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);
 
   const mapSpecialServiceConfig = new Map<string, SpecialServiceConfig>([
     ["cgn", { isEnabled: isCGNEnabled, isSupported: true }],
