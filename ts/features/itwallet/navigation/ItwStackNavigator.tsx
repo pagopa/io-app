@@ -21,6 +21,7 @@ import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWro
 import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
 import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
 import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
+import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -93,6 +94,10 @@ export const ItwStackNavigator = () => (
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_CIE.UNEXPECTED_ERROR}
         component={ItwCieUnexpectedErrorScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.EID_CIE.CIE_EXPIRED_SCREEN}
+        component={ItwCieExpiredOrInvalidScreen}
       />
     </Stack.Group>
 

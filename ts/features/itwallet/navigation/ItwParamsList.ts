@@ -25,6 +25,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.EID_CIE.UNEXPECTED_ERROR]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_CIE
     .ACTIVATE_NFC]: CieCardReaderScreenNavigationParams;
+  [ITW_ROUTES.ISSUANCE.EID_CIE.CIE_EXPIRED_SCREEN]: undefined;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION.EID_DETAIL]: undefined;
 };

@@ -355,11 +355,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "CERTIFICATE_EXPIRED":
       case "CERTIFICATE_REVOKED":
         this.setError({
-          eventReason: event.event
-          /* navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_EXPIRED_SCREEN
-            }) */
+          eventReason: event.event,
+          navigation: () =>
+            this.props.navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.ISSUANCE.EID_CIE.CIE_EXPIRED_SCREEN
+            })
         });
         break;
 
