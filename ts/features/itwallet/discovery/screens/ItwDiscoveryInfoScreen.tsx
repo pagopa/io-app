@@ -1,13 +1,11 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { FooterStackButton } from "../../common/components/FooterStackButton";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import ItwMarkdown from "../components/ItwMarkdown";
+import { FooterStackButton } from "../../common/components/FooterStackButton";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -16,12 +14,6 @@ import ItwMarkdown from "../components/ItwMarkdown";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
-  useOnFirstRender(() => {
-    machineRef.send({ type: "start" });
-  });
-
   useHeaderSecondLevel({
     title: I18n.t("features.itWallet.discovery.info.title"),
     contextualHelp: emptyContextualHelp,
@@ -36,9 +28,7 @@ const ItwDiscoveryInfoScreen = () => {
           primaryActionProps={{
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => {
-              machineRef.send({ type: "accept-tos" });
-            }
+            onPress: () => undefined
           }}
           secondaryActionProps={{
             label: I18n.t("global.buttons.cancel"),
