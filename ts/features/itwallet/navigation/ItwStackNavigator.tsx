@@ -14,6 +14,7 @@ import {
   ItwCredentialIssuanceMachineContext,
   ItwEidIssuanceMachineContext
 } from "../machine/provider";
+import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -45,6 +46,10 @@ const InnerNavigator = () => {
         }
       }}
     >
+      <Stack.Screen
+        name={ITW_ROUTES.ONBOARDING}
+        component={WalletCardOnboardingScreen}
+      />
       {/* DISCOVERY */}
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
@@ -83,7 +88,6 @@ const InnerNavigator = () => {
         component={ItwIssuanceEidResultScreen}
         options={{ headerShown: false }}
       />
-
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.EID_DETAIL}

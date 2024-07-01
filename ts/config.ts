@@ -251,3 +251,8 @@ export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";
+
+// IT Wallet
+export const itwWalletProviderBaseUrl = Config.ITW_WALLET_PROVIDER_BASE_URL;
+export const itwGoogleCloudProjectNumber =
+  Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;

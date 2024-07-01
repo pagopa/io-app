@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { Alert } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { WalletRoutes } from "../../../newWallet/navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const createEidIssuanceActionsImplementation = (
@@ -37,7 +37,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToFailureScreen: () => {},
+  navigateToFailureScreen: () => {
+    Alert.alert("Failure");
+  },
 
   navigateToWallet: () => {
     navigation.reset({
@@ -67,9 +69,9 @@ export const createEidIssuanceActionsImplementation = (
           }
         },
         {
-          name: WalletRoutes.WALLET_NAVIGATOR,
+          name: ITW_ROUTES.MAIN,
           params: {
-            screen: WalletRoutes.WALLET_CARD_ONBOARDING
+            screen: ITW_ROUTES.ONBOARDING
           }
         }
       ]

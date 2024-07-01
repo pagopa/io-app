@@ -30,6 +30,10 @@ export const itwEidIssuanceMachine = setup({
   },
   actors: {
     registerWalletInstance: fromPromise<string>(notImplemented),
+    getWalletAttestation: fromPromise<
+      string,
+      { hardwareKeyTag: string | undefined }
+    >(notImplemented),
     showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
       notImplemented
     ),
@@ -63,15 +67,48 @@ export const itwEidIssuanceMachine = setup({
     },
     WalletInitialization: {
       tags: [ItwTags.Loading],
-      description: "Wallet instance registration and attestation issuance",
-      invoke: {
-        src: "registerWalletInstance",
-        onDone: {
-          target: "UserIdentification",
-          actions: "storeWalletAttestation"
+      description: "Wallet instance registration and attestation retrieval",
+      initial: "WalletInstanceRegistration",
+      states: {
+        WalletInstanceRegistration: {
+          description:
+            "This state generates the integry hardware key and registers the wallet instance. The generated integrity hardware key is then stored and persisted to the redux store.",
+          invoke: {
+            src: "registerWalletInstance",
+            onDone: {
+              actions: [
+                assign(({ event }) => ({
+                  hardwareKeyTag: event.output
+                })),
+                ({ event }) => ({
+                  type: "storeHardwareKeyTag",
+                  params: { keyTag: event.output }
+                })
+              ],
+              target: "WalletAttestationRetrieval"
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
         },
-        onError: {
-          target: "Failure"
+        WalletAttestationRetrieval: {
+          description: "Obtainment of the wallet attestation",
+          invoke: {
+            src: "getWalletAttestation",
+            input: ({ context }) => ({
+              hardwareKeyTag: context.hardwareKeyTag
+            }),
+            onDone: {
+              actions: assign(({ event }) => ({
+                walletAttestation: event.output
+              })),
+              target: "#itwEidIssuanceMachine.UserIdentification"
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
         }
       }
     },
