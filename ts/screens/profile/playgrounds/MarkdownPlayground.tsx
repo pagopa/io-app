@@ -122,6 +122,7 @@ const MarkdownPlayground = () => {
       >
         <View style={styles.row}>
           <TextInput
+            accessibilityLabel="Markdown content"
             multiline={true}
             placeholder={"paste here your markdown and press the button"}
             style={styles.textInput}
@@ -185,7 +186,6 @@ const MarkdownPlayground = () => {
           <View style={styles.row}>
             <ExtractedCtaButton
               cta={maybeCTA.value.cta_1}
-              xsmall={true}
               onCTAPress={handleCtaPress}
             />
           </View>
@@ -196,7 +196,6 @@ const MarkdownPlayground = () => {
             <View style={styles.row}>
               <ExtractedCtaButton
                 cta={maybeCTA.value.cta_2}
-                xsmall={true}
                 onCTAPress={handleCtaPress}
               />
             </View>

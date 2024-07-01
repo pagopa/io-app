@@ -1,20 +1,32 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action, createStore } from "redux";
-import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
-import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { NetworkError } from "../../../../../../utils/errors";
-import { paginatedInstitutionsGet } from "../../actions";
 import {
+  featuredInstitutionsSelector,
+  featuredServicesSelector,
+  isErrorFeaturedInstitutionsSelector,
+  isErrorFeaturedServicesSelector,
   isErrorPaginatedInstitutionsSelector,
+  isLoadingFeaturedInstitutionsSelector,
+  isLoadingFeaturedServicesSelector,
   isLoadingPaginatedInstitutionsSelector,
   isUpdatingPaginatedInstitutionsSelector,
   paginatedInstitutionsCurrentPageSelector,
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
 } from "..";
+import { FeaturedService } from "../../../../../../../definitions/services/FeaturedService";
+import { FeaturedServices } from "../../../../../../../definitions/services/FeaturedServices";
+import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
+import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../../utils/errors";
+import {
+  featuredInstitutionsGet,
+  featuredServicesGet,
+  paginatedInstitutionsGet
+} from "../../actions";
 
 const MOCK_INSTITUTIONS: InstitutionsResource["institutions"] = [
   {
@@ -32,6 +44,36 @@ const MOCK_INSTITUTIONS: InstitutionsResource["institutions"] = [
     id: "3",
     name: "Institution 3"
   }
+];
+
+const MOCK_FEATURED_SERVICES: FeaturedServices["services"] = [
+  {
+    id: "aServiceId1",
+    name: "Service Name 1",
+    version: 1
+  } as FeaturedService,
+  {
+    id: "aServiceId2",
+    name: "Service Name 2",
+    version: 1
+  } as FeaturedService,
+  {
+    id: "aServiceId3",
+    name: "Service Name 3",
+    version: 1,
+    organization_name: "Organization Name"
+  } as FeaturedService,
+  {
+    id: "aServiceId4",
+    name: "Service Name 4",
+    version: 1
+  } as FeaturedService,
+  {
+    id: "aServiceId5",
+    name: "Service Name 5",
+    version: 1,
+    organization_name: "Organization Name"
+  } as FeaturedService
 ];
 
 const MOCK_NETWORK_ERROR: NetworkError = {
@@ -388,6 +430,282 @@ describe("Services home paginatedInstitutions selectors", () => {
 
         expect(lastPage).toStrictEqual(isLastPage);
       });
+    });
+  });
+});
+
+describe("Services home featuredInstitutions reducer", () => {
+  it("should have initial state", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+
+    expect(state.features.services.home.featuredInstitutions).toStrictEqual(
+      pot.none
+    );
+  });
+
+  it("should handle featuredInstitutionsGet action", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, state as any);
+
+    store.dispatch(featuredInstitutionsGet.request());
+    expect(
+      store.getState().features.services.home.featuredInstitutions
+    ).toStrictEqual(pot.noneLoading);
+
+    store.dispatch(
+      featuredInstitutionsGet.success({
+        institutions: MOCK_INSTITUTIONS
+      })
+    );
+    expect(
+      store.getState().features.services.home.featuredInstitutions
+    ).toStrictEqual(
+      pot.some({
+        institutions: MOCK_INSTITUTIONS
+      })
+    );
+
+    store.dispatch(featuredInstitutionsGet.failure(MOCK_NETWORK_ERROR));
+    expect(
+      store.getState().features.services.home.featuredInstitutions
+    ).toStrictEqual(
+      pot.someError(
+        {
+          institutions: MOCK_INSTITUTIONS
+        },
+        MOCK_NETWORK_ERROR
+      )
+    );
+  });
+});
+
+describe("Services home featuredInstitutions selectors", () => {
+  describe("featuredInstitutionsSelector", () => {
+    it("should return FeaturedInstitutions when pot.some", () => {
+      const featuredInstitutions = featuredInstitutionsSelector(
+        appReducer(
+          {} as GlobalState,
+          featuredInstitutionsGet.success({
+            institutions: MOCK_INSTITUTIONS
+          })
+        )
+      );
+      expect(featuredInstitutions).toStrictEqual(MOCK_INSTITUTIONS);
+    });
+
+    it("should return undefined when not pot.some", () => {
+      expect(
+        featuredInstitutionsSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual([]);
+
+      expect(
+        featuredInstitutionsSelector(
+          appReducer({} as GlobalState, featuredInstitutionsGet.request())
+        )
+      ).toStrictEqual([]);
+
+      expect(
+        featuredInstitutionsSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredInstitutionsGet.failure(MOCK_NETWORK_ERROR)
+          )
+        )
+      ).toStrictEqual([]);
+    });
+  });
+
+  describe("isLoadingFeaturedInstitutionsSelector", () => {
+    it("should return true when pot.loading", () => {
+      const isLoading = isLoadingFeaturedInstitutionsSelector(
+        appReducer({} as GlobalState, featuredInstitutionsGet.request())
+      );
+      expect(isLoading).toStrictEqual(true);
+    });
+
+    it("should return false when not pot.loading", () => {
+      expect(
+        isLoadingFeaturedInstitutionsSelector(
+          appReducer(undefined, {} as Action)
+        )
+      ).toStrictEqual(false);
+
+      expect(
+        isLoadingFeaturedInstitutionsSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredInstitutionsGet.success({
+              institutions: MOCK_INSTITUTIONS
+            })
+          )
+        )
+      ).toStrictEqual(false);
+    });
+  });
+
+  describe("isErrorFeaturedInstitutionsSelector", () => {
+    it("should return true when pot.error", () => {
+      const isError = isErrorFeaturedInstitutionsSelector(
+        appReducer(
+          {} as GlobalState,
+          featuredInstitutionsGet.failure(MOCK_NETWORK_ERROR)
+        )
+      );
+      expect(isError).toStrictEqual(true);
+    });
+
+    it("should return false when not pot.error", () => {
+      expect(
+        isErrorFeaturedInstitutionsSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual(false);
+
+      expect(
+        isErrorFeaturedInstitutionsSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredInstitutionsGet.success({
+              institutions: MOCK_INSTITUTIONS
+            })
+          )
+        )
+      ).toStrictEqual(false);
+    });
+  });
+});
+
+describe("Services home featuredServices reducer", () => {
+  it("should have initial state", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+
+    expect(state.features.services.home.featuredServices).toStrictEqual(
+      pot.none
+    );
+  });
+
+  it("should handle featuredServicesGet action", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, state as any);
+
+    store.dispatch(featuredServicesGet.request());
+    expect(
+      store.getState().features.services.home.featuredServices
+    ).toStrictEqual(pot.noneLoading);
+
+    store.dispatch(
+      featuredServicesGet.success({
+        services: MOCK_FEATURED_SERVICES
+      })
+    );
+    expect(
+      store.getState().features.services.home.featuredServices
+    ).toStrictEqual(
+      pot.some({
+        services: MOCK_FEATURED_SERVICES
+      })
+    );
+
+    store.dispatch(featuredServicesGet.failure(MOCK_NETWORK_ERROR));
+    expect(
+      store.getState().features.services.home.featuredServices
+    ).toStrictEqual(
+      pot.someError(
+        {
+          services: MOCK_FEATURED_SERVICES
+        },
+        MOCK_NETWORK_ERROR
+      )
+    );
+  });
+});
+
+describe("Services home featuredServices selectors", () => {
+  describe("featuredServicesSelector", () => {
+    it("should return FeaturedServices when pot.some", () => {
+      const featuredServices = featuredServicesSelector(
+        appReducer(
+          {} as GlobalState,
+          featuredServicesGet.success({
+            services: MOCK_FEATURED_SERVICES
+          })
+        )
+      );
+      expect(featuredServices).toStrictEqual(MOCK_FEATURED_SERVICES);
+    });
+
+    it("should return undefined when not pot.some", () => {
+      expect(
+        featuredServicesSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual([]);
+
+      expect(
+        featuredServicesSelector(
+          appReducer({} as GlobalState, featuredServicesGet.request())
+        )
+      ).toStrictEqual([]);
+
+      expect(
+        featuredServicesSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredServicesGet.failure(MOCK_NETWORK_ERROR)
+          )
+        )
+      ).toStrictEqual([]);
+    });
+  });
+
+  describe("isLoadingFeaturedServicesSelector", () => {
+    it("should return true when pot.loading", () => {
+      const isLoading = isLoadingFeaturedServicesSelector(
+        appReducer({} as GlobalState, featuredServicesGet.request())
+      );
+      expect(isLoading).toStrictEqual(true);
+    });
+
+    it("should return false when not pot.loading", () => {
+      expect(
+        isLoadingFeaturedServicesSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual(false);
+
+      expect(
+        isLoadingFeaturedServicesSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredServicesGet.success({
+              services: MOCK_FEATURED_SERVICES
+            })
+          )
+        )
+      ).toStrictEqual(false);
+    });
+  });
+
+  describe("isErrorFeaturedServicesSelector", () => {
+    it("should return true when pot.error", () => {
+      const isError = isErrorFeaturedServicesSelector(
+        appReducer(
+          {} as GlobalState,
+          featuredServicesGet.failure(MOCK_NETWORK_ERROR)
+        )
+      );
+      expect(isError).toStrictEqual(true);
+    });
+
+    it("should return false when not pot.error", () => {
+      expect(
+        isErrorFeaturedServicesSelector(appReducer(undefined, {} as Action))
+      ).toStrictEqual(false);
+
+      expect(
+        isErrorFeaturedServicesSelector(
+          appReducer(
+            {} as GlobalState,
+            featuredServicesGet.success({
+              services: MOCK_FEATURED_SERVICES
+            })
+          )
+        )
+      ).toStrictEqual(false);
     });
   });
 });

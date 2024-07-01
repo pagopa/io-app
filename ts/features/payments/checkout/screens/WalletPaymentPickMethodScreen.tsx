@@ -4,7 +4,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useEffect } from "react";
+import _ from "lodash";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -25,10 +26,11 @@ import {
   walletPaymentDetailsSelector
 } from "../store/selectors";
 import {
+  notHasValidPaymentMethodsSelector,
   walletPaymentAllMethodsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
-  walletPaymentSelectedWalletIdOptionSelector,
-  walletPaymentUserWalletsSelector
+  walletPaymentSelectedWalletIdOptionSelector
 } from "../store/selectors/paymentMethods";
 import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import {
@@ -36,6 +38,12 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import * as analytics from "../analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalytics";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -44,12 +52,19 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
-  const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
+  const userWalletsPots = useIOSelector(
+    walletPaymentEnabledUserWalletsSelector
+  );
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const isTransactionAlreadyActivated = useIOSelector(
     walletPaymentIsTransactionActivatedSelector
   );
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const notHasValidPaymentMethods = useIOSelector(
+    notHasValidPaymentMethodsSelector
+  );
+
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -66,6 +81,26 @@ const WalletPaymentPickMethodScreen = () => {
       dispatch(paymentsGetPaymentUserMethodsAction.request());
     }, [dispatch])
   );
+
+  // If the user doesn't have any onboarded payment method and the backend doesn't return any payment method as guest ..
+  // .. we redirect the user to the outcome screen with an outcome that allow the user to start the onboarding process of a new payment method.
+  // .. This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
+  useEffect(() => {
+    if (notHasValidPaymentMethods) {
+      const paymentDetails = pot.toUndefined(paymentDetailsPot);
+      dispatch(
+        paymentsInitOnboardingWithRptIdToResume({
+          rptId: paymentDetails?.rptId
+        })
+      );
+      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
+        params: {
+          outcome: WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+        }
+      });
+    }
+  }, [notHasValidPaymentMethods, paymentDetailsPot, navigation, dispatch]);
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(
@@ -88,6 +123,18 @@ const WalletPaymentPickMethodScreen = () => {
         // In case of guest payment walletId could be undefined
         const walletId = O.toUndefined(selectedWalletIdOption);
 
+        // In case of an onboarded wallet, it could be present the idPsp that needs to be preselected in the calculateFees request
+        const idPsp = pipe(
+          userWalletsPots,
+          pot.toOption,
+          O.chainNullableK(wallets =>
+            wallets.find(wallet => wallet.walletId === walletId)
+          ),
+          O.chainNullableK(wallet => wallet.details as UIWalletInfoDetails),
+          O.map(details => details.pspId),
+          O.getOrElseW(() => undefined)
+        );
+
         dispatch(
           paymentsCalculatePaymentFeesAction.request({
             paymentToken,
@@ -96,7 +143,8 @@ const WalletPaymentPickMethodScreen = () => {
             paymentAmount,
             transferList,
             isAllCCP,
-            primaryCreditorInstitution
+            primaryCreditorInstitution,
+            idPsp
           })
         );
       })
@@ -106,6 +154,7 @@ const WalletPaymentPickMethodScreen = () => {
     dispatch,
     paymentAmountPot,
     transactionPot,
+    userWalletsPots,
     selectedPaymentMethodIdOption,
     selectedWalletIdOption
   ]);
@@ -128,6 +177,23 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
 
+  useOnFirstRender(
+    () => {
+      analytics.trackPaymentMethodSelection({
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method_unavailable:
+          paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
+        last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+      });
+    },
+    () => !isLoading && !!paymentAnalyticsData
+  );
+
   React.useEffect(() => {
     if (isError) {
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
@@ -141,7 +207,25 @@ const WalletPaymentPickMethodScreen = () => {
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
+  const getSelectedPaymentMethodFlag = () =>
+    pipe(
+      sequenceT(O.Monad)(selectedPaymentMethodIdOption, selectedWalletIdOption),
+      O.fold(
+        () => "none" as PaymentAnalyticsSelectedMethodFlag,
+        () => "saved" as PaymentAnalyticsSelectedMethodFlag
+      )
+    );
+
   const handleContinue = () => {
+    analytics.trackPaymentMethodSelected({
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      payment_method_selected_flag: getSelectedPaymentMethodFlag()
+    });
     if (isTransactionAlreadyActivated) {
       // If transacion is already activated (for example, when the user returns to this screen to edit the selected
       // method) we can go directly to the next step.

@@ -6,7 +6,7 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import MessageListScreen, {
   MessagesHomeTabNavigationParams
-} from "../screens/MessageListScreen";
+} from "../screens/legacy/MessageListScreen";
 
 export const MessagesHomeTabRoutes = {
   MESSAGES_INBOX: "MESSAGES_INBOX",
@@ -35,7 +35,7 @@ const MessagesHomeTabNavigator = () => (
         height: 40
       },
       tabBarLabelStyle: {
-        ...makeFontStyleObject("SemiBold"),
+        ...makeFontStyleObject("Semibold"),
         fontSize: Platform.OS === "android" ? 16 : undefined,
         fontWeight: Platform.OS === "android" ? "normal" : "bold",
         textTransform: "capitalize",

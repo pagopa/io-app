@@ -424,14 +424,15 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -440,13 +441,13 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Modelli F24
                               </Text>
@@ -459,7 +460,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         color="grey-850"
                         defaultColor="bluegrey"
                         defaultWeight="Regular"
-                        font="TitilliumWeb"
+                        font="TitilliumSansPro"
                         fontStyle={
                           Object {
                             "fontSize": 16,
@@ -474,7 +475,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                             },
                             Object {
                               "color": "#2B2E38",
-                              "fontFamily": "Titillium Web",
+                              "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
                               "fontWeight": "400",
                             },
@@ -494,7 +495,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -567,7 +568,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -689,12 +690,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -702,18 +703,18 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         2
                                       </Text>
@@ -762,7 +763,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -781,7 +782,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -917,12 +918,12 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -930,18 +931,18 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         4
                                       </Text>
@@ -990,7 +991,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -1009,7 +1010,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2518,14 +2519,15 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -2534,13 +2536,13 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 Modelli F24
                               </Text>
@@ -2553,7 +2555,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         color="grey-850"
                         defaultColor="bluegrey"
                         defaultWeight="Regular"
-                        font="TitilliumWeb"
+                        font="TitilliumSansPro"
                         fontStyle={
                           Object {
                             "fontSize": 16,
@@ -2568,7 +2570,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             },
                             Object {
                               "color": "#2B2E38",
-                              "fontFamily": "Titillium Web",
+                              "fontFamily": "Titillium Sans Pro",
                               "fontStyle": "normal",
                               "fontWeight": "400",
                             },
@@ -2647,12 +2649,12 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             <Text
                               allowFontScaling={false}
                               color="blueIO-500"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
-                              font="TitilliumWeb"
+                              defaultColor="black"
+                              defaultWeight="Semibold"
+                              font="TitilliumSansPro"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
+                                  "fontSize": 16,
                                   "lineHeight": 21,
                                 }
                               }
@@ -2660,18 +2662,18 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               style={
                                 Array [
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   },
                                   Object {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                   },
                                 ]
                               }
-                              weight="SemiBold"
+                              weight="Semibold"
                             >
                               2
                             </Text>
@@ -2720,7 +2722,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                         "textTransform": "uppercase",
                                       },
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
@@ -2739,7 +2741,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             style={
                               Object {
                                 "alignItems": "center",
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >

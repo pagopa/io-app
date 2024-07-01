@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarSearch,
   HSpacer,
   IOColors,
   IOLogoPaymentCardType,
@@ -50,7 +51,7 @@ export const DSLogos = () => {
     <DesignSystemScreen title={"Logos"}>
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Avatar
@@ -61,7 +62,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Payment Networks (Small)
@@ -72,7 +73,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Payment Networks (Big)
@@ -83,7 +84,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Banks (Extended)
@@ -94,7 +95,7 @@ export const DSLogos = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         Payment Networks (Card)
@@ -104,7 +105,7 @@ export const DSLogos = () => {
   );
 };
 
-const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 
 const organizationsURIs = [
   {
@@ -155,7 +156,6 @@ const renderAvatar = () => (
         {organizationsURIs.map(({ imageSource }, i) => (
           <React.Fragment key={i}>
             <Avatar
-              shape="square"
               size="small"
               logoUri={
                 imageSource
@@ -166,6 +166,7 @@ const renderAvatar = () => (
               }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
           </React.Fragment>
         ))}
       </ScrollView>
@@ -179,7 +180,6 @@ const renderAvatar = () => (
         {organizationsURIs.map(({ imageSource }, i) => (
           <React.Fragment key={i}>
             <Avatar
-              shape="square"
               size="medium"
               logoUri={
                 imageSource
@@ -190,6 +190,30 @@ const renderAvatar = () => (
               }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
+          </React.Fragment>
+        ))}
+      </ScrollView>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={`AvatarSearch`}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={styles.horizontalScroll}
+      >
+        {organizationsURIs.map(({ imageSource }, i) => (
+          <React.Fragment key={i}>
+            <AvatarSearch
+              source={
+                imageSource
+                  ? Array.isArray(imageSource)
+                    ? imageSource.map(s => ({ uri: s }))
+                    : [{ uri: imageSource }]
+                  : []
+              }
+            />
+            {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+            {i === organizationsURIs.length - 1 && <HSpacer size={32} />}
           </React.Fragment>
         ))}
       </ScrollView>

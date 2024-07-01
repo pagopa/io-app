@@ -4,7 +4,9 @@ import {
   ButtonExtendedOutline,
   ModuleAttachment,
   ModuleCheckout,
+  ModuleCredential,
   ModuleIDP,
+  ModuleNavigation,
   ModulePaymentNotice,
   PaymentNoticeStatus,
   VSpacer,
@@ -17,6 +19,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { LegacyModuleAttachment } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -42,7 +45,7 @@ export const DSModules = () => {
     <DesignSystemScreen title="Modules">
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleAttachment
@@ -53,7 +56,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModulePaymentNotice
@@ -64,7 +67,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleCheckout
@@ -75,7 +78,29 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        ModuleCredential
+      </H2>
+      {renderModuleCredential()}
+
+      <VSpacer size={40} />
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"Semibold"}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        ModuleNavigation
+      </H2>
+      {renderModuleNavigation()}
+
+      <VSpacer size={40} />
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ButtonExtendedOutline
@@ -86,7 +111,7 @@ export const DSModules = () => {
 
       <H2
         color={theme["textHeading-default"]}
-        weight={"SemiBold"}
+        weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
         ModuleIDP
@@ -328,6 +353,98 @@ const renderModuleIDP = () => (
           onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
         />
+      </View>
+    </DSComponentViewerBox>
+  </>
+);
+
+const renderModuleCredential = () => (
+  <>
+    <DSComponentViewerBox name="ModuleCredential">
+      <View>
+        <ModuleCredential
+          icon="fingerprint"
+          label="Identità digitale"
+          onPress={onButtonPress}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCredential, with Badge">
+      <View>
+        <ModuleCredential
+          icon="fingerprint"
+          label="Identità digitale"
+          onPress={onButtonPress}
+          badge={{
+            text: "predefinita",
+            variant: "info"
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCredential, with long label">
+      <View>
+        <ModuleCredential
+          icon="fingerprint"
+          label="This is a very long long long label"
+          onPress={onButtonPress}
+          badge={{
+            text: "predefinita",
+            variant: "info"
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCredential, with image asset">
+      <View>
+        <ModuleCredential
+          image={CgnLogo}
+          label="Carta Giovani Nazionale"
+          badge={{
+            text: "già presente",
+            variant: "success"
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCredential, loading">
+      <View>
+        <ModuleCredential isLoading={true} />
+      </View>
+    </DSComponentViewerBox>
+  </>
+);
+
+const renderModuleNavigation = () => (
+  <>
+    <DSComponentViewerBox name="ModuleNavigation">
+      <View>
+        <ModuleNavigation
+          icon="spid"
+          title="SPID"
+          subtitle="Usa credenziali e app (o SMS)"
+          onPress={onButtonPress}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigation, with Badge">
+      <View>
+        <ModuleNavigation
+          icon="spid"
+          title="SPID"
+          subtitle="Usa credenziali e app (o SMS)"
+          onPress={onButtonPress}
+          badge={{
+            text: "IN arrivo",
+            variant: "blue",
+            outline: true
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigation, loading">
+      <View>
+        <ModuleNavigation isLoading={true} />
       </View>
     </DSComponentViewerBox>
   </>

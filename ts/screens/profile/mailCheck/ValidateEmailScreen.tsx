@@ -2,10 +2,10 @@ import React, { useMemo, useCallback } from "react";
 import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
+import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   trackEmailNotAlreadyConfirmed,
@@ -13,12 +13,10 @@ import {
 } from "../../analytics/emailAnalytics";
 import { getFlowType } from "../../../utils/analytics";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
-import {
-  BodyProps,
-  OperationResultScreenContent
-} from "../../../components/screens/OperationResultScreenContent";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
+import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
 
 export type EmailNotVerifiedScreenParamList = {
   email: string;
@@ -77,7 +75,7 @@ const ValidateEmailScreen = () => {
         style: {
           textAlign: "center"
         },
-        weight: "SemiBold"
+        weight: "Semibold"
       }
     ],
     [email]

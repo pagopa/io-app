@@ -1,18 +1,16 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsGetPaymentUserMethodsAction } from "../../../store/actions/networking";
 import { handleWalletPaymentGetUserWallets } from "../handleWalletPaymentGetUserWallets";
 import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletStatus";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
+import { WalletClientStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
 
 describe("Test handleWalletPaymentGetUserWallets saga", () => {
   const T_SESSION_TOKEN = "ABCD";
-
   it(`should put ${getType(
     paymentsGetPaymentUserMethodsAction.success
   )} when getWalletsByIdUser is 200`, () => {
@@ -25,6 +23,12 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
           paymentMethodId: "paymentMethodId",
           paymentMethodAsset: "paymentMethodAsset",
           applications: [],
+          clients: {
+            IO: {
+              status: WalletClientStatusEnum.ENABLED,
+              lastUsage: new Date()
+            }
+          },
           status: WalletStatusEnum.VALIDATED,
           updateDate: new Date()
         }
@@ -37,13 +41,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        paymentsGetPaymentUserMethodsAction.request()
-      )
       .next(E.right({ status: 200, value: getWalletsByIdUserResponse }))
       .put(
         paymentsGetPaymentUserMethodsAction.success(getWalletsByIdUserResponse)
@@ -63,13 +61,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        paymentsGetPaymentUserMethodsAction.request()
-      )
       .next(E.right({ status: 400, value: undefined }))
       .put(
         paymentsGetPaymentUserMethodsAction.failure(
@@ -91,13 +83,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        paymentsGetPaymentUserMethodsAction.request()
-      )
       .next(E.left([]))
       .put(
         paymentsGetPaymentUserMethodsAction.failure({

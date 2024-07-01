@@ -7,8 +7,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import BlockButtons from "../../../../components/ui/BlockButtons";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../../../xstate/selectors";
@@ -21,6 +20,7 @@ import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
+import { FooterActions } from "../../../../components/ui/FooterActions";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -79,43 +79,46 @@ export const InitiativeDetailsScreen = () => {
     )
   );
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.onboarding.headerTitle"),
+    contextualHelp: emptyContextualHelp,
+    goBack: handleGoBackPress,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      goBack={handleGoBackPress}
-      headerTitle={I18n.t("idpay.onboarding.headerTitle")}
-      contextualHelp={emptyContextualHelp}
+    <ForceScrollDownView
+      threshold={150}
+      scrollEnabled={isDescriptionLoaded}
+      contentContainerStyle={styles.scrollContainer}
     >
-      <ForceScrollDownView
-        threshold={150}
-        scrollEnabled={isDescriptionLoaded}
-        contentContainerStyle={styles.scrollContainer}
-      >
-        <View style={styles.container}>
-          <VSpacer size={24} />
-          <OnboardingServiceHeader initiative={initiative} />
-          <VSpacer size={24} />
-          {descriptionComponent}
-          <VSpacer size={8} />
-          <ItemSeparatorComponent noPadded={true} />
-          <VSpacer size={16} />
-          {onboardingPrivacyAdvice}
-          <VSpacer size={32} />
-          <BlockButtons
-            key={"continue"}
-            type="SingleButton"
-            leftButton={{
-              title: I18n.t("global.buttons.continue"),
+      <View style={styles.container}>
+        <VSpacer size={24} />
+        <OnboardingServiceHeader initiative={initiative} />
+        <VSpacer size={24} />
+        {descriptionComponent}
+        <VSpacer size={8} />
+        <ItemSeparatorComponent noPadded={true} />
+        <VSpacer size={16} />
+        {onboardingPrivacyAdvice}
+        <VSpacer size={32} />
+        <FooterActions
+          key={"continue"}
+          actions={{
+            type: "SingleButton",
+            primary: {
+              label: I18n.t("global.buttons.continue"),
               accessibilityLabel: I18n.t("global.buttons.continue"),
               onPress: handleContinuePress,
               testID: "IDPayOnboardingContinue",
-              isLoading,
+              loading: isLoading,
               disabled: isLoading
-            }}
-          />
-          <VSpacer size={48} />
-        </View>
-      </ForceScrollDownView>
-    </BaseScreenComponent>
+            }
+          }}
+        />
+        <VSpacer size={48} />
+      </View>
+    </ForceScrollDownView>
   );
 };
 

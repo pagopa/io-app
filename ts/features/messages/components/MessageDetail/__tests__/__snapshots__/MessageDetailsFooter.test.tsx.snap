@@ -394,7 +394,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -470,7 +470,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -896,7 +896,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -972,7 +972,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1398,7 +1398,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -1474,7 +1474,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1900,7 +1900,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -1976,7 +1976,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2402,7 +2402,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -2478,7 +2478,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2550,7 +2550,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -2626,7 +2626,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3052,7 +3052,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3128,7 +3128,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3200,7 +3200,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3276,7 +3276,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3702,7 +3702,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3778,7 +3778,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3850,7 +3850,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -3926,7 +3926,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4352,7 +4352,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -4428,7 +4428,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4500,7 +4500,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   Object {
-                                    "marginRight": 16,
+                                    "marginRight": 12,
                                   }
                                 }
                               >
@@ -4576,7 +4576,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                   style={
                                     Array [
                                       Object {
-                                        "fontFamily": "Titillium Web",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

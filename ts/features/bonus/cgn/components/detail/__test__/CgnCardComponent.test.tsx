@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { Provider } from "react-redux";
@@ -11,13 +10,10 @@ import {
   CardRevoked,
   StatusEnum as CgnRevokedStatusEnum
 } from "../../../../../../../definitions/cgn/CardRevoked";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { profileLoadSuccess } from "../../../../../../store/actions/profile";
-import { appReducer } from "../../../../../../store/reducers";
-import { profileNameSurnameSelector } from "../../../../../../store/reducers/profile";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import mockedProfile from "../../../../../../__mocks__/initializedProfile";
 import CgnCardComponent from "../CgnCardComponent";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,
@@ -43,67 +39,82 @@ const cgnStatusPending: Card = {
   status: CgnPendingStatusEnum.PENDING
 };
 
-const baseCardTestCase = (store: any, card: Card) => {
-  const component = getComponent(store, card);
-
-  expect(component).not.toBeNull();
-  const webView = component.queryByTestId("background-webview");
-  expect(webView).not.toBeNull();
-
-  const nameSurname = component.queryByTestId("profile-name-surname");
-  if (pot.isSome(store.getState().profile)) {
-    expect(nameSurname).not.toBeNull();
-    expect(nameSurname).toHaveTextContent(
-      profileNameSurnameSelector(store.getState()) ?? ""
-    );
-  } else {
-    expect(nameSurname).toBeNull();
-  }
-};
-
 describe("CgnCardComponent", () => {
-  const globalState = appReducer(undefined, profileLoadSuccess(mockedProfile));
-  const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore({
-    ...globalState
-  } as GlobalState);
-
   it("Activated card", () => {
-    baseCardTestCase(store, cgnStatusActivated);
-  });
-
-  it("Revoked card", () => {
-    baseCardTestCase(store, cgnStatusRevoked);
-  });
-
-  it("Expired card", () => {
-    baseCardTestCase(store, cgnStatusExpired);
-  });
-
-  it("Pending card", () => {
-    const component = getComponent(store, cgnStatusPending);
+    const component = getComponent(cgnStatusActivated);
 
     expect(component).not.toBeNull();
     const webView = component.queryByTestId("background-webview");
     expect(webView).not.toBeNull();
 
-    const validityDate = component.queryByTestId("validity-date");
-    expect(validityDate).toBeNull();
+    const validityDate = component.queryByTestId("card-bottom-content");
+    expect(validityDate).not.toBeNull();
+
+    const revokedTag = component.queryByTestId("card-status-revoked");
+    expect(revokedTag).toBeNull();
+
+    const expiredTag = component.queryByTestId("card-status-expired");
+    expect(expiredTag).toBeNull();
   });
 
-  it("No profile", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const mockStore = configureMockStore<GlobalState>();
-    const storeNoProfile: ReturnType<typeof mockStore> = mockStore({
-      ...globalState
-    } as GlobalState);
-    baseCardTestCase(storeNoProfile, cgnStatusActivated);
+  it("Revoked card", () => {
+    const component = getComponent(cgnStatusRevoked);
+
+    expect(component).not.toBeNull();
+    const webView = component.queryByTestId("background-webview");
+    expect(webView).not.toBeNull();
+
+    const validityDate = component.queryByTestId("card-bottom-content");
+    expect(validityDate).toBeNull();
+
+    const revokedTag = component.queryByTestId("card-status-revoked");
+    expect(revokedTag).not.toBeNull();
+
+    const expiredTag = component.queryByTestId("card-status-expired");
+    expect(expiredTag).toBeNull();
+  });
+
+  it("Expired card", () => {
+    const component = getComponent(cgnStatusExpired);
+
+    expect(component).not.toBeNull();
+    const webView = component.queryByTestId("background-webview");
+    expect(webView).not.toBeNull();
+
+    const validityDate = component.queryByTestId("card-bottom-content");
+    expect(validityDate).toBeNull();
+
+    const revokedTag = component.queryByTestId("card-status-revoked");
+    expect(revokedTag).toBeNull();
+
+    const expiredTag = component.queryByTestId("card-status-expired");
+    expect(expiredTag).not.toBeNull();
+  });
+
+  it("Pending card", () => {
+    const component = getComponent(cgnStatusPending);
+
+    expect(component).not.toBeNull();
+    const webView = component.queryByTestId("background-webview");
+    expect(webView).not.toBeNull();
+
+    const validityDate = component.queryByTestId("card-bottom-content");
+    expect(validityDate).toBeNull();
+
+    const revokedTag = component.queryByTestId("card-status-revoked");
+    expect(revokedTag).toBeNull();
+
+    const expiredTag = component.queryByTestId("card-status-expired");
+    expect(expiredTag).toBeNull();
   });
 });
 
-const getComponent = (store: any, card: Card) => {
+const getComponent = (card: Card) => {
   const onLoadEnd = jest.fn();
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const mockStore = configureMockStore<GlobalState>();
 
+  const store = mockStore(globalState);
   return render(
     <Provider store={store}>
       <CgnCardComponent cgnDetails={card} onCardLoadEnd={onLoadEnd} />

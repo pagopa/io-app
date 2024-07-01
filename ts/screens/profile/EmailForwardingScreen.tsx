@@ -1,285 +1,176 @@
 /**
  * A screens to express the preferences related to email forwarding.
- * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { List } from "native-base";
-import * as React from "react";
-import { View } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../components/core/typography/Body";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
-import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { pipe } from "fp-ts/lib/function";
+import {
+  ContentWrapper,
+  ListItemSwitch,
+  useIOToast
+} from "@pagopa/io-app-design-system";
+import _ from "lodash";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
-import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
-import { profileUpsert } from "../../store/actions/profile";
-import { ReduxProps } from "../../store/actions/types";
+import { BodyProps } from "../../components/core/typography/ComposedBodyFromArray";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
-  visibleServicesSelector,
-  VisibleServicesState
-} from "../../store/reducers/entities/services/visibleServices";
-import {
+  ProfileState,
   isEmailEnabledSelector,
   profileEmailSelector,
-  profileSelector,
-  ProfileState
+  profileSelector
 } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { profileUpsert } from "../../store/actions/profile";
+import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
-import { showToast } from "../../utils/showToast";
-
-type OwnProps = {
-  navigation: IOStackNavigationProp<
-    ProfileParamsList,
-    "PROFILE_PREFERENCES_EMAIL_FORWARDING"
-  >;
-};
-
-type State = {
-  isCustomChannelEnabledChoice?: boolean;
-  isLoading: boolean;
-};
-
-type Props = OwnProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  ReduxProps;
-
-function renderListItem(
-  title: string,
-  subTitle: string,
-  isActive: boolean,
-  onPress: () => void
-) {
-  return (
-    <ListItemComponent
-      title={title}
-      subTitle={subTitle}
-      iconName={isActive ? "legRadioOn" : "legRadioOff"}
-      smallIconSize={true}
-      iconOnTop={true}
-      useExtendedSubTitle={true}
-      onPress={onPress}
-      accessible={true}
-      accessibilityRole={"radio"}
-      accessibilityLabel={`${title} ${subTitle}, ${
-        isActive
-          ? I18n.t("global.accessibility.active")
-          : I18n.t("global.accessibility.inactive")
-      }`}
-    />
-  );
-}
+import {
+  VisibleServicesState,
+  visibleServicesSelector
+} from "../../store/reducers/entities/services/visibleServices";
+import { usePrevious } from "../../utils/hooks/usePrevious";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.email.forward.contextualHelpTitle",
   body: "profile.preferences.email.forward.contextualHelpContent"
 };
 
-class EmailForwardingScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { isLoading: false, isCustomChannelEnabledChoice: undefined };
-  }
-
-  public componentDidUpdate(prevProps: Props) {
-    if (pot.isUpdating(prevProps.potProfile)) {
-      // if we got an error while updating the preference
-      // show a toast
-      if (pot.isError(this.props.potProfile)) {
-        showToast(I18n.t("global.genericError"));
-        this.setState({ isLoading: false });
-        return;
-      }
-      // TODO move this login into a dedicated saga https://www.pivotaltracker.com/story/show/171600688
-      // if the profile updating is successfully then apply isCustomChannelEnabledChoice
-      if (
-        pot.isSome(this.props.potProfile) &&
-        this.state.isCustomChannelEnabledChoice !== undefined
-      ) {
-        this.props.setCustomEmailChannelEnabled(
-          this.state.isCustomChannelEnabledChoice
-        );
-        this.setState({ isLoading: false });
-      }
-    }
-  }
-
-  public render() {
-    return (
-      <TopScreenComponent
-        headerTitle={I18n.t("send_email_messages.title")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        goBack={() => this.props.navigation.goBack()}
-      >
-        <ScreenContent title={I18n.t("send_email_messages.title")}>
-          <View style={IOStyles.horizontalContentPadding}>
-            <Body>
-              <Body>{I18n.t("send_email_messages.subtitle")}</Body>
-              <Body weight="SemiBold">{` ${this.props.userEmail}`}</Body>
-              <Body>{I18n.t("global.symbols.question")}</Body>
-            </Body>
-          </View>
-          <VSpacer size={16} />
-          <List withContentLateralPadding={true}>
-            {/* ALL INACTIVE */}
-            {renderListItem(
-              I18n.t("send_email_messages.options.disable_all.label"),
-              I18n.t("send_email_messages.options.disable_all.info"),
-              !this.props.isEmailEnabled,
-              () => {
-                if (this.state.isLoading) {
-                  return;
-                }
-                // Disable custom email notification and disable email notifications from all visible service
-                // The upsert of blocked_inbox_or_channels is avoided: the backend will block any email notification
-                // when is_email_enabled is false
-                this.setState(
-                  { isCustomChannelEnabledChoice: false, isLoading: true },
-                  () => {
-                    this.props.setEmailChannel(false);
-                  }
-                );
-              }
-            )}
-            {/* ALL ACTIVE */}
-            {renderListItem(
-              I18n.t("send_email_messages.options.enable_all.label"),
-              I18n.t("send_email_messages.options.enable_all.info"),
-              this.props.isEmailEnabled &&
-                !this.props.isCustomEmailChannelEnabled,
-              () => {
-                if (this.state.isLoading) {
-                  return;
-                }
-                // Disable custom email notification and enable email notifications from all visible services.
-                // The upsert of blocked_inbox_or_channels is required to enable those channel that was disabled
-                // from the service detail
-                this.setState(
-                  { isCustomChannelEnabledChoice: false, isLoading: true },
-                  () => {
-                    this.props.disableOrEnableAllEmailNotifications(
-                      this.props.visibleServicesId,
-                      this.props.potProfile
-                    );
-                  }
-                );
-              }
-            )}
-            {/* CASE BY CASE */}
-            {/* ByService option is disabled until it will be persisted on backend as a proper attribute */}
-            {
-              // TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17
-              // renderListItem(
-              //   I18n.t("send_email_messages.options.by_service.label"),
-              //   I18n.t("send_email_messages.options.by_service.info"),
-              //   this.props.isEmailEnabled &&
-              //     this.props.isCustomEmailChannelEnabled,
-              //   // Enable custom set of the email notification for each visible service
-              //   () => {
-              //     if (this.state.isLoading) {
-              //       return;
-              //     }
-              //     this.setState(
-              //       { isCustomChannelEnabledChoice: true, isLoading: true },
-              //       () => {
-              //         this.props.setEmailChannel(true);
-              //       }
-              //     );
-              //   }
-              // )
-            }
-
-            <EdgeBorderComponent />
-          </List>
-        </ScreenContent>
-      </TopScreenComponent>
-    );
-  }
-}
-
-const mapStateToProps = (state: GlobalState) => {
-  const potVisibleServices: VisibleServicesState =
-    visibleServicesSelector(state);
+const EmailForwardingScreen = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const isCustomChannelEnabledChoice = useRef<boolean | undefined>(undefined);
+  const IOToast = useIOToast();
+  const dispatch = useIODispatch();
+  const profile = useIOSelector(profileSelector, _.isEqual);
+  const prevProfile = usePrevious(profile);
+  const potVisibleServices: VisibleServicesState = useIOSelector(
+    visibleServicesSelector
+  );
   const visibleServicesId = pot.getOrElse(
     pot.map(potVisibleServices, services =>
       services.map(service => service.service_id)
     ),
     []
   );
-
-  const potProfile = profileSelector(state);
-  // const potIsCustomEmailChannelEnabled = isCustomEmailChannelEnabledSelector(
-  //   state
-  // );
-  // TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17
-  const isCustomEmailChannelEnabled = false;
-  // : pot.getOrElse(potIsCustomEmailChannelEnabled, false);
-
-  const potUserEmail = profileEmailSelector(state);
+  const isEmailEnabled = useIOSelector(isEmailEnabledSelector, _.isEqual);
+  const UserEmailSelector = useIOSelector(profileEmailSelector, _.isEqual);
   const userEmail = pipe(
-    potUserEmail,
+    UserEmailSelector,
     O.fold(
       () => I18n.t("global.remoteStates.notAvailable"),
       (i: string) => i
     )
   );
 
-  return {
-    potProfile,
-    isLoading: pot.isLoading(potProfile) || pot.isUpdating(potProfile),
-    isEmailEnabled: isEmailEnabledSelector(state),
-    isCustomEmailChannelEnabled,
-    visibleServicesId,
-    userEmail
-  };
+  const setEmailChannel = useCallback(
+    (isEmailEnabled: boolean) => {
+      dispatch(
+        profileUpsert.request({
+          is_email_enabled: isEmailEnabled
+        })
+      );
+    },
+    [dispatch]
+  );
+
+  const setCustomEmailChannelEnabled = useCallback(
+    (customEmailChannelEnabled: boolean) => {
+      dispatch(customEmailChannelSetEnabled(customEmailChannelEnabled));
+    },
+    [dispatch]
+  );
+
+  const disableOrEnableAllEmailNotifications = useCallback(
+    (servicesId: ReadonlyArray<string>, profile: ProfileState) => {
+      const newBlockedChannels = getProfileChannelsforServicesList(
+        servicesId,
+        profile,
+        true,
+        "EMAIL"
+      );
+      dispatch(
+        profileUpsert.request({
+          blocked_inbox_or_channels: newBlockedChannels,
+          is_email_enabled: true
+        })
+      );
+    },
+    [dispatch]
+  );
+
+  const bodyPropsArray: Array<BodyProps> = [
+    {
+      text: I18n.t("send_email_messages.subtitle")
+    },
+    {
+      text: <> {userEmail}</>,
+      weight: "Semibold"
+    },
+    {
+      text: I18n.t("global.symbols.question")
+    }
+  ];
+
+  const handleSwitchValueChange = useCallback(
+    (canSendEmail: boolean) => {
+      setIsLoading(true);
+      // eslint-disable-next-line functional/immutable-data
+      isCustomChannelEnabledChoice.current = false;
+      if (canSendEmail) {
+        disableOrEnableAllEmailNotifications(visibleServicesId, profile);
+      } else {
+        setEmailChannel(false);
+      }
+    },
+    [
+      disableOrEnableAllEmailNotifications,
+      profile,
+      setEmailChannel,
+      visibleServicesId
+    ]
+  );
+
+  useEffect(() => {
+    if (prevProfile && pot.isUpdating(prevProfile)) {
+      // if we got an error while updating the preference
+      // show a toast
+      if (pot.isError(profile)) {
+        IOToast.error(I18n.t("global.genericError"));
+        setIsLoading(false);
+        return;
+      }
+      // TODO move this login into a dedicated saga https://www.pivotaltracker.com/story/show/171600688
+      // if the profile updating is successfully then apply isCustomChannelEnabledChoice
+      if (
+        pot.isSome(profile) &&
+        isCustomChannelEnabledChoice.current !== undefined
+      ) {
+        setCustomEmailChannelEnabled(isCustomChannelEnabledChoice.current);
+        setIsLoading(false);
+        return;
+      }
+    }
+  }, [IOToast, profile, prevProfile, setCustomEmailChannelEnabled]);
+
+  return (
+    <IOScrollViewWithLargeHeader
+      title={{ label: I18n.t("send_email_messages.title") }}
+      description={bodyPropsArray}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      canGoback={true}
+    >
+      <ContentWrapper>
+        <ListItemSwitch
+          label={I18n.t("send_email_messages.switch.title")}
+          description={I18n.t("send_email_messages.switch.subtitle")}
+          onSwitchValueChange={handleSwitchValueChange}
+          value={isEmailEnabled}
+          isLoading={isLoading}
+        />
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
+  );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  disableOrEnableAllEmailNotifications: (
-    servicesId: ReadonlyArray<string>,
-    profile: ProfileState
-  ) => {
-    const newBlockedChannels = getProfileChannelsforServicesList(
-      servicesId,
-      profile,
-      true,
-      "EMAIL"
-    );
-    dispatch(
-      profileUpsert.request({
-        blocked_inbox_or_channels: newBlockedChannels,
-        is_email_enabled: true
-      })
-    );
-  },
-  setCustomEmailChannelEnabled: (customEmailChannelEnabled: boolean) => {
-    dispatch(customEmailChannelSetEnabled(customEmailChannelEnabled));
-  },
-  setEmailChannel: (isEmailEnabled: boolean) => {
-    dispatch(
-      profileUpsert.request({
-        is_email_enabled: isEmailEnabled
-      })
-    );
-  }
-});
-
-export default withValidatedEmail(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withLoadingSpinner(EmailForwardingScreen))
-);
+export default EmailForwardingScreen;

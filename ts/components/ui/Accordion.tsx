@@ -53,7 +53,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
     >
       <View style={styles.header}>
         <View style={IOStyles.flex}>
-          <Body weight="SemiBold">{title}</Body>
+          <Body weight="Semibold">{title}</Body>
         </View>
         <View
           style={{

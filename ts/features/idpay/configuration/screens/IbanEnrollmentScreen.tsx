@@ -1,4 +1,9 @@
-import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  HSpacer,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
@@ -10,7 +15,6 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
@@ -100,11 +104,14 @@ export const IbanEnrollmentScreen = () => {
       return (
         <FooterWithButtons
           type="SingleButton"
-          leftButton={{
-            title: I18n.t("idpay.configuration.iban.button.addNew"),
-            disabled: isUpsertingIban,
-            onPress: handleAddNewIbanPress,
-            testID: "addIbanButtonTestID"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("idpay.configuration.iban.button.addNew"),
+              disabled: isUpsertingIban,
+              onPress: handleAddNewIbanPress,
+              testID: "addIbanButtonTestID"
+            }
           }}
         />
       );
@@ -113,19 +120,24 @@ export const IbanEnrollmentScreen = () => {
     return (
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={{
-          title: I18n.t("idpay.configuration.iban.button.addNew"),
-          disabled: isUpsertingIban,
-          bordered: true,
-          onPress: handleAddNewIbanPress,
-          testID: "addIbanButtonTestID"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("idpay.configuration.iban.button.addNew"),
+            disabled: isUpsertingIban,
+            onPress: handleAddNewIbanPress,
+            testID: "addIbanButtonTestID"
+          }
         }}
-        rightButton={{
-          title: isUpsertingIban ? "" : I18n.t("global.buttons.continue"),
-          disabled: !selectedIban || isUpsertingIban,
-          isLoading: isUpsertingIban,
-          onPress: handleContinuePress,
-          testID: "continueButtonTestID"
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            disabled: !selectedIban || isUpsertingIban,
+            loading: isUpsertingIban,
+            onPress: handleContinuePress,
+            testID: "continueButtonTestID"
+          }
         }}
       />
     );

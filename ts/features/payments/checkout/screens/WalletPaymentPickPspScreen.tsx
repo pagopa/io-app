@@ -8,6 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -30,22 +31,39 @@ import {
 } from "../store/selectors/psps";
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { selectWalletPaymentCurrentStep } from "../store/selectors";
 
 const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
   const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
-  const [sortType, setSortType] =
-    React.useState<WalletPaymentPspSortType>("default");
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const isLoading = pot.isLoading(pspListPot);
   const isError = pot.isError(pspListPot);
 
   const canContinue = O.isSome(selectedPspOption);
+
+  const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
+    setShowFeaturedPsp(sortType === "default");
+    dismiss();
+  };
+
+  const {
+    sortType,
+    bottomSheet: sortPspBottomSheet,
+    present,
+    dismiss
+  } = useSortPspBottomSheet({
+    onSortChange: handleChangePspSorting
+  });
 
   const sortedPspList = pipe(
     pot.toOption(pspListPot),
@@ -64,19 +82,29 @@ const WalletPaymentPickPspScreen = () => {
     }
   }, [isError, navigation]);
 
-  const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
-    setShowFeaturedPsp(sortType === "default");
-    setSortType(sortType);
-    dismiss();
-  };
-
-  const {
-    bottomSheet: sortPspBottomSheet,
-    present,
-    dismiss
-  } = useSortPspBottomSheet({
-    onSortChange: handleChangePspSorting
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      if (
+        !pot.isSome(pspListPot) ||
+        pot.isLoading(pspListPot) ||
+        currentStep !== WalletPaymentStepEnum.PICK_PSP
+      ) {
+        return;
+      }
+      const preSelectedPsp = O.toUndefined(selectedPspOption);
+      analytics.trackPaymentFeeSelection({
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+        payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+        preselected_psp_flag: preSelectedPsp ? "customer" : "none"
+      });
+      // only need to run when the pspList changes
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pspListPot])
+  );
 
   const handlePspSelection = React.useCallback(
     (bundleId: string) => {
@@ -95,6 +123,15 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   const handleContinue = () => {
+    analytics.trackPaymentFeeSelected({
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
+    });
     dispatch(
       walletPaymentSetCurrentStep(WalletPaymentStepEnum.CONFIRM_TRANSACTION)
     );
@@ -122,7 +159,7 @@ const WalletPaymentPickPspScreen = () => {
         <Body>{I18n.t("wallet.payment.psp.description")}</Body>
         <Body>
           {I18n.t("wallet.payment.psp.taxDescription")}{" "}
-          <Body weight="SemiBold">
+          <Body weight="Semibold">
             {I18n.t("wallet.payment.psp.taxDescriptionBold")}
           </Body>
         </Body>
@@ -176,7 +213,7 @@ const getRadioItemsFromPspList = (
     O.map(list =>
       list.map((psp, index) => ({
         id: psp.idBundle ?? index.toString(),
-        label: psp.bundleName ?? I18n.t("wallet.payment.psp.defaultName"),
+        label: psp.pspBusinessName ?? I18n.t("wallet.payment.psp.defaultName"),
         isSuggested: psp.onUs && showFeaturedPsp,
         suggestReason: I18n.t("wallet.payment.psp.featuredReason"),
         formattedAmountString: formatNumberCentsToAmount(

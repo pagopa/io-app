@@ -20,6 +20,8 @@ const DESIGN_SYSTEM_ROUTES = {
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
     ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
+    STEPPER: { route: "DESIGN_SYSTEM_STEPPER", title: "Stepper" },
+    OTP_INPUT: { route: "DESIGN_SYSTEM_OTP_INPUT", title: "OTP Input" },
     ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice & Banners" },
     CARDS: { route: "DESIGN_SYSTEM_CARDS", title: "Cards" },
     BOTTOM_SHEET: {
@@ -44,10 +46,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   SCREENS: {
-    GRADIENT_SCROLL: {
-      route: "GRADIENT_SCROLL",
-      title: "Gradient scroll + Actions"
-    },
     OPERATION_RESULT: {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
@@ -55,6 +53,10 @@ const DESIGN_SYSTEM_ROUTES = {
     WIZARD_SCREEN: {
       route: "WIZARD_SCREEN",
       title: "Wizard Screen"
+    },
+    LIST_ITEM_SCREEN: {
+      route: "LIST_ITEM_SCREEN",
+      title: "List Item Screen"
     },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
@@ -78,6 +80,34 @@ const DESIGN_SYSTEM_ROUTES = {
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
+    },
+    SCREEN_END_MARGIN: {
+      route: "DS_SCREEN_END_MARGIN",
+      title: "Screen End margin"
+    },
+    IOSCROLLVIEW: {
+      route: "IOSCROLLVIEW",
+      title: "IOScrollView"
+    },
+    IOSCROLLVIEW_WO_ACTIONS: {
+      route: "IOSCROLLVIEW_WO_ACTIONS",
+      title: "IOScrollView w/o Actions"
+    },
+    IOSCROLLVIEW_LARGEHEADER: {
+      route: "IOSCROLLVIEW_LARGEHEADER",
+      title: "IOScrollView w/ Large header"
+    },
+    FOOTER_ACTIONS: {
+      route: "DESIGN_SYSTEM_FOOTER_ACTIONS",
+      title: "Footer Actions"
+    },
+    FOOTER_ACTIONS_STICKY: {
+      route: "DS_FOOTER_ACTIONS_STICKY",
+      title: "Footer Actions (sticky)"
+    },
+    FOOTER_ACTIONS_NOT_FIXED: {
+      route: "DS_FOOTER_ACTIONS_NOT_FIXED",
+      title: "Footer Actions (not fixed)"
     }
   },
   LEGACY: {
@@ -85,9 +115,37 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
       title: "Pictograms"
     },
-    ILLUSTRATIONS: {
-      route: "DESIGN_SYSTEM_LEGACY_ILLUSTRATIONS",
-      title: "Illustrations"
+    BUTTONS: {
+      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
+      title: "Buttons"
+    },
+    TEXT_FIELDS: {
+      route: "DESIGN_SYSTEM_LEGACY_TEXT_FIELDS",
+      title: "Text Fields"
+    },
+    LIST_ITEMS: {
+      route: "DESIGN_SYSTEM_LEGACY_LIST_ITEMS",
+      title: "List Items"
+    },
+    BADGES: {
+      route: "DESIGN_SYSTEM_LEGACY_BADGES",
+      title: "Badges"
+    },
+    SELECTION: {
+      route: "DESIGN_SYSTEM_LEGACY_SELECTION",
+      title: "Selection"
+    },
+    ACCORDION: {
+      route: "DESIGN_SYSTEM_LEGACY_ACCORDION",
+      title: "Accordion"
+    },
+    ALERT: {
+      route: "DESIGN_SYSTEM_LEGACY_ALERT",
+      title: "Alert"
+    },
+    ADVICE: {
+      route: "DESIGN_SYSTEM_LEGACY_ADVICE",
+      title: "Advice & Banners"
     }
   } as const
 } as const;

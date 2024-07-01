@@ -6,28 +6,28 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen";
+import LegacyMessagesHomeScreen from "../features/messages/screens/legacy/LegacyMessagesHomeScreen";
+import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
-import { ServicesHomeScreen as NewServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
+import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isDesignSystemEnabledSelector,
-  isNewWalletSectionEnabledSelector
+  isNewHomeSectionEnabledSelector
 } from "../store/reducers/persistedPreferences";
+import { isNewPaymentSectionEnabledSelector } from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { isNewServicesEnabled } from "../config";
+import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
-import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
@@ -59,7 +59,10 @@ export const MainTabNavigator = () => {
   const startupLoaded = useIOSelector(isStartupLoaded);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
+  );
+  const isNewHomeSectionEnabled = useIOSelector(
+    isNewHomeSectionEnabledSelector
   );
   const showBarcodeScanSection = false; // Currently disabled
 
@@ -88,7 +91,7 @@ export const MainTabNavigator = () => {
             ...makeFontStyleObject(
               "Regular",
               false,
-              isDesignSystemEnabled ? "ReadexPro" : "TitilliumWeb"
+              isDesignSystemEnabled ? "ReadexPro" : "TitilliumSansPro"
             )
           },
           tabBarHideOnKeyboard: true,
@@ -106,7 +109,11 @@ export const MainTabNavigator = () => {
       >
         <Tab.Screen
           name={MESSAGES_ROUTES.MESSAGES_HOME}
-          component={MessagesHomeScreen}
+          component={
+            isDesignSystemEnabled && isNewHomeSectionEnabled
+              ? MessagesHomeScreen
+              : LegacyMessagesHomeScreen
+          }
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
@@ -115,8 +122,6 @@ export const MainTabNavigator = () => {
                 iconNameFocused={"navMessagesFocused"}
                 color={color}
                 focused={focused}
-                // Badge is disabled with paginated messages.
-                // https://pagopa.atlassian.net/browse/IA-572
               />
             )
           }}
@@ -180,11 +185,7 @@ export const MainTabNavigator = () => {
         )}
         <Tab.Screen
           name={SERVICES_ROUTES.SERVICES_HOME}
-          component={
-            isDesignSystemEnabled && isNewServicesEnabled
-              ? NewServicesHomeScreen
-              : ServicesHomeScreen
-          }
+          component={ServicesHomeScreen}
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
@@ -206,8 +207,8 @@ export const MainTabNavigator = () => {
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navProfile"}
-                iconNameFocused={"navProfileFocused"}
+                iconName="navProfile"
+                iconNameFocused="navProfileFocused"
                 color={color}
                 focused={focused}
               />

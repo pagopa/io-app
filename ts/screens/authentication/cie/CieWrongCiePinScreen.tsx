@@ -1,94 +1,176 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import { Content } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
-import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { Route, useRoute } from "@react-navigation/native";
+import { IOPictograms } from "@pagopa/io-app-design-system";
+import { Linking } from "react-native";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { WithTestID } from "../../../types/WithTestID";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
 };
 
-type NavigationProps = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_WRONG_PIN_SCREEN"
->;
+const CieWrongCiePinScreen = () => {
+  const navigation = useIONavigation();
+  const route =
+    useRoute<
+      Route<
+        typeof ROUTES.CIE_WRONG_PIN_SCREEN,
+        CieWrongCiePinScreenNavigationParams
+      >
+    >();
+  const { remainingCount } = route.params;
 
-type Props = NavigationProps & ReturnType<typeof mapDispatchToProps>;
-
-class CieWrongCiePinScreen extends React.PureComponent<Props> {
-  // TODO: use redux to handle control?
-  private navigateToCiePinScreen = async () => {
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+  const navigateToCiePinScreen = React.useCallback(() => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.CIE_PIN_SCREEN
     });
+  }, [navigation]);
+
+  const navigateToAuthenticationScreen = React.useCallback(() => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: ROUTES.AUTHENTICATION }]
+    });
+  }, [navigation]);
+
+  const didYouForgetPin = React.useCallback(() => {
+    Linking.openURL(
+      "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
+    ).catch(constNull);
+  }, []);
+
+  const didYouForgetPuk = React.useCallback(() => {
+    Linking.openURL(
+      "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
+    ).catch(constNull);
+  }, []);
+
+  type MessageAction<T extends string> = {
+    label: T;
+    accessibilityLabel: T;
+    onPress: () => void;
   };
 
-  get ciePinRemainingCount() {
-    return this.props.route.params.remainingCount;
-  }
-
-  private renderFooterButtons = () => {
-    const cancelButtonProps = {
-      bordered: true,
-      onPress: resetToAuthenticationRoute,
-      title: I18n.t("global.buttons.cancel")
-    };
-    const retryButtonProps = {
-      primary: true,
-      onPress: this.navigateToCiePinScreen,
-      title: I18n.t("global.buttons.retry")
-    };
-    return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        rightButton={retryButtonProps}
-        leftButton={cancelButtonProps}
-      />
-    );
+  type Message = {
+    pictogram: IOPictograms;
+    title: string;
+    subtitle: string;
+    action: MessageAction<string>;
+    secondaryAction: MessageAction<string>;
   };
 
-  public render(): React.ReactNode {
-    const remainingCount = this.ciePinRemainingCount;
-    return (
-      <TopScreenComponent
-        goBack={false}
-        headerTitle={I18n.t(
-          "authentication.cie.pin.incorrectCiePinHeaderTitle"
-        )}
-      >
-        <ScreenContentHeader
-          title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
-            remainingCount
-          })}
-        />
-        <Content>
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
-          </Body>
-          <VSpacer size={16} />
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
-          </Body>
-          <VSpacer size={16} />
-        </Content>
+  type Messages = {
+    [key: number]: Message;
+  };
 
-        {this.renderFooterButtons()}
-      </TopScreenComponent>
-    );
-  }
-}
-const mapDispatchToProps = (_: Dispatch) => ({});
+  const createMessageAction = React.useCallback(
+    <T extends string>({
+      label,
+      onPress
+    }: {
+      label: T;
+      onPress: () => void;
+    }): WithTestID<MessageAction<T>> => ({
+      label,
+      accessibilityLabel: label,
+      onPress,
+      testID: `message-action-${label}`
+    }),
+    []
+  );
 
-export default connect(undefined, mapDispatchToProps)(CieWrongCiePinScreen);
+  const messages: Messages = React.useMemo(
+    () => ({
+      2: {
+        pictogram: "attention",
+        title: I18n.t("authentication.cie.pin.incorrectCiePinTitle1"),
+        subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent1"),
+        action: createMessageAction({
+          label: I18n.t("global.buttons.retry"),
+          onPress: navigateToCiePinScreen
+        }),
+        secondaryAction: createMessageAction({
+          label: I18n.t("global.buttons.close"),
+          onPress: navigateToAuthenticationScreen
+        })
+      },
+      1: {
+        pictogram: "attention",
+        title: I18n.t("authentication.cie.pin.incorrectCiePinTitle2"),
+        subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent2"),
+        action: createMessageAction({
+          label: I18n.t("global.buttons.retry"),
+          onPress: navigateToCiePinScreen
+        }),
+        secondaryAction: createMessageAction({
+          label: I18n.t(
+            "authentication.cie.pin.incorrectCiePinSecondaryActionLabel2"
+          ),
+          onPress: didYouForgetPin
+        })
+      },
+      0: {
+        pictogram: "fatalError",
+        title: I18n.t("authentication.cie.pin.lockedCiePinTitle"),
+        subtitle: I18n.t("authentication.cie.pin.lockedCiePinContent"),
+        action: createMessageAction({
+          label: I18n.t("global.buttons.close"),
+          onPress: navigateToAuthenticationScreen
+        }),
+        secondaryAction: createMessageAction({
+          label: I18n.t("authentication.cie.pin.lockedSecondaryActionLabel"),
+          onPress: didYouForgetPuk
+        })
+      }
+    }),
+    [
+      createMessageAction,
+      didYouForgetPin,
+      didYouForgetPuk,
+      navigateToAuthenticationScreen,
+      navigateToCiePinScreen
+    ]
+  );
+
+  // This should never happen,
+  // but it's a good practice to have a default message
+  // in case of unexpected values of `remainingCount`.
+  const defaultMessageThatShouldNeverHappen: Message = React.useMemo(
+    () => ({
+      pictogram: "attention",
+      title: I18n.t("global.genericError"),
+      subtitle: `${remainingCount}`,
+      action: createMessageAction({
+        label: I18n.t("global.buttons.retry"),
+        onPress: navigateToCiePinScreen
+      }),
+      secondaryAction: createMessageAction({
+        label: I18n.t("global.buttons.close"),
+        onPress: navigateToAuthenticationScreen
+      })
+    }),
+    [
+      createMessageAction,
+      navigateToAuthenticationScreen,
+      navigateToCiePinScreen,
+      remainingCount
+    ]
+  );
+
+  const getMessage = React.useCallback(
+    (key: number) =>
+      key in messages ? messages[key] : defaultMessageThatShouldNeverHappen,
+    [defaultMessageThatShouldNeverHappen, messages]
+  );
+
+  return <OperationResultScreenContent {...getMessage(remainingCount)} />;
+};
+
+export default CieWrongCiePinScreen;

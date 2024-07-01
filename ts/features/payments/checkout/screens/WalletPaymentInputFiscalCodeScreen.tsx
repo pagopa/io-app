@@ -44,6 +44,8 @@ import {
 } from "../../common/utils/validation";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../analytics";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -87,13 +89,16 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         organizationFiscalCode: inputState.fiscalCode
       }),
       O.chain(flow(RptId.decode, O.fromEither)),
-      O.map(rptId => {
+      O.map((rptId: RptId) => {
         // Removes the manual input screen from the stack
         navigation.popToTop();
         navigation.pop();
         // Navigate to the payment details screen (payment verification)
         if (isNewWalletSectionEnabled) {
-          startPaymentFlowWithRptId(rptId);
+          startPaymentFlowWithRptId(rptId, {
+            onSuccess: "showTransaction",
+            startOrigin: "manual_insertion"
+          });
         } else {
           dispatch(paymentInitializeState());
           navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
@@ -118,6 +123,10 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         focusTextInput();
       }, navigateToTransactionSummary)
     );
+
+  useOnFirstRender(() => {
+    analytics.trackPaymentOrganizationDataEntry();
+  });
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>

@@ -9,7 +9,7 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { profileEmailSelector } from "../../../../store/reducers/profile";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -17,6 +17,7 @@ import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackB
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import {
+  selectWalletPaymentCurrentStep,
   walletPaymentDetailsSelector,
   walletPaymentOnSuccessActionSelector
 } from "../store/selectors";
@@ -25,6 +26,15 @@ import {
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
 import ROUTES from "../../../../navigation/routes";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import * as analytics from "../analytics";
+import {
+  paymentAnalyticsDataSelector,
+  selectOngoingPaymentHistory
+} from "../../history/store/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { getPaymentPhaseFromStep } from "../utils";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -38,6 +48,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
 
+  const dispatch = useIODispatch();
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
 
@@ -45,6 +56,9 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const onSuccessAction = useIOSelector(walletPaymentOnSuccessActionSelector);
   const profileEmailOption = useIOSelector(profileEmailSelector);
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -106,6 +120,88 @@ const WalletPaymentOutcomeScreen = () => {
     label: I18n.t("wallet.payment.support.button"),
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleContactSupport
+  };
+
+  const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["action"] =
+    {
+      label: I18n.t("global.buttons.close"),
+      accessibilityLabel: I18n.t("global.buttons.close"),
+      onPress: () => {
+        analytics.trackPaymentMethodErrorExit({
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          service_name: paymentAnalyticsData?.serviceName,
+          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+        });
+        handleClose();
+      }
+    };
+
+  const onboardPaymentMethodAction: OperationResultScreenContentProps["action"] =
+    {
+      label: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
+      ),
+      accessibilityLabel: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
+      ),
+      onPress: () => {
+        analytics.trackPaymentMethodErrorContinue({
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          service_name: paymentAnalyticsData?.serviceName,
+          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+        });
+        navigation.replace(
+          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+          {
+            screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
+          }
+        );
+      }
+    };
+
+  useOnFirstRender(() => {
+    const kind =
+      outcome === WalletPaymentOutcomeEnum.SUCCESS
+        ? "COMPLETED"
+        : outcome === WalletPaymentOutcomeEnum.DUPLICATE_ORDER
+        ? "DUPLICATED"
+        : undefined;
+    const rptId = paymentOngoingHistory?.rptId;
+
+    if (kind && rptId) {
+      dispatch(paymentCompletedSuccess({ rptId, kind }));
+    }
+
+    trackOutcomeScreen();
+  });
+
+  const trackOutcomeScreen = () => {
+    if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
+      analytics.trackPaymentOutcomeSuccess({
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+        payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+        data_entry: paymentAnalyticsData?.startOrigin
+      });
+      return;
+    }
+    analytics.trackPaymentOutcomeFailure(outcome, {
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      attempt: paymentAnalyticsData?.attempt,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      payment_phase:
+        outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
+          ? getPaymentPhaseFromStep(currentStep)
+          : undefined
+    });
   };
 
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
@@ -219,6 +315,18 @@ const WalletPaymentOutcomeScreen = () => {
             "wallet.payment.outcome.METHOD_NOT_ENABLED.subtitle"
           ),
           action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
+        return {
+          pictogram: "cardAdd",
+          title: I18n.t(
+            "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
+          ),
+          action: onboardPaymentMethodAction,
+          secondaryAction: onboardPaymentMethodCloseAction
         };
     }
   };

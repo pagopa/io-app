@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -47,6 +47,7 @@ import {
   trackPNOptInMessageCTADisplaySuccess,
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
+import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -86,6 +87,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     O.toUndefined
   );
 
+  const hasRemoteContent = messageDetails?.hasRemoteContent ?? false;
   const hasAttachments = useIOSelector(state =>
     hasAttachmentsSelector(state, messageId)
   );
@@ -178,12 +180,13 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             >
               {hasAttachments && (
                 <MessageDetailsTagBox>
-                  <Tag
-                    variant="attachment"
-                    testID="attachment-tag"
-                    iconAccessibilityLabel={I18n.t(
+                  <Icon
+                    name="attachment"
+                    accessibilityLabel={I18n.t(
                       "messageDetails.accessibilityAttachmentIcon"
                     )}
+                    testID="attachment-tag"
+                    size={16}
                   />
                 </MessageDetailsTagBox>
               )}
@@ -198,6 +201,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             <MessageDetailsPayment messageId={messageId} />
             <VSpacer size={16} />
             <MessageDetailsAttachments messageId={messageId} />
+            {hasRemoteContent && <RemoteContentBanner />}
           </ContentWrapper>
         </View>
         <VSpacer size={24} />

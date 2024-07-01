@@ -11,7 +11,7 @@ import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL =
-  "https://assets.cdn.io.italia.it" as NonEmptyString;
+  "https://assets.cdn.io.pagopa.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -108,11 +108,6 @@ export const cieLoginFlowWithDevServerEnabled =
 
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
-
-// Opt-in for reminder push notifications
-export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
-
-export const isNewServicesEnabled = Config.NEW_SERVICES_ENABLED === "YES";
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import {
   Body,
+  FooterWithButtons,
   H1,
   IOColors,
   IOStyles,
@@ -8,14 +9,13 @@ import {
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { default as React } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -107,7 +107,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
           <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
           <VSpacer size={24} />
           <H4>{selfDeclaration.description}</H4>
-          <ScrollView style={styles.maxheight}>
+          <ScrollView style={styles.maxHeight}>
             {selfDeclaration.value.map((answer, index) => (
               <CustomListItem
                 key={index}
@@ -121,16 +121,20 @@ const MultiValuePrerequisiteItemScreenContent = ({
       </BaseScreenComponent>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={{
-          onPress: handleGoBack,
-          title: I18n.t("global.buttons.back"),
-          bordered: true
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            onPress: handleGoBack,
+            label: I18n.t("global.buttons.back")
+          }
         }}
-        rightButton={{
-          onPress: handleContinuePress,
-          disabled: selectedIndex === undefined,
-          title: I18n.t("global.buttons.continue"),
-          bordered: false
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            onPress: handleContinuePress,
+            disabled: selectedIndex === undefined,
+            label: I18n.t("global.buttons.continue")
+          }
         }}
       />
     </>
@@ -143,7 +147,7 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
       <View
         style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.innerListItem]}
       >
-        <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
+        <H4 weight={checked ? "Semibold" : "Regular"} color={"bluegreyDark"}>
           {text}
         </H4>
         <Icon
@@ -164,7 +168,8 @@ const styles = StyleSheet.create({
   innerListItem: {
     paddingVertical: 4
   },
-  maxheight: {
+  maxHeight: {
+    flex: 1,
     height: "100%"
   }
 });

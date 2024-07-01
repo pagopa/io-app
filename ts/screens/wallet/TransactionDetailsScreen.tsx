@@ -1,25 +1,24 @@
+import { ButtonOutline, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBButtonText } from "native-base";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   BackHandler,
   Image,
   NativeEventSubscription,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
+import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -51,7 +50,6 @@ import {
   getTransactionIUV
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 
 export type TransactionDetailsScreenNavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -202,7 +200,7 @@ class TransactionDetailsScreen extends React.Component<
         <View style={[IOStyles.flex, IOStyles.selfCenter]}>
           <Body>{label}</Body>
         </View>
-        <Body color="bluegreyDark" weight="SemiBold" selectable={true}>
+        <Body color="bluegreyDark" weight="Semibold" selectable={true}>
           {value}
         </Body>
       </View>
@@ -306,13 +304,14 @@ class TransactionDetailsScreen extends React.Component<
             <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
               <Body>{I18n.t("wallet.paymentMethod")}</Body>
               <Image
+                accessibilityIgnoresInvertColors
                 style={styles.cardLogo}
                 source={{ uri: data.paymentMethodIcon }}
               />
             </View>
           ) : (
             data.paymentMethodBrand && (
-              <Body weight="SemiBold">{data.paymentMethodBrand}</Body>
+              <Body weight="Semibold">{data.paymentMethodBrand}</Body>
             )
           )}
 
@@ -326,22 +325,18 @@ class TransactionDetailsScreen extends React.Component<
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
             </Body>
             <View style={IOStyles.rowSpaceBetween}>
-              <Body weight="SemiBold">{data.idTransaction}</Body>
+              <Body weight="Semibold">{data.idTransaction}</Body>
               <CopyButtonComponent textToCopy={data.idTransaction.toString()} />
             </View>
           </View>
 
           <VSpacer size={48} />
-          <ButtonDefaultOpacity
-            light={true}
-            bordered={true}
-            block={true}
+          <ButtonOutline
             onPress={this.handleBackPress}
-          >
-            {/* <ButtonText> */}
-            <NBButtonText>{I18n.t("global.buttons.close")}</NBButtonText>
-          </ButtonDefaultOpacity>
-          <VSpacer size={16} />
+            fullWidth
+            label={I18n.t("global.buttons.close")}
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          />
         </SlidedContentComponent>
       </BaseScreenComponent>
     );

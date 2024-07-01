@@ -14,10 +14,10 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
@@ -32,6 +32,7 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesItWalletTestSetEnabled,
+  preferencesNewHomeSectionSetEnabled,
   preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -43,10 +44,11 @@ import {
   walletTokenSelector
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
+import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
 import {
   isIdPayTestEnabledSelector,
   isItWalletTestEnabledSelector,
+  isNewHomeSectionEnabledSelector,
   isNewWalletSectionEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -177,7 +179,7 @@ const DeveloperActionsSection = () => {
       data={filteredDevActionButtons}
       renderItem={renderDevActionButton}
       ItemSeparatorComponent={() => <VSpacer size={8} />}
-      ListFooterComponent={() => <VSpacer size={16} />}
+      ListFooterComponent={() => <VSpacer size={8} />}
     />
   );
 };
@@ -186,10 +188,7 @@ const DeveloperDataSection = () => {
   const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
   const sessionToken = useIOSelector(sessionTokenSelector);
   const walletToken = useIOSelector(walletTokenSelector);
-  const { id: notificationId } = useIOSelector(
-    notificationsInstallationSelector
-  );
-  const { token: notificationToken } = useIOSelector(
+  const { id: notificationId, token: notificationToken } = useIOSelector(
     notificationsInstallationSelector
   );
   const publicKey = useIOSelector(lollipopPublicKeySelector);
@@ -222,7 +221,7 @@ const DeveloperDataSection = () => {
       onPress: () => clipboardSetStringWithFeedback(`${notificationId}`)
     },
     {
-      condition: isDevEnv && !!notificationToken,
+      condition: !!notificationToken,
       label: "Notification token",
       value: `${notificationToken}`,
       onPress: () => clipboardSetStringWithFeedback(`${notificationToken}`)
@@ -290,11 +289,22 @@ const DesignSystemSection = () => {
   const isNewWalletSectionEnabled = useIOSelector(
     isNewWalletSectionEnabledSelector
   );
+  const isNewHomeSectionEnabled = useIOSelector(
+    isNewHomeSectionEnabledSelector
+  );
 
   const onNewWalletSectionToggle = (enabled: boolean) => {
     dispatch(
       preferencesNewWalletSectionSetEnabled({
         isNewWalletSectionEnabled: enabled
+      })
+    );
+  };
+
+  const onNewHomeSectionToggle = (enabled: boolean) => {
+    dispatch(
+      preferencesNewHomeSectionSetEnabled({
+        isNewHomeSectionEnabled: enabled
       })
     );
   };
@@ -328,6 +338,12 @@ const DesignSystemSection = () => {
         value={isNewWalletSectionEnabled}
         onSwitchValueChange={onNewWalletSectionToggle}
       />
+      <Divider />
+      <ListItemSwitch
+        label={I18n.t("profile.main.newHomeSection")}
+        value={isNewHomeSectionEnabled}
+        onSwitchValueChange={onNewHomeSectionToggle}
+      />
     </ContentWrapper>
   );
 };
@@ -356,6 +372,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.CGN_LANDING_PLAYGROUND
+        })
+    },
+    {
+      value: I18n.t("profile.main.trial.titleSection"),
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.TRIALS_SYSTEM_PLAYGROUND
         })
     },
     {
@@ -502,6 +525,7 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(
       preferencesItWalletTestSetEnabled({ isItWalletTestEnabled: enabled })
     );
+    handleShowModal();
   };
   return (
     <ContentWrapper>
@@ -540,6 +564,7 @@ const DeveloperTestEnvironmentSection = ({
         value={isItWalletTestEnabled}
         onSwitchValueChange={onItWalletTestToggle}
       />
+      <Divider />
     </ContentWrapper>
   );
 };

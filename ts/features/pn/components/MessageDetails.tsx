@@ -8,6 +8,7 @@ import * as SEP from "fp-ts/lib/Separated";
 import {
   ContentWrapper,
   IOStyles,
+  Icon,
   Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -29,9 +30,9 @@ import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
 import { MessagePayments } from "./MessagePayments";
-import { MessageInfo } from "./MessageInfo";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessageFooter } from "./MessageFooter";
+import { MessageCancelledContent } from "./MessageCancelledContent";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -84,17 +85,23 @@ export const MessageDetails = ({
             </MessageDetailsTagBox>
             {attachmentList.length > 0 && (
               <MessageDetailsTagBox>
-                <Tag
-                  variant="attachment"
-                  testID="attachment-tag"
-                  iconAccessibilityLabel={I18n.t(
+                <Icon
+                  name="attachment"
+                  accessibilityLabel={I18n.t(
                     "messageDetails.accessibilityAttachmentIcon"
                   )}
+                  testID="attachment-tag"
+                  size={16}
                 />
               </MessageDetailsTagBox>
             )}
             <VSpacer size={8} />
           </MessageDetailsHeader>
+          <MessageCancelledContent
+            isCancelled={isCancelled}
+            paidNoticeCodes={completedPaymentNoticeCodes}
+            payments={payments}
+          />
           <MessageDetailsContent abstract={message.abstract} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
@@ -118,12 +125,13 @@ export const MessageDetails = ({
             serviceId={serviceId}
           />
           <VSpacer size={16} />
-          <MessageInfo iun={message.iun} />
         </ContentWrapper>
         <MessageBottomMenu
           history={message.notificationStatusHistory}
+          isCancelled={message.isCancelled}
           iun={message.iun}
           messageId={messageId}
+          paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
           serviceId={serviceId}
         />

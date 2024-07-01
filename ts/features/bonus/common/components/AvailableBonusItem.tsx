@@ -1,16 +1,15 @@
-import { ListItem } from "native-base";
-import * as React from "react";
-import { View, Image, StyleSheet } from "react-native";
 import { HSpacer } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { IOBadge } from "../../../../components/core/IOBadge";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
-import { IOBadge } from "../../../../components/core/IOBadge";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
@@ -22,8 +21,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   listItem: {
-    marginLeft: 0,
-    paddingRight: 0,
+    alignItems: "center",
     flexDirection: "row"
   },
   disabled: {
@@ -75,7 +73,8 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     bonusItem[getRemoteLocale()];
 
   return (
-    <ListItem
+    <Pressable
+      accessibilityRole="button"
       style={styles.listItem}
       onPress={props.onPress}
       testID={`AvailableBonusItem-${bonusItem.id_type}`}
@@ -97,9 +96,13 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
       </View>
       <View style={[styles.columnRight, disabledStyle]}>
         {bonusItem.cover && (
-          <Image style={styles.methodImage} source={{ uri: bonusItem.cover }} />
+          <Image
+            accessibilityIgnoresInvertColors
+            style={styles.methodImage}
+            source={{ uri: bonusItem.cover }}
+          />
         )}
       </View>
-    </ListItem>
+    </Pressable>
   );
 };

@@ -7,7 +7,12 @@ import {
   View
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOStyles,
+  VSpacer,
+  makeFontStyleObject
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -38,7 +43,7 @@ import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
 import CtaBar from "./CtaBar";
-import { RemoteContentBanner } from "./RemoteContentBanner";
+import { LegacyRemoteContentBanner } from "./LegacyRemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
 import MessageContent from "./Content";
 import { MessageMarkdown } from "./MessageMarkdown";
@@ -54,11 +59,11 @@ const styles = StyleSheet.create({
   message: {
     paddingStart: variables.spacerWidth,
     color: IOColors.white,
-    font: "TitilliumWeb",
-    fontSize: variables.headerBodyFontSize
+    fontSize: variables.headerBodyFontSize,
+    ...makeFontStyleObject("Regular", undefined, "TitilliumSansPro")
   },
   messageBold: {
-    fontWeight: "bold"
+    ...makeFontStyleObject("Bold", undefined, "TitilliumSansPro")
   }
 });
 
@@ -226,7 +231,7 @@ const MessageDetailsComponent = ({
 
         {hasRemoteContent && isContentLoadCompleted ? (
           <>
-            <RemoteContentBanner />
+            <LegacyRemoteContentBanner />
             <VSpacer size={24} />
           </>
         ) : null}

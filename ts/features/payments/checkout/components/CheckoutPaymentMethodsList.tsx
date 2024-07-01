@@ -8,7 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { capitalize } from "lodash";
+import _, { capitalize } from "lodash";
 import React, { useEffect, useMemo } from "react";
 import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
@@ -21,9 +21,9 @@ import { selectPaymentMethodAction } from "../store/actions/orchestration";
 import { walletPaymentAmountSelector } from "../store/selectors";
 import {
   walletPaymentAllMethodsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
-  walletPaymentSelectedWalletIdOptionSelector,
-  walletPaymentUserWalletsSelector
+  walletPaymentSelectedWalletIdOptionSelector
 } from "../store/selectors/paymentMethods";
 import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 
@@ -36,7 +36,7 @@ const CheckoutPaymentMethodsList = () => {
 
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);
-  const userWallets = useIOSelector(walletPaymentUserWalletsSelector);
+  const userWallets = useIOSelector(walletPaymentEnabledUserWalletsSelector);
 
   const selectedUserWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -131,18 +131,22 @@ const CheckoutPaymentMethodsList = () => {
           action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
-      <ListItemHeader
-        label={I18n.t("wallet.payment.methodSelection.yourMethods")}
-      />
+      {!_.isEmpty(userPaymentMethodListItems) && (
+        <ListItemHeader
+          label={I18n.t("wallet.payment.methodSelection.yourMethods")}
+        />
+      )}
       <RadioGroup<string>
         type="radioListItem"
         selectedItem={selectedWalletId}
         items={userPaymentMethodListItems}
         onPress={handleSelectUserWallet}
       />
-      <ListItemHeader
-        label={I18n.t("wallet.payment.methodSelection.otherMethods")}
-      />
+      {!_.isEmpty(allPaymentMethodListItems) && (
+        <ListItemHeader
+          label={I18n.t("wallet.payment.methodSelection.otherMethods")}
+        />
+      )}
       <RadioGroup<string>
         type="radioListItem"
         selectedItem={!selectedWalletId ? selectedPaymentMethodId : undefined}
@@ -186,10 +190,16 @@ const mapUserWalletToRadioItem = (
       startImage
     };
   } else if (details.maskedEmail !== undefined) {
+    const details = method.details as UIWalletInfoDetails;
+    const description =
+      details.pspBusinessName && details.maskedEmail
+        ? `${details.pspBusinessName} · ${details.maskedEmail}`
+        : undefined;
     return {
       id: method.walletId,
-      value: "PayPal",
-      startImage
+      value: I18n.t("wallet.payment.methodType.fastPayPalPayment"),
+      startImage,
+      description
     };
   } else if (details.maskedNumber !== undefined) {
     return {

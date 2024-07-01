@@ -1,13 +1,9 @@
-import { Container } from "native-base";
-import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import React, { ComponentProps, PropsWithChildren, ReactNode } from "react";
-import { ColorValue } from "react-native";
-import { useDispatch } from "react-redux";
+import { ColorValue, View } from "react-native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
@@ -49,7 +45,13 @@ export type Props = PropsWithChildren<
   OwnProps & ComponentProps<typeof BaseHeader>
 >;
 
-const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
+/**
+ * @deprecated In the legacy screens, BaseScreenComponent was used to include the header
+ * in the screen component. To properly configure the header through the `react-navigation`
+ * library, please use `useHeaderSecondLevel` and configure the navigator with `headerShown`
+ * set to `true`. If in doubt, please ask for help or read the available documentation.
+ */
+const BaseScreenComponent = React.forwardRef<ReactNode, Props>(
   (props: Props, _) => {
     const {
       accessibilityEvents,
@@ -73,7 +75,8 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       onAccessibilityNavigationHeaderFocus,
       primary,
       showChat,
-      titleColor
+      titleColor,
+      hideSafeArea
     } = props;
 
     /**
@@ -84,7 +87,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
      */
     const currentScreenName = useIOSelector(currentRouteSelector);
 
-    const dispatch = useDispatch();
+    const dispatch = useIODispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
     const canShowHelp = useIOSelector(canShowHelpSelector);
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
@@ -123,9 +126,10 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     };
 
     return (
-      <Container>
+      <View style={{ flexGrow: 1 }}>
         {!hideBaseHeader && (
           <BaseHeader
+            hideSafeArea={hideSafeArea}
             onAccessibilityNavigationHeaderFocus={
               onAccessibilityNavigationHeaderFocus
             }
@@ -148,13 +152,9 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           />
         )}
         {children}
-      </Container>
+      </View>
     );
   }
 );
 
-export default connectStyle(
-  "UIComponent.BaseScreenComponent",
-  {},
-  mapPropsToStyleNames
-)(BaseScreenComponentFC);
+export default BaseScreenComponent;

@@ -1,34 +1,34 @@
+import {
+  Alert,
+  ContentWrapper,
+  FooterWithButtons,
+  IOColors,
+  TextInputPassword,
+  TextInputValidation,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import {
-  IOColors,
-  VSpacer,
-  ContentWrapper,
-  Alert
-} from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
-import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import I18n from "../../i18n";
-import { Dispatch } from "../../store/actions/types";
 import { Body } from "../../components/core/typography/Body";
-import { getAppVersion } from "../../utils/appVersion";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { useIOSelector } from "../../store/hooks";
-import { testLoginSelector } from "../../store/reducers/testLogin";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
+import I18n from "../../i18n";
 import {
   testLoginCleanUp,
   testLoginRequest
 } from "../../store/actions/authentication";
+import { Dispatch } from "../../store/actions/types";
+import { useIOSelector } from "../../store/hooks";
+import { testLoginSelector } from "../../store/reducers/testLogin";
+import { getAppVersion } from "../../utils/appVersion";
 
 const styles = StyleSheet.create({
   appVersion: { ...IOStyles.flex, ...IOStyles.rowSpaceBetween }
@@ -42,7 +42,7 @@ const checkUsernameValid = (username: string): boolean =>
 const VersionView = () => (
   <View style={styles.appVersion} testID="appVersionView">
     <Body>{I18n.t("profile.main.appVersion")}</Body>
-    <Body numberOfLines={1} weight="SemiBold" testID="appVersion">
+    <Body numberOfLines={1} weight="Semibold" testID="appVersion">
       {getAppVersion()}
     </Body>
   </View>
@@ -101,10 +101,7 @@ const isConfirmButtonDisabled = (
 ) => password.length === 0 || !checkUsernameValid(username) || isLoading;
 
 const isUsernameFieldValid = (username: string) =>
-  username.length > 0 ? checkUsernameValid(username) : undefined;
-
-const isPasswordFieldValid = (password: string) =>
-  password.length > 0 ? true : undefined;
+  username.length > 0 ? checkUsernameValid(username) : false;
 
 const TestAuthenticationScreen = (props: Props) => {
   const [username, setUsername] = React.useState("");
@@ -115,19 +112,6 @@ const TestAuthenticationScreen = (props: Props) => {
   const isError = loginState.kind === "failed";
   const isSuccessful = loginState.kind === "succedeed";
 
-  const confirmButton: BlockButtonProps = {
-    block: true,
-    primary: true,
-    disabled: isConfirmButtonDisabled(username, password, isLoading),
-    onPress: () =>
-      pipe(
-        PasswordLogin.decode({ username, password }),
-        E.map(props.requestLogin)
-      ),
-    title: I18n.t("global.buttons.confirm"),
-    testID: "confirmButton"
-  };
-
   useFocusEffect(
     React.useCallback(() => props.cleanUpLogin, [props.cleanUpLogin])
   );
@@ -137,33 +121,31 @@ const TestAuthenticationScreen = (props: Props) => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <ContentWrapper>
-            <LabelledItem
-              label={I18n.t("global.username")}
+            <TextInputValidation
+              placeholder={I18n.t("global.username")}
+              value={username}
+              onChangeText={setUsername}
+              testID={"usernameInput"}
               icon="profile"
-              isValid={isUsernameFieldValid(username)}
-              inputProps={{
-                disabled: isLoading,
-                value: username,
-                placeholder: I18n.t("global.username"),
-                returnKeyType: "done",
-                onChangeText: setUsername
+              onValidate={isUsernameFieldValid}
+              disabled={isLoading}
+              textInputProps={{
+                inputMode: "text",
+                returnKeyType: "done"
               }}
-              testID={"username"}
             />
             <VSpacer size={16} />
-            <LabelledItem
-              label={I18n.t("global.password")}
+            <TextInputPassword
+              placeholder={I18n.t("global.password")}
+              value={password}
+              onChangeText={setPassword}
+              testID={"passwordInput"}
               icon="locked"
-              isValid={isPasswordFieldValid(password)}
-              inputProps={{
-                disabled: isLoading,
-                value: password,
-                placeholder: I18n.t("global.password"),
-                returnKeyType: "done",
-                secureTextEntry: true,
-                onChangeText: setPassword
+              disabled={isLoading}
+              textInputProps={{
+                inputMode: "password",
+                returnKeyType: "done"
               }}
-              testID={"password"}
             />
             <VSpacer size={16} />
             <VersionView />
@@ -172,8 +154,24 @@ const TestAuthenticationScreen = (props: Props) => {
             {isSuccessful && SuccessfulView()}
           </ContentWrapper>
         </ScrollView>
-        <FooterWithButtons type={"SingleButton"} leftButton={confirmButton} />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.confirm"),
+            accessibilityLabel: I18n.t("global.buttons.confirm"),
+            disabled: isConfirmButtonDisabled(username, password, isLoading),
+            onPress: () =>
+              pipe(
+                PasswordLogin.decode({ username, password }),
+                E.map(props.requestLogin)
+              ),
+            testID: "confirmButton"
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

@@ -1,12 +1,11 @@
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { paymentsStartOnboardingAction } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -14,49 +13,47 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  * @param action
  */
 export function* handleStartWalletOnboarding(
-  startOnboarding: WalletClient["createWallet"],
+  startOnboarding: WalletClient["createIOPaymentWallet"],
   action: ActionType<(typeof paymentsStartOnboardingAction)["request"]>
 ) {
   try {
     const { paymentMethodId } = action.payload;
-    const startOnboardingRequest = startOnboarding({
-      body: {
-        applications: ["PAGOPA"],
-        useDiagnosticTracing: true,
-        paymentMethodId
-      }
-    });
-    const startOnboardingResult = (yield* call(
-      withRefreshApiCall,
-      startOnboardingRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof startOnboarding>;
-    if (E.isRight(startOnboardingResult)) {
-      if (startOnboardingResult.right.status === 201) {
-        // handled success
-        yield* put(
-          paymentsStartOnboardingAction.success(
-            startOnboardingResult.right.value
+    const startOnboardingResult = yield* withPaymentsSessionToken(
+      startOnboarding,
+      paymentsStartOnboardingAction.failure,
+      action,
+      {
+        body: {
+          applications: ["PAGOPA"],
+          useDiagnosticTracing: true,
+          paymentMethodId
+        }
+      },
+      "pagoPAPlatformSessionToken"
+    );
+    if (E.isLeft(startOnboardingResult)) {
+      yield* put(
+        paymentsStartOnboardingAction.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(startOnboardingResult.left))
           )
-        );
-        return;
-      }
-      // not handled error codes
+        })
+      );
+      return;
+    }
+    if (startOnboardingResult.right.status === 201) {
+      yield* put(
+        paymentsStartOnboardingAction.success(startOnboardingResult.right.value)
+      );
+      return;
+    } else if (startOnboardingResult.right.status === 401) {
+      // The 401 status is handled by the withRefreshApiCall
       yield* put(
         paymentsStartOnboardingAction.failure({
           ...getGenericError(
             new Error(
               `response status code ${startOnboardingResult.right.status}`
             )
-          )
-        })
-      );
-    } else {
-      // cannot decode response
-      yield* put(
-        paymentsStartOnboardingAction.failure({
-          ...getGenericError(
-            new Error(readablePrivacyReport(startOnboardingResult.left))
           )
         })
       );

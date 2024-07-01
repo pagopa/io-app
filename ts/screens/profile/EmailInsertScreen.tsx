@@ -2,10 +2,19 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
+import {
+  ButtonSolid,
+  ContentWrapper,
+  H1,
+  IOToast,
+  TextInputValidation,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import { pipe } from "fp-ts/lib/function";
+import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React, {
   useCallback,
   useEffect,
@@ -13,32 +22,28 @@ import React, {
   useRef,
   useState
 } from "react";
-import validator from "validator";
 import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  View,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import {
-  VSpacer,
-  H1,
-  TextInputValidation,
-  ContentWrapper,
-  ButtonSolid,
-  IOToast
-} from "@pagopa/io-app-design-system";
-import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
-import themeVariables from "../../theme/variables";
+import { SafeAreaView } from "react-native-safe-area-context";
+import validator from "validator";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { Body } from "../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
+import { abortOnboarding } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import {
   isProfileEmailAlreadyTakenSelector,
   isProfileEmailValidatedSelector,
@@ -46,24 +51,19 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
+import themeVariables from "../../theme/variables";
+import { setAccessibilityFocus } from "../../utils/accessibility";
+import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { areStringsEqual } from "../../utils/options";
-import { Body } from "../../components/core/typography/Body";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import {
   trackEmailDuplicateEditing,
   trackEmailEditing,
   trackEmailEditingError,
   trackSendValidationEmail
 } from "../analytics/emailAnalytics";
-import { getFlowType } from "../../utils/analytics";
-import { emailValidationSelector } from "../../store/reducers/emailValidation";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { trackTosUserExit } from "../authentication/analytics";
-import { abortOnboarding } from "../../store/actions/onboarding";
-import ROUTES from "../../navigation/routes";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { setAccessibilityFocus } from "../../utils/accessibility";
 
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -428,7 +428,7 @@ const EmailInsertScreen = () => {
               ) : (
                 <>
                   {I18n.t("email.edit.subtitle")}
-                  <Body weight="SemiBold">
+                  <Body weight="Semibold">
                     {` ${pipe(
                       optionEmail,
                       O.getOrElse(() => "")

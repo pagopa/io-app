@@ -1,28 +1,24 @@
+import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { BadgeComponent } from "../../../components/screens/BadgeComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
+import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { CreditCardInsertion } from "../../../store/reducers/wallet/creditCard";
@@ -38,6 +34,7 @@ import {
   zendeskCategoryId,
   zendeskPaymentMethodCategory
 } from "../../../utils/supportAssistance";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 
 export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
@@ -74,7 +71,7 @@ const renderRow = (label: string, value: string) => (
  * to ask assistance about this attempts
  */
 const CreditCardOnboardingAttemptDetailScreen = () => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { attempt } =
     useRoute<
       Route<
@@ -127,17 +124,13 @@ const CreditCardOnboardingAttemptDetailScreen = () => {
         {I18n.t("wallet.creditCard.onboardingAttempts.help")}
       </Label>
       <VSpacer size={16} />
-      <ButtonDefaultOpacity
+      <ButtonOutline
+        fullWidth
         onPress={handleAskAssistance}
-        bordered={true}
-        block={true}
-      >
-        <Icon name="chat" color="blue" />
-        <HSpacer size={8} />
-        <NBButtonText>
-          {I18n.t("payment.details.info.buttons.help")}
-        </NBButtonText>
-      </ButtonDefaultOpacity>
+        icon="chat"
+        label={I18n.t("payment.details.info.buttons.help")}
+        accessibilityLabel={I18n.t("payment.details.info.buttons.help")}
+      />
     </View>
   );
 

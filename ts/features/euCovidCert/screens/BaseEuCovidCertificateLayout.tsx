@@ -1,14 +1,13 @@
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
-import { useFocusEffect } from "@react-navigation/native";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../../components/SectionStatus";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { WithTestID } from "../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 
 type Props = WithTestID<{
   header?: React.ReactElement;
@@ -23,8 +22,18 @@ const styles = StyleSheet.create({
   }
 });
 
-export const BaseEuCovidCertificateLayout = (props: Props) => {
+export const BaseEuCovidCertificateLayout = ({
+  testID,
+  header,
+  content,
+  footer
+}: Props) => {
   const elementRef = useRef(null);
+
+  useHeaderSecondLevel({
+    supportRequest: true,
+    title: ""
+  });
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,24 +42,15 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
   );
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"BaseEuCovidCertificateLayout"}
-        ref={elementRef}
-      >
-        <ScrollView
-          style={IOStyles.horizontalContentPadding}
-          testID={props.testID}
-        >
-          {/* if the header is not defined put an empty header that works as a spacer
+    <>
+      <ScrollView style={IOStyles.horizontalContentPadding} testID={testID}>
+        {/* if the header is not defined put an empty header that works as a spacer
           (design directions, to avoid content too close with the top of the screen) */}
-          {props.header ?? <View style={styles.emptyHeader} />}
-          {props.content}
-        </ScrollView>
-        <SectionStatusComponent sectionKey={"euCovidCert"} />
-        {props.footer}
-      </SafeAreaView>
-    </BaseScreenComponent>
+        {header ?? <View style={styles.emptyHeader} />}
+        {content}
+      </ScrollView>
+      <SectionStatusComponent sectionKey={"euCovidCert"} />
+      {footer}
+    </>
   );
 };

@@ -8,7 +8,9 @@ import {
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../../features/itwallet/components/ItwMarkdown";
+import ItwMarkdown from "../../../features/itwallet/discovery/components/ItwMarkdown";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../../features/itwallet/navigation/routes";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -36,9 +38,41 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
+  const navigation = useIONavigation();
+
   useHeaderSecondLevel({
     title: "ITW Playground"
   });
+
+  const navigateToDiscovery = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO
+    });
+  };
+
+  const navigateToIdentification = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
+    });
+  };
+
+  const navigateToCredentialDetail = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
+    });
+  };
+
+  const navigateToCredentialPreview = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
+    });
+  };
+
+  const navigateToCredentialAuth = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH
+    });
+  };
 
   return (
     <ScrollView>
@@ -48,7 +82,7 @@ const ItwPlayground = () => {
           value="Discovery"
           accessibilityLabel={"Discovery Playground"}
           description="Start the discovery flow before activate IT-Wallet"
-          onPress={() => undefined}
+          onPress={() => navigateToDiscovery()}
         />
         <Divider />
         {/* Issuing eID Playground */}
@@ -56,7 +90,7 @@ const ItwPlayground = () => {
           value="Issuing (eID)"
           accessibilityLabel={"Issuing (eID) Playground"}
           description="Start the issuing flow choosing activation method to activate IT-Wallet and get your digital identity"
-          onPress={() => undefined}
+          onPress={navigateToIdentification}
         />
         <Divider />
         {/* Issuing mDL Playground */}
@@ -73,6 +107,30 @@ const ItwPlayground = () => {
           accessibilityLabel={"Issuing (TS) Playground"}
           description="Start the issuing flow to get your health card"
           onPress={() => undefined}
+        />
+        <Divider />
+        {/* Credential Preview */}
+        <ListItemNav
+          value="Credential preview (mDL)"
+          accessibilityLabel="Credential preview (mdl) Playground"
+          description="Open the credential preview screen"
+          onPress={navigateToCredentialPreview}
+        />
+        <Divider />
+        {/* Credential detail playground */}
+        <ListItemNav
+          value="Credential detail (eID)"
+          accessibilityLabel={"Credential detail (eID) Playground"}
+          description="Open the eID credential detail screen"
+          onPress={navigateToCredentialDetail}
+        />
+        <Divider />
+        {/* Credential auth playground */}
+        <ListItemNav
+          value="Credential auth (mDL)"
+          accessibilityLabel={"Credential auth (mdl) Playground"}
+          description="Open the eID credential detail screen"
+          onPress={navigateToCredentialAuth}
         />
         <Divider />
         <VSpacer />

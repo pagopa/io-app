@@ -1,0 +1,343 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ServicesHeaderSection component should match snapshot for loading 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#F4F5F8",
+      },
+      Object {
+        "marginTop": -1334,
+        "paddingBottom": undefined,
+        "paddingTop": 1534,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "paddingVertical": 6,
+        }
+      }
+      testID="services-header-skeleton"
+    >
+      <View
+        style={
+          Object {
+            "marginRight": 16,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 0.5,
+            }
+          }
+        >
+          <View
+            color="#D2D6E3"
+            height={66}
+            radius={12}
+            style={
+              Object {
+                "backgroundColor": "#D2D6E3",
+                "borderRadius": 12,
+                "height": 66,
+                "width": 66,
+              }
+            }
+            width={66}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 0.5,
+            }
+          }
+        >
+          <View
+            color="#D2D6E3"
+            height={16}
+            radius={8}
+            style={
+              Object {
+                "backgroundColor": "#D2D6E3",
+                "borderRadius": 8,
+                "height": 16,
+                "width": "100%",
+              }
+            }
+            width="100%"
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "height": 8,
+            }
+          }
+        />
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 0.5,
+            }
+          }
+        >
+          <View
+            color="#D2D6E3"
+            height={16}
+            radius={8}
+            style={
+              Object {
+                "backgroundColor": "#D2D6E3",
+                "borderRadius": 8,
+                "height": 16,
+                "width": "80%",
+              }
+            }
+            width="80%"
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "height": 8,
+            }
+          }
+        />
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 0.5,
+            }
+          }
+        >
+          <View
+            color="#D2D6E3"
+            height={8}
+            radius={8}
+            style={
+              Object {
+                "backgroundColor": "#D2D6E3",
+                "borderRadius": 8,
+                "height": 8,
+                "width": "60%",
+              }
+            }
+            width="60%"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "height": 16,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`ServicesHeaderSection component should match the snapshot for service header 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#F4F5F8",
+      },
+      Object {
+        "marginTop": -1334,
+        "paddingBottom": undefined,
+        "paddingTop": 1534,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "paddingVertical": 6,
+        }
+      }
+      testID="services-header"
+    >
+      <View
+        style={
+          Object {
+            "marginRight": 16,
+          }
+        }
+      >
+        <View
+          accessibilityIgnoresInvertColors={true}
+          style={
+            Array [
+              Object {
+                "borderColor": "rgba(14,15,19,0.1)",
+                "borderCurve": "continuous",
+                "borderWidth": 1,
+                "overflow": "hidden",
+              },
+              Object {
+                "backgroundColor": "#FFFFFF",
+                "borderRadius": 12,
+                "height": 66,
+                "padding": 9,
+                "width": 66,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderCurve": "continuous",
+                  "overflow": "hidden",
+                },
+                Object {
+                  "borderRadius": 3,
+                },
+              ]
+            }
+          >
+            <Image
+              accessibilityIgnoresInvertColors={true}
+              onError={[Function]}
+              source={
+                Object {
+                  "testUri": "../../../img/test/logo.png",
+                }
+              }
+              style={
+                Object {
+                  "height": "100%",
+                  "resizeMode": "contain",
+                  "width": "100%",
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          color="bluegreyDark"
+          defaultColor="bluegreyDark"
+          defaultWeight="Semibold"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 24,
+              "lineHeight": 34,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 24,
+                "lineHeight": 34,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+        >
+          #### title ####
+        </Text>
+        <Text
+          allowFontScaling={false}
+          color="grey-700"
+          defaultColor="blue"
+          defaultWeight="Bold"
+          font="TitilliumSansPro"
+          fontSize="regular"
+          fontStyle={
+            Object {
+              "fontSize": 14,
+              "lineHeight": 21,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 14,
+                "lineHeight": 21,
+              },
+              Object {
+                "color": "#555C70",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "700",
+              },
+            ]
+          }
+          weight="Bold"
+        >
+          #### subTitle ####
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "height": 16,
+        }
+      }
+    />
+  </View>
+</View>
+`;

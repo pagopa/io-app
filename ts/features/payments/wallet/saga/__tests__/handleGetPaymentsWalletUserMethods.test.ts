@@ -3,7 +3,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { getPaymentsWalletUserMethods } from "../../store/actions";
 import { handleGetPaymentsWalletUserMethods } from "../handleGetPaymentsWalletUserMethods";
 import { WalletCard } from "../../../../newWallet/types";
@@ -13,6 +12,8 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { getDateFromExpiryDate } from "../../../../../utils/dates";
 
 describe("handleGetPaymentsWalletUserMethods", () => {
+  const T_SESSION_TOKEN = "ABCD";
+
   it(`should put ${getType(getPaymentsWalletUserMethods.success)} and ${getType(
     walletAddCards
   )} when response is success`, () => {
@@ -28,6 +29,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
           paymentMethodId: "paymentMethodId",
           paymentMethodAsset: "paymentMethodAsset",
           applications: [],
+          clients: {},
           status: WalletStatusEnum.CREATED,
           updateDate: new Date(),
           details: {
@@ -60,11 +62,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        getPaymentsWalletUserMethods.request()
-      )
+      .next(T_SESSION_TOKEN)
       .next(E.right({ status: 200, value: getWalletsByIdUserResponse }))
       .put(walletAddCards(cards))
       .next()
@@ -84,11 +82,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        getPaymentsWalletUserMethods.request()
-      )
+      .next(T_SESSION_TOKEN)
       .next(E.right({ status: 400, value: undefined }))
       .put(
         getPaymentsWalletUserMethods.failure(
@@ -110,11 +104,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       getPaymentsWalletUserMethods.request()
     )
       .next()
-      .call(
-        withRefreshApiCall,
-        mockGetWalletsByIdUser(),
-        getPaymentsWalletUserMethods.request()
-      )
+      .next(T_SESSION_TOKEN)
       .next(E.left([]))
       .put(
         getPaymentsWalletUserMethods.failure({

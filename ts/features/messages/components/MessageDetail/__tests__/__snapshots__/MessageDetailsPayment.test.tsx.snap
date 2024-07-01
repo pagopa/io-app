@@ -772,14 +772,15 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                 allowFontScaling={false}
                                 color="grey-700"
                                 defaultColor="black"
-                                defaultWeight="SemiBold"
-                                font="TitilliumWeb"
+                                defaultWeight="Semibold"
+                                font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
+                                role="heading"
                                 style={
                                   Array [
                                     Object {
@@ -788,13 +789,13 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                     },
                                     Object {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Web",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
+                                      "fontWeight": "600",
                                     },
                                   ]
                                 }
-                                weight="Regular"
+                                weight="Semibold"
                               >
                                 pagoPA notices
                               </Text>
@@ -882,7 +883,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                           <View
                             style={
                               Object {
-                                "marginLeft": 16,
+                                "marginLeft": 12,
                               }
                             }
                           >

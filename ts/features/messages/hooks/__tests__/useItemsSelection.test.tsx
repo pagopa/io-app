@@ -32,18 +32,24 @@ const TestContainer = ({
 
       {/* Test toggle function */}
       <TouchableOpacity
+        accessibilityRole="button"
         onPress={() => toggleItem(toToggle)}
         testID={"toggle"}
       />
 
       {/* Test set all function */}
       <TouchableOpacity
+        accessibilityRole="button"
         onPress={() => setAllItems(toSetAll)}
         testID={"set-all"}
       />
 
       {/* Test reset function */}
-      <TouchableOpacity onPress={() => resetSelection()} testID={"reset"} />
+      <TouchableOpacity
+        accessibilityRole="button"
+        onPress={() => resetSelection()}
+        testID={"reset"}
+      />
     </View>
   );
 };

@@ -1,6 +1,7 @@
 import {
   ButtonSolid,
   ContentWrapper,
+  FooterWithButtons,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -10,7 +11,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -71,7 +71,7 @@ export const IbanConfigurationLanding = () => {
           <Body style={styles.textCenter}>
             {I18n.t("idpay.configuration.iban.landing.body")}
           </Body>
-          <Body color="blue" weight="SemiBold" onPress={present}>
+          <Body color="blue" weight="Semibold" onPress={present}>
             {I18n.t("idpay.configuration.iban.landing.bodyLink")}
           </Body>
         </View>
@@ -80,9 +80,12 @@ export const IbanConfigurationLanding = () => {
       <SafeAreaView>
         <FooterWithButtons
           type="SingleButton"
-          leftButton={{
-            title: I18n.t("global.buttons.continue"),
-            onPress: () => machine.send({ type: "next" })
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.continue"),
+              onPress: () => machine.send({ type: "next" })
+            }
           }}
         />
       </SafeAreaView>

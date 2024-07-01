@@ -48,11 +48,6 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationInstallationFailure,
-  updateNotificationsInstallationToken
-} from "../actions/notifications";
-import {
   profileFirstLogin,
   profileLoadFailure,
   profileLoadRequest,
@@ -107,8 +102,13 @@ import {
   updatePaymentStatus
 } from "../actions/wallet/wallets";
 import { buildEventProperties } from "../../utils/analytics";
+import {
+  notificationsInstallationTokenRegistered,
+  updateNotificationInstallationFailure,
+  updateNotificationsInstallationToken
+} from "../../features/pushNotifications/store/actions/notifications";
+import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackContentAction } from "./contentAnalytics";
-import { trackServiceAction } from "./serviceAnalytics";
 
 const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -397,7 +397,7 @@ export const actionTracking =
       void trackCoBadgeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);
       void trackContentAction(mixpanel)(action);
-      void trackServiceAction(mixpanel)(action);
+      void trackServicesAction(mixpanel)(action);
       void trackEuCovidCertificateActions(mixpanel)(action);
       void trackPaypalOnboarding(mixpanel)(action);
       void trackZendesk(mixpanel)(action);

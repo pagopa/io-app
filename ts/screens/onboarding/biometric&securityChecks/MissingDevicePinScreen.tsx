@@ -1,21 +1,22 @@
-import * as React from "react";
-import { Alert, ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
+import { ListItemInfo } from "@pagopa/io-app-design-system";
+import React, { useMemo } from "react";
+import { Platform } from "react-native";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { FAQsCategoriesType } from "../../../utils/faq";
+import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
 import { trackPinEducationalScreen } from "./analytics";
+
+const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
+  "onboarding_fingerprint"
+];
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -27,90 +28,65 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * the instruction to enable the fingerprint/faceID usage
  */
 const MissingDevicePinScreen = () => {
-  const insets = useSafeAreaInsets();
-  const dispatch = useDispatch();
-
+  const dispatch = useIODispatch();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const { showAlert } = useOnboardingAbortAlert();
 
   useOnFirstRender(() => {
     trackPinEducationalScreen(getFlowType(true, isFirstOnBoarding));
   });
 
-  const handleGoBack = () =>
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: () => dispatch(abortOnboarding())
-        }
-      ]
-    );
+  useHeaderSecondLevel({
+    title: "",
+    contextualHelpMarkdown,
+    faqCategories: FAQ_CATEGORIES,
+    goBack: showAlert,
+    supportRequest: true
+  });
+
+  const listItems = useMemo<Array<ListItemInfo>>(
+    () => [
+      {
+        label: I18n.t("onboarding.biometric.unavailable.body.step1.label"),
+        value: I18n.t("onboarding.biometric.unavailable.body.step1.value"),
+        icon: "systemSettingsAndroid"
+      },
+      {
+        label: I18n.t("onboarding.biometric.unavailable.body.step2.label"),
+        value: I18n.t("onboarding.biometric.unavailable.body.step2.value"),
+        icon: Platform.select({
+          ios: "systemPasswordiOS",
+          android: "systemPasswordAndroid"
+        })
+      }
+    ],
+    []
+  );
+
+  const actionProps = useMemo(
+    () => ({
+      label: I18n.t("global.buttons.continue"),
+      accessibilityLabel: I18n.t("global.buttons.continue"),
+      onPress: () =>
+        dispatch(
+          preferenceFingerprintIsEnabledSaveSuccess({
+            isFingerprintEnabled: false
+          })
+        )
+    }),
+    [dispatch]
+  );
 
   return (
-    <TopScreenComponent
-      goBack={handleGoBack}
-      headerTitle={I18n.t("onboarding.biometric.headerTitle")}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["onboarding_fingerprint"]}
-    >
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: IOVisualCostants.appMarginDefault
-        }}
-      >
-        <ScreenContentHeader
-          title={I18n.t("onboarding.biometric.unavailable.title")}
-        />
-        <VSpacer size={24} />
-        <View
-          style={{
-            flexGrow: 1,
-            paddingHorizontal: IOVisualCostants.appMarginDefault
-          }}
-        >
-          <Body>
-            {I18n.t("onboarding.biometric.unavailable.body.firstInfoStart") +
-              " "}
-            <Body weight="SemiBold">
-              {I18n.t("onboarding.biometric.unavailable.body.firstInfoEnd")}
-            </Body>
-          </Body>
-          <VSpacer size={24} />
-          <Body>
-            {I18n.t("onboarding.biometric.unavailable.body.secondInfoStart") +
-              " "}
-            <Body weight="SemiBold">
-              {I18n.t("onboarding.biometric.unavailable.body.secondInfoEnd")}
-            </Body>
-          </Body>
-        </View>
-      </ScrollView>
-      {/* Waiting for a component that makes this wrapper
-      useless. FooterWithButtons currently uses
-      NativeBase buttons, instead of new ones */}
-      <View style={{ paddingBottom: insets.bottom }}>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            title: I18n.t("global.buttons.continue"),
-            primary: true,
-            onPress: () =>
-              dispatch(
-                preferenceFingerprintIsEnabledSaveSuccess({
-                  isFingerprintEnabled: false
-                })
-              )
-          }}
-        />
-      </View>
-    </TopScreenComponent>
+    <ScreenWithListItems
+      title={I18n.t("onboarding.biometric.unavailable.title")}
+      subtitle={I18n.t("onboarding.biometric.unavailable.subtitle")}
+      listItemHeaderLabel={I18n.t(
+        "onboarding.biometric.unavailable.body.label"
+      )}
+      renderItems={listItems}
+      primaryActionProps={actionProps}
+    />
   );
 };
 

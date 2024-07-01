@@ -28,8 +28,10 @@ const styles = StyleSheet.create({
 
 type MessageBottomMenuProps = {
   history: NotificationStatusHistory;
+  isCancelled?: boolean;
   iun: string;
   messageId: UIMessageId;
+  paidNoticeCodes?: ReadonlyArray<string>;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
   serviceId: ServiceId;
 };
@@ -37,6 +39,8 @@ type MessageBottomMenuProps = {
 const generateMessageSectionData = (
   iun: string,
   messageId: UIMessageId,
+  isCancelled?: boolean,
+  paidNoticeCodes?: ReadonlyArray<string>,
   payments?: ReadonlyArray<NotificationPaymentInfo>
 ): ShowMoreSection => {
   const messageSectionData: ShowMoreSection = [
@@ -67,40 +71,69 @@ const generateMessageSectionData = (
       ]
     }
   ];
-  const paymentsSectionData: ShowMoreSection =
-    payments?.map((payment, index) => ({
-      title: `${I18n.t(
-        "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
-      )} ${index + 1}`,
-      items: [
-        {
-          accessibilityLabel: I18n.t(
-            "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
-          ),
-          icon: "docPaymentCode",
-          label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
-          value: formatPaymentNoticeNumber(payment.noticeCode),
-          valueToCopy: payment.noticeCode
-        },
-        {
-          accessibilityLabel: I18n.t(
-            "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
-          ),
-          icon: "entityCode",
-          label: I18n.t(
-            "messageDetails.showMoreDataBottomSheet.entityFiscalCode"
-          ),
-          value: payment.creditorTaxId
-        }
-      ]
-    })) ?? [];
-  return messageSectionData.concat(paymentsSectionData);
+  if (isCancelled) {
+    const paymentsSectionData: ShowMoreSection =
+      paidNoticeCodes?.map((paidNoticeCode, index) => ({
+        title: `${I18n.t(
+          "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
+        )} ${index + 1}`,
+        items: [
+          {
+            accessibilityLabel: I18n.t(
+              "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
+            ),
+            icon: "docPaymentCode",
+            label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
+            value: formatPaymentNoticeNumber(paidNoticeCode),
+            valueToCopy: paidNoticeCode
+          }
+        ]
+      })) ?? [];
+    return messageSectionData.concat(paymentsSectionData);
+  } else {
+    const hasMoreThanOnePayment = (payments?.length ?? 0) > 1;
+    const paymentsSectionData: ShowMoreSection =
+      payments?.map((payment, index) => {
+        const titleSuffix = hasMoreThanOnePayment ? ` ${index + 1}` : ``;
+        return {
+          title: `${I18n.t(
+            "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
+          )}${titleSuffix}`,
+          items: [
+            {
+              accessibilityLabel: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
+              ),
+              icon: "docPaymentCode",
+              label: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.noticeCode"
+              ),
+              value: formatPaymentNoticeNumber(payment.noticeCode),
+              valueToCopy: payment.noticeCode
+            },
+            {
+              accessibilityLabel: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
+              ),
+              icon: "entityCode",
+              label: I18n.t(
+                "messageDetails.showMoreDataBottomSheet.entityFiscalCode"
+              ),
+              value: payment.creditorTaxId
+            }
+          ]
+        };
+      }) ?? [];
+    return messageSectionData.concat(paymentsSectionData);
+  }
 };
 
 export const MessageBottomMenu = ({
   history,
+  isCancelled,
   iun,
   messageId,
+  paidNoticeCodes,
   payments,
   serviceId
 }: MessageBottomMenuProps) => {
@@ -108,8 +141,15 @@ export const MessageBottomMenu = ({
     serviceMetadataByIdSelector(state, serviceId)
   );
   const showMoreSectionData = useMemo(
-    () => generateMessageSectionData(iun, messageId, payments),
-    [iun, messageId, payments]
+    () =>
+      generateMessageSectionData(
+        iun,
+        messageId,
+        isCancelled,
+        paidNoticeCodes,
+        payments
+      ),
+    [isCancelled, iun, messageId, paidNoticeCodes, payments]
   );
   return (
     <View style={styles.container}>

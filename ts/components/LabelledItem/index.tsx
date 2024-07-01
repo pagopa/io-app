@@ -9,8 +9,9 @@
  * icon  |
  *       input
  */
+import { HSpacer, IOColors, IOIcons } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
-import { Input as InputNativeBase, Item } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -18,13 +19,12 @@ import {
   ImageStyle,
   NativeSyntheticEvent,
   StyleSheet,
+  TextInput,
   TextInputFocusEventData,
   TextInputProps,
   View
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
-import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 
@@ -33,19 +33,25 @@ import { makeFontStyleObject } from "../core/fonts";
 import { H5 } from "../core/typography/H5";
 import { IOStyles } from "../core/variables/IOStyles";
 import TextInputMask from "../ui/MaskedInput";
+import variables from "../../theme/variables";
 import { LabelledItemIconOrImage } from "./LabelledItemIconOrImage";
 
 const styles = StyleSheet.create({
-  noBottomLine: {
-    borderBottomWidth: 0
-  },
   bottomLine: {
     borderBottomWidth: 1
   },
-  flex: {
-    flex: 1
-  },
   textInputMask: {
+    height: variables.inputHeightBase,
+    color: IOColors["grey-850"],
+    paddingLeft: 5,
+    paddingRight: 5,
+    flex: 1,
+    fontSize: variables.inputFontSize,
+    ...makeFontStyleObject("Regular")
+  },
+  regularInput: {
+    flexGrow: 1,
+    paddingVertical: 8,
     ...makeFontStyleObject("Regular")
   }
 });
@@ -113,7 +119,7 @@ function getColorsByProps({
     };
   }
   return {
-    borderColor: hasFocus && isEmpty ? IOColors.milderGray : undefined,
+    borderColor: hasFocus && isEmpty ? IOColors.bluegrey : undefined,
     descriptionColor: isValid === false ? "red" : "bluegreyDark",
     iconColor: iconColor ?? "bluegrey",
     placeholderTextColor: brandGrayDarken,
@@ -165,16 +171,14 @@ export const LabelledItem: React.FC<Props> = ({
     setIsEmpty(isStringNullyOrEmpty(text));
 
   return (
-    <View style={styles.flex}>
+    <View style={{ flexGrow: 1 }}>
       {props.label && (
         <View
           testID="label"
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
         >
-          <Item style={styles.noBottomLine}>
-            <H5 color={labelColor}>{props.label}</H5>
-          </Item>
+          <H5 color={labelColor}>{props.label}</H5>
         </View>
       )}
 
@@ -197,14 +201,17 @@ export const LabelledItem: React.FC<Props> = ({
           credit card sorting have a fallback value that's an icon,
           not an image */}
           {iconPosition === "left" && props.icon && (
-            <LabelledItemIconOrImage
-              icon={props.icon}
-              iconColor={iconColor}
-              imageStyle={props.imageStyle}
-              accessible={false}
-              accessibilityLabelIcon={props.accessibilityLabelIcon}
-              onPress={props.onPress}
-            />
+            <>
+              <LabelledItemIconOrImage
+                icon={props.icon}
+                iconColor={iconColor}
+                imageStyle={props.imageStyle}
+                accessible={false}
+                accessibilityLabelIcon={props.accessibilityLabelIcon}
+                onPress={props.onPress}
+              />
+              <HSpacer size={8} />
+            </>
           )}
 
           {props.inputMaskProps && (
@@ -229,7 +236,7 @@ export const LabelledItem: React.FC<Props> = ({
           )}
 
           {props.inputProps && (
-            <InputNativeBase
+            <TextInput
               accessible={true}
               accessibilityLabel={I18n.t("global.accessibility.textField", {
                 inputLabel: accessibilityLabel
@@ -244,9 +251,10 @@ export const LabelledItem: React.FC<Props> = ({
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               testID={`${props.testID}Input`}
-              disabled={props.inputProps?.disabled}
+              editable={props.inputProps?.disabled}
               placeholderTextColor={placeholderTextColor}
               inputAccessoryViewID={props.inputAccessoryViewID}
+              style={styles.regularInput}
             />
           )}
 
@@ -268,15 +276,13 @@ export const LabelledItem: React.FC<Props> = ({
           accessibilityElementsHidden={true}
           key={"description"}
         >
-          <Item style={styles.noBottomLine}>
-            <H5
-              weight={"Regular"}
-              color={descriptionColor}
-              testID="H5-description"
-            >
-              {props.description}
-            </H5>
-          </Item>
+          <H5
+            weight={"Regular"}
+            color={descriptionColor}
+            testID="H5-description"
+          >
+            {props.description}
+          </H5>
         </View>
       )}
     </View>

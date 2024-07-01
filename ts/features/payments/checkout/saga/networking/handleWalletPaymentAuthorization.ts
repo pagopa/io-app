@@ -1,6 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ApmDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/ApmDetailType";
 import { AuthorizationDetails } from "../../../../../../definitions/pagopa/ecommerce/AuthorizationDetails";
@@ -9,32 +8,21 @@ import {
   RequestAuthorizationRequest
 } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
 import { WalletDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletDetailType";
-import { SagaCallReturnType } from "../../../../../types/utils";
+import { RedirectDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/RedirectDetailType";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
-import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
+import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 
 export function* handleWalletPaymentAuthorization(
-  requestTransactionAuthorization: PaymentClient["requestTransactionAuthorization"],
+  requestTransactionAuthorization: PaymentClient["requestTransactionAuthorizationForIO"],
   action: ActionType<
     (typeof paymentsStartPaymentAuthorizationAction)["request"]
   >
 ) {
   try {
-    const sessionToken = yield* getOrFetchWalletSessionToken();
-
-    if (sessionToken === undefined) {
-      yield* put(
-        paymentsStartPaymentAuthorizationAction.failure({
-          ...getGenericError(new Error(`Missing session token`))
-        })
-      );
-      return;
-    }
-
     const details: AuthorizationDetails =
       action.payload.walletId !== undefined
         ? {
@@ -42,51 +30,66 @@ export function* handleWalletPaymentAuthorization(
             walletId: action.payload.walletId
           }
         : {
-            detailType: ApmDetailTypeEnum.apm,
+            detailType:
+              action.payload.paymentMethodManagement ===
+              PaymentMethodManagementTypeEnum.REDIRECT
+                ? RedirectDetailTypeEnum.redirect
+                : ApmDetailTypeEnum.apm,
             paymentMethodId: action.payload.paymentMethodId
           };
 
     const requestBody: RequestAuthorizationRequest = {
       amount: action.payload.paymentAmount,
       fee: action.payload.paymentFees,
-      isAllCCP: true,
+      isAllCCP: action.payload.isAllCCP,
       language: LanguageEnum.IT,
       pspId: action.payload.pspId,
       details
     };
-    const requestTransactionAuthorizationRequest =
-      requestTransactionAuthorization({
-        transactionId: action.payload.transactionId,
-        body: requestBody,
-        eCommerceSessionToken: sessionToken
-      });
 
-    const requestTransactionAuthorizationResult = (yield* call(
-      withRefreshApiCall,
-      requestTransactionAuthorizationRequest,
-      action
-    )) as SagaCallReturnType<typeof requestTransactionAuthorization>;
+    const requestTransactionAuthorizationResult =
+      yield* withPaymentsSessionToken(
+        requestTransactionAuthorization,
+        paymentsStartPaymentAuthorizationAction.failure,
+        action,
+        {
+          transactionId: action.payload.transactionId,
+          body: requestBody
+        },
+        "pagoPAPlatformSessionToken"
+      );
 
-    yield* put(
-      pipe(
-        requestTransactionAuthorizationResult,
-        E.fold(
-          error =>
-            paymentsStartPaymentAuthorizationAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
+    if (E.isLeft(requestTransactionAuthorizationResult)) {
+      yield* put(
+        paymentsStartPaymentAuthorizationAction.failure({
+          ...getGenericError(
+            new Error(
+              readablePrivacyReport(requestTransactionAuthorizationResult.left)
+            )
+          )
+        })
+      );
+      return;
+    }
 
-          res => {
-            if (res.status === 200) {
-              return paymentsStartPaymentAuthorizationAction.success(res.value);
-            }
-            return paymentsStartPaymentAuthorizationAction.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
-          }
+    if (requestTransactionAuthorizationResult.right.status === 200) {
+      yield* put(
+        paymentsStartPaymentAuthorizationAction.success(
+          requestTransactionAuthorizationResult.right.value
         )
-      )
-    );
+      );
+    } else if (requestTransactionAuthorizationResult.right.status !== 401) {
+      // The 401 status is handled by the withPaymentsSessionToken
+      yield* put(
+        paymentsStartPaymentAuthorizationAction.failure({
+          ...getGenericError(
+            new Error(
+              `Error: ${requestTransactionAuthorizationResult.right.status}`
+            )
+          )
+        })
+      );
+    }
   } catch (e) {
     yield* put(
       paymentsStartPaymentAuthorizationAction.failure({ ...getNetworkError(e) })

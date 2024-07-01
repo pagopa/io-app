@@ -1,12 +1,11 @@
-import * as React from "react";
-import { ScrollView, StatusBar, View, useColorScheme } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   ContentWrapper,
-  IOColors,
   IOVisualCostants,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { ScrollView, StatusBar, View, useColorScheme } from "react-native";
+import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 
 type Props = {
   title: string;
@@ -16,8 +15,9 @@ type Props = {
 
 export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {
   const colorScheme = useColorScheme();
-  const insets = useSafeAreaInsets();
   const theme = useIOTheme();
+
+  const { screenEndMargin } = useScreenEndMargin();
 
   return (
     <>
@@ -27,9 +27,8 @@ export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {
       />
       <ScrollView
         contentContainerStyle={{
-          backgroundColor: IOColors[theme["appBackground-primary"]],
           paddingTop: IOVisualCostants.appMarginDefault,
-          paddingBottom: insets.bottom + IOVisualCostants.appMarginDefault
+          paddingBottom: screenEndMargin
         }}
       >
         {noMargin ? (

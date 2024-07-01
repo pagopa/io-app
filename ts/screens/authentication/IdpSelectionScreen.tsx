@@ -8,9 +8,7 @@ import React, {
 } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, View } from "react-native";
-import { useSelector, useStore } from "react-redux";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -32,9 +30,9 @@ import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import IdpsGridRevamp from "../../components/IdpsGridRevamp";
+import IdpsGrid from "../../components/IdpsGrid";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isReady } from "../../common/model/RemoteValue";
 import { trackSpidLoginIdpSelection } from "./analytics";
 import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
@@ -67,7 +65,7 @@ export const randomOrderIdps = <T extends object>(
  */
 const IdpSelectionScreen = (): ReactElement => {
   const dispatch = useIODispatch();
-  const store = useStore();
+  const store = useIOStore();
   const navigation =
     useNavigation<
       IOStackNavigationProp<
@@ -79,8 +77,10 @@ const IdpSelectionScreen = (): ReactElement => {
   const idps = useIOSelector(idpsRemoteValueSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
-  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
-  const isNativeLoginFeatureFlagEnabled = useSelector(
+  const isFastLoginFeatureFlagEnabled = useIOSelector(
+    isFastLoginEnabledSelector
+  );
+  const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
 
@@ -130,7 +130,6 @@ const IdpSelectionScreen = (): ReactElement => {
       (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
     nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
-
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
@@ -205,14 +204,13 @@ const IdpSelectionScreen = (): ReactElement => {
   });
 
   return (
-    <SafeAreaView edges={["bottom"]}>
-      <IdpsGridRevamp
-        idps={randomIdps.current}
-        onIdpSelected={onIdpSelected}
-        headerComponent={headerComponent}
-        footerComponent={<VSpacer size={24} />}
-      />
-    </SafeAreaView>
+    <IdpsGrid
+      testID="idps-grid"
+      idps={randomIdps.current}
+      onIdpSelected={onIdpSelected}
+      headerComponent={headerComponent}
+      footerComponent={<VSpacer size={40} />}
+    />
   );
 };
 

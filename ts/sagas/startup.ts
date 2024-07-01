@@ -3,7 +3,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Alert } from "react-native";
-import PushNotification from "react-native-push-notification";
 import { channel } from "redux-saga";
 import {
   call,
@@ -94,10 +93,20 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
+import { watchFimsSaga } from "../features/fims/common/saga";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
+import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
 import { watchServicesSaga } from "../features/services/common/saga";
+import { watchItwSaga } from "../features/itwallet/common/saga";
+import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
+import {
+  handlePendingMessageStateIfAllowedSaga,
+  updateInstallationSaga
+} from "../features/pushNotifications/sagas/notifications";
+import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
+import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import {
   clearKeychainError,
   keychainError
@@ -110,10 +119,6 @@ import {
   initMixpanel,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
-import {
-  handlePendingMessageStateIfAllowedSaga,
-  updateInstallationSaga
-} from "./notifications";
 import { setLanguageFromProfileIfExists } from "./preferences";
 import {
   loadProfile,
@@ -122,7 +127,6 @@ import {
   watchProfileUpsertRequestsSaga
 } from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
-import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -130,7 +134,6 @@ import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "./startup/checkEmailSaga";
-import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
@@ -306,14 +309,14 @@ export function* initializeApplicationSaga(
     backendClient.deleteUserDataProcessingRequest
   );
 
-  // Load visible services and service details from backend when requested
-  yield* fork(watchLoadServicesSaga, backendClient);
-
   // Start watching for services actions
-  yield* fork(watchServicesSaga, sessionToken);
+  yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga, backendClient, sessionToken);
+
+  // start watching for FIMS actions
+  yield* fork(watchFimsSaga);
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
@@ -512,6 +515,9 @@ export function* initializeApplicationSaga(
   // User is autenticated, session token is valid
   //
 
+  // Start wathing new wallet sagas
+  yield* fork(watchNewWalletSaga);
+
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
@@ -545,6 +551,12 @@ export function* initializeApplicationSaga(
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
+
+  // Start watching for trial system saga
+  yield* fork(watchTrialSystemSaga, sessionToken);
+
+  // Start watching for itw saga
+  yield* fork(watchItwSaga);
 
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, maybeSessionInformation.value.walletToken);
@@ -703,20 +715,6 @@ function* waitForMainNavigator() {
   });
 }
 
-/**
- * Remove all the local notifications related to authentication with spid.
- *
- * With the previous library version (7.3.1 - now 8.1.1), cancelLocalNotifications
- * did not work. At the moment, the "first access spid" is the only kind of
- * scheduled notification and for this reason it is safe to use
- * PushNotification.cancelAllLocalNotifications();
- * If we add more scheduled notifications, we need to investigate if
- * cancelLocalNotifications works with the new library version
- */
-function cancellAllLocalNotifications() {
-  PushNotification.cancelAllLocalNotifications();
-}
-
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
   yield* takeLatest(
@@ -727,8 +725,4 @@ export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv
   ? waitForNavigatorServiceInitialization
-  : undefined;
-
-export const testCancellAllLocalNotifications = isTestEnv
-  ? cancellAllLocalNotifications
   : undefined;

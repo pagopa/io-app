@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
-import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
@@ -30,6 +29,7 @@ import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboa
 import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import { isGestureEnabled } from "../utils/navigation";
+import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -48,7 +48,11 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_PRIVACY_MAIN}
       component={PrivacyMainScreen}
     />
-    <Stack.Screen name={ROUTES.PROFILE_PRIVACY} component={TosScreen} />
+    <Stack.Screen
+      options={{ headerShown: true }}
+      name={ROUTES.PROFILE_PRIVACY}
+      component={TosScreen}
+    />
     <Stack.Screen
       name={ROUTES.PROFILE_PRIVACY_SHARE_DATA}
       component={ShareDataScreen}
@@ -59,9 +63,6 @@ const ProfileStackNavigator = () => (
       component={ServicesPreferenceScreen}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
       name={ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING}
       component={EmailForwardingScreen}
     />
@@ -86,9 +87,6 @@ const ProfileStackNavigator = () => (
       component={LogoutScreen}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
       name={ROUTES.PROFILE_FISCAL_CODE}
       component={FiscalCodeScreen}
     />
@@ -102,13 +100,7 @@ const ProfileStackNavigator = () => (
       name={ROUTES.EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
     />
-    <Stack.Screen
-      options={{
-        headerShown: false
-      }}
-      name={ROUTES.PIN_SCREEN}
-      component={PinScreen}
-    />
+    <Stack.Screen name={ROUTES.PIN_SCREEN} component={PinScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}
@@ -131,6 +123,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CGN_LANDING_PLAYGROUND}
       component={CgnLandingPlayground}
+    />
+    <Stack.Screen
+      name={ROUTES.TRIALS_SYSTEM_PLAYGROUND}
+      component={TrialSystemPlayground}
     />
     <Stack.Screen
       options={{
@@ -161,12 +157,10 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS}
       component={RemoveAccountSuccess}
     />
-    {remindersOptInEnabled && (
-      <Stack.Screen
-        name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
-        component={NotificationsPreferencesScreen}
-      />
-    )}
+    <Stack.Screen
+      name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
+      component={NotificationsPreferencesScreen}
+    />
     <Stack.Screen name={ROUTES.ITW_PLAYGROUND} component={ItwPlayground} />
   </Stack.Navigator>
 );

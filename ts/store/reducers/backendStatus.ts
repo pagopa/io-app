@@ -31,7 +31,10 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 
-import { isIdPayTestEnabledSelector } from "./persistedPreferences";
+import {
+  isIdPayTestEnabledSelector,
+  isNewWalletSectionEnabledSelector
+} from "./persistedPreferences";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -54,10 +57,9 @@ export const backendServicesStatusSelector = (
   state: GlobalState
 ): BackendStatusState => state.backendStatus;
 
-export const backendStatusSelector = createSelector(
-  backendServicesStatusSelector,
-  backendStatus => backendStatus.status
-);
+export const backendStatusSelector = (
+  state: GlobalState
+): O.Option<BackendStatus> => state.backendStatus.status;
 
 // return the section status for the given key. if it is not present, returns undefined
 export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
@@ -404,6 +406,22 @@ export const isIdPayEnabledSelector = createSelector(
           getAppVersion()
         )
       ),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return the remote config about the new payment section enabled/disabled
+ * If the local feature flag is enabled, the remote config is ignored
+ */
+export const isNewPaymentSectionEnabledSelector = createSelector(
+  backendStatusSelector,
+  isNewWalletSectionEnabledSelector,
+  (backendStatus, isNeWalletSectionEnabled): boolean =>
+    isNeWalletSectionEnabled ||
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.newPaymentSection?.enabled),
       O.getOrElse(() => false)
     )
 );

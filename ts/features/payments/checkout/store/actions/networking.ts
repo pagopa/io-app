@@ -2,23 +2,17 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
-import { NewSessionTokenResponse } from "../../../../../../definitions/pagopa/ecommerce/NewSessionTokenResponse";
 import { NewTransactionRequest } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RequestAuthorizationResponse } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
-
-export const paymentsGetNewSessionTokenAction = createAsyncAction(
-  "PAYMENTS_GET_NEW_SESSION_TOKEN_REQUEST",
-  "PAYMENTS_GET_NEW_SESSION_TOKEN_SUCCESS",
-  "PAYMENTS_GET_NEW_SESSION_TOKEN_FAILURE"
-)<undefined, NewSessionTokenResponse, NetworkError>();
 
 export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
@@ -38,12 +32,17 @@ export const paymentsGetPaymentUserMethodsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_USER_METHODS_FAILURE"
 )<undefined, Wallets, NetworkError>();
 
+export type CalculateFeePayload = {
+  paymentMethodId: string;
+  idPsp?: string;
+};
+
 export const paymentsCalculatePaymentFeesAction = createAsyncAction(
   "PAYMENTS_CALCULATE_PAYMENT_FEES_REQUEST",
   "PAYMENTS_CALCULATE_PAYMENT_FEES_SUCCESS",
   "PAYMENTS_CALCULATE_PAYMENT_FEES_FAILURE"
 )<
-  CalculateFeeRequest & { paymentMethodId: string },
+  CalculateFeeRequest & CalculateFeePayload,
   CalculateFeeResponse,
   NetworkError
 >();
@@ -75,8 +74,10 @@ export type WalletPaymentAuthorizePayload = {
   walletId?: string;
   paymentMethodId: string;
   pspId: string;
+  isAllCCP: boolean;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;
+  paymentMethodManagement?: PaymentMethodManagementTypeEnum;
 };
 
 export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
@@ -92,7 +93,6 @@ export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
 >();
 
 export type PaymentsCheckoutNetworkingActions =
-  | ActionType<typeof paymentsGetNewSessionTokenAction>
   | ActionType<typeof paymentsGetPaymentDetailsAction>
   | ActionType<typeof paymentsGetPaymentMethodsAction>
   | ActionType<typeof paymentsGetPaymentUserMethodsAction>

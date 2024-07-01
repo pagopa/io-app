@@ -6,9 +6,9 @@ Array [
     accessibilityRole="link"
     color="blue"
     defaultColor="blue"
-    defaultWeight="SemiBold"
+    defaultWeight="Semibold"
     ellipsizeMode="tail"
-    font="TitilliumWeb"
+    font="TitilliumSansPro"
     fontStyle={
       Object {
         "fontSize": 16,
@@ -28,13 +28,13 @@ Array [
         },
         Object {
           "color": "#0073E6",
-          "fontFamily": "Titillium Web",
+          "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",
           "fontWeight": "600",
         },
       ]
     }
-    weight="SemiBold"
+    weight="Semibold"
   >
     Email
   </Text>,

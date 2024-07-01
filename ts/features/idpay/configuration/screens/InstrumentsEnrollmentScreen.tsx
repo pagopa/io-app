@@ -1,6 +1,5 @@
 import {
   FooterWithButtons,
-  IOColors,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -8,13 +7,12 @@ import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import AdviceComponent from "../../../../components/AdviceComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import LegacyFooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -34,8 +32,8 @@ import {
   selectWalletInstruments
 } from "../machine/selectors";
 import { IdPayConfigurationParamsList } from "../navigation/params";
-import { InitiativeFailureType } from "../types/failure";
 import { ConfigurationMode } from "../types";
+import { InitiativeFailureType } from "../types/failure";
 
 export type IdPayInstrumentsEnrollmentScreenParams = {
   initiativeId?: string;
@@ -123,7 +121,7 @@ export const InstrumentsEnrollmentScreen = () => {
       component: (
         <Body>
           {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyFirst")}
-          <Body weight="SemiBold">
+          <Body weight="Semibold">
             {I18n.t(
               "idpay.configuration.instruments.enrollmentSheet.bodyBold"
             ) + "\n"}
@@ -181,34 +179,52 @@ export const InstrumentsEnrollmentScreen = () => {
   const renderFooterButtons = () => {
     if (isInstrumentsOnlyMode) {
       return (
-        <LegacyFooterWithButtons
+        <FooterWithButtons
           type="SingleButton"
-          leftButton={{
-            title: I18n.t("idpay.configuration.instruments.buttons.addMethod"),
-            onPress: handleAddPaymentMethodButton,
-            disabled: isUpserting
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t(
+                "idpay.configuration.instruments.buttons.addMethod"
+              ),
+              accessibilityLabel: I18n.t(
+                "idpay.configuration.instruments.buttons.addMethod"
+              ),
+              onPress: handleAddPaymentMethodButton,
+              disabled: isUpserting
+            }
           }}
         />
       );
     }
 
     return (
-      <LegacyFooterWithButtons
+      <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={{
-          title: I18n.t("idpay.configuration.instruments.buttons.skip"),
-          bordered: true,
-          disabled: isUpserting,
-          onPress: handleSkipButton
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("idpay.configuration.instruments.buttons.skip"),
+            accessibilityLabel: I18n.t(
+              "idpay.configuration.instruments.buttons.skip"
+            ),
+            onPress: handleSkipButton,
+            disabled: isUpserting
+          }
         }}
-        rightButton={{
-          title: !isUpserting
-            ? I18n.t("idpay.configuration.instruments.buttons.continue")
-            : "",
-          disabled: isUpserting || !hasSelectedInstruments,
-          labelColor: IOColors.white,
-          onPress: handleContinueButton,
-          isLoading: isUpserting
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: !isUpserting
+              ? I18n.t("idpay.configuration.instruments.buttons.continue")
+              : "",
+            accessibilityLabel: !isUpserting
+              ? I18n.t("idpay.configuration.instruments.buttons.continue")
+              : "",
+            disabled: isUpserting || !hasSelectedInstruments,
+            onPress: handleContinueButton,
+            loading: isUpserting
+          }
         }}
       />
     );
@@ -277,7 +293,7 @@ export const InstrumentsEnrollmentScreen = () => {
             />
             <VSpacer size={16} />
           </ScrollView>
-          <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
+          {renderFooterButtons()}
         </LoadingSpinnerOverlay>
       </BaseScreenComponent>
       {enrollmentBottomSheetModal.bottomSheet}

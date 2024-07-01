@@ -322,7 +322,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -395,7 +395,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -517,12 +517,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -530,18 +530,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         0
                                       </Text>
@@ -590,7 +590,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -609,7 +609,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -745,12 +745,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -758,18 +758,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         1
                                       </Text>
@@ -818,7 +818,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -837,7 +837,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -973,12 +973,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -986,18 +986,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         2
                                       </Text>
@@ -1046,7 +1046,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -1065,7 +1065,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1201,12 +1201,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1214,18 +1214,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         3
                                       </Text>
@@ -1274,7 +1274,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -1293,7 +1293,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1429,12 +1429,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1442,18 +1442,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         4
                                       </Text>
@@ -1502,7 +1502,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -1521,7 +1521,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1657,12 +1657,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1670,18 +1670,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         5
                                       </Text>
@@ -1730,7 +1730,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -1749,7 +1749,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -1885,12 +1885,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -1898,18 +1898,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         6
                                       </Text>
@@ -1958,7 +1958,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -1977,7 +1977,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2113,12 +2113,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -2126,18 +2126,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         7
                                       </Text>
@@ -2186,7 +2186,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -2205,7 +2205,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2341,12 +2341,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -2354,18 +2354,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         8
                                       </Text>
@@ -2414,7 +2414,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -2433,7 +2433,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -2569,12 +2569,12 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -2582,18 +2582,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         9
                                       </Text>
@@ -2642,7 +2642,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -2661,7 +2661,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >
@@ -3068,7 +3068,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -3141,7 +3141,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -3540,7 +3540,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                       <View
                         style={
                           Object {
-                            "alignSelf": "center",
+                            "alignSelf": "flex-start",
                             "justifyContent": "center",
                           }
                         }
@@ -3613,7 +3613,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                               style={
                                 Array [
                                   Object {
-                                    "fontFamily": "Titillium Web",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
@@ -3735,12 +3735,12 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       <Text
                                         allowFontScaling={false}
                                         color="blueIO-500"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
-                                        font="TitilliumWeb"
+                                        defaultColor="black"
+                                        defaultWeight="Semibold"
+                                        font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "lineHeight": 21,
                                           }
                                         }
@@ -3748,18 +3748,18 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                         style={
                                           Array [
                                             Object {
-                                              "fontSize": 14,
+                                              "fontSize": 16,
                                               "lineHeight": 21,
                                             },
                                             Object {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Web",
+                                              "fontFamily": "Titillium Sans Pro",
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                             },
                                           ]
                                         }
-                                        weight="SemiBold"
+                                        weight="Semibold"
                                       >
                                         0
                                       </Text>
@@ -3808,7 +3808,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                                   "textTransform": "uppercase",
                                                 },
                                                 Object {
-                                                  "fontFamily": "Titillium Web",
+                                                  "fontFamily": "Titillium Sans Pro",
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                 },
@@ -3827,7 +3827,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       style={
                                         Object {
                                           "alignItems": "center",
-                                          "marginLeft": 16,
+                                          "marginLeft": 12,
                                         }
                                       }
                                     >

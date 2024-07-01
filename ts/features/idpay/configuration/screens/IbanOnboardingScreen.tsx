@@ -1,8 +1,13 @@
-import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  HSpacer,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import { Body } from "../../../../components/core/typography/Body";
@@ -11,7 +16,6 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -93,12 +97,14 @@ export const IbanOnboardingScreen = () => {
           </LabelSmall>
         </View>
       </ScrollView>
-      <SafeAreaView>
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={{
-            title: isLoading ? "" : I18n.t("global.buttons.continue"),
-            isLoading,
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            loading: isLoading,
+            disabled: isLoading || !isInputValid,
             onPress: () => {
               pipe(
                 iban.value,
@@ -109,12 +115,10 @@ export const IbanOnboardingScreen = () => {
                   })
                 )
               );
-            },
-
-            disabled: isLoading || !isInputValid
-          }}
-        />
-      </SafeAreaView>
+            }
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

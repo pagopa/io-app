@@ -51,6 +51,7 @@ type Props = {
  * @param faqCategories
  * @param headerProps
  * @param canGoback allows to show/not show the back button and consequently does not pass to the HeaderSecondLevel the props that would display the back button
+ * @deprecated This component is deprecated and will be removed in future versions. Please use `IOScrollViewWithLargeHeader` instead.
  */
 export const RNavScreenWithLargeHeader = ({
   children,
@@ -135,7 +136,7 @@ export const RNavScreenWithLargeHeader = ({
 
         {description && (
           <ContentWrapper>
-            <VSpacer size={4} />
+            <VSpacer size={16} />
             <Body color="grey-700">{description}</Body>
           </ContentWrapper>
         )}

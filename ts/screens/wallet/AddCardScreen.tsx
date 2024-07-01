@@ -3,31 +3,41 @@
  * (holder, pan, cvc, expiration date)
  */
 
+import {
+  ContentWrapper,
+  FooterWithButtons,
+  HSpacer,
+  IOColors,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
-import React, { useState } from "react";
-import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React, { useState } from "react";
+import {
+  Keyboard,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import { Link } from "../../components/core/typography/Link";
 import { LabelledItem } from "../../components/LabelledItem";
+import SectionStatusComponent from "../../components/SectionStatus";
+import { Link } from "../../components/core/typography/Link";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../components/SectionStatus";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
+import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
-
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
 import { isTestEnv } from "../../utils/environment";
@@ -37,16 +47,14 @@ import {
   CreditCardExpirationYear,
   CreditCardState,
   CreditCardStateKeys,
-  getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
+  MIN_PAN_DIGITS,
+  getCreditCardFromState,
   isValidCardHolder,
   isValidPan,
-  isValidSecurityCode,
-  MIN_PAN_DIGITS
+  isValidSecurityCode
 } from "../../utils/input";
-import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
-import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 
 export type AddCardScreenNavigationParams = Readonly<{
   inPayment: O.Option<{
@@ -63,10 +71,6 @@ const styles = StyleSheet.create({
     height: 24,
     width: 24
   },
-  verticalSpacing: {
-    width: 16,
-    flex: 0
-  },
   whiteBg: {
     backgroundColor: IOColors.white
   },
@@ -82,7 +86,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const openSupportedCardsPage = (): void => {
   openWebUrl(acceptedPaymentMethodsFaqUrl, () =>
-    showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
+    IOToast.error(I18n.t("wallet.alert.supportedCardPageLinkError"))
   );
 };
 
@@ -91,13 +95,7 @@ const usePrimaryButtonPropsFromState = (
   onNavigate: (card: CreditCard) => void,
   isHolderValid: boolean,
   isExpirationDateValid?: boolean
-): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-  const baseButtonProps = {
-    block: true,
-    primary: true,
-    title: I18n.t("global.buttons.continue")
-  };
-
+): ComponentProps<typeof FooterWithButtons>["primary"] => {
   const { isCardNumberValid, isCvvValid } = useLuhnValidation(
     pipe(
       state.pan,
@@ -115,21 +113,29 @@ const usePrimaryButtonPropsFromState = (
     card,
     E.foldW(
       e => ({
-        ...baseButtonProps,
-        disabled: true,
-        accessibilityRole: "button",
-        accessibilityLabel: e
+        type: "Solid",
+        buttonProps: {
+          disabled: true,
+          accessibilityLabel: e,
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onPress: () => {},
+          label: I18n.t("global.buttons.continue")
+        }
       }),
       c => ({
-        ...baseButtonProps,
-        disabled:
-          !isCardNumberValid ||
-          !isCvvValid ||
-          !isHolderValid ||
-          !isExpirationDateValid,
-        onPress: () => {
-          Keyboard.dismiss();
-          onNavigate(c);
+        type: "Solid",
+        buttonProps: {
+          disabled:
+            !isCardNumberValid ||
+            !isCvvValid ||
+            !isHolderValid ||
+            !isExpirationDateValid,
+          onPress: () => {
+            Keyboard.dismiss();
+            onNavigate(c);
+          },
+          accessibilityLabel: I18n.t("global.buttons.continue"),
+          label: I18n.t("global.buttons.continue")
         }
       })
     )
@@ -255,13 +261,6 @@ const AddCardScreen: React.FC = () => {
     });
   };
 
-  const secondaryButtonProps = {
-    block: true,
-    bordered: true,
-    onPress: navigation.goBack,
-    title: I18n.t("global.buttons.back")
-  };
-
   const isScreenReaderEnabled = !useScreenReaderEnabled();
   const placeholders = isScreenReaderEnabled
     ? {
@@ -291,7 +290,7 @@ const AddCardScreen: React.FC = () => {
           style={styles.whiteBg}
           keyboardShouldPersistTaps="handled"
         >
-          <Content scrollEnabled={false}>
+          <ContentWrapper>
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.holder.label")}
               description={
@@ -356,8 +355,9 @@ const AddCardScreen: React.FC = () => {
             />
 
             <VSpacer size={16} />
-            <Grid>
-              <Col>
+
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ flexGrow: 1 }}>
                 <LabelledItem
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="calendar"
@@ -381,9 +381,9 @@ const AddCardScreen: React.FC = () => {
                   )}
                   testID={"expirationDate"}
                 />
-              </Col>
-              <Col style={styles.verticalSpacing} />
-              <Col>
+              </View>
+              <HSpacer size={16} />
+              <View style={{ flexGrow: 1 }}>
                 <LabelledItem
                   label={I18n.t(
                     detectedBrand.cvvLength === 4
@@ -417,8 +417,8 @@ const AddCardScreen: React.FC = () => {
                   )}
                   testID={"securityCode"}
                 />
-              </Col>
-            </Grid>
+              </View>
+            </View>
 
             <VSpacer size={16} />
 
@@ -429,20 +429,28 @@ const AddCardScreen: React.FC = () => {
             >
               {I18n.t("wallet.openAcceptedCardsPageCTA")}
             </Link>
-          </Content>
+          </ContentWrapper>
         </ScrollView>
         <SectionStatusComponent sectionKey={"credit_card"} />
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={secondaryButtonProps}
-          rightButton={usePrimaryButtonPropsFromState(
-            creditCard,
-            navigateToConfirmCardDetailsScreen,
-            isValidCardHolder(creditCard.holder),
-            O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
-          )}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            color: "primary",
+            accessibilityLabel: I18n.t("global.buttons.back"),
+            onPress: navigation.goBack
+          }
+        }}
+        secondary={usePrimaryButtonPropsFromState(
+          creditCard,
+          navigateToConfirmCardDetailsScreen,
+          isValidCardHolder(creditCard.holder),
+          O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
+        )}
+      />
     </BaseScreenComponent>
   );
 };

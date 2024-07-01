@@ -1,0 +1,3268 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageList Item component when \`isRead\` is true should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and \`isSelected\` is false should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          false,
+        ]
+      }
+    >
+      <RNSVGSvgView
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        align="xMidYMid"
+        bbHeight={24}
+        bbWidth={24}
+        focusable={false}
+        height={24}
+        importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "color": "#0073E6",
+            },
+            Object {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
+          ]
+        }
+        tintColor="#0073E6"
+        vbHeight={22}
+        vbWidth={22}
+        width={24}
+      >
+        <RNSVGGroup
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        >
+          <RNSVGPath
+            clipRule={0}
+            d="M19.25 0H2.75C1.23122 0 0 1.23122 0 2.75v16.5C0 20.7688 1.23122 22 2.75 22h16.5c1.5188 0 2.75-1.2312 2.75-2.75V2.75C22 1.23122 20.7688 0 19.25 0ZM1.83333 2.75c0-.50626.41041-.91667.91667-.91667h16.5c.5063 0 .9167.41041.9167.91667v16.5c0 .5063-.4104.9167-.9167.9167H2.75c-.50626 0-.91667-.4104-.91667-.9167V2.75Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and \`isSelected\` is true should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          false,
+        ]
+      }
+    >
+      <RNSVGSvgView
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        align="xMidYMid"
+        bbHeight={24}
+        bbWidth={24}
+        focusable={false}
+        height={24}
+        importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "color": "#0073E6",
+            },
+            Object {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
+          ]
+        }
+        tintColor="#0073E6"
+        vbHeight={22}
+        vbWidth={22}
+        width={24}
+      >
+        <RNSVGGroup
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        >
+          <RNSVGPath
+            d="m10.8251 15.2047-.0323-.0311 7.2435-7.24342-1.7369-1.73684-7.27371 7.27376-3.50128-3.3812-1.63504 1.6931 5.30066 5.1188 1.63507-1.6931Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            clipRule={0}
+            d="M2.75 0h16.5C20.7688 0 22 1.23122 22 2.75v16.5c0 1.5188-1.2312 2.75-2.75 2.75H2.75C1.23122 22 0 20.7688 0 19.25V2.75C0 1.23122 1.23122 0 2.75 0Zm0 1.83333c-.50626 0-.91667.41041-.91667.91667v16.5c0 .5063.41041.9167.91667.9167h16.5c.5063 0 .9167-.4104.9167-.9167V2.75c0-.50626-.4104-.91667-.9167-.91667H2.75Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+          <RNSVGPath
+            d="m10.8251 15.2047-.0323-.0311 7.2435-7.24342-1.7369-1.73684-7.27371 7.27376-3.50128-3.3812-1.63504 1.6931 5.30066 5.1188 1.63507-1.6931Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            clipRule={0}
+            d="M2.75 0h16.5C20.7688 0 22 1.23122 22 2.75v16.5c0 1.5188-1.2312 2.75-2.75 2.75H2.75C1.23122 22 0 20.7688 0 19.25V2.75C0 1.23122 1.23122 0 2.75 0Zm0 1.83333c-.50626 0-.91667.41041-.91667.91667v16.5c0 .5063.41041.9167.91667.9167h16.5c.5063 0 .9167-.4104.9167-.9167V2.75c0-.50626-.4104-.91667-.9167-.91667H2.75Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when category is LEGAL_MESSAGE should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when category is PN should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when category=EU_COVID_CERT and rptId matches=false should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "marginRight": 56,
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          Object {
+            "marginRight": 56,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#0073E6",
+          "borderRadius": 24,
+          "bottom": 0,
+          "color": "#FFFFFF",
+          "height": 48,
+          "justifyContent": "center",
+          "position": "absolute",
+          "right": 0,
+          "width": 48,
+        }
+      }
+    >
+      <RNSVGSvgView
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        align="xMidYMid"
+        bbHeight={20}
+        bbWidth={20}
+        focusable={false}
+        height={20}
+        importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "flex": 0,
+              "height": 20,
+              "width": 20,
+            },
+          ]
+        }
+        tintColor="#FFFFFF"
+        vbHeight={24}
+        vbWidth={24}
+        width={20}
+      >
+        <RNSVGGroup
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        >
+          <RNSVGPath
+            clipRule={0}
+            d="M0 3a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H3ZM0 16a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3v-5Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3ZM16 0a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3h-5Zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V3Zm-1.5 13.681a.5.5 0 0 1-.5-.5V13.5a.5.5 0 0 1 .5-.5h2.637a.5.5 0 0 1 .5.5v3.181H13.5Zm6.819 0h-3.682v3.637H13.5a.5.5 0 0 0-.5.5V23.5a.5.5 0 0 0 .5.5h3.137v-3.681h3.681V24H23.5a.5.5 0 0 0 .5-.5v-3.181h-3.681v-3.637Zm0 0V13.5a.5.5 0 0 1 .5-.5H23.5a.5.5 0 0 1 .5.5v3.181h-3.681ZM5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5ZM4 18a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1ZM18 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-1Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when category=GENERIC and rptId matches=false should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when category=PAYMENT and rptId matches=false should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component when category=PAYMENT and rptId matches=true should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . Paid"
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "flex-start",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 50,
+              "justifyContent": "center",
+              "paddingHorizontal": 20,
+              "paddingVertical": 2.5,
+            },
+            false,
+            Object {
+              "backgroundColor": "#00C5CA",
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "alignSelf": "center",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+              Object {
+                "fontSize": 14,
+                "lineHeight": 20,
+              },
+              false,
+              Object {
+                "color": "#17324D",
+              },
+            ]
+          }
+        >
+          Paid
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MessageList Item component with all the flags set to false should match the snapshot 1`] = `
+<View
+  accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
+    received on October 18th 2021
+  . "
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+      "paddingVertical": 16,
+    }
+  }
+  testID="MessageListItem_PMT00003"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        defaultColor="bluegreyDark"
+        defaultWeight="Semibold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="Semibold"
+      >
+        Ċentru tas-Saħħa
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumSansPro"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Sans Pro",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        10/18/21
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumSansPro"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Sans Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      health
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexBasis": "100%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "minHeight": 24,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight={10}
+          bbWidth={10}
+          focusable={false}
+          height={10}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 10,
+                "width": 10,
+              },
+            ]
+          }
+          width={10}
+        >
+          <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGCircle
+              cx="50%"
+              cy="50%"
+              fill={
+                Object {
+                  "payload": 4278219750,
+                  "type": 0,
+                }
+              }
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              r={5}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          color="bluegreyDark"
+          font="TitilliumSansPro"
+          fontStyle={
+            Object {
+              "fontSize": 18,
+              "lineHeight": 22,
+            }
+          }
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "fontSize": 18,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "#17324D",
+                "fontFamily": "Titillium Sans Pro",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="Semibold"
+          weightColorFactory={[Function]}
+        >
+          Għandek flus?
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -1,28 +1,27 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
 import { WalletClient } from "../../common/api/client";
 import { mapWalletsToCards } from "../../common/utils";
 import { getPaymentsWalletUserMethods } from "../store/actions";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 export function* handleGetPaymentsWalletUserMethods(
-  getWalletsByIdUser: WalletClient["getWalletsByIdUser"],
+  getWalletsByIdUser: WalletClient["getIOPaymentWalletsByIdUser"],
   action: ActionType<(typeof getPaymentsWalletUserMethods)["request"]>
 ) {
-  const getWalletsByIdUserRequest = getWalletsByIdUser({});
-
   try {
-    const getWalletsByIdUserResult = (yield* call(
-      withRefreshApiCall,
-      getWalletsByIdUserRequest,
-      action
-    )) as SagaCallReturnType<typeof getWalletsByIdUser>;
+    const getWalletsByIdUserResult = yield* withPaymentsSessionToken(
+      getWalletsByIdUser,
+      getPaymentsWalletUserMethods.failure,
+      action,
+      {},
+      "pagoPAPlatformSessionToken"
+    );
 
     yield* pipe(
       getWalletsByIdUserResult,
@@ -43,6 +42,7 @@ export function* handleGetPaymentsWalletUserMethods(
           } else if (res.status === 404) {
             yield* put(getPaymentsWalletUserMethods.success({ wallets: [] }));
           } else {
+            // The 401 is handled by the withPaymentsSessionToken
             yield* put(
               getPaymentsWalletUserMethods.failure({
                 ...getGenericError(new Error(`Error: ${res.status}`))

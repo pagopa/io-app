@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -14,10 +13,7 @@ import { connect } from "react-redux";
 
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
-import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
@@ -51,10 +47,12 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
-import UnlockAccessScreen from "../onboarding/UnlockAccessScreen";
 import { apiUrlPrefix } from "../../config";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
+import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
+import ROUTES from "../../navigation/routes";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
-import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -162,10 +160,10 @@ const IdpLoginScreen = (props: Props) => {
     props.dispatchLoginSuccess(token, idp);
   };
 
-  const onRetryButtonPressed = (): void => {
+  const onRetryButtonPressed = useCallback((): void => {
     setRequestState(pot.noneLoading);
     retryLollipopLogin();
-  };
+  }, [retryLollipopLogin]);
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
@@ -220,29 +218,36 @@ const IdpLoginScreen = (props: Props) => {
   };
 
   const renderMask = () => {
-    if (pot.isLoading(requestState)) {
+    // in order to prevent graphic glitches when navigating
+    // to the error screen the spinner is shown also when the login has failed
+    if (pot.isLoading(requestState) || pot.isError(requestState)) {
       return (
         <View style={styles.refreshIndicatorContainer}>
-          <RefreshIndicator />
+          <LoadingIndicator />
         </View>
       );
-    } else if (pot.isError(requestState)) {
-      if (errorCode === "1002") {
-        return <UnlockAccessScreen identifier="SPID" />;
-      } else {
-        return (
-          <IdpAuthErrorScreen
-            requestStateError={requestState.error}
-            errorCode={errorCode}
-            onCancel={() => props.navigation.goBack()}
-            onRetry={onRetryButtonPressed}
-          />
-        );
-      }
     }
     // loading complete, no mask needed
     return null;
   };
+
+  const navigateToAuthErrorScreen = useCallback(() => {
+    props.navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCode,
+        authMethod: "SPID",
+        authLevel: "L2",
+        onRetrySpid: onRetryButtonPressed
+      }
+    });
+  }, [errorCode, onRetryButtonPressed, props.navigation]);
+
+  useEffect(() => {
+    if (pot.isError(requestState)) {
+      navigateToAuthErrorScreen();
+    }
+  }, [navigateToAuthErrorScreen, requestState]);
 
   const contextualHelp = useMemo(() => {
     if (O.isNone(props.selectedIdpTextData)) {
@@ -255,12 +260,20 @@ const IdpLoginScreen = (props: Props) => {
         )
       };
     }
-    const idpTextData = props.selectedIdpTextData.value;
-    return IdpCustomContextualHelpContent(idpTextData);
+    return emptyContextualHelp;
   }, [props.selectedIdpTextData]);
 
   const { loggedOutWithIdpAuth, loggedInAuth } = props;
   const hasError = pot.isError(requestState);
+
+  useHeaderSecondLevel({
+    title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
+      loggedOutWithIdpAuth?.idp.name
+    }`,
+    supportRequest: true,
+    contextualHelp,
+    faqCategories: ["authentication_SPID"]
+  });
 
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;
@@ -276,39 +289,30 @@ const IdpLoginScreen = (props: Props) => {
     // login-url was not available and so the hook that
     // retrieves the public key cannot produce a valid output
     if (pot.isError(requestState)) {
-      return renderMask();
+      return null;
     }
     return <LoadingSpinnerOverlay isLoading={true} />;
   }
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      contextualHelp={contextualHelp}
-      faqCategories={["authentication_SPID"]}
-      headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
-        loggedOutWithIdpAuth.idp.name
-      }`}
-    >
-      <View style={styles.webViewWrapper}>
-        {!hasError && (
-          <WebView
-            cacheEnabled={false}
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            textZoom={100}
-            originWhitelist={originSchemasWhiteList}
-            source={webviewSource}
-            onError={handleLoadingError}
-            onHttpError={handleLoadingError}
-            javaScriptEnabled={true}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
-          />
-        )}
-        {renderMask()}
-      </View>
-    </BaseScreenComponent>
+    <View style={styles.webViewWrapper}>
+      {!hasError && (
+        <WebView
+          cacheEnabled={false}
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
+          textZoom={100}
+          originWhitelist={originSchemasWhiteList}
+          source={webviewSource}
+          onError={handleLoadingError}
+          onHttpError={handleLoadingError}
+          javaScriptEnabled={true}
+          onNavigationStateChange={handleNavigationStateChange}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+        />
+      )}
+      {renderMask()}
+    </View>
   );
 };
 

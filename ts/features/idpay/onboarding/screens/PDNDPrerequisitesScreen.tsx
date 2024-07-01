@@ -2,6 +2,7 @@ import {
   ButtonExtendedOutline,
   ButtonSolid,
   ContentWrapper,
+  FooterWithButtons,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -9,14 +10,12 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
@@ -26,17 +25,6 @@ import { serviceByIdPotSelector } from "../../../services/details/store/reducers
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
-
-const secondaryButtonProps = {
-  block: true,
-  bordered: true,
-  title: I18n.t("global.buttons.back")
-};
-const primaryButtonProps = {
-  block: true,
-  bordered: false,
-  title: I18n.t("global.buttons.continue")
-};
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -106,52 +94,63 @@ export const PDNDPrerequisitesScreen = () => {
     machine.send({ type: "back", skipNavigation: true });
   });
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.onboarding.navigation.header"),
+    contextualHelp: emptyContextualHelp,
+    goBack: goBackOnPress,
+    supportRequest: true
+  });
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <BaseScreenComponent
-        goBack={goBackOnPress}
-        headerTitle={I18n.t("idpay.onboarding.navigation.header")}
-        contextualHelp={emptyContextualHelp}
-      >
-        <ScrollView>
-          <View style={IOStyles.horizontalContentPadding}>
-            <VSpacer size={16} />
-            <H1>{I18n.t("idpay.onboarding.PDNDPrerequisites.title")}</H1>
-            <VSpacer size={16} />
-            <Body>
-              {I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
-                service: serviceName
-              })}
-            </Body>
-          </View>
-          <View
-            style={[IOStyles.horizontalContentPadding, styles.listContainer]}
-          >
-            {pdndCriteria.map((criteria, index) => (
-              <React.Fragment key={index}>
-                <ButtonExtendedOutline
-                  label={I18n.t(
-                    `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
-                  )}
-                  description={getPDNDCriteriaDescription(criteria)}
-                  onPress={() => {
-                    setAuthority(criteria.authority);
-                    present();
-                  }}
-                />
-                <VSpacer size={16} />
-              </React.Fragment>
-            ))}
-          </View>
-        </ScrollView>
-      </BaseScreenComponent>
+    <>
+      <ScrollView>
+        <View style={IOStyles.horizontalContentPadding}>
+          <VSpacer size={16} />
+          <H1>{I18n.t("idpay.onboarding.PDNDPrerequisites.title")}</H1>
+          <VSpacer size={16} />
+          <Body>
+            {I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
+              service: serviceName
+            })}
+          </Body>
+        </View>
+        <View style={[IOStyles.horizontalContentPadding, styles.listContainer]}>
+          {pdndCriteria.map((criteria, index) => (
+            <React.Fragment key={index}>
+              <ButtonExtendedOutline
+                label={I18n.t(
+                  `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
+                )}
+                description={getPDNDCriteriaDescription(criteria)}
+                onPress={() => {
+                  setAuthority(criteria.authority);
+                  present();
+                }}
+              />
+              <VSpacer size={16} />
+            </React.Fragment>
+          ))}
+        </View>
+      </ScrollView>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={{ onPress: goBackOnPress, ...secondaryButtonProps }}
-        rightButton={{ onPress: continueOnPress, ...primaryButtonProps }}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            onPress: goBackOnPress
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: continueOnPress
+          }
+        }}
       />
       {bottomSheet}
-    </SafeAreaView>
+    </>
   );
 };
 

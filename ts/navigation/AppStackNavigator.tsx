@@ -12,7 +12,7 @@ import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { fimsEnabled } from "../config";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
-import { fimsLinkingOptions } from "../features/fims/navigation/navigator";
+import { fimsLegacyLinkingOptions } from "../features/fimsLegacy/navigation/navigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
@@ -23,9 +23,9 @@ import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
   isCGNEnabledSelector,
-  isFIMSEnabledSelector
+  isFIMSEnabledSelector,
+  isNewPaymentSectionEnabledSelector
 } from "../store/reducers/backendStatus";
-import { isNewWalletSectionEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -87,7 +87,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
 
   // Dark/Light Mode
@@ -140,7 +140,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
           }
         },
         ...fciLinkingOptions,
-        ...(isFimsEnabled ? fimsLinkingOptions : {}),
+        ...(isFimsEnabled ? fimsLegacyLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",

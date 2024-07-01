@@ -28,7 +28,8 @@ type BaseScreenComponentProps =
   | "headerBody"
   | "hideBaseHeader"
   | "customGoBack"
-  | "isSearchAvailable";
+  | "isSearchAvailable"
+  | "hideSafeArea";
 
 type Props = OwnProps &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
@@ -36,7 +37,9 @@ type Props = OwnProps &
 export type TopScreenComponentProps = Props;
 
 /**
- * Wraps a BaseScreenComponent with a title and a subtitle
+ * It wraps a `BaseScreenComponent` with a title and an optional subtitle
+ * @deprecated This component wraps the `BaseScreenComponent` component, which is marked as deprecated.
+ * Please read the `BaseScreenComponent` deprecation note to understand how to replace it.
  */
 class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
@@ -56,11 +59,13 @@ class TopScreenComponent extends React.PureComponent<Props> {
       onAccessibilityNavigationHeaderFocus,
       faqCategories,
       accessibilityEvents,
+      hideSafeArea,
       titleColor
     } = this.props;
 
     return (
       <BaseScreenComponent
+        hideSafeArea={hideSafeArea}
         onAccessibilityNavigationHeaderFocus={
           onAccessibilityNavigationHeaderFocus
         }

@@ -10,13 +10,19 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { getExpireStatus } from "../../../utils/dates";
-import { PaymentData, UIMessageDetails, UIMessageId } from "../types";
+import {
+  PaymentData,
+  UIMessage,
+  UIMessageDetails,
+  UIMessageId
+} from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { getAmountFromPaymentAmount } from "../../../utils/payment";
 import { trackPNPaymentStart } from "../../pn/analytics";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
+import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
 import { MessagePaymentExpirationInfo } from "./messages";
 
 export const gapBetweenItemsInAGrid = 8;
@@ -51,6 +57,7 @@ export const getRptIdStringFromPaymentData = (
 ): string => `${paymentData.payee.fiscalCode}${paymentData.noticeNumber}`;
 
 export const initializeAndNavigateToWalletForPayment = (
+  isNewWalletSectionEnabled: boolean,
   messageId: UIMessageId,
   paymentId: string,
   isPaidOrHasAnError: boolean,
@@ -88,25 +95,35 @@ export const initializeAndNavigateToWalletForPayment = (
   if (!isPaidOrHasAnError) {
     dispatch(addUserSelectedPaymentRptId(paymentId));
   }
-  dispatch(paymentInitializeState());
 
-  const initialAmount = pipe(
-    paymentAmount,
-    O.fromNullable,
-    O.map(getAmountFromPaymentAmount),
-    O.flatten,
-    O.getOrElse(() => "0000" as AmountInEuroCents)
-  );
+  if (isNewWalletSectionEnabled) {
+    startPaymentFlowWithRptIdWorkaround(
+      eitherRptId.right,
+      dispatch,
+      NavigationService.navigate,
+      { startOrigin: "message" }
+    );
+  } else {
+    dispatch(paymentInitializeState());
 
-  NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
-    screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params: {
-      rptId: eitherRptId.right,
-      paymentStartOrigin: "message",
-      initialAmount,
-      messageId
-    }
-  });
+    const initialAmount = pipe(
+      paymentAmount,
+      O.fromNullable,
+      O.map(getAmountFromPaymentAmount),
+      O.flatten,
+      O.getOrElse(() => "0000" as AmountInEuroCents)
+    );
+
+    NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+      params: {
+        rptId: eitherRptId.right,
+        paymentStartOrigin: "message",
+        initialAmount,
+        messageId
+      }
+    });
+  }
 };
 
 export const duplicateSetAndAdd = <T>(inputSet: Set<T>, item: T) => {
@@ -119,3 +136,5 @@ export const duplicateSetAndRemove = <T>(inputSet: Set<T>, item: T) => {
   outputSet.delete(item);
   return outputSet;
 };
+
+export const emptyMessageArray: ReadonlyArray<UIMessage> = [];

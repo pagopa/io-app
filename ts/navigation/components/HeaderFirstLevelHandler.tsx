@@ -9,13 +9,14 @@ import {
   useStartSupportRequest
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
-import { navigateToServicePreferenceScreen } from "../../store/actions/navigation";
 import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isNewWalletSectionEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
+import { useIONavigation } from "../params/AppParamsList";
+import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
+import * as analytics from "../../features/services/common/analytics";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -70,9 +71,10 @@ type Props = {
  */
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
+    isNewPaymentSectionEnabledSelector
   );
 
   const requestParams = useMemo(
@@ -106,20 +108,28 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case SERVICES_ROUTES.SERVICES_HOME:
         return {
           title: I18n.t("services.title"),
-          type: "twoActions",
+          type: "threeActions",
           firstAction: helpAction,
           secondAction: {
             icon: "coggle",
             accessibilityLabel: I18n.t("global.buttons.edit"),
+            onPress: () =>
+              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+              })
+          },
+          thirdAction: {
+            icon: "search",
+            accessibilityLabel: I18n.t("global.accessibility.search"),
             onPress: () => {
-              navigateToServicePreferenceScreen();
+              analytics.trackSearchStart({ source: "header_icon" });
+              navigation.navigate(SERVICES_ROUTES.SEARCH);
             }
           }
         };
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
-          backgroundColor: "dark",
           type: "singleAction",
           firstAction: helpAction
         };
@@ -171,7 +181,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     helpAction,
     presentWalletHomeHeaderBottomsheet,
     isNewWalletSectionEnabled,
-    dispatch
+    dispatch,
+    navigation
   ]);
 
   return (
