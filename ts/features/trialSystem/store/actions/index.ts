@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { TrialId } from "../../../../../definitions/trial_systwem/TrialId";
 import { Subscription } from "../../../../../definitions/trial_systwem/Subscription";
 
@@ -19,6 +23,11 @@ export const trialSystemActivationStatus = createAsyncAction(
   "TRIAL_SYSTEM_ACTIVATION_STATUS_FAILURE"
 )<TrialId, Subscription, ErrorPayload>();
 
+export const trialSystemActivationStatusReset = createStandardAction(
+  "TRIAL_SYSTEM_ACTIVATION_STATUS_RESET"
+)<TrialId>();
+
 export type TrialSystemActions =
   | ActionType<typeof trialSystemActivationStatusUpsert>
+  | ActionType<typeof trialSystemActivationStatusReset>
   | ActionType<typeof trialSystemActivationStatus>;
