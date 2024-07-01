@@ -77,14 +77,11 @@ const ItwIssuanceCredentialAuthScreen = () => {
             credentialName: credential.displayData.title
           })}
         </H2>
-        <ItwMarkdown
-          content={I18n.t(
-            "features.itWallet.issuance.credentialAuth.subtitle",
-            {
-              organization: "Istituto Poligrafico e Zecca"
-            }
-          )}
-        />
+        <ItwMarkdown>
+          {I18n.t("features.itWallet.issuance.credentialAuth.subtitle", {
+            organization: "Istituto Poligrafico e Zecca"
+          })}
+        </ItwMarkdown>
         <VSpacer size={8} />
         <ListItemHeader
           label={I18n.t(
