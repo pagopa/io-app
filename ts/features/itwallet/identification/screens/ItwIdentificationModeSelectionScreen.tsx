@@ -8,24 +8,27 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { Alert } from "react-native";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCieSupportedSelector } from "../../../../store/reducers/cie";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { itwNfcIsEnabled } from "../store/actions";
 import { itwIsNfcEnabledSelector } from "../store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
   const isCieSupportedPot = useIOSelector(isCieSupportedSelector);
   const isNfcEnabledPot = useIOSelector(itwIsNfcEnabledSelector);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(itwNfcIsEnabled.request());
+    }, [dispatch])
+  );
 
   const isCieSupported = React.useMemo(
     () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
@@ -38,7 +41,9 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const handleSpidPress = () => {
-    machineRef.send({ type: "select-identification-mode", mode: "spid" });
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
+    });
   };
 
   const handleCiePinPress = () => {
@@ -55,14 +60,8 @@ export const ItwIdentificationModeSelectionScreen = () => {
     Alert.alert("Not implemented");
   };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(itwNfcIsEnabled.request());
-    }, [dispatch])
-  );
-
   return (
-    <IOScrollViewWithLargeHeader
+    <RNavScreenWithLargeHeader
       title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
     >
       <ContentWrapper>
@@ -106,6 +105,6 @@ export const ItwIdentificationModeSelectionScreen = () => {
           onPress={handleCieIdPress}
         />
       </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+    </RNavScreenWithLargeHeader>
   );
 };
