@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.63.0-rc.5](https://github.com/pagopa/io-app/compare/2.63.0-rc.4...2.63.0-rc.5) (2024-07-01)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1159](https://pagopa.atlassian.net/browse/SIW-1159)] Add XState issuance machine scaffolding ([#5817](https://github.com/pagopa/io-app/issues/5817)) ([#5919](https://github.com/pagopa/io-app/issues/5919)) ([c78179c](https://github.com/pagopa/io-app/commit/c78179caa5fece5ea3b1c7508662b162601e966c))
+
 ## [2.63.0-rc.4](https://github.com/pagopa/io-app/compare/2.63.0-rc.3...2.63.0-rc.4) (2024-07-01)
 
 
