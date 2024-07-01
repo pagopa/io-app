@@ -34,6 +34,8 @@ import {
 } from "../../common/utils/validation";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import I18n from "../../../../i18n";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../analytics";
 
 type InputState = {
   noticeNumberText: string;
@@ -71,6 +73,10 @@ const WalletPaymentInputNoticeNumberScreen = () => {
       AccessibilityInfo.setAccessibilityFocus(textInputA11yWrapper);
     }
   };
+
+  useOnFirstRender(() => {
+    analytics.trackPaymentNoticeDataEntry();
+  });
 
   const textInputWrappperRef = React.useRef<View>(null);
 

@@ -18,6 +18,8 @@ import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { WALLET_PAYMENT_STEP_MAX } from "../store/reducers";
 import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import { WalletPaymentStepEnum } from "../types";
+import { WalletPaymentStepScreenNames } from "../utils";
+import * as analytics from "../analytics";
 
 type WalletPaymentHeaderProps = {
   currentStep: number;
@@ -38,6 +40,9 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
 
   const handleGoBack = React.useCallback(() => {
     if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {
+      analytics.trackPaymentBack(
+        WalletPaymentStepScreenNames[WalletPaymentStepEnum.PICK_PAYMENT_METHOD]
+      );
       // If we are in the first step, if the goBackHandler is defined (payment was started)
       // call it, otherwise use the default navigation goBack function
       return (goBackHandler || navigation.goBack)();
@@ -45,11 +50,17 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
       currentStep === WalletPaymentStepEnum.CONFIRM_TRANSACTION &&
       pspList.length === 1
     ) {
+      analytics.trackPaymentBack(
+        WalletPaymentStepScreenNames[WalletPaymentStepEnum.CONFIRM_TRANSACTION]
+      );
       // If we are in the last step, if there is one PSP go back to the method selection
       dispatch(
         walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
       );
     } else {
+      analytics.trackPaymentBack(
+        WalletPaymentStepScreenNames[WalletPaymentStepEnum.PICK_PSP]
+      );
       // For any other step just go back 1 step
       dispatch(walletPaymentSetCurrentStep(currentStep - 1));
     }
