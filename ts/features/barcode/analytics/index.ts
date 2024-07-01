@@ -156,12 +156,12 @@ export const trackBarcodeManualEntryPath = (flow: BarcodeAnalyticsFlow) => {
   );
 };
 
-/* export const trackBarcodePaymentManualEntry = () => {
+export const trackBarcodePaymentManualEntry = () => {
   void mixpanelTrack(
     "QRCODE_PAYMENT_MANUAL_ENTRY",
     buildEventProperties("UX", "action")
   );
-}; */
+};
 
 export const trackBarcodeUploadPath = (flow: BarcodeAnalyticsFlow) => {
   void mixpanelTrack(

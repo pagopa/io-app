@@ -10,11 +10,17 @@ import { clearCache } from "../../../../../store/actions/profile";
 import { Action } from "../../../../../store/actions/types";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {
+  paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsGetPaymentDetailsAction,
-  paymentsGetPaymentTransactionInfoAction
+  paymentsGetPaymentTransactionInfoAction,
+  paymentsGetPaymentUserMethodsAction
 } from "../../../checkout/store/actions/networking";
-import { initPaymentStateAction } from "../../../checkout/store/actions/orchestration";
+import {
+  initPaymentStateAction,
+  selectPaymentMethodAction,
+  selectPaymentPspAction
+} from "../../../checkout/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailure";
 import { PaymentHistory } from "../../types";
 import {
@@ -22,8 +28,16 @@ import {
   storePaymentOutcomeToHistory
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
+import { getPspFlagType } from "../../../checkout/utils";
+import {
+  centsToAmount,
+  formatNumberAmount
+} from "../../../../../utils/stringBuilder";
+import { PaymentAnalyticsData } from "../../../checkout/types/PaymentAnalytics";
 
 export type PaymentsHistoryState = {
+  analyticsData?: PaymentAnalyticsData;
   ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
 };
@@ -42,6 +56,11 @@ const reducer = (
     case getType(initPaymentStateAction):
       return {
         ...state,
+        analyticsData: {
+          savedPaymentMethods: state.analyticsData?.savedPaymentMethods,
+          startOrigin: action.payload.startOrigin,
+          serviceName: action.payload.serviceName
+        },
         ongoingPayment: {
           startOrigin: action.payload.startOrigin,
           startedAt: new Date(),
@@ -51,6 +70,10 @@ const reducer = (
     case getType(paymentsGetPaymentDetailsAction.request):
       return {
         ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          attempt: getPaymentAttemptByRptId(state, action.payload)
+        },
         ongoingPayment: {
           ...state.ongoingPayment,
           rptId: action.payload,
@@ -60,6 +83,15 @@ const reducer = (
     case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          verifiedData: action.payload,
+          formattedAmount: formatNumberAmount(
+            centsToAmount(action.payload.amount),
+            true,
+            "right"
+          )
+        },
         ongoingPayment: {
           ...state.ongoingPayment,
           verifiedData: action.payload
@@ -87,6 +119,53 @@ const reducer = (
           O.toUndefined
         )
       });
+    case getType(selectPaymentMethodAction):
+      const paymentMethodName =
+        action.payload.userWallet?.details?.type ||
+        action.payload.paymentMethod?.name;
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          selectedPaymentMethod: paymentMethodName
+        }
+      };
+    case getType(paymentsGetPaymentUserMethodsAction.success):
+    case getType(getPaymentsWalletUserMethods.success):
+      const unavailablePaymentMethods = action.payload.wallets?.filter(wallet =>
+        wallet.applications.find(
+          app => app.name === "PAGOPA" && app.status !== "ENABLED"
+        )
+      );
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          savedPaymentMethods: action.payload.wallets,
+          savedPaymentMethodsUnavailable: unavailablePaymentMethods
+        }
+      };
+    case getType(paymentsCalculatePaymentFeesAction.success):
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          selectedPsp: undefined,
+          pspList: action.payload.bundles
+        }
+      };
+    case getType(selectPaymentPspAction):
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          selectedPsp: action.payload,
+          selectedPspFlag: getPspFlagType(
+            action.payload,
+            state.analyticsData?.pspList
+          )
+        }
+      };
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
       return INITIAL_STATE;
