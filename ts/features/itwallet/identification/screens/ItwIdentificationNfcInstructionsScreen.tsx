@@ -5,10 +5,11 @@ import {
   ListItemInfo
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import * as cieUtils from "../../../../utils/cie";
+import { FooterStackButton } from "../../common/components/FooterStackButton";
 
 export const ItwIdentificationNfcInstructionsScreen = () => {
   const navigation = useIONavigation();
@@ -22,20 +23,23 @@ export const ItwIdentificationNfcInstructionsScreen = () => {
   };
 
   return (
-    <IOScrollViewWithLargeHeader
+    <RNavScreenWithLargeHeader
       title={{ label: I18n.t("features.itWallet.identification.nfc.title") }}
       description={I18n.t("features.itWallet.identification.nfc.description")}
-      actions={{
-        type: "TwoButtons",
-        primary: {
-          label: I18n.t("features.itWallet.identification.nfc.primaryAction"),
-          onPress: handleOpenSettingsPress
-        },
-        secondary: {
-          label: I18n.t("features.itWallet.identification.nfc.secondaryAction"),
-          onPress: handleClosePress
-        }
-      }}
+      fixedBottomSlot={
+        <FooterStackButton
+          primaryActionProps={{
+            label: I18n.t("features.itWallet.identification.nfc.primaryAction"),
+            onPress: handleOpenSettingsPress
+          }}
+          secondaryActionProps={{
+            label: I18n.t(
+              "features.itWallet.identification.nfc.secondaryAction"
+            ),
+            onPress: handleClosePress
+          }}
+        />
+      }
     >
       <ContentWrapper>
         <ListItemHeader
@@ -65,6 +69,6 @@ export const ItwIdentificationNfcInstructionsScreen = () => {
           icon="systemToggleInstructions"
         />
       </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+    </RNavScreenWithLargeHeader>
   );
 };

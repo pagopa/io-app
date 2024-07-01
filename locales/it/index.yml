@@ -3153,6 +3153,8 @@ features:
         action: "Cosa significa?"
         title: "Cosa significa?"
         explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
+    errors:
+      transactionCreationError: C’è un problema con i sistemi di pagamento.
   itWallet:
     card:
       status:
