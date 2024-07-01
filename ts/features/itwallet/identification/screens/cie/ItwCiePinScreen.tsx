@@ -32,7 +32,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   CieEntityIds,
   CieRequestAuthenticationOverlay
-} from "../../../../../components/cie/CieRequestAuthenticationOverlay";
+} from "../../../common/components/ItwCieRequestAuthenticationOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
