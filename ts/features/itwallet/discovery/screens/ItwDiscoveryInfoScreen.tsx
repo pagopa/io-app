@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   ForceScrollDownView,
+  H1,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
@@ -11,7 +12,6 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { ItwSmallText } from "../../common/components/ItwSmallText";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 /**
@@ -42,8 +42,14 @@ const ItwDiscoveryInfoScreen = () => {
       />
       <VSpacer size={24} />
       <ContentWrapper>
-        <ItwMarkdown content={I18n.t("features.itWallet.discovery.content")} />
-        <ItwSmallText>{I18n.t("features.itWallet.discovery.tos")}</ItwSmallText>
+        <H1>{I18n.t("features.itWallet.discovery.title")}</H1>
+        <VSpacer size={24} />
+        <ItwMarkdown>
+          {I18n.t("features.itWallet.discovery.content")}
+        </ItwMarkdown>
+        <ItwMarkdown styles={{ body: { fontSize: 14 } }}>
+          {I18n.t("features.itWallet.discovery.tos")}
+        </ItwMarkdown>
       </ContentWrapper>
       <FooterActions
         fixed={false}

@@ -136,7 +136,7 @@ const ItwPlayground = () => {
         <VSpacer />
         <H3>{"IT Wallet markdown preview"}</H3>
         {/* Markdown ITW Playground */}
-        <ItwMarkdown content={sampleMarkdown} />
+        <ItwMarkdown>{sampleMarkdown}</ItwMarkdown>
         {/* TODO: Add more items here */}
       </ContentWrapper>
     </ScrollView>

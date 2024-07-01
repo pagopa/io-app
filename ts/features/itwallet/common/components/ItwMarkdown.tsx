@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
 import {
   Body,
+  bodyFontSize,
   H1,
   h1FontSize,
   H2,
@@ -17,19 +17,57 @@ import {
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import Markdown, { ASTNode } from "react-native-markdown-display";
+import _ from "lodash";
+import React, { ReactNode } from "react";
 import { StyleSheet } from "react-native";
-import { openWebUrl } from "../../../../utils/url";
+import Markdown, { ASTNode } from "react-native-markdown-display";
 import I18n from "../../../../i18n";
+import { openWebUrl } from "../../../../utils/url";
 
-interface MarkdownParserProps {
-  content?: string;
-}
+type ItwMarkdownProps = {
+  // We can provide styles to override the default ones
+  styles?: Partial<typeof styles>;
+};
 
 const rules = {
+  heading1: (node: ASTNode, children: Array<ReactNode>) => (
+    <React.Fragment key={node.key}>
+      <H1>{children}</H1>
+      <VSpacer size={8} />
+    </React.Fragment>
+  ),
+  heading2: (node: ASTNode, children: Array<ReactNode>) => (
+    <React.Fragment key={node.key}>
+      <H2>{children}</H2>
+      <VSpacer size={8} />
+    </React.Fragment>
+  ),
+  heading3: (node: ASTNode, children: Array<ReactNode>) => (
+    <React.Fragment key={node.key}>
+      <H3>{children}</H3>
+      <VSpacer size={8} />
+    </React.Fragment>
+  ),
+  heading4: (node: ASTNode, children: Array<ReactNode>) => (
+    <React.Fragment key={node.key}>
+      <H4>{children}</H4>
+      <VSpacer size={8} />
+    </React.Fragment>
+  ),
+  heading5: (node: ASTNode, children: Array<ReactNode>) => (
+    <React.Fragment key={node.key}>
+      <H5>{children}</H5>
+      <VSpacer size={8} />
+    </React.Fragment>
+  ),
+  heading6: (node: ASTNode, children: Array<ReactNode>) => (
+    <React.Fragment key={node.key}>
+      <H6>{children}</H6>
+      <VSpacer size={8} />
+    </React.Fragment>
+  ),
   paragraph: (node: ASTNode, children: Array<ReactNode>) => (
     <React.Fragment key={node.key}>
-      <VSpacer size={8} />
       <Body>{children}</Body>
       <VSpacer size={24} />
     </React.Fragment>
@@ -38,27 +76,6 @@ const rules = {
     <Body key={node.key} weight="Bold">
       {children}
     </Body>
-  ),
-  heading1: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
-      <H1>{children}</H1>
-      <VSpacer size={24} />
-    </React.Fragment>
-  ),
-  heading2: (node: ASTNode, children: Array<ReactNode>) => (
-    <H2 key={node.key}>{children}</H2>
-  ),
-  heading3: (node: ASTNode, children: Array<ReactNode>) => (
-    <H3 key={node.key}>{children}</H3>
-  ),
-  heading4: (node: ASTNode, children: Array<ReactNode>) => (
-    <H4 key={node.key}>{children}</H4>
-  ),
-  heading5: (node: ASTNode, children: Array<ReactNode>) => (
-    <H5 key={node.key}>{children}</H5>
-  ),
-  heading6: (node: ASTNode, children: Array<ReactNode>) => (
-    <H6 key={node.key}>{children}</H6>
   ),
   link: (node: ASTNode, children: Array<ReactNode>) => (
     <LabelLink
@@ -77,6 +94,9 @@ const rules = {
 
 /* eslint-disable react-native/no-unused-styles */
 const styles = StyleSheet.create({
+  body: {
+    fontSize: bodyFontSize
+  },
   heading1: {
     fontSize: h1FontSize
   },
@@ -103,9 +123,9 @@ const styles = StyleSheet.create({
  * Main components are mapped into rules object.
  * @param content - contains the text to be converted in react elements.
  */
-const ItwMarkdown: React.FC<MarkdownParserProps> = ({ content }) => (
-  <Markdown style={styles} rules={rules}>
-    {content}
+const ItwMarkdown = (props: React.PropsWithChildren<ItwMarkdownProps>) => (
+  <Markdown style={_.merge(styles, props.styles)} rules={rules}>
+    {props.children}
   </Markdown>
 );
 
