@@ -38,9 +38,9 @@ const CalendarsPreferencesScreen = () => {
     [dispatch]
   );
 
-  const onCalendarsLoaded = () => {
+  const onCalendarsLoaded = useCallback(() => {
     setIsLoading(false);
-  };
+  }, []);
 
   return (
     <IOScrollViewWithLargeHeader
