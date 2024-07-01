@@ -1,7 +1,7 @@
 import {
-  ContentWrapper,
   Divider,
   IOToast,
+  IOVisualCostants,
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -284,20 +284,21 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         loadingOpacity={0.9}
         loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <ContentWrapper>
-          <SectionList
-            sections={[
-              {
-                data: privacyNavListItems
-              }
-            ]}
-            keyExtractor={(item: PrivacyNavListItem, index: number) =>
-              `${item.value}-${index}`
+        <SectionList
+          sections={[
+            {
+              data: privacyNavListItems
             }
-            renderItem={renderPrivacyNavItem}
-            ItemSeparatorComponent={Divider}
-          />
-        </ContentWrapper>
+          ]}
+          keyExtractor={(item: PrivacyNavListItem, index: number) =>
+            `${item.value}-${index}`
+          }
+          renderItem={renderPrivacyNavItem}
+          ItemSeparatorComponent={Divider}
+          contentContainerStyle={{
+            paddingHorizontal: IOVisualCostants.appMarginDefault
+          }}
+        />
       </LoadingSpinnerOverlay>
     </IOScrollViewWithLargeHeader>
   );
