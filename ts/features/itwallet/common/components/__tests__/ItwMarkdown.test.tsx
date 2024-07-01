@@ -24,7 +24,7 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
 
 describe("ItwMarkdown", () => {
   it(`should match snapshot`, () => {
-    const component = render(<ItwMarkdown content={sampleMarkdown} />);
+    const component = render(<ItwMarkdown>{sampleMarkdown}</ItwMarkdown>);
     expect(component).toMatchSnapshot();
   });
 });

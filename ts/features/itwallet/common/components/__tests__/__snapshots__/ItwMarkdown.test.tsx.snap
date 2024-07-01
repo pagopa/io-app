@@ -52,7 +52,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   <View
     style={
       Object {
-        "height": 24,
+        "height": 8,
       }
     }
   />
@@ -101,6 +101,13 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
     </Text>
   </Text>
+  <View
+    style={
+      Object {
+        "height": 8,
+      }
+    }
+  />
   <Text
     allowFontScaling={false}
     color="bluegreyDark"
@@ -146,6 +153,13 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
     </Text>
   </Text>
+  <View
+    style={
+      Object {
+        "height": 8,
+      }
+    }
+  />
   <Text
     allowFontScaling={false}
     color="bluegreyDark"
@@ -191,6 +205,13 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
     </Text>
   </Text>
+  <View
+    style={
+      Object {
+        "height": 8,
+      }
+    }
+  />
   <Text
     allowFontScaling={false}
     color="black"
@@ -240,6 +261,13 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
     </Text>
   </Text>
+  <View
+    style={
+      Object {
+        "height": 8,
+      }
+    }
+  />
   <Text
     allowFontScaling={false}
     color="black"
@@ -326,7 +354,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -342,7 +372,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -360,6 +392,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
           style={
             Array [
               Object {
+                "fontSize": 16,
                 "fontStyle": "italic",
               },
               Object {},
@@ -372,7 +405,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -390,6 +425,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
           style={
             Array [
               Object {
+                "fontSize": 16,
                 "fontStyle": "italic",
               },
               Object {},
@@ -402,7 +438,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -418,7 +456,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -457,6 +497,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
           style={
             Array [
               Object {
+                "fontSize": 16,
                 "fontWeight": "bold",
               },
               Object {},
@@ -469,7 +510,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -485,7 +528,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -529,6 +574,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
           style={
             Array [
               Object {
+                "fontSize": 16,
                 "textDecorationLine": "underline",
               },
               Object {},
@@ -541,7 +587,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -557,7 +605,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
@@ -601,6 +651,7 @@ exports[`ItwMarkdown should match snapshot 1`] = `
           style={
             Array [
               Object {
+                "fontSize": 16,
                 "textDecorationLine": "underline",
               },
               Object {},
@@ -613,7 +664,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       <Text
         style={
           Array [
-            Object {},
+            Object {
+              "fontSize": 16,
+            },
             Object {},
           ]
         }
