@@ -10,9 +10,7 @@ import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -21,12 +19,6 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
  * with a primary and secondary action.
  */
 const ItwDiscoveryInfoScreen = () => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
-  useOnFirstRender(() => {
-    machineRef.send({ type: "start" });
-  });
-
   useHeaderSecondLevel({
     title: "",
     contextualHelp: emptyContextualHelp,
@@ -58,7 +50,7 @@ const ItwDiscoveryInfoScreen = () => {
           primary: {
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => machineRef.send({ type: "accept-tos" })
+            onPress: () => undefined
           }
         }}
       />
