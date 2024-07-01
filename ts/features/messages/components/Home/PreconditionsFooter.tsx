@@ -12,7 +12,7 @@ import { openAppStoreUrl } from "../../../../utils/url";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
 import { UIMessageId } from "../../types";
 
-type PreconditionsFooterProps = {
+export type PreconditionsFooterProps = {
   onNavigation: (messageId: UIMessageId) => void;
   onDismiss: () => void;
 };
