@@ -330,7 +330,6 @@ profile:
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
         title: "Dein Konto löschen"
-        description: "Dein Konto und deine persönlichen Daten endgültig löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
           activeBonusTitle: "Aktive Boni"

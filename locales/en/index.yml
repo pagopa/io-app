@@ -338,7 +338,7 @@ profile:
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
-        description: Permanently delete your account and your personal data
+        description: Elimina il tuo profilo e i tuoi dati personali
         error: An error occurred while submit your deletion request, please retry!
         alert:
           activeBonusTitle: Active bonus
