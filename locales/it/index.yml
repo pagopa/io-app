@@ -334,7 +334,7 @@ profile:
     privacy:
       title: Privacy e Condizioni d'uso
       description: I tuoi diritti e obblighi nell’uso di IO
-      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei tuoi dati personali.
+      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Elimina il tuo account

@@ -326,7 +326,6 @@ profile:
     privacy:
       title: "Datenschutz und Nutzungsbedingungen"
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
-      subtitle: "Hier findest du Informationen zu deinen Rechten und Pflichten sowie über die Verarbeitung deiner persönlichen Daten."
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
         title: "Dein Konto löschen"

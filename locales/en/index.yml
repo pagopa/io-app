@@ -334,7 +334,7 @@ profile:
     privacy:
       title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
-      subtitle: In this section you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
+      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
