@@ -1,14 +1,24 @@
 import { View } from "react-native";
 import React, { ComponentProps, memo, useCallback } from "react";
-import { Body, IOSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  HSpacer,
+  IOSpacer,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import {
+  BodyProps,
+  ComposedBodyFromArray
+} from "./core/typography/ComposedBodyFromArray";
 
 const BULLET_ITEM = "\u2022";
 
-type ListItem = {
+export type BulletListItem = {
   /**
    * The text of the list item.
    */
-  value: string;
+  value: string | Array<BodyProps>;
   /**
    * The id used as key, it must be unique.
    */
@@ -20,7 +30,7 @@ type ListItem = {
   /**
    * Nested list.
    */
-  list?: Array<Omit<ListItem, "list">>;
+  list?: Array<Omit<BulletListItem, "list">>;
 };
 
 type Props = {
@@ -31,7 +41,7 @@ type Props = {
   /**
    * The list to display bullet items.
    */
-  list: Array<ListItem>;
+  list: Array<BulletListItem>;
   /**
    * Title extra props.
    */
@@ -43,10 +53,10 @@ type Props = {
 };
 
 /**
- * This component renders a bullet list. It supports two levels of nesting, so the first level `ListItem` can contain a `list` prop.
+ * This component renders a bullet list. It supports two levels of nesting, so the first level `BulletListItem` can contain a `list` prop.
  *
  * @param {string} title The bullet list title.
- * @param {Array<ListItem>} list The array used to render the bullet list.
+ * @param {Array<BulletListItem>} list The array used to render the bullet list.
  * @param {ComponentProps<typeof Body>} [titleProps] Used to customize title.
  * @param {IOSpacer} [spacing] Used to define list item indentation and space between title and list.
  * @returns {JSX.Element} The rendered component.
@@ -71,16 +81,23 @@ type Props = {
 export const BulletList = memo(
   ({ title, list, spacing = 8, titleProps = {} }: Props) => {
     /**
-     * @param {Array<ListItem>} [list] The list to iterate.
+     * @param {Array<BulletListItem>} [list] The list to iterate.
      * @param {number} [count=0] The number a recursive calls, used to stop the cycle when nesting level is equal to two.
      * @returns {JSX.Element} The rendered list.
      */
     const renderListItems = useCallback(
-      (list?: Array<ListItem>, count: number = 0) =>
+      (list?: Array<BulletListItem>, count: number = 0) =>
         list?.map(({ id, value, textProps = {}, ...rest }) => (
-          <View key={id} style={{ paddingLeft: spacing }} {...textProps}>
-            <Body>
-              {BULLET_ITEM} {value}
+          <View key={id} style={IOStyles.row}>
+            <HSpacer size={spacing} />
+            <Body>{BULLET_ITEM}</Body>
+            <HSpacer size={spacing} />
+            <Body {...textProps}>
+              {Array.isArray(value) ? (
+                <ComposedBodyFromArray body={value} />
+              ) : (
+                value
+              )}
             </Body>
             {"list" in rest &&
               count === 0 &&
