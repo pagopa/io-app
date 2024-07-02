@@ -21,6 +21,7 @@ import {
 } from "../../components/core/typography/ComposedBodyFromArray";
 import { IOScrollViewActions } from "../../components/ui/IOScrollView";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 
 /**
  * A screen to explain how profile data export works.
@@ -28,7 +29,7 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
  */
 const DownloadProfileDataScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
+  const { navigate, goBack } = useIONavigation();
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
   const toast = useIOToast();
@@ -48,15 +49,21 @@ const DownloadProfileDataScreen = () => {
         toast.error(I18n.t("profile.main.privacy.exportData.error"));
         return;
       }
-      navigation.goBack();
+      goBack();
     }
-  }, [prevUserDataProcessing, userDataProcessing, navigation, toast]);
+  }, [prevUserDataProcessing, userDataProcessing, goBack, toast]);
 
   const handleDownloadPress = useCallback(() => {
     dispatch(
       upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
     );
   }, [dispatch]);
+
+  const handleNavigateToProfilePrivacy = useCallback(() => {
+    navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PRIVACY
+    });
+  }, [navigate]);
 
   const actions = useMemo<IOScrollViewActions>(
     () => ({
@@ -142,7 +149,7 @@ const DownloadProfileDataScreen = () => {
         <VSpacer />
         <Body>
           {I18n.t("profile.main.privacy.exportData.detail.paragraph3.part1")}
-          <LabelLink>
+          <LabelLink onPress={handleNavigateToProfilePrivacy}>
             {I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")}
           </LabelLink>
         </Body>
