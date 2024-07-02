@@ -6,11 +6,15 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ComponentProps, useCallback, useEffect, useState } from "react";
-import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
+import {
+  Alert,
+  AlertButton,
+  ListRenderItemInfo,
+  SectionList
+} from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -23,6 +27,7 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -175,19 +180,22 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     handleUserDataRequestAlert
   ]);
 
-  const isRequestProcessing = (choice: UserDataProcessingChoiceEnum): boolean =>
-    !pot.isLoading(userDataProcessing[choice]) &&
-    !pot.isError(userDataProcessing[choice]) &&
-    pot.getOrElse(
-      pot.map(
-        userDataProcessing[choice],
-        v =>
-          v !== undefined &&
-          v.status !== UserDataProcessingStatusEnum.CLOSED &&
-          v.status !== UserDataProcessingStatusEnum.ABORTED
+  const isRequestProcessing = useCallback(
+    (choice: UserDataProcessingChoiceEnum): boolean =>
+      !pot.isLoading(userDataProcessing[choice]) &&
+      !pot.isError(userDataProcessing[choice]) &&
+      pot.getOrElse(
+        pot.map(
+          userDataProcessing[choice],
+          v =>
+            v !== undefined &&
+            v.status !== UserDataProcessingStatusEnum.CLOSED &&
+            v.status !== UserDataProcessingStatusEnum.ABORTED
+        ),
+        false
       ),
-      false
-    );
+    [userDataProcessing]
+  );
 
   const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = [
     {
@@ -247,21 +255,24 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     }
   ];
 
-  const renderPrivacyNavItem = ({
-    item: { value, description, onPress, topElement, testID }
-  }: ListRenderItemInfo<PrivacyNavListItem>) => (
-    <ListItemNav
-      accessibilityLabel={value}
-      value={value}
-      description={description}
-      onPress={onPress}
-      topElement={topElement}
-      testID={testID}
-    />
+  const renderPrivacyNavItem = useCallback(
+    ({
+      item: { value, description, onPress, topElement, testID }
+    }: ListRenderItemInfo<PrivacyNavListItem>) => (
+      <ListItemNav
+        accessibilityLabel={value}
+        value={value}
+        description={description}
+        onPress={onPress}
+        topElement={topElement}
+        testID={testID}
+      />
+    ),
+    []
   );
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("profile.main.privacy.title")
       }}
@@ -273,20 +284,23 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         loadingOpacity={0.9}
         loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <FlatList
-          scrollEnabled={false}
+        <SectionList
+          sections={[
+            {
+              data: privacyNavListItems
+            }
+          ]}
           keyExtractor={(item: PrivacyNavListItem, index: number) =>
             `${item.value}-${index}`
           }
+          renderItem={renderPrivacyNavItem}
+          ItemSeparatorComponent={Divider}
           contentContainerStyle={{
             paddingHorizontal: IOVisualCostants.appMarginDefault
           }}
-          data={privacyNavListItems}
-          renderItem={renderPrivacyNavItem}
-          ItemSeparatorComponent={() => <Divider />}
         />
       </LoadingSpinnerOverlay>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
