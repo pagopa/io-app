@@ -87,11 +87,11 @@ const TimelineRefundDetailsComponent = (props: Props) => {
       {rejectedAlertComponent}
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.iban")}</Body>
-        <Body weight="Semibold">{refund.iban}</Body>
+        <Body weight="SemiBold">{refund.iban}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.amount")}</Body>
-        <Body weight="Semibold">{formattedAmount}</Body>
+        <Body weight="SemiBold">{formattedAmount}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>
@@ -119,11 +119,11 @@ const TimelineRefundDetailsComponent = (props: Props) => {
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.period")}</Body>
-        <Body weight="Semibold">{getRefundPeriodDateString(refund)}</Body>
+        <Body weight="SemiBold">{getRefundPeriodDateString(refund)}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>Data rimborso</Body>
-        <Body weight="Semibold">
+        <Body weight="SemiBold">
           {format(refund.operationDate, "DD MMM YYYY, HH:mm")}
         </Body>
       </View>
@@ -132,7 +132,7 @@ const TimelineRefundDetailsComponent = (props: Props) => {
         <HSpacer size={16} />
         <View style={[IOStyles.flex, IOStyles.row]}>
           <Body
-            weight="Semibold"
+            weight="SemiBold"
             numberOfLines={1}
             ellipsizeMode="tail"
             style={IOStyles.flex}

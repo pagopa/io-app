@@ -35,7 +35,7 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
       <View
         style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.innerListItem]}
       >
-        <H4 weight={checked ? "Semibold" : "Regular"} color={"bluegreyDark"}>
+        <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
           {text}
         </H4>
         <Icon

@@ -123,7 +123,7 @@ const InstrumentsEnrollmentScreen = () => {
       component: (
         <Body>
           {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyFirst")}
-          <Body weight="Semibold">
+          <Body weight="SemiBold">
             {I18n.t(
               "idpay.configuration.instruments.enrollmentSheet.bodyBold"
             ) + "\n"}

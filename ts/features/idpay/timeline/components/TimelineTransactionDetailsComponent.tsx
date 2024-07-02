@@ -71,7 +71,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
             isExtended={false}
           />
           <HSpacer size={8} />
-          <Body weight="Semibold">
+          <Body weight="SemiBold">
             {I18n.t("idpay.initiative.operationDetails.transaction.maskedPan", {
               lastDigits: transaction.maskedPan
             })}
@@ -82,7 +82,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
         <Body>
           {I18n.t("idpay.initiative.operationDetails.transaction.amountLabel")}
         </Body>
-        <Body weight="Semibold">{formattedAmount}</Body>
+        <Body weight="SemiBold">{formattedAmount}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>
@@ -90,7 +90,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
             "idpay.initiative.operationDetails.transaction.accruedAmountLabel"
           )}
         </Body>
-        <Body weight="Semibold">{formattedAccrued}</Body>
+        <Body weight="SemiBold">{formattedAccrued}</Body>
       </View>
       <ItemSeparatorComponent noPadded={true} />
       <VSpacer size={24} />
@@ -102,7 +102,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
         <Body>
           {I18n.t("idpay.initiative.operationDetails.transaction.date")}
         </Body>
-        <Body weight="Semibold">
+        <Body weight="SemiBold">
           {format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
         </Body>
       </View>
@@ -110,7 +110,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
         <Body>
           {I18n.t("idpay.initiative.operationDetails.transaction.circuit")}
         </Body>
-        <Body weight="Semibold">
+        <Body weight="SemiBold">
           {getLabelForCircuitType(transaction.circuitType)}
         </Body>
       </View>
@@ -121,7 +121,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
         <HSpacer size={16} />
         <View style={[IOStyles.flex, IOStyles.row]}>
           <Body
-            weight="Semibold"
+            weight="SemiBold"
             numberOfLines={1}
             ellipsizeMode="tail"
             style={IOStyles.flex}
@@ -139,7 +139,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
         <HSpacer size={16} />
         <View style={[IOStyles.flex, IOStyles.row]}>
           <Body
-            weight="Semibold"
+            weight="SemiBold"
             numberOfLines={1}
             ellipsizeMode="tail"
             style={IOStyles.flex}
