@@ -85,8 +85,8 @@ export const mockedmDLResponse = Buffer.from(
 );
 
 export const ItwCredentialsMocks = {
-  eid: eid as StoredCredential,
-  dc: dc as StoredCredential,
-  mdl: mdl as StoredCredential,
-  ts: ts as StoredCredential
+  eid: eid as unknown as StoredCredential,
+  dc: dc as unknown as StoredCredential,
+  mdl: mdl as unknown as StoredCredential,
+  ts: ts as unknown as StoredCredential
 };

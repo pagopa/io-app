@@ -10,6 +10,7 @@ import {
   ItwEidIssuanceMachineContext,
   ItwCredentialIssuanceMachineContext
 } from "../../../machine/provider";
+import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 
 describe("Test ItwDiscoveryInfo screen", () => {
   it("it should render the screen correctly", () => {
@@ -20,9 +21,16 @@ describe("Test ItwDiscoveryInfo screen", () => {
 
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const logic = itwEidIssuanceMachine.provide({
+    actions: {
+      navigateToTosScreen: () => undefined
+    }
+  });
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwEidIssuanceMachineContext.Provider>
+      <ItwEidIssuanceMachineContext.Provider logic={logic}>
         <ItwCredentialIssuanceMachineContext.Provider>
           <ItwDiscoveryInfoScreen />
         </ItwCredentialIssuanceMachineContext.Provider>

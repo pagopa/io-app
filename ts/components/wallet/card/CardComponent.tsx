@@ -3,19 +3,13 @@
  * with different appearences based on
  * the props passed
  */
-import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { Alert, Image, Platform, StyleSheet, View } from "react-native";
-import {
-  Menu,
-  MenuOption,
-  MenuOptions,
-  MenuTrigger
-} from "react-native-popup-menu";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import { CreditCard, CreditCardType, Wallet } from "../../../types/pagopa";
@@ -26,7 +20,6 @@ import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
-import { Label } from "../../core/typography/Label";
 import Logo, { cardIcons } from "./Logo";
 
 interface BaseProps {
@@ -36,7 +29,6 @@ interface BaseProps {
 interface FullCommonProps extends BaseProps {
   isFavorite?: pot.Pot<boolean, Error>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
-  hideMenu?: boolean;
   extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
@@ -120,27 +112,6 @@ const styles = StyleSheet.create({
  * @deprecated Use {@link BaseCardComponent} and related custom implementation (eg: {@link CreditCardComponent})
  */
 export default class CardComponent extends React.Component<Props> {
-  private handleDeleteSelect = () =>
-    Alert.alert(
-      I18n.t("cardComponent.deleteTitle"),
-      I18n.t("cardComponent.deleteMsg"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.ok"),
-          style: "destructive",
-          onPress:
-            this.props.type === "Full" || this.props.type === "Header"
-              ? this.props.onDelete
-              : undefined
-        }
-      ],
-      { cancelable: false }
-    );
-
   private handleFavoritePress = () => {
     if (
       (this.props.type === "Full" || this.props.type === "Header") &&
@@ -164,13 +135,7 @@ export default class CardComponent extends React.Component<Props> {
     }
 
     if (this.props.type === "Header") {
-      const {
-        hideFavoriteIcon,
-        isFavorite,
-        onSetFavorite,
-        onDelete,
-        hideMenu
-      } = this.props;
+      const { hideFavoriteIcon, isFavorite } = this.props;
 
       return (
         <View style={styles.row}>
@@ -185,45 +150,6 @@ export default class CardComponent extends React.Component<Props> {
                 color={pot.isUpdating(isFavorite) ? "bluegrey" : "blue"}
               />
             </TouchableDefaultOpacity>
-          )}
-
-          {!hideMenu && (
-            <Menu>
-              <MenuTrigger>
-                <Icon name="dotMenu" color="blue" />
-                <HSpacer size={8} />
-              </MenuTrigger>
-
-              <MenuOptions>
-                {onSetFavorite && isFavorite !== undefined && (
-                  <MenuOption onSelect={this.handleFavoritePress}>
-                    <Label
-                      weight="Bold"
-                      color="blue"
-                      style={{ textAlign: "center" }}
-                    >
-                      {I18n.t(
-                        pot.getOrElseWithUpdating(isFavorite, false)
-                          ? "cardComponent.unsetFavorite"
-                          : "cardComponent.setFavorite"
-                      )}
-                    </Label>
-                  </MenuOption>
-                )}
-
-                {onDelete && (
-                  <MenuOption onSelect={this.handleDeleteSelect}>
-                    <Label
-                      weight="Bold"
-                      color="blue"
-                      style={{ textAlign: "center" }}
-                    >
-                      {I18n.t("global.buttons.delete")}
-                    </Label>
-                  </MenuOption>
-                )}
-              </MenuOptions>
-            </Menu>
           )}
         </View>
       );

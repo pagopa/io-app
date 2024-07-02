@@ -12,7 +12,7 @@ import ServicesSectionsList from "./ServicesSectionsList";
 type OwnProps = Readonly<{
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
-  onRefresh: (hideToast?: boolean) => void; // eslint-disable-line
+  onRefresh: (hideToast?: boolean) => void;
   onServiceSelect: (service: ServicePublic) => void;
   tabScrollOffset: Animated.Value;
 }>;

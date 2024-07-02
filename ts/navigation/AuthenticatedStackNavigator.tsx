@@ -300,7 +300,7 @@ const AuthenticatedStackNavigator = () => {
             component={IDPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
-          {/* 
+          {/*
             This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
             FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
           */}

@@ -72,20 +72,17 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         dispatch(reloadAllMessagesAction);
       }
     }, [category, dispatch, store]);
-    const onEndReachedCallback = useCallback(
-      _ => {
-        const state = store.getState();
-        const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
-          state,
-          category,
-          new Date()
-        );
-        if (loadNextPageMessages) {
-          dispatch(loadNextPageMessages);
-        }
-      },
-      [category, dispatch, store]
-    );
+    const onEndReachedCallback = useCallback(() => {
+      const state = store.getState();
+      const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
+        state,
+        category,
+        new Date()
+      );
+      if (loadNextPageMessages) {
+        dispatch(loadNextPageMessages);
+      }
+    }, [category, dispatch, store]);
     return (
       <FlatList
         ref={ref}
