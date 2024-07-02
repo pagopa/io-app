@@ -369,7 +369,7 @@ profile:
       exportData:
         cta: Richiedi una copia dei dati
         title: Accedi ai tuoi dati
-        subtitle: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
+        subtitle: Puoi scaricare i dati principali del tuo profilo IO in qualsiasi momento.
         description: Ricevi una copia dei dati associati al tuo profilo IO
         detail:
           bulletList:
