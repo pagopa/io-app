@@ -485,7 +485,7 @@ PODS:
   - react-native-pager-view (6.2.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - react-native-pdf (6.7.5):
+  - react-native-pdf (6.7.4):
     - React-Core
   - react-native-pdf-thumbnail (1.2.1):
     - React-Core
@@ -1099,7 +1099,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-pager-view: 948dc00b6545d82b53e5f99cafef4a8521c60dd4
-  react-native-pdf: 103940c90d62adfd259f63cca99c7c0c306b514c
+  react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
   react-native-safe-area-context: 399a5859f6acbdf67f671c69b53113f535f3b5b0
