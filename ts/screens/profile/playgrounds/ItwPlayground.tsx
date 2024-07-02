@@ -8,7 +8,7 @@ import {
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../../features/itwallet/discovery/components/ItwMarkdown";
+import ItwMarkdown from "../../../features/itwallet/common/components/ItwMarkdown";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../../features/itwallet/navigation/routes";
 
@@ -136,7 +136,7 @@ const ItwPlayground = () => {
         <VSpacer />
         <H3>{"IT Wallet markdown preview"}</H3>
         {/* Markdown ITW Playground */}
-        <ItwMarkdown content={sampleMarkdown} />
+        <ItwMarkdown>{sampleMarkdown}</ItwMarkdown>
         {/* TODO: Add more items here */}
       </ContentWrapper>
     </ScrollView>

@@ -18,7 +18,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ItwCredentialsMocks } from "../../common/utils/itwMocksUtils";
-import ItwMarkdown from "../../discovery/components/ItwMarkdown";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
 import {
   ItwRequestedClaimsList,
   RequiredClaim
@@ -77,14 +77,11 @@ const ItwIssuanceCredentialAuthScreen = () => {
             credentialName: credential.displayData.title
           })}
         </H2>
-        <ItwMarkdown
-          content={I18n.t(
-            "features.itWallet.issuance.credentialAuth.subtitle",
-            {
-              organization: "Istituto Poligrafico e Zecca"
-            }
-          )}
-        />
+        <ItwMarkdown>
+          {I18n.t("features.itWallet.issuance.credentialAuth.subtitle", {
+            organization: "Istituto Poligrafico e Zecca"
+          })}
+        </ItwMarkdown>
         <VSpacer size={8} />
         <ListItemHeader
           label={I18n.t(
