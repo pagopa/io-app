@@ -68,6 +68,7 @@ type ServiceSelectedType = {
 } & ServiceBaseType;
 
 type InstitutionSelectedType = {
+  organization_fiscal_code: string;
   source:
     | "featured_organizations"
     | "main_list"
@@ -124,12 +125,14 @@ export const trackServiceSelected = ({
   );
 
 export const trackInstitutionSelected = ({
+  organization_fiscal_code,
   organization_name,
   source
 }: InstitutionSelectedType) =>
   void mixpanelTrack(
     "SERVICES_ORGANIZATION_SELECTED",
     buildEventProperties("UX", "action", {
+      organization_fiscal_code,
       organization_name,
       source
     })
@@ -149,10 +152,13 @@ export const trackInstitutionDetails = ({
     })
   );
 
-export const trackInstitutionDetailsError = (reason: string) =>
+export const trackInstitutionDetailsError = (
+  organization_fiscal_code: string,
+  reason: string
+) =>
   void mixpanelTrack(
     "SERVICES_ORGANIZATION_DETAIL_ERROR",
-    buildEventProperties("KO", undefined, { reason })
+    buildEventProperties("KO", undefined, { organization_fiscal_code, reason })
   );
 
 export const trackSearchPage = () =>
@@ -233,10 +239,10 @@ export const trackSpecialServiceStatusChanged = (
     buildEventProperties("UX", "action", props)
   );
 
-export const trackServiceDetailsError = (reason: string) =>
+export const trackServiceDetailsError = (service_id: string, reason: string) =>
   void mixpanelTrack(
     "SERVICES_DETAIL_ERROR",
-    buildEventProperties("KO", undefined, { reason })
+    buildEventProperties("KO", undefined, { service_id, reason })
   );
 
 export const trackServiceDetailsCtaTapped = (
@@ -278,10 +284,14 @@ export const trackServicesAction =
       // Institution details
       case getType(paginatedServicesGet.failure):
         return trackInstitutionDetailsError(
+          action.payload.id,
           getNetworkErrorMessage(action.payload)
         );
       // Service details
       case getType(loadServicePreference.failure):
-        return trackServiceDetailsError(getNetworkErrorMessage(action.payload));
+        return trackServiceDetailsError(
+          action.payload.id,
+          getNetworkErrorMessage(action.payload)
+        );
     }
   };

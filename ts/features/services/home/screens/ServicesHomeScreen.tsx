@@ -164,8 +164,9 @@ export const ServicesHomeScreen = () => {
   );
 
   const navigateToInstitution = useCallback(
-    ({ id, name }: Institution) => {
+    ({ fiscal_code, id, name }: Institution) => {
       analytics.trackInstitutionSelected({
+        organization_fiscal_code: fiscal_code,
         organization_name: name,
         source: "main_list"
       });
