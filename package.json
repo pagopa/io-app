@@ -170,7 +170,7 @@
     "react-native-markdown-display": "^7.0.2",
     "react-native-masked-text": "^1.13.0",
     "react-native-pager-view": "^6.2.3",
-    "react-native-pdf": "^6.7.5",
+    "react-native-pdf": "6.7.4",
     "react-native-pdf-thumbnail": "^1.2.1",
     "react-native-permissions": "^4.0.0",
     "react-native-push-notification": "^8.1.1",
