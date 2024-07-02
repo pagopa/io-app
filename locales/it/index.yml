@@ -367,12 +367,25 @@ profile:
           body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
           cta: Esci
       exportData:
-        cta: Richiedi copia dei tuoi dati
+        cta: Richiedi una copia dei dati
         title: Accedi ai tuoi dati
+        subtitle: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
         description: Ricevi una copia dei dati associati al tuo profilo IO
-        info:
-          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "I dati sono:"
+            item1: il tuo codice fiscale;
+            item2: l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;
+            item3: il testo dei Messaggi che hai ricevuto;
+            item4: le tue preferenze di notifica.
+          paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
+          paragraph2: 
+            part1: "Riceverai un "
+            part2: "messaggio su IO "
+            part3: in cui sono presenti un link e una password validi per 15 giorni. 
+          paragraph3: 
+            part1: Per maggiori informazioni consulta l’
+            link: Informativa privacy di IO.
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.

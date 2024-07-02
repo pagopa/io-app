@@ -359,11 +359,8 @@ profile:
           body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
           cta: "Beenden"
       exportData:
-        cta: "Kopie deiner Daten anfordern"
         title: "Zugriff auf deine Daten"
         description: "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten"
-        info:
-          title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
         alert:
           requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
           oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"

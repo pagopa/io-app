@@ -367,12 +367,25 @@ profile:
           body: "Your request has been taken care of and we will delete your account within 30 days.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE. By clicking on Exit, your session will be terminated.\n\nThanks for using IO"
           cta: Logout
       exportData:
-        cta: Request a copy of your data
+        cta: Richiedi una copia dei dati
         title: Access your data
+        subtitle: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
         description: Receive a copy of the data associated with your IO profile
-        info:
-          title: You can download your IO profile information at any time.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "I dati sono:"
+            item1: il tuo codice fiscale;
+            item2: l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;
+            item3: il testo dei Messaggi che hai ricevuto;
+            item4: le tue preferenze di notifica.
+          paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
+          paragraph2: 
+            part1: "Riceverai un "
+            part2: "messaggio su IO "
+            part3: in cui sono presenti un link e una password validi per 15 giorni. 
+          paragraph3: 
+            part1: Per maggiori informazioni consulta l’
+            link: Informativa privacy di IO.
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
