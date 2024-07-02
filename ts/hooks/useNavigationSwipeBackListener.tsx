@@ -1,18 +1,7 @@
-import {
-  EventListenerCallback,
-  EventMapCore,
-  StackNavigationState,
-  useNavigation
-} from "@react-navigation/native";
+import { EventListenerCallback } from "@react-navigation/native";
 import { StackNavigationEventMap } from "@react-navigation/stack/lib/typescript/src/types";
 import React from "react";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../navigation/params/AppParamsList";
-
-type StackEventMap = StackNavigationEventMap &
-  EventMapCore<StackNavigationState<AppParamsList>>;
+import { useIONavigation } from "../navigation/params/AppParamsList";
 
 /**
  * A custom React hook that attaches a swipe back listener to the navigation stack.
@@ -33,18 +22,18 @@ type StackEventMap = StackNavigationEventMap &
  * };
  */
 export const useNavigationSwipeBackListener = (handler: () => void) => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
   const [withGesture, setWithGesture] = React.useState(false);
 
   const handleTransitionEnd = React.useCallback<
-    EventListenerCallback<StackEventMap, "transitionEnd">
+    EventListenerCallback<StackNavigationEventMap, "transitionEnd">
   >(
-    e => {
+    ({ data }) => {
       // The handleTransitionEnd callback function is executed when a screen transition is completed.
       // We only need to know if the user is swiping back, regardless of the direction of the transition.
       // Fortunately, the transition event provides this information through the closing property in the data parameter.
       // if it is true, it means that the user is swiping back to the previous screen
-      if (e.data.closing) {
+      if (data.closing) {
         handler();
       }
 
@@ -66,7 +55,7 @@ export const useNavigationSwipeBackListener = (handler: () => void) => {
   }, [navigation, withGesture, handleTransitionEnd]);
 
   const handleGestureEnd = React.useCallback<
-    EventListenerCallback<StackEventMap, "gestureEnd">
+    EventListenerCallback<StackNavigationEventMap, "gestureEnd">
   >(() => {
     // Everytime the user ands a swipe gesture (any direction), we save it to the state by mutating `setWithGesture` to true
     setWithGesture(true);

@@ -13,9 +13,6 @@ module.exports = {
     "./jestSetup.js",
     "./node_modules/react-native-gesture-handler/jestSetup.js"
   ],
-  setupFilesAfterEnv: [
-    "@testing-library/jest-native/extend-expect",
-    "./jestSetupAfterEnv.js"
-  ],
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   collectCoverage: true
 };

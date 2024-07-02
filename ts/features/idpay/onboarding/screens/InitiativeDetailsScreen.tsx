@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";

@@ -37,7 +37,6 @@ const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
-// eslint-disable-next-line complexity, sonarjs/cognitive-complexity
 export const DSButtons = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const theme = useIOTheme();

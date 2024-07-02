@@ -66,7 +66,7 @@ export const latestTransactionsSelector = createSelector(
             //        use that new type for parsing responses, we ignore
             //        wallets with undefined creation dates... so the check
             //        is unnecessary.
-            // eslint-disable-next-line
+
             isNaN(a.created as any) || isNaN(b.created as any)
               ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
               : b.created.toISOString().localeCompare(a.created.toISOString())

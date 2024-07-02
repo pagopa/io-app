@@ -10,6 +10,10 @@ import { profileLoadSuccess } from "../../../store/actions/profile";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
+jest.mock("../../../utils/brightness", () => ({
+  useMaxBrightness: jest.fn()
+}));
+
 const FISCAL_CODE_TEST = "AAAAAA00A00A000A" as FiscalCode;
 
 describe(FiscalCodeScreen, () => {

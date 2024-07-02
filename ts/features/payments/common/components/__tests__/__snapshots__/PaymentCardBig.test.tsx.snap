@@ -3,7 +3,7 @@
 exports[`PaymentCardBig component matches snapshot for loading 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,14 +326,14 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignContent": "space-between",
                             "alignItems": "flex-start",
                             "backgroundColor": "#E8EBF1",
@@ -340,7 +352,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                           <View
                             collapsable={false}
                             style={
-                              Object {
+                              {
                                 "opacity": 0.5,
                               }
                             }
@@ -350,7 +362,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                               height={24}
                               radius={8}
                               style={
-                                Object {
+                                {
                                   "backgroundColor": "#D2D6E3",
                                   "borderRadius": 8,
                                   "height": 24,
@@ -362,7 +374,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 16,
                               }
                             }
@@ -370,7 +382,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                           <View
                             collapsable={false}
                             style={
-                              Object {
+                              {
                                 "opacity": 0.5,
                               }
                             }
@@ -380,7 +392,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                               height={16}
                               radius={8}
                               style={
-                                Object {
+                                {
                                   "backgroundColor": "#D2D6E3",
                                   "borderRadius": 8,
                                   "height": 16,
@@ -395,7 +407,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                           <View
                             collapsable={false}
                             style={
-                              Object {
+                              {
                                 "opacity": 0.5,
                               }
                             }
@@ -405,7 +417,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                               height={16}
                               radius={8}
                               style={
-                                Object {
+                                {
                                   "backgroundColor": "#D2D6E3",
                                   "borderRadius": 8,
                                   "height": 16,
@@ -417,7 +429,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -425,7 +437,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                           <View
                             collapsable={false}
                             style={
-                              Object {
+                              {
                                 "opacity": 0.5,
                               }
                             }
@@ -435,7 +447,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
                               height={24}
                               radius={8}
                               style={
-                                Object {
+                                {
                                   "backgroundColor": "#D2D6E3",
                                   "borderRadius": 8,
                                   "height": 24,
@@ -453,8 +465,8 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -463,7 +475,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
 exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -471,8 +483,8 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -481,8 +493,8 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -494,7 +506,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -510,7 +522,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -524,12 +536,12 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -543,7 +555,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -555,7 +567,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -563,7 +575,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -574,7 +586,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -588,7 +600,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -603,7 +615,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -617,7 +629,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -631,21 +643,34 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -657,7 +682,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -675,12 +700,12 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -690,10 +715,10 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -702,9 +727,9 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -720,27 +745,26 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -750,13 +774,13 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -766,7 +790,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -774,14 +798,14 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
                     >
                       <View
                         style={
-                          Object {
+                          {
                             "alignContent": "space-between",
                             "alignItems": "flex-start",
                             "backgroundColor": "#E8EBF1",
@@ -801,12 +825,12 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                           accessible={true}
                           resizeMode="contain"
                           source={
-                            Object {
+                            {
                               "testUri": "../../../img/wallet/payment-methods/paypal-logo.png",
                             }
                           }
                           style={
-                            Object {
+                            {
                               "height": 32,
                               "width": 114,
                             }
@@ -814,7 +838,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                         />
                         <View
                           style={
-                            Object {
+                            {
                               "height": 8,
                             }
                           }
@@ -829,22 +853,22 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                           ellipsizeMode="tail"
                           font="TitilliumSansPro"
                           fontStyle={
-                            Object {
+                            {
                               "fontSize": 18,
                               "lineHeight": 25,
                             }
                           }
                           numberOfLines={1}
                           style={
-                            Array [
-                              Object {
+                            [
+                              {
                                 "width": "75%",
                               },
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               },
-                              Object {
+                              {
                                 "color": "#0E0F13",
                                 "fontFamily": "Titillium Sans Pro",
                                 "fontStyle": "normal",
@@ -863,8 +887,8 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

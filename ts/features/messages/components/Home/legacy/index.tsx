@@ -317,7 +317,7 @@ const MessageList = ({
         scrollEventThrottle={animated?.scrollEventThrottle}
         style={styles.padded}
         getItemLayout={(
-          _: ReadonlyArray<UIMessage> | null | undefined,
+          _: ArrayLike<UIMessage> | null | undefined,
           index: number
         ) => generateItemLayout(messages.length)(index)}
         onScroll={(...args) => {
@@ -333,7 +333,6 @@ const MessageList = ({
   );
 };
 
-// eslint-disable-next-line arrow-body-style
 const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
   const archived = filter.getArchived ?? false;
   const paginatedState = archived

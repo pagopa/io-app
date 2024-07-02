@@ -1,6 +1,6 @@
 import { IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, DimensionValue } from "react-native";
 
 type Props = {
   // between 0 and 1
@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
  * the percentage is set to 1
  * @param progressPercentage
  */
-const calculateStylePercentage = (progressPercentage: number) => {
+const calculateStylePercentage = (
+  progressPercentage: number
+): DimensionValue => {
   // clamp between 0 and 100 to avoid over/under flow
   const percentageValue = Math.max(Math.min(progressPercentage * 100, 100), 0);
   return `${percentageValue === 0 ? 1 : percentageValue}%`;
@@ -40,7 +42,9 @@ export const ProgressBar: React.FunctionComponent<Props> = props => (
       testID={"progressBar"}
       style={[
         styles.fillBar,
-        { width: calculateStylePercentage(props.progressPercentage) }
+        {
+          width: calculateStylePercentage(props.progressPercentage)
+        }
       ]}
     />
   </View>

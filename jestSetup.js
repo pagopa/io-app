@@ -12,6 +12,7 @@ import { NativeModules } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockRNCameraRoll from "@react-native-camera-roll/camera-roll/src/__mocks__/nativeInterface";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
+import "react-native-get-random-values";
 
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
@@ -139,3 +140,12 @@ jest.mock("mixpanel-react-native", () => ({
     init: jest.fn()
   }))
 }));
+
+jest.mock("react-native", () => {
+  const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
+
+  // eslint-disable-next-line functional/immutable-data
+  RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
+
+  return RN;
+});

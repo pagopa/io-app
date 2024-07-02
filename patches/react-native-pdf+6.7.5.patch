@@ -1,8 +1,8 @@
-diff --git a/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m b/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m
-index 52aafd8..5efda0b 100644
---- a/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m
-+++ b/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m
-@@ -188,12 +188,16 @@ const float MIN_SCALE = 1.0f;
+diff --git a/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm b/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
+index c70c17e..0bf40ab 100644
+--- a/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
++++ b/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
+@@ -385,12 +385,16 @@ - (void)didSetProps:(NSArray<NSString *> *)changedProps
          }
  
          if (_pdfDocument && ([changedProps containsObject:@"path"] || [changedProps containsObject:@"enableAnnotationRendering"])) {

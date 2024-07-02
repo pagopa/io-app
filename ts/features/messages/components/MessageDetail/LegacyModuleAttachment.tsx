@@ -78,6 +78,37 @@ const DISABLED_OPACITY = 0.5;
 const ICON_SIZE: IOIconSizeScale = 32;
 const MARGIN_SIZE: IOSpacingScale = 16;
 
+const IconOrActivityIndicatorComponent = ({
+  isFetching
+}: {
+  isFetching?: boolean;
+}) => {
+  if (isFetching) {
+    return (
+      <ActivityIndicator
+        color={IOColors.blue}
+        accessible={true}
+        accessibilityHint={I18n.t(
+          "global.accessibility.activityIndicator.hint"
+        )}
+        accessibilityLabel={I18n.t(
+          "global.accessibility.activityIndicator.label"
+        )}
+        importantForAccessibility={"no-hide-descendants"}
+        testID={"activityIndicator"}
+      />
+    );
+  }
+
+  return (
+    <Icon
+      name="chevronRightListItem"
+      color="blue"
+      size={IOListItemVisualParams.chevronSize}
+    />
+  );
+};
+
 const LegacyModuleAttachmentContent = ({
   isFetching,
   format,
@@ -86,55 +117,26 @@ const LegacyModuleAttachmentContent = ({
 }: Pick<
   LegacyModuleAttachmentProps,
   "isFetching" | "format" | "title" | "subtitle"
->) => {
-  const IconOrActivityIndicatorComponent = () => {
-    if (isFetching) {
-      return (
-        <ActivityIndicator
-          color={IOColors.blue}
-          accessible={true}
-          accessibilityHint={I18n.t(
-            "global.accessibility.activityIndicator.hint"
-          )}
-          accessibilityLabel={I18n.t(
-            "global.accessibility.activityIndicator.label"
-          )}
-          importantForAccessibility={"no-hide-descendants"}
-          testID={"activityIndicator"}
-        />
-      );
-    }
-
-    return (
-      <Icon
-        name="chevronRightListItem"
-        color="blue"
-        size={IOListItemVisualParams.chevronSize}
-      />
-    );
-  };
-
-  return (
-    <>
-      <View style={{ marginRight: MARGIN_SIZE }}>
-        <Icon name={formatMap[format]} size={ICON_SIZE} color="blue" />
-      </View>
-      <View style={IOStyles.flex}>
-        <LabelSmall numberOfLines={1} weight="Semibold" color="bluegrey">
-          {title}
+>) => (
+  <>
+    <View style={{ marginRight: MARGIN_SIZE }}>
+      <Icon name={formatMap[format]} size={ICON_SIZE} color="blue" />
+    </View>
+    <View style={IOStyles.flex}>
+      <LabelSmall numberOfLines={1} weight="Semibold" color="bluegrey">
+        {title}
+      </LabelSmall>
+      {subtitle && (
+        <LabelSmall weight="Regular" color="bluegrey">
+          {subtitle}
         </LabelSmall>
-        {subtitle && (
-          <LabelSmall weight="Regular" color="bluegrey">
-            {subtitle}
-          </LabelSmall>
-        )}
-      </View>
-      <View style={styles.rightSection}>
-        <IconOrActivityIndicatorComponent />
-      </View>
-    </>
-  );
-};
+      )}
+    </View>
+    <View style={styles.rightSection}>
+      <IconOrActivityIndicatorComponent isFetching={isFetching} />
+    </View>
+  </>
+);
 
 /**
  * The `LegacyModuleAttachment` component is a custom button component with an extended outline style.

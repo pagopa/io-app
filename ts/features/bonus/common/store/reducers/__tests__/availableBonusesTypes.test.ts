@@ -38,10 +38,11 @@ const mockBonus: BonusAvailable = {
 
 describe("availableBonusesTypes with FF enabled", () => {
   it("should return 1 bonus available", () => {
-    jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
-      () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
-    );
+    jest
+      .spyOn(bonus, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
+      );
     expect(
       supportedAvailableBonusSelector.resultFunc(
         pot.some([...availableBonuses])
@@ -51,7 +52,6 @@ describe("availableBonusesTypes with FF enabled", () => {
 
   it("should return 2 bonuses available if an experimental bonus with no FF is available", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],

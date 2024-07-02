@@ -3,7 +3,7 @@
 exports[`MessagePaymentItem component Should match the snapshot for a loading item 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -322,7 +334,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                       <View>
                         <View
                           style={
-                            Object {
+                            {
                               "height": 24,
                             }
                           }
@@ -330,7 +342,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                         <View
                           accessible={false}
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
                               "borderColor": "#E8EBF1",
@@ -346,7 +358,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                         >
                           <View
                             style={
-                              Object {
+                              {
                                 "flex": 1,
                               }
                             }
@@ -354,7 +366,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                             <View
                               collapsable={false}
                               style={
-                                Object {
+                                {
                                   "opacity": 0.5,
                                 }
                               }
@@ -363,7 +375,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                 height={16}
                                 radius={8}
                                 style={
-                                  Object {
+                                  {
                                     "backgroundColor": "#efefef",
                                     "borderRadius": 8,
                                     "height": 16,
@@ -375,7 +387,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "height": 4,
                                 }
                               }
@@ -383,7 +395,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                             <View
                               collapsable={false}
                               style={
-                                Object {
+                                {
                                   "opacity": 0.5,
                                 }
                               }
@@ -392,7 +404,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                 height={13}
                                 radius={8}
                                 style={
-                                  Object {
+                                  {
                                     "backgroundColor": "#efefef",
                                     "borderRadius": 8,
                                     "height": 13,
@@ -405,7 +417,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                           </View>
                           <View
                             style={
-                              Object {
+                              {
                                 "marginLeft": 12,
                               }
                             }
@@ -413,7 +425,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                             <View
                               collapsable={false}
                               style={
-                                Object {
+                                {
                                   "opacity": 0.5,
                                 }
                               }
@@ -422,7 +434,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                 height={16}
                                 radius={8}
                                 style={
-                                  Object {
+                                  {
                                     "backgroundColor": "#efefef",
                                     "borderRadius": 8,
                                     "height": 16,
@@ -441,8 +453,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -451,7 +463,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
 exports[`MessagePaymentItem component Should match the snapshot for a payable item 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -459,8 +471,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -469,8 +481,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -482,7 +494,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -498,7 +510,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -512,12 +524,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -531,7 +543,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -543,7 +555,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -551,7 +563,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -562,7 +574,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -576,7 +588,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -591,7 +603,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -605,7 +617,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -619,21 +631,34 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -645,7 +670,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -663,12 +688,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -678,10 +703,10 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -690,9 +715,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -708,27 +733,26 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -738,13 +762,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -754,7 +778,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -762,7 +786,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -770,13 +794,30 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                       <View>
                         <View
                           style={
-                            Object {
+                            {
                               "height": 24,
                             }
                           }
                         />
                         <View
                           accessibilityRole="button"
+                          accessibilityState={
+                            {
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
+                            }
+                          }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
                           accessible={true}
                           collapsable={false}
                           focusable={true}
@@ -793,8 +834,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
@@ -807,9 +848,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   "paddingVertical": 16,
                                 },
                                 false,
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -819,7 +860,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "flexGrow": 1,
                                   "flexShrink": 1,
                                   "paddingEnd": 8,
@@ -833,19 +874,19 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 defaultWeight="Bold"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 21,
                                   }
                                 }
                                 numberOfLines={1}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 14,
                                       "lineHeight": 21,
                                     },
-                                    Object {
+                                    {
                                       "color": "#475A6D",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -864,19 +905,19 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 defaultWeight="Bold"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 21,
                                   }
                                 }
                                 numberOfLines={2}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 14,
                                       "lineHeight": 21,
                                     },
-                                    Object {
+                                    {
                                       "color": "#475A6D",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -891,7 +932,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "flex-end",
@@ -907,19 +948,19 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 defaultWeight="Semibold"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 18,
                                     "lineHeight": 25,
                                   }
                                 }
                                 numberOfLines={1}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 18,
                                       "lineHeight": 25,
                                     },
-                                    Object {
+                                    {
                                       "color": "#0073E6",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -945,15 +986,15 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 minX={0}
                                 minY={0}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "backgroundColor": "transparent",
                                       "borderWidth": 0,
                                     },
-                                    Object {
+                                    {
                                       "color": "#0073E6",
                                     },
-                                    Object {
+                                    {
                                       "flex": 0,
                                       "height": 24,
                                       "width": 24,
@@ -967,7 +1008,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                               >
                                 <RNSVGGroup
                                   fill={
-                                    Object {
+                                    {
                                       "payload": 4278190080,
                                       "type": 0,
                                     }
@@ -977,13 +1018,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     clipRule={0}
                                     d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                     fill={
-                                      Object {
+                                      {
                                         "type": 2,
                                       }
                                     }
                                     fillRule={0}
                                     propList={
-                                      Array [
+                                      [
                                         "fill",
                                         "fillRule",
                                       ]
@@ -1001,8 +1042,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1011,7 +1052,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
 exports[`MessagePaymentItem component Should match the snapshot for a processed item 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -1019,8 +1060,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -1029,8 +1070,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -1042,7 +1083,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -1058,7 +1099,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -1072,12 +1113,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -1091,7 +1132,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -1103,7 +1144,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -1111,7 +1152,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -1122,7 +1163,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1136,7 +1177,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -1151,7 +1192,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -1165,7 +1206,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -1179,21 +1220,34 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -1205,7 +1259,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -1223,12 +1277,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -1238,10 +1292,10 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1250,9 +1304,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -1268,27 +1322,26 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -1298,13 +1351,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -1314,7 +1367,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -1322,7 +1375,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -1330,13 +1383,30 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                       <View>
                         <View
                           style={
-                            Object {
+                            {
                               "height": 24,
                             }
                           }
                         />
                         <View
                           accessibilityRole="button"
+                          accessibilityState={
+                            {
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
+                            }
+                          }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
                           accessible={true}
                           collapsable={false}
                           focusable={true}
@@ -1353,8 +1423,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
@@ -1367,9 +1437,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   "paddingVertical": 16,
                                 },
                                 false,
-                                Object {
-                                  "transform": Array [
-                                    Object {
+                                {
+                                  "transform": [
+                                    {
                                       "scale": undefined,
                                     },
                                   ],
@@ -1379,7 +1449,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                           >
                             <View
                               style={
-                                Object {
+                                {
                                   "flexGrow": 1,
                                   "flexShrink": 1,
                                   "paddingEnd": 8,
@@ -1393,19 +1463,19 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 defaultWeight="Bold"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 21,
                                   }
                                 }
                                 numberOfLines={1}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 14,
                                       "lineHeight": 21,
                                     },
-                                    Object {
+                                    {
                                       "color": "#475A6D",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -1424,19 +1494,19 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 defaultWeight="Bold"
                                 font="TitilliumSansPro"
                                 fontStyle={
-                                  Object {
+                                  {
                                     "fontSize": 14,
                                     "lineHeight": 21,
                                   }
                                 }
                                 numberOfLines={2}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "fontSize": 14,
                                       "lineHeight": 21,
                                     },
-                                    Object {
+                                    {
                                       "color": "#475A6D",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
@@ -1451,7 +1521,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                             </View>
                             <View
                               style={
-                                Object {
+                                {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "flex-end",
@@ -1461,8 +1531,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
                                       "borderRadius": 24,
@@ -1471,7 +1541,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                       "paddingHorizontal": 8,
                                       "paddingVertical": 4,
                                     },
-                                    Object {
+                                    {
                                       "backgroundColor": "#F4F5F8",
                                     },
                                   ]
@@ -1481,20 +1551,20 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   ellipsizeMode="tail"
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
+                                    [
+                                      {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
                                         "fontSize": 12,
                                         "lineHeight": 16,
                                         "textTransform": "uppercase",
                                       },
-                                      Object {
+                                      {
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                       },
-                                      Object {
+                                      {
                                         "color": "#555C70",
                                       },
                                     ]
@@ -1517,15 +1587,15 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 minX={0}
                                 minY={0}
                                 style={
-                                  Array [
-                                    Object {
+                                  [
+                                    {
                                       "backgroundColor": "transparent",
                                       "borderWidth": 0,
                                     },
-                                    Object {
+                                    {
                                       "color": "#0073E6",
                                     },
-                                    Object {
+                                    {
                                       "flex": 0,
                                       "height": 24,
                                       "width": 24,
@@ -1539,7 +1609,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                               >
                                 <RNSVGGroup
                                   fill={
-                                    Object {
+                                    {
                                       "payload": 4278190080,
                                       "type": 0,
                                     }
@@ -1549,13 +1619,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     clipRule={0}
                                     d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                     fill={
-                                      Object {
+                                      {
                                         "type": 2,
                                       }
                                     }
                                     fillRule={0}
                                     propList={
-                                      Array [
+                                      [
                                         "fill",
                                         "fillRule",
                                       ]
@@ -1573,8 +1643,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

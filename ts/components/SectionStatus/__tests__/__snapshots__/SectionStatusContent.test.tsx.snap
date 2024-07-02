@@ -6,8 +6,8 @@ exports[`StatusContent should match the snapshot 1`] = `
   accessibilityRole="link"
   accessible={true}
   style={
-    Array [
-      Object {
+    [
+      {
         "alignContent": "center",
         "alignItems": "flex-start",
         "flexDirection": "row",
@@ -17,7 +17,7 @@ exports[`StatusContent should match the snapshot 1`] = `
         "paddingTop": 8,
         "width": "100%",
       },
-      Object {
+      {
         "backgroundColor": "#00C5CA",
       },
     ]
@@ -26,7 +26,7 @@ exports[`StatusContent should match the snapshot 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "alignSelf": "center",
       }
     }
@@ -45,15 +45,15 @@ exports[`StatusContent should match the snapshot 1`] = `
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Object {
+          {
             "color": "#17324D",
           },
-          Object {
+          {
             "flex": 0,
             "height": 24,
             "width": 24,
@@ -67,7 +67,7 @@ exports[`StatusContent should match the snapshot 1`] = `
     >
       <RNSVGGroup
         fill={
-          Object {
+          {
             "payload": 4278190080,
             "type": 0,
           }
@@ -76,12 +76,12 @@ exports[`StatusContent should match the snapshot 1`] = `
         <RNSVGPath
           d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           propList={
-            Array [
+            [
               "fill",
             ]
           }
@@ -90,13 +90,13 @@ exports[`StatusContent should match the snapshot 1`] = `
           clipRule={0}
           d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           fillRule={0}
           propList={
-            Array [
+            [
               "fill",
               "fillRule",
             ]
@@ -105,12 +105,12 @@ exports[`StatusContent should match the snapshot 1`] = `
         <RNSVGPath
           d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           propList={
-            Array [
+            [
               "fill",
             ]
           }
@@ -119,13 +119,13 @@ exports[`StatusContent should match the snapshot 1`] = `
           clipRule={0}
           d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
           fill={
-            Object {
+            {
               "type": 2,
             }
           }
           fillRule={0}
           propList={
-            Array [
+            [
               "fill",
               "fillRule",
             ]
@@ -140,23 +140,23 @@ exports[`StatusContent should match the snapshot 1`] = `
     defaultWeight="Bold"
     font="TitilliumSansPro"
     fontStyle={
-      Object {
+      {
         "fontSize": 16,
       }
     }
     style={
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "flex": 1,
             "marginLeft": 16,
           },
-          Object {},
+          {},
         ],
-        Object {
+        {
           "fontSize": 16,
         },
-        Object {
+        {
           "color": "#17324D",
           "fontFamily": "Titillium Sans Pro",
           "fontStyle": "normal",

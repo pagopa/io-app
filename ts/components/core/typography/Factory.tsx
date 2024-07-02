@@ -87,6 +87,7 @@ export function useTypographyFactory<
             props.weight,
             props.color
           ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.weight, props.color]
   );
 

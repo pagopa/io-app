@@ -220,7 +220,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
-  // eslint-disable-next-line
   public componentDidUpdate(prevProps: Props, prevState: State) {
     // if some errors occur while updating profile, we will show a message in a toast
     // profile could be updated by enabling/disabling on or more channel of a service
@@ -343,8 +342,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.props.searchText,
       O.map(_ =>
         _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+          // eslint-disable-next-line react/jsx-key
           <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
         ) : (
+          // eslint-disable-next-line react/jsx-key
           <ServicesSearch
             sectionsState={this.props.allSections}
             onRefresh={this.refreshServices}

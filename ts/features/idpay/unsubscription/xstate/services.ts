@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { flow, pipe } from "fp-ts/lib/function";

@@ -34,7 +34,7 @@ const CompletionScreen = () => {
           goBack={true}
           headerTitle={I18n.t("idpay.onboarding.headerTitle")}
         >
-          <LoadingSpinnerOverlay isLoading={true}></LoadingSpinnerOverlay>
+          <LoadingSpinnerOverlay isLoading={true} />
         </BaseScreenComponent>
       </SafeAreaView>
     );

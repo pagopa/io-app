@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";

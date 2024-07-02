@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import * as p from "@pagopa/ts-commons/lib/pot";
 import { IOToast } from "@pagopa/io-app-design-system";
