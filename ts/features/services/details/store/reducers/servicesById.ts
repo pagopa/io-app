@@ -1,9 +1,12 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { SpecialServiceMetadata } from "../../../../../../definitions/backend/SpecialServiceMetadata";
 import {
   logoutSuccess,
   sessionExpired
@@ -11,8 +14,7 @@ import {
 import { removeServiceTuples } from "../../../../../store/actions/services";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { SpecialServiceMetadata } from "../../../../../../definitions/backend/SpecialServiceMetadata";
+import { ServiceMetadataInfo } from "../../types/ServiceMetadataInfo";
 import { loadServiceDetail } from "../actions/details";
 
 export type ServicesByIdState = Readonly<{
@@ -123,15 +125,15 @@ export const serviceMetadataInfoSelector = createSelector(
     pipe(
       serviceMetadata,
       O.fromNullable,
-      O.chain(serviceMetadata => {
+      O.chain<ServiceMetadata, ServiceMetadataInfo>(serviceMetadata => {
         if (SpecialServiceMetadata.is(serviceMetadata)) {
           return O.some({
             isSpecialService: true,
-            customSpecialFlow: serviceMetadata.custom_special_flow
+            customSpecialFlow: serviceMetadata.custom_special_flow as string
           });
         }
         return O.none;
       }),
-      O.toUndefined
+      O.getOrElse<ServiceMetadataInfo>(() => ({ isSpecialService: false }))
     )
 );

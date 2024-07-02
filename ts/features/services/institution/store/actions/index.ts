@@ -8,6 +8,10 @@ export type PaginatedServicesGetPayload = {
   offset: number;
 };
 
+export type WithInstitutionID<T> = T & {
+  id: string;
+};
+
 export const paginatedServicesGet = createAsyncAction(
   "PAGINATED_SERVICES_GET_REQUEST",
   "PAGINATED_SERVICES_GET_SUCCESS",
@@ -16,7 +20,7 @@ export const paginatedServicesGet = createAsyncAction(
 )<
   PaginatedServicesGetPayload,
   InstitutionServicesResource,
-  NetworkError,
+  WithInstitutionID<NetworkError>,
   void
 >();
 
