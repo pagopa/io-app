@@ -1751,14 +1751,13 @@ describe("shouldShowRefreshControllOnListSelector", () => {
   categories.forEach(category =>
     messagePagePotData.forEach(messagePagePot =>
       messageRequests.forEach(messageRequest => {
-        // eslint-disable-next-line no-underscore-dangle
         const expectedOutput =
           (messagePagePot.kind === "PotSomeLoading" ||
             messagePagePot.kind === "PotSomeUpdating") &&
           O.isSome(messageRequest) &&
           (messageRequest.value === "all" ||
             messageRequest.value === "previous");
-        // eslint-disable-next-line no-underscore-dangle
+
         it(`should return ${expectedOutput}, ${category}, '${
           O.isSome(messageRequest) ? messageRequest.value : "None"
         }' lastRequest, ${messagePagePot.kind}`, () => {
