@@ -3,7 +3,7 @@
 exports[`Timeline component should match the snapshot, default data 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,8 +11,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -21,8 +21,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -34,7 +34,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -50,7 +50,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -64,12 +64,12 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -83,7 +83,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -95,7 +95,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -103,7 +103,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -114,7 +114,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -128,7 +128,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -143,7 +143,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -171,21 +171,34 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -197,7 +210,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -215,12 +228,12 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -230,10 +243,10 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -242,9 +255,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -260,27 +273,26 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -290,13 +302,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -306,7 +318,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -314,7 +326,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -322,7 +334,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -333,7 +345,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -347,18 +359,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -377,18 +389,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -403,7 +415,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -411,13 +423,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
-                                Object {
+                                {
                                   "opacity": 0,
                                 },
                               ]
@@ -425,15 +437,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#6CC66A",
                                   "borderWidth": 0,
                                 },
@@ -442,8 +454,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -455,7 +467,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -468,18 +480,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -493,7 +505,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -505,18 +517,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -533,7 +545,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -544,7 +556,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -558,18 +570,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -588,18 +600,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -614,7 +626,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -622,8 +634,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -634,15 +646,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#FFCB46",
                                   "borderWidth": 1.5,
                                 },
@@ -651,8 +663,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -664,7 +676,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -677,18 +689,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -702,7 +714,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -714,18 +726,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -742,7 +754,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -753,7 +765,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -767,18 +779,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -797,18 +809,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -823,7 +835,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -831,8 +843,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -843,15 +855,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#BBC2D6",
                                   "borderWidth": 1.5,
                                 },
@@ -860,8 +872,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -873,7 +885,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -886,18 +898,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -911,7 +923,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -923,18 +935,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -951,7 +963,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -962,7 +974,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -976,18 +988,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1006,18 +1018,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1032,7 +1044,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -1040,8 +1052,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1052,15 +1064,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#BBC2D6",
                                   "borderWidth": 1.5,
                                 },
@@ -1069,8 +1081,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1082,7 +1094,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -1095,18 +1107,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1120,7 +1132,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -1132,18 +1144,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1160,7 +1172,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -1171,7 +1183,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -1185,18 +1197,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1215,18 +1227,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1241,7 +1253,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -1249,8 +1261,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1261,15 +1273,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#6BCFFB",
                                   "borderWidth": 1.5,
                                 },
@@ -1278,8 +1290,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1291,7 +1303,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -1304,18 +1316,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1329,7 +1341,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -1341,18 +1353,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1369,7 +1381,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -1380,7 +1392,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -1394,18 +1406,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1424,18 +1436,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1450,7 +1462,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -1458,8 +1470,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1470,15 +1482,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#FF4040",
                                   "borderWidth": 1.5,
                                 },
@@ -1487,8 +1499,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1500,7 +1512,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -1513,18 +1525,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1538,7 +1550,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -1550,18 +1562,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1578,7 +1590,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -1589,7 +1601,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -1603,18 +1615,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1633,18 +1645,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1659,7 +1671,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -1667,8 +1679,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1679,15 +1691,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#6CC66A",
                                   "borderWidth": 1.5,
                                 },
@@ -1696,8 +1708,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1709,7 +1721,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -1722,18 +1734,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1747,7 +1759,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -1759,18 +1771,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1787,7 +1799,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -1798,7 +1810,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -1812,18 +1824,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1842,18 +1854,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1868,7 +1880,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -1876,8 +1888,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1888,15 +1900,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#BBC2D6",
                                   "borderWidth": 1.5,
                                 },
@@ -1905,8 +1917,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -1918,7 +1930,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -1931,18 +1943,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1956,7 +1968,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -1968,18 +1980,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -1996,7 +2008,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -2007,7 +2019,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -2021,18 +2033,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2051,18 +2063,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2077,7 +2089,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -2085,8 +2097,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -2097,15 +2109,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#BBC2D6",
                                   "borderWidth": 1.5,
                                 },
@@ -2114,8 +2126,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -2127,7 +2139,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -2140,18 +2152,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2165,7 +2177,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -2177,18 +2189,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2205,7 +2217,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -2216,7 +2228,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -2230,18 +2242,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2260,18 +2272,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2286,7 +2298,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -2294,8 +2306,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -2306,15 +2318,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#BBC2D6",
                                   "borderWidth": 1.5,
                                 },
@@ -2323,8 +2335,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -2336,7 +2348,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -2349,18 +2361,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2374,7 +2386,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -2386,18 +2398,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2414,7 +2426,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -2425,7 +2437,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -2439,18 +2451,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2469,18 +2481,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2495,7 +2507,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -2503,8 +2515,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -2515,15 +2527,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#BBC2D6",
                                   "borderWidth": 1.5,
                                 },
@@ -2532,8 +2544,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -2545,7 +2557,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -2558,18 +2570,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2583,7 +2595,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -2595,18 +2607,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2623,7 +2635,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       <View
                         accessible={true}
                         style={
-                          Object {
+                          {
                             "alignItems": "center",
                             "flex": 1,
                             "flexDirection": "row",
@@ -2634,7 +2646,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       >
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingVertical": 12,
                               "width": 30,
@@ -2648,18 +2660,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2678,18 +2690,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2704,7 +2716,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "alignItems": "center",
                               "paddingHorizontal": 16,
                             }
@@ -2712,8 +2724,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
@@ -2724,15 +2736,15 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 7,
                                   "height": 14,
                                   "marginVertical": 4,
                                   "width": 14,
                                 },
-                                Object {
+                                {
                                   "backgroundColor": "#FFCB46",
                                   "borderWidth": 0,
                                 },
@@ -2741,13 +2753,13 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <View
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "backgroundColor": "#CCD4DC",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
-                                Object {
+                                {
                                   "opacity": 0,
                                 },
                               ]
@@ -2756,7 +2768,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         </View>
                         <View
                           style={
-                            Object {
+                            {
                               "flexShrink": 1,
                               "paddingVertical": 12,
                             }
@@ -2769,18 +2781,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 18,
                                 "lineHeight": 25,
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 18,
                                   "lineHeight": 25,
                                 },
-                                Object {
+                                {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2794,7 +2806,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </Text>
                           <View
                             style={
-                              Object {
+                              {
                                 "height": 4,
                               }
                             }
@@ -2806,18 +2818,18 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             defaultWeight="Regular"
                             font="TitilliumSansPro"
                             fontStyle={
-                              Object {
+                              {
                                 "fontSize": 12,
                                 "textTransform": "uppercase",
                               }
                             }
                             style={
-                              Array [
-                                Object {
+                              [
+                                {
                                   "fontSize": 12,
                                   "textTransform": "uppercase",
                                 },
-                                Object {
+                                {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontStyle": "normal",
@@ -2837,8 +2849,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2847,7 +2859,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
 exports[`Timeline component should match the snapshot, empty data 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -2855,8 +2867,8 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -2865,8 +2877,8 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
@@ -2878,7 +2890,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          Object {
+          {
             "zIndex": 1,
           }
         }
@@ -2894,7 +2906,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "opacity": 1,
@@ -2908,12 +2920,12 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
             <View
               collapsable={false}
               style={
-                Object {
+                {
                   "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": Object {
+                  "shadowOffset": {
                     "height": 0.5,
                     "width": 0,
                   },
@@ -2927,7 +2939,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              Object {
+              {
                 "height": 44,
                 "maxHeight": undefined,
                 "minHeight": undefined,
@@ -2939,7 +2951,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
             <View
               pointerEvents="none"
               style={
-                Object {
+                {
                   "height": 0,
                 }
               }
@@ -2947,7 +2959,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
             <View
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "alignItems": "stretch",
                   "flex": 1,
                   "flexDirection": "row",
@@ -2958,7 +2970,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-start",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -2972,7 +2984,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "justifyContent": "center",
                     "marginHorizontal": 16,
                     "maxWidth": 718,
@@ -2987,7 +2999,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    Object {
+                    {
                       "color": "rgb(28, 28, 30)",
                       "fontSize": 17,
                       "fontWeight": "600",
@@ -3001,7 +3013,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                 collapsable={false}
                 pointerEvents="box-none"
                 style={
-                  Object {
+                  {
                     "alignItems": "flex-end",
                     "flexBasis": 0,
                     "flexGrow": 1,
@@ -3015,21 +3027,34 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
       >
-        <View
+        <RNSScreen
           activityState={2}
           collapsable={false}
-          forwardedRef={[Function]}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
-            Object {
+            {
               "bottom": 0,
               "left": 0,
               "position": "absolute",
@@ -3041,7 +3066,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
           <View
             collapsable={false}
             style={
-              Object {
+              {
                 "opacity": 1,
               }
             }
@@ -3059,12 +3084,12 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
             onTransition={[Function]}
             pointerEvents="box-none"
             style={
-              Array [
-                Object {
+              [
+                {
                   "display": "flex",
                   "overflow": undefined,
                 },
-                Object {
+                {
                   "bottom": 0,
                   "left": 0,
                   "position": "absolute",
@@ -3074,10 +3099,10 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
               ]
             }
             transitionSpec={
-              Object {
-                "close": Object {
+              {
+                "close": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3086,9 +3111,9 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                     "stiffness": 1000,
                   },
                 },
-                "open": Object {
+                "open": {
                   "animation": "spring",
-                  "config": Object {
+                  "config": {
                     "damping": 500,
                     "mass": 3,
                     "overshootClamping": true,
@@ -3104,27 +3129,26 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                Object {
+                {
                   "flex": 1,
                 }
               }
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
                 style={
-                  Object {
+                  {
                     "flex": 1,
-                    "transform": Array [
-                      Object {
+                    "transform": [
+                      {
                         "translateX": 0,
                       },
-                      Object {
+                      {
                         "translateX": 0,
                       },
                     ],
@@ -3134,13 +3158,13 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                 <View
                   pointerEvents="box-none"
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "flex": 1,
                         "overflow": "hidden",
                       },
-                      Array [
-                        Object {
+                      [
+                        {
                           "backgroundColor": "#FFFFFF",
                         },
                         undefined,
@@ -3150,7 +3174,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                 >
                   <View
                     style={
-                      Object {
+                      {
                         "flex": 1,
                         "flexDirection": "column-reverse",
                       }
@@ -3158,7 +3182,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                   >
                     <View
                       style={
-                        Object {
+                        {
                           "flex": 1,
                         }
                       }
@@ -3168,8 +3192,8 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

@@ -138,7 +138,7 @@ const recurseUntilRPUrl = async (
     if (res.type === "failure") {
       return res;
     }
-    if (200 <= res.status && res.status < 300) {
+    if (res.status >= 200 && res.status < 300) {
       return res;
     }
     // error case
@@ -424,7 +424,7 @@ const validateAndProcessExtractedFormData = (
   formData: Map<string, string>
 ): E.Either<string, PostData> => {
   const method = formData.get("method");
-  if ("post" !== method) {
+  if (method !== "post") {
     return E.left(`Invalid form 'method' found: ${method}`);
   }
 

@@ -83,7 +83,7 @@ class ServiceList extends React.Component<Props> {
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactNode => (
+  }): React.ReactElement => (
     <SectionHeaderComponent
       sectionHeader={info.section.organizationName}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}

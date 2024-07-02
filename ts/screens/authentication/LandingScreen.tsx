@@ -41,7 +41,6 @@ import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
-import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
@@ -111,8 +110,8 @@ export const LandingScreen = () => {
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
-  useOnFirstRender(async () => {
-    const isRootedOrJailbrokenFromJailMonkey = await JailMonkey.isJailBroken();
+  useOnFirstRender(() => {
+    const isRootedOrJailbrokenFromJailMonkey = JailMonkey.isJailBroken();
     setIsRootedOrJailbroken(O.some(isRootedOrJailbrokenFromJailMonkey));
     if (isSessionExpired) {
       // eslint-disable-next-line functional/immutable-data
@@ -196,7 +195,7 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const LandingScreen = () => {
+  const LandingScreenComponent = () => {
     useHeaderSecondLevel({
       title: "",
       supportRequest: true,
@@ -212,7 +211,7 @@ export const LandingScreen = () => {
     );
 
     const carouselCards: ReadonlyArray<
-      ComponentProps<typeof LandingCardComponent>
+      React.ComponentProps<typeof LandingCardComponent>
     > = React.useMemo(
       () => [
         {
@@ -378,6 +377,6 @@ export const LandingScreen = () => {
     if (DeviceInfo.isTablet()) {
       displayTabletAlert();
     }
-    return <LandingScreen />;
+    return <LandingScreenComponent />;
   }
 };

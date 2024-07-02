@@ -95,8 +95,8 @@ const NewOptInScreen = () => {
       }}
     >
       <ContentWrapper>
-        {/* 
-          if the device height is > 820 then the pictogram will be visible, 
+        {/*
+          if the device height is > 820 then the pictogram will be visible,
           otherwise it will not be visible
           */}
         {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (

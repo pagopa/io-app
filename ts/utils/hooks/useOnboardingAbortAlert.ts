@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import { useCallback } from "react";
-import I18n from "../../i18n";
 import { abortOnboarding } from "../../store/actions/onboarding";
+import I18n from "../../i18n";
 import { useIODispatch } from "../../store/hooks";
 
 type OnboardingAbortAlertUtils = {

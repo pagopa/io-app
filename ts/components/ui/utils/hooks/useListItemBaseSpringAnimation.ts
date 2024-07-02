@@ -29,7 +29,6 @@ export const useListItemBaseSpringAnimation = () => {
   const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
 
   // Interpolate animation values from `isPressed` values
-  // eslint-disable-next-line sonarjs/no-identical-functions
   const animatedScaleStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       progress.value,

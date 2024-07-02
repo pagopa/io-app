@@ -7,7 +7,7 @@ import I18n from "../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import EmailInsertScreen from "../../profile/EmailInsertScreen";
 
-describe("EmailInsertScreen", async () => {
+describe("EmailInsertScreen", () => {
   it("the components into the page should be render correctly", () => {
     const component = renderComponent();
     expect(component).toBeDefined();

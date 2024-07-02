@@ -1,9 +1,7 @@
-#import <React/RCTBridgeDelegate.h>
+#import <RCTAppDelegate.h>
 #import <UIKit/UIKit.h>
 #import <UserNotifications/UNUserNotificationCenter.h> // react-native-push-notification-ios
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, UNUserNotificationCenterDelegate> // UNUserNotificationCenterDelegate react-native-push-notification-ios
-
-@property (nonatomic, strong) UIWindow *window;
+@interface AppDelegate : RCTAppDelegate <UNUserNotificationCenterDelegate> // UNUserNotificationCenterDelegate react-native-push-notification-ios
 
 @end

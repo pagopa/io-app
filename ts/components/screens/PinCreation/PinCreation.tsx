@@ -150,7 +150,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         /**
          * pinRef is used to avoid having to pass pin as a dependency of useCallback around `handlePinConfirmation`.
          */
-        // eslint-disable-next-line functional/immutable-data
+
         pinRef.current = v;
         scrollToConfirmation();
       } else {

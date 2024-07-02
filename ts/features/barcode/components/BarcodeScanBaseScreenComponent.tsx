@@ -11,9 +11,12 @@ import {
   useRoute
 } from "@react-navigation/native";
 import React from "react";
-import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import {
@@ -302,12 +305,13 @@ const BarcodeScanBaseScreenComponent = ({
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
-        <SafeAreaView
-          style={{
-            // Apparently, on Android, with translucent status bar SafeAreaView doesn't work as expected
-            paddingTop: Platform.OS === "android" ? insets.top : 0
-          }}
-        >
+        <SafeAreaView>
+          {/* This overrides BaseHeader status bar configuration */}
+          <FocusAwareStatusBar
+            barStyle={"light-content"}
+            backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
+            translucent={false}
+          />
           {/* FIXME: replace with new header */}
           <BaseHeader
             hideSafeArea={true}
@@ -319,12 +323,6 @@ const BarcodeScanBaseScreenComponent = ({
             customRightIcon={
               shouldDisplayTorchButton ? torchIconButton : undefined
             }
-          />
-          {/* This overrides BaseHeader status bar configuration */}
-          <FocusAwareStatusBar
-            barStyle={"light-content"}
-            backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
-            translucent={false}
           />
         </SafeAreaView>
       </LinearGradient>

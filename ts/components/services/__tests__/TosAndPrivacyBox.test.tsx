@@ -40,7 +40,7 @@ describe("TosAndPrivacyBox component", () => {
   describe("when both URLs are defined", () => {
     it("should call `openWebUrl` for TOS link", () => {
       const component = renderComponent(options);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       const link = component
         .getAllByRole("link")
         .find(item => item.children[0] === I18n.t("services.tosLink"))!;
@@ -50,7 +50,7 @@ describe("TosAndPrivacyBox component", () => {
 
     it("should call `openWebUrl` for Privacy link", () => {
       const component = renderComponent(options);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       const link = component
         .getAllByRole("link")
         .find(item => item.children[0] === I18n.t("services.privacyLink"))!;
@@ -62,7 +62,7 @@ describe("TosAndPrivacyBox component", () => {
       MOCK_URL_WILL_FAIL = true;
       const component = renderComponent(options);
       const showToastSpy = jest.spyOn(IOToast, "error");
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       const link = component
         .getAllByRole("link")
         .find(item => item.children[0] === I18n.t("services.privacyLink"))!;

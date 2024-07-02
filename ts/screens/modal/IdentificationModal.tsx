@@ -284,7 +284,7 @@ const IdentificationModal = () => {
       // We need to show the lock modal with the countdown
       // updated with the remaining time to handle cases where
       // the app has been killed and restarted.
-      // eslint-disable-next-line functional/immutable-data
+
       countdownInMs = elapsedTimeInMs as Millisecond;
     }
   }

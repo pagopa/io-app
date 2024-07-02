@@ -16,7 +16,7 @@ type Props = Readonly<{
 
 const IdpCustomContextualHelpContent = (idpTextData: Idp) => ({
   title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
-  body: () => <IdpCustomContextualHelpBody idpTextData={idpTextData} />
+  body: <IdpCustomContextualHelpBody idpTextData={idpTextData} />
 });
 
 const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {

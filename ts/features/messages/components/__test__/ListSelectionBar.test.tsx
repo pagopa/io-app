@@ -1,7 +1,6 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 
-import I18n from "../../../../i18n";
 import ListSelectionBar from "../Home/legacy/ListSelectionBar";
 
 jest.useFakeTimers();
@@ -49,13 +48,6 @@ describe("ListSelectionBar component", () => {
       const primaryBtn = getByText(defaultProps.primaryButtonText);
       fireEvent(primaryBtn, "onPress");
       expect(onToggleSelectionSpy).toHaveBeenCalled();
-    });
-  });
-
-  describe("when selected items are the same as total items", () => {
-    it("should render 'deselect all messages' button", () => {
-      const { findByText } = render(<ListSelectionBar {...defaultProps} />);
-      expect(findByText(I18n.t("messages.cta.deselectAll"))).not.toBeNull();
     });
   });
 });

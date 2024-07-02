@@ -55,7 +55,7 @@ export default class CieCardReadingAnimation extends React.PureComponent<
     this.state = {
       progressBarValue: 0
     };
-    // eslint-disable-next-line
+
     this.progressAnimatedValue = new Animated.Value(0);
     this.createAnimation();
   }

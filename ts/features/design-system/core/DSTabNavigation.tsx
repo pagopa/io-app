@@ -1,6 +1,5 @@
-/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable arrow-body-style */
+
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";

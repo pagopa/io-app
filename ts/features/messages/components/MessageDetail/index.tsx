@@ -178,7 +178,7 @@ const MessageDetailsComponent = ({
     (
       messageId: UIMessageId,
       thirdPartyMessage: ThirdPartyMessageWithContent
-    ): React.ReactNode => {
+    ) => {
       // In order not to break or refactor existing PN code, the backend
       // model for third party attachments is converted into in-app
       // model for attachments when the user generates the request. This

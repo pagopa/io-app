@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import * as React from "react";
-import Slider from "@react-native-community/slider";
+import { SliderComponent } from "@react-native-community/slider";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import I18n from "../../../../../../i18n";
@@ -27,7 +27,7 @@ export const DistanceSlider = (props: Props) => (
         )}`}
       </H5>
     </View>
-    <Slider
+    <SliderComponent
       style={{ width: "100%" }}
       disabled={props.disabled}
       minimumValue={MIN_VALUE}

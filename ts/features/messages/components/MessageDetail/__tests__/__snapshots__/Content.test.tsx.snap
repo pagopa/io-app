@@ -3,7 +3,7 @@
 exports[`MessageDetailData component when service's contact detail are not defined should match the snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "backgroundColor": "#F5F6F7",
       "padding": 24,
     }
@@ -11,11 +11,11 @@ exports[`MessageDetailData component when service's contact detail are not defin
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexDirection": "row",
         },
       ]
@@ -27,18 +27,18 @@ exports[`MessageDetailData component when service's contact detail are not defin
       defaultWeight="Regular"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 24,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#475A6D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -56,20 +56,20 @@ exports[`MessageDetailData component when service's contact detail are not defin
       defaultWeight="Bold"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
             "flexWrap": "wrap",
           },
-          Object {
+          {
             "fontSize": 16,
           },
-          Object {
+          {
             "color": "#475A6D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -84,11 +84,11 @@ exports[`MessageDetailData component when service's contact detail are not defin
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexDirection": "row",
         },
       ]
@@ -100,18 +100,18 @@ exports[`MessageDetailData component when service's contact detail are not defin
       defaultWeight="Regular"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 24,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#475A6D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -129,20 +129,20 @@ exports[`MessageDetailData component when service's contact detail are not defin
       defaultWeight="Bold"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
             "flexWrap": "wrap",
           },
-          Object {
+          {
             "fontSize": 16,
           },
-          Object {
+          {
             "color": "#475A6D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -157,11 +157,11 @@ exports[`MessageDetailData component when service's contact detail are not defin
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
-        Object {
+        {
           "flexDirection": "row",
         },
       ]
@@ -173,18 +173,18 @@ exports[`MessageDetailData component when service's contact detail are not defin
       defaultWeight="Regular"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 24,
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 24,
           },
-          Object {
+          {
             "color": "#475A6D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -203,23 +203,23 @@ exports[`MessageDetailData component when service's contact detail are not defin
       defaultWeight="Semibold"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "textDecorationLine": "underline",
         }
       }
       onPress={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
             "flexWrap": "wrap",
           },
-          Object {
+          {
             "fontSize": 16,
             "textDecorationLine": "underline",
           },
-          Object {
+          {
             "color": "#0073E6",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",

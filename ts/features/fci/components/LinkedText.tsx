@@ -55,7 +55,7 @@ const LinkedText = (props: Props) => {
     text: string,
     onPress: (holder: string) => void
   ) => {
-    const parts = getMatchedLinks(text);
+    const innerParts = getMatchedLinks(text);
 
     // a function to render the link
     const getTextWithLinkComponent = (matched: string, index: number) => {
@@ -74,7 +74,7 @@ const LinkedText = (props: Props) => {
       );
     };
 
-    return parts.map(
+    return innerParts.map(
       (part, index) => part && getTextWithLinkComponent(part, index)
     );
   };
@@ -88,14 +88,14 @@ const LinkedText = (props: Props) => {
     <H4>
       {textWithSeparator.split("$@").map((text, index) =>
         O.isSome(O.fromNullable(arrayOfLinkedText[index])) ? (
-          <>
+          <React.Fragment key={index}>
             <H6 weight={"Regular"} color={"bluegreyDark"}>
               {text}
             </H6>
             {arrayOfLinkedText[index]}
-          </>
+          </React.Fragment>
         ) : (
-          <H6 weight={"Regular"} color={"bluegreyDark"}>
+          <H6 key={index} weight={"Regular"} color={"bluegreyDark"}>
             {text}
           </H6>
         )

@@ -7,5 +7,5 @@ import { ContextualHelpProps } from "../components/screens/BaseScreenComponent";
  */
 export const emptyContextualHelp: ContextualHelpProps = {
   title: "",
-  body: () => null
+  body: null
 };

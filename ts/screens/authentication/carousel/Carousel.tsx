@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { trackCarousel } from "../analytics/carouselAnalytics";
 import { LandingCardComponent } from "../../../components/LandingCardComponent";
-import { ComponentProps } from "../../../types/react";
 import { useInteractiveElementDefaultColorName } from "../../../utils/hooks/theme";
 
 const styles = StyleSheet.create({
@@ -31,7 +30,9 @@ const styles = StyleSheet.create({
 const newDsGrey = IOColors["grey-200"];
 
 type CarouselProps = {
-  carouselCards: ReadonlyArray<ComponentProps<typeof LandingCardComponent>>;
+  carouselCards: ReadonlyArray<
+    React.ComponentProps<typeof LandingCardComponent>
+  >;
   dotEasterEggCallback?: () => void;
 };
 

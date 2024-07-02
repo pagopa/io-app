@@ -143,7 +143,6 @@ const TestAuthenticationScreen = (props: Props) => {
               icon="locked"
               disabled={isLoading}
               textInputProps={{
-                inputMode: "password",
                 returnKeyType: "done"
               }}
             />
