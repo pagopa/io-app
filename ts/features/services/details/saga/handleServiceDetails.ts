@@ -3,15 +3,11 @@ import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
 import { BackendClient } from "../../../../api/backend";
-import { handleOrganizationNameUpdateSaga } from "../../../../sagas/services/handleOrganizationNameUpdateSaga";
-import { handleServiceReadabilitySaga } from "../../../../sagas/services/handleServiceReadabilitySaga";
-import { loadServiceDetailNotFound } from "../../../../store/actions/services";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { loadServiceDetail } from "../store/actions/details";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 /**
  * saga to handle the loading of a service detail
@@ -50,19 +46,7 @@ export function* handleServiceDetails(
 
       if (response.right.status === 200) {
         yield* put(loadServiceDetail.success(response.right.value));
-        // If it is occurring during the first load of serivces,
-        // mark the service as read (it will not display the badge on the list item)
-        yield* call(handleServiceReadabilitySaga, action.payload);
-        // Update, if needed, the name of the organization that provides the service
-        yield* call(handleOrganizationNameUpdateSaga, response.right.value);
-
         return;
-      }
-
-      if (response.right.status === 404) {
-        yield* put(
-          loadServiceDetailNotFound(action.payload as unknown as ServiceId)
-        );
       }
       // not handled error codes
       yield* put(

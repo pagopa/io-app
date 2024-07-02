@@ -11,7 +11,7 @@ import I18n from "../../../../i18n";
 import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers/servicesById";
+import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers";
 import {
   messagePagePotFromCategorySelector,
   shownMessageCategorySelector

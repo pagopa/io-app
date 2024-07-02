@@ -10,7 +10,6 @@ import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
 import { isLoginUtilsError } from "../features/lollipop/utils/login";
-import { ServicesDetailLoadTrack } from "../sagas/startup/loadServiceDetailRequestHandler";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -92,20 +91,6 @@ export const buildEventProperties = (
   ...customProperties,
   flow
 });
-
-// Services related events
-
-export function trackServiceDetailLoadingStatistics(
-  trackingStats: ServicesDetailLoadTrack
-) {
-  void mixpanelTrack("SERVICES_DETAIL_LOADING_STATS", {
-    ...trackingStats,
-    // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead on sending
-    servicesId: undefined
-  });
-}
-
-// End of Services related events
 
 // Lollipop events
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {

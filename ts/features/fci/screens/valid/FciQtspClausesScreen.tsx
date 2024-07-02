@@ -29,7 +29,7 @@ import {
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
-import { servicePreferenceSelector } from "../../../services/details/store/reducers/servicePreference";
+import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
@@ -45,7 +45,7 @@ const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const [clausesChecked, setClausesChecked] = React.useState(0);
-  const servicePreference = useIOSelector(servicePreferenceSelector);
+  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
   const qtspClausesSelector = useIOSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useIOSelector(fciQtspPrivacyTextSelector);
   const qtspPrivacyUrlSelector = useIOSelector(fciQtspPrivacyUrlSelector);
@@ -58,7 +58,7 @@ const FciQtspClausesScreen = () => {
   const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
-  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+  const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
 
   const isServiceActive =
     servicePreferenceValue &&

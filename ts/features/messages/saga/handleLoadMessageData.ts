@@ -18,7 +18,7 @@ import {
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../types";
-import { serviceByIdPotSelector } from "../../services/details/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../services/details/store/reducers";
 import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";

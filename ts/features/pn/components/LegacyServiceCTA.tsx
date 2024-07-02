@@ -11,7 +11,7 @@ import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { servicePreferenceSelector } from "../../services/details/store/reducers/servicePreference";
+import { servicePreferencePotSelector } from "../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
 import { AppDispatch } from "../../../App";
 import { pnActivationUpsert } from "../store/actions";
@@ -61,11 +61,11 @@ const LegacyPnServiceCTA = ({ serviceId, activate }: Props) => {
 
   const dispatch = useIODispatch();
   const serviceActivation = useIOSelector(pnActivationSelector);
-  const servicePreference = useIOSelector(servicePreferenceSelector);
-  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
+  const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
 
   const isLoading =
-    pot.isLoading(servicePreference) ||
+    pot.isLoading(servicePreferencePot) ||
     pot.isLoading(serviceActivation) ||
     pot.isUpdating(serviceActivation);
 

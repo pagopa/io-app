@@ -7,9 +7,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
-import { logosForService } from "../../../../utils/services";
+import { logosForService } from "../../../services/common/utils";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers/servicesById";
+import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { gapBetweenItemsInAGrid } from "../../utils";
 import { OrganizationHeader } from "./OrganizationHeader";
 

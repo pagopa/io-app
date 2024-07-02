@@ -17,7 +17,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { showServiceDetails } from "../../../../store/actions/services";
 import { Dispatch } from "../../../../store/actions/types";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -100,13 +99,11 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
               IOToast.info(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
             },
-            s => () => {
-              dispatch(showServiceDetails(s));
+            s => () =>
               navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
                 screen: SERVICES_ROUTES.SERVICE_DETAIL,
                 params: { serviceId: s.service_id }
-              });
-            }
+              })
           )
         );
       }
