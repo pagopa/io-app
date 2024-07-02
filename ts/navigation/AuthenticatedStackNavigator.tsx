@@ -80,16 +80,9 @@ import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPrefer
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import {
-  FIMS_SSO_ROUTES,
-  FimsSSONavigator
-} from "../features/fims/singleSignOn/navigation";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
-import {
-  FIMS_HISTORY_ROUTES,
-  FimsHistoryNavigator
-} from "../features/fims/history/navigation";
+import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -261,14 +254,9 @@ const AuthenticatedStackNavigator = () => {
         />
       )}
       <Stack.Screen
-        name={FIMS_SSO_ROUTES.MAIN}
+        name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}
-        component={FimsSSONavigator}
-      />
-      <Stack.Screen
-        name={FIMS_HISTORY_ROUTES.MAIN}
-        options={hideHeaderOptions}
-        component={FimsHistoryNavigator}
+        component={FimsNavigator}
       />
 
       {cdcEnabled && (

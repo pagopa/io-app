@@ -11,11 +11,11 @@ const FIMS_DEV_ENV_TOKEN = "";
 export function* watchFimsSaga(): SagaIterator {
   const fimsClient = createFimsClient(apiUrlPrefix);
 
-  const fimsToken = yield* select(sessionTokenSelector);
+  const sessionToken = yield* select(sessionTokenSelector);
   yield* fork(watchFimsSSOSaga);
   yield* fork(
     watchFimsHistorySaga,
     fimsClient,
-    fimsToken ?? FIMS_DEV_ENV_TOKEN
+    sessionToken ?? FIMS_DEV_ENV_TOKEN
   );
 }

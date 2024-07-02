@@ -24,17 +24,26 @@ export function* handleGetFimsHistorySaga(
       action
     )) as SagaCallReturnType<typeof getFimsHistory>;
 
-    yield pipe(
-      getHistoryResult,
-      E.fold(
-        error => put(fimsHistoryGet.failure(error.toString())),
-        response =>
-          response.status === 200
-            ? put(fimsHistoryGet.success(response.value))
-            : put(fimsHistoryGet.failure("GENERIC_NON_200"))
-      )
+    const resultAction = yield* call(
+      extractFimsHistoryResponseAction,
+      getHistoryResult
     );
+    yield* put(resultAction);
   } catch (e) {
     yield* put(fimsHistoryGet.failure((e as Error).toString()));
   }
 }
+
+const extractFimsHistoryResponseAction = (
+  historyResult: SagaCallReturnType<FimsHistoryClient["getConsents"]>
+) =>
+  pipe(
+    historyResult,
+    E.fold(
+      error => fimsHistoryGet.failure(error.toString()),
+      response =>
+        response.status === 200
+          ? fimsHistoryGet.success(response.value)
+          : fimsHistoryGet.failure("GENERIC_NON_200")
+    )
+  );

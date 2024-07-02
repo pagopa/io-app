@@ -23,8 +23,8 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import { FIMS_HISTORY_ROUTES } from "../../features/fims/history/navigation";
 import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
+import { FIMS_ROUTES } from "../../features/fims/common/navigation";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -185,8 +185,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           value: "FIMS_HISTORY",
           description: "HISTORY_DESC",
           onPress: () =>
-            navigation.navigate(FIMS_HISTORY_ROUTES.MAIN, {
-              screen: FIMS_HISTORY_ROUTES.HISTORY
+            navigation.navigate(FIMS_ROUTES.MAIN, {
+              screen: FIMS_ROUTES.HISTORY
             })
         }
       ]

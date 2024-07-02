@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
-import { FimsHistoryActions, fimsHistoryGet } from "../actions";
+import { Action } from "../../../../../store/actions/types";
+import { fimsHistoryGet } from "../actions";
 
 export type FimsHistoryState = {
   consentsList: pot.Pot<ConsentsResponseDTO, string>;
@@ -13,19 +14,13 @@ const INITIAL_STATE: FimsHistoryState = {
 
 const reducer = (
   state: FimsHistoryState = INITIAL_STATE,
-  action: FimsHistoryActions
+  action: Action
 ): FimsHistoryState => {
   switch (action.type) {
     case getType(fimsHistoryGet.request):
-      // first request for the history will reload the page
-      return action.payload.continuationToken
-        ? {
-            consentsList: pot.toLoading(state.consentsList)
-          }
-        : {
-            consentsList: pot.noneLoading
-          };
-
+      return {
+        consentsList: pot.toLoading(state.consentsList)
+      };
     case getType(fimsHistoryGet.success):
       const currentHistoryItems =
         pot.toUndefined(state.consentsList)?.items ?? [];
