@@ -28,6 +28,7 @@ import { PreconditionsContent } from "./PreconditionsContent";
 import { PreconditionsFooter } from "./PreconditionsFooter";
 
 export const Preconditions = () => {
+  console.log(`=== Preconditions`);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const store = useIOStore();

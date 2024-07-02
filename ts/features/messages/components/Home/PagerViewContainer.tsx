@@ -16,8 +16,10 @@ import {
   getMessagesViewPagerInitialPageIndex,
   messageViewPageIndexToListCategory
 } from "./homeUtils";
+import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
 
 export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
+  console.log(`=== PagerViewContainer`);
   const dispatch = useIODispatch();
   const store = useIOStore();
   const archiveFlatListRef = useRef<FlatList>(null);
@@ -89,22 +91,25 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
   }, [dispatchReloadAllMessagesIfNeeded, store]);
 
   return (
-    <PagerView
-      initialPage={initialPageIndex}
-      onPageSelected={onPagerViewPageSelected}
-      ref={ref}
-      style={IOStyles.flex}
-    >
-      <MessageList
-        category={"INBOX"}
-        key={`message_list_inbox`}
-        ref={inboxFlatListRef}
-      />
-      <MessageList
-        category={"ARCHIVE"}
-        key={`message_list_category`}
-        ref={archiveFlatListRef}
-      />
-    </PagerView>
+    <>
+      <PagerView
+        initialPage={initialPageIndex}
+        onPageSelected={onPagerViewPageSelected}
+        ref={ref}
+        style={IOStyles.flex}
+      >
+        <MessageList
+          category={"INBOX"}
+          key={`message_list_inbox`}
+          ref={inboxFlatListRef}
+        />
+        <MessageList
+          category={"ARCHIVE"}
+          key={`message_list_category`}
+          ref={archiveFlatListRef}
+        />
+      </PagerView>
+      <ArchiveRestoreBar />
+    </>
   );
 });

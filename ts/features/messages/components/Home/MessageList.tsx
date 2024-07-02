@@ -42,6 +42,7 @@ const bottomTabHeight = 54;
 
 export const MessageList = React.forwardRef<FlatList, MessageListProps>(
   ({ category }: MessageListProps, ref) => {
+    console.log(`=== MessageList ${category}`);
     const store = useIOStore();
     const dispatch = useIODispatch();
     const safeAreaFrame = useSafeAreaFrame();
@@ -103,7 +104,13 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
               />
             );
           } else {
-            return <WrappedMessageListItem index={index} message={item} />;
+            return (
+              <WrappedMessageListItem
+                index={index}
+                listCategory={category}
+                message={item}
+              />
+            );
           }
         }}
         ListFooterComponent={<Footer category={category} />}

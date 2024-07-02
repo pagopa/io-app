@@ -7,7 +7,10 @@ import I18n from "../../../../i18n";
 import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import {
+  useIONavigation,
+  useIOTabNavigation
+} from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
 import {
@@ -15,20 +18,25 @@ import {
   toScheduledPayload
 } from "../../store/actions/preconditions";
 import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
+import { toggleScheduledMessageArchivingAction } from "../../store/actions/archiving";
+import { MessageListCategory } from "../../types/messageListCategory";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
   index: number;
+  listCategory: MessageListCategory;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
   index,
+  listCategory,
   message
 }: WrappedMessageListItemProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const tabNavigation = useIOTabNavigation();
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
 
@@ -69,8 +77,20 @@ export const WrappedMessageListItem = ({
     [message]
   );
 
+  const onLongPressCallback = useCallback(() => {
+    tabNavigation.setOptions({
+      tabBarStyle: { display: "none" }
+    });
+    dispatch(
+      toggleScheduledMessageArchivingAction({
+        messageId: message.id,
+        fromInboxToArchive: listCategory === "INBOX"
+      })
+    );
+  }, [dispatch, listCategory, message, tabNavigation]);
   const onPressCallback = useCallback(
     () =>
+      // TODO handle archiving
       pipe(
         message.hasPrecondition,
         B.fold(
@@ -93,6 +113,7 @@ export const WrappedMessageListItem = ({
     [dispatch, message, navigation]
   );
 
+  // TODO update archiving UI
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
@@ -102,7 +123,7 @@ export const WrappedMessageListItem = ({
       formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}
-      onLongPress={() => undefined}
+      onLongPress={onLongPressCallback}
       onPress={onPressCallback}
       organizationName={organizationName}
       serviceLogos={serviceLogoUriSources}

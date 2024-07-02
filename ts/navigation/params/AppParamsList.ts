@@ -5,6 +5,7 @@ import {
   useNavigation
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
 import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
 import {
@@ -151,6 +152,11 @@ export type IOStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<AppParamsList & ParamList, RouteName>;
+export type IOTabNavigationProp<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = BottomTabNavigationProp<MainTabParamsList & ParamList, RouteName>;
 
 export const useIONavigation = () =>
   useNavigation<IOStackNavigationProp<AppParamsList, keyof AppParamsList>>();
+export const useIOTabNavigation = () => useNavigation<IOTabNavigationProp<MainTabParamsList, keyof MainTabParamsList>>();

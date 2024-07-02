@@ -10,6 +10,7 @@ import {
 import I18n from "../../../../i18n";
 
 export const Toasts = () => {
+  console.log(`=== Toasts`);
   const toast = useIOToast();
 
   // Handling of archiving/unarchiving operations result

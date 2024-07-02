@@ -137,4 +137,6 @@ export const duplicateSetAndRemove = <T>(inputSet: Set<T>, item: T) => {
   return outputSet;
 };
 
+export const duplicateSetAndToggle = <A>(inputSet: Set<A>, id: A) => inputSet.has(id) ? duplicateSetAndRemove(inputSet, id) : duplicateSetAndAdd(inputSet, id);
+
 export const emptyMessageArray: ReadonlyArray<UIMessage> = [];
