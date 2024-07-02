@@ -303,7 +303,7 @@ profile:
   logout:
     menulabel: Logout from IO
     alertTitle: Do you want to logout?
-    alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
+    alertMessage: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
     loading: You're leaving IO
     exit: Exit
   errors:
@@ -434,7 +434,12 @@ profile:
     appInfo:
       title: About IO
       description: Learn more about the IO app
-      contextualHelpContent: !include profile/profile_appinfo_main.md
+      subtitle: Qui puoi trovare ulteriori dettagli sull'app IO e scoprire di più sul suo utilizzo.
+      paragraphTitle: Cos’è IO?
+      paragraphBody1: "IO, l’app dei servizi pubblici, "
+      paragraphBody2: ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.
+      bannerBody: Vuoi saperne di più?
+      bannerButton: Vai al sito di IO
     developersSectionHeader: Developers
     testEnvironmentSectionHeader: Test Environment
     pagoPaEnvironment:
