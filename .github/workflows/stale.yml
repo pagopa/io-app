@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
 
     steps:
-    - uses: actions/stale@v3
+    - uses: actions/stale@98ed4cb500039dbcccf4bd9bedada4d0187f2757 # v3
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'This issue is stale because it has been open for 60 days with no activity. If the issue is still present, please leave a comment within 14 days to keep it open, otherwise it will be closed automatically.'
