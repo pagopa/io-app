@@ -49,7 +49,7 @@ const ProfileAboutApp = () => {
         <H4>{I18n.t("profile.main.appInfo.paragraphTitle")}</H4>
         <VSpacer size={16} />
         <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
-        <VSpacer size={16} />
+        <VSpacer size={32} />
         <Banner
           viewRef={viewRef}
           color="neutral"
