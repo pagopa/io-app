@@ -10,7 +10,6 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { FimsSSOParamsList } from "../navigation";
 import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction
@@ -22,11 +21,12 @@ import {
 } from "../store/reducers";
 import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { FimsParamsList } from "../../common/navigation";
 
 export type FimsFlowHandlerScreenRouteParams = { ctaUrl: string };
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
-  FimsSSOParamsList,
+  FimsParamsList,
   "FIMS_SSO_CONSENTS"
 >;
 
