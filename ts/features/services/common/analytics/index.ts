@@ -13,6 +13,7 @@ import { paginatedServicesGet } from "../../institution/store/actions";
 import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
 
 type ServiceBaseType = {
+  service_id: string;
   service_name: string;
 } & InstitutionBaseType;
 
@@ -24,7 +25,6 @@ type ServiceDetailsType = {
   bottom_cta_available: boolean;
   organization_fiscal_code: string;
   service_category: "special" | "standard";
-  service_id: string;
 } & ServiceBaseType;
 
 type ServiceDetailsConsentType = {
@@ -109,14 +109,16 @@ export const trackSearchStart = (props: SearchStartType) =>
 
 export const trackServiceSelected = ({
   organization_name,
+  service_id,
   service_name,
   source
 }: ServiceSelectedType) =>
   void mixpanelTrack(
     "SERVICES_SELECTED",
     buildEventProperties("UX", "action", {
-      service_name,
       organization_name,
+      service_id,
+      service_name,
       source
     })
   );

@@ -123,6 +123,7 @@ export const InstitutionServicesScreen = ({
     ({ id, name }: ServiceMinified) => {
       analytics.trackServiceSelected({
         organization_name: institutionName,
+        service_id: id,
         service_name: name,
         source: "organization_detail"
       });
