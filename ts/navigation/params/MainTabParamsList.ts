@@ -5,7 +5,7 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 
 export type MainTabParamsList = {
   [MESSAGES_ROUTES.MESSAGES_HOME]: undefined;
-  [ROUTES.WALLET_HOME]: WalletHomeNavigationParams;
+  [ROUTES.WALLET_HOME]: WalletHomeNavigationParams | undefined;
   [ROUTES.BARCODE_SCAN]: undefined;
   [SERVICES_ROUTES.SERVICES_HOME]: undefined;
   [ROUTES.PAYMENTS_HOME]: undefined;
