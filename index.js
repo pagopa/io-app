@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 /**
  * Main app entrypoint
  */
@@ -38,6 +39,7 @@ const errorHandler = (e, isFatal) => {
         `
     );
   } else {
+    // eslint-disable-next-line no-console
     console.log(e); // So that we can see it in the ADB logs in case of Android if needed
   }
 };

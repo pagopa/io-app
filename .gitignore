@@ -105,3 +105,6 @@ GeneratedDotEnv.m
 
 # XState Typegen
 **/*.typegen.*
+
+# Sentry prop file
+sentry.properties
