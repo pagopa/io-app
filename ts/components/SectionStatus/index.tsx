@@ -2,10 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import React, { useCallback } from "react";
-import { Pressable, View } from "react-native";
+import React, { ComponentProps, useCallback } from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
-import type { IOColors, IOIcons } from "@pagopa/io-app-design-system";
+import { Alert } from "@pagopa/io-app-design-system";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
 import {
@@ -16,8 +16,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
 import { maybeNotNullyString } from "../../utils/strings";
 import { openWebUrl } from "../../utils/url";
-import { Link } from "../core/typography/Link";
-import StatusContent from "./StatusContent";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
@@ -26,23 +24,14 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-export const statusColorMap: Record<LevelEnum, IOColors> = {
-  [LevelEnum.normal]: "aqua",
-  [LevelEnum.critical]: "red",
-  [LevelEnum.warning]: "orange"
+export const statusVariantMap: Record<
+  LevelEnum,
+  ComponentProps<typeof Alert>["variant"]
+> = {
+  [LevelEnum.normal]: "info",
+  [LevelEnum.critical]: "error",
+  [LevelEnum.warning]: "warning"
 };
-
-export const statusIconMap: Record<LevelEnum, IOIcons> = {
-  [LevelEnum.normal]: "ok",
-  [LevelEnum.critical]: "notice",
-  [LevelEnum.warning]: "info"
-};
-
-// map the text background color with the relative text color
-export const getStatusTextColor = (
-  level: LevelEnum
-): "bluegreyDark" | "white" =>
-  level === LevelEnum.normal ? "bluegreyDark" : "white";
 
 export const InnerSectionStatus = (
   props: Omit<Props, "sectionStatus"> & {
@@ -51,15 +40,11 @@ export const InnerSectionStatus = (
 ) => {
   const viewRef = React.createRef<View>();
   const { sectionStatus, onSectionRef } = props;
-  const iconName = statusIconMap[sectionStatus.level];
-  const backgroundColor = statusColorMap[sectionStatus.level];
   const locale = getFullLocale();
   const maybeWebUrl = maybeNotNullyString(
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
   const navigation = useNavigation();
-
-  const color = getStatusTextColor(sectionStatus.level);
 
   const handleOnSectionRef = useCallback(() => {
     if (viewRef.current) {
@@ -78,49 +63,23 @@ export const InnerSectionStatus = (
     O.fold(
       () => (
         // render text only
-        <StatusContent
-          accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
-            "global.accessibility.alert"
-          )}`}
-          backgroundColor={backgroundColor}
-          iconName={iconName}
-          testID={"SectionStatusComponentContent"}
-          ref={viewRef}
-          foregroundColor={color}
-        >
-          {`${sectionStatus.message[locale]} `}
-        </StatusContent>
+        <Alert
+          fullWidth
+          content={`${sectionStatus.message[locale]}`}
+          variant={statusVariantMap[sectionStatus.level]}
+          viewRef={viewRef}
+        />
       ),
-
-      // render a pressable element with the link
       webUrl => (
-        <Pressable
-          accessibilityHint={I18n.t("global.accessibility.linkHint")}
-          accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
-            "global.sectionStatus.moreInfo"
-          )}`}
-          accessibilityRole={"link"}
+        // render a pressable element with the link
+        <Alert
+          fullWidth
+          content={`${sectionStatus.message[locale]} `}
+          variant={statusVariantMap[sectionStatus.level]}
+          action={I18n.t("global.sectionStatus.moreInfo")}
           onPress={() => openWebUrl(webUrl)}
-          testID={"SectionStatusComponentPressable"}
-        >
-          <StatusContent
-            // disable accessibility to prevent the override of the container
-            accessible={false}
-            backgroundColor={backgroundColor}
-            iconName={iconName}
-            ref={viewRef}
-            foregroundColor={color}
-          >
-            {`${sectionStatus.message[locale]} `}
-            <Link
-              testID={"SectionStatusComponentMoreInfo"}
-              color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
-              weight={"Bold"}
-            >
-              {I18n.t("global.sectionStatus.moreInfo")}
-            </Link>
-          </StatusContent>
-        </Pressable>
+          viewRef={viewRef}
+        />
       )
     )
   );

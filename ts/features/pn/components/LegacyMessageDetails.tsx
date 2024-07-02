@@ -23,12 +23,11 @@ import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { trackPNAttachmentOpening } from "../analytics";
 import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
-import StatusContent from "../../../components/SectionStatus/StatusContent";
-import {
-  getStatusTextColor,
+import StatusContent, {
   statusColorMap,
+  getStatusTextColor,
   statusIconMap
-} from "../../../components/SectionStatus";
+} from "../../../components/SectionStatus/StatusContent";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { maxVisiblePaymentCountGenerator } from "../utils";

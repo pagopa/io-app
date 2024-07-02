@@ -8,6 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
 
 const iconSize = 24;
 
@@ -37,6 +38,24 @@ type Props = WithTestID<{
   foregroundColor: ComponentProps<typeof Label>["color"];
   labelPaddingVertical?: number;
 }>;
+
+export const statusColorMap: Record<LevelEnum, IOColors> = {
+  [LevelEnum.normal]: "aqua",
+  [LevelEnum.critical]: "red",
+  [LevelEnum.warning]: "orange"
+};
+
+export const statusIconMap: Record<LevelEnum, IOIcons> = {
+  [LevelEnum.normal]: "ok",
+  [LevelEnum.critical]: "notice",
+  [LevelEnum.warning]: "info"
+};
+
+// map the text background color with the relative text color
+export const getStatusTextColor = (
+  level: LevelEnum
+): "bluegreyDark" | "white" =>
+  level === LevelEnum.normal ? "bluegreyDark" : "white";
 
 const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
   (
