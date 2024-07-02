@@ -4,6 +4,7 @@ import PagerView from "react-native-pager-view";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { PagerViewContainer } from "../components/Home/PagerViewContainer";
 import { TabNavigationContainer } from "../components/Home/TabNavigationContainer";
+import { SecuritySuggestions } from "../components/Home/SecuritySuggestions";
 import { Toasts } from "../components/Home/Toasts";
 
 export const MessagesHomeScreen = () => {
@@ -13,6 +14,7 @@ export const MessagesHomeScreen = () => {
       <Toasts />
       <TabNavigationContainer pagerViewRef={pagerViewRef} />
       <PagerViewContainer ref={pagerViewRef} />
+      <SecuritySuggestions />
     </View>
   );
 };
