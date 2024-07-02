@@ -3,27 +3,29 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
+import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { SpecialServiceMetadata } from "../../../../../../definitions/backend/SpecialServiceMetadata";
+import {
+  logoutSuccess,
+  sessionExpired
+} from "../../../../../store/actions/authentication";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { isStrictSome } from "../../../../../utils/pot";
+import { ServiceMetadataInfo } from "../../types/ServiceMetadataInfo";
 import {
   ServicePreferenceResponse,
   WithServiceID,
   isServicePreferenceResponseSuccess
 } from "../../types/ServicePreferenceResponse";
+import { loadServiceDetail } from "../actions/details";
 import {
   loadServicePreference,
   upsertServicePreference
 } from "../actions/preference";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
-import { loadServiceDetail } from "../actions/details";
-import {
-  logoutSuccess,
-  sessionExpired
-} from "../../../../../store/actions/authentication";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { SpecialServiceMetadata } from "../../../../../../definitions/backend/SpecialServiceMetadata";
 
 export type ServicesDetailsState = {
   byId: Record<string, pot.Pot<ServicePublic, Error>>;
@@ -167,16 +169,16 @@ export const serviceMetadataInfoSelector = createSelector(
     pipe(
       serviceMetadata,
       O.fromNullable,
-      O.chain(serviceMetadata => {
+      O.chain<ServiceMetadata, ServiceMetadataInfo>(serviceMetadata => {
         if (SpecialServiceMetadata.is(serviceMetadata)) {
           return O.some({
             isSpecialService: true,
-            customSpecialFlow: serviceMetadata.custom_special_flow
+            customSpecialFlow: serviceMetadata.custom_special_flow as string
           });
         }
         return O.none;
       }),
-      O.toUndefined
+      O.getOrElse<ServiceMetadataInfo>(() => ({ isSpecialService: false }))
     )
 );
 

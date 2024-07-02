@@ -6,10 +6,6 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  ItwEidIssuanceMachineContext,
-  ItwCredentialIssuanceMachineContext
-} from "../../../machine/provider";
 
 describe("Test ItwDiscoveryInfo screen", () => {
   it("it should render the screen correctly", () => {
@@ -21,13 +17,7 @@ describe("Test ItwDiscoveryInfo screen", () => {
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => (
-      <ItwEidIssuanceMachineContext.Provider>
-        <ItwCredentialIssuanceMachineContext.Provider>
-          <ItwDiscoveryInfoScreen />
-        </ItwCredentialIssuanceMachineContext.Provider>
-      </ItwEidIssuanceMachineContext.Provider>
-    ),
+    () => <ItwDiscoveryInfoScreen />,
     ITW_ROUTES.DISCOVERY.INFO,
     {},
     createStore(appReducer, globalState as any)

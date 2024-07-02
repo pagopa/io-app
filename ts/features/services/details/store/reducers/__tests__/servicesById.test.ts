@@ -278,7 +278,9 @@ describe("serviceById selectors", () => {
         appReducer({} as GlobalState, loadServiceDetail.success(service)),
         serviceId
       );
-      expect(serviceById).toBeUndefined();
+      expect(serviceById).toStrictEqual({
+        isSpecialService: false
+      });
     });
   });
 });
