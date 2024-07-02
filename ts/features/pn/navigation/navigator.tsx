@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { isGestureEnabled } from "../../../utils/navigation";
 import { LegacyMessageDetailsScreen } from "../screens/LegacyMessageDetailsScreen";
 import { LegacyAttachmentPreviewScreen } from "../screens/LegacyAttachmentPreviewScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
@@ -21,7 +20,7 @@ export const PnStackNavigator = () => {
     <Stack.Navigator
       initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
       screenOptions={{
-        gestureEnabled: isGestureEnabled,
+        gestureEnabled: false,
         headerMode: "screen",
         headerShown: isDesignSystemEnabled
       }}
