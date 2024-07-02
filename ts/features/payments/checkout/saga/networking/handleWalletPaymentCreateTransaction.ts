@@ -1,12 +1,26 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import { put } from "typed-redux-saga/macro";
+import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { IOToast } from "@pagopa/io-app-design-system";
+import { getNetworkError } from "../../../../../utils/errors";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCreateTransactionAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { paymentAnalyticsDataSelector } from "../../../history/store/selectors";
+import I18n from "../../../../../i18n";
+import * as analytics from "../../analytics";
+
+const handleError = (
+  paymentAnalyticsData: ReturnType<typeof paymentAnalyticsDataSelector>
+) => {
+  IOToast.error(I18n.t("features.payments.errors.transactionCreationError"));
+  analytics.trackPaymentMethodVerificaFatalError({
+    organization_name: paymentAnalyticsData?.verifiedData?.paName,
+    service_name: paymentAnalyticsData?.serviceName,
+    attempt: paymentAnalyticsData?.attempt,
+    expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+  });
+};
 
 export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransactionForIO"],
@@ -23,28 +37,27 @@ export function* handleWalletPaymentCreateTransaction(
       "pagoPAPlatformSessionToken"
     );
 
-    yield* put(
-      pipe(
-        newTransactionResult,
-        E.fold(
-          error =>
-            paymentsCreateTransactionAction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-          ({ status, value }) => {
-            if (status === 200) {
-              return paymentsCreateTransactionAction.success(value);
-            } else if (status === 400) {
-              return paymentsCreateTransactionAction.failure({
-                ...getGenericError(new Error(`Error: ${status}`))
-              });
-            } else {
-              return paymentsCreateTransactionAction.failure(value);
-            }
-          }
+    const paymentAnalyticsData = yield* select(paymentAnalyticsDataSelector);
+    if (E.isLeft(newTransactionResult)) {
+      handleError(paymentAnalyticsData);
+      return;
+    }
+    const status = newTransactionResult.right.status;
+    if (status === 200) {
+      yield* put(
+        paymentsCreateTransactionAction.success(
+          newTransactionResult.right.value
         )
-      )
-    );
+      );
+    } else if (status === 400) {
+      handleError(paymentAnalyticsData);
+    } else {
+      yield* put(
+        paymentsCreateTransactionAction.failure(
+          newTransactionResult.right.value
+        )
+      );
+    }
   } catch (e) {
     yield* put(
       paymentsCreateTransactionAction.failure({ ...getNetworkError(e) })
