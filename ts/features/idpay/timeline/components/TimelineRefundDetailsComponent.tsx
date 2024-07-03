@@ -76,7 +76,7 @@ const TimelineRefundDetailsComponent = (props: Props) => {
   );
 
   const formattedAmount = pipe(
-    refund.amount,
+    refund.amountCents,
     O.fromNullable,
     O.map(amount => formatNumberAmount(amount, true)),
     O.getOrElse(() => "-")

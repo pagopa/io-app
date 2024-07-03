@@ -102,7 +102,7 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "",
           operationType: RefundOperationTypeEnum.PAID_REFUND,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           eventId: ""
         };
 
@@ -146,7 +146,7 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "",
           operationType: RefundOperationTypeEnum.REJECTED_REFUND,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           eventId: ""
         };
 

@@ -279,7 +279,7 @@ const getOnboardingOperationProps = (
 const getRefundOperationProps = (
   operation: RefundOperationDTO
 ): ListItemTransaction => {
-  const { operationDate, operationType, amount } = operation;
+  const { operationDate, operationType, amountCents } = operation;
   const isRejected = operationType === RefundOperationTypeEnum.REJECTED_REFUND;
 
   const paymentLogoIcon = (
@@ -305,7 +305,7 @@ const getRefundOperationProps = (
     subtitle,
     paymentLogoIcon,
     transactionStatus: "success",
-    transactionAmount: `${formatAbsNumberAmountOrDefault(amount)} €`
+    transactionAmount: `${formatAbsNumberAmountOrDefault(amountCents)} €`
   };
 };
 
