@@ -334,11 +334,11 @@ profile:
     privacy:
       title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
-      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
+      subtitle: Here you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
-        description: Elimina il tuo profilo e i tuoi dati personali
+        description: Delete your account and your personal data
         error: An error occurred while submit your deletion request, please retry!
         alert:
           activeBonusTitle: Active bonus
