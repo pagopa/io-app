@@ -1,16 +1,15 @@
 import React, { useCallback, useMemo } from "react";
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import {
-  useIONavigation,
-  useIOTabNavigation
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
 import {
@@ -20,6 +19,12 @@ import {
 import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
 import { toggleScheduledMessageArchivingAction } from "../../store/actions/archiving";
 import { MessageListCategory } from "../../types/messageListCategory";
+import {
+  isMessageScheduledForArchivingSelector,
+  isArchivingInSchedulingModeSelector,
+  isArchivingDisabledSelector,
+  isArchivingInProcessingModeSelector
+} from "../../store/reducers/archiving";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
@@ -36,12 +41,16 @@ export const WrappedMessageListItem = ({
 }: WrappedMessageListItemProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const tabNavigation = useIOTabNavigation();
+  const store = useIOStore();
+
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
 
   const isPaymentMessageWithPaidNotice = useIOSelector(state =>
     isPaymentMessageWithPaidNoticeSelector(state, message.category)
+  );
+  const isSelected = useIOSelector(state =>
+    isMessageScheduledForArchivingSelector(state, message.id)
   );
 
   const messageCategoryTag = message.category.tag;
@@ -77,43 +86,47 @@ export const WrappedMessageListItem = ({
     [message]
   );
 
-  const onLongPressCallback = useCallback(() => {
-    tabNavigation.setOptions({
-      tabBarStyle: { display: "none" }
-    });
-    dispatch(
-      toggleScheduledMessageArchivingAction({
-        messageId: message.id,
-        fromInboxToArchive: listCategory === "INBOX"
-      })
-    );
-  }, [dispatch, listCategory, message, tabNavigation]);
-  const onPressCallback = useCallback(
-    () =>
-      // TODO handle archiving
-      pipe(
-        message.hasPrecondition,
-        B.fold(
-          () =>
-            navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-              screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
-              params: {
-                messageId: message.id,
-                fromNotification: false
-              }
-            }),
-          () =>
-            pipe(
-              toScheduledPayload(message.id, message.category.tag),
-              scheduledPreconditionStatusAction,
-              dispatch
-            )
-        )
-      ),
-    [dispatch, message, navigation]
-  );
+  const toggleScheduledMessageArchivingCallback = useCallback(() => {
+    const state = store.getState();
+    if (!isArchivingInProcessingModeSelector(state)) {
+      dispatch(
+        toggleScheduledMessageArchivingAction({
+          messageId: message.id,
+          fromInboxToArchive: listCategory === "INBOX"
+        })
+      );
+    }
+  }, [dispatch, listCategory, message, store]);
 
-  // TODO update archiving UI
+  const onPressCallback = useCallback(() => {
+    const state = store.getState();
+    if (isArchivingInSchedulingModeSelector(state)) {
+      toggleScheduledMessageArchivingCallback();
+    } else if (isArchivingDisabledSelector(state)) {
+      if (message.hasPrecondition) {
+        dispatch(
+          scheduledPreconditionStatusAction(
+            toScheduledPayload(message.id, message.category.tag)
+          )
+        );
+      } else {
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+          params: {
+            messageId: message.id,
+            fromNotification: false
+          }
+        });
+      }
+    }
+  }, [
+    dispatch,
+    message,
+    navigation,
+    store,
+    toggleScheduledMessageArchivingCallback
+  ]);
+
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
@@ -123,9 +136,10 @@ export const WrappedMessageListItem = ({
       formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}
-      onLongPress={onLongPressCallback}
+      onLongPress={toggleScheduledMessageArchivingCallback}
       onPress={onPressCallback}
       organizationName={organizationName}
+      selected={isSelected}
       serviceLogos={serviceLogoUriSources}
       serviceName={serviceName}
       testID={`wrapped_message_list_item_${index}`}

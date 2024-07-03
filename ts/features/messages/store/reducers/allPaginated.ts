@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
@@ -22,7 +23,7 @@ import {
 import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { UIMessage } from "../../types";
+import { UIMessage, UIMessageId } from "../../types";
 import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -933,6 +934,20 @@ export const archiveMessagesErrorReasonSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.allPaginated.archive.data,
     messagePotToToastReportableErrorOrUndefined
+  );
+
+export const paginatedMessageFromIdForCategorySelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  category: MessageListCategory
+) =>
+  pipe(
+    state,
+    messagePagePotFromCategorySelector(category),
+    pot.toOption,
+    O.map(messagePage => messagePage.page),
+    O.chain(RA.findFirst(message => message.id === messageId)),
+    O.toUndefined
   );
 
 const messagePotToToastReportableErrorOrUndefined = (

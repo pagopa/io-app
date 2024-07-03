@@ -159,4 +159,7 @@ export type IOTabNavigationProp<
 
 export const useIONavigation = () =>
   useNavigation<IOStackNavigationProp<AppParamsList, keyof AppParamsList>>();
-export const useIOTabNavigation = () => useNavigation<IOTabNavigationProp<MainTabParamsList, keyof MainTabParamsList>>();
+export const useIOTabNavigation = () =>
+  useNavigation<
+    IOTabNavigationProp<MainTabParamsList, keyof MainTabParamsList>
+  >();

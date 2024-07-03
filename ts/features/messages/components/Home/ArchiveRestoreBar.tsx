@@ -1,66 +1,98 @@
 import React, { useEffect } from "react";
-import { constUndefined } from "fp-ts/lib/function";
-import { View } from "react-native";
-import {
-  ButtonOutline,
-  ButtonSolid,
-  IOStyles
-} from "@pagopa/io-app-design-system";
+import { StyleSheet, View } from "react-native";
+import { ButtonOutline, ButtonSolid } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { showArchiveRestoreBarSelector } from "../../store/reducers/archiving";
+import {
+  areThereEntriesForShownMessageListCategorySelector,
+  isArchivingDisabledSelector,
+  isArchivingInProcessingModeSelector
+} from "../../store/reducers/archiving";
 import { useIOTabNavigation } from "../../../../navigation/params/AppParamsList";
 import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
 import I18n from "../../../../i18n";
-import { cancelMessageArchivingScheduleAction } from "../../store/actions/archiving";
+import {
+  resetMessageArchivingAction,
+  startProcessingMessageArchivingAction
+} from "../../store/actions/archiving";
+import { MessageListCategory } from "../../types/messageListCategory";
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    paddingHorizontal: 24,
+    paddingTop: 8
+  },
+  endButtonContainer: {
+    flex: 1,
+    marginStart: 4
+  },
+  startButtonContainer: {
+    flex: 1,
+    marginEnd: 4
+  }
+});
+
+type ArchiveRestoreCTAsProps = {
+  category: MessageListCategory;
+};
 
 export const ArchiveRestoreBar = () => {
-  const safeAreaInsets = useSafeAreaInsets();
   const tabNavigation = useIOTabNavigation();
-  const dispatch = useIODispatch();
 
-  const showArchiveRestoreBar = useIOSelector(showArchiveRestoreBarSelector);
+  const isArchivingDisabled = useIOSelector(isArchivingDisabledSelector);
   const shownCategory = useIOSelector(shownMessageCategorySelector);
+
   console.log(`=== ArchiveRestoreBar ${shownCategory}`);
 
   useEffect(() => {
-    // TODO would be nice not to raise this event if the bar is already hidden/shown
+    // __TODO__ would be nice not to raise this event if the bar is already hidden/shown
     console.log(`=== ArchiveRestoreBar useEffect`);
     tabNavigation.setOptions({
       tabBarStyle: {
-        display: showArchiveRestoreBar ? "none" : "flex"
+        display: isArchivingDisabled ? "flex" : "none"
       }
     });
-  }, [showArchiveRestoreBar, tabNavigation]);
+  }, [isArchivingDisabled, tabNavigation]);
 
-  if (!showArchiveRestoreBar) {
+  if (isArchivingDisabled) {
     return null;
   }
 
+  return <ArchiveRestoreCTAs category={shownCategory} />;
+};
+
+const ArchiveRestoreCTAs = ({ category }: ArchiveRestoreCTAsProps) => {
+  console.log(`=== ArchiveRestoreCTAs ${category}`);
+  const safeAreaInsets = useSafeAreaInsets();
+  const dispatch = useIODispatch();
+
+  const archiveRestoreCTAEnabled = useIOSelector(state =>
+    areThereEntriesForShownMessageListCategorySelector(state, category)
+  );
+  const isProcessing = useIOSelector(isArchivingInProcessingModeSelector);
+
   const rightButtonLabel = I18n.t(
-    `messages.cta.${shownCategory === "ARCHIVE" ? "unarchive" : "archive"}`
+    `messages.cta.${category === "ARCHIVE" ? "unarchive" : "archive"}`
   );
   return (
     <View
-      style={{
-        flexDirection: "row",
-        paddingBottom: 8 + safeAreaInsets.bottom,
-        paddingHorizontal: 24,
-        paddingTop: 8
-      }}
+      style={[styles.container, { paddingBottom: 8 + safeAreaInsets.bottom }]}
     >
-      <View style={[IOStyles.flex, { marginEnd: 4 }]}>
+      <View style={styles.startButtonContainer}>
         <ButtonOutline
           label="Annulla"
           fullWidth
-          onPress={() => dispatch(cancelMessageArchivingScheduleAction())}
+          onPress={() => dispatch(resetMessageArchivingAction())}
         />
       </View>
-      <View style={[IOStyles.flex, { marginStart: 4 }]}>
+      <View style={styles.endButtonContainer}>
         <ButtonSolid
+          disabled={!archiveRestoreCTAEnabled}
           label={rightButtonLabel}
+          loading={isProcessing}
           fullWidth
-          onPress={constUndefined}
+          onPress={() => dispatch(startProcessingMessageArchivingAction())}
         />
       </View>
     </View>

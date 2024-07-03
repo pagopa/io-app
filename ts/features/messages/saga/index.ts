@@ -28,6 +28,7 @@ import {
   getLegacyMessagePrecondition,
   retrievingDataPreconditionStatusAction
 } from "../store/actions/preconditions";
+import { startProcessingMessageArchivingAction } from "../store/actions/archiving";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
@@ -39,7 +40,10 @@ import { handleLoadPreviousPageMessages } from "./handleLoadPreviousPageMessages
 import { handleReloadAllMessages } from "./handleReloadAllMessages";
 import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
-import { handleUpsertMessageStatusAttribues } from "./handleUpsertMessageStatusAttribues";
+import {
+  handleMessageArchivingRestoring,
+  handleUpsertMessageStatusAttribues
+} from "./handleUpsertMessageStatusAttribues";
 import { handleMigrateToPagination } from "./handleMigrateToPagination";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
@@ -99,6 +103,11 @@ export function* watchMessagesSaga(
     backendClient.getThirdPartyMessage
   );
 
+  yield* takeLatest(
+    startProcessingMessageArchivingAction,
+    handleMessageArchivingRestoring,
+    backendClient.upsertMessageStatusAttributes
+  );
   yield* takeEvery(
     upsertMessageStatusAttributes.request,
     handleUpsertMessageStatusAttribues,

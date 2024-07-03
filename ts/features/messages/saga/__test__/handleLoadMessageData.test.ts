@@ -316,7 +316,10 @@ describe("setMessageReadIfNeeded", () => {
       ])
       .next(
         upsertMessageStatusAttributes.failure({
-          payload: { message: paginatedMessage, update: { tag: "reading" } },
+          payload: {
+            message: paginatedMessage,
+            update: { tag: "reading" }
+          },
           error: new Error()
         })
       )
