@@ -64,6 +64,7 @@ export const InnerSectionStatus = (
       () => (
         // render text only
         <Alert
+          testID={"SectionStatusComponentContent"}
           fullWidth
           content={`${sectionStatus.message[locale]}`}
           variant={statusVariantMap[sectionStatus.level]}
@@ -73,6 +74,7 @@ export const InnerSectionStatus = (
       webUrl => (
         // render a pressable element with the link
         <Alert
+          testID={"SectionStatusComponentPressable"}
           fullWidth
           content={`${sectionStatus.message[locale]} `}
           variant={statusVariantMap[sectionStatus.level]}
