@@ -120,8 +120,8 @@ const getTransactionOperationProps = (
     businessName,
     brand,
     status,
-    amount,
-    accrued
+    amountCents,
+    accruedCents
   } = operation;
 
   const isQRCode = channel === ChannelEnum.QRCODE;
@@ -149,13 +149,13 @@ const getTransactionOperationProps = (
 
   const subtitle = getOperationSubtitleWithAmount(
     operationDate,
-    amount,
+    amountCents,
     isReversal
   );
 
   const getAccruedString = () => {
     const signString = isReversal ? "" : "-";
-    const accruedString = `${formatAbsNumberAmountOrDefault(accrued)} €`;
+    const accruedString = `${formatAbsNumberAmountOrDefault(accruedCents)} €`;
 
     return `${signString}${accruedString}`;
   };

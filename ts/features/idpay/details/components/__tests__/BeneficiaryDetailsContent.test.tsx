@@ -188,9 +188,9 @@ const renderComponent = (
       status: InitiativeStatusEnum.REFUNDABLE,
       nInstr: 2,
       endDate: T_END_DATE,
-      accrued: T_ACCRUED,
-      amount: T_AMOUNT,
-      refunded: T_REFUNDED,
+      accruedCents: T_ACCRUED,
+      amountCents: T_AMOUNT,
+      refundedCents: T_REFUNDED,
       iban: T_IBAN,
       initiativeName: T_INITIATIVE_NAME,
       initiativeRewardType

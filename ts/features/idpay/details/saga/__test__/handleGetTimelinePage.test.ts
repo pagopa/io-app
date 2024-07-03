@@ -17,11 +17,11 @@ const mockResponseSuccess: TimelineDTO = {
   operationList: [
     {
       brand: "VISA",
-      accrued: 50,
+      accruedCents: 50,
       operationId: "1234567890",
       operationType: OperationTypeEnum.TRANSACTION,
       operationDate: new Date("2020-05-20T09:00:00.000Z"),
-      amount: 100,
+      amountCents: 100,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
       circuitType: "MASTERCARD",

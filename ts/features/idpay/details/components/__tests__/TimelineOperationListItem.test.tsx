@@ -432,9 +432,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA"
         };
 
@@ -463,9 +463,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA",
           businessName: T_BUSINESS_NAME
         };
@@ -499,9 +499,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.CANCELLED,
-          amount: T_AMOUNT
+          amountCents: T_AMOUNT
         };
 
         const component = render(
@@ -537,9 +537,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA"
         };
 
@@ -575,9 +575,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.AUTHORIZED,
-          amount: T_AMOUNT,
+          amountCents: T_AMOUNT,
           brand: "VISA",
           businessName: T_BUSINESS_NAME
         };
@@ -614,9 +614,9 @@ describe("Test TimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
-          accrued: T_ACCRUED,
+          accruedCents: T_ACCRUED,
           status: StatusEnum.CANCELLED,
-          amount: T_AMOUNT
+          amountCents: T_AMOUNT
         };
 
         const component = render(

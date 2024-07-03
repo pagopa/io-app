@@ -50,13 +50,13 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
   const idTrxAcquirer = transaction.idTrxAcquirer || "";
 
   const formattedAmount = pipe(
-    transaction.amount,
+    transaction.amountCents,
     O.fromNullable,
     O.map(amount => formatNumberAmount(amount, true)),
     O.getOrElse(() => "-")
   );
 
-  const formattedAccrued = formatNumberAmount(transaction.accrued, true);
+  const formattedAccrued = formatNumberAmount(transaction.accruedCents, true);
 
   return (
     <View style={IOStyles.flex}>
