@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import {
   ButtonSolid,
   ContentWrapper,
@@ -9,8 +10,21 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, Keyboard, SafeAreaView, View } from "react-native";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
+import {
+  AccessibilityInfo,
+  Alert,
+  Keyboard,
+  SafeAreaView,
+  View
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { shufflePinPadOnPayment } from "../../config";
@@ -48,9 +62,9 @@ const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
           fullWidth
           loading={isLoading}
           color="danger"
-          label={I18n.t("profile.main.privacy.removeAccount.info.cta")}
+          label={I18n.t("profile.main.privacy.removeAccount.details.cta")}
           accessibilityLabel={I18n.t(
-            "profile.main.privacy.removeAccount.info.cta"
+            "profile.main.privacy.removeAccount.details.cta"
           )}
           onPress={onPress}
         />
@@ -67,6 +81,7 @@ const RemoveAccountDetails = () => {
   const dispatch = useIODispatch();
   const { navigate } = useIONavigation();
   const toast = useIOToast();
+  const timeoutRef = useRef<number>();
 
   const hasActiveBonus = useIOSelector(isCgnEnrolledSelector);
   const isLoading = useIOSelector(isUserDataProcessingDeleteLoadingSelector);
@@ -84,6 +99,12 @@ const RemoveAccountDetails = () => {
 
   useEffect(() => {
     if (isError) {
+      timeoutRef.current = setTimeout(() => {
+        AccessibilityInfo.announceForAccessibilityWithOptions(
+          I18n.t("wallet.errors.GENERIC_ERROR"),
+          { queue: true }
+        );
+      }, 1000);
       toast.error(I18n.t("wallet.errors.GENERIC_ERROR"));
     }
   }, [dispatch, isError, toast]);
@@ -94,6 +115,7 @@ const RemoveAccountDetails = () => {
       if (isError) {
         dispatch(resetDeleteUserDataProcessing());
       }
+      clearTimeout(timeoutRef.current);
     };
   }, [dispatch, isError]);
 
@@ -129,6 +151,15 @@ const RemoveAccountDetails = () => {
       );
     },
     [dispatch]
+  );
+
+  const handleSetSelectedMotivation = useCallback(
+    (motivation: RemoveAccountMotivationEnum) => {
+      setSelectedMotivation(prev =>
+        prev === motivation ? RemoveAccountMotivationEnum.UNDEFINED : motivation
+      );
+    },
+    []
   );
 
   const handleContinuePress = useCallback(() => {
@@ -245,7 +276,7 @@ const RemoveAccountDetails = () => {
             <VSpacer />
             <RadioGroup<RemoveAccountMotivationEnum>
               type="radioListItem"
-              onPress={setSelectedMotivation}
+              onPress={handleSetSelectedMotivation}
               items={motivationItems}
               selectedItem={selectedMotivation}
             />

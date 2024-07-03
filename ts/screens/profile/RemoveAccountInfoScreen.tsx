@@ -5,7 +5,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React, { useMemo } from "react";
-import { View } from "react-native";
 import I18n from "../../i18n";
 import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
 import { useIODispatch } from "../../store/hooks";
@@ -65,7 +64,7 @@ const RemoveAccountInfo = () => {
           {I18n.t("profile.main.privacy.removeAccount.info.body.p1")}
         </Body>
         <VSpacer size={16} />
-        <View>
+        <Body>
           <Body>
             {I18n.t(
               "profile.main.privacy.removeAccount.info.body.p2.firstPart"
@@ -74,7 +73,7 @@ const RemoveAccountInfo = () => {
           <Body weight="Bold">
             {I18n.t("profile.main.privacy.removeAccount.info.body.p2.lastPart")}
           </Body>
-        </View>
+        </Body>
         <VSpacer size={16} />
         <Body weight="Regular">
           {I18n.t("profile.main.privacy.removeAccount.info.body.p3")}
