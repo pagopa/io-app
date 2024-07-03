@@ -46,6 +46,7 @@ import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
+import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -151,9 +152,13 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
     },
     subscribe(listener) {
       const linkingSubscription = Linking.addEventListener("url", ({ url }) => {
-        // __TODO__ better code to isolate it
+        // Message archving/restoring hides the bottom tab bar so we must make
+        // sure that either it is disabled or we manually deactivate it, otherwise
+        // a deep link may initiate a navigation flow that will later deliver the
+        // user to a screen where the tab bar is hidden (while it should be shown)
         const state = store.getState();
-        if (state.entities.messages.archiving.status !== "disabled") {
+        const isArchivingDisabled = isArchivingDisabledSelector(state);
+        if (!isArchivingDisabled) {
           dispatch(resetMessageArchivingAction());
         }
         listener(url);
