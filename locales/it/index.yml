@@ -504,6 +504,7 @@ profile:
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
+    genericToastTitle: Preferenze aggiornate!
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
