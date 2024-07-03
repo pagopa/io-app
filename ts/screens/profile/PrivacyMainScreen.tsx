@@ -5,7 +5,13 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { ComponentProps, useCallback, useEffect, useState } from "react";
+import React, {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import {
   Alert,
   AlertButton,
@@ -197,63 +203,68 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     [userDataProcessing]
   );
 
-  const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = [
-    {
-      // Privacy Policy
-      value: I18n.t("profile.main.privacy.privacyPolicy.title"),
-      description: I18n.t("profile.main.privacy.privacyPolicy.description"),
-      onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY)
-    },
-    {
-      // Share data
-      value: I18n.t("profile.main.privacy.shareData.listItem.title"),
-      description: I18n.t(
-        "profile.main.privacy.shareData.listItem.description"
-      ),
-      onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
-    },
-    {
-      // Export your data
-      value: I18n.t("profile.main.privacy.exportData.title"),
-      description: I18n.t("profile.main.privacy.exportData.description"),
-      onPress: () => {
-        setRequestProcess(true);
-        dispatch(
-          loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
-        );
+  const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = useMemo(
+    () => [
+      {
+        // Privacy Policy
+        value: I18n.t("profile.main.privacy.privacyPolicy.title"),
+        description: I18n.t("profile.main.privacy.privacyPolicy.description"),
+        onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY)
       },
-      topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
-        ? {
-            badgeProps: {
-              text: I18n.t("profile.preferences.list.wip"),
-              variant: "info"
-            }
-          }
-        : undefined,
-      testID: "profile-export-data"
-    },
-    {
-      // Remove account
-      value: I18n.t("profile.main.privacy.removeAccount.title"),
-      description: I18n.t("profile.main.privacy.removeAccount.description"),
-      onPress: () => {
-        if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
-          handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
-        } else {
-          navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
-        }
+      {
+        // Share data
+        value: I18n.t("profile.main.privacy.shareData.listItem.title"),
+        description: I18n.t(
+          "profile.main.privacy.shareData.listItem.description"
+        ),
+        onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
       },
-      topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
-        ? {
-            badgeProps: {
-              text: I18n.t("profile.preferences.list.wip"),
-              variant: "info"
+      {
+        // Export your data
+        value: I18n.t("profile.main.privacy.exportData.title"),
+        description: I18n.t("profile.main.privacy.exportData.description"),
+        onPress: () => {
+          setRequestProcess(true);
+          dispatch(
+            loadUserDataProcessing.request(
+              UserDataProcessingChoiceEnum.DOWNLOAD
+            )
+          );
+        },
+        topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
+          ? {
+              badgeProps: {
+                text: I18n.t("profile.preferences.list.wip"),
+                variant: "info"
+              }
             }
+          : undefined,
+        testID: "profile-export-data"
+      },
+      {
+        // Remove account
+        value: I18n.t("profile.main.privacy.removeAccount.title"),
+        description: I18n.t("profile.main.privacy.removeAccount.description"),
+        onPress: () => {
+          if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
+            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
+          } else {
+            navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
           }
-        : undefined,
-      testID: "profile-delete"
-    }
-  ];
+        },
+        topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
+          ? {
+              badgeProps: {
+                text: I18n.t("profile.preferences.list.wip"),
+                variant: "info"
+              }
+            }
+          : undefined,
+        testID: "profile-delete"
+      }
+    ],
+    [dispatch, handleUserDataRequestAlert, isRequestProcessing, navigation]
+  );
 
   const renderPrivacyNavItem = useCallback(
     ({
@@ -268,6 +279,11 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         testID={testID}
       />
     ),
+    []
+  );
+
+  const extractKey = useCallback(
+    (item: PrivacyNavListItem, index: number) => `${item.value}-${index}`,
     []
   );
 
@@ -290,9 +306,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
               data: privacyNavListItems
             }
           ]}
-          keyExtractor={(item: PrivacyNavListItem, index: number) =>
-            `${item.value}-${index}`
-          }
+          keyExtractor={extractKey}
           renderItem={renderPrivacyNavItem}
           ItemSeparatorComponent={Divider}
           contentContainerStyle={{
