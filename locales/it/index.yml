@@ -3257,9 +3257,14 @@ features:
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
-      success:
-        title: "Hai aggiunto\nIdentità Digitale!"
-        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+      eidResult:
+        success:
+          title: "IT Wallet è attivo!"
+          subtitle: È tutto pronto, ora puoi aggiungere il primo documento al Portafoglio.
+          toast: Fatto!
+          actions:
+            continue: Aggiungi primo documento
+            close: Continua più tardi
     unsupportedDevice:
       text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
       moreInfo: Scopri perchè

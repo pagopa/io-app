@@ -27,7 +27,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
 
   const handleStoreEidSuccess = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.RESULT
+      screen: ITW_ROUTES.ISSUANCE.EID_RESULT
     });
   };
 
