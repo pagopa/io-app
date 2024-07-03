@@ -266,7 +266,7 @@ startup:
   userDeletePendingAlert:
     title: Profile deletion in progress
     message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
-    cta_1: Vai al Profilo
+    cta_1: Go to Profile
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
@@ -337,44 +337,44 @@ profile:
       subtitle: In this section you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
-        title: Delete your account
+        title: Delete your profile
         description: Permanently delete your account and your personal data
         error: An error occurred while submit your deletion request, please retry!
         alert:
-          activeBonusTitle: Elimina il tuo profilo
-          activeBonusDescription: "Sembra che tu abbia aderito ad alcune iniziative presenti su IO. Se elimini il tuo profilo, l’iscrizione a eventuali iniziative a cui hai aderito non verrà cancellata\n\nPer gestirle, vai alla sezione Portafoglio, altrimenti scegli “Elimina”"
-          oldRequest: Hai già chiesto di eliminare il tuo profilo
-          oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n\nSe hai cambiato idea o hai richiesto l'eliminazione per sbaglio, premi su 'Annulla eliminazione'."
+          activeBonusTitle: Delete your profile
+          activeBonusDescription: "It seems that you have joined some initiatives on IO. Deleting your profile will not remove your subscriptions to the initiatives you have joined.\n\nTo manage them, go to the Portfolio section, otherwise choose 'Delete'"
+          oldRequest: You already asked for your profile to be deleted
+          oldRequestSubtitle: "We are processing your request.\n\nIf you have changed your mind or have requested deletion by mistake, please press 'Cancel Removal'."
           cta:
-            manageBonus: Vai al portafoglio
-            continue: Elimina Profilo
+            manageBonus: Go to Wallet
+            continue: Delete profile
             return: Return
-            cancel: Annulla eliminazione
+            cancel: Cancel deletion
         info:
-          title: Elimina il tuo profilo
-          description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
-          banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
+          title: Delete your profile
+          description: You can delete your IO profile at any time.
+          banner: Your profile will be deleted within 30 days of your request.
           body: 
-            p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
+            p1: If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.
             p2: 
-              firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
-              lastPart: non saranno più accessibili.
-            p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
-          cta: Procedi con l’eliminazione
+              firstPart: "Any bonuses or discounts you get via the IO app "
+              lastPart: won't be available anymore.
+            p3: You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.
+          cta: Delete
         details:
-          title: Perché vuoi eliminare il tuo profilo su IO?
-          body: Ci piacerebbe sapere perché stai eliminando il tuo profilo, così da poter migliorare in futuro. Se preferisci non condividere il motivo, salta questo passaggio e premi su “Elimina il tuo profilo”.
-          question: Qual è il motivo?
+          title: Why delete your IO profile?
+          body: Please tell us why you're deleting your profile so we can improve. If you don't want to share why, just click 'Delete your profile'”.
+          question: What is the reason?
           answer_1: I no longer consider "IO" useful
           answer_2: I don't feel safe on IO
           answer_3: I've never used the app
           answer_4: None of the above
-          labelOpenAnswer: Scrivi qui il motivo
-          cta: Elimina il tuo profilo
+          labelOpenAnswer: Write here the reason
+          cta: Delete your profile
         success:
-          title: Abbiamo preso in carico la tua richiesta
-          body: Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
-          cta: Chiudi
+          title: We've taken over your request.
+          body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE.
+          cta: Close
       exportData:
         cta: Request a copy of your data
         title: Access your data
@@ -2263,7 +2263,7 @@ identification:
     congiunction: or
   title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
-  titleValidation: Autorizza l'operazione
+  titleValidation: Authorise the operation.
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
