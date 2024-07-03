@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.63.0-rc.2",
+  "version": "2.63.0-rc.5",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.33/definitions.yml",
@@ -24,7 +24,7 @@
   "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/ecommerce-app/api/ecommerce-io/v2/_openapi.json.tpl",
   "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/0.1.37/openapi/openapi_io_patch.json",
   "pagopa_api_platform": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl",
-  "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/features/add-openapi-trial-service/api_trial_system.yaml",
+  "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/v13.39.1-RELEASE/api_trial_system.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -177,7 +177,6 @@
     "react-native-pdf-thumbnail": "^1.2.1",
     "react-native-permissions": "^4.0.0",
     "react-native-popup-menu": "^0.15.11",
-    "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^8.1.1",
     "react-native-reanimated": "^2.9.1",
     "react-native-render-html": "^6.3.1",
@@ -185,7 +184,6 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screen-brightness": "^2.0.0-alpha",
     "react-native-screens": "^2.18.1",
-    "react-native-sha256": "1.2.3",
     "react-native-share": "7.3.9",
     "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^15.1.0",

@@ -6,6 +6,10 @@ import { createSelector } from "reselect";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { getLatestUsedWallet, isValidPaymentMethod } from "../../utils";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
+import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationStatus";
+import { WalletApplicationNameEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationName";
+import { UIWalletInfoDetails } from "../../../common/types/UIWalletInfoDetails";
+import { isPaymentMethodExpired } from "../../../common/utils";
 import { selectPaymentsCheckoutState, walletPaymentDetailsSelector } from ".";
 
 export const walletPaymentUserWalletsSelector = createSelector(
@@ -13,9 +17,27 @@ export const walletPaymentUserWalletsSelector = createSelector(
   state => pot.map(state.userWallets, _ => _.wallets ?? [])
 );
 
-// Get from the userwallets the wallet with the attribute lastUpdated more recent
-export const walletPaymentUserWalletLastUpdatedSelector = createSelector(
+export const walletPaymentEnabledUserWalletsSelector = createSelector(
   walletPaymentUserWalletsSelector,
+  userWalletsPot =>
+    pot.map(userWalletsPot, userWallets =>
+      userWallets.filter(wallet => {
+        const walletDetails = wallet.details as UIWalletInfoDetails;
+        return (
+          !isPaymentMethodExpired(walletDetails) &&
+          wallet.applications.find(
+            app =>
+              app.name === WalletApplicationNameEnum.PAGOPA &&
+              app.status === WalletApplicationStatusEnum.ENABLED
+          )
+        );
+      })
+    )
+);
+
+// Get from the enabled userwallets the wallet with the attribute lastUpdated more recent
+export const walletPaymentUserWalletLastUpdatedSelector = createSelector(
+  walletPaymentEnabledUserWalletsSelector,
   userWalletsPot =>
     pipe(userWalletsPot, pot.toOption, O.chain(getLatestUsedWallet))
 );
@@ -97,7 +119,7 @@ export const walletPaymentSelectedPaymentMethodManagementOptionSelector =
 
 export const notHasValidPaymentMethodsSelector = createSelector(
   walletPaymentAllMethodsSelector,
-  walletPaymentUserWalletsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentDetailsSelector,
   (allMethodsPot, userWalletsPot, paymentDetailsPot) => {
     const allMethods = pipe(

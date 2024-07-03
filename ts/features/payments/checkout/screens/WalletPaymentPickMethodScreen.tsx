@@ -28,9 +28,9 @@ import {
 import {
   notHasValidPaymentMethodsSelector,
   walletPaymentAllMethodsSelector,
+  walletPaymentEnabledUserWalletsSelector,
   walletPaymentSelectedPaymentMethodIdOptionSelector,
-  walletPaymentSelectedWalletIdOptionSelector,
-  walletPaymentUserWalletsSelector
+  walletPaymentSelectedWalletIdOptionSelector
 } from "../store/selectors/paymentMethods";
 import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import {
@@ -40,6 +40,10 @@ import {
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import * as analytics from "../analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { PaymentAnalyticsSelectedMethodFlag } from "../types/PaymentAnalytics";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -48,7 +52,9 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
-  const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
+  const userWalletsPots = useIOSelector(
+    walletPaymentEnabledUserWalletsSelector
+  );
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const isTransactionAlreadyActivated = useIOSelector(
     walletPaymentIsTransactionActivatedSelector
@@ -57,6 +63,8 @@ const WalletPaymentPickMethodScreen = () => {
   const notHasValidPaymentMethods = useIOSelector(
     notHasValidPaymentMethodsSelector
   );
+
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
@@ -169,6 +177,23 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
 
+  useOnFirstRender(
+    () => {
+      analytics.trackPaymentMethodSelection({
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method_unavailable:
+          paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
+        last_used_payment_method: "no", // <- TODO: This should be dynamic when the feature will be implemented
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+      });
+    },
+    () => !isLoading && !!paymentAnalyticsData
+  );
+
   React.useEffect(() => {
     if (isError) {
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
@@ -182,7 +207,25 @@ const WalletPaymentPickMethodScreen = () => {
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
+  const getSelectedPaymentMethodFlag = () =>
+    pipe(
+      sequenceT(O.Monad)(selectedPaymentMethodIdOption, selectedWalletIdOption),
+      O.fold(
+        () => "none" as PaymentAnalyticsSelectedMethodFlag,
+        () => "saved" as PaymentAnalyticsSelectedMethodFlag
+      )
+    );
+
   const handleContinue = () => {
+    analytics.trackPaymentMethodSelected({
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      payment_method_selected_flag: getSelectedPaymentMethodFlag()
+    });
     if (isTransactionAlreadyActivated) {
       // If transacion is already activated (for example, when the user returns to this screen to edit the selected
       // method) we can go directly to the next step.
