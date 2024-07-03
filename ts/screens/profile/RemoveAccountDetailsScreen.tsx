@@ -38,25 +38,6 @@ type FooterButtonProps = {
   onPress: () => void;
 };
 
-const motivationItems: ReadonlyArray<RadioItem<RemoveAccountMotivationEnum>> = [
-  {
-    value: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
-    id: RemoveAccountMotivationEnum.NOT_UTILS
-  },
-  {
-    value: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
-    id: RemoveAccountMotivationEnum.NOT_SAFE
-  },
-  {
-    value: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
-    id: RemoveAccountMotivationEnum.NEVER_USED
-  },
-  {
-    value: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
-    id: RemoveAccountMotivationEnum.OTHERS
-  }
-];
-
 const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
   const { bottom } = useSafeAreaInsets();
 
@@ -170,7 +151,8 @@ const RemoveAccountDetails = () => {
                 StackActions.popToTop()
               );
               navigate(ROUTES.MAIN, {
-                screen: ROUTES.WALLET_HOME
+                screen: ROUTES.WALLET_HOME,
+                params: { newMethodAdded: false }
               });
             }
           },
@@ -222,6 +204,29 @@ const RemoveAccountDetails = () => {
     }
     return null;
   }, [isOtherMotivation, otherMotivation]);
+
+  const motivationItems: ReadonlyArray<RadioItem<RemoveAccountMotivationEnum>> =
+    useMemo(
+      () => [
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+          id: RemoveAccountMotivationEnum.NOT_UTILS
+        },
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+          id: RemoveAccountMotivationEnum.NOT_SAFE
+        },
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+          id: RemoveAccountMotivationEnum.NEVER_USED
+        },
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+          id: RemoveAccountMotivationEnum.OTHERS
+        }
+      ],
+      []
+    );
 
   return (
     <>
