@@ -111,7 +111,9 @@ export const BulletList = memo(
       <View>
         <Body {...titleProps}>{title}</Body>
         <VSpacer size={spacing} />
-        {renderListItems(list)}
+        <View accessible={true} accessibilityRole="list">
+          {renderListItems(list)}
+        </View>
       </View>
     );
   }

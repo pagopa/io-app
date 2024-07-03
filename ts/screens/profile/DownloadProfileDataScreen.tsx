@@ -147,9 +147,9 @@ const DownloadProfileDataScreen = () => {
         <VSpacer />
         <ComposedBodyFromArray textAlign="left" body={secondParagraph} />
         <VSpacer />
-        <Body>
+        <Body accessibilityRole="link" onPress={handleNavigateToProfilePrivacy}>
           {I18n.t("profile.main.privacy.exportData.detail.paragraph3.part1")}
-          <LabelLink onPress={handleNavigateToProfilePrivacy}>
+          <LabelLink>
             {I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")}
           </LabelLink>
         </Body>
