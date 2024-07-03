@@ -109,10 +109,7 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
       loading={isLoadingStatus}
       testID="service-activate-bonus-button"
       onPress={() => {
-        analytics.trackSpecialServiceStatusChanged({
-          is_active: true,
-          service_id: serviceId
-        });
+        analytics.trackServicesCgnStartRequest(serviceId);
         dispatch(loadAvailableBonuses.request());
         dispatch(cgnActivationStart());
       }}

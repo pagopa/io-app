@@ -303,7 +303,7 @@ profile:
   logout:
     menulabel: Esci da IO
     alertTitle: Vuoi davvero uscire?
-    alertMessage: Al prossimo accesso sarà necessario autenticarti con CIE o SPID.
+    alertMessage: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
     loading: Stai uscendo da IO
     exit: Esci
   errors:
@@ -434,7 +434,12 @@ profile:
     appInfo:
       title: Informazioni su IO
       description: Per saperne di più sull'app IO
-      contextualHelpContent: !include profile/profile_appinfo_main.md
+      subtitle: Qui puoi trovare ulteriori dettagli sull'app IO e scoprire di più sul suo utilizzo.
+      paragraphTitle: Cos’è IO?
+      paragraphBody1: "IO, l’app dei servizi pubblici, "
+      paragraphBody2: ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.
+      bannerBody: Vuoi saperne di più?
+      bannerButton: Vai al sito di IO
     developersSectionHeader: Sviluppatori
     testEnvironmentSectionHeader: Ambiente di test
     pagoPaEnvironment:
@@ -495,6 +500,7 @@ profile:
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
+    genericToastTitle: Preferenze aggiornate!
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
