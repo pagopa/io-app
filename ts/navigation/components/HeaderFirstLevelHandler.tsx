@@ -17,6 +17,7 @@ import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
 import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
 import * as analytics from "../../features/services/common/analytics";
+import { showBarcodeScanSection } from "../../config";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -29,7 +30,7 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "messages.contextualHelpContent"
     }
   },
-  // TODO: delete this route when the isNewWalletSectionEnabled FF will be deleted
+  // TODO: delete this route when the showBarcodeScanSection FF will be deleted
   [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
@@ -136,6 +137,17 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     present: presentWalletHomeHeaderBottomsheet
   } = useWalletHomeHeaderBottomSheet();
 
+  const walletAction: ActionProp = useMemo(
+    () => ({
+      icon: "add",
+      accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
+      onPress: presentWalletHomeHeaderBottomsheet,
+      testID: "walletAddNewPaymentMethodTestId"
+    }),
+    [presentWalletHomeHeaderBottomsheet]
+  );
+
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
@@ -145,10 +157,10 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction,
           secondAction: {
             icon: "coggle",
-            accessibilityLabel: isNewWalletSectionEnabled
+            accessibilityLabel: showBarcodeScanSection
               ? I18n.t("global.buttons.settings")
               : I18n.t("global.buttons.edit"),
-            onPress: isNewWalletSectionEnabled
+            onPress: showBarcodeScanSection
               ? navigateToSettingMainScreen
               : navigateToProfilePrefercesScreen
           },
@@ -161,7 +173,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             }
           }
         };
-      // TODO: delete this route when the isNewWalletSectionEnabled FF will be deleted
+      // TODO: delete this route when the showBarcodeScanSection FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
@@ -172,30 +184,37 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         if (isNewWalletSectionEnabled) {
           return {
             title: I18n.t("wallet.wallet"),
-            type: "twoActions",
             firstAction: helpAction,
             testID: "wallet-home-header-title",
-            secondAction: settingsAction
+            ...(showBarcodeScanSection
+              ? {
+                  type: "twoActions",
+                  secondAction: settingsAction
+                }
+              : { type: "singleAction" })
           };
         }
         return {
           title: I18n.t("wallet.wallet"),
-          type: "twoActions",
           firstAction: helpAction,
           backgroundColor: "dark",
           testID: "wallet-home-header-title",
-          secondAction: {
-            icon: "add",
-            accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-            onPress: presentWalletHomeHeaderBottomsheet,
-            testID: "walletAddNewPaymentMethodTestId"
-          }
+          ...(showBarcodeScanSection
+            ? {
+                type: "threeActions",
+                secondAction: settingsAction,
+                thirdAction: walletAction
+              }
+            : {
+                type: "twoActions",
+                secondAction: walletAction
+              })
         };
       case ROUTES.PAYMENTS_HOME:
         return {
           title: I18n.t("features.payments.title"),
           firstAction: helpAction,
-          ...(isNewWalletSectionEnabled
+          ...(showBarcodeScanSection
             ? {
                 type: "twoActions",
                 secondAction: settingsAction
@@ -207,7 +226,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         return {
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
-          ...(isNewWalletSectionEnabled
+          ...(showBarcodeScanSection
             ? {
                 type: "threeActions",
                 secondAction: settingsAction,
@@ -226,9 +245,9 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     navigateToProfilePrefercesScreen,
     navigateToSettingMainScreen,
     navigation,
-    presentWalletHomeHeaderBottomsheet,
     searchMessageAction,
-    settingsAction
+    settingsAction,
+    walletAction
   ]);
 
   return (
