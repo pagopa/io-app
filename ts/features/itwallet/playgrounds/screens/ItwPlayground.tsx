@@ -7,10 +7,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../../features/itwallet/common/components/ItwMarkdown";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../../features/itwallet/navigation/routes";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 // Sample markdown text
 const sampleMarkdown = `

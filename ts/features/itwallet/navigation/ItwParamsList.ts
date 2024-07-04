@@ -14,4 +14,6 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION.EID_DETAIL]: undefined;
+  // PLAYGROUNDS
+  [ITW_ROUTES.PLAYGROUNDS]: undefined;
 };
