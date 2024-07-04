@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: IO (FIMS)
+  version: 1.0.0
+  
+security:
+  - Bearer: []
+
+paths:
+  /api/v1/fims/consents:
+    get:
+      operationId: getConsents
+      parameters:
+        - $ref: "#/components/parameters/continuationToken"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/ConsentsResponseDTO"
+        401:
+          description: Bearer token null or expired.
+        502:
+          description: Bad gateway.
+        504:
+          description: Gateway timeout.
+        500:
+          description: Service unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+                
+  /api/v1/fims/exports:
+    post:
+      operationId: exports
+      requestBody:
+        $ref: "#/components/requestBodies/Export"
+      responses:
+        202:
+          description: Accepted
+        409:
+          description: Conflict
+        401:
+          description: Bearer token null or expired.
+        502:
+          description: Bad gateway.
+        504:
+          description: Gateway timeout.
+        500:
+          description: Service unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        
+
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+
+  parameters:
+    continuationToken:
+      name: continuationToken
+      in: query
+      required: false
+      schema:
+        type: string
+        
+  requestBodies:
+    Export:
+      description: Require an export
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: ["consent"]
+            required:
+              - type
+
+  schemas:
+    ConsentsResponseDTO:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Consent"
+        continuationToken:
+          type: string
+      required:
+        - items
+        - continuationToken
+
+    ProblemJson:
+      $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v26.3.0/openapi/definitions.yaml#/ProblemJson"
+
+    Consent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: ulid
+        service_id:
+          type: string
+          format: ulid
+        redirect:
+          type: object
+          properties:
+            uri:
+              type: string
+              format: uri
+            display_name:
+              type: string
+        timestamp:
+          $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v26.3.0/openapi/definitions.yaml#/Timestamp"
+      required:
+        - id
+        - service_id
+        - timestamp
