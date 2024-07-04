@@ -16,6 +16,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
+import { DoubleAvatar } from "./DoubleAvatar";
 
 const styles = StyleSheet.create({
   badgeContainer: { flexDirection: "row", marginTop: 8 },
@@ -48,6 +49,8 @@ const styles = StyleSheet.create({
 type MessageListItemProps = WithTestID<{
   accessibilityLabel: string;
   badgeText?: string;
+  badgeVariant?: "legalMessage" | "success";
+  doubleAvatar?: boolean;
   formattedDate: string;
   isRead: boolean;
   messageTitle: string;
@@ -78,6 +81,8 @@ const BadgeComponent = ({ color, width = 14 }: BadgeComponentProps) => (
 export const MessageListItem = ({
   accessibilityLabel,
   badgeText,
+  badgeVariant,
+  doubleAvatar,
   formattedDate,
   isRead,
   messageTitle,
@@ -99,7 +104,11 @@ export const MessageListItem = ({
     <View style={styles.container}>
       <View style={styles.serviceLogoAndSelectionContainer}>
         <View style={styles.serviceLogoContainer}>
-          <Avatar logoUri={serviceLogos} size="small" />
+          {doubleAvatar ? (
+            <DoubleAvatar backgroundLogoUri={serviceLogos} />
+          ) : (
+            <Avatar logoUri={serviceLogos} size="small" />
+          )}
           <View style={StyleSheet.absoluteFill}>
             <AnimatedMessageCheckbox checked={selected} />
           </View>
@@ -121,7 +130,7 @@ export const MessageListItem = ({
         </View>
         <View style={styles.serviceNameAndMessageTitleContainer}>
           <Body numberOfLines={2} style={IOStyles.flex}>
-            <LabelSmall fontSize="regular" color="grey-700" weight="SemiBold">
+            <LabelSmall fontSize="regular" color="grey-700" weight="Semibold">
               {serviceName}
             </LabelSmall>
             <Caption weight="Regular" color="grey-700">
@@ -137,11 +146,15 @@ export const MessageListItem = ({
             </View>
           )}
         </View>
-        {badgeText && (
+        {badgeText && badgeVariant && (
           <View style={styles.badgeContainer}>
-            <Tag text={badgeText} variant="legalMessage" />
-            <HSpacer size={8} />
-            <Tag variant="attachment" />
+            <Tag text={badgeText} variant={badgeVariant} />
+            {badgeVariant === "legalMessage" && (
+              <>
+                <HSpacer size={8} />
+                <Tag variant="attachment" />
+              </>
+            )}
           </View>
         )}
       </View>

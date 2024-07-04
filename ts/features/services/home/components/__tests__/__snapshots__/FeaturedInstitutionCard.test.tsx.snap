@@ -334,17 +334,27 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        style={
+                          Object {
+                            "flexGrow": 1,
+                          }
+                        }
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
                           style={
-                            Object {
-                              "transform": Array [
-                                Object {
-                                  "scale": undefined,
-                                },
-                              ],
-                            }
+                            Array [
+                              Object {
+                                "transform": Array [
+                                  Object {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                              Object {
+                                "flexGrow": 1,
+                              },
+                            ]
                           }
                         >
                           <View
@@ -447,7 +457,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   allowFontScaling={false}
                                   color="hanPurple-850"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -471,7 +481,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   ### Institution ###
                                 </Text>
@@ -827,17 +837,27 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        style={
+                          Object {
+                            "flexGrow": 1,
+                          }
+                        }
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
                           style={
-                            Object {
-                              "transform": Array [
-                                Object {
-                                  "scale": undefined,
-                                },
-                              ],
-                            }
+                            Array [
+                              Object {
+                                "transform": Array [
+                                  Object {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                              Object {
+                                "flexGrow": 1,
+                              },
+                            ]
                           }
                         >
                           <View
@@ -943,7 +963,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   allowFontScaling={false}
                                   color="hanPurple-850"
                                   defaultColor="black"
-                                  defaultWeight="SemiBold"
+                                  defaultWeight="Semibold"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -967,7 +987,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       },
                                     ]
                                   }
-                                  weight="SemiBold"
+                                  weight="Semibold"
                                 >
                                   ### Institution ###
                                 </Text>

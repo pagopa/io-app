@@ -24,6 +24,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { selectPaymentOnboardingRptIdToResume } from "../store/selectors";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { paymentsResetRptIdToResume } from "../store/actions";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -76,6 +77,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
         startPaymentFlow(rptIdToResume);
         return;
       }
+      dispatch(getPaymentsWalletUserMethods.request());
       navigation.reset({
         index: 1,
         routes: [

@@ -3,16 +3,13 @@
  * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
-
 import { getType } from "typesafe-actions";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { createSelector } from "reselect";
-
 import { Action } from "../../actions/types";
-import { paymentCompletedSuccess } from "../../actions/wallet/payment";
+import { paymentCompletedSuccess as legacyPaymentCompletedSuccess } from "../../actions/wallet/payment";
+import { paymentCompletedSuccess } from "../../../features/payments/checkout/store/actions/orchestration";
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
-import { UIMessage } from "../../../features/messages/types";
 
 export type PaidReason = Readonly<
   | {
@@ -40,7 +37,7 @@ export const paymentByRptIdReducer = (
   action: Action
 ): PaymentByRptIdState => {
   switch (action.type) {
-    case getType(paymentCompletedSuccess):
+    case getType(legacyPaymentCompletedSuccess):
       // Use the ID as object key
       const rptIdString: string = RptIdFromString.encode(action.payload.rptId);
       return {
@@ -54,6 +51,16 @@ export const paymentByRptIdReducer = (
             : {
                 kind: "DUPLICATED"
               }
+      };
+    // New payment flow completed
+    case getType(paymentCompletedSuccess):
+      return {
+        ...state,
+        [action.payload.rptId]: {
+          kind: action.payload.kind,
+          // The transaction ID is not available with the PM, it will be added when migrated to the NPG that will support it
+          transactionId: undefined
+        }
       };
     // clear state if the current profile is different from the previous one
     case getType(differentProfileLoggedIn):
@@ -69,20 +76,3 @@ export const paymentByRptIdReducer = (
 export const paymentsByRptIdSelector = (
   state: GlobalState
 ): PaymentByRptIdState => state.entities.paymentByRptId;
-
-/**
- * Given an rptId as a string, return true if there is a matching paid transaction.
- * TODO: just a placeholder for now, see https://pagopa.atlassian.net/browse/IA-417
- */
-export const isNoticePaidSelector = createSelector(
-  [
-    paymentsByRptIdSelector,
-    (_: GlobalState, category: UIMessage["category"]) => category
-  ],
-  (paymentByRptId, category) => {
-    if (category.tag === "PAYMENT") {
-      return !!paymentByRptId[category.rptId];
-    }
-    return false;
-  }
-);

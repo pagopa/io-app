@@ -341,7 +341,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         allowFontScaling={false}
                         color="bluegreyDark"
                         defaultColor="bluegreyDark"
-                        defaultWeight="SemiBold"
+                        defaultWeight="Semibold"
                         font="TitilliumSansPro"
                         fontStyle={
                           Object {
@@ -364,7 +364,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           ]
                         }
                         testID="message-header-subject"
-                        weight="SemiBold"
+                        weight="Semibold"
                       >
                         #### Subject ####
                       </Text>
@@ -441,7 +441,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             allowFontScaling={false}
                             color="grey-700"
                             defaultColor="black"
-                            defaultWeight="SemiBold"
+                            defaultWeight="Semibold"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -463,7 +463,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 },
                               ]
                             }
-                            weight="SemiBold"
+                            weight="Semibold"
                           >
                             Ċentru tas-Saħħa
                           </Text>

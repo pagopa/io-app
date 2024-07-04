@@ -339,7 +339,9 @@ const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
   const paginatedState = archived
     ? allArchiveSelector(state)
     : allInboxSelector(state);
-  const error = pot.isError(paginatedState) ? paginatedState.error : undefined;
+  const error = pot.isError(paginatedState)
+    ? paginatedState.error.reason
+    : undefined;
   const messagesPage = pot.getOrElse(paginatedState, undefined);
   const didLoad = pot.isSome(paginatedState);
   return {

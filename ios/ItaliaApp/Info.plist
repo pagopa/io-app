@@ -34,7 +34,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>0</string>
+    <string>5</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -47,7 +47,7 @@
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true/>
     <key>NFCReaderUsageDescription</key>
-    <string>NFC tag to read NDEF messages into the application</string>
+    <string>NFC tag to read EIC cards</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSExceptionDomains</key>
@@ -72,7 +72,7 @@
     <key>NSContactsUsageDescription</key>
     <string>IO needs access to your contacts to let you add them in calendar events</string>
     <key>NSFaceIDUsageDescription</key>
-    <string>Enable Face ID for a faster identification.</string>
+    <string>You'll be able to access the app more easily without having to enter the unlock code.</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>The app needs NSLocationAlwaysUsageDescription permission</string>
     <key>NSLocationUsageDescription</key>

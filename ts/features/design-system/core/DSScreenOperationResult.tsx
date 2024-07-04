@@ -19,7 +19,7 @@ const DSScreenOperationResult = () => {
       style: {
         textAlign: "center"
       },
-      weight: "SemiBold"
+      weight: "Semibold"
     },
     {
       text: I18n.t("email.cduScreens.emailAlreadyTaken.subtitleEnd"),

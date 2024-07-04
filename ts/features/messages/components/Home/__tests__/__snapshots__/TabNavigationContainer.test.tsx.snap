@@ -506,7 +506,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -528,7 +528,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Inbox
                                   </Text>
@@ -673,7 +673,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     allowFontScaling={false}
                                     color="blue"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -695,7 +695,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Archived
                                   </Text>
@@ -1237,7 +1237,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     allowFontScaling={false}
                                     color="blue"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1259,7 +1259,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Inbox
                                   </Text>
@@ -1404,7 +1404,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     allowFontScaling={false}
                                     color="black"
                                     defaultColor="black"
-                                    defaultWeight="SemiBold"
+                                    defaultWeight="Semibold"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1426,7 +1426,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                       ]
                                     }
-                                    weight="SemiBold"
+                                    weight="Semibold"
                                   >
                                     Archived
                                   </Text>

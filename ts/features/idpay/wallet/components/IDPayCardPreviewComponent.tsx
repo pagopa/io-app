@@ -84,7 +84,7 @@ const IDPayCardPreviewComponent = (props: Props) => {
             </H4>
             <HSpacer size={8} />
             <LabelSmall
-              weight="SemiBold"
+              weight="Semibold"
               fontSize="regular"
               color="black"
               ellipsizeMode={"tail"}

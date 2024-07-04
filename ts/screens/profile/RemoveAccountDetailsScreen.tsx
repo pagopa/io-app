@@ -1,75 +1,169 @@
+/* eslint-disable functional/immutable-data */
 import {
-  BlockButtonProps,
+  ButtonSolid,
   ContentWrapper,
-  FooterWithButtons
+  H6,
+  RadioGroup,
+  RadioItem,
+  TextInput,
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
-import * as React from "react";
-import { Alert, SafeAreaView } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { LabelledItem } from "../../components/LabelledItem";
-import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import {
-  RadioButtonList,
-  RadioItem
-} from "../../components/core/selection/RadioButtonList";
+  AccessibilityInfo,
+  Alert,
+  Keyboard,
+  SafeAreaView,
+  View
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../config";
 import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
 import { identificationRequest } from "../../store/actions/identification";
-import { navigateToWalletHome } from "../../store/actions/navigation";
 import {
   RemoveAccountMotivationEnum,
-  RemoveAccountMotivationPayload,
   removeAccountMotivation
 } from "../../store/actions/profile";
-import { GlobalState } from "../../store/reducers/types";
-import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
+import {
+  isUserDataProcessingDeleteErrorSelector,
+  isUserDataProcessingDeleteLoadingSelector
+} from "../../store/reducers/userDataProcessing";
 import { withKeyboard } from "../../utils/keyboard";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
+import { resetDeleteUserDataProcessing } from "../../store/actions/userDataProcessing";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type FooterButtonProps = {
+  isLoading: boolean;
+  onPress: () => void;
+};
 
-const getMotivationItems = (): ReadonlyArray<
-  RadioItem<RemoveAccountMotivationEnum>
-> => [
-  {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
-    id: RemoveAccountMotivationEnum.NOT_UTILS
-  },
-  {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
-    id: RemoveAccountMotivationEnum.NOT_SAFE
-  },
-  {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
-    id: RemoveAccountMotivationEnum.NEVER_USED
-  },
-  {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
-    id: RemoveAccountMotivationEnum.OTHERS
-  }
-];
+const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
+  const { bottom } = useSafeAreaInsets();
+
+  return withKeyboard(
+    <View style={{ marginBottom: bottom }}>
+      <ContentWrapper>
+        <ButtonSolid
+          fullWidth
+          loading={isLoading}
+          color="danger"
+          label={I18n.t("profile.main.privacy.removeAccount.details.cta")}
+          accessibilityLabel={I18n.t(
+            "profile.main.privacy.removeAccount.details.cta"
+          )}
+          onPress={onPress}
+        />
+      </ContentWrapper>
+    </View>,
+    true
+  );
+});
 /**
  * A screen that ask user the motivation of the account removal
  * Here user can ask to delete his account
  */
-const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
+const RemoveAccountDetails = () => {
+  const dispatch = useIODispatch();
+  const { navigate } = useIONavigation();
+  const toast = useIOToast();
+  const timeoutRef = useRef<number>();
+
+  const hasActiveBonus = useIOSelector(isCgnEnrolledSelector);
+  const isLoading = useIOSelector(isUserDataProcessingDeleteLoadingSelector);
+  const isError = useIOSelector(isUserDataProcessingDeleteErrorSelector);
+
   // Initially no motivation is selected
   const [selectedMotivation, setSelectedMotivation] =
-    React.useState<RemoveAccountMotivationEnum>(
+    useState<RemoveAccountMotivationEnum>(
       RemoveAccountMotivationEnum.UNDEFINED
     );
+  const [otherMotivation, setOtherMotivation] = useState<string>("");
 
-  const [otherMotivation, setOtherMotivation] = React.useState<string>("");
+  const isOtherMotivation =
+    selectedMotivation === RemoveAccountMotivationEnum.OTHERS;
 
-  const handleContinuePress = () => {
-    const hasActiveBonus = props.cgnActiveBonus;
+  useEffect(() => {
+    if (isError) {
+      timeoutRef.current = setTimeout(() => {
+        AccessibilityInfo.announceForAccessibilityWithOptions(
+          I18n.t("wallet.errors.GENERIC_ERROR"),
+          { queue: true }
+        );
+      }, 1000);
+      toast.error(I18n.t("wallet.errors.GENERIC_ERROR"));
+    }
+  }, [dispatch, isError, toast]);
+
+  // eslint-disable-next-line arrow-body-style
+  useEffect(() => {
+    return () => {
+      if (isError) {
+        dispatch(resetDeleteUserDataProcessing());
+      }
+      clearTimeout(timeoutRef.current);
+    };
+  }, [dispatch, isError]);
+
+  const handleSendMotivation = useCallback(
+    (
+      selectedMotivation: RemoveAccountMotivationEnum,
+      otherMotivation?: string
+    ) => {
+      dispatch(
+        identificationRequest(
+          false,
+          true,
+          {
+            message: I18n.t("wallet.ConfirmPayment.identificationMessage")
+          },
+          {
+            label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
+            onCancel: () => undefined
+          },
+          {
+            onSuccess: () =>
+              dispatch(
+                removeAccountMotivation({
+                  reason: selectedMotivation,
+                  ...(selectedMotivation === RemoveAccountMotivationEnum.OTHERS
+                    ? { userText: otherMotivation }
+                    : {})
+                })
+              )
+          },
+          shufflePinPadOnPayment
+        )
+      );
+    },
+    [dispatch]
+  );
+
+  const handleSetSelectedMotivation = useCallback(
+    (motivation: RemoveAccountMotivationEnum) => {
+      setSelectedMotivation(prev =>
+        prev === motivation ? RemoveAccountMotivationEnum.UNDEFINED : motivation
+      );
+    },
+    []
+  );
+
+  const handleContinuePress = useCallback(() => {
+    Keyboard.dismiss();
 
     if (hasActiveBonus) {
       Alert.alert(
@@ -83,7 +177,15 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
               "profile.main.privacy.removeAccount.alert.cta.manageBonus"
             ),
             style: "default",
-            onPress: props.navigateToWalletHomeScreen
+            onPress: () => {
+              NavigationService.dispatchNavigationAction(
+                StackActions.popToTop()
+              );
+              navigate(ROUTES.MAIN, {
+                screen: ROUTES.WALLET_HOME,
+                params: { newMethodAdded: false }
+              });
+            }
           },
           {
             text: I18n.t(
@@ -91,153 +193,100 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
             ),
             style: "cancel",
             onPress: () => {
-              handleSendMotivation(selectedMotivation);
+              handleSendMotivation(selectedMotivation, otherMotivation);
             }
           }
         ]
       );
     } else {
-      handleSendMotivation(selectedMotivation);
+      handleSendMotivation(selectedMotivation, otherMotivation);
     }
-  };
+  }, [
+    hasActiveBonus,
+    handleSendMotivation,
+    otherMotivation,
+    navigate,
+    selectedMotivation
+  ]);
 
-  const handleSendMotivation = (
-    selectedMotivation: RemoveAccountMotivationEnum
-  ) => {
-    switch (selectedMotivation) {
-      case RemoveAccountMotivationEnum.OTHERS:
-        // Only the "others" reason allow to insert a custom text
-        props.requestIdentification({
-          reason: selectedMotivation,
-          userText: otherMotivation
-        });
-        break;
-      default:
-        props.requestIdentification({ reason: selectedMotivation });
-    }
-  };
-
-  const continueButtonProps: BlockButtonProps = {
-    type: "Solid",
-    buttonProps: {
-      color: "primary",
-      label: I18n.t("profile.main.privacy.removeAccount.info.cta"),
-      accessibilityLabel: I18n.t("profile.main.privacy.removeAccount.info.cta"),
-      onPress: handleContinuePress
-    }
-  };
-
-  const loadingCaption = I18n.t(
-    "profile.main.privacy.removeAccount.success.title"
-  );
-  return (
-    <RNavScreenWithLargeHeader
-      title={{
-        label: I18n.t("profile.main.privacy.removeAccount.title")
-      }}
-      description={I18n.t("profile.main.privacy.removeAccount.details.body")}
-      fixedBottomSlot={withKeyboard(
-        <FooterWithButtons
-          type={"SingleButton"}
-          primary={continueButtonProps}
-        />,
-        true
-      )}
-    >
-      {props.isLoading || props.isError ? (
-        <LoadingErrorComponent
-          isLoading={props.isLoading}
-          loadingCaption={loadingCaption}
-          onRetry={() => {
-            props.onIdentificationSuccess({
-              reason: selectedMotivation,
-              userText: otherMotivation
-            });
-          }}
-        />
-      ) : (
-        <SafeAreaView style={IOStyles.flex}>
-          <ContentWrapper>
-            <RadioButtonList<RemoveAccountMotivationEnum>
-              head={I18n.t(
-                "profile.main.privacy.removeAccount.details.question"
-              )}
-              key="delete_reason"
-              items={getMotivationItems()}
-              selectedItem={selectedMotivation}
-              onPress={setSelectedMotivation}
-            />
-            {selectedMotivation === RemoveAccountMotivationEnum.OTHERS && (
-              <LabelledItem
-                label={I18n.t(
-                  "profile.main.privacy.removeAccount.details.labelOpenAnswer"
-                )}
-                inputProps={{
-                  keyboardType: "default",
-                  returnKeyType: "done",
-                  autoFocus: true,
-                  maxLength: 18,
-                  onChangeText: setOtherMotivation
-                }}
-              />
+  const otherMotivationInput = useMemo(() => {
+    if (isOtherMotivation) {
+      return (
+        <>
+          <VSpacer />
+          <TextInput
+            placeholder={I18n.t(
+              "profile.main.privacy.removeAccount.details.labelOpenAnswer"
             )}
+            accessibilityLabel={I18n.t(
+              "profile.main.privacy.removeAccount.details.labelOpenAnswer"
+            )}
+            value={otherMotivation}
+            onChangeText={setOtherMotivation}
+            autoFocus
+            textInputProps={{
+              inputMode: "text",
+              returnKeyType: "done",
+              keyboardType: "default"
+            }}
+          />
+        </>
+      );
+    }
+    return null;
+  }, [isOtherMotivation, otherMotivation]);
+
+  const motivationItems: ReadonlyArray<RadioItem<RemoveAccountMotivationEnum>> =
+    useMemo(
+      () => [
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+          id: RemoveAccountMotivationEnum.NOT_UTILS
+        },
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+          id: RemoveAccountMotivationEnum.NOT_SAFE
+        },
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+          id: RemoveAccountMotivationEnum.NEVER_USED
+        },
+        {
+          value: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+          id: RemoveAccountMotivationEnum.OTHERS
+        }
+      ],
+      []
+    );
+
+  return (
+    <>
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("profile.main.privacy.removeAccount.details.title")
+        }}
+        description={I18n.t("profile.main.privacy.removeAccount.details.body")}
+      >
+        <SafeAreaView style={IOStyles.flex}>
+          <VSpacer />
+          <ContentWrapper>
+            <H6>
+              {I18n.t("profile.main.privacy.removeAccount.details.question")}
+            </H6>
+            <VSpacer />
+            <RadioGroup<RemoveAccountMotivationEnum>
+              type="radioListItem"
+              onPress={handleSetSelectedMotivation}
+              items={motivationItems}
+              selectedItem={selectedMotivation}
+            />
+            {otherMotivationInput}
           </ContentWrapper>
         </SafeAreaView>
-      )}
-    </RNavScreenWithLargeHeader>
+      </IOScrollViewWithLargeHeader>
+      <FooterButton isLoading={isLoading} onPress={handleContinuePress} />
+    </>
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  const onIdentificationSuccess = (
-    motivationPayload: RemoveAccountMotivationPayload
-  ) => dispatch(removeAccountMotivation(motivationPayload));
-
-  return {
-    onIdentificationSuccess,
-    requestIdentification: (
-      motivationPayload: RemoveAccountMotivationPayload
-    ) =>
-      dispatch(
-        identificationRequest(
-          false,
-          true,
-          {
-            message: I18n.t("wallet.ConfirmPayment.identificationMessage")
-          },
-          {
-            label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
-            onCancel: () => undefined
-          },
-          {
-            onSuccess: () => onIdentificationSuccess(motivationPayload)
-          },
-          shufflePinPadOnPayment
-        )
-      ),
-    navigateToWalletHomeScreen: () => {
-      NavigationService.dispatchNavigationAction(StackActions.popToTop());
-      navigateToWalletHome();
-    }
-  };
-};
-
-const mapStateToProps = (state: GlobalState) => {
-  const cgnActiveBonus = isCgnEnrolledSelector(state);
-  const userDataProcessing = userDataProcessingSelector(state);
-  const isLoading =
-    pot.isLoading(userDataProcessing.DELETE) ||
-    pot.isUpdating(userDataProcessing.DELETE);
-  const isError = pot.isError(userDataProcessing.DELETE);
-  return {
-    cgnActiveBonus,
-    userDataProcessing,
-    isLoading,
-    isError
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RemoveAccountDetails);
+export default RemoveAccountDetails;

@@ -1,6 +1,5 @@
 import {
   Body,
-  GradientScrollView,
   LabelLink,
   ListItemHeader,
   ModuleCheckout,
@@ -11,6 +10,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { useFocusEffect } from "@react-navigation/native";
 import { default as React } from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import I18n from "../../../../i18n";
@@ -27,7 +27,10 @@ import { WalletPaymentTotalAmount } from "../components/WalletPaymentTotalAmount
 import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
-import { walletPaymentDetailsSelector } from "../store/selectors";
+import {
+  selectWalletPaymentCurrentStep,
+  walletPaymentDetailsSelector
+} from "../store/selectors";
 import {
   walletPaymentSelectedPaymentMethodIdOptionSelector,
   walletPaymentSelectedPaymentMethodManagementOptionSelector,
@@ -45,12 +48,16 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
   );
@@ -60,6 +67,7 @@ const WalletPaymentConfirmScreen = () => {
   const selectedPaymentMethodManagement = useIOSelector(
     walletPaymentSelectedPaymentMethodManagementOptionSelector
   );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
@@ -69,37 +77,45 @@ const WalletPaymentConfirmScreen = () => {
         paymentDetail: pot.toOption(paymentDetailsPot),
         paymentMethodId: selectedPaymentMethodIdOption,
         selectedPsp: selectedPspOption,
-        transaction: pot.toOption(transactionPot),
-        paymentMethodManagement: selectedPaymentMethodManagement
+        transaction: pot.toOption(transactionPot)
       }),
-      O.map(
-        ({
-          paymentDetail,
+      O.map(({ paymentDetail, paymentMethodId, selectedPsp, transaction }) => {
+        // In case of guest payment walletId could be undefined
+        const walletId = O.toUndefined(selectedWalletIdOption);
+        const paymentMethodManagement = O.toUndefined(
+          selectedPaymentMethodManagement
+        );
+        const isAllCCP = pipe(
+          transaction.payments[0],
+          O.fromNullable,
+          O.chainNullableK(payment => payment.isAllCCP),
+          O.getOrElse(() => false)
+        );
+
+        analytics.trackPaymentConversion({
+          attempt: paymentAnalyticsData?.attempt,
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          service_name: paymentAnalyticsData?.serviceName,
+          amount: paymentAnalyticsData?.formattedAmount,
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+          payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+          saved_payment_method:
+            paymentAnalyticsData?.savedPaymentMethods?.length,
+          selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+          data_entry: paymentAnalyticsData?.startOrigin
+        });
+
+        startPaymentAuthorizaton({
+          paymentAmount: paymentDetail.amount as AmountEuroCents,
+          paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
+          pspId: selectedPsp.idPsp ?? "",
+          isAllCCP,
+          transactionId: transaction.transactionId,
+          walletId,
           paymentMethodId,
-          selectedPsp,
-          transaction,
           paymentMethodManagement
-        }) => {
-          // In case of guest payment walletId could be undefined
-          const walletId = O.toUndefined(selectedWalletIdOption);
-          const isAllCCP = pipe(
-            transaction.payments[0],
-            O.fromNullable,
-            O.chainNullableK(payment => payment.isAllCCP),
-            O.getOrElse(() => false)
-          );
-          startPaymentAuthorizaton({
-            paymentAmount: paymentDetail.amount as AmountEuroCents,
-            paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
-            pspId: selectedPsp.idPsp ?? "",
-            isAllCCP,
-            transactionId: transaction.transactionId,
-            walletId,
-            paymentMethodId,
-            paymentMethodManagement
-          });
-        }
-      )
+        });
+      })
     );
 
   const handleAuthorizationOutcome = React.useCallback(
@@ -132,6 +148,25 @@ const WalletPaymentConfirmScreen = () => {
     }
   }, [isError, handleAuthorizationOutcome]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (currentStep !== WalletPaymentStepEnum.CONFIRM_TRANSACTION) {
+        return;
+      }
+      analytics.trackPaymentSummaryScreen({
+        attempt: paymentAnalyticsData?.attempt,
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        service_name: paymentAnalyticsData?.serviceName,
+        amount: paymentAnalyticsData?.formattedAmount,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
+      });
+      // should be called only when the current step is the confirm screen
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentStep])
+  );
+
   const totalAmount = pipe(
     sequenceS(O.Monad)({
       taxFee: pipe(
@@ -148,19 +183,22 @@ const WalletPaymentConfirmScreen = () => {
   );
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
-          totalAmount,
-          true,
-          "right"
-        )}`,
-        accessibilityLabel: `${I18n.t(
-          "payment.confirm.pay"
-        )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
-        onPress: handleStartPaymentAuthorization,
-        disabled: isLoading,
-        loading: isLoading
+    <IOScrollView
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
+            totalAmount,
+            true,
+            "right"
+          )}`,
+          accessibilityLabel: `${I18n.t(
+            "payment.confirm.pay"
+          )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
+          onPress: handleStartPaymentAuthorization,
+          disabled: isLoading,
+          loading: isLoading
+        }
       }}
     >
       <ListItemHeader
@@ -192,7 +230,7 @@ const WalletPaymentConfirmScreen = () => {
           {I18n.t("payment.confirm.termsAndConditionsLink")}
         </LabelLink>
       </Body>
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 
@@ -205,11 +243,20 @@ const SelectedPaymentMethodModuleCheckout = () => {
   const selectedPaymentMethodOption = useIOSelector(
     walletPaymentSelectedPaymentMethodOptionSelector
   );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
-  const handleOnPress = () =>
+  const handleOnPress = () => {
+    analytics.trackPaymentSummaryEditing({
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+      editing: "payment_method"
+    });
     dispatch(
       walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
     );
+  };
 
   if (O.isSome(selectedWalletOption) && selectedWalletOption.value.details) {
     const details = selectedWalletOption.value.details;
@@ -250,7 +297,7 @@ const SelectedPspModuleCheckout = () => {
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
-
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const pspList = pot.getOrElse(pspListPot, []);
   const pspBusinessName = pipe(
     selectedPspOption,
@@ -264,6 +311,17 @@ const SelectedPspModuleCheckout = () => {
     O.getOrElse(() => 0)
   );
 
+  const handleOnPress = () => {
+    analytics.trackPaymentSummaryEditing({
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+      editing: "psp"
+    });
+    dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));
+  };
+
   return (
     <ModuleCheckout
       ctaText={
@@ -271,9 +329,7 @@ const SelectedPspModuleCheckout = () => {
       }
       title={formatNumberCentsToAmount(taxFee, true, "right")}
       subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspBusinessName}`}
-      onPress={() =>
-        dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP))
-      }
+      onPress={handleOnPress}
     />
   );
 };

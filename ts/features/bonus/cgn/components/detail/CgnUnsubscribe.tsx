@@ -53,7 +53,7 @@ const CgnUnsubscribe = () => {
       accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}
       variant="danger"
       label={I18n.t("bonus.cgn.cta.deactivateBonus")}
-      testID="cgnDeactivateBonusTestId"
+      testID="service-cgn-deactivate-bonus-button"
       onPress={requestUnsubscription}
       icon="trashcan"
     />
