@@ -515,13 +515,13 @@ profile:
     list:
       wip: In progress
       digitalDomicile: Digital domicile
-      service_contact: 
+      service_contact:
         title: Use of services
         subtitle: Choose who can contact you
       send_email_messages:
         title: Forwarding messages by email
         subtitle: Receive message previews
-      language: 
+      language:
         title: Language
         subtitle: Choose language
       preferred_calendar:
@@ -982,13 +982,13 @@ onboarding:
         notEnrolled:
           text: You need to configure this in your device settings.
           label: How to
-          step1: 
+          step1:
             label: Step 1
             value: Go to your device settings
-          step2: 
+          step2:
             label: Step 2
             value: Set up face or fingerprint
-          step3: 
+          step3:
             label: Step 3
             value: Enable it in IO under Profile > Security
     unavailable:
@@ -996,10 +996,10 @@ onboarding:
       subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
       body:
         label: How to
-        step1: 
+        step1:
           label: Step 1
           value: Go to your device settings
-        step2: 
+        step2:
           label: Step 2
           value: Set a code or sign to unlock the device
   shareData:
@@ -3216,9 +3216,9 @@ features:
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
-      info:
-        title: Start with your Digital Identity
-        content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
+      title: Attiva IT Wallet
+      content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
     identification:
       mode:
         title: Con quale metodo vuoi identificarti?
@@ -3255,12 +3255,13 @@ features:
         tos:
           0: "Per maggiori informazioni, leggi"
           1: l’informativa Privacy e i Termini e Condizioni d’uso
+      eidPreview:
+        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        actions:
+          primary: Continua
+          secondary: Annulla
       credentialPreview:
-        title: "{{credential}}: ecco l'anteprima"
-        banner:
-          title: "Qualcosa non torna?"
-          content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
-          actionTitle: "Contatta l'assistenza"
+        title: "{{credential}}: ecco l'anteprima dei tuoi dati"
         bottomSheet:
           about:
             title: "Chi è?"
@@ -3268,15 +3269,17 @@ features:
           data:
             title: "Protezione dei dati"
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
-        toast:
-          success: "Tessera aggiunta!"
-          failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
-      success:
-        title: "Hai aggiunto\nIdentità Digitale!"
-        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+      eidResult:
+        success:
+          title: "IT Wallet è attivo!"
+          subtitle: È tutto pronto, ora puoi aggiungere il primo documento al Portafoglio.
+          toast: Fatto!
+          actions:
+            continue: Aggiungi primo documento
+            close: Continua più tardi
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
