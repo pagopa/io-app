@@ -1,15 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { getPaymentsBizEventsTransactionsAction } from "../store/actions";
 import { TransactionClient } from "../../common/api/client";
-import { getOrFetchWalletSessionToken } from "../../checkout/saga/networking/handleWalletPaymentNewSessionToken";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BizEventsHeaders } from "../utils/types";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 const DEFAULT_TRANSACTION_LIST_SIZE = 10;
 
@@ -17,28 +15,17 @@ export function* handleGetBizEventsTransactions(
   getTransactionList: TransactionClient["getTransactionList"],
   action: ActionType<(typeof getPaymentsBizEventsTransactionsAction)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
-
-  if (sessionToken === undefined) {
-    yield* put(
-      getPaymentsBizEventsTransactionsAction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
-    return;
-  }
-  const getTransactionListRequest = getTransactionList({
-    size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
-    Authorization: sessionToken,
-    "x-continuation-token": action.payload.continuationToken
-  });
-
   try {
-    const getTransactionListResult = (yield* call(
-      withRefreshApiCall,
-      getTransactionListRequest,
-      action
-    )) as unknown as SagaCallReturnType<typeof getTransactionList>;
+    const getTransactionListResult = yield* withPaymentsSessionToken(
+      getTransactionList,
+      getPaymentsBizEventsTransactionsAction.failure,
+      action,
+      {
+        size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
+        "x-continuation-token": action.payload.continuationToken
+      },
+      "Authorization"
+    );
 
     if (E.isLeft(getTransactionListResult)) {
       yield* put(
@@ -67,7 +54,8 @@ export function* handleGetBizEventsTransactions(
     } else if (getTransactionListResult.right.status === 404) {
       yield* put(getPaymentsBizEventsTransactionsAction.success({ data: [] }));
     } else if (getTransactionListResult.right.status !== 401) {
-      // The 401 status is handled by the withRefreshApiCall
+      // The 401 status returned from all the pagoPA APIs need to reset the session token before refreshing the token
+
       yield* put(
         getPaymentsBizEventsTransactionsAction.failure({
           ...getGenericError(

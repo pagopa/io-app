@@ -53,6 +53,10 @@ import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { formatPaymentNoticeNumber } from "../../common/utils";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 
+import * as analytics from "../analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
 };
@@ -73,6 +77,13 @@ const WalletPaymentDetailScreen = () => {
     React.useCallback(() => {
       dispatch(paymentsGetPaymentDetailsAction.request(rptId));
     }, [dispatch, rptId])
+  );
+
+  useOnFirstRender(
+    () => {
+      analytics.trackPaymentSummaryLoading();
+    },
+    () => pot.isLoading(paymentDetailsPot)
   );
 
   if (pot.isError(paymentDetailsPot)) {
@@ -119,7 +130,20 @@ const WalletPaymentDetailContent = ({
   payment
 }: WalletPaymentDetailContentProps) => {
   const dispatch = useIODispatch();
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  useOnFirstRender(() => {
+    analytics.trackPaymentSummaryInfoScreen({
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+      service_name: paymentAnalyticsData?.serviceName,
+      data_entry: paymentAnalyticsData?.startOrigin,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no"
+    });
+  });
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -194,8 +218,25 @@ const WalletPaymentDetailContent = ({
     componentProps: {
       icon: "info",
       accessibilityLabel: "info",
-      onPress: amountInfoBottomSheet.present
+      onPress: () => {
+        amountInfoBottomSheet.present();
+        analytics.trackPaymentSummaryAmountInfo({
+          amount,
+          organization_name: payment.paName,
+          service_name: description
+        });
+      }
     }
+  };
+
+  const handleOnCopy = (text: string) => {
+    clipboardSetStringWithFeedback(text);
+    analytics.trackPaymentSummaryNoticeCopy({
+      code: text,
+      organization_name: payment.paName,
+      service_name: description,
+      expiration_date: dueDate
+    });
   };
 
   return (
@@ -240,9 +281,7 @@ const WalletPaymentDetailContent = ({
         label={I18n.t("payment.noticeCode")}
         accessibilityLabel={I18n.t("payment.noticeCode")}
         value={formattedPaymentNoticeNumber}
-        onPress={() =>
-          clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
-        }
+        onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
       />
       <Divider />
       <ListItemInfoCopy
@@ -250,7 +289,7 @@ const WalletPaymentDetailContent = ({
         label={I18n.t("wallet.firstTransactionSummary.entityCode")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
         value={organizationFiscalCode}
-        onPress={() => clipboardSetStringWithFeedback(organizationFiscalCode)}
+        onPress={() => handleOnCopy(organizationFiscalCode)}
       />
       {amountInfoBottomSheet.bottomSheet}
     </GradientScrollView>

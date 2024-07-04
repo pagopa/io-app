@@ -14,6 +14,6 @@ export function* watchPaymentsWalletSaga(
   yield* takeLatest(
     getPaymentsWalletUserMethods.request,
     handleGetPaymentsWalletUserMethods,
-    walletClient.getWalletsByIdUser
+    walletClient.getIOPaymentWalletsByIdUser
   );
 }
