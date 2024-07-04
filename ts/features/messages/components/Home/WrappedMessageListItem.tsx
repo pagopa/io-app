@@ -1,11 +1,14 @@
 import React, { useCallback, useMemo } from "react";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
+import { useIOSelector } from "../../../../store/hooks";
+import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
@@ -22,6 +25,12 @@ export const WrappedMessageListItem = ({
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
 
+  const isPaymentMessageWithPaidNotice = useIOSelector(state =>
+    isPaymentMessageWithPaidNoticeSelector(state, message.category)
+  );
+
+  const messageCategoryTag = message.category.tag;
+  const doubleAvatar = messageCategoryTag === PaymentTagEnum.PAYMENT;
   const serviceLogoUriSources = useMemo(
     () => logoForService(serviceId, organizationFiscalCode),
     [serviceId, organizationFiscalCode]
@@ -37,8 +46,16 @@ export const WrappedMessageListItem = ({
   );
   const isRead = message.isRead;
   const badgeText =
-    message.category.tag === TagEnum.PN
+    messageCategoryTag === SENDTagEnum.PN
       ? I18n.t("features.pn.details.badge.legalValue")
+      : isPaymentMessageWithPaidNotice
+      ? I18n.t("messages.badge.paid")
+      : undefined;
+  const badgeVariant =
+    messageCategoryTag === SENDTagEnum.PN
+      ? "legalMessage"
+      : isPaymentMessageWithPaidNotice
+      ? "success"
       : undefined;
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message),
@@ -46,7 +63,7 @@ export const WrappedMessageListItem = ({
   );
 
   const onPressCallback = useCallback(() => {
-    if (message.category.tag === TagEnum.PN || message.hasPrecondition) {
+    if (message.category.tag === SENDTagEnum.PN || message.hasPrecondition) {
       // TODO preconditions IOCOM-840
       return;
     }
@@ -62,15 +79,17 @@ export const WrappedMessageListItem = ({
   return (
     <MessageListItem
       accessibilityLabel={accessibilityLabel}
-      serviceName={serviceName}
+      badgeText={badgeText}
+      badgeVariant={badgeVariant}
+      doubleAvatar={doubleAvatar}
+      formattedDate={messageDate}
+      isRead={isRead}
       messageTitle={messageTitle}
       onLongPress={() => undefined}
       onPress={onPressCallback}
-      serviceLogos={serviceLogoUriSources}
-      badgeText={badgeText}
-      isRead={isRead}
       organizationName={organizationName}
-      formattedDate={messageDate}
+      serviceLogos={serviceLogoUriSources}
+      serviceName={serviceName}
       testID={`wrapped_message_list_item_${index}`}
     />
   );

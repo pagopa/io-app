@@ -6,12 +6,9 @@ import { NewTransactionResponse } from "../../../../../../../definitions/pagopa/
 import { PaymentInfo } from "../../../../../../../definitions/pagopa/ecommerce/PaymentInfo";
 import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
-import { getGenericError } from "../../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { paymentsCreateTransactionAction } from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
-import { selectWalletPaymentSessionToken } from "../../../store/selectors";
+import { paymentAnalyticsDataSelector } from "../../../../history/store/selectors";
 
 describe("Test handleWalletPaymentCreateTransaction saga", () => {
   const newTransactionPayload: NewTransactionRequest = {
@@ -45,14 +42,10 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockNewTransaction(),
-        paymentsCreateTransactionAction.request(newTransactionPayload)
-      )
       .next(E.right({ status: 200, value: newTransactionResponse }))
+      .select(paymentAnalyticsDataSelector)
+      .next()
       .put(paymentsCreateTransactionAction.success(newTransactionResponse))
       .next()
       .isDone();
@@ -69,19 +62,10 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockNewTransaction(),
-        paymentsCreateTransactionAction.request(newTransactionPayload)
-      )
       .next(E.right({ status: 400, value: undefined }))
-      .put(
-        paymentsCreateTransactionAction.failure(
-          getGenericError(new Error(`Error: 400`))
-        )
-      )
+      .select(paymentAnalyticsDataSelector)
+      .next({})
       .next()
       .isDone();
   });
@@ -97,19 +81,10 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
-      .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockNewTransaction(),
-        paymentsCreateTransactionAction.request(newTransactionPayload)
-      )
       .next(E.left([]))
-      .put(
-        paymentsCreateTransactionAction.failure({
-          ...getGenericError(new Error(readablePrivacyReport([])))
-        })
-      )
+      .select(paymentAnalyticsDataSelector)
+      .next({})
       .next()
       .isDone();
   });

@@ -8,6 +8,7 @@ import { Action } from "../actions/types";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
+  resetDeleteUserDataProcessing,
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
@@ -81,7 +82,15 @@ const userDataProcessingReducer = (
         ...computedProp(action.payload, pot.none)
       };
     }
+    case getType(resetDeleteUserDataProcessing): {
+      const maybeValue = state[UserDataProcessingChoiceEnum.DELETE];
+      const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
 
+      return {
+        ...state,
+        [UserDataProcessingChoiceEnum.DELETE]: pot.some(prevValue)
+      };
+    }
     case getType(clearCache):
       return INITIAL_STATE;
 
@@ -95,3 +104,14 @@ export default userDataProcessingReducer;
 // Selectors
 export const userDataProcessingSelector = (state: GlobalState) =>
   state.userDataProcessing;
+
+export const isUserDataProcessingDeleteLoadingSelector = (
+  state: GlobalState
+) => {
+  const deleteChoice = state.userDataProcessing.DELETE;
+
+  return pot.isLoading(deleteChoice) || pot.isUpdating(deleteChoice);
+};
+
+export const isUserDataProcessingDeleteErrorSelector = (state: GlobalState) =>
+  pot.isError(state.userDataProcessing.DELETE);

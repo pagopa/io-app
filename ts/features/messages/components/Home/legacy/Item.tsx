@@ -23,8 +23,8 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { BadgeComponent } from "../../../../../components/screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { useIOSelector } from "../../../../../store/hooks";
-import { isNoticePaidSelector } from "../../../../../store/reducers/entities/payments";
 import { isPnEnabledSelector } from "../../../../../store/reducers/backendStatus";
+import { isPaymentMessageWithPaidNoticeSelector } from "../../../store/reducers/allPaginated";
 
 const ICON_WIDTH = 24;
 
@@ -241,7 +241,7 @@ const MessageListItem = ({
 
   const pnEnabled = useIOSelector(isPnEnabledSelector);
   const hasPaidBadge = useIOSelector(state =>
-    isNoticePaidSelector(state, category)
+    isPaymentMessageWithPaidNoticeSelector(state, category)
   );
   const maybeItemBadge = getMaybeItemBadge({
     paid: hasPaidBadge,
