@@ -29,6 +29,7 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "messages.contextualHelpContent"
     }
   },
+  // TODO: delete this route when the isNewWalletSectionEnabled FF will be deleted
   [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
@@ -77,21 +78,36 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isNewPaymentSectionEnabledSelector
   );
 
-  const navigateToSettingMainScreen = useCallback(
-    () =>
-      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.SETTINGS_MAIN
-      }),
-    [navigation]
-  );
+  const navigateToSettingMainScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.SETTINGS_MAIN
+    });
+  }, [navigation]);
+
+  const navigateToProfilePrefercesScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    });
+  }, [navigation]);
 
   const settingsAction: ActionProp = useMemo(
     () => ({
       icon: "coggle",
-      accessibilityLabel: I18n.t("global.buttons.edit"),
+      accessibilityLabel: I18n.t("global.buttons.settings"),
       onPress: navigateToSettingMainScreen
     }),
     [navigateToSettingMainScreen]
+  );
+
+  const searchMessageAction: ActionProp = useMemo(
+    () => ({
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: () => {
+        dispatch(searchMessagesEnabled(true));
+      }
+    }),
+    [dispatch]
   );
 
   const requestParams = useMemo(
@@ -129,13 +145,12 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction,
           secondAction: {
             icon: "coggle",
-            accessibilityLabel: I18n.t("global.buttons.edit"),
-            onPress: () =>
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: isNewWalletSectionEnabled
-                  ? ROUTES.SETTINGS_MAIN
-                  : ROUTES.PROFILE_PREFERENCES_SERVICES
-              })
+            accessibilityLabel: isNewWalletSectionEnabled
+              ? I18n.t("global.buttons.settings")
+              : I18n.t("global.buttons.edit"),
+            onPress: isNewWalletSectionEnabled
+              ? navigateToSettingMainScreen
+              : navigateToProfilePrefercesScreen
           },
           thirdAction: {
             icon: "search",
@@ -146,6 +161,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             }
           }
         };
+      // TODO: delete this route when the isNewWalletSectionEnabled FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
@@ -176,57 +192,43 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           }
         };
       case ROUTES.PAYMENTS_HOME:
-        if (isNewWalletSectionEnabled) {
-          return {
-            title: I18n.t("features.payments.title"),
-            type: "twoActions",
-            firstAction: helpAction,
-            secondAction: settingsAction
-          };
-        }
         return {
           title: I18n.t("features.payments.title"),
-          type: "singleAction",
-          firstAction: helpAction
+          firstAction: helpAction,
+          ...(isNewWalletSectionEnabled
+            ? {
+                type: "twoActions",
+                secondAction: settingsAction
+              }
+            : { type: "singleAction" })
         };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
-        if (isNewWalletSectionEnabled) {
-          return {
-            title: I18n.t("messages.contentTitle"),
-            type: "threeActions",
-            firstAction: helpAction,
-            secondAction: settingsAction,
-            thirdAction: {
-              icon: "search",
-              accessibilityLabel: I18n.t("global.accessibility.search"),
-              onPress: () => {
-                dispatch(searchMessagesEnabled(true));
-              }
-            }
-          };
-        }
         return {
           title: I18n.t("messages.contentTitle"),
-          type: "twoActions",
           firstAction: helpAction,
-          secondAction: {
-            icon: "search",
-            accessibilityLabel: I18n.t("global.accessibility.search"),
-            onPress: () => {
-              dispatch(searchMessagesEnabled(true));
-            }
-          }
+          ...(isNewWalletSectionEnabled
+            ? {
+                type: "threeActions",
+                secondAction: settingsAction,
+                thirdAction: searchMessageAction
+              }
+            : {
+                type: "twoActions",
+                secondAction: searchMessageAction
+              })
         };
     }
   }, [
     currentRouteName,
     helpAction,
     isNewWalletSectionEnabled,
-    presentWalletHomeHeaderBottomsheet,
+    navigateToProfilePrefercesScreen,
+    navigateToSettingMainScreen,
     navigation,
-    settingsAction,
-    dispatch
+    presentWalletHomeHeaderBottomsheet,
+    searchMessageAction,
+    settingsAction
   ]);
 
   return (

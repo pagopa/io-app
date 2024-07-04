@@ -21,14 +21,9 @@ import React, {
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { LightModalContext } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../navigation/params/AppParamsList";
-import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
@@ -38,14 +33,10 @@ import { showProfileBannerSelector } from "../../features/profileSettings/store/
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
-
-type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
-  LightModalContextInterface;
 
 type ProfileNavListItem = {
   value: string;
@@ -59,7 +50,8 @@ const ListItem = memo(ListItemNav);
 /**
  * A screen to show all the options related to the user profile
  */
-const ProfileMainScreen = ({ hideModal }: Props) => {
+const ProfileMainScreen = () => {
+  const { hideModal } = React.useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const theme = useIOTheme();
@@ -287,4 +279,4 @@ const ProfileMainScreen = ({ hideModal }: Props) => {
   );
 };
 
-export default withLightModalContext(ProfileMainScreen);
+export default ProfileMainScreen;
