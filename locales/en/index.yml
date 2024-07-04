@@ -3207,9 +3207,9 @@ features:
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
-      info:
-        title: Start with your Digital Identity
-        content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
+      title: Attiva IT Wallet
+      content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
     identification:
       mode:
         title: Con quale metodo vuoi identificarti?
