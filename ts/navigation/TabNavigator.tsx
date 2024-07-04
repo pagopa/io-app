@@ -200,21 +200,23 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        <Tab.Screen
-          name={ROUTES.PROFILE_MAIN}
-          component={ProfileMainScreen}
-          options={{
-            title: I18n.t("global.navigator.profile"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                iconName="navProfile"
-                iconNameFocused="navProfileFocused"
-                color={color}
-                focused={focused}
-              />
-            )
-          }}
-        />
+        {!isNewWalletSectionEnabled && (
+          <Tab.Screen
+            name={ROUTES.PROFILE_MAIN}
+            component={ProfileMainScreen}
+            options={{
+              title: I18n.t("global.navigator.profile"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName="navProfile"
+                  iconNameFocused="navProfileFocused"
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
       </Tab.Navigator>
     </LoadingSpinnerOverlay>
   );

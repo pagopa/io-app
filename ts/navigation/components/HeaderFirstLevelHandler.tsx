@@ -1,7 +1,7 @@
 import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps, useMemo } from "react";
+import React, { ComponentProps, useCallback, useMemo } from "react";
 import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import {
@@ -77,6 +77,23 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isNewPaymentSectionEnabledSelector
   );
 
+  const navigateToSettingMainScreen = useCallback(
+    () =>
+      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.SETTINGS_MAIN
+      }),
+    [navigation]
+  );
+
+  const settingsAction: ActionProp = useMemo(
+    () => ({
+      icon: "coggle",
+      accessibilityLabel: I18n.t("global.buttons.edit"),
+      onPress: navigateToSettingMainScreen
+    }),
+    [navigateToSettingMainScreen]
+  );
+
   const requestParams = useMemo(
     () =>
       pipe(
@@ -115,7 +132,9 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             accessibilityLabel: I18n.t("global.buttons.edit"),
             onPress: () =>
               navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+                screen: isNewWalletSectionEnabled
+                  ? ROUTES.SETTINGS_MAIN
+                  : ROUTES.PROFILE_PREFERENCES_SERVICES
               })
           },
           thirdAction: {
@@ -137,9 +156,10 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         if (isNewWalletSectionEnabled) {
           return {
             title: I18n.t("wallet.wallet"),
-            type: "singleAction",
+            type: "twoActions",
             firstAction: helpAction,
-            testID: "wallet-home-header-title"
+            testID: "wallet-home-header-title",
+            secondAction: settingsAction
           };
         }
         return {
@@ -156,6 +176,14 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           }
         };
       case ROUTES.PAYMENTS_HOME:
+        if (isNewWalletSectionEnabled) {
+          return {
+            title: I18n.t("features.payments.title"),
+            type: "twoActions",
+            firstAction: helpAction,
+            secondAction: settingsAction
+          };
+        }
         return {
           title: I18n.t("features.payments.title"),
           type: "singleAction",
@@ -163,6 +191,21 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
+        if (isNewWalletSectionEnabled) {
+          return {
+            title: I18n.t("messages.contentTitle"),
+            type: "threeActions",
+            firstAction: helpAction,
+            secondAction: settingsAction,
+            thirdAction: {
+              icon: "search",
+              accessibilityLabel: I18n.t("global.accessibility.search"),
+              onPress: () => {
+                dispatch(searchMessagesEnabled(true));
+              }
+            }
+          };
+        }
         return {
           title: I18n.t("messages.contentTitle"),
           type: "twoActions",
@@ -179,10 +222,11 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   }, [
     currentRouteName,
     helpAction,
-    presentWalletHomeHeaderBottomsheet,
     isNewWalletSectionEnabled,
-    dispatch,
-    navigation
+    presentWalletHomeHeaderBottomsheet,
+    navigation,
+    settingsAction,
+    dispatch
   ]);
 
   return (

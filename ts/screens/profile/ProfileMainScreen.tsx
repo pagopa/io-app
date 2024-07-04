@@ -12,12 +12,12 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, {
   useCallback,
-  useEffect,
   useState,
   useRef,
   ComponentProps,
   useMemo,
-  memo
+  memo,
+  useEffect
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
@@ -37,6 +37,8 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
@@ -224,6 +226,15 @@ const ProfileMainScreen = ({ hideModal }: Props) => {
   );
 
   const logoutLabel = I18n.t("profile.logout.menulabel");
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    faqCategories: ["profile"],
+    contextualHelpMarkdown: {
+      title: "profile.main.contextualHelpTitle",
+      body: "profile.main.contextualHelpContent"
+    }
+  });
 
   return (
     <ScrollView

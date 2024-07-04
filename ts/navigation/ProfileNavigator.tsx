@@ -30,6 +30,7 @@ import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
+import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -43,6 +44,11 @@ const ProfileStackNavigator = () => (
     initialRouteName={ROUTES.PROFILE_DATA}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
+    <Stack.Screen
+      options={{ headerShown: true }}
+      name={ROUTES.SETTINGS_MAIN}
+      component={ProfileMainScreen}
+    />
     <Stack.Screen name={ROUTES.PROFILE_DATA} component={ProfileDataScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_PRIVACY_MAIN}
