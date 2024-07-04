@@ -45,6 +45,11 @@ export const ItwStackNavigator = () => (
       options={{ headerShown: false }}
     />
     <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_RESULT}
+      component={ItwIssuanceEidResultScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH}
       component={ItwIssuanceCredentialAuthScreen}
     />
@@ -53,12 +58,6 @@ export const ItwStackNavigator = () => (
       component={ItwIssuanceCredentialPreviewScreen}
       options={{ headerShown: false }}
     />
-    <Stack.Screen
-      name={ITW_ROUTES.ISSUANCE.RESULT}
-      component={ItwIssuanceEidResultScreen}
-      options={{ headerShown: false }}
-    />
-
     {/* CREDENTIAL PRESENTATION */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.EID_DETAIL}

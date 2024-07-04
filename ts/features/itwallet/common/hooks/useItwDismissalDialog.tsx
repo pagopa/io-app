@@ -11,7 +11,6 @@ export const useItwDismissalDialog = () => {
 
   const handleDismiss = () => {
     navigation.popToTop();
-    navigation.pop();
   };
 
   const show = () =>
