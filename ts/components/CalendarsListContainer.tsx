@@ -1,20 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-
-import { View, ListRenderItemInfo, SectionList } from "react-native";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { connect } from "react-redux";
-import { ButtonSolid } from "@pagopa/io-app-design-system";
-import ListItemComponent from "../components/screens/ListItemComponent";
+import {
+  ContentWrapper,
+  ListItemHeader,
+  RadioGroup,
+  VSpacer,
+  useIOToast
+} from "@pagopa/io-app-design-system";
+import _ from "lodash";
 import I18n from "../i18n";
-import { preferredCalendarSaveSuccess } from "../store/actions/persistedPreferences";
-import { Dispatch } from "../store/actions/types";
-import { GlobalState } from "../store/reducers/types";
-import customVariables from "../theme/variables";
-import { convertLocalCalendarName } from "../utils/calendar";
-import { Body } from "./core/typography/Body";
-import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
-import SectionHeaderComponent from "./screens/SectionHeaderComponent";
+import { useIOSelector } from "../store/hooks";
+import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 
 type CalendarByAccount = Readonly<{
   title: string;
@@ -23,23 +20,10 @@ type CalendarByAccount = Readonly<{
 
 type CalendarsByAccount = ReadonlyArray<CalendarByAccount>;
 
-type OwnProps = {
+type Props = {
   onCalendarSelected: (calendar: Calendar) => void;
   onCalendarsLoaded: () => void;
-  lastListItem?: React.ReactNode;
   onCalendarRemove?: () => void;
-};
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
-
-type State = {
-  calendarsByAccount: pot.Pot<CalendarsByAccount, ResourceError>;
-};
-
-const INITIAL_STATE: State = {
-  calendarsByAccount: pot.none
 };
 
 type FetchError = {
@@ -47,18 +31,6 @@ type FetchError = {
 };
 
 type ResourceError = FetchError;
-
-const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
-  switch (resourceError.kind) {
-    case "FETCH_ERROR":
-      return I18n.t("messages.cta.errors.fetchCalendars");
-
-    default: {
-      // Exhaustive check
-      return ((): never => resourceError.kind)();
-    }
-  }
-};
 
 const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
   const accounts: ReadonlyArray<string> = [
@@ -74,81 +46,22 @@ const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
 /**
  * Allows the user to select one of the device available Calendars
  */
-class CalendarsListContainer extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = INITIAL_STATE;
-  }
+const CalendarsListContainer = ({
+  onCalendarSelected,
+  onCalendarsLoaded,
+  onCalendarRemove
+}: Props) => {
+  const [calendarsByAccount, setCalendarsByAccount] = useState<
+    pot.Pot<CalendarsByAccount, ResourceError>
+  >(pot.none);
+  const toast = useIOToast();
+  const defaultCalendar = useIOSelector(preferredCalendarSelector, _.isEqual);
+  const [selectedCalendar, setSelectedCalendar] = useState<
+    Calendar | undefined
+  >(defaultCalendar);
 
-  private renderSectionHeader = (info: { section: any }): React.ReactNode => (
-    <SectionHeaderComponent sectionHeader={info.section.title} />
-  );
-
-  private renderListItem = ({ item }: ListRenderItemInfo<Calendar>) => {
-    const { defaultCalendar } = this.props;
-    const isDefaultCalendar = defaultCalendar && item.id === defaultCalendar.id;
-    return (
-      <ListItemComponent
-        key={item.id}
-        title={convertLocalCalendarName(item.title)}
-        hideIcon={!isDefaultCalendar}
-        iconSize={12}
-        iconName={isDefaultCalendar ? "checkTickBig" : undefined}
-        onPress={() =>
-          isDefaultCalendar && this.props.onCalendarRemove
-            ? this.props.onCalendarRemove()
-            : this.props.onCalendarSelected(item)
-        }
-        accessible={true}
-        accessibilityRole={"radio"}
-        accessibilityLabel={`${convertLocalCalendarName(item.title)}, ${
-          isDefaultCalendar
-            ? I18n.t("global.accessibility.active")
-            : I18n.t("global.accessibility.inactive")
-        }`}
-      />
-    );
-  };
-
-  public render() {
-    const { calendarsByAccount } = this.state;
-    const { defaultCalendar } = this.props;
-
-    return (
-      <React.Fragment>
-        {pot.isError(calendarsByAccount) && (
-          <React.Fragment>
-            <Body>{mapResourceErrorToMessage(calendarsByAccount.error)}</Body>
-            <ButtonSolid
-              onPress={this.fetchCalendars}
-              label={I18n.t("global.buttons.retry")}
-              accessibilityLabel={I18n.t("global.buttons.retry")}
-            />
-          </React.Fragment>
-        )}
-        <View style={{ paddingHorizontal: customVariables.contentPadding }}>
-          {pot.isSome(calendarsByAccount) && (
-            <SectionList
-              extraData={{ defaultCalendar }}
-              sections={calendarsByAccount.value}
-              renderSectionHeader={this.renderSectionHeader}
-              renderItem={this.renderListItem}
-            />
-          )}
-          <EdgeBorderComponent />
-        </View>
-      </React.Fragment>
-    );
-  }
-
-  public componentDidMount() {
-    this.fetchCalendars();
-  }
-
-  private fetchCalendars = () => {
-    this.setState({
-      calendarsByAccount: pot.noneLoading
-    });
+  const fetchCalendars = useCallback(() => {
+    setCalendarsByAccount(pot.noneLoading);
     // Fetch user calendars.
     RNCalendarEvents.findCalendars()
       .then(calendars => {
@@ -158,13 +71,8 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
             calendars.filter(calendar => calendar.allowsModifications)
           )
         );
-
-        this.setState(
-          {
-            calendarsByAccount: organizedCalendars
-          },
-          () => this.props.onCalendarsLoaded()
-        );
+        setCalendarsByAccount(organizedCalendars);
+        onCalendarsLoaded();
       })
       .catch(_ => {
         const fetchError: FetchError = {
@@ -174,30 +82,76 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
           ReadonlyArray<CalendarByAccount>,
           ResourceError
         > = pot.toError(pot.none, fetchError);
-        this.setState(
-          {
-            calendarsByAccount
-          },
-          () => this.props.onCalendarsLoaded()
-        );
+        setCalendarsByAccount(calendarsByAccount);
+        onCalendarsLoaded();
       });
-  };
-}
+  }, [onCalendarsLoaded]);
 
-const mapStateToProps = (state: GlobalState) => ({
-  defaultCalendar: state.persistedPreferences.preferredCalendar
-});
+  const mapData = useCallback(
+    (data: ReadonlyArray<Calendar>) =>
+      data.map((item: Calendar) => ({
+        id: item.id,
+        value: item.title,
+        disabled: !item.allowsModifications
+      })),
+    []
+  );
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  preferredCalendarSaveSuccess: (calendar: Calendar) =>
-    dispatch(
-      preferredCalendarSaveSuccess({
-        preferredCalendar: calendar
-      })
-    )
-});
+  const onPressRadio = useCallback(
+    (value: string) => {
+      const calendar =
+        pot.isSome(calendarsByAccount) &&
+        calendarsByAccount.value
+          .flatMap(section => section.data)
+          .find(cal => cal.id === value);
+      if (calendar) {
+        const isDefaultCalendar =
+          defaultCalendar && calendar.id === defaultCalendar.id;
+        if (isDefaultCalendar && onCalendarRemove) {
+          onCalendarRemove();
+          setSelectedCalendar(undefined);
+        } else {
+          setSelectedCalendar(calendar);
+          onCalendarSelected(calendar);
+        }
+        toast.hideAll();
+        toast.success(I18n.t("profile.preferences.genericToastTitle"));
+      }
+    },
+    [
+      calendarsByAccount,
+      defaultCalendar,
+      onCalendarRemove,
+      onCalendarSelected,
+      toast
+    ]
+  );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CalendarsListContainer);
+  useEffect(() => {
+    fetchCalendars();
+  }, [fetchCalendars]);
+
+  return (
+    <ContentWrapper>
+      {pot.isSome(calendarsByAccount) &&
+        calendarsByAccount.value.map((section, index) => (
+          <React.Fragment key={index}>
+            <ListItemHeader label={section.title} />
+            <RadioGroup<string>
+              type="radioListItem"
+              key={`radio_group_${index}`}
+              items={mapData(section.data)}
+              selectedItem={selectedCalendar?.id}
+              onPress={onPressRadio}
+            />
+            {/* not show the end spacer if the element is the last */}
+            {index < calendarsByAccount.value.length - 1 && (
+              <VSpacer size={24} />
+            )}
+          </React.Fragment>
+        ))}
+    </ContentWrapper>
+  );
+};
+
+export default memo(CalendarsListContainer);

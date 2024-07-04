@@ -157,7 +157,7 @@ export const FimsFlowSuccessBody = ({
                   dispatch(
                     fimsGetRedirectUrlAndOpenIABAction.request(
                       // eslint-disable-next-line no-underscore-dangle
-                      { acceptUrl: consents._links.confirm.href }
+                      { acceptUrl: consents._links.consent.href }
                     )
                   )
               }
