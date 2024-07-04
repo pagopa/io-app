@@ -13,13 +13,7 @@ import { duplicateSetAndRemove, duplicateSetAndToggle } from "../../utils";
 import { GlobalState } from "../../../../store/reducers/types";
 import { MessageListCategory } from "../../types/messageListCategory";
 
-// __TODO__ lock load and reload of messages while the archiving is processing
-// __TODO__ lock even for push notifications
-
-// __TODO__ a push notification tapped in foreground while in enabled state should disable the archiving
-// __TODO__ a push notification tapped in foreground while in processing state should do nothing
-
-// __TODO__ Android back button while in processing state should do nothing
+// __TODO__ lock load and reload of messages while the archiving is processing and when the first action is dispatched to load an empty list (or when the error component is shown)
 
 type ArchivingStatus = "disabled" | "enabled" | "processing";
 

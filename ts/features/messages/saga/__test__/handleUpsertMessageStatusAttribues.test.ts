@@ -47,6 +47,8 @@ describe("handleUpsertMessageStatusAttribues", () => {
         .next(E.right({ status: 200, value: {} }))
         .put(action.success(actionPayload))
         .next()
+        .cancelled()
+        .next(false)
         .isDone();
     });
   });
@@ -77,6 +79,8 @@ describe("handleUpsertMessageStatusAttribues", () => {
           })
         )
         .next()
+        .cancelled()
+        .next(false)
         .isDone();
     });
   });
@@ -97,6 +101,8 @@ describe("handleUpsertMessageStatusAttribues", () => {
           })
         )
         .next()
+        .cancelled()
+        .next(false)
         .isDone();
     });
   });

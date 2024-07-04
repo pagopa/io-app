@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ButtonOutline, ButtonSolid } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import {
   areThereEntriesForShownMessageListCategorySelector,
   isArchivingDisabledSelector,
@@ -16,6 +20,7 @@ import {
   startProcessingMessageArchivingAction
 } from "../../store/actions/archiving";
 import { MessageListCategory } from "../../types/messageListCategory";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,12 +43,20 @@ type ArchiveRestoreCTAsProps = {
 };
 
 export const ArchiveRestoreBar = () => {
+  const store = useIOStore();
   const tabNavigation = useIOTabNavigation();
 
   const isArchivingDisabled = useIOSelector(isArchivingDisabledSelector);
   const shownCategory = useIOSelector(shownMessageCategorySelector);
 
   console.log(`=== ArchiveRestoreBar ${shownCategory}`);
+
+  const androidBackButtonCallback = useCallback(() => {
+    // Disable Android back button while processing archiving/restoring
+    const state = store.getState();
+    return isArchivingInProcessingModeSelector(state);
+  }, [store]);
+  useHardwareBackButton(androidBackButtonCallback);
 
   useEffect(() => {
     // __TODO__ would be nice not to raise this event if the bar is already hidden/shown

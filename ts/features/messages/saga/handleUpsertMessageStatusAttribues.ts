@@ -131,22 +131,18 @@ export function* handleMessageArchivingRestoring(
     ]);
 
     if (isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
-
       yield* put(
         removeScheduledMessageArchivingAction({
           fromInboxToArchive: currentEntryToProcess.archiving,
           messageId: currentEntryToProcess.messageId
         })
       );
-
     } else {
-      
       if (isActionOf(upsertMessageStatusAttributes.failure, outputAction)) {
         yield* put(interruptMessageArchivingProcessingAction());
       }
       return;
     }
-    
   } while (true);
 }
 
