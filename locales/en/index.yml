@@ -303,7 +303,7 @@ profile:
   logout:
     menulabel: Logout from IO
     alertTitle: Do you want to logout?
-    alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
+    alertMessage: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
     loading: You're leaving IO
     exit: Exit
   errors:
@@ -434,7 +434,12 @@ profile:
     appInfo:
       title: About IO
       description: Learn more about the IO app
-      contextualHelpContent: !include profile/profile_appinfo_main.md
+      subtitle: Qui puoi trovare ulteriori dettagli sull'app IO e scoprire di più sul suo utilizzo.
+      paragraphTitle: Cos’è IO?
+      paragraphBody1: "IO, l’app dei servizi pubblici, "
+      paragraphBody2: ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.
+      bannerBody: Vuoi saperne di più?
+      bannerButton: Vai al sito di IO
     developersSectionHeader: Developers
     testEnvironmentSectionHeader: Test Environment
     pagoPaEnvironment:
@@ -495,18 +500,19 @@ profile:
   preferences:
     title: Preferences
     subtitle: These settings allow you to customise your IO experience
+    genericToastTitle: Preferenze aggiornate!
     contextualHelpTitle: Your preferences
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       wip: In progress
       digitalDomicile: Digital domicile
-      service_contact: 
+      service_contact:
         title: Use of services
         subtitle: Choose who can contact you
       send_email_messages:
         title: Forwarding messages by email
         subtitle: Receive message previews
-      language: 
+      language:
         title: Language
         subtitle: Choose language
       preferred_calendar:
@@ -967,13 +973,13 @@ onboarding:
         notEnrolled:
           text: You need to configure this in your device settings.
           label: How to
-          step1: 
+          step1:
             label: Step 1
             value: Go to your device settings
-          step2: 
+          step2:
             label: Step 2
             value: Set up face or fingerprint
-          step3: 
+          step3:
             label: Step 3
             value: Enable it in IO under Profile > Security
     unavailable:
@@ -981,10 +987,10 @@ onboarding:
       subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
       body:
         label: How to
-        step1: 
+        step1:
           label: Step 1
           value: Go to your device settings
-        step2: 
+        step2:
           label: Step 2
           value: Set a code or sign to unlock the device
   shareData:
@@ -3240,12 +3246,13 @@ features:
         tos:
           0: "Per maggiori informazioni, leggi"
           1: l’informativa Privacy e i Termini e Condizioni d’uso
+      eidPreview:
+        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        actions:
+          primary: Continua
+          secondary: Annulla
       credentialPreview:
-        title: "{{credential}}: ecco l'anteprima"
-        banner:
-          title: "Qualcosa non torna?"
-          content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
-          actionTitle: "Contatta l'assistenza"
+        title: "{{credential}}: ecco l'anteprima dei tuoi dati"
         bottomSheet:
           about:
             title: "Chi è?"
@@ -3253,15 +3260,17 @@ features:
           data:
             title: "Protezione dei dati"
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
-        toast:
-          success: "Tessera aggiunta!"
-          failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
-      success:
-        title: "Hai aggiunto\nIdentità Digitale!"
-        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+      eidResult:
+        success:
+          title: "IT Wallet è attivo!"
+          subtitle: È tutto pronto, ora puoi aggiungere il primo documento al Portafoglio.
+          toast: Fatto!
+          actions:
+            continue: Aggiungi primo documento
+            close: Continua più tardi
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
