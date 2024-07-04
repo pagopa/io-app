@@ -266,7 +266,7 @@ startup:
   userDeletePendingAlert:
     title: Eliminazione profilo in corso
     message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
-    cta_1: Vai a Privacy
+    cta_1: Vai al Profilo
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
@@ -303,7 +303,7 @@ profile:
   logout:
     menulabel: Esci da IO
     alertTitle: Vuoi davvero uscire?
-    alertMessage: Al prossimo accesso sarà necessario autenticarti con CIE o SPID.
+    alertMessage: Dovrai entrare di nuovo con SPID o CIE per usare l’app.
     loading: Stai uscendo da IO
     exit: Esci
   errors:
@@ -334,38 +334,47 @@ profile:
     privacy:
       title: Privacy e Condizioni d'uso
       description: I tuoi diritti e obblighi nell’uso di IO
-      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei tuoi dati personali.
+      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Elimina il tuo account
-        description: Cancella in modo permanente il tuo account e i tuoi dati personali
+        description: Elimina il tuo profilo e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
-          activeBonusTitle: Bonus attivi
-          activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
-          oldRequest: Hai già richiesto la cancellazione del tuo account.
-          oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
+          activeBonusTitle: Elimina il tuo profilo
+          activeBonusDescription: "Sembra che tu abbia aderito ad alcune iniziative presenti su IO. Se elimini il tuo profilo, l’iscrizione a eventuali iniziative a cui hai aderito non verrà cancellata\n\nPer gestirle, vai alla sezione Portafoglio, altrimenti scegli “Elimina”"
+          oldRequest: Hai già chiesto di eliminare il tuo profilo
+          oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n\nSe hai cambiato idea o hai richiesto l'eliminazione per sbaglio, premi su 'Annulla eliminazione'."
           cta:
-            manageBonus: Gestisci bonus
-            continue: Continua
+            manageBonus: Vai al portafoglio
+            continue: Elimina Profilo
             return: Indietro
-            cancel: Annulla l'eliminazione
+            cancel: Annulla eliminazione
         info:
-          body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo account è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
-          cta: Continua
+          title: Elimina il tuo profilo
+          description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
+          banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
+          body: 
+            p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
+            p2: 
+              firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
+              lastPart: non saranno più accessibili.
+            p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
+          cta: Procedi con l’eliminazione
         details:
-          body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          question: Qual è il motivo della cancellazione?
+          title: Perché vuoi eliminare il tuo profilo su IO?
+          body: Ci piacerebbe sapere perché stai eliminando il tuo profilo, così da poter migliorare in futuro. Se preferisci non condividere il motivo, salta questo passaggio e premi su “Elimina il tuo profilo”.
+          question: Qual è il motivo?
           answer_1: Non ritengo più utile IO
           answer_2: Non mi sento al sicuro su IO
           answer_3: Non ho mai usato l'app
           answer_4: Nessuno dei precedenti
-          labelOpenAnswer: Dicci di più
-          cta: Elimina Account
+          labelOpenAnswer: Scrivi qui il motivo
+          cta: Elimina il tuo profilo
         success:
-          title: Stiamo processando la tua richiesta.
-          body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
-          cta: Esci
+          title: Abbiamo preso in carico la tua richiesta
+          body: Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
+          cta: Chiudi
       exportData:
         cta: Richiedi copia dei tuoi dati
         title: Accedi ai tuoi dati
@@ -434,7 +443,12 @@ profile:
     appInfo:
       title: Informazioni su IO
       description: Per saperne di più sull'app IO
-      contextualHelpContent: !include profile/profile_appinfo_main.md
+      subtitle: Qui puoi trovare ulteriori dettagli sull'app IO e scoprire di più sul suo utilizzo.
+      paragraphTitle: Cos’è IO?
+      paragraphBody1: "IO, l’app dei servizi pubblici, "
+      paragraphBody2: ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.
+      bannerBody: Vuoi saperne di più?
+      bannerButton: Vai al sito di IO
     developersSectionHeader: Sviluppatori
     testEnvironmentSectionHeader: Ambiente di test
     pagoPaEnvironment:
@@ -495,18 +509,19 @@ profile:
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
+    genericToastTitle: Preferenze aggiornate!
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       wip: In elaborazione
       digitalDomicile: Domicilio digitale
-      service_contact: 
+      service_contact:
         title: Gestione servizi
         subtitle: Scegli chi può contattarti
       send_email_messages:
         title: Inoltro dei messaggi via email
         subtitle: Ricevi un’anteprima dei messaggi
-      language: 
+      language:
         title: Lingua
         subtitle: Scegli la lingua
       preferred_calendar:
@@ -967,13 +982,13 @@ onboarding:
         notEnrolled:
           text: Per farlo, devi prima configurarlo nelle impostazioni di sistema del tuo dispositivo.
           label: Come fare
-          step1: 
+          step1:
             label: Step 1
             value: Vai alle impostazioni del tuo dispositivo
-          step2: 
+          step2:
             label: Step 2
             value: Configura il volto o l’impronta
-          step3: 
+          step3:
             label: Step 3
             value: Attivalo su IO in Profilo > Sicurezza
     unavailable:
@@ -981,10 +996,10 @@ onboarding:
       subtitle: IO ti invia comunicazioni che ti riguardano personalmente. Assicurati che solo tu possa accedere all’app impostando un codice o un segno per sbloccare il dispositivo.
       body:
         label: Come fare
-        step1: 
+        step1:
           label: Step 1
           value: Vai alle impostazioni del tuo dispositivo
-        step2: 
+        step2:
           label: Step 2
           value: Imposta un codice o un segno per sbloccare il dispositivo
   shareData:
@@ -2248,7 +2263,7 @@ identification:
     congiunction: o
   title: Ciao {{name}}!
   titleProfileName: Ciao {{profileName}}!
-  titleValidation: Conferma l'operazione
+  titleValidation: Autorizza l'operazione
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
@@ -3201,9 +3216,9 @@ features:
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
-      info:
-        title: Inizia dalla tua Identità Digitale
-        content: "Usa le credenziali SPID o CIE per aggiungere la tua Identità Digitale al Portafoglio. **È un passaggio necessario per aggiungere i tuoi documenti digitali** (ad esempio la patente di guida) in modo sicuro.\n### Utile da sapere \nIn futuro potrai usare l’Identità Digitale salvata nel Portafoglio per identificarti tramite la funzionalità IT Wallet. \n\nPer maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()"
+      title: Attiva IT Wallet
+      content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
     identification:
       mode:
         title: Con quale metodo vuoi identificarti?
@@ -3240,12 +3255,13 @@ features:
         tos:
           0: Per maggiori informazioni, leggi
           1: l’informativa Privacy e i Termini e Condizioni d’uso
+      eidPreview:
+        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        actions:
+          primary: Continua
+          secondary: Annulla
       credentialPreview:
-        title: "{{credential}}: ecco l'anteprima"
-        banner:
-          title: "Qualcosa non torna?"
-          content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
-          actionTitle: "Contatta l'assistenza"
+        title: "{{credential}}: ecco l'anteprima dei tuoi dati"
         bottomSheet:
           about:
             title: "Chi è?"
@@ -3253,15 +3269,17 @@ features:
           data:
             title: "Protezione dei dati"
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
-        toast:
-          success: "Tessera aggiunta!"
-          failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
-      success:
-        title: "Hai aggiunto\nIdentità Digitale!"
-        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+      eidResult:
+        success:
+          title: "IT Wallet è attivo!"
+          subtitle: È tutto pronto, ora puoi aggiungere il primo documento al Portafoglio.
+          toast: Fatto!
+          actions:
+            continue: Aggiungi primo documento
+            close: Continua più tardi
     unsupportedDevice:
       text: A partire dal 02.07.2024 il tuo dispositivo potrebbe non essere più compatibile con IO.
       moreInfo: Scopri perchè

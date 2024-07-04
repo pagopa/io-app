@@ -102,4 +102,5 @@ export type ProfileActions =
   | ActionType<typeof removeAccountMotivation>
   | ActionType<typeof setEmailCheckAtStartupFailure>
   | ActionType<typeof emailValidationPollingStart>
-  | ActionType<typeof emailValidationPollingStop>;
+  | ActionType<typeof emailValidationPollingStop>
+  | ActionType<typeof loadBonusBeforeRemoveAccount>;
