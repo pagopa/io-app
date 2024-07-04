@@ -9,10 +9,9 @@ export const fimsHistoryPotSelector = (state: GlobalState) =>
 // the flag should be treated as enabled when either true or undefined,
 // and is defined as an optional bool
 export const fimsIsHistoryEnabledSelector = (state: GlobalState) =>
-  pipe(state, backendStatusSelector, status =>
-    pipe(
-      status,
-      O.map(_ => _.config.fims.historyEnabled !== false),
-      O.getOrElse(() => false)
-    )
+  pipe(
+    state,
+    backendStatusSelector,
+    O.map(backendStatus => backendStatus.config.fims.historyEnabled !== false),
+    O.getOrElse(() => false)
   );
