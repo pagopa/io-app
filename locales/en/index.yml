@@ -373,7 +373,7 @@ profile:
           cta: Delete your profile
         success:
           title: We've taken over your request.
-          body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE.
+          body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE."
           cta: Close
       exportData:
         cta: Request a copy of your data
