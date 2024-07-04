@@ -31,6 +31,7 @@ export const FeaturedInstitutionList = () => {
   const handlePress = useCallback(
     ({ fiscal_code, name }: Institution) => {
       analytics.trackInstitutionSelected({
+        organization_fiscal_code: fiscal_code,
         organization_name: name,
         source: "featured_organizations"
       });
