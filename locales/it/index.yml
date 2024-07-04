@@ -475,6 +475,10 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
+    itWallet:
+      itWalletTest: IT Wallet
+    trial:
+      titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
     newWalletSection: Nuova sezione portafoglio
     newHomeSection: Nuova home messaggi
@@ -482,17 +486,8 @@ profile:
     backendVersion: Versione Backend
     debugMode: Modalità debug
     designSystem: Design System
-    addCard:
-      titleSection: Aggiungi carta di test
-      warning:
-        title: Attenzione
-        message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
-        closeButton: Chiudi
-    trial:
-      titleSection: Partecipa alla sperimentazione
-    itWallet:
-      itWalletTest: IT Wallet
-      itWalletTestDescription: Abilita ambiente di test per IT Wallet
+    addTestCard:
+      title: Aggiungi carta di test
     banner:
       title: Vuoi visualizzare il tuo Codice Fiscale?
       action: Vai alla sezione “I tuoi dati”
