@@ -105,7 +105,7 @@
     "@pagopa/io-app-design-system": "1.39.4",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.3.0",
-    "@pagopa/io-react-native-http-client": "1.0.2",
+    "@pagopa/io-react-native-http-client": "1.0.5",
     "@pagopa/io-react-native-jwt": "^1.2.0",
     "@pagopa/io-react-native-login-utils": "^1.0.1",
     "@pagopa/io-react-native-wallet": "^0.11.1",
