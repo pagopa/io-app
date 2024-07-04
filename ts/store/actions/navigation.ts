@@ -146,16 +146,6 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
 /**
  * @deprecated
  */
-export const navigateToServicePreferenceScreen = () =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
-    })
-  );
-
-/**
- * @deprecated
- */
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
