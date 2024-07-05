@@ -13,8 +13,6 @@ import { duplicateSetAndRemove, duplicateSetAndToggle } from "../../utils";
 import { GlobalState } from "../../../../store/reducers/types";
 import { MessageListCategory } from "../../types/messageListCategory";
 
-// __TODO__ lock load and reload of messages while the archiving is processing and when the first action is dispatched to load an empty list (or when the error component is shown)
-
 type ArchivingStatus = "disabled" | "enabled" | "processing";
 
 export type Archiving = {
