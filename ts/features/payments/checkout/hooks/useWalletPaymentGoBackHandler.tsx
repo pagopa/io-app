@@ -11,9 +11,12 @@ import { paymentsDeleteTransactionAction } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const useWalletPaymentGoBackHandler = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const dispatch = useIODispatch();
 
@@ -29,12 +32,29 @@ const useWalletPaymentGoBackHandler = () => {
     const { transactionId } = transactionPot.value;
 
     const handleConfirmAbort = () => {
+      analytics.trackPaymentMethodSelectionBackExit({
+        attempt: paymentAnalyticsData?.attempt,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method_unavailable:
+          paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+      });
       dispatch(paymentsDeleteTransactionAction.request(transactionId));
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.CANCELED_BY_USER
         }
+      });
+    };
+
+    const handleCancel = () => {
+      analytics.trackPaymentMethodSelectionBackContinue({
+        attempt: paymentAnalyticsData?.attempt,
+        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method_unavailable:
+          paymentAnalyticsData?.savedPaymentMethodsUnavailable?.length,
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
       });
     };
 
@@ -47,7 +67,8 @@ const useWalletPaymentGoBackHandler = () => {
         },
         {
           text: I18n.t("wallet.payment.abortDialog.cancel"),
-          style: "cancel"
+          style: "cancel",
+          onPress: handleCancel
         }
       ]);
     };

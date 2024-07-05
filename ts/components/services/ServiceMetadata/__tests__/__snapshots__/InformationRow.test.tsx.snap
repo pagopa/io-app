@@ -5,6 +5,23 @@ exports[`the InformationRow component should match the snapshot 1`] = `
   <View
     accessibilityLabel="Label"
     accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -16,7 +33,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Object {
+      {
         "flexDirection": "row",
         "marginVertical": 16,
         "opacity": 1,
@@ -27,19 +44,19 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       color="bluegrey"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 22,
         }
       }
       numberOfLines={1}
       style={
-        Array [
-          Object {
+        [
+          {
             "fontSize": 16,
             "lineHeight": 22,
           },
-          Object {
+          {
             "color": "#475A6D",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -54,7 +71,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
     </Text>
     <View
       style={
-        Object {
+        {
           "width": 16,
         }
       }
@@ -64,24 +81,24 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       ellipsizeMode="tail"
       font="TitilliumSansPro"
       fontStyle={
-        Object {
+        {
           "fontSize": 16,
           "lineHeight": 22,
         }
       }
       numberOfLines={1}
       style={
-        Array [
-          Object {
+        [
+          {
             "flexGrow": 1,
             "flexShrink": 1,
             "textAlign": "right",
           },
-          Object {
+          {
             "fontSize": 16,
             "lineHeight": 22,
           },
-          Object {
+          {
             "color": "#0073E6",
             "fontFamily": "Titillium Sans Pro",
             "fontStyle": "normal",
@@ -97,12 +114,12 @@ exports[`the InformationRow component should match the snapshot 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "#CCD4DC",
         },
         false,
-        Object {
+        {
           "height": 0.5,
         },
       ]

@@ -70,7 +70,7 @@ export const DSFooterActionsSticky = () => {
   );
 
   const actionBlockAnimatedStyle = useAnimatedStyle(() => ({
-    /* 
+    /*
     We only start translating the action block
     when it reaches the top of the placeholder
        0 = Translate is blocked

@@ -408,12 +408,12 @@ export const servicesBadgeValueSelector = createSelector(
       ]);
       return [...servicesSet].reduce(
         (acc: number, service: ServicesSectionState) => {
-          const servicesNotRead = service.data.filter(
+          const servicesNotRead: number = service.data.filter(
             data =>
               pot.isSome(data) &&
               readServicesById[data.value.service_id] === undefined
           ).length;
-          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
           return acc + servicesNotRead;
         },
         0

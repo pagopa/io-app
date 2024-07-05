@@ -68,14 +68,14 @@ const getChannelPreference = (
   return false;
 };
 
-const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
+const ContactPreferencesToggle = (props: Props) => {
   const { isLoading, isError } = props;
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const { serviceId, loadServicePreference } = props;
+  const { serviceId, requestServicePreference } = props;
 
   const loadPreferences = useCallback(
-    () => loadServicePreference(serviceId),
-    [serviceId, loadServicePreference]
+    () => requestServicePreference(serviceId),
+    [serviceId, requestServicePreference]
   );
 
   const isFocused = useIsFocused();
@@ -222,7 +222,7 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   upsertServicePreference: (id: ServiceId, sp: ServicePreference) =>
     dispatch(upsertServicePreference.request({ id, ...sp })),
-  loadServicePreference: (id: ServiceId) =>
+  requestServicePreference: (id: ServiceId) =>
     dispatch(loadServicePreference.request(id))
 });
 

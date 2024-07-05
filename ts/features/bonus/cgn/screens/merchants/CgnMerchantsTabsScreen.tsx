@@ -107,7 +107,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (_: Props) => {
             heading={I18n.t("bonus.cgn.merchantsList.places")}
           >
             <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-               TODO PLACEHOLDER HERE GOES THE MAP 
+               TODO PLACEHOLDER HERE GOES THE MAP
               <H1>{`${I18n.t("bonus.cgn.merchantsList.places")} TAB`}</H1>
             </View>
           </Tab>

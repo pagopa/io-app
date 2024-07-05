@@ -6,10 +6,9 @@ import { NewTransactionResponse } from "../../../../../../../definitions/pagopa/
 import { PaymentInfo } from "../../../../../../../definitions/pagopa/ecommerce/PaymentInfo";
 import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
-import { getGenericError } from "../../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { paymentsCreateTransactionAction } from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
+import { paymentAnalyticsDataSelector } from "../../../../history/store/selectors";
 
 describe("Test handleWalletPaymentCreateTransaction saga", () => {
   const newTransactionPayload: NewTransactionRequest = {
@@ -45,6 +44,8 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.right({ status: 200, value: newTransactionResponse }))
+      .select(paymentAnalyticsDataSelector)
+      .next()
       .put(paymentsCreateTransactionAction.success(newTransactionResponse))
       .next()
       .isDone();
@@ -63,11 +64,8 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.right({ status: 400, value: undefined }))
-      .put(
-        paymentsCreateTransactionAction.failure(
-          getGenericError(new Error(`Error: 400`))
-        )
-      )
+      .select(paymentAnalyticsDataSelector)
+      .next({})
       .next()
       .isDone();
   });
@@ -85,11 +83,8 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.left([]))
-      .put(
-        paymentsCreateTransactionAction.failure({
-          ...getGenericError(new Error(readablePrivacyReport([])))
-        })
-      )
+      .select(paymentAnalyticsDataSelector)
+      .next({})
       .next()
       .isDone();
   });

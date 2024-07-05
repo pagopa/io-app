@@ -164,10 +164,10 @@ export function getProfileChannelsforServicesList(
         : channels;
 
     if (updatedBlockedChannels.length !== 0) {
-      // eslint-disable-next-line
+      // eslint-disable-next-line functional/immutable-data
       profileBlockedChannels[id] = updatedBlockedChannels;
     } else {
-      // eslint-disable-next-line
+      // eslint-disable-next-line functional/immutable-data
       delete profileBlockedChannels[id];
     }
   });
