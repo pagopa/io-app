@@ -5,12 +5,22 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { ComponentProps, useCallback, useEffect, useState } from "react";
-import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
+import React, {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
+import {
+  Alert,
+  AlertButton,
+  ListRenderItemInfo,
+  SectionList
+} from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -23,6 +33,9 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
+import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
+import { FIMS_ROUTES } from "../../features/fims/common/navigation";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -57,6 +70,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
 
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
+  const isFimsHistoryEnabled = useIOSelector(fimsIsHistoryEnabledSelector);
   const [requestProcess, setRequestProcess] = useState(false);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
@@ -175,93 +189,124 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     handleUserDataRequestAlert
   ]);
 
-  const isRequestProcessing = (choice: UserDataProcessingChoiceEnum): boolean =>
-    !pot.isLoading(userDataProcessing[choice]) &&
-    !pot.isError(userDataProcessing[choice]) &&
-    pot.getOrElse(
-      pot.map(
-        userDataProcessing[choice],
-        v =>
-          v !== undefined &&
-          v.status !== UserDataProcessingStatusEnum.CLOSED &&
-          v.status !== UserDataProcessingStatusEnum.ABORTED
-      ),
-      false
-    );
-
-  const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = [
-    {
-      // Privacy Policy
-      value: I18n.t("profile.main.privacy.privacyPolicy.title"),
-      description: I18n.t("profile.main.privacy.privacyPolicy.description"),
-      onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY)
-    },
-    {
-      // Share data
-      value: I18n.t("profile.main.privacy.shareData.listItem.title"),
-      description: I18n.t(
-        "profile.main.privacy.shareData.listItem.description"
-      ),
-      onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
-    },
-    {
-      // Export your data
-      value: I18n.t("profile.main.privacy.exportData.title"),
-      description: I18n.t("profile.main.privacy.exportData.description"),
-      onPress: () => {
-        setRequestProcess(true);
-        dispatch(
-          loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
-        );
-      },
-      topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
-        ? {
-            badgeProps: {
-              text: I18n.t("profile.preferences.list.wip"),
-              variant: "info"
-            }
-          }
-        : undefined,
-      testID: "profile-export-data"
-    },
-    {
-      // Remove account
-      value: I18n.t("profile.main.privacy.removeAccount.title"),
-      description: I18n.t("profile.main.privacy.removeAccount.description"),
-      onPress: () => {
-        if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
-          handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
-        } else {
-          navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+  const spreadableMaybeFimsHistoryListItem = isFimsHistoryEnabled
+    ? [
+        {
+          // TODO: add correct I18n keys
+          value: "FIMS_HISTORY",
+          description: "HISTORY_DESC",
+          onPress: () =>
+            navigation.navigate(FIMS_ROUTES.MAIN, {
+              screen: FIMS_ROUTES.HISTORY
+            })
         }
-      },
-      topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
-        ? {
-            badgeProps: {
-              text: I18n.t("profile.preferences.list.wip"),
-              variant: "info"
-            }
-          }
-        : undefined,
-      testID: "profile-delete"
-    }
-  ];
+      ]
+    : [];
 
-  const renderPrivacyNavItem = ({
-    item: { value, description, onPress, topElement, testID }
-  }: ListRenderItemInfo<PrivacyNavListItem>) => (
-    <ListItemNav
-      accessibilityLabel={value}
-      value={value}
-      description={description}
-      onPress={onPress}
-      topElement={topElement}
-      testID={testID}
-    />
+  const isRequestProcessing = useCallback(
+    (choice: UserDataProcessingChoiceEnum): boolean =>
+      !pot.isLoading(userDataProcessing[choice]) &&
+      !pot.isError(userDataProcessing[choice]) &&
+      pot.getOrElse(
+        pot.map(
+          userDataProcessing[choice],
+          v =>
+            v !== undefined &&
+            v.status !== UserDataProcessingStatusEnum.CLOSED &&
+            v.status !== UserDataProcessingStatusEnum.ABORTED
+        ),
+        false
+      ),
+    [userDataProcessing]
+  );
+
+  const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = useMemo(
+    () => [
+      {
+        // Privacy Policy
+        value: I18n.t("profile.main.privacy.privacyPolicy.title"),
+        description: I18n.t("profile.main.privacy.privacyPolicy.description"),
+        onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY)
+      },
+      {
+        // Share data
+        value: I18n.t("profile.main.privacy.shareData.listItem.title"),
+        description: I18n.t(
+          "profile.main.privacy.shareData.listItem.description"
+        ),
+        onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
+      },
+      {
+        // Export your data
+        value: I18n.t("profile.main.privacy.exportData.title"),
+        description: I18n.t("profile.main.privacy.exportData.description"),
+        onPress: () => {
+          setRequestProcess(true);
+          dispatch(
+            loadUserDataProcessing.request(
+              UserDataProcessingChoiceEnum.DOWNLOAD
+            )
+          );
+        },
+        topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
+          ? {
+              badgeProps: {
+                text: I18n.t("profile.preferences.list.wip"),
+                variant: "info"
+              }
+            }
+          : undefined,
+        testID: "profile-export-data"
+      },
+      ...spreadableMaybeFimsHistoryListItem,
+      {
+        // Remove account
+        value: I18n.t("profile.main.privacy.removeAccount.title"),
+        description: I18n.t("profile.main.privacy.removeAccount.description"),
+        onPress: () => {
+          if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
+            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
+          } else {
+            navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+          }
+        },
+        topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
+          ? {
+              badgeProps: {
+                text: I18n.t("profile.preferences.list.wip"),
+                variant: "info"
+              }
+            }
+          : undefined,
+        testID: "profile-delete"
+      }
+    ],
+    [dispatch, handleUserDataRequestAlert, isRequestProcessing, navigation]
+  );
+
+  const renderPrivacyNavItem = useCallback(
+    ({
+      item: { value, description, onPress, topElement, testID }
+    }: ListRenderItemInfo<PrivacyNavListItem>) => (
+      <ListItemNav
+        accessibilityLabel={value}
+        value={value}
+        description={description}
+        onPress={onPress}
+        topElement={topElement}
+        testID={testID}
+      />
+    ),
+    []
+  );
+
+  const extractKey = useCallback(
+    (item: PrivacyNavListItem, index: number) => `${item.value}-${index}`,
+    []
   );
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t("profile.main.privacy.title")
       }}
@@ -273,20 +318,21 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         loadingOpacity={0.9}
         loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <FlatList
-          scrollEnabled={false}
-          keyExtractor={(item: PrivacyNavListItem, index: number) =>
-            `${item.value}-${index}`
-          }
+        <SectionList
+          sections={[
+            {
+              data: privacyNavListItems
+            }
+          ]}
+          keyExtractor={extractKey}
+          renderItem={renderPrivacyNavItem}
+          ItemSeparatorComponent={Divider}
           contentContainerStyle={{
             paddingHorizontal: IOVisualCostants.appMarginDefault
           }}
-          data={privacyNavListItems}
-          renderItem={renderPrivacyNavItem}
-          ItemSeparatorComponent={() => <Divider />}
         />
       </LoadingSpinnerOverlay>
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

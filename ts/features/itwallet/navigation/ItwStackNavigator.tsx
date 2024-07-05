@@ -10,6 +10,7 @@ import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssua
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwPresentationEidDetailScreen } from "../presentation/screens/ItwPresentationEidDetailScreen";
+import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -45,6 +46,11 @@ export const ItwStackNavigator = () => (
       options={{ headerShown: false }}
     />
     <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_RESULT}
+      component={ItwIssuanceEidResultScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH}
       component={ItwIssuanceCredentialAuthScreen}
     />
@@ -53,17 +59,13 @@ export const ItwStackNavigator = () => (
       component={ItwIssuanceCredentialPreviewScreen}
       options={{ headerShown: false }}
     />
-    <Stack.Screen
-      name={ITW_ROUTES.ISSUANCE.RESULT}
-      component={ItwIssuanceEidResultScreen}
-      options={{ headerShown: false }}
-    />
-
     {/* CREDENTIAL PRESENTATION */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.EID_DETAIL}
       component={ItwPresentationEidDetailScreen}
       options={{ headerShown: false }}
     />
+    {/* PLAYGROUNDS */}
+    <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
   </Stack.Navigator>
 );

@@ -26,7 +26,6 @@ import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
-import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
@@ -167,7 +166,6 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
       component={NotificationsPreferencesScreen}
     />
-    <Stack.Screen name={ROUTES.ITW_PLAYGROUND} component={ItwPlayground} />
   </Stack.Navigator>
 );
 

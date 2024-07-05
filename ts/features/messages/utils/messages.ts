@@ -19,7 +19,6 @@ import {
   isIoInternalLink,
   removeFIMSPrefixFromUrl
 } from "../../../components/ui/Markdown/handlers/link";
-import { FIMS_SSO_ROUTES } from "../../fims/singleSignOn/navigation";
 import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
@@ -31,6 +30,7 @@ import {
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
+import { FIMS_ROUTES } from "../../fims/common/navigation";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -71,8 +71,8 @@ export const handleCtaAction = (cta: CTA, linkTo: (path: string) => void) => {
     handleInternalLink(linkTo, `${convertedLink}`);
   } else if (isIoFIMSLink(cta.action)) {
     const url = removeFIMSPrefixFromUrl(cta.action);
-    NavigationService.navigate(FIMS_SSO_ROUTES.MAIN, {
-      screen: FIMS_SSO_ROUTES.CONSENTS,
+    NavigationService.navigate(FIMS_ROUTES.MAIN, {
+      screen: FIMS_ROUTES.CONSENTS,
       params: {
         ctaUrl: url
       }
