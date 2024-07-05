@@ -59,7 +59,6 @@ export const ArchiveRestoreBar = () => {
   useHardwareBackButton(androidBackButtonCallback);
 
   useEffect(() => {
-    // __TODO__ would be nice not to raise this event if the bar is already hidden/shown
     console.log(`=== ArchiveRestoreBar useEffect`);
     tabNavigation.setOptions({
       tabBarStyle: {
@@ -96,7 +95,14 @@ const ArchiveRestoreCTAs = ({ category }: ArchiveRestoreCTAsProps) => {
         <ButtonOutline
           label="Annulla"
           fullWidth
-          onPress={() => dispatch(resetMessageArchivingAction())}
+          onPress={() =>
+            dispatch(
+              resetMessageArchivingAction({
+                reason: I18n.t("messages.operations.generic.cancelled"),
+                type: "warning"
+              })
+            )
+          }
         />
       </View>
       <View style={styles.endButtonContainer}>

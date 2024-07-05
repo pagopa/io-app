@@ -300,7 +300,7 @@ describe("handlePendingMessageStateIfAllowedSaga", () => {
       .next()
       .select(isArchivingDisabledSelector)
       .next(false)
-      .put(resetMessageArchivingAction())
+      .put(resetMessageArchivingAction(undefined))
       .next()
       .call(
         NavigationService.dispatchNavigationAction,

@@ -15,7 +15,8 @@ export const linkingSubscription =
       const state = store.getState();
       const isArchivingDisabled = isArchivingDisabledSelector(state);
       if (!isArchivingDisabled) {
-        dispatch(resetMessageArchivingAction());
+        // Auto-reset does not provide feedback to the user
+        dispatch(resetMessageArchivingAction(undefined));
       }
       listener(url);
     });

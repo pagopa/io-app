@@ -2004,6 +2004,10 @@ messages:
     archive:
       success: "Archiviazione riuscita!"
       failure: "L’archiviazione non è andata a buon fine"
+    generic:
+      cancelled: "Annullato"
+      failure: "L'operazione non è andata a buon fine"
+      success: "Operazione riuscita!"
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"

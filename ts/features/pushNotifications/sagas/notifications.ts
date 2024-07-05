@@ -131,7 +131,8 @@ export function* handlePendingMessageStateIfAllowedSaga(
     // screen where such tab bar is hidden)
     const isArchivingDisabled = yield* select(isArchivingDisabledSelector);
     if (!isArchivingDisabled) {
-      yield* put(resetMessageArchivingAction());
+      // Auto-reset does not provide feedback to the user
+      yield* put(resetMessageArchivingAction(undefined));
     }
 
     // Navigate to message router screen

@@ -122,7 +122,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     // screen tab details with no such tab bar shown
     const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
     if (isSchedulingArchiving) {
-      dispatch(resetMessageArchivingAction());
+      // Auto-reset does not provide feedback to the user
+      dispatch(resetMessageArchivingAction(undefined));
     }
 
     dispatch(searchMessagesEnabled(true));

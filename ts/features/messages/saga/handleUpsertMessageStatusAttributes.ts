@@ -31,6 +31,7 @@ import {
 import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archiving";
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
+import I18n from "../../../i18n";
 
 /**
  * @throws invalid payload
@@ -88,7 +89,10 @@ export function* handleMessageArchivingRestoring(
     console.log(`=== next interaction loop`);
     if (!currentEntryToProcess) {
       console.log(`=== no entry to process, stop`);
-      yield* put(resetMessageArchivingAction());
+      const userFeedback = I18n.t("messages.operations.generic.success");
+      yield* put(
+        resetMessageArchivingAction({ type: "success", reason: userFeedback })
+      );
       return;
     }
 
@@ -138,7 +142,13 @@ export function* handleMessageArchivingRestoring(
     } else {
       console.log(`=== message FAILED`);
       if (isActionOf(upsertMessageStatusAttributes.failure, outputAction)) {
-        yield* put(interruptMessageArchivingProcessingAction());
+        const userFeedback = I18n.t("messages.operations.generic.failure");
+        yield* put(
+          interruptMessageArchivingProcessingAction({
+            type: "error",
+            reason: userFeedback
+          })
+        );
       }
       return;
     }

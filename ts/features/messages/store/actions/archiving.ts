@@ -1,5 +1,6 @@
 import { createStandardAction } from "typesafe-actions";
 import { UIMessageId } from "../../types";
+import { ProcessingResult } from "../reducers/archiving";
 
 type ScheduleMessageArchivingType = {
   fromInboxToArchive: boolean;
@@ -16,11 +17,11 @@ export const removeScheduledMessageArchivingAction = createStandardAction(
 
 export const resetMessageArchivingAction = createStandardAction(
   "RESET_MESSAGE_ARCHIVING_SCHEDULE"
-)<void>();
+)<ProcessingResult | undefined>();
 
 export const startProcessingMessageArchivingAction = createStandardAction(
   "START_PROCESSING_MESSAGE_ARCHIVING_ACTION"
 )<void>();
 export const interruptMessageArchivingProcessingAction = createStandardAction(
   "INTERRUPT_MESSAGE_ARCHIVING_PROCESSING"
-)<void>();
+)<ProcessingResult | undefined>();

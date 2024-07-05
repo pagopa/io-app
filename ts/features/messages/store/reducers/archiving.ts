@@ -15,16 +15,23 @@ import { MessageListCategory } from "../../types/messageListCategory";
 
 type ArchivingStatus = "disabled" | "enabled" | "processing";
 
+export type ProcessingResult = {
+  type: "success" | "warning" | "error";
+  reason: string;
+};
+
 export type Archiving = {
-  status: ArchivingStatus;
-  fromInboxToArchive: Set<UIMessageId>;
   fromArchiveToInbox: Set<UIMessageId>;
+  fromInboxToArchive: Set<UIMessageId>;
+  processingResult: ProcessingResult | undefined;
+  status: ArchivingStatus;
 };
 
 export const INITIAL_STATE: Archiving = {
-  status: "disabled",
+  fromArchiveToInbox: new Set<UIMessageId>(),
   fromInboxToArchive: new Set<UIMessageId>(),
-  fromArchiveToInbox: new Set<UIMessageId>()
+  processingResult: undefined,
+  status: "disabled"
 };
 
 export const archivingReducer = (
@@ -56,11 +63,12 @@ export const archivingReducer = (
       };
     }
     case getType(resetMessageArchivingAction): {
-      return INITIAL_STATE;
+      return { ...INITIAL_STATE, processingResult: action.payload };
     }
     case getType(startProcessingMessageArchivingAction): {
       return {
         ...state,
+        processingResult: undefined,
         status: "processing"
       };
     }
@@ -86,6 +94,7 @@ export const archivingReducer = (
       if (state.status === "processing") {
         return {
           ...state,
+          processingResult: action.payload,
           status: "enabled"
         };
       }
@@ -142,3 +151,7 @@ export const nextQueuedMessageDataUncachedSelector = (state: GlobalState) => {
   }
   return undefined;
 };
+export const processingResultTypeSelector = (state: GlobalState) =>
+  state.entities.messages.archiving.processingResult?.type;
+export const processingResultReasonSelector = (state: GlobalState) =>
+  state.entities.messages.archiving.processingResult?.reason;
