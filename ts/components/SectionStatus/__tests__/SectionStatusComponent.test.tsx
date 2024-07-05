@@ -68,21 +68,22 @@ describe("SectionStatusComponent", () => {
   });
 
   [
-    [LevelEnum.normal, IOColors.aqua],
-    [LevelEnum.warning, IOColors.orange],
-    [LevelEnum.critical, IOColors.red]
+    [LevelEnum.normal, IOColors["info-100"]],
+    [LevelEnum.warning, IOColors["warning-100"]],
+    [LevelEnum.critical, IOColors["error-100"]]
   ].forEach(([level, color]) => {
     describe(`given the level ${level}`, () => {
       const store = mockStore(
         mockSectionStatusState("messages", {
           ...sectionStatus,
+          web_url: undefined,
           level: level as LevelEnum
         })
       );
 
       it(`should apply background color ${color} to the status content`, () => {
         const component = getComponent("messages", store);
-        const view = component.getByTestId("SectionStatusContent");
+        const view = component.getByTestId("SectionStatusComponentContent");
         expect(view).toHaveStyle({ backgroundColor: color });
       });
     });
@@ -101,15 +102,7 @@ describe("SectionStatusComponent", () => {
       const component = getComponent("messages");
       const view = component.getByTestId("SectionStatusComponentPressable");
       expect(view.props.accessible).toBe(true);
-      expect(view.props.accessibilityLabel).toMatch(
-        `${sectionStatus.message["it-IT"]}, ${I18n.t(
-          "global.sectionStatus.moreInfo"
-        )}`
-      );
-      expect(view.props.accessibilityHint).toMatch(
-        I18n.t("global.accessibility.linkHint")
-      );
-      expect(view.props.accessibilityRole).toBe("link");
+      expect(view.props.accessibilityRole).toBe("button");
     });
 
     it("should render the touchable wrapper which opens the correct url", () => {
@@ -135,14 +128,9 @@ describe("SectionStatusComponent", () => {
     it("should set the correct a11y properties to the status content", () => {
       setLocale("it");
       const component = getComponent("messages", store);
-      const view = component.getByTestId("SectionStatusContent");
-      expect(view.props.accessible).toBe(true);
-      expect(view.props.accessibilityRole).toBeUndefined();
-      expect(view.props.accessibilityLabel).toMatch(
-        `${sectionStatus.message["it-IT"]}, ${I18n.t(
-          "global.accessibility.alert"
-        )}`
-      );
+      const view = component.getByTestId("SectionStatusComponentContent");
+      expect(view.props.accessible).toBe(false);
+      expect(view.props.accessibilityRole).toBe("alert");
     });
 
     it("should display the accessibility alert text", () => {
