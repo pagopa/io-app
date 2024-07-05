@@ -263,7 +263,6 @@ startup:
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
     message: "Wenn du deine Meinung geändert hast, kannst du deinen Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
-    cta_1: "Gehe zum Datenschutz"
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
@@ -326,38 +325,18 @@ profile:
     privacy:
       title: "Datenschutz und Nutzungsbedingungen"
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
-      subtitle: "Hier findest du Informationen zu deinen Rechten und Pflichten sowie über die Verarbeitung deiner persönlichen Daten."
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
         title: "Dein Konto löschen"
-        description: "Dein Konto und deine persönlichen Daten endgültig löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
-          activeBonusTitle: "Aktive Boni"
-          activeBonusDescription: "Es scheint, dass du aktive Boni hast. Wir möchten dich darauf hinweisen, dass die Löschung deines Profils nicht gleichbedeutend mit der Löschung von Boni oder der Abmeldung von Initiativen ist. Um deine Boni zu verwalten, gehe zum Abschnitt Konto, ansonsten wähle “Weiter”"
-          oldRequest: "Du hast bereits die Löschung deines Kontos beantragt."
-          oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf “Löschung abbrechen”."
           cta:
-            manageBonus: "Boni verwalten"
-            continue: "Weiter"
             return: "Zurück"
-            cancel: "Löschung abbrechen"
-        info:
-          body: "Du kannst jederzeit von deinem Recht auf Löschung deines IO-Profils Gebrauch machen.\n\nWir informieren dich darüber, dass die Löschung deines Kontos endgültig ist und innerhalb von 30 Tagen nach Anfrage erfolgt.\n\nWenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App vorgenommen hast, nicht mehr wiederherstellen.\nBitte beachte auch, dass die über die IO-App erhaltene Boni oder Rabatte nicht mehr zugänglich sind.\n\nDu kannst dich jederzeit erneut für die IO-App registrieren, indem du eine neue Registrierung mittels SPID oder CIE durchführst."
-          cta: "Weiter"
         details:
-          body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
-          question: "Was ist der Grund für die Löschung?"
           answer_1: "Ich halte IO nicht mehr für nützlich"
           answer_2: "Ich fühle mich in IO nicht sicher"
           answer_3: "Ich habe die App nie benutzt"
           answer_4: "Keiner der oben genannten Punkte"
-          labelOpenAnswer: "Erzähle uns mehr"
-          cta: "Konto löschen"
-        success:
-          title: "Wir bearbeiten deine Anfrage."
-          body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
-          cta: "Beenden"
       exportData:
         cta: "Kopie deiner Daten anfordern"
         title: "Zugriff auf deine Daten"
@@ -1973,7 +1952,6 @@ identification:
     congiunction: "oder"
   title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
-  titleValidation: "Bestätige den Vorgang"
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
