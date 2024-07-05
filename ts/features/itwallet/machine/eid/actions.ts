@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Alert } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  itwLifecycleOperational,
+  itwLifecycleValid
+} from "../../lifecycle/store/actions";
 
 export const createEidIssuanceActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => ({
   navigateToTosScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -80,6 +86,14 @@ export const createEidIssuanceActionsImplementation = (
 
   closeIssuance: () => {
     navigation.popToTop();
+  },
+
+  setWalletInstanceToOperational: () => {
+    dispatch(itwLifecycleOperational());
+  },
+
+  setWalletInstanceToValid: () => {
+    dispatch(itwLifecycleValid());
   },
 
   storeWalletAttestation: () => {},
