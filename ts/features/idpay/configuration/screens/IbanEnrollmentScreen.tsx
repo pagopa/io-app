@@ -30,6 +30,7 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
+import { showBarcodeScanSection } from "../../../../config";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -197,7 +198,9 @@ const IbanEnrollmentScreen = () => {
               weight="Regular"
               style={IOStyles.flex} // required for correct wrapping
             >
-              {I18n.t("idpay.configuration.iban.enrollment.footer")}
+              {showBarcodeScanSection
+                ? I18n.t("idpay.configuration.iban.enrollment.footerNew")
+                : I18n.t("idpay.configuration.iban.enrollment.footer")}
             </LabelSmall>
           </View>
           {/* TODO:: end AdviceComponent  */}

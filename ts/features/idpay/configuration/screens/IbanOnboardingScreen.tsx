@@ -23,6 +23,7 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { isLoadingSelector } from "../xstate/selectors";
+import { showBarcodeScanSection } from "../../../../config";
 
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
@@ -105,7 +106,9 @@ const IbanOnboardingScreen = () => {
           <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
-            {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
+            {showBarcodeScanSection
+              ? I18n.t("idpay.configuration.iban.onboarding.bottomLabelNew")
+              : I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
           </LabelSmall>
         </View>
       </ScrollView>
