@@ -62,23 +62,41 @@ function validatePayload(
   }
 }
 
-/*
-  Ricevi l'azione totalmente anonima che ti dice di iniziare a processare
-
-  do {
-    Estrai il primo id dalle code, ottenendo anche il flag di archiviazione
-    Se è undefined -> Dispatcha l'azione che porti lo stato da progress a disabled (ACTION 1), break per uscire dal while e termina
-    Se è defined   ->
-      A partire dall'id, estrai il messaggio dal relativo pot
-      Se non c'è -> allora dispatcha un'azione che rimuove l'id (ACTION 3), passa alla prossima iterazione del ciclo while
-      Se c'è     -> richiama manualmente la saga che fa l'archiviazione
-                    Rimani in attesa per un'action di success o failure o cancel (ACTION 1) da parte di quella saga
-                    Se azione di failure oppure di cancel -> Dispatcha un action che porti lo stato da progress ad enabled (ACTION 2), break per uscire dal while e termina
-                    Se azione di success                  -> allora dispatcha un'azione che rimuove l'id (ACTION 3), passa alla prossima iterazione del ciclo while
-  } while (true) 
-
-*/
-
+/**
+ * The algorithm of this saga is as follows:
+ *
+ * Get awaken by the receival of `startProcessingMessageArchivingAction` in takeLastest mode
+ * do {
+ *   Extract the first message ID for archiving/restoring queues, along with the info about archiving or restoring the message
+ *   If no data was returned, then the process has ended. Dispatch resetMessageArchivingAction with success
+ *   Otherwise
+ *     Given the message id, look for it in the related message page (inbox or archived)
+ *     If no message has been found, then it was already processed somehow, just discard the ID from the archiving/restoring queues
+ *       (by dispatching removeScheduledMessageArchivingAction) and continue to the next do-while loop interaction
+ *     Otherwise
+ *       Build and dispatch the legacy upsertMessageStatusAttributes.request. Such action triggers the legacy saga which uses the
+ *        legacy archiving/restoring logic to move the message to the other list, contact the server and, in case of a failure, puts
+ *        back the message to the source list). Such saga is raced against resetMessageArchivingAction in order to be cancelable
+ *       Listen for the saga async output action, which is either upsertMessageStatusAttributes.success or upsertMessageStatusAttributes.success
+ *         but also for resetMessageArchivingAction to avoid a race conidtion where the saga fails one moment before the user cancels the
+ *         processing (dispatching resetMessageArchivingAction by the UI button)
+ *       If upsertMessageStatusAttributes.failure is received, then cancel the processing using interruptMessageArchivingProcessingAction (which
+ *         does not clear the user selection) and stop the current saga
+ *       If upsertMessageStatusAttributes.success is received, then discard the ID from the archiving/restoring queues (by dispatching
+ *         removeScheduledMessageArchivingAction) and continue to the next do-while loop interaction
+ *       If resetMessageArchivingAction is received, then just go to the next do-while loop interaction, which will extract no data from the
+ *         archiving/restoring queues (since they have been emptied by resetMessageArchivingAction) and will terminate
+ * } while (true)
+ *
+ * If the session expires (due to fast login), it is expected that the legacy saga fails with a 401 error and the
+ * 'upsertMessageStatusAttributes.failure' is triggered. If the authentication session is later restored, the original
+ * 'upsertMessageStatusAttributes.request' action will be redispatched and the related legacy saga will either succeed or fail. At this point
+ * the user may either discard the scheduled archiving/restoring of messages, in which case the UI is consistent (since the message has been
+ * moved) or she may retry the restoring/archiving, in which case the message ID will not have a match into the original message collection
+ * (INBOX or ARCHIVE) and so it will just be discarded, leaving the UI consistent. In case the automatically dispatched action from fast
+ * login had failed, there will be a match and the process will resume.
+ *
+ */
 export function* handleMessageArchivingRestoring(
   _: ActionType<typeof startProcessingMessageArchivingAction>
 ) {
@@ -86,9 +104,7 @@ export function* handleMessageArchivingRestoring(
     const currentEntryToProcess = yield* select(
       nextQueuedMessageDataUncachedSelector
     );
-    console.log(`=== next interaction loop`);
     if (!currentEntryToProcess) {
-      console.log(`=== no entry to process, stop`);
       const userFeedback = I18n.t("messages.operations.generic.success");
       yield* put(
         resetMessageArchivingAction({ type: "success", reason: userFeedback })
@@ -105,7 +121,6 @@ export function* handleMessageArchivingRestoring(
       category
     );
     if (!message) {
-      console.log(`=== no message found for entry`);
       yield* put(
         removeScheduledMessageArchivingAction({
           fromInboxToArchive: currentEntryToProcess.archiving,
@@ -132,7 +147,6 @@ export function* handleMessageArchivingRestoring(
     ]);
 
     if (isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
-      console.log(`=== message moved`);
       yield* put(
         removeScheduledMessageArchivingAction({
           fromInboxToArchive: currentEntryToProcess.archiving,
@@ -140,7 +154,6 @@ export function* handleMessageArchivingRestoring(
         })
       );
     } else {
-      console.log(`=== message FAILED`);
       if (isActionOf(upsertMessageStatusAttributes.failure, outputAction)) {
         const userFeedback = I18n.t("messages.operations.generic.failure");
         yield* put(
@@ -155,11 +168,12 @@ export function* handleMessageArchivingRestoring(
   } while (true);
 }
 
+// Be aware that this saga is execute with a takeEvery, in order to remain
+// compatible with the old messages home way of archiving messages
 export function* raceUpsertMessageStatusAttributes(
   putMessage: BackendClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
-  console.log(`=== starting the race`);
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),
     cancel: take(resetMessageArchivingAction)
@@ -172,7 +186,6 @@ export function* handleUpsertMessageStatusAttributes(
 ) {
   try {
     const body = validatePayload(action.payload);
-    console.log(`=== UPSERT making web request`);
     const response = (yield* call(
       withRefreshApiCall,
       putMessage({ id: action.payload.message.id, body }),
@@ -192,13 +205,10 @@ export function* handleUpsertMessageStatusAttributes(
       }
     );
 
-    console.log(`=== UPSERT checking next action`);
     if (nextAction) {
-      console.log(`=== UPSERT sending next action`);
       yield* put(nextAction);
     }
   } catch (error) {
-    console.log(`=== UPSERT error`);
     const reason = unknownToReason(error);
     trackUpsertMessageStatusAttributesFailure(reason);
     yield* put(
@@ -209,7 +219,6 @@ export function* handleUpsertMessageStatusAttributes(
     );
   } finally {
     if (yield* cancelled()) {
-      console.log(`=== UPSERT was cancelled`);
       yield* put(
         upsertMessageStatusAttributes.failure({
           error: getError("Cancelled"),

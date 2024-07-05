@@ -9,7 +9,6 @@ import { Toasts } from "../components/Home/Toasts";
 import { Preconditions } from "../components/Home/Preconditions";
 
 export const MessagesHomeScreen = () => {
-  console.log(`=== MessagesHomeScreen`);
   const pagerViewRef = useRef<PagerView>(null);
   return (
     <View style={IOStyles.flex}>

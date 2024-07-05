@@ -19,7 +19,6 @@ import {
 import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
 
 export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
-  console.log(`=== PagerViewContainer`);
   const dispatch = useIODispatch();
   const store = useIOStore();
   const archiveFlatListRef = useRef<FlatList>(null);

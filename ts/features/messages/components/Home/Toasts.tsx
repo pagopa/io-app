@@ -12,7 +12,6 @@ import {
 } from "../../store/reducers/archiving";
 
 export const Toasts = () => {
-  console.log(`=== Toasts`);
   const toast = useIOToast();
 
   // Handling of archiving/unarchiving operations result

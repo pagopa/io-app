@@ -42,7 +42,6 @@ const bottomTabHeight = 54;
 
 export const MessageList = React.forwardRef<FlatList, MessageListProps>(
   ({ category }: MessageListProps, ref) => {
-    console.log(`=== MessageList ${category}`);
     const store = useIOStore();
     const dispatch = useIODispatch();
     const safeAreaFrame = useSafeAreaFrame();

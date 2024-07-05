@@ -49,8 +49,6 @@ export const ArchiveRestoreBar = () => {
   const isArchivingDisabled = useIOSelector(isArchivingDisabledSelector);
   const shownCategory = useIOSelector(shownMessageCategorySelector);
 
-  console.log(`=== ArchiveRestoreBar ${shownCategory}`);
-
   const androidBackButtonCallback = useCallback(() => {
     // Disable Android back button while processing archiving/restoring
     const state = store.getState();
@@ -59,7 +57,6 @@ export const ArchiveRestoreBar = () => {
   useHardwareBackButton(androidBackButtonCallback);
 
   useEffect(() => {
-    console.log(`=== ArchiveRestoreBar useEffect`);
     tabNavigation.setOptions({
       tabBarStyle: {
         display: isArchivingDisabled ? "flex" : "none"
@@ -75,7 +72,6 @@ export const ArchiveRestoreBar = () => {
 };
 
 const ArchiveRestoreCTAs = ({ category }: ArchiveRestoreCTAsProps) => {
-  console.log(`=== ArchiveRestoreCTAs ${category}`);
   const safeAreaInsets = useSafeAreaInsets();
   const dispatch = useIODispatch();
 

@@ -103,6 +103,8 @@ export function* watchMessagesSaga(
     backendClient.getThirdPartyMessage
   );
 
+  // Be aware that this saga must use the takeEvery
+  // due to compatibility with the old messages home
   yield* takeEvery(
     upsertMessageStatusAttributes.request,
     raceUpsertMessageStatusAttributes,
