@@ -21,7 +21,7 @@ export type Archiving = {
   fromArchiveToInbox: Set<UIMessageId>;
 };
 
-const INITIAL_STATE: Archiving = {
+export const INITIAL_STATE: Archiving = {
   status: "disabled",
   fromInboxToArchive: new Set<UIMessageId>(),
   fromArchiveToInbox: new Set<UIMessageId>()
