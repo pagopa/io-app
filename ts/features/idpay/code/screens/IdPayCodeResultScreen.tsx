@@ -14,6 +14,7 @@ import {
   isIdPayCodeEnrollmentRequestLoadingSelector,
   isIdPayCodeFailureSelector
 } from "../store/selectors";
+import { getContentWithFF } from "../../../../screens/onboarding/biometric&securityChecks/FingerprintScreen";
 
 const IdPayCodeResultScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -68,7 +69,7 @@ const IdPayCodeResultScreen = () => {
         onPress: handleClose,
         testID: "actionButtonTestID"
       }}
-      subtitle={I18n.t(
+      subtitle={getContentWithFF(
         "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
       )}
     />

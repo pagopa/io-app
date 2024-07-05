@@ -31,6 +31,7 @@ import {
   isIdPayCodeFailureSelector,
   isIdPayCodeLoadingSelector
 } from "../store/selectors";
+import { getContentWithFF } from "../../../../screens/onboarding/biometric&securityChecks/FingerprintScreen";
 
 type IdPayCodeDisplayRouteParams = {
   isOnboarding?: boolean;
@@ -103,7 +104,7 @@ const IdPayCodeDisplayScreen = () => {
               size="big"
               viewRef={bannerRef}
               title={I18n.t("idpay.code.onboarding.banner.header")}
-              content={I18n.t("idpay.code.onboarding.banner.body")}
+              content={getContentWithFF("idpay.code.onboarding.banner.body")}
             />
           </ContentWrapper>
         </TopScreenComponent>

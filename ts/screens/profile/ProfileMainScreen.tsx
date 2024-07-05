@@ -33,6 +33,7 @@ import { showProfileBannerSelector } from "../../features/profileSettings/store/
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { showBarcodeScanSection } from "../../config";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
@@ -224,7 +225,9 @@ const ProfileMainScreen = () => {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
       title: "profile.main.contextualHelpTitle",
-      body: "profile.main.contextualHelpContent"
+      body: showBarcodeScanSection
+        ? "profile.main.contextualHelpContentNew"
+        : "profile.main.contextualHelpContent"
     }
   });
 

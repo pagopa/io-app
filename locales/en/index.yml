@@ -317,6 +317,7 @@ profile:
     dumpAsyncStorage: Dump AsyncStorage content to console
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
+    contextualHelpContentNew: !include profile/profile_account_main_new.md
     developerModeOn: Developer mode enabled
     cache:
       alert: Are you sure you want to clear the cache?
@@ -425,7 +426,7 @@ profile:
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
+          profileSettings: "You can change this choice anytime in {{pageName}} > Privacy Policy and Terms of Service"
           cta:
             shareData: "Share"
             dontShareData: Please don't share data
@@ -920,6 +921,7 @@ email:
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
+  contextualHelpContentNew: !include onboarding/onboarding_fingerprint_new.md
   tos:
     headerTitle: Configure IO
     accept: Accept and continue
@@ -967,7 +969,7 @@ onboarding:
     headerTitle: Configure IO
     available:
       title: Enable biometric recognition
-      settings: You can always change your choice in Profile > Security
+      settings: You can always change your choice in {{pageName}} > Security
       body:
         text: You can use your face or fingerprint to enter instead of the unlock code. This will let you access the app and authorise operation and payments more easily and safely.
         infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorize operations and payments with your
@@ -985,7 +987,7 @@ onboarding:
             value: Set up face or fingerprint
           step3:
             label: Step 3
-            value: Enable it in IO under Profile > Security
+            value: Enable it in IO under {{pageName}} > Security
     unavailable:
       title: Protect your device
       subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
@@ -2118,7 +2120,7 @@ services:
         title: "Preferences saved!"
         body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
-      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
+      banner: You can change this choice anytime in {{pageName}} > Preferenze
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
@@ -3389,7 +3391,7 @@ idpay:
       bodyCta: "Come funziona?"
       banner:
         header: E se lo dimentichi?
-        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+        body: Puoi reimpostare il codice in ogni momento da {{pageName}} > Sicurezza.
       title: Paga con la tua carta d'identità elettronica
       description: Spendi il denaro delle iniziative a te previste usando la tua carta d’identità elettronica.
       buttons:
@@ -3492,7 +3494,7 @@ idpay:
             GENERIC: In questo momento non è possibile generare un codice
         successScreen:
           header: Ora puoi utilizzare la tua carta d’identità per pagare!
-          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento da {{pageName}} > Sicurezza.
           cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
@@ -3571,7 +3573,7 @@ idpay:
         title: "Come funziona?"
         featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare sul POS la tua carta d’identità elettronica."
         featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
-        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
+        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in {{pageName}} > Sicurezza."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...

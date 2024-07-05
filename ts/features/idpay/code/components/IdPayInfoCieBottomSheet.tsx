@@ -6,6 +6,7 @@ import {
   useIOBottomSheetAutoresizableModal
 } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
+import { getContentWithFF } from "../../../../screens/onboarding/biometric&securityChecks/FingerprintScreen";
 
 /**
  * This custom hook, useIdPayInfoCieBottomSheet, is designed to display a bottom sheet
@@ -26,7 +27,7 @@ const useIdPayInfoCieBottomSheet = (): IOBottomSheetModal => {
       <VSpacer size={24} />
       <FeatureInfo
         iconName="change"
-        body={I18n.t("idpay.initiative.cie.bottomSheet.featureThree")}
+        body={getContentWithFF("idpay.initiative.cie.bottomSheet.featureThree")}
       />
       <VSpacer size={24} />
     </View>

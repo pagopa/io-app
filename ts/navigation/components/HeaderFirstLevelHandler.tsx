@@ -35,7 +35,9 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
       title: "profile.main.contextualHelpTitle",
-      body: "profile.main.contextualHelpContent"
+      body: showBarcodeScanSection
+        ? "profile.main.contextualHelpContentNew"
+        : "profile.main.contextualHelpContent"
     }
   },
   [SERVICES_ROUTES.SERVICES_HOME]: {
