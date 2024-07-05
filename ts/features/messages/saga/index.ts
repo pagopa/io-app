@@ -42,8 +42,8 @@ import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
 import {
   handleMessageArchivingRestoring,
-  handleUpsertMessageStatusAttribues
-} from "./handleUpsertMessageStatusAttribues";
+  raceUpsertMessageStatusAttributes
+} from "./handleUpsertMessageStatusAttributes";
 import { handleMigrateToPagination } from "./handleMigrateToPagination";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
@@ -103,15 +103,14 @@ export function* watchMessagesSaga(
     backendClient.getThirdPartyMessage
   );
 
-  yield* takeLatest(
-    startProcessingMessageArchivingAction,
-    handleMessageArchivingRestoring,
-    backendClient.upsertMessageStatusAttributes
-  );
   yield* takeEvery(
     upsertMessageStatusAttributes.request,
-    handleUpsertMessageStatusAttribues,
+    raceUpsertMessageStatusAttributes,
     backendClient.upsertMessageStatusAttributes
+  );
+  yield* takeLatest(
+    startProcessingMessageArchivingAction,
+    handleMessageArchivingRestoring
   );
 
   yield* fork(watchLoadMessageData);

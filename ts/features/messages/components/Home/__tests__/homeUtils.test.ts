@@ -669,7 +669,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                               : O.none
                         }
                       },
-                      archiving: INITIAL_STATE,
+                      archiving: INITIAL_STATE
                     }
                   }
                 } as GlobalState;

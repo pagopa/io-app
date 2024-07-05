@@ -1,7 +1,6 @@
 import {
   call,
   cancelled,
-  fork,
   put,
   race,
   take,
@@ -80,14 +79,15 @@ function validatePayload(
 */
 
 export function* handleMessageArchivingRestoring(
-  putMessage: BackendClient["upsertMessageStatusAttributes"],
   _: ActionType<typeof startProcessingMessageArchivingAction>
 ) {
   do {
     const currentEntryToProcess = yield* select(
       nextQueuedMessageDataUncachedSelector
     );
+    console.log(`=== next interaction loop`);
     if (!currentEntryToProcess) {
+      console.log(`=== no entry to process, stop`);
       yield* put(resetMessageArchivingAction());
       return;
     }
@@ -101,6 +101,7 @@ export function* handleMessageArchivingRestoring(
       category
     );
     if (!message) {
+      console.log(`=== no message found for entry`);
       yield* put(
         removeScheduledMessageArchivingAction({
           fromInboxToArchive: currentEntryToProcess.archiving,
@@ -118,11 +119,7 @@ export function* handleMessageArchivingRestoring(
           tag: "archiving"
         }
       });
-    yield* fork(
-      raceArchiveRestoreMessage,
-      putMessage,
-      upsertMessageStatusAttributesAction
-    );
+    yield* put(upsertMessageStatusAttributesAction);
 
     const outputAction = yield* take([
       upsertMessageStatusAttributes.success,
@@ -131,6 +128,7 @@ export function* handleMessageArchivingRestoring(
     ]);
 
     if (isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
+      console.log(`=== message moved`);
       yield* put(
         removeScheduledMessageArchivingAction({
           fromInboxToArchive: currentEntryToProcess.archiving,
@@ -138,6 +136,7 @@ export function* handleMessageArchivingRestoring(
         })
       );
     } else {
+      console.log(`=== message FAILED`);
       if (isActionOf(upsertMessageStatusAttributes.failure, outputAction)) {
         yield* put(interruptMessageArchivingProcessingAction());
       }
@@ -146,22 +145,24 @@ export function* handleMessageArchivingRestoring(
   } while (true);
 }
 
-export function* raceArchiveRestoreMessage(
+export function* raceUpsertMessageStatusAttributes(
   putMessage: BackendClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
+  console.log(`=== starting the race`);
   yield* race({
-    task: call(handleUpsertMessageStatusAttribues, putMessage, action),
+    task: call(handleUpsertMessageStatusAttributes, putMessage, action),
     cancel: take(resetMessageArchivingAction)
   });
 }
 
-export function* handleUpsertMessageStatusAttribues(
+export function* handleUpsertMessageStatusAttributes(
   putMessage: BackendClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
   try {
     const body = validatePayload(action.payload);
+    console.log(`=== UPSERT making web request`);
     const response = (yield* call(
       withRefreshApiCall,
       putMessage({ id: action.payload.message.id, body }),
@@ -181,10 +182,13 @@ export function* handleUpsertMessageStatusAttribues(
       }
     );
 
+    console.log(`=== UPSERT checking next action`);
     if (nextAction) {
+      console.log(`=== UPSERT sending next action`);
       yield* put(nextAction);
     }
   } catch (error) {
+    console.log(`=== UPSERT error`);
     const reason = unknownToReason(error);
     trackUpsertMessageStatusAttributesFailure(reason);
     yield* put(
@@ -195,6 +199,7 @@ export function* handleUpsertMessageStatusAttribues(
     );
   } finally {
     if (yield* cancelled()) {
+      console.log(`=== UPSERT was cancelled`);
       yield* put(
         upsertMessageStatusAttributes.failure({
           error: getError("Cancelled"),
