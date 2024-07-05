@@ -147,6 +147,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - pagopa-io-react-native-integrity (0.3.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - SwiftCBOR
   - pagopa-io-react-native-jwt (1.2.0):
@@ -1077,7 +1078,7 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: 48d51868a2751db4d9220283626d0d53f2375f63
-  pagopa-io-react-native-integrity: 2df0acdf2dff0a4d612bfe06ec70f8fc2c1ba9a0
+  pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
   pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
   pagopa-io-react-native-login-utils: 9fb43fd59dcc864a24343209e74bd7429659456a
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
