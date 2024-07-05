@@ -266,7 +266,7 @@ startup:
   userDeletePendingAlert:
     title: Eliminazione profilo in corso
     message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
-    cta_1: Vai a Privacy
+    cta_1: Vai al Profilo
     cta_2: Ignora
   contextualHelp:
     title: Problemi di inizializzazione?
@@ -334,38 +334,47 @@ profile:
     privacy:
       title: Privacy e Condizioni d'uso
       description: I tuoi diritti e obblighi nell’uso di IO
-      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei tuoi dati personali.
+      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Elimina il tuo account
-        description: Cancella in modo permanente il tuo account e i tuoi dati personali
+        description: Elimina il tuo profilo e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
-          activeBonusTitle: Bonus attivi
-          activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
-          oldRequest: Hai già richiesto la cancellazione del tuo account.
-          oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
+          activeBonusTitle: Elimina il tuo profilo
+          activeBonusDescription: "Sembra che tu abbia aderito ad alcune iniziative presenti su IO. Se elimini il tuo profilo, l’iscrizione a eventuali iniziative a cui hai aderito non verrà cancellata\n\nPer gestirle, vai alla sezione Portafoglio, altrimenti scegli “Elimina”"
+          oldRequest: Hai già chiesto di eliminare il tuo profilo
+          oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n\nSe hai cambiato idea o hai richiesto l'eliminazione per sbaglio, premi su 'Annulla eliminazione'."
           cta:
-            manageBonus: Gestisci bonus
-            continue: Continua
+            manageBonus: Vai al portafoglio
+            continue: Elimina Profilo
             return: Indietro
-            cancel: Annulla l'eliminazione
+            cancel: Annulla eliminazione
         info:
-          body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo account è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
-          cta: Continua
+          title: Elimina il tuo profilo
+          description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
+          banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
+          body: 
+            p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
+            p2: 
+              firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
+              lastPart: non saranno più accessibili.
+            p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
+          cta: Procedi con l’eliminazione
         details:
-          body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          question: Qual è il motivo della cancellazione?
+          title: Perché vuoi eliminare il tuo profilo su IO?
+          body: Ci piacerebbe sapere perché stai eliminando il tuo profilo, così da poter migliorare in futuro. Se preferisci non condividere il motivo, salta questo passaggio e premi su “Elimina il tuo profilo”.
+          question: Qual è il motivo?
           answer_1: Non ritengo più utile IO
           answer_2: Non mi sento al sicuro su IO
           answer_3: Non ho mai usato l'app
           answer_4: Nessuno dei precedenti
-          labelOpenAnswer: Dicci di più
-          cta: Elimina Account
+          labelOpenAnswer: Scrivi qui il motivo
+          cta: Elimina il tuo profilo
         success:
-          title: Stiamo processando la tua richiesta.
-          body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
-          cta: Esci
+          title: Abbiamo preso in carico la tua richiesta
+          body: Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
+          cta: Chiudi
       exportData:
         cta: Richiedi copia dei tuoi dati
         title: Accedi ai tuoi dati
@@ -453,6 +462,10 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
+    itWallet:
+      itWalletTest: IT Wallet
+    trial:
+      titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
     newWalletSection: Nuova sezione portafoglio
     newHomeSection: Nuova home messaggi
@@ -460,17 +473,8 @@ profile:
     backendVersion: Versione Backend
     debugMode: Modalità debug
     designSystem: Design System
-    addCard:
-      titleSection: Aggiungi carta di test
-      warning:
-        title: Attenzione
-        message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
-        closeButton: Chiudi
-    trial:
-      titleSection: Partecipa alla sperimentazione
-    itWallet:
-      itWalletTest: IT Wallet
-      itWalletTestDescription: Abilita ambiente di test per IT Wallet
+    addTestCard:
+      title: Aggiungi carta di test
     banner:
       title: Vuoi visualizzare il tuo Codice Fiscale?
       action: Vai alla sezione “I tuoi dati”
@@ -2254,7 +2258,7 @@ identification:
     congiunction: o
   title: Ciao {{name}}!
   titleProfileName: Ciao {{profileName}}!
-  titleValidation: Conferma l'operazione
+  titleValidation: Autorizza l'operazione
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
