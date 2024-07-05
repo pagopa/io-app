@@ -2520,7 +2520,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               Object {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               Object {
                                                 "flex": 0,
@@ -2529,7 +2529,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -3523,7 +3523,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               Object {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               Object {
                                                 "flex": 0,
@@ -3532,7 +3532,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -4581,7 +4581,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                                 "borderWidth": 0,
                                               },
                                               Object {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               Object {
                                                 "flex": 0,
@@ -4590,7 +4590,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -5459,7 +5459,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                                 "borderWidth": 0,
                                               },
                                               Object {
-                                                "color": "#0B3EE3",
+                                                "color": "#0066CC",
                                               },
                                               Object {
                                                 "flex": 0,
@@ -5468,7 +5468,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
+                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
