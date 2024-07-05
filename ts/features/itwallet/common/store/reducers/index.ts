@@ -6,15 +6,20 @@ import identificationReducer, {
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";
+import lifecycleReducer, {
+  ItwLifecycleState
+} from "../../../lifecycle/store/reducers";
 
 export type ItWalletState = {
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState & PersistPartial;
+  lifecycle: ItwLifecycleState;
 };
 
 const reducer = combineReducers({
   identification: identificationReducer,
-  issuance: issuanceReducer
+  issuance: issuanceReducer,
+  lifecycle: lifecycleReducer
 });
 
 export default reducer;
