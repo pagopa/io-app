@@ -4,10 +4,8 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
-import {
-  itwLifecycleOperational,
-  itwLifecycleValid
-} from "../../lifecycle/store/actions";
+import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
+import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -89,11 +87,13 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   setWalletInstanceToOperational: () => {
-    dispatch(itwLifecycleOperational());
+    dispatch(
+      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
+    );
   },
 
   setWalletInstanceToValid: () => {
-    dispatch(itwLifecycleValid());
+    dispatch(itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID));
   },
 
   storeWalletAttestation: () => {},
