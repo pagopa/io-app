@@ -33,6 +33,8 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
+import { fimsIsHistoryEnabledSelector } from "../../features/fims/history/store/selectors";
+import { FIMS_ROUTES } from "../../features/fims/common/navigation";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
@@ -68,6 +70,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
 
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
+  const isFimsHistoryEnabled = useIOSelector(fimsIsHistoryEnabledSelector);
   const [requestProcess, setRequestProcess] = useState(false);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
@@ -186,6 +189,20 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     handleUserDataRequestAlert
   ]);
 
+  const spreadableMaybeFimsHistoryListItem = isFimsHistoryEnabled
+    ? [
+        {
+          // TODO: add correct I18n keys
+          value: "FIMS_HISTORY",
+          description: "HISTORY_DESC",
+          onPress: () =>
+            navigation.navigate(FIMS_ROUTES.MAIN, {
+              screen: FIMS_ROUTES.HISTORY
+            })
+        }
+      ]
+    : [];
+
   const isRequestProcessing = useCallback(
     (choice: UserDataProcessingChoiceEnum): boolean =>
       !pot.isLoading(userDataProcessing[choice]) &&
@@ -241,6 +258,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           : undefined,
         testID: "profile-export-data"
       },
+      ...spreadableMaybeFimsHistoryListItem,
       {
         // Remove account
         value: I18n.t("profile.main.privacy.removeAccount.title"),

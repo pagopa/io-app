@@ -57,6 +57,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -413,8 +414,8 @@ const PlaygroundsSection = () => {
       condition: isItWalletTestEnabled,
       value: "IT Wallet",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.ITW_PLAYGROUND
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.PLAYGROUNDS
         })
     },
     {
