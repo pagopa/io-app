@@ -2118,6 +2118,7 @@ services:
         title: "Preferences saved!"
         body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
+      banner: Puoi modificare la tua scelta in ogni momento da Profilo > Preferenze
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
