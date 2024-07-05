@@ -41,7 +41,7 @@ import {
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
-import ItwMarkdown from "../../itwallet/discovery/components/ItwMarkdown";
+import ItwMarkdown from "../../itwallet/common/components/ItwMarkdown";
 import ZendeskSupportActions from "../components/ZendeskSupportActions";
 import { ZendeskParamsList } from "../navigation/params";
 import {

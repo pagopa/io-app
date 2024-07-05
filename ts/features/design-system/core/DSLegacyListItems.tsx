@@ -1,11 +1,9 @@
-import { Icon } from "@pagopa/io-app-design-system";
 import * as React from "react";
 
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import { H2 } from "../../../components/core/typography/H2";
 import ListItemComponent from "../../../components/screens/ListItemComponent";
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
-import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -119,14 +117,6 @@ export const DSLegacyListItems = () => (
       />
     </DSComponentViewerBox>
 
-    <DSComponentViewerBox name="ZendeskItemPermissionComponent">
-      <ZendeskItemPermissionComponent
-        icon={<Icon name="info" size={24} />}
-        title="Storico versioni dell'app"
-        value="Per capire se il problema dipende dall'ultimo aggiornamento"
-        testId="TestID"
-      />
-    </DSComponentViewerBox>
     <H2
       color={"bluegrey"}
       weight={"Semibold"}
