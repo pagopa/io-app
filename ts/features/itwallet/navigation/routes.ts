@@ -16,5 +16,6 @@ export const ITW_ROUTES = {
   } as const,
   PRESENTATION: {
     EID_DETAIL: "ITW_PRESENTATION_EID_DETAIL"
-  } as const
+  } as const,
+  PLAYGROUNDS: "ITW_PLAYGROUNDS" as const
 };
