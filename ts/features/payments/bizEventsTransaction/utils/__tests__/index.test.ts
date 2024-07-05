@@ -1,39 +1,44 @@
 import { calculateTotalAmount, formatAmountText, getPayerInfoLabel } from "..";
 
 describe("formatAmountText", () => {
-  it('should format "1000.00" as "1.000,00 €"', () => {
-    const result = formatAmountText("1000.00");
-    expect(result).toBe("1.000,00 €");
+  it('should format "1.000,00" as "1.000,00 €"', () => {
+    const result = formatAmountText("1.000,00");
+    expect(result).toBe("1.000,00 €");
   });
 
-  it('should fotmat "10.00" as "10,00 €"', () => {
-    const result = formatAmountText("10.00");
-    expect(result).toBe("10,00 €");
+  it('should fotmat "10,00" as "10,00 €"', () => {
+    const result = formatAmountText("10,00");
+    expect(result).toBe("10,00 €");
   });
 
   it('should format "40,25" as "40,25 €"', () => {
     const result = formatAmountText("40,25");
-    expect(result).toBe("40,25 €");
+    expect(result).toBe("40,25 €");
   });
 
-  it('should format "1000.1234" as "1.000,12 €"', () => {
-    const result = formatAmountText("1000.1234");
-    expect(result).toBe("1.000,12 €");
+  it('should format "1.000,12" as "1.000,12 €"', () => {
+    const result = formatAmountText("1.000,12");
+    expect(result).toBe("1.000,12 €");
   });
 
-  it('should format "1000.1" as "1.000,10 €"', () => {
-    const result = formatAmountText("1000.1");
-    expect(result).toBe("1.000,10 €");
+  it('should format "1.000.10" as "1.000,10 €"', () => {
+    const result = formatAmountText("1.000,10");
+    expect(result).toBe("1.000,10 €");
   });
 
-  it('should format "-1000.00" as "-1.000,00 €"', () => {
-    const result = formatAmountText("-1000.00");
-    expect(result).toBe("-1.000,00 €");
+  it('should format "1.117,88" as "1.117,88 €"', () => {
+    const result = formatAmountText("1.117,88");
+    expect(result).toBe("1.117,88 €");
   });
 
-  it('should format "1000,00" as "1.000,00 €"', () => {
-    const result = formatAmountText("1000,00");
-    expect(result).toBe("1.000,00 €");
+  it('should format "-1.000.00" as "-1.000,00 €"', () => {
+    const result = formatAmountText("-1.000,00");
+    expect(result).toBe("-1.000,00 €");
+  });
+
+  it('should format "1.000,00" as "1.000,00 €"', () => {
+    const result = formatAmountText("1.000,00");
+    expect(result).toBe("1.000,00 €");
   });
 
   it('should return empty string for "abcd"', () => {

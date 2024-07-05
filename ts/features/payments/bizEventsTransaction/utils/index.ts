@@ -37,19 +37,14 @@ export const groupTransactionsByMonth = (
   }));
 };
 
-// This function formats the text of the amount that is a string composed by "1000.00" in the format "1.000,00 €" allowing only two decimal digits
+// This function is used to format the amount in the transaction list as we know that the backend
+// .. will send the amount in the format "123,45" and we want to show it as "123,45 €" or "1.234,56" as "1.234,56 €"
 export const formatAmountText = (amount: string): string => {
-  const normalizedAmount = amount.replace(",", ".");
-  const amountNumber = parseFloat(normalizedAmount);
-  if (isNaN(amountNumber)) {
+  if (isNaN(parseFloat(amount))) {
     return "";
   }
-  return amountNumber.toLocaleString("it-IT", {
-    style: "currency",
-    currency: "EUR",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+
+  return `${amount} €`;
 };
 
 export const byteArrayToBase64 = (byteArray: Uint8Array): string => {
