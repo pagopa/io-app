@@ -22,6 +22,10 @@ import {
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
+import {
+  isDesignSystemEnabledSelector,
+  isNewHomeSectionEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -79,6 +83,10 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const navigation = useIONavigation();
   const store = useIOStore();
 
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isNewHomeSectionEnabled = useIOSelector(
+    isNewHomeSectionEnabledSelector
+  );
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
   );
@@ -126,8 +134,18 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       dispatch(resetMessageArchivingAction(undefined));
     }
 
-    dispatch(searchMessagesEnabled(true));
-  }, [dispatch, store]);
+    if (isDesignSystemEnabled && isNewHomeSectionEnabled) {
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_SEARCH);
+    } else {
+      dispatch(searchMessagesEnabled(true));
+    }
+  }, [
+    dispatch,
+    isDesignSystemEnabled,
+    isNewHomeSectionEnabled,
+    navigation,
+    store
+  ]);
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {

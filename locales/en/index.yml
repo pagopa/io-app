@@ -2011,6 +2011,13 @@ messages:
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
+  search:
+    emptyState:
+      title: "Enter at least three letters"
+    input:
+      cancel: "Cancel"
+      clear: "Erase"
+      placeholderShort: "Enter text to search for"
 messageDetails:
   accessibilityAttachmentIcon: "Includes attachments"
   contextualHelpTitle: Message details

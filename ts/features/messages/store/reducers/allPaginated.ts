@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
@@ -28,6 +29,7 @@ import { emptyMessageArray } from "../../utils";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { foldMessageCategoryK } from "../../utils/messageCategory";
 import { paymentsByRptIdSelector } from "../../../../store/reducers/entities/payments";
+import { isTextIncludedCaseInsensitive } from "../../../../utils/strings";
 
 export type MessagePage = {
   page: ReadonlyArray<UIMessage>;
@@ -899,6 +901,55 @@ export const paginatedMessageFromIdForCategorySelector = (
     O.chain(RA.findFirst(message => message.id === messageId)),
     O.toUndefined
   );
+
+export const searchMessagesCachedSelector = createSelector(
+  [
+    (state: GlobalState) => state.entities.messages.allPaginated.inbox.data,
+    (state: GlobalState) => state.entities.messages.allPaginated.archive.data,
+    (_state: GlobalState, searchText: string) => searchText,
+    (_state: GlobalState, _searchText: string, minQueryLength: number) =>
+      minQueryLength
+  ],
+  (inboxData, archiveData, searchText, minQueryLength) =>
+    pipe(searchText.trim(), trimmedSearchText =>
+      pipe(
+        trimmedSearchText.length >= minQueryLength,
+        B.fold(
+          () => [] as ReadonlyArray<UIMessage>,
+          () =>
+            pipe(
+              inboxData,
+              pot.toOption,
+              O.map(inboxData => inboxData.page),
+              O.getOrElse(() => [] as ReadonlyArray<UIMessage>),
+              inboxMessages =>
+                pipe(
+                  archiveData,
+                  pot.toOption,
+                  O.map(archiveData => archiveData.page),
+                  O.getOrElseW(() => [] as ReadonlyArray<UIMessage>),
+                  archiveMessages => inboxMessages.concat(archiveMessages)
+                ),
+              inboxAndArchiveMessages =>
+                inboxAndArchiveMessages.filter(message =>
+                  isTextIncludedCaseInsensitive(
+                    [
+                      message.title,
+                      message.organizationName,
+                      message.serviceName
+                    ].join(" "),
+                    searchText
+                  )
+                ),
+              filteredMessages =>
+                [...filteredMessages].sort((a, b) =>
+                  b.id.localeCompare(a.id, "en")
+                )
+            )
+        )
+      )
+    )
+);
 
 const messagePotToToastReportableErrorOrUndefined = (
   messagePagePot: MessagePagePot

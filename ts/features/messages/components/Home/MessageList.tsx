@@ -105,8 +105,8 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
           } else {
             return (
               <WrappedMessageListItem
+                archiveRestoreSourceCategory={category}
                 index={index}
-                listCategory={category}
                 message={item}
               />
             );
