@@ -3834,7 +3834,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: Non siamo riusciti a caricare la ricevuta
+      title: We couldn't retrieve the receipt
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
