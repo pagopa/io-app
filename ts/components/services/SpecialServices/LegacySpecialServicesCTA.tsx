@@ -14,7 +14,7 @@ import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isPnEnabledSelector,
-  isPnSupportedSelector
+  isPnAppVersionSupportedSelector
 } from "../../../store/reducers/backendStatus";
 import { openAppStoreUrl } from "../../../utils/url";
 
@@ -69,7 +69,7 @@ const LegacySpecialServicesCTA = (props: Props) => {
   const isCdcEnabled = cdcEnabledSelector && cdcEnabled;
 
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
-  const isPnSupported = useIOSelector(isPnSupportedSelector);
+  const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);
 
   const mapSpecialServiceConfig = new Map<string, SpecialServiceConfig>([
     ["cgn", { isEnabled: isCGNEnabled, isSupported: true }],

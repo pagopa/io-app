@@ -6,20 +6,24 @@ import {
 } from "typesafe-actions";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import {
-  UIMessage,
-  UIMessageDetails,
-  UIMessageId,
-  WithUIMessageId
-} from "../../types";
+import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { MessagesStatus } from "../reducers/messagesStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
+import {
+  clearLegacyMessagePrecondition,
+  errorPreconditionStatusAction,
+  getLegacyMessagePrecondition,
+  idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
+  retrievingDataPreconditionStatusAction,
+  scheduledPreconditionStatusAction,
+  shownPreconditionStatusAction,
+  updateRequiredPreconditionStatusAction
+} from "./preconditions";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
@@ -199,20 +203,6 @@ export const migrateToPaginatedMessages = createAsyncAction(
   "MESSAGES_MIGRATE_TO_PAGINATED_FAILURE"
 )<MessagesStatus, number, MigrationResult>();
 
-export const getMessagePrecondition = createAsyncAction(
-  "GET_MESSAGE_PRECONDITION_REQUEST",
-  "GET_MESSAGE_PRECONDITION_SUCCESS",
-  "GET_MESSAGE_PRECONDITION_FAILURE"
-)<
-  WithUIMessageId<{ categoryTag: MessageCategory["tag"] }>,
-  ThirdPartyMessagePrecondition,
-  Error
->();
-
-export const clearMessagePrecondition = createAction(
-  "CLEAR_MESSAGE_PRECONDITION"
-);
-
 /**
  * Used to mark the end of a migration and reset it to a pristine state.
  */
@@ -333,8 +323,15 @@ export type MessagesActions = ActionType<
   | typeof cancelPreviousAttachmentDownload
   | typeof clearRequestedAttachmentDownload
   | typeof removeCachedAttachment
-  | typeof getMessagePrecondition
-  | typeof clearMessagePrecondition
+  | typeof errorPreconditionStatusAction
+  | typeof idlePreconditionStatusAction
+  | typeof loadingContentPreconditionStatusAction
+  | typeof retrievingDataPreconditionStatusAction
+  | typeof scheduledPreconditionStatusAction
+  | typeof shownPreconditionStatusAction
+  | typeof updateRequiredPreconditionStatusAction
+  | typeof getLegacyMessagePrecondition
+  | typeof clearLegacyMessagePrecondition
   | typeof getMessageDataAction
   | typeof cancelGetMessageDataAction
   | typeof resetGetMessageDataAction
