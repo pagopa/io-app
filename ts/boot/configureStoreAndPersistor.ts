@@ -158,16 +158,7 @@ const migrations: MigrationManifest = {
 
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "7": (state: PersistedState) => ({
-    ...state,
-    entities: {
-      ...(state as PersistedGlobalState).entities,
-      services: {
-        ...(state as PersistedGlobalState).entities.services,
-        byId: {}
-      }
-    }
-  }),
+  "7": (state: PersistedState) => _.set(state, "entities.services.byId", {}),
 
   // Version 8
   // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
