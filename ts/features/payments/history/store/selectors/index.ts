@@ -10,7 +10,10 @@ export const selectPaymentsHistoryArchive = (state: GlobalState) =>
 export const selectOngoingPaymentHistory = (state: GlobalState) =>
   state.features.payments.history.ongoingPayment;
 
-export const selectPymentAttemptByRptId = (rptId: RptId) =>
+export const paymentAnalyticsDataSelector = (state: GlobalState) =>
+  state.features.payments.history.analyticsData;
+
+export const selectPaymentAttemptByRptId = (rptId: RptId) =>
   createSelector(selectPaymentsHistoryArchive, archive =>
     pipe(
       O.fromNullable(archive.find(h => h.rptId === rptId)),

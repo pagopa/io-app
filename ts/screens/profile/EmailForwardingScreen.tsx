@@ -13,13 +13,9 @@ import {
 import _ from "lodash";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../../components/core/typography/ComposedBodyFromArray";
+import { BodyProps } from "../../components/core/typography/ComposedBodyFromArray";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
-  ProfileState,
   isEmailEnabledSelector,
   profileEmailSelector,
   profileSelector
@@ -27,11 +23,6 @@ import {
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { profileUpsert } from "../../store/actions/profile";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
-import { getProfileChannelsforServicesList } from "../../utils/profile";
-import {
-  VisibleServicesState,
-  visibleServicesSelector
-} from "../../store/reducers/entities/services/visibleServices";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -46,15 +37,6 @@ const EmailForwardingScreen = () => {
   const dispatch = useIODispatch();
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
-  const potVisibleServices: VisibleServicesState = useIOSelector(
-    visibleServicesSelector
-  );
-  const visibleServicesId = pot.getOrElse(
-    pot.map(potVisibleServices, services =>
-      services.map(service => service.service_id)
-    ),
-    []
-  );
   const isEmailEnabled = useIOSelector(isEmailEnabledSelector, _.isEqual);
   const UserEmailSelector = useIOSelector(profileEmailSelector, _.isEqual);
   const userEmail = pipe(
@@ -84,20 +66,13 @@ const EmailForwardingScreen = () => {
   );
 
   const disableOrEnableAllEmailNotifications = useCallback(
-    (servicesId: ReadonlyArray<string>, profile: ProfileState) => {
-      const newBlockedChannels = getProfileChannelsforServicesList(
-        servicesId,
-        profile,
-        true,
-        "EMAIL"
-      );
+    () =>
       dispatch(
         profileUpsert.request({
-          blocked_inbox_or_channels: newBlockedChannels,
+          blocked_inbox_or_channels: {},
           is_email_enabled: true
         })
-      );
-    },
+      ),
     [dispatch]
   );
 
@@ -120,17 +95,12 @@ const EmailForwardingScreen = () => {
       // eslint-disable-next-line functional/immutable-data
       isCustomChannelEnabledChoice.current = false;
       if (canSendEmail) {
-        disableOrEnableAllEmailNotifications(visibleServicesId, profile);
+        disableOrEnableAllEmailNotifications();
       } else {
         setEmailChannel(false);
       }
     },
-    [
-      disableOrEnableAllEmailNotifications,
-      profile,
-      setEmailChannel,
-      visibleServicesId
-    ]
+    [disableOrEnableAllEmailNotifications, setEmailChannel]
   );
 
   useEffect(() => {
@@ -158,11 +128,7 @@ const EmailForwardingScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       title={{ label: I18n.t("send_email_messages.title") }}
-      description={
-        (
-          <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
-        ) as unknown as string
-      }
+      description={bodyPropsArray}
       headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}
       canGoback={true}

@@ -377,10 +377,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return undefined, defined organization fiscal code", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.none
+          details: {
+            byId: {
+              [serviceId]: pot.none
+            }
           }
         }
       }
@@ -396,10 +398,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return undefined, undefined organization fiscal code, service pot.noneLoading", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.noneLoading
+          details: {
+            byId: {
+              [serviceId]: pot.noneLoading
+            }
           }
         }
       }
@@ -414,10 +418,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return undefined, undefined organization fiscal code, service pot.someLoading", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.someLoading({})
+          details: {
+            byId: {
+              [serviceId]: pot.someLoading({})
+            }
           }
         }
       }
@@ -432,9 +438,11 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service unmatching", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {}
+          details: {
+            byId: {}
+          }
         }
       }
     } as GlobalState;
@@ -449,10 +457,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.none", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.none
+          details: {
+            byId: {
+              [serviceId]: pot.none
+            }
           }
         }
       }
@@ -468,10 +478,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneUpdating", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.noneUpdating({})
+          details: {
+            byId: {
+              [serviceId]: pot.noneUpdating({})
+            }
           }
         }
       }
@@ -487,10 +499,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.noneError", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.noneError(new Error())
+          details: {
+            byId: {
+              [serviceId]: pot.noneError(new Error())
+            }
           }
         }
       }
@@ -506,10 +520,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.some", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.some({})
+          details: {
+            byId: {
+              [serviceId]: pot.some({})
+            }
           }
         }
       }
@@ -525,10 +541,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someUpdating", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.someUpdating({}, {})
+          details: {
+            byId: {
+              [serviceId]: pot.someUpdating({}, {})
+            }
           }
         }
       }
@@ -544,10 +562,12 @@ describe("getLoadServiceDetailsActionIfNeeded", () => {
   it("should return loadServiceDetail.request, undefined organization fiscal code, service pot.someError", () => {
     const serviceId = "01HYE2HRFESQ9TN5E1WZ99AW8Z" as ServiceId;
     const globalState = {
-      entities: {
+      features: {
         services: {
-          byId: {
-            [serviceId]: pot.someError({}, new Error())
+          details: {
+            byId: {
+              [serviceId]: pot.someError({}, new Error())
+            }
           }
         }
       }
