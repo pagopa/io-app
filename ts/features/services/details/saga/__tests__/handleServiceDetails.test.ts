@@ -8,8 +8,6 @@ import { ServiceName } from "../../../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { loadServiceDetail } from "../../store/actions/details";
 import { handleServiceDetails } from "../handleServiceDetails";
-import { handleOrganizationNameUpdateSaga } from "../../../../../sagas/services/handleOrganizationNameUpdateSaga";
-import { handleServiceReadabilitySaga } from "../../../../../sagas/services/handleServiceReadabilitySaga";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { BackendClient } from "../../../../../api/__mocks__/backend";
 
@@ -63,10 +61,6 @@ describe("handleServiceDetails", () => {
       )
       .next(E.right({ status: 200, value: mockedService }))
       .put(loadServiceDetail.success(mockedService))
-      .next()
-      .call(handleServiceReadabilitySaga, mockedServiceId)
-      .next()
-      .call(handleOrganizationNameUpdateSaga, mockedService)
       .next()
       .isDone();
   });

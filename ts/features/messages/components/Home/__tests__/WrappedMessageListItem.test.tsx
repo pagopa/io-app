@@ -13,6 +13,10 @@ import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend
 import { WrappedMessageListItem } from "../WrappedMessageListItem";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  scheduledPreconditionStatusAction,
+  toScheduledPayload
+} from "../../../store/actions/preconditions";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -22,6 +26,11 @@ jest.mock("@react-navigation/native", () => ({
   useNavigation: () => ({
     navigate: mockNavigate
   })
+}));
+const mockDispatch = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual<typeof import("react-redux")>("react-redux"),
+  useDispatch: () => mockDispatch
 }));
 
 describe("WrappedMessageListItem", () => {
@@ -81,7 +90,7 @@ describe("WrappedMessageListItem", () => {
     const component = renderComponent(message);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should trigger navigation to Message Routing when the component is pressed", () => {
+  it("should trigger navigation to Message Routing when the component is pressed and the message has no preconditions", () => {
     const message = messageGenerator(false, false, true);
     const component = renderComponent(message);
     const pressable = component.getByTestId("wrapped_message_list_item_0");
@@ -95,6 +104,21 @@ describe("WrappedMessageListItem", () => {
         fromNotification: false
       }
     });
+    expect(mockDispatch.mock.calls.length).toBe(0);
+  });
+  it("should dispatch 'scheduledPreconditionStatusAction' when the message has preconditions", () => {
+    const message = messageGenerator(false, true, true);
+    const component = renderComponent(message);
+    const pressable = component.getByTestId("wrapped_message_list_item_0");
+    expect(pressable).toBeDefined();
+    fireEvent.press(pressable);
+    expect(mockNavigate.mock.calls.length).toBe(0);
+    expect(mockDispatch.mock.calls.length).toBe(1);
+    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
+      scheduledPreconditionStatusAction(
+        toScheduledPayload(message.id, message.category.tag)
+      )
+    );
   });
 });
 
@@ -119,7 +143,8 @@ const messageGenerator = (
         ? PaymentTagEnum.PAYMENT
         : TagEnum.GENERIC,
       rptId
-    }
+    },
+    hasPrecondition: isFromSend
   } as UIMessage);
 
 const renderComponent = (
