@@ -27,7 +27,7 @@ import {
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import MessageList from "../../components/Home/legacy";
 import MessagesSearch from "../../components/Home/legacy/MessagesSearch";
-import { useMessageOpening } from "../../hooks/useMessageOpening";
+import { useLegacyMessageOpening } from "../../hooks/useLegacyMessageOpening";
 import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
@@ -102,7 +102,7 @@ const LegacyMessagesHomeScreen = ({
     );
   }, [latestMessageOperation]);
 
-  const { present, bottomSheet } = useMessageOpening();
+  const { present, bottomSheet } = useLegacyMessageOpening();
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 

@@ -43,48 +43,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "calendarEvents": {
     "byMessageId": {},
   },
-  "messages": {
-    "allPaginated": {
-      "archive": {
-        "data": {
-          "kind": "PotNone",
-        },
-        "lastRequest": {
-          "_tag": "None",
-        },
-      },
-      "inbox": {
-        "data": {
-          "kind": "PotNone",
-        },
-        "lastRequest": {
-          "_tag": "None",
-        },
-      },
-      "migration": {
-        "_tag": "None",
-      },
-      "shownCategory": "INBOX",
-    },
-    "detailsById": {},
-    "downloads": {},
-    "messageGetStatus": {
-      "status": "idle",
-    },
-    "messagePrecondition": {
-      "content": {
-        "kind": "undefined",
-      },
-      "messageId": {
-        "_tag": "None",
-      },
-    },
-    "paginatedById": {},
-    "payments": {
-      "userSelectedPayments": Set {},
-    },
-    "thirdPartyById": {},
-  },
   "messagesStatus": {},
   "organizations": {
     "all": [],
