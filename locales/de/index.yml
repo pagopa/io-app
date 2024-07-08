@@ -338,11 +338,8 @@ profile:
           answer_3: "Ich habe die App nie benutzt"
           answer_4: "Keiner der oben genannten Punkte"
       exportData:
-        cta: "Kopie deiner Daten anfordern"
         title: "Zugriff auf deine Daten"
         description: "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten"
-        info:
-          title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
         alert:
           requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
           oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
