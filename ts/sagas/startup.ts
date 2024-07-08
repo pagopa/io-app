@@ -309,7 +309,7 @@ export function* initializeApplicationSaga(
     backendClient.deleteUserDataProcessingRequest
   );
 
-  // Start watching for services actions
+  // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
