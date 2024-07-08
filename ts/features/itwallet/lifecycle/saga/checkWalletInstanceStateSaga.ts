@@ -6,7 +6,7 @@ import { getAttestation } from "../../common/utils/itwAttestationUtils";
 import { itwHardwareKeyTagSelector } from "../../issuance/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { ItwLifecycleState } from "../store/reducers";
-import { itwLifecycleDeactivated } from "../store/actions";
+import { itwLifecycleStateUpdated } from "../store/actions";
 
 /**
  * The wallet instance's state check is performed
@@ -19,7 +19,9 @@ const activeStates = [
 
 function* handleWalletInstanceReset() {
   // TODO: reset wallet instance store and keys
-  yield* put(itwLifecycleDeactivated()); // or installed?
+  yield* put(
+    itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED) // or installed?
+  );
 }
 
 export function* checkWalletInstanceStateSaga(): Generator<
