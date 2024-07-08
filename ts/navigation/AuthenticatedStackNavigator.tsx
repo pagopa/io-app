@@ -181,7 +181,10 @@ const AuthenticatedStackNavigator = () => {
 
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={{
+          ...hideHeaderOptions,
+          ...TransitionPresets.SlideFromRightIOS
+        }}
         component={ProfileStackNavigator}
       />
 
