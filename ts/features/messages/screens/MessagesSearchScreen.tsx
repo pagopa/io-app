@@ -84,7 +84,6 @@ export const MessagesSearchScreen = () => {
       </View>
       <FlatList
         ItemSeparatorComponent={() => <Divider />}
-        contentContainerStyle={IOStyles.horizontalContentPadding}
         data={searchResultMessages}
         renderItem={renderItemCallback}
         ListEmptyComponent={renderListEmptyComponent}
