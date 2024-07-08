@@ -27,7 +27,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { serviceByIdSelector } from "../../../services/details/store/reducers/servicesById";
+import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { logoForService } from "../../../services/home/utils";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { ConsentData, FimsClaimType } from "../types";
