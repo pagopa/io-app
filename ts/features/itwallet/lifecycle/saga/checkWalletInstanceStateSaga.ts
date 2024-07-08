@@ -1,9 +1,11 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
+import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { call, put, select } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import { itwLifecycleSelector } from "../store/selectors";
 import { getAttestation } from "../../common/utils/itwAttestationUtils";
 import { itwHardwareKeyTagSelector } from "../../issuance/store/selectors";
+import { itwRemoveHardwareKeyTag } from "../../issuance/store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { ItwLifecycleState } from "../store/reducers";
 import { itwLifecycleStateUpdated } from "../store/actions";
@@ -17,10 +19,11 @@ const activeStates = [
   ItwLifecycleState.ITW_LIFECYCLE_VALID
 ];
 
-function* handleWalletInstanceReset() {
-  // TODO: reset wallet instance store and keys
+function* handleWalletInstanceReset(hardwareKeyTag: string) {
+  yield* call(deleteKey, hardwareKeyTag);
+  yield* put(itwRemoveHardwareKeyTag());
   yield* put(
-    itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED) // or installed?
+    itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_INSTALLED)
   );
 }
 
@@ -54,7 +57,7 @@ export function* checkWalletInstanceStateSaga(): Generator<
       // err instanceof Errors.WalletInstanceRevokedError ||
       // err instanceof Errors.WalletInstanceNotFoundError
     ) {
-      yield* call(handleWalletInstanceReset);
+      yield* call(handleWalletInstanceReset, hardwareKeyTag.value);
     }
   }
 }

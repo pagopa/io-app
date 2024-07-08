@@ -4,4 +4,10 @@ export const itwStoreHardwareKeyTag = createStandardAction(
   "ITW_STORE_HARDWARE_KEY_TAG"
 )<string>();
 
-export type ItwIssuanceActions = ActionType<typeof itwStoreHardwareKeyTag>;
+export const itwRemoveHardwareKeyTag = createStandardAction(
+  "ITW_REMOVE_HARDWARE_KEY_TAG"
+)<void>();
+
+export type ItwIssuanceActions =
+  | ActionType<typeof itwStoreHardwareKeyTag>
+  | ActionType<typeof itwRemoveHardwareKeyTag>;

@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwStoreHardwareKeyTag } from "../actions";
+import { itwRemoveHardwareKeyTag, itwStoreHardwareKeyTag } from "../actions";
 
 export type ItwIssuanceState = {
   hardwareKeyTag: O.Option<string>;
@@ -20,6 +20,11 @@ const reducer = (
       return {
         ...state,
         hardwareKeyTag: O.some(action.payload)
+      };
+    case getType(itwRemoveHardwareKeyTag):
+      return {
+        ...state,
+        hardwareKeyTag: O.none
       };
   }
   return state;
