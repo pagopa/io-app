@@ -49,20 +49,6 @@ Object {
     "nameByFiscalCode": Object {},
   },
   "paymentByRptId": Object {},
-  "services": Object {
-    "byId": Object {},
-    "byOrgFiscalCode": Object {},
-    "firstLoading": Object {
-      "isFirstServicesLoadingCompleted": false,
-    },
-    "readState": Object {},
-    "servicePreference": Object {
-      "kind": "PotNone",
-    },
-    "visible": Object {
-      "kind": "PotNone",
-    },
-  },
 }
 `;
 
