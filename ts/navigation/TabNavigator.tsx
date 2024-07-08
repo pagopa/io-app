@@ -24,7 +24,6 @@ import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { showBarcodeScanSection } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -52,6 +51,8 @@ const styles = StyleSheet.create({
     elevation: variables.footerElevation
   }
 });
+
+export const showBarcodeScanSection = false; // Currently disabled
 
 export const MainTabNavigator = () => {
   const navigation = useIONavigation();

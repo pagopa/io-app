@@ -109,9 +109,6 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
-export const showBarcodeScanSection =
-  Config.SHOW_BARCODE_SCAN_SECTION === "YES";
-
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,

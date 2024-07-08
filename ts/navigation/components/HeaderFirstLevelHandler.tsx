@@ -17,7 +17,7 @@ import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
 import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
 import * as analytics from "../../features/services/common/analytics";
-import { showBarcodeScanSection } from "../../config";
+import { showBarcodeScanSection } from "../TabNavigator";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
