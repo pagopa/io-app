@@ -13,7 +13,7 @@ export const paymentsWalletUserMethodsSelector = createSelector(
     pot.map(
       wallet.userMethods,
       ({ wallets }) =>
-        _.orderBy(wallets, wallet => wallet.updateDate, "desc") ||
+        _.orderBy(wallets, wallet => wallet.creationDate, "desc") ||
         ([] as ReadonlyArray<WalletInfo>)
     )
 );
