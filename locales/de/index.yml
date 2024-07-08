@@ -2131,13 +2131,13 @@ bonus:
       goToDetail: "Die Karte anzeigen"
     detail:
       cta:
-        buyers: "CGN Ermäßigungen anzeigen"
+        buyers: Scopri le opportunità CGN
         otp: "Code generieren"
         eyca:
           copy: "EYCA Kartennummer kopieren"
-          pending: "EYCA Ermäßigungen anzeigen"
+          pending: Scopri le opportunità EYCA
           bottomSheet: "Besuche die EYCA Website"
-          showEycaDiscounts: "EYCA Ermäßigungen anzeigen"
+          showEycaDiscounts: Scopri le opportunità EYCA
       information:
         active: "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden."
         warning: "Achtung! "
@@ -2152,7 +2152,7 @@ bonus:
         eycaPending: "Wir verknüpfen deine nationale Jugendkarte mit einer EYCA Nummer."
         eycaError: "Wir hatten Probleme mit den EYCA Systemen."
         eycaBottomSheetTitle: "EYCA Kartennummer"
-        eycaDescription: "Bis zum Alter von 31 Jahren ist **deine nationale Jugendkarte Mitglied der EYCA** (European Youth Card Association).\n\nMit der Karte kannst du bei den teilnehmenden Händlern Rabatte und Ermäßigungen bei kulturellen Aktivitäten, beim Einkaufen, im Verkehr, in der Gastronomie und bei der Unterbringung erhalten, und zwar auch in den europäischen Ländern, die an der EYCA teilnehmen."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: "Aktiv"
           revoked: "Widerrufen"
@@ -2197,7 +2197,7 @@ bonus:
         toast: "Die Anfrage zur Deaktivierung war erfolgreich"
         alert:
           title: "Karte deaktivieren"
-          message: "Bist du sicher, dass du deine Nationale Jugendkarte deaktivieren möchtest? Wenn du dies bestätigst, verlierst du die Möglichkeit, die Vorteile der Initiative in Anspruch zu nehmen und die Karte wird aus deinem Konto verschwinden."
+          message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
     otp:
       error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
       code:

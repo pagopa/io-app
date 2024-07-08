@@ -2701,14 +2701,14 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the CGN benefits
+        buyers: Scopri le opportunità CGN
         discover: Discover the benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
-          pending: Check EYCA discounts
+          pending: Scopri le opportunità EYCA
           bottomSheet: Check the EYCA website
-          showEycaDiscounts: Check EYCA discounts
+          showEycaDiscounts: Scopri le opportunità EYCA
       information:
         active: "Your card is active and can be used until {{date}}"
         warning: "Attention! "
@@ -2722,7 +2722,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy using the card at participating merchants, you will be able to obtain discounts and concessions on cultural activities, shops, transport, catering and accommodation even in European countries participating in the circuit."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         eycaNumber: Card number
         badge:
           active: Active
@@ -2769,7 +2769,7 @@ bonus:
         toast: "The request to deactivate the card has been successfully executed"
         alert:
           title: "Deactivate card"
-          message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
+          message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
     otp:
       error: "Due to a technical problem we were unable to generate a discount code. Please try again."
       code:
