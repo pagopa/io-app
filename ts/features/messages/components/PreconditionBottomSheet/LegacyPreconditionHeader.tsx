@@ -18,7 +18,7 @@ type Props = {
   title: string;
 };
 
-export const PreconditionHeader = ({ title }: Props) => (
+export const LegacyPreconditionHeader = ({ title }: Props) => (
   <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
     <HeaderImage
       width={32}
@@ -30,7 +30,7 @@ export const PreconditionHeader = ({ title }: Props) => (
   </View>
 );
 
-export const PreconditionHeaderSkeleton = () => (
+export const LegacyPreconditionHeaderSkeleton = () => (
   <View
     style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}
     accessible={false}
