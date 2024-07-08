@@ -11,6 +11,14 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  selectOngoingPaymentHistory,
+  paymentAnalyticsDataSelector
+} from "../../history/store/selectors";
+import * as analytics from "../analytics";
 
 type Props = {
   failure: WalletPaymentFailure;
@@ -19,12 +27,22 @@ type Props = {
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
+  const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const dispatch = useIODispatch();
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const handleClose = () => {
     navigation.pop();
   };
 
   const handleContactSupport = () => {
+    analytics.trackPaymentErrorHelp({
+      error: failure.faultCodeCategory,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+    });
     supportModal.present();
   };
 
@@ -44,7 +62,8 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     pictogram: "umbrellaNew",
     title: I18n.t("wallet.payment.failure.GENERIC_ERROR.title"),
     subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
-    action: closeAction
+    action: closeAction,
+    secondaryAction: contactSupportAction
   };
 
   const getPropsFromFailure = ({
@@ -116,6 +135,28 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const contentProps = getPropsFromFailure(failure);
+
+  useOnFirstRender(() => {
+    if (
+      paymentOngoingHistory?.rptId &&
+      failure.faultCodeCategory === "PAYMENT_DUPLICATED"
+    ) {
+      dispatch(
+        paymentCompletedSuccess({
+          rptId: paymentOngoingHistory.rptId,
+          kind: "DUPLICATED"
+        })
+      );
+    }
+    analytics.trackPaymentRequestFailure(failure, {
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      service_name: paymentAnalyticsData?.serviceName,
+      data_entry: paymentAnalyticsData?.startOrigin,
+      first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      payment_phase: "verifica"
+    });
+  });
 
   return (
     <>

@@ -210,6 +210,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             snapToOffsets={[0, headerHeight]}
             snapToEnd={false}
             decelerationRate="normal"
+            testID={"CGNCardDetailsScrollView"}
           >
             <View
               style={{ height: 260, backgroundColor: HEADER_BACKGROUND_COLOR }}

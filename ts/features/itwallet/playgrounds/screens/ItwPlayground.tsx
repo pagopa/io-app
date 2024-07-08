@@ -2,15 +2,16 @@ import {
   ContentWrapper,
   Divider,
   H3,
+  ListItemHeader,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../../features/itwallet/discovery/components/ItwMarkdown";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../../features/itwallet/navigation/routes";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -50,12 +51,6 @@ const ItwPlayground = () => {
     });
   };
 
-  const navigateToIdentification = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
-    });
-  };
-
   const navigateToCredentialDetail = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PRESENTATION.EID_DETAIL
@@ -77,39 +72,47 @@ const ItwPlayground = () => {
   return (
     <ScrollView>
       <ContentWrapper>
-        {/* Discovery Playground */}
+        {/* Activation Playground */}
+        <ListItemHeader label="Activation" />
         <ListItemNav
-          value="Discovery"
+          value="Wallet activation"
           accessibilityLabel={"Discovery Playground"}
-          description="Start the discovery flow before activate IT-Wallet"
-          onPress={() => navigateToDiscovery()}
+          description="Start the eID issuing flow"
+          onPress={() => undefined}
         />
-        <Divider />
-        {/* Issuing eID Playground */}
+        <VSpacer size={16} />
+        {/* Issuing Playground */}
+        <ListItemHeader label="Credentials issuing" />
         <ListItemNav
-          value="Issuing (eID)"
-          accessibilityLabel={"Issuing (eID) Playground"}
-          description="Start the issuing flow choosing activation method to activate IT-Wallet and get your digital identity"
-          onPress={navigateToIdentification}
-        />
-        <Divider />
-        {/* Issuing mDL Playground */}
-        <ListItemNav
-          value="Issuing (mDL)"
-          accessibilityLabel={"Issuing (mDL) Playground"}
+          value="mDL issuing"
+          accessibilityLabel={"mDL Issuing"}
           description="Start the issuing flow to get your mobile driving license"
           onPress={() => undefined}
         />
         <Divider />
-        {/* Issuing TS Playground */}
         <ListItemNav
-          value="Issuing (TS)"
-          accessibilityLabel={"Issuing (TS) Playground"}
-          description="Start the issuing flow to get your health card"
+          value="TS issuing"
+          accessibilityLabel={"TS Issuing"}
+          description="Start the issuing flow to get your health insurance card"
           onPress={() => undefined}
         />
         <Divider />
-        {/* Credential Preview */}
+        <ListItemNav
+          value="DC issuing"
+          accessibilityLabel={"DC Issuing"}
+          description="Start the issuing flow to get your european disability card card"
+          onPress={() => undefined}
+        />
+        <VSpacer size={16} />
+        {/* Screens Playground */}
+        <ListItemHeader label="Screens" />
+        <ListItemNav
+          value="Wallet discovery screen"
+          accessibilityLabel={"Discovery screen"}
+          description="Navigate to the IT Wallet discovery screen"
+          onPress={navigateToDiscovery}
+        />
+        <Divider />
         <ListItemNav
           value="Credential preview (mDL)"
           accessibilityLabel="Credential preview (mdl) Playground"
@@ -117,7 +120,6 @@ const ItwPlayground = () => {
           onPress={navigateToCredentialPreview}
         />
         <Divider />
-        {/* Credential detail playground */}
         <ListItemNav
           value="Credential detail (eID)"
           accessibilityLabel={"Credential detail (eID) Playground"}
@@ -125,19 +127,20 @@ const ItwPlayground = () => {
           onPress={navigateToCredentialDetail}
         />
         <Divider />
-        {/* Credential auth playground */}
         <ListItemNav
           value="Credential auth (mDL)"
           accessibilityLabel={"Credential auth (mdl) Playground"}
           description="Open the eID credential detail screen"
           onPress={navigateToCredentialAuth}
         />
-        <Divider />
-        <VSpacer />
+        <VSpacer size={16} />
+        {/* Other Playgrounds */}
+        <ListItemHeader label="Miscellaneous" />
         <H3>{"IT Wallet markdown preview"}</H3>
-        {/* Markdown ITW Playground */}
-        <ItwMarkdown content={sampleMarkdown} />
+        <VSpacer size={8} />
+        <ItwMarkdown>{sampleMarkdown}</ItwMarkdown>
         {/* TODO: Add more items here */}
+        <VSpacer size={32} />
       </ContentWrapper>
     </ScrollView>
   );

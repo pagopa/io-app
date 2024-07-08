@@ -6,10 +6,13 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
-import { paginatedServicesGet } from "../actions";
+import { WithInstitutionID, paginatedServicesGet } from "../actions";
 
 export type InstitutionState = {
-  paginatedServices: pot.Pot<InstitutionServicesResource, NetworkError>;
+  paginatedServices: pot.Pot<
+    InstitutionServicesResource,
+    WithInstitutionID<NetworkError>
+  >;
 };
 
 const INITIAL_STATE: InstitutionState = {
