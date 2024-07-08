@@ -6,32 +6,32 @@ import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { UIMessage } from "../types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  getMessagePrecondition,
-  clearMessagePrecondition
-} from "../store/actions";
-import { messagePreconditionSelector } from "../store/reducers/messagePrecondition";
+import { legacyMessagePreconditionSelector } from "../store/reducers/legacyMessagePrecondition";
 import { RemoteValue, fold } from "../../../common/model/RemoteValue";
 import I18n from "../../../i18n";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { trackDisclaimerOpened } from "../analytics";
 import {
-  isPnSupportedSelector,
+  isPnAppVersionSupportedSelector,
   pnMinAppVersionSelector
 } from "../../../store/reducers/backendStatus";
-import { MessageFeedback } from "../components/Home/legacy/MessageFeedback";
+import { PreconditionsFeedback } from "../components/Home/PreconditionsFeedback";
 import { openAppStoreUrl } from "../../../utils/url";
 import {
-  PreconditionHeader,
-  PreconditionHeaderSkeleton
-} from "../components/PreconditionBottomSheet/PreconditionHeader";
+  LegacyPreconditionHeader,
+  LegacyPreconditionHeaderSkeleton
+} from "../components/PreconditionBottomSheet/LegacyPreconditionHeader";
 import {
-  PreconditionContent,
-  PreconditionContentSkeleton
-} from "../components/PreconditionBottomSheet/PreconditionContent";
-import { PreconditionFooter } from "../components/PreconditionBottomSheet/PreconditionFooter";
+  LegacyPreconditionContent,
+  LegacyPreconditionContentSkeleton
+} from "../components/PreconditionBottomSheet/LegacyPreconditionContent";
+import { LegacyPreconditionFooter } from "../components/PreconditionBottomSheet/LegacyPreconditionFooter";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import {
+  clearLegacyMessagePrecondition,
+  getLegacyMessagePrecondition
+} from "../store/actions/preconditions";
 
 const renderPreconditionHeader = (
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>
@@ -39,8 +39,8 @@ const renderPreconditionHeader = (
   fold(
     content,
     constNull,
-    () => <PreconditionHeaderSkeleton />,
-    ({ title }) => <PreconditionHeader title={title} />,
+    () => <LegacyPreconditionHeaderSkeleton />,
+    ({ title }) => <LegacyPreconditionHeader title={title} />,
     () => <View />
   );
 
@@ -51,15 +51,15 @@ const renderPreconditionContent = (
   fold(
     content,
     constNull,
-    () => <PreconditionContentSkeleton />,
+    () => <LegacyPreconditionContentSkeleton />,
     ({ markdown }) => (
-      <PreconditionContent
+      <LegacyPreconditionContent
         markdown={markdown}
         onLoadEnd={() => onLoadEnd(true)}
       />
     ),
     () => (
-      <MessageFeedback
+      <PreconditionsFeedback
         pictogram="umbrella"
         title={I18n.t("global.genericError")}
       />
@@ -78,7 +78,7 @@ const renderPreconditionFooter = (
   }
 
   return (
-    <PreconditionFooter
+    <LegacyPreconditionFooter
       messageId={messageId}
       onDismiss={() => onDismiss()}
       navigationAction={navigationAction}
@@ -86,15 +86,15 @@ const renderPreconditionFooter = (
   );
 };
 
-export const useMessageOpening = () => {
+export const useLegacyMessageOpening = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
-  const pnSupported = useIOSelector(isPnSupportedSelector);
+  const pnSupported = useIOSelector(isPnAppVersionSupportedSelector);
   const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
 
   const { messageId: maybeMessageId, content } = useIOSelector(
-    messagePreconditionSelector
+    legacyMessagePreconditionSelector
   );
   const [isContentLoadCompleted, setIsContentLoadCompleted] =
     React.useState<boolean>(false);
@@ -125,7 +125,7 @@ export const useMessageOpening = () => {
   const getContentModal = () => {
     if (!pnSupported) {
       return (
-        <MessageFeedback
+        <PreconditionsFeedback
           pictogram="umbrella"
           title={I18n.t("features.messages.updateBottomSheet.title")}
           subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
@@ -183,7 +183,7 @@ export const useMessageOpening = () => {
 
     return () => {
       setIsContentLoadCompleted(false);
-      dispatch(clearMessagePrecondition());
+      dispatch(clearLegacyMessagePrecondition());
     };
   };
 
@@ -203,7 +203,7 @@ export const useMessageOpening = () => {
 
     trackDisclaimerOpened(message.category.tag);
     dispatch(
-      getMessagePrecondition.request({
+      getLegacyMessagePrecondition.request({
         id: message.id,
         categoryTag: message.category.tag
       })
