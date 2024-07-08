@@ -14,7 +14,7 @@ import I18n, { setLocale } from "../../../i18n";
 import { SectionStatusKey } from "../../../store/reducers/backendStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
-import { SectionStatusComponent } from "../SectionStatusComponent";
+import SectionStatusComponent from "../index";
 
 jest.mock("../../../utils/url");
 
