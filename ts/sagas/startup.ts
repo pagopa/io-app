@@ -100,6 +100,7 @@ import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
+import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
 import {
   handlePendingMessageStateIfAllowedSaga,
   updateInstallationSaga
@@ -550,6 +551,9 @@ export function* initializeApplicationSaga(
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
+
+  // Start watching for trial system saga
+  yield* fork(watchTrialSystemSaga, sessionToken);
 
   // Start watching for itw saga
   yield* fork(watchItwSaga);

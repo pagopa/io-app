@@ -22,6 +22,7 @@ import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrong
 import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
 import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
 import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen";
+import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -108,6 +109,11 @@ export const ItwStackNavigator = () => (
       options={hiddenHeader}
     />
     <Stack.Screen
+      name={ITW_ROUTES.ISSUANCE.EID_RESULT}
+      component={ItwIssuanceEidResultScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
       name={ITW_ROUTES.ISSUANCE.CREDENTIAL_AUTH}
       component={ItwIssuanceCredentialAuthScreen}
     />
@@ -128,5 +134,7 @@ export const ItwStackNavigator = () => (
       component={ItwPresentationEidDetailScreen}
       options={hiddenHeader}
     />
+    {/* PLAYGROUNDS */}
+    <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
   </Stack.Navigator>
 );
