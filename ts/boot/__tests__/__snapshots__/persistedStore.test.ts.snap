@@ -43,48 +43,6 @@ Object {
   "calendarEvents": Object {
     "byMessageId": Object {},
   },
-  "messages": Object {
-    "allPaginated": Object {
-      "archive": Object {
-        "data": Object {
-          "kind": "PotNone",
-        },
-        "lastRequest": Object {
-          "_tag": "None",
-        },
-      },
-      "inbox": Object {
-        "data": Object {
-          "kind": "PotNone",
-        },
-        "lastRequest": Object {
-          "_tag": "None",
-        },
-      },
-      "migration": Object {
-        "_tag": "None",
-      },
-      "shownCategory": "INBOX",
-    },
-    "detailsById": Object {},
-    "downloads": Object {},
-    "messageGetStatus": Object {
-      "status": "idle",
-    },
-    "messagePrecondition": Object {
-      "content": Object {
-        "kind": "undefined",
-      },
-      "messageId": Object {
-        "_tag": "None",
-      },
-    },
-    "paginatedById": Object {},
-    "payments": Object {
-      "userSelectedPayments": Set {},
-    },
-    "thirdPartyById": Object {},
-  },
   "messagesStatus": Object {},
   "organizations": Object {
     "all": Array [],
