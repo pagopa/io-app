@@ -1,6 +1,6 @@
 import { IOColors } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import * as React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -65,6 +65,17 @@ export const MainTabNavigator = () => {
   );
   const isNewHomeSectionEnabled = useIOSelector(
     isNewHomeSectionEnabledSelector
+  );
+
+  // This variable checks that both the new wallet section and
+  // the new document scanning section are included in the tab bar.
+  // if these two sections are visible then the profile will
+  // no more be displayed in the tab bar
+  // It will be possible to delete this check and all the code
+  // it carries when the two data it refers to are deleted
+  const isSettingsVisibleAndHideProfile = useMemo(
+    () => isNewWalletSectionEnabled && showBarcodeScanSection,
+    [isNewWalletSectionEnabled]
   );
 
   const tabBarHeight = 54;
@@ -201,7 +212,7 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {!showBarcodeScanSection && (
+        {!isSettingsVisibleAndHideProfile && (
           <Tab.Screen
             name={ROUTES.PROFILE_MAIN}
             component={ProfileMainScreen}

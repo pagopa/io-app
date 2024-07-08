@@ -30,7 +30,8 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "messages.contextualHelpContent"
     }
   },
-  // TODO: delete this route when the showBarcodeScanSection FF will be deleted
+  // TODO: delete this route when the showBarcodeScanSection
+  // and isNewPaymentSectionEnabledSelector FF will be deleted
   [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
@@ -77,6 +78,17 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
+  );
+
+  // This variable checks that both the new wallet section and
+  // the new document scanning section are included in the tab bar
+  // and the 'settings' section, which can be accessed by clicking
+  // on the icon in the headers of the top-level screens
+  // It will be possible to delete this check and all the code
+  // it carries when the two data it refers to are deleted
+  const isSettingsVisibleAndHideProfile = useMemo(
+    () => isNewWalletSectionEnabled && showBarcodeScanSection,
+    [isNewWalletSectionEnabled]
   );
 
   const navigateToSettingMainScreen = useCallback(() => {
@@ -157,10 +169,10 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction,
           secondAction: {
             icon: "coggle",
-            accessibilityLabel: showBarcodeScanSection
+            accessibilityLabel: isSettingsVisibleAndHideProfile
               ? I18n.t("global.buttons.settings")
               : I18n.t("global.buttons.edit"),
-            onPress: showBarcodeScanSection
+            onPress: isSettingsVisibleAndHideProfile
               ? navigateToSettingMainScreen
               : navigateToProfilePrefercesScreen
           },
@@ -173,7 +185,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             }
           }
         };
-      // TODO: delete this route when the showBarcodeScanSection FF will be deleted
+      // TODO: delete this route when the showBarcodeScanSection
+      // and isNewPaymentSectionEnabledSelector FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
@@ -186,7 +199,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             title: I18n.t("wallet.wallet"),
             firstAction: helpAction,
             testID: "wallet-home-header-title",
-            ...(showBarcodeScanSection
+            ...(isSettingsVisibleAndHideProfile
               ? {
                   type: "twoActions",
                   secondAction: settingsAction
@@ -199,7 +212,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction,
           backgroundColor: "dark",
           testID: "wallet-home-header-title",
-          ...(showBarcodeScanSection
+          ...(isSettingsVisibleAndHideProfile
             ? {
                 type: "threeActions",
                 secondAction: settingsAction,
@@ -214,7 +227,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         return {
           title: I18n.t("features.payments.title"),
           firstAction: helpAction,
-          ...(showBarcodeScanSection
+          ...(isSettingsVisibleAndHideProfile
             ? {
                 type: "twoActions",
                 secondAction: settingsAction
@@ -226,7 +239,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         return {
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
-          ...(showBarcodeScanSection
+          ...(isSettingsVisibleAndHideProfile
             ? {
                 type: "threeActions",
                 secondAction: settingsAction,
@@ -242,6 +255,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     currentRouteName,
     helpAction,
     isNewWalletSectionEnabled,
+    isSettingsVisibleAndHideProfile,
     navigateToProfilePrefercesScreen,
     navigateToSettingMainScreen,
     navigation,
