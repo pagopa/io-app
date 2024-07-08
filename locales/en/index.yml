@@ -266,7 +266,7 @@ startup:
   userDeletePendingAlert:
     title: Profile deletion in progress
     message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
-    cta_1: Browse Privacy
+    cta_1: Go to Profile
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
@@ -303,7 +303,7 @@ profile:
   logout:
     menulabel: Logout from IO
     alertTitle: Do you want to logout?
-    alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
+    alertMessage: You will need to login again with SPID or CIE to use the app.
     loading: You're leaving IO
     exit: Exit
   errors:
@@ -334,38 +334,47 @@ profile:
     privacy:
       title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
-      subtitle: In this section you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
+      subtitle: Here you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
-        title: Delete your account
-        description: Permanently delete your account and your personal data
+        title: Delete your profile
+        description: Delete your account and your personal data
         error: An error occurred while submit your deletion request, please retry!
         alert:
-          activeBonusTitle: Active bonus
-          activeBonusDescription: You have active Bonuses. Please be aware that deleting your profile will not delete bonuses or unsubscribe you from any initiative. To manage your bonuses go to your Wallet, otherwise choose Continue
-          oldRequest: We are already proceeding to delete your account.
-          oldRequestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
+          activeBonusTitle: Delete your profile
+          activeBonusDescription: "It seems that you have joined some initiatives on IO. Deleting your profile will not remove your subscriptions to the initiatives you have joined.\n\nTo manage them, go to the Portfolio section, otherwise choose 'Delete'"
+          oldRequest: You already asked for your profile to be deleted
+          oldRequestSubtitle: "We are processing your request.\n\nIf you have changed your mind or have requested deletion by mistake, please press 'Cancel Removal'."
           cta:
-            manageBonus: Manage bonuses
-            continue: Continue
+            manageBonus: Go to Wallet
+            continue: Delete profile
             return: Return
-            cancel: Cancel the deletion
+            cancel: Cancel deletion
         info:
-          body: "You can exercise your right to have your IO profile deleted at any time\n\nWe inform you that the deletion of your account is final and will take place within 30 days of the request.\n\nIf you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.\n\nWe also point out that any bonuses or discounts obtained through the IO app will no longer be accessible.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE."
-          cta: Continue
+          title: Delete your profile
+          description: You can delete your IO profile at any time.
+          banner: Your profile will be deleted within 30 days of your request.
+          body: 
+            p1: If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.
+            p2: 
+              firstPart: "Any bonuses or discounts you get via the IO app "
+              lastPart: won't be available anymore.
+            p3: You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.
+          cta: Delete
         details:
-          body: "We would like to know why you are deleting your account, in order to improve in the future. You can also proceed directly with the deletion by clicking on the button below."
-          question: What is the reason for the cancellation?
+          title: Why delete your IO profile?
+          body: Please tell us why you're deleting your profile so we can improve. If you don't want to share why, just click 'Delete your profile'”.
+          question: What is the reason?
           answer_1: I no longer consider "IO" useful
           answer_2: I don't feel safe on IO
           answer_3: I've never used the app
           answer_4: None of the above
-          labelOpenAnswer: Tell us more
-          cta: Remove Account
+          labelOpenAnswer: Write here the reason
+          cta: Delete your profile
         success:
-          title: Stiamo processando la tua richiesta.
-          body: "Your request has been taken care of and we will delete your account within 30 days.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE. By clicking on Exit, your session will be terminated.\n\nThanks for using IO"
-          cta: Logout
+          title: We've taken over your request.
+          body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE."
+          cta: Close
       exportData:
         cta: Request a copy of your data
         title: Access your data
@@ -434,7 +443,12 @@ profile:
     appInfo:
       title: About IO
       description: Learn more about the IO app
-      contextualHelpContent: !include profile/profile_appinfo_main.md
+      subtitle: Here you can find more details about the IO app and learn more about its use.
+      paragraphTitle: About IO
+      paragraphBody1: "IO, the public services app, "
+      paragraphBody2: provides an efficient and convenient way for citizens to interact with institutions at the local and national level (municipalities, regions, central agencies) directly from your device. IO allows administrations to contact you in a timely and personalised manner, enabling you to manage operations related to a specific service, such as notices, payments, deadlines and notifications, in a simple and secure manner.
+      bannerBody: Want to know more?
+      bannerButton: Go to IO website
     developersSectionHeader: Developers
     testEnvironmentSectionHeader: Test Environment
     pagoPaEnvironment:
@@ -448,6 +462,8 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
+    itWallet:
+      itWalletTest: IT Wallet
     designSystemEnvironment: Experimental Design System
     newWalletSection: New wallet section
     newHomeSection: New messages home
@@ -455,17 +471,10 @@ profile:
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
-    addCard:
-      titleSection: Add test card
-      warning:
-        title: Warning
-        message: To add a new test card, you must enable the pagoPA test environment from the settings.
-        closeButton: Close
     trial:
       titleSection: Join a trial
-    itWallet:
-      itWalletTest: IT Wallet
-      itWalletTestDescription: Enable the IT Wallet test environment
+    addTestCard:
+      title: Add test card
     banner:
       title: Do you want to display your fiscal code?
       action: Go to "Your data" section
@@ -495,18 +504,19 @@ profile:
   preferences:
     title: Preferences
     subtitle: These settings allow you to customise your IO experience
+    genericToastTitle: Updated preferences!
     contextualHelpTitle: Your preferences
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       wip: In progress
       digitalDomicile: Digital domicile
-      service_contact: 
+      service_contact:
         title: Use of services
         subtitle: Choose who can contact you
       send_email_messages:
         title: Forwarding messages by email
         subtitle: Receive message previews
-      language: 
+      language:
         title: Language
         subtitle: Choose language
       preferred_calendar:
@@ -967,13 +977,13 @@ onboarding:
         notEnrolled:
           text: You need to configure this in your device settings.
           label: How to
-          step1: 
+          step1:
             label: Step 1
             value: Go to your device settings
-          step2: 
+          step2:
             label: Step 2
             value: Set up face or fingerprint
-          step3: 
+          step3:
             label: Step 3
             value: Enable it in IO under Profile > Security
     unavailable:
@@ -981,10 +991,10 @@ onboarding:
       subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
       body:
         label: How to
-        step1: 
+        step1:
           label: Step 1
           value: Go to your device settings
-        step2: 
+        step2:
           label: Step 2
           value: Set a code or sign to unlock the device
   shareData:
@@ -2248,7 +2258,7 @@ identification:
     congiunction: or
   title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
-  titleValidation: Confirm the procedure
+  titleValidation: Authorise the operation.
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
@@ -3201,9 +3211,9 @@ features:
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
-      info:
-        title: Start with your Digital Identity
-        content: "Use SPID or CIE credentials to add your Digital Identity to the Wallet. **This is a necessary step to add your digital documents** (e.g. driving license) securely.\n### Good to know\nIn the future, you will be able to use the Digital Identity saved in your Wallet to identify yourself through IT Wallet functionality. \n\nFor more information, read the [Privacy Policy]() and the [Terms and Conditions of Use]()"
+      title: Attiva IT Wallet
+      content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
+      tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
     identification:
       mode:
         title: Con quale metodo vuoi identificarti?
@@ -3240,12 +3250,13 @@ features:
         tos:
           0: "Per maggiori informazioni, leggi"
           1: l’informativa Privacy e i Termini e Condizioni d’uso
+      eidPreview:
+        title: "Stiamo aggiungendo i seguenti dati al Portafoglio:"
+        actions:
+          primary: Continua
+          secondary: Annulla
       credentialPreview:
-        title: "{{credential}}: ecco l'anteprima"
-        banner:
-          title: "Qualcosa non torna?"
-          content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
-          actionTitle: "Contatta l'assistenza"
+        title: "{{credential}}: ecco l'anteprima dei tuoi dati"
         bottomSheet:
           about:
             title: "Chi è?"
@@ -3253,15 +3264,17 @@ features:
           data:
             title: "Protezione dei dati"
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
-        toast:
-          success: "Tessera aggiunta!"
-          failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
         actions:
           primary: Aggiungi al portafoglio
           secondary: Annulla
-      success:
-        title: "Hai aggiunto\nIdentità Digitale!"
-        subtitle: Premi Continua per aggiungere {{credentialName}}, tessere o metodi di pagamento al tuo Portafoglio.
+      eidResult:
+        success:
+          title: "IT Wallet è attivo!"
+          subtitle: È tutto pronto, ora puoi aggiungere il primo documento al Portafoglio.
+          toast: Fatto!
+          actions:
+            continue: Aggiungi primo documento
+            close: Continua più tardi
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info

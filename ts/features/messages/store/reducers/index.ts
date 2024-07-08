@@ -12,11 +12,15 @@ import paginatedByIdReducer, { PaginatedById } from "./paginatedById";
 import { thirdPartyByIdReducer, ThirdPartyById } from "./thirdPartyById";
 import { Downloads, downloadsReducer } from "./downloads";
 import {
-  MessagePrecondition,
-  messagePreconditionReducer
-} from "./messagePrecondition";
+  LegacyMessagePrecondition,
+  legacyMessagePreconditionReducer
+} from "./legacyMessagePrecondition";
 import { MessageGetStatus, messageGetStatusReducer } from "./messageGetStatus";
 import { MultiplePaymentState, paymentsReducer } from "./payments";
+import {
+  MessagePreconditionStatus,
+  preconditionReducer
+} from "./messagePrecondition";
 
 export type MessagesState = Readonly<{
   allPaginated: AllPaginated;
@@ -24,9 +28,10 @@ export type MessagesState = Readonly<{
   detailsById: DetailsById;
   thirdPartyById: ThirdPartyById;
   downloads: Downloads;
-  messagePrecondition: MessagePrecondition;
+  legacyMessagePrecondition: LegacyMessagePrecondition;
   messageGetStatus: MessageGetStatus;
   payments: MultiplePaymentState;
+  precondition: MessagePreconditionStatus;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
@@ -35,9 +40,10 @@ const reducer = combineReducers<MessagesState, Action>({
   detailsById: detailsByIdReducer,
   thirdPartyById: thirdPartyByIdReducer,
   downloads: downloadsReducer,
-  messagePrecondition: messagePreconditionReducer,
+  legacyMessagePrecondition: legacyMessagePreconditionReducer,
   messageGetStatus: messageGetStatusReducer,
-  payments: paymentsReducer
+  payments: paymentsReducer,
+  precondition: preconditionReducer
 });
 
 export default reducer;

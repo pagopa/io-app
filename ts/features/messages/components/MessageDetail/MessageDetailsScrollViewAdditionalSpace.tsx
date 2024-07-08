@@ -36,6 +36,6 @@ export const MessageDetailsScrollViewAdditionalSpace = ({
       style={{
         height
       }}
-    ></View>
+    />
   );
 };

@@ -30,19 +30,15 @@ describe("isValidSixDigitNumber", () => {
       456789,
       // 567890,
       "345678"
-    ].forEach(
-      // eslint-disable-next-line sonarjs/no-identical-functions
-      input => {
-        it(`${input}`, () => {
-          expect(String(input).length).toBe(6);
-          expect(isValidPinNumber(input)).toBe(false);
-        });
-      }
-    );
+    ].forEach(input => {
+      it(`${input}`, () => {
+        expect(String(input).length).toBe(6);
+        expect(isValidPinNumber(input)).toBe(false);
+      });
+    });
   });
 
   describe("returns false for descending sequences", () => {
-    // eslint-disable-next-line sonarjs/no-identical-functions
     [
       654321,
       543210,

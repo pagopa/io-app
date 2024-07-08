@@ -13,7 +13,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
-import { paginatedServicesGet } from "../../actions";
+import { WithInstitutionID, paginatedServicesGet } from "../../actions";
 
 const MOCK_INSTITUTION_ID = "1";
 
@@ -35,7 +35,8 @@ const MOCK_SERVICES: InstitutionServicesResource["services"] = [
   }
 ];
 
-const MOCK_NETWORK_ERROR: NetworkError = {
+const MOCK_NETWORK_ERROR: WithInstitutionID<NetworkError> = {
+  id: MOCK_INSTITUTION_ID,
   kind: "generic",
   value: new Error("response status code 500")
 };

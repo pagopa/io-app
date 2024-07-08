@@ -91,8 +91,9 @@ export const SearchScreen = () => {
   }, [currentPage, data, fetchNextPage, query]);
 
   const navigateToInstitution = useCallback(
-    ({ id, name }: Institution) => {
+    ({ fiscal_code, id, name }: Institution) => {
       analytics.trackInstitutionSelected({
+        organization_fiscal_code: fiscal_code,
         organization_name: name,
         source: "search_list"
       });

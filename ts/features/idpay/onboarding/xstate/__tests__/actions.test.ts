@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import {
   AppParamsList,

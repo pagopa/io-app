@@ -80,12 +80,9 @@ import { isItWalletTestEnabledSelector } from "../store/reducers/persistedPrefer
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import {
-  FIMS_SSO_ROUTES,
-  FimsSSONavigator
-} from "../features/fims/singleSignOn/navigation";
 import FIMS_LEGACY_ROUTES from "../features/fimsLegacy/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
+import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -257,9 +254,9 @@ const AuthenticatedStackNavigator = () => {
         />
       )}
       <Stack.Screen
-        name={FIMS_SSO_ROUTES.MAIN}
+        name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}
-        component={FimsSSONavigator}
+        component={FimsNavigator}
       />
 
       {cdcEnabled && (
@@ -300,7 +297,7 @@ const AuthenticatedStackNavigator = () => {
             component={IDPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
-          {/* 
+          {/*
             This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
             FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
           */}
