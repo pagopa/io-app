@@ -2017,7 +2017,7 @@ messages:
     input:
       cancel: "Annulla"
       clear: "Cancella"
-      placeholderShort: "Inserisci testo da cercare"
+      placeholderShort: "Inserisci testo"
 messageDetails:
   accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio

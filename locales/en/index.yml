@@ -2017,7 +2017,7 @@ messages:
     input:
       cancel: "Cancel"
       clear: "Erase"
-      placeholderShort: "Enter text to search for"
+      placeholderShort: "Enter text"
 messageDetails:
   accessibilityAttachmentIcon: "Includes attachments"
   contextualHelpTitle: Message details
