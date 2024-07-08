@@ -376,25 +376,25 @@ profile:
           body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE."
           cta: Close
       exportData:
-        cta: Richiedi una copia dei dati
+        cta: Ask for a copy of the data
         title: Access your data
-        subtitle: Puoi scaricare i dati principali del tuo profilo IO in qualsiasi momento.
+        subtitle: You can download your IO profile data at any time.
         description: Receive a copy of the data associated with your IO profile
         detail:
           bulletList:
-            title: "I dati sono:"
-            item1: il tuo codice fiscale;
-            item2: l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;
-            item3: il testo dei Messaggi che hai ricevuto;
-            item4: le tue preferenze di notifica.
-          paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
+            title: "Your data are:"
+            item1: your tax code;
+            item2: your email address and, if applicable, confirmation of its validation;
+            item3: the text of the Messages you received;
+            item4: your notification preferences.
+          paragraph1: The information will be downloaded in YAML format, a standard format for exchanging data between different applications.
           paragraph2: 
-            part1: "Riceverai un "
-            part2: "messaggio su IO "
-            part3: in cui sono presenti un link e una password validi per 15 giorni. 
+            part1: "You will get "
+            part2: "a message on IO "
+            part3: with a link and password that lasts 15 days. 
           paragraph3: 
-            part1: Per maggiori informazioni consulta l’
-            link: Informativa privacy di IO.
+            part1: For more information see the.
+            link:  IO Privacy Policy.
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
