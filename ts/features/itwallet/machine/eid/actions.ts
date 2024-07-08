@@ -6,6 +6,7 @@ import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleStateUpdated } from "../../lifecycle/store/actions";
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
+import { itwStoreHardwareKeyTag } from "../../issuance/store/actions";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -100,5 +101,9 @@ export const createEidIssuanceActionsImplementation = (
 
   storeEidCredential: () => {},
 
-  requestAssistance: () => {}
+  requestAssistance: () => {},
+
+  storeHardwareKeyTag: ({ keyTag }: { keyTag: string }) => {
+    dispatch(itwStoreHardwareKeyTag(keyTag));
+  }
 });

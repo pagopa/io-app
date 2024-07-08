@@ -39,9 +39,10 @@ export const itwEidIssuanceMachine = setup({
     showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
       notImplemented
     ),
-    requestEid: fromPromise<StoredCredential, string | undefined>(
-      notImplemented
-    )
+    requestEid: fromPromise<
+      StoredCredential,
+      { userToken: string; walletInstanceAttestation: string }
+    >(notImplemented)
   },
   guards: {}
 }).createMachine({
@@ -193,7 +194,10 @@ export const itwEidIssuanceMachine = setup({
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
-            input: ({ context }) => context.userToken,
+            input: ({ context }) => ({
+              userToken: context.userToken!,
+              walletInstanceAttestation: context.walletAttestation!
+            }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
               target: "#itwEidIssuanceMachine.Issuance.DisplayingPreview"

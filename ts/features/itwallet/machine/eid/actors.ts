@@ -3,6 +3,7 @@ import { fromPromise } from "xstate5";
 import { LocalIdpsFallback } from "../../../../utils/idps";
 import { getIdpLoginUri } from "../../../../utils/login";
 import * as attestationUtils from "../../common/utils/itwAttestationUtils";
+import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 export const createEidIssuanceActorsImplementation = () => ({
@@ -40,7 +41,15 @@ export const createEidIssuanceActorsImplementation = () => ({
       openAuthenticationSession(getIdpLoginUri(input.id, 2), "iologin")
   ),
 
-  requestEid: fromPromise<StoredCredential, string | undefined>(
-    async () => ({} as StoredCredential)
-  )
+  requestEid: fromPromise<
+    StoredCredential,
+    { walletInstanceAttestation: string }
+  >(async ({ input }) => {
+    const eidCredential = await issuanceUtils.getPid({
+      walletInstanceAttestation: input.walletInstanceAttestation,
+      idphint: "https://demo.spid.gov.it"
+    });
+
+    return {} as StoredCredential;
+  })
 });

@@ -256,3 +256,4 @@ export const defaultPin = "162534";
 export const itwWalletProviderBaseUrl = Config.ITW_WALLET_PROVIDER_BASE_URL;
 export const itwGoogleCloudProjectNumber =
   Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;
+export const itWalletPidIssuanceRedirectUri = "";
