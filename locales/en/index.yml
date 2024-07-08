@@ -2676,7 +2676,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Opportunità
+        deals: Opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -2685,10 +2685,10 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to operator website
+        label: Go to partner's website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
-        website: Vai al sito del partner
+        website: Go to partner's website
       categories:
         all: All the operators
         counting: and other {{count}}
