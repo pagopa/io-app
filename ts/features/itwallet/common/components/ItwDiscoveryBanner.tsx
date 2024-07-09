@@ -1,6 +1,5 @@
 import {
   Banner,
-  ContentWrapper,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -16,10 +15,12 @@ import { ITW_TRIAL_ID } from "../utils/itwTrialUtils";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
+  ignoreMargins?: boolean;
 };
 
 export const ItwDiscoveryBanner = ({
-  withTitle = true
+  withTitle = true,
+  ignoreMargins = false
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
@@ -38,32 +39,31 @@ export const ItwDiscoveryBanner = ({
   };
 
   return (
-    <Banner
-      viewRef={bannerRef}
-      title={
-        withTitle
-          ? I18n.t("features.itWallet.discovery.banner.title")
-          : undefined
+    <View
+      style={
+        !ignoreMargins
+          ? { marginHorizontal: IOVisualCostants.appMarginDefault }
+          : {}
       }
-      content={I18n.t("features.itWallet.discovery.banner.content")}
-      action={I18n.t("features.itWallet.discovery.banner.action")}
-      pictogramName="itWallet"
-      color="turquoise"
-      size="big"
-      onClose={() => setVisible(false)}
-      labelClose={I18n.t("global.buttons.close")}
-      onPress={handleOnPress}
-    />
+    >
+      <VSpacer size={16} />
+      <Banner
+        viewRef={bannerRef}
+        title={
+          withTitle
+            ? I18n.t("features.itWallet.discovery.banner.title")
+            : undefined
+        }
+        content={I18n.t("features.itWallet.discovery.banner.content")}
+        action={I18n.t("features.itWallet.discovery.banner.action")}
+        pictogramName="itWallet"
+        color="turquoise"
+        size="big"
+        onClose={() => setVisible(false)}
+        labelClose={I18n.t("global.buttons.close")}
+        onPress={handleOnPress}
+      />
+      <VSpacer size={16} />
+    </View>
   );
 };
-
-/**
- * Wrapper for ItwDiscoveryBanner inside Messages' home, which requires extra margins
- */
-export const ItwDiscoveryBannerForMessages = () => (
-  <ContentWrapper>
-    <VSpacer size={16} />
-    <ItwDiscoveryBanner />
-    <VSpacer size={16} />
-  </ContentWrapper>
-);
