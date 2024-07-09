@@ -122,8 +122,8 @@ export const DSModules = () => {
 };
 
 const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
-  <DSComponentViewerBox name="ModuleAttachment">
-    <View>
+  <>
+    <DSComponentViewerBox name="ModuleAttachment, loading">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -140,7 +140,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, default variant">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -155,7 +156,6 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
       {isDesignSystemEnabled ? null : (
         <LegacyModuleAttachment
           title="Nome del documento.pdf"
@@ -163,7 +163,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, stress test">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="This is a very loooooooooooooooooooooong title"
@@ -178,7 +179,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, fetching">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -195,7 +197,8 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleAttachment, disabled">
       {isDesignSystemEnabled ? (
         <ModuleAttachment
           title="Nome del documento.pdf"
@@ -212,13 +215,13 @@ const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
           onPress={onButtonPress}
         />
       )}
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </>
 );
 
 const renderModulePaymentNotice = () => (
-  <DSComponentViewerBox name="ModulePaymentNotice">
-    <View>
+  <>
+    <DSComponentViewerBox name="ModulePaymentNotice, loading">
       <ModulePaymentNotice
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
@@ -227,7 +230,8 @@ const renderModulePaymentNotice = () => (
         isLoading={true}
         onPress={onButtonPress}
       />
-      <VSpacer size={16} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModulePaymentNotice, default with amount">
       <ModulePaymentNotice
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
@@ -235,10 +239,10 @@ const renderModulePaymentNotice = () => (
         paymentNoticeAmount="1.000,00 €"
         onPress={onButtonPress}
       />
-      <VSpacer size={16} />
-
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModulePaymentNotice, various statuses">
       {noticeStatusArray.map(
-        (noticeStatus: PaymentNoticeStatusWithoutDefault) => (
+        (noticeStatus: PaymentNoticeStatusWithoutDefault, index: number) => (
           <React.Fragment key={`paymentNotice-${noticeStatus}`}>
             <ModulePaymentNotice
               title="Codice avviso"
@@ -247,19 +251,21 @@ const renderModulePaymentNotice = () => (
               badgeText={getBadgeTextByPaymentNoticeStatus(noticeStatus)}
               onPress={onButtonPress}
             />
-            <VSpacer size={16} />
+            {index < noticeStatusArray.length - 1 && <VSpacer size={8} />}
           </React.Fragment>
         )
       )}
+    </DSComponentViewerBox>
 
+    <DSComponentViewerBox name="ModulePaymentNotice, default, without title">
       <ModulePaymentNotice
         subtitle="TARI 2023 - Rata 01"
         paymentNoticeStatus="default"
         paymentNoticeAmount="1.000,00 €"
         onPress={onButtonPress}
       />
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </>
 );
 
 const renderModuleCheckout = () => (
