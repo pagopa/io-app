@@ -2,15 +2,17 @@ import { generate } from "@pagopa/io-react-native-crypto";
 import {
   type AuthorizationContext,
   createCryptoContextFor,
+  WalletInstanceAttestation,
   Credential
 } from "@pagopa/io-react-native-wallet";
-import { v4 as uuid } from "uuid";
+import uuid from "react-native-uuid";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import {
   itWalletPidIssuanceRedirectUri,
   itwWalletProviderBaseUrl
 } from "../../../../config";
 import { type IdentificationMode } from "../../machine/eid/events";
+import { getIntegrityContext } from "./itwIntegrityUtils";
 
 // TODO: read from env
 const SPID_HINT =
@@ -24,19 +26,30 @@ const idpHintsMap: Record<IdentificationMode, string> = {
 };
 
 export async function getPid({
-  walletInstanceAttestation,
-  identificationMode
+  identificationMode,
+  hardwareKeyTag
 }: {
-  walletInstanceAttestation: string;
+  hardwareKeyTag: string;
   identificationMode: IdentificationMode;
 }) {
-  // Create identification context only for SPID
+  const integrityContext = getIntegrityContext(hardwareKeyTag);
+
+  const wiaKeyTag = uuid.v4().toString();
+  await generate(wiaKeyTag);
+  const wiaCryptoContext = createCryptoContextFor(wiaKeyTag);
+
+  const walletInstanceAttestation =
+    await WalletInstanceAttestation.getAttestation({
+      wiaCryptoContext,
+      integrityContext,
+      walletProviderBaseUrl: itwWalletProviderBaseUrl
+    });
+
   const authorizationContext: AuthorizationContext | undefined =
     identificationMode === "spid"
       ? { authorize: openAuthenticationSession }
       : undefined;
 
-  // Start the issuance flow
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwWalletProviderBaseUrl,
     credentialType: "PersonIdentificationData"
@@ -49,16 +62,10 @@ export async function getPid({
     issuerUrl
   );
 
-  // Create credential crypto context
-  const credentialKeyTag = uuid();
+  const credentialKeyTag = uuid.v4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 
-  const wiaKeyTag = uuid();
-  await generate(wiaKeyTag);
-  const wiaCryptoContext = createCryptoContextFor(wiaKeyTag);
-
-  // Start user authorization
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await Credential.Issuance.startUserAuthorization(
       issuerConf,

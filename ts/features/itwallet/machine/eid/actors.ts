@@ -12,7 +12,7 @@ export type GetWalletAttestationActorParams = {
 };
 
 export type RequestEidActorParams = {
-  walletInstanceAttestation: string;
+  hardwareKeyTag: string;
   identificationMode: IdentificationMode;
 };
 
@@ -56,7 +56,6 @@ export const createEidIssuanceActorsImplementation = () => ({
       const eidCredential = await issuanceUtils.getPid(input);
 
       // TODO: create stored credential
-
       return {} as StoredCredential;
     }
   )

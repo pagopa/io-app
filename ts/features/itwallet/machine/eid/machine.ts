@@ -203,7 +203,7 @@ export const itwEidIssuanceMachine = setup({
             src: "requestEid",
             input: ({ context }) => ({
               userToken: context.userToken!,
-              walletInstanceAttestation: context.walletAttestation!,
+              hardwareKeyTag: context.hardwareKeyTag!,
               identificationMode: context.identificationMode!
             }),
             onDone: {
