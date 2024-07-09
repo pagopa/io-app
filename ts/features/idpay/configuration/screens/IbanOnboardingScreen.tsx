@@ -23,7 +23,8 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { isLoadingSelector } from "../xstate/selectors";
-import { showBarcodeScanSection } from "../../../../config";
+import { useIOSelector } from "../../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
@@ -31,6 +32,10 @@ const IbanOnboardingScreen = () => {
   const [iban, setIban] = React.useState<string | undefined>(undefined);
   const [ibanName, setIbanName] = React.useState<string | undefined>(undefined);
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
+
   const isIbanValid = () =>
     pipe(
       iban,
@@ -106,7 +111,7 @@ const IbanOnboardingScreen = () => {
           <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
-            {showBarcodeScanSection
+            {isSettingsVisibleAndHideProfile
               ? I18n.t("idpay.configuration.iban.onboarding.bottomLabelNew")
               : I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
           </LabelSmall>

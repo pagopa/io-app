@@ -20,7 +20,7 @@ import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
 import { IOScrollViewActions } from "../../components/ui/IOScrollView";
-import { getContentWithFF } from "./biometric&securityChecks/FingerprintScreen";
+import useContentWithFF from "../profile/useContentWithFF";
 
 const OnboardingShareDataScreen = (): ReactElement => {
   const dispatch = useIODispatch();
@@ -82,10 +82,8 @@ const OnboardingShareDataScreen = (): ReactElement => {
     [isFirstOnBoarding, present, store, dispatch]
   );
 
-  const settingsContent = useMemo(
-    () =>
-      getContentWithFF("profile.main.privacy.shareData.screen.profileSettings"),
-    []
+  const content = useContentWithFF(
+    "profile.main.privacy.shareData.screen.profileSettings"
   );
 
   return (
@@ -103,8 +101,8 @@ const OnboardingShareDataScreen = (): ReactElement => {
           <ShareDataComponent trackAction={handleTrackingAction} />
           <VSpacer size={32} />
           <Banner
-            content={settingsContent}
-            accessibilityLabel={settingsContent}
+            content={content}
+            accessibilityLabel={content}
             color="neutral"
             pictogramName="activate"
             size="small"

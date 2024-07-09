@@ -30,7 +30,8 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
-import { showBarcodeScanSection } from "../../../../config";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
+import { useIOSelector } from "../../../../store/hooks";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -50,6 +51,9 @@ const IbanEnrollmentScreen = () => {
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
   const ibanList = useSelector(configurationMachine, ibanListSelector);
   const isIbanOnly = useSelector(configurationMachine, selectIsIbanOnlyMode);
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
 
   const enrolledIban = useSelector(configurationMachine, selectEnrolledIban);
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
@@ -198,7 +202,7 @@ const IbanEnrollmentScreen = () => {
               weight="Regular"
               style={IOStyles.flex} // required for correct wrapping
             >
-              {showBarcodeScanSection
+              {isSettingsVisibleAndHideProfile
                 ? I18n.t("idpay.configuration.iban.enrollment.footerNew")
                 : I18n.t("idpay.configuration.iban.enrollment.footer")}
             </LabelSmall>

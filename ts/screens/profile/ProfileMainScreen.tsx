@@ -33,7 +33,7 @@ import { showProfileBannerSelector } from "../../features/profileSettings/store/
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import { showBarcodeScanSection } from "../../config";
+import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
@@ -59,6 +59,9 @@ const ProfileMainScreen = () => {
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
+  );
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const scrollViewContentRef = useRef<ScrollView>(null);
   const idResetTap = useRef<number>();
@@ -225,7 +228,7 @@ const ProfileMainScreen = () => {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
       title: "profile.main.contextualHelpTitle",
-      body: showBarcodeScanSection
+      body: isSettingsVisibleAndHideProfile
         ? "profile.main.contextualHelpContentNew"
         : "profile.main.contextualHelpContent"
     }

@@ -11,8 +11,8 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import ScreenWithListItems from "../../../components/screens/ScreenWithListItems";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
+import useContentWithFF from "../../profile/useContentWithFF";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
-import { getContentWithFF } from "./FingerprintScreen";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
   "onboarding_fingerprint"
@@ -45,13 +45,8 @@ const MissingDeviceBiometricScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown
   });
-
-  const settingsContent = useMemo(
-    () =>
-      getContentWithFF(
-        "onboarding.biometric.available.body.notEnrolled.step3.value"
-      ),
-    []
+  const content = useContentWithFF(
+    "onboarding.biometric.available.body.notEnrolled.step3.value"
   );
 
   const listItems = useMemo<Array<ListItemInfo>>(
@@ -78,11 +73,11 @@ const MissingDeviceBiometricScreen = () => {
         label: I18n.t(
           "onboarding.biometric.available.body.notEnrolled.step3.label"
         ),
-        value: settingsContent,
+        value: content,
         icon: "systemToggleInstructions"
       }
     ],
-    [settingsContent]
+    [content]
   );
 
   const primaryActionProps = useMemo(

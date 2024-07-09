@@ -14,7 +14,7 @@ import {
   isIdPayCodeEnrollmentRequestLoadingSelector,
   isIdPayCodeFailureSelector
 } from "../store/selectors";
-import { getContentWithFF } from "../../../../screens/onboarding/biometric&securityChecks/FingerprintScreen";
+import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 
 const IdPayCodeResultScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -31,6 +31,10 @@ const IdPayCodeResultScreen = () => {
   );
 
   const isFailure = isCodeFailure || isEnrollmentFailure;
+
+  const content = useContentWithFF(
+    "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
+  );
 
   const handleClose = () => {
     dispatch(idPayResetCode());
@@ -69,9 +73,7 @@ const IdPayCodeResultScreen = () => {
         onPress: handleClose,
         testID: "actionButtonTestID"
       }}
-      subtitle={getContentWithFF(
-        "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
-      )}
+      subtitle={content}
     />
   );
 

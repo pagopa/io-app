@@ -7,7 +7,7 @@ import {
 import React from "react";
 import I18n from "../../../i18n";
 import { usePreviewMoreInfo } from "../hooks/usePreviewMoreInfo";
-import { getContentWithFF } from "../../../screens/onboarding/biometric&securityChecks/FingerprintScreen";
+import useContentWithFF from "../../../screens/profile/useContentWithFF";
 import { NotificationsPreferencesPreview } from "./NotificationsPreferencesPreview";
 
 type ProfileNotificationSettingsProps = {
@@ -33,6 +33,9 @@ export const ProfileNotificationSettings = ({
   remindersSwitchValue,
   showSettingsPath
 }: ProfileNotificationSettingsProps) => {
+  const content = useContentWithFF(
+    "profile.main.privacy.shareData.screen.profileSettings"
+  );
   const { present, bottomSheet } = usePreviewMoreInfo();
   return (
     <>
@@ -73,9 +76,7 @@ export const ProfileNotificationSettings = ({
       {showSettingsPath && (
         <Banner
           pictogramName="reactivate"
-          content={getContentWithFF(
-            "profile.main.privacy.shareData.screen.profileSettings"
-          )}
+          content={content}
           size="small"
           color="neutral"
         />

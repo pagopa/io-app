@@ -416,13 +416,7 @@ export const isIdPayEnabledSelector = createSelector(
 export const isNewPaymentSectionEnabledSelector = createSelector(
   backendStatusSelector,
   isNewWalletSectionEnabledSelector,
-  (backendStatus, isNeWalletSectionEnabled): boolean =>
-    isNeWalletSectionEnabled ||
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.newPaymentSection?.enabled),
-      O.getOrElse(() => false)
-    )
+  (backendStatus, isNeWalletSectionEnabled): boolean => true
 );
 
 // This selector checks that both the new wallet section and the

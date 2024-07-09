@@ -16,8 +16,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
-import { showBarcodeScanSection } from "../../../config";
-import { TranslationKeys } from "../../../../locales/locales";
+import useContentWithFF from "../../profile/useContentWithFF";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined,
@@ -34,13 +33,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
   body: "onboarding.contextualHelpContent"
 };
-
-export const getContentWithFF = (i18nString: TranslationKeys) =>
-  I18n.t(i18nString, {
-    pageName: showBarcodeScanSection
-      ? I18n.t("global.buttons.settings")
-      : I18n.t("navigation.profile")
-  });
 
 /**
  * A screen to show, if the fingerprint is supported by the device,
@@ -64,6 +56,8 @@ const FingerprintScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown
   });
+
+  const content = useContentWithFF("onboarding.biometric.available.settings");
 
   const actions = useMemo<IOScrollViewActions>(
     () => ({
@@ -122,7 +116,7 @@ const FingerprintScreen = () => {
       <Body>{I18n.t("onboarding.biometric.available.body.text")}</Body>
       <VSpacer size={24} />
       <Banner
-        content={getContentWithFF("onboarding.biometric.available.settings")}
+        content={content}
         color="neutral"
         size="small"
         pictogramName="activate"
