@@ -2648,7 +2648,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Deals and opportunities
+        deals: Opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -2657,10 +2657,10 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to operator website
+        label: Go to partner's website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
-        website: Go to the website
+        website: Go to partner's website
       categories:
         all: All the operators
         counting: and other {{count}}
