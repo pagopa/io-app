@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import {
   defaultRequestPayload,
   defaultRequestError,
@@ -14,6 +13,7 @@ import {
   loadPreviousPageMessages,
   migrateToPaginatedMessages,
   reloadAllMessages,
+  requestAutomaticMessagesRefresh,
   resetMigrationStatus,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
@@ -1931,6 +1931,138 @@ describe("isPaymentMessageWithPaidNoticeSelector", () => {
     } as MessageCategory;
     const isPaid = isPaymentMessageWithPaidNoticeSelector(state, category);
     expect(isPaid).toBe(true);
+  });
+});
+
+describe("allPaginated reducer", () => {
+  it("'lastUpdateTime' should match expected values for initial state", () => {
+    const allPaginatedState = reducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    expect(allPaginatedState.archive.lastUpdateTime).toStrictEqual(new Date(0));
+    expect(allPaginatedState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+  });
+  const expectedResultForIndex = (index: number, archived?: boolean) => {
+    const isChangingTimeIndex = index === 1 || index === 4;
+    return {
+      archiveShouldHaveOriginalValue: !archived || !isChangingTimeIndex,
+      inboxShoudlHaveOriginalValue: archived || !isChangingTimeIndex
+    };
+  };
+  [undefined, false, true].forEach(archived =>
+    [
+      reloadAllMessages.request({
+        pageSize,
+        filter: { getArchived: archived }
+      }),
+      reloadAllMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      reloadAllMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      }),
+      loadPreviousPageMessages.request({
+        filter: { getArchived: archived },
+        pageSize
+      }),
+      loadPreviousPageMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      loadPreviousPageMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      }),
+      loadNextPageMessages.request({
+        filter: { getArchived: archived },
+        pageSize
+      }),
+      loadNextPageMessages.success({
+        filter: { getArchived: archived },
+        messages: [],
+        pagination: {}
+      }),
+      loadNextPageMessages.failure({
+        error: new Error(""),
+        filter: { getArchived: archived }
+      })
+    ].forEach((dispatchedAction, index) => {
+      it(`'lastUpdateTime' should match expected value for action '${
+        dispatchedAction.type
+      }' with filter '${
+        archived ? "ARCHIVED" : archived === false ? "INBOX" : "undefined"
+      }'`, () => {
+        const reducerState = reducer(undefined, dispatchedAction);
+        const result = expectedResultForIndex(index, archived);
+        if (result.archiveShouldHaveOriginalValue) {
+          expect(reducerState.archive.lastUpdateTime).toStrictEqual(
+            new Date(0)
+          );
+        } else {
+          expect(reducerState.archive.lastUpdateTime).not.toStrictEqual(
+            new Date(0)
+          );
+        }
+        if (result.inboxShoudlHaveOriginalValue) {
+          expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+        } else {
+          expect(reducerState.inbox.lastUpdateTime).not.toStrictEqual(
+            new Date(0)
+          );
+        }
+      });
+    })
+  );
+  it("'inbox.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('INBOX')' dispatch", () => {
+    const lastUpdateTime = new Date();
+    const initialState = {
+      archive: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      inbox: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      migration: O.none,
+      shownCategory: "INBOX"
+    } as AllPaginated;
+    const reducerState = reducer(
+      initialState,
+      requestAutomaticMessagesRefresh("INBOX")
+    );
+    expect(reducerState.archive.lastUpdateTime).toStrictEqual(lastUpdateTime);
+    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
+  });
+  it("'archive.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('ARCHIVE')' dispatch", () => {
+    const lastUpdateTime = new Date();
+    const initialState = {
+      archive: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      inbox: {
+        data: pot.none,
+        lastRequest: O.none,
+        lastUpdateTime
+      },
+      migration: O.none,
+      shownCategory: "INBOX"
+    } as AllPaginated;
+    const reducerState = reducer(
+      initialState,
+      requestAutomaticMessagesRefresh("ARCHIVE")
+    );
+    expect(reducerState.archive.lastUpdateTime).toStrictEqual(new Date(0));
+    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(lastUpdateTime);
   });
 });
 

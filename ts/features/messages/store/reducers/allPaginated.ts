@@ -118,6 +118,9 @@ const reducer = (
     case getType(upsertMessageStatusAttributes.failure):
       return reduceUpsertMessageStatusAttributes(state, action);
 
+    case getType(requestAutomaticMessagesRefresh):
+      return reduceAutomaticMessageRefreshRequest(state, action);
+
     /* BEGIN Migration-related block */
     case getType(migrateToPaginatedMessages.request):
       return {
@@ -432,6 +435,16 @@ const reduceLoadPreviousPage = (
         }
       };
 
+    default:
+      return state;
+  }
+};
+
+const reduceAutomaticMessageRefreshRequest = (
+  state: AllPaginated,
+  action: Action
+): AllPaginated => {
+  switch (action.type) {
     case getType(requestAutomaticMessagesRefresh): {
       if (action.payload === "ARCHIVE") {
         return {
@@ -450,10 +463,9 @@ const reduceLoadPreviousPage = (
         }
       };
     }
-
-    default:
-      return state;
   }
+
+  return state;
 };
 
 /**
