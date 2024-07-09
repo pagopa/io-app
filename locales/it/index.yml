@@ -3858,7 +3858,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: Non siamo riusciti a caricare la ricevuta
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
