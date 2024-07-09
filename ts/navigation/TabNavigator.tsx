@@ -1,4 +1,8 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  useIOTheme,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -33,7 +37,6 @@ const Tab = createBottomTabNavigator<MainTabParamsList>();
 
 const styles = StyleSheet.create({
   tabBarStyle: {
-    backgroundColor: IOColors.white,
     paddingLeft: 3,
     paddingRight: 3,
     borderTopWidth: 0,
@@ -55,6 +58,8 @@ const styles = StyleSheet.create({
 export const MainTabNavigator = () => {
   const navigation = useIONavigation();
   const insets = useSafeAreaInsets();
+  const theme = useIOTheme();
+  const { themeType } = useIOThemeContext();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -96,13 +101,18 @@ export const MainTabNavigator = () => {
           },
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
-          tabBarActiveTintColor: isDesignSystemEnabled
-            ? IOColors["blueIO-500"]
-            : IOColors.blue,
-          tabBarInactiveTintColor: IOColors["grey-850"],
+          tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
+          tabBarInactiveTintColor: IOColors[theme["textBody-secondary"]],
           tabBarStyle: [
             styles.tabBarStyle,
-            { height: tabBarHeight + bottomInset },
+            {
+              height: tabBarHeight + bottomInset,
+              backgroundColor: IOColors[theme["appBackground-primary"]]
+            },
+            themeType === "dark" && {
+              borderTopColor: IOColors[theme["divider-default"]],
+              borderTopWidth: 1
+            },
             insets.bottom === 0 ? { paddingBottom: additionalPadding } : {}
           ]
         }}

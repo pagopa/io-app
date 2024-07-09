@@ -6,23 +6,25 @@ import {
   ListItemAction,
   ListItemNav,
   VSpacer,
-  useIOTheme,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, {
+  ComponentProps,
+  memo,
   useCallback,
   useEffect,
-  useState,
-  useRef,
-  ComponentProps,
   useMemo,
-  memo
+  useRef,
+  useState
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
 import AppVersion from "../../components/AppVersion";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
+import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
+import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -31,12 +33,9 @@ import {
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { showProfileBannerSelector } from "../../features/profileSettings/store/selectors";
-import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
-import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import DeveloperModeSection from "./DeveloperModeSection";
 
 const consecutiveTapRequired = 4;
@@ -60,7 +59,6 @@ const ListItem = memo(ListItemNav);
 const ProfileMainScreen = ({ hideModal }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const theme = useIOTheme();
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const showProfileBanner = useIOSelector(showProfileBannerSelector);
@@ -226,10 +224,7 @@ const ProfileMainScreen = ({ hideModal }: Props) => {
   const logoutLabel = I18n.t("profile.logout.menulabel");
 
   return (
-    <ScrollView
-      ref={scrollViewContentRef}
-      style={{ backgroundColor: theme["appBackground-primary"] }}
-    >
+    <ScrollView ref={scrollViewContentRef}>
       {showProfileBanner && (
         <ContentWrapper>
           <VSpacer size={16} />
