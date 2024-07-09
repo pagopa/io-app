@@ -1,6 +1,6 @@
 import { IOColors } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import * as React from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -19,7 +19,10 @@ import {
   isDesignSystemEnabledSelector,
   isNewHomeSectionEnabledSelector
 } from "../store/reducers/persistedPreferences";
-import { isNewPaymentSectionEnabledSelector } from "../store/reducers/backendStatus";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -64,6 +67,10 @@ export const MainTabNavigator = () => {
   );
   const isNewHomeSectionEnabled = useIOSelector(
     isNewHomeSectionEnabledSelector
+  );
+
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
   );
 
   const tabBarHeight = 54;
@@ -194,13 +201,11 @@ export const MainTabNavigator = () => {
                 iconNameFocused="navServicesFocused"
                 color={color}
                 focused={focused}
-                // Badge counter has been disabled
-                // https://www.pivotaltracker.com/story/show/176919053
               />
             )
           }}
         />
-        {!showBarcodeScanSection && (
+        {!isSettingsVisibleAndHideProfile && (
           <Tab.Screen
             name={ROUTES.PROFILE_MAIN}
             component={ProfileMainScreen}

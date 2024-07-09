@@ -36,9 +36,6 @@ const DEFAULT_FAST_LOGIN_MAX_RETRIES = 3;
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
-// Default number of workers to fetch service.
-const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
-
 // TODO: calculate the page size based on available screen space and item's height
 // https://pagopa.atlassian.net/browse/IA-474
 const DEFAULT_PAGE_SIZE = 12;
@@ -109,9 +106,6 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
-export const showBarcodeScanSection =
-  Config.SHOW_BARCODE_SCAN_SECTION === "YES";
-
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,
@@ -154,12 +148,6 @@ export const totMessageFetchWorkers = pipe(
   E.getOrElse(() => DEFAULT_TOT_MESSAGE_FETCH_WORKERS)
 );
 
-export const totServiceFetchWorkers = pipe(
-  parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10),
-  t.Integer.decode,
-  E.getOrElse(() => DEFAULT_TOT_SERVICE_FETCH_WORKERS)
-);
-
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
 
@@ -173,12 +161,6 @@ export const zendeskPrivacyUrl: string = pipe(
   Config.ZENDESK_PRIVACY_URL,
   t.string.decode,
   E.getOrElse(() => "https://www.pagopa.it/it/privacy-policy-assistenza/")
-);
-
-export const localServicesWebUrl: string = pipe(
-  Config.LOCAL_SERVICE_WEB_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it")
 );
 
 export const unsupportedDeviceMoreInfoUrl: string = pipe(
@@ -244,6 +226,9 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
 
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
+
+export const showBarcodeScanSection =
+  Config.SHOW_BARCODE_SCAN_SECTION === "YES";
 
 export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 

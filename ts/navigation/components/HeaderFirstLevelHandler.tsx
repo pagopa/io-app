@@ -15,9 +15,11 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../../store/reducers/backendStatus";
 import * as analytics from "../../features/services/common/analytics";
-import { showBarcodeScanSection } from "../../config";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -30,7 +32,8 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "messages.contextualHelpContent"
     }
   },
-  // TODO: delete this route when the showBarcodeScanSection FF will be deleted
+  // TODO: delete this route when the showBarcodeScanSection
+  // and isSettingsVisibleAndHideProfileSelector FF will be deleted
   [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
@@ -79,6 +82,10 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
+  );
+
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
   );
 
   const navigateToSettingMainScreen = useCallback(() => {
@@ -159,10 +166,10 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction,
           secondAction: {
             icon: "coggle",
-            accessibilityLabel: showBarcodeScanSection
+            accessibilityLabel: isSettingsVisibleAndHideProfile
               ? I18n.t("global.buttons.settings")
               : I18n.t("global.buttons.edit"),
-            onPress: showBarcodeScanSection
+            onPress: isSettingsVisibleAndHideProfile
               ? navigateToSettingMainScreen
               : navigateToProfilePrefercesScreen
           },
@@ -175,7 +182,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             }
           }
         };
-      // TODO: delete this route when the showBarcodeScanSection FF will be deleted
+      // TODO: delete this route when the showBarcodeScanSection
+      // and isSettingsVisibleAndHideProfileSelector FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),
@@ -188,7 +196,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             title: I18n.t("wallet.wallet"),
             firstAction: helpAction,
             testID: "wallet-home-header-title",
-            ...(showBarcodeScanSection
+            ...(isSettingsVisibleAndHideProfile
               ? {
                   type: "twoActions",
                   secondAction: settingsAction
@@ -201,7 +209,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction,
           backgroundColor: "dark",
           testID: "wallet-home-header-title",
-          ...(showBarcodeScanSection
+          ...(isSettingsVisibleAndHideProfile
             ? {
                 type: "threeActions",
                 secondAction: settingsAction,
@@ -216,7 +224,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         return {
           title: I18n.t("features.payments.title"),
           firstAction: helpAction,
-          ...(showBarcodeScanSection
+          ...(isSettingsVisibleAndHideProfile
             ? {
                 type: "twoActions",
                 secondAction: settingsAction
@@ -228,7 +236,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         return {
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
-          ...(showBarcodeScanSection
+          ...(isSettingsVisibleAndHideProfile
             ? {
                 type: "threeActions",
                 secondAction: settingsAction,
@@ -244,6 +252,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     currentRouteName,
     helpAction,
     isNewWalletSectionEnabled,
+    isSettingsVisibleAndHideProfile,
     navigateToProfilePrefercesScreen,
     navigateToSettingMainScreen,
     navigation,
