@@ -10,7 +10,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
 import { foldK as foldMessageListCategory } from "../../types/messageListCategory";
-import { SectionStatusComponent } from "../../../../components/SectionStatus/SectionStatusComponent";
+import SectionStatusComponent from "../../../../components/SectionStatus";
 import { MessageList } from "./MessageList";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
