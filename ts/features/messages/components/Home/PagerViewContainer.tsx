@@ -1,13 +1,13 @@
-import { IOStyles } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect, useRef } from "react";
+import { pipe } from "fp-ts/lib/function";
 import { FlatList, NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
-import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
-import { GlobalState } from "../../../../store/reducers/types";
 import { setShownMessageCategoryAction } from "../../store/actions";
+import { GlobalState } from "../../../../store/reducers/types";
+import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
 import { foldK as foldMessageListCategory } from "../../types/messageListCategory";
 import { MessageList } from "./MessageList";
