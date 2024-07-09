@@ -12,7 +12,6 @@ import { logoutSuccess } from "../../../store/actions/authentication";
 import {
   downloadAttachment,
   getMessageDataAction,
-  getMessagePrecondition,
   loadMessageById,
   loadMessageDetails,
   loadNextPageMessages,
@@ -25,6 +24,10 @@ import {
 } from "../store/actions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
 import { BackendClient } from "../../../api/backend";
+import {
+  getLegacyMessagePrecondition,
+  retrievingDataPreconditionStatusAction
+} from "../store/actions/preconditions";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
@@ -82,7 +85,10 @@ export function* watchMessagesSaga(
   );
 
   yield* takeLatest(
-    getMessagePrecondition.request,
+    [
+      getLegacyMessagePrecondition.request,
+      retrievingDataPreconditionStatusAction
+    ],
     handleMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );

@@ -338,11 +338,8 @@ profile:
           answer_3: "Ich habe die App nie benutzt"
           answer_4: "Keiner der oben genannten Punkte"
       exportData:
-        cta: "Kopie deiner Daten anfordern"
         title: "Zugriff auf deine Daten"
         description: "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten"
-        info:
-          title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
         alert:
           requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
           oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
@@ -1830,8 +1827,6 @@ biometric_recognition:
 send_email_messages:
   title: "Mitteilungen mittels E-Mail weiterleiten"
 services:
-  accessibility:
-    edit: "Ändere die Einstellung der Dienste"
   optIn:
     preferences:
       completed:
@@ -1862,40 +1857,7 @@ services:
           title: "Wenn du bestätigst, erhältst du keine Mitteilungen"
           body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
   title: "Dienste"
-  subTitle: "Aktiviere oder deaktiviere die Dienste, die dir Mitteilungen senden dürfen"
   contextualHelpTitle: "Was du in deinen Diensten machen kannst"
-  serviceIsEnabled: "In der App kontaktieren"
-  serviceNotEnabled: "Der Dienst ist nicht aktiv"
-  pushNotifications: "Push-Benachrichtigungen senden"
-  messageReadStatus: "Lesebestätigungen erhalten"
-  emailForwarding: "E-Mails senden"
-  tosAndPrivacy: "Nutzungsbedingungen und Datenschutzbestimmungen"
-  tosLink: "Nutzungsbedingungen"
-  privacyLink: "Informationen zum Datenschutz"
-  otherAppsInfo: "Du findest diesen Dienst auch"
-  otherAppWeb: "online auf"
-  otherAppIos: "iOS-App"
-  otherAppAndroid: "Android-App"
-  contactsAndInfo: "Kontakte und Informationen"
-  visitWebsite: "Website"
-  askForAssistance: "Hilfe anfordern"
-  contactAddress: "Adresse"
-  contactPhone: "Telefon"
-  contactSupport: "Support"
-  tab:
-    locals: "Lokal"
-    national: "National"
-    all: "Alle"
-  loading:
-    title: "Lade die Liste der Dienste"
-    subtitle: "Warte ein paar Sekunden..."
-  enableAll: "Schnelleinrichtung verwenden"
-  disableAll: "Manuelle Konfiguration verwenden"
-  updatingServiceMode: "Bitte warten..."
-  disableAllTitle: "Möchtest du wirklich alle Dienste deaktivieren?"
-  disableAllMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du alle Dienste deaktivierst, können diese dich nicht mehr über IO kontaktieren (bis du sie wieder aktivierst). Du kannst die Dienste weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
-  close: "Schließen"
-  emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
   home:
     institutions:
       title: "National"
@@ -1925,22 +1887,6 @@ services:
       title: "Nutzungsbedingungen und Datenschutzbestimmungen"
       tosLink: "Nutzungsbedingungen"
       privacyLink: "Datenschutzerklärung"
-serviceDetail:
-  fiscalCode: "Steuernummer Körperschaft"
-  fiscalCodeAccessibility: "Steuernummer Körperschaft"
-  fiscalCodeAccessibilityCopy: "Kopiere Steuernummer Körperschaft"
-  contacts:
-    title: "Dieser Dienst kann:"
-  headerTitle: "Details zum Dienst"
-  onUpdateEnabledChannelsFailure: "Beim Speichern der Einstellungen ist ein temporärer Fehler aufgetreten. Bitte versuche es erneut."
-  disableTitle: "Möchtest du den Dienst wirklich deaktivieren?"
-  disableMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du diesen Dienst deaktivierst, kann dieser dich nicht mehr über IO kontaktieren (bis du ihn wieder aktivierst). Du kannst diesen Dienst weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
-  lockedMailAlert: "Die E-Mail-Weiterleitung von Mitteilungen ist global {{enabled}}:"
-  updatePreferences: "Einstellungen ändern"
-  goTo: "Geh zu den Einstellungen"
-  enabled: "aktiviert"
-  disabled: "deaktiviert"
-  notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
   instructions:
     unlockCode: "Entsperrcode"
@@ -2078,7 +2024,7 @@ bonus:
         error:
           noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
       title:
-        deals: "Rabatte und Ermäßigungen"
+        deals: Opportunità
         description: "Beschreibung"
         services: "Dienste"
         contactInfo: "Adressen"
@@ -2090,6 +2036,7 @@ bonus:
         label: "Besuche die Website des Anbieters"
         landingPage: "Die Ermäßigung nutzen"
         discountUrl: "Nutze die Ermäßigung"
+        website: Vai al sito del partner
       categories:
         all: "Alle Anbieter"
         counting: "und weitere {{count}}"
