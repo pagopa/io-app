@@ -453,34 +453,49 @@ const renderModuleCredential = () => (
 const renderModuleNavigation = () => (
   <>
     <DSComponentViewerBox name="ModuleNavigation">
-      <View>
-        <ModuleNavigation
-          icon="spid"
-          title="SPID"
-          subtitle="Usa credenziali e app (o SMS)"
-          onPress={onButtonPress}
-        />
-      </View>
+      <ModuleNavigation
+        icon="spid"
+        title="SPID"
+        subtitle="Usa credenziali e app (o SMS)"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigation, with Image">
+      <ModuleNavigation
+        image={CgnLogo}
+        title="Carta Giovani Nazionale"
+        subtitle="Usa credenziali e app (o SMS)"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleNavigation, with Badge">
-      <View>
-        <ModuleNavigation
-          icon="spid"
-          title="SPID"
-          subtitle="Usa credenziali e app (o SMS)"
-          onPress={onButtonPress}
-          badge={{
-            text: "IN arrivo",
-            variant: "blue",
-            outline: true
-          }}
-        />
-      </View>
+      <ModuleNavigation
+        icon="spid"
+        title="SPID"
+        subtitle="Usa credenziali e app (o SMS)"
+        onPress={onButtonPress}
+        badge={{
+          text: "In arrivo",
+          variant: "blue",
+          outline: true
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigation, with Badge, stress test">
+      <ModuleNavigation
+        icon="spid"
+        title="Testo relativo allo SPID davvero molto lungo"
+        subtitle="Usa credenziali e app (o SMS), ma anche qui il testo è molto lungo"
+        onPress={onButtonPress}
+        badge={{
+          text: "In arrivo",
+          variant: "blue",
+          outline: true
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleNavigation, loading">
-      <View>
-        <ModuleNavigation isLoading={true} />
-      </View>
+      <ModuleNavigation isLoading={true} />
     </DSComponentViewerBox>
   </>
 );
