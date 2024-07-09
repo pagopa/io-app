@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
-import _, { merge } from "lodash";
+import _, { merge, omit } from "lodash";
 import {
   applyMiddleware,
   compose,
@@ -53,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 30;
+const CURRENT_REDUX_STORE_VERSION = 31;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -415,7 +415,10 @@ const migrations: MigrationManifest = {
       persistedPreferences: {
         isNewHomeSectionEnabled: false
       }
-    })
+    }),
+  // version 31
+  // remove userMetadata from persisted state
+  "31": (state: PersistedState) => omit(state, "userMetadata")
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -438,7 +441,6 @@ const rootPersistConfig: PersistConfig = {
     "installation",
     "payments",
     "content",
-    "userMetadata",
     "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
