@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useRef } from "react";
 import { pipe } from "fp-ts/lib/function";
+import React, { useCallback, useEffect, useRef } from "react";
 import { FlatList, NativeSyntheticEvent } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
 import { IOStyles } from "@pagopa/io-app-design-system";
@@ -14,6 +15,7 @@ import SectionStatusComponent from "../../../../components/SectionStatus";
 import { MessageList } from "./MessageList";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
+  getLoadNextPreviousPageMessagesActionIfAllowed,
   getMessagesViewPagerInitialPageIndex,
   messageViewPageIndexToListCategory
 } from "./homeUtils";
@@ -43,6 +45,14 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
       ),
     [store]
   );
+  const loadNewlyReceivedMessagesIfNeededCallback = useCallback(() => {
+    const state = store.getState();
+    const loadPreviousPageAction =
+      getLoadNextPreviousPageMessagesActionIfAllowed(state);
+    if (loadPreviousPageAction) {
+      dispatch(loadPreviousPageAction);
+    }
+  }, [dispatch, store]);
   const dispatchReloadAllMessagesIfNeeded = useCallback(
     (state: GlobalState) => {
       const reloadAllMessagesActionOrUndefined =
@@ -78,10 +88,32 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
       // the store will not have the proper 'shownCategory' value
       const state = store.getState();
       dispatchReloadAllMessagesIfNeeded(state);
+
+      // As before, in order for the following call to work propertly,
+      // 'setShownMessageCategoryAction(selectedShownCategory)' has to be
+      // called before it (otherwise the 'shownMessageCategory' will be
+      // wrong). It has an internal logic by which it does not dispatch
+      // anything if the previous `dispatchReloadAllMessagesIfNeeded` has
+      // already requested a 'reloadAllMessages.request'
+      // It is called here to refresh the message list when not changing
+      // the screen but only switching between tabs
+      loadNewlyReceivedMessagesIfNeededCallback();
     },
-    [dispatch, dispatchReloadAllMessagesIfNeeded, store]
+    [
+      dispatch,
+      dispatchReloadAllMessagesIfNeeded,
+      loadNewlyReceivedMessagesIfNeededCallback,
+      store
+    ]
   );
   useTabItemPressWhenScreenActive(onTabPressedCallback, false);
+  useFocusEffect(
+    useCallback(() => {
+      // This is called to automatically refresh after coming back
+      // to this screen from another one
+      loadNewlyReceivedMessagesIfNeededCallback();
+    }, [loadNewlyReceivedMessagesIfNeededCallback])
+  );
   useEffect(() => {
     // Upon first component rendering, the PagerView's onPageSelected
     // callback is not called, so we must dispatch the reload action

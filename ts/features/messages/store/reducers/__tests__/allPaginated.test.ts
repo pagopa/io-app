@@ -472,7 +472,8 @@ describe("allPaginated reducer", () => {
           previous: "abcde",
           next: "12345"
         }),
-        lastRequest: O.none
+        lastRequest: O.none,
+        lastUpdateTime: new Date(0)
       }
     };
 
@@ -769,8 +770,8 @@ describe("allPaginated reducer", () => {
 });
 
 const defaultState: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: O.none },
-  archive: { data: pot.none, lastRequest: O.none },
+  inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
+  archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   migration: O.none,
   shownCategory: "INBOX"
 };
@@ -788,6 +789,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -796,6 +798,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.none,
       inbox: pot.none,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -804,6 +807,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -812,6 +816,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.none,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -820,6 +825,7 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -827,11 +833,19 @@ describe("isLoadingPreviousPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("all"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     }
   ].forEach(
-    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+    ({
+      archive,
+      inbox,
+      lastRequest,
+      lastUpdateTime,
+      expectedArchive,
+      expectedInbox
+    }) => {
       describe(`given { archive: ${archive.kind}, inbox: ${
         inbox.kind
       }, lastRequest: ${lastRequest.toString()} `, () => {
@@ -843,12 +857,14 @@ describe("isLoadingPreviousPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -863,12 +879,14 @@ describe("isLoadingPreviousPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -886,6 +904,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -894,6 +913,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.none,
       inbox: pot.none,
       lastRequest: O.none,
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -902,6 +922,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -910,6 +931,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.none,
       lastRequest: O.some("next"),
+      lastUpdateTime: new Date(0),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -918,6 +940,7 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("previous"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     },
@@ -925,11 +948,19 @@ describe("isLoadingNextPage selector", () => {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
       lastRequest: O.some("all"),
+      lastUpdateTime: new Date(0),
       expectedArchive: false,
       expectedInbox: false
     }
   ].forEach(
-    ({ archive, inbox, lastRequest, expectedArchive, expectedInbox }) => {
+    ({
+      archive,
+      inbox,
+      lastRequest,
+      lastUpdateTime,
+      expectedArchive,
+      expectedInbox
+    }) => {
       describe(`given { archive: ${archive.kind}, inbox: ${
         inbox.kind
       }, lastRequest: ${lastRequest.toString()} `, () => {
@@ -941,12 +972,14 @@ describe("isLoadingNextPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -961,12 +994,14 @@ describe("isLoadingNextPage selector", () => {
                 archive: {
                   data: archive,
                   lastRequest:
-                    lastRequest as AllPaginated["archive"]["lastRequest"]
+                    lastRequest as AllPaginated["archive"]["lastRequest"],
+                  lastUpdateTime
                 },
                 inbox: {
                   data: inbox,
                   lastRequest:
-                    lastRequest as AllPaginated["inbox"]["lastRequest"]
+                    lastRequest as AllPaginated["inbox"]["lastRequest"],
+                  lastUpdateTime
                 }
               })
             )
@@ -1038,7 +1073,8 @@ describe("isLoadingOrUpdatingInbox selector", () => {
               ...defaultState,
               inbox: {
                 data: inbox,
-                lastRequest: O.none
+                lastRequest: O.none,
+                lastUpdateTime: new Date(0)
               }
             })
           )

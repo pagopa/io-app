@@ -1,10 +1,15 @@
-import { constUndefined, pipe } from "fp-ts/lib/function";
+import { constTrue, constUndefined, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
 import { GlobalState } from "../../../../store/reducers/types";
-import { loadNextPageMessages, reloadAllMessages } from "../../store/actions";
-import { pageSize } from "../../../../config";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../store/actions";
+import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
@@ -25,6 +30,8 @@ import {
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
+export const messageListItemHeight = () => 130;
+export const refreshIntervalMillisecondsGenerator = () => 60000;
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
@@ -70,8 +77,6 @@ export const accessibilityLabelForMessageItem = (message: UIMessage): string =>
     state: ""
   });
 
-export const messageListItemHeight = () => 130;
-
 export const getLoadServiceDetailsActionIfNeeded = (
   state: GlobalState,
   serviceId: ServiceId,
@@ -92,31 +97,19 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   comparisonTimeInCaseOfError: Date
 ): ActionType<typeof loadNextPageMessages.request> | undefined => {
   // No archiving/restoring running
-  const isProcessingArchiving = isArchivingInProcessingModeSelector(state);
-  if (isProcessingArchiving) {
+  if (isDoingAnAsyncOperationOnMessages(state)) {
     return undefined;
   }
 
   const allPaginated = state.entities.messages.allPaginated;
 
-  // No running message loading
-  const inboxData = allPaginated.inbox.data;
-  const archiveData = allPaginated.archive.data;
-  if (isLoadingOrUpdating(inboxData) || isLoadingOrUpdating(archiveData)) {
-    return undefined;
-  }
-
   // Check that there are more pages to load
-  const { messagePagePot, lastRequest } =
+  const messagePagePot =
+    category === "INBOX" ? allPaginated.inbox.data : allPaginated.archive.data;
+  const lastRequest =
     category === "INBOX"
-      ? {
-          messagePagePot: inboxData,
-          lastRequest: allPaginated.inbox.lastRequest
-        }
-      : {
-          messagePagePot: archiveData,
-          lastRequest: allPaginated.archive.lastRequest
-        };
+      ? allPaginated.inbox.lastRequest
+      : allPaginated.archive.lastRequest;
   const nextMessagePageStartingId = isSomeOrSomeError(messagePagePot)
     ? messagePagePot.value.next
     : undefined;
@@ -156,29 +149,76 @@ export const getLoadNextPageMessagesActionIfAllowed = (
 export const getReloadAllMessagesActionForRefreshIfAllowed = (
   state: GlobalState,
   category: MessageListCategory
-): ActionType<typeof reloadAllMessages.request> | undefined => {
-  const allPaginated = state.entities.messages.allPaginated;
+): ActionType<typeof reloadAllMessages.request> | undefined =>
+  pipe(
+    state,
+    isDoingAnAsyncOperationOnMessages,
+    B.fold(
+      () => pipe(category, initialReloadAllMessagesFromCategory),
+      constUndefined
+    )
+  );
 
-  // No archiving/restoring running
-  const isProcessingArchiving = isArchivingInProcessingModeSelector(state);
-  if (isProcessingArchiving) {
-    return undefined;
-  }
-
-  // No running message loading
-  const archiveMessagePagePot = allPaginated.archive.data;
-  const inboxMessagePagePot = allPaginated.inbox.data;
-  if (
-    isLoadingOrUpdating(archiveMessagePagePot) ||
-    isLoadingOrUpdating(inboxMessagePagePot)
-  ) {
-    return undefined;
-  }
-  return initialReloadAllMessagesFromCategory(category);
-};
+export const getLoadNextPreviousPageMessagesActionIfAllowed = (
+  state: GlobalState
+) =>
+  pipe(state.entities.messages.allPaginated, allPaginated =>
+    pipe(
+      allPaginated.shownCategory === "ARCHIVE"
+        ? allPaginated.archive
+        : allPaginated.inbox,
+      shownMessageCollection =>
+        pipe(
+          shownMessageCollection.lastUpdateTime.getTime() +
+            refreshIntervalMillisecondsGenerator() <
+            new Date().getTime(),
+          B.fold(constUndefined, () =>
+            pipe(
+              shownMessageCollection.data,
+              pot.toOption,
+              O.chainNullableK(a => a.previous),
+              O.fold(constUndefined, previousPageCursor =>
+                pipe(
+                  state,
+                  isDoingAnAsyncOperationOnMessages,
+                  B.fold(
+                    () =>
+                      loadPreviousPageMessages.request({
+                        pageSize: maximumItemsFromAPI,
+                        cursor: previousPageCursor,
+                        filter: {
+                          getArchived: allPaginated.shownCategory === "ARCHIVE"
+                        }
+                      }),
+                    constUndefined
+                  )
+                )
+              )
+            )
+          )
+        )
+    )
+  );
 
 const initialReloadAllMessagesFromCategory = (category: MessageListCategory) =>
   reloadAllMessages.request({
     pageSize,
     filter: { getArchived: category === "ARCHIVE" }
   });
+
+const isDoingAnAsyncOperationOnMessages = (state: GlobalState) =>
+  pipe(
+    state,
+    isArchivingInProcessingModeSelector, // No archiving/restoring running
+    B.fold(
+      () =>
+        pipe(
+          // No running message loading
+          state.entities.messages.allPaginated,
+          allPaginated =>
+            isLoadingOrUpdating(allPaginated.archive.data) ||
+            isLoadingOrUpdating(allPaginated.inbox.data)
+        ),
+      constTrue
+    )
+  );
