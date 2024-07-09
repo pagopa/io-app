@@ -125,12 +125,6 @@ Object {
 }
 `;
 
-exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'userMetadata' state 1`] = `
-Object {
-  "kind": "PotNone",
-}
-`;
-
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'wallet.wallets.walletById' state 1`] = `
 Object {
   "kind": "PotNone",
