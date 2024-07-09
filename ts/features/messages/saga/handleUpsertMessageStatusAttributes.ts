@@ -190,7 +190,7 @@ export function* handleUpsertMessageStatusAttributes(
       withRefreshApiCall,
       putMessage({ id: action.payload.message.id, body }),
       action
-    )) as unknown as SagaCallReturnType<typeof putMessage>;
+    )) as SagaCallReturnType<typeof putMessage>;
 
     const nextAction = handleResponse<unknown>(
       response,
