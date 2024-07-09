@@ -1,12 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
+import { pipe } from "fp-ts/lib/function";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../store/reducers/profile";
+import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
+import { ServiceId } from "../../definitions/backend/ServiceId";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { pad } from "./dates";
 
 type GenderType = "M" | "F" | undefined;

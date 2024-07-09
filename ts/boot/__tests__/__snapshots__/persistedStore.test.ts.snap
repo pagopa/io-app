@@ -49,20 +49,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
     "nameByFiscalCode": {},
   },
   "paymentByRptId": {},
-  "services": {
-    "byId": {},
-    "byOrgFiscalCode": {},
-    "firstLoading": {
-      "isFirstServicesLoadingCompleted": false,
-    },
-    "readState": {},
-    "servicePreference": {
-      "kind": "PotNone",
-    },
-    "visible": {
-      "kind": "PotNone",
-    },
-  },
 }
 `;
 

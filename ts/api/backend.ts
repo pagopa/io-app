@@ -42,8 +42,6 @@ import {
   getUserMetadataDefaultDecoder,
   GetUserMetadataT,
   GetUserProfileT,
-  getVisibleServicesDefaultDecoder,
-  GetVisibleServicesT,
   StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
   UpdateProfileT,
@@ -178,14 +176,6 @@ export function BackendClient(
     query: _ => ({}),
     body: body => JSON.stringify(body.body),
     response_decoder: upsertServicePreferencesDefaultDecoder()
-  };
-
-  const getVisibleServicesT: GetVisibleServicesT = {
-    method: "get",
-    url: () => "/api/v1/services",
-    query: _ => ({}),
-    headers: tokenHeaderProducer,
-    response_decoder: getVisibleServicesDefaultDecoder()
   };
 
   const getMessagesT: GetUserMessagesT = {
@@ -383,9 +373,6 @@ export function BackendClient(
     ),
     upsertServicePreference: withBearerToken(
       createFetchRequestForApi(upsertServicePreferenceT, options)
-    ),
-    getVisibleServices: withBearerToken(
-      createFetchRequestForApi(getVisibleServicesT, options)
     ),
     getMessages: withBearerToken(
       createFetchRequestForApi(getMessagesT, options)
