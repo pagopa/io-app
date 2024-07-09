@@ -2637,7 +2637,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni e opportunità
+        deals: Opportunità
         description: Descrizione
         services: Servizi
         contactInfo: Contatti e informazioni
@@ -2649,7 +2649,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
-        website: Vai al sito dell'esercente
+        website: Vai al sito del partner
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
