@@ -15,9 +15,11 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import { isNewPaymentSectionEnabledSelector } from "../../store/reducers/backendStatus";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../../store/reducers/backendStatus";
 import * as analytics from "../../features/services/common/analytics";
-import { showBarcodeScanSection } from "../TabNavigator";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -80,15 +82,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isNewPaymentSectionEnabledSelector
   );
 
-  // This variable checks that both the new wallet section and
-  // the new document scanning section are included in the tab bar
-  // and the 'settings' section, which can be accessed by clicking
-  // on the icon in the headers of the top-level screens
-  // It will be possible to delete this check and all the code
-  // it carries when the two data it refers to are deleted
-  const isSettingsVisibleAndHideProfile = useMemo(
-    () => isNewWalletSectionEnabled && showBarcodeScanSection,
-    [isNewWalletSectionEnabled]
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
   );
 
   const navigateToSettingMainScreen = useCallback(() => {

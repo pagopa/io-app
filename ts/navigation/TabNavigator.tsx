@@ -1,6 +1,6 @@
 import { IOColors } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React, { useMemo } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -19,11 +19,15 @@ import {
   isDesignSystemEnabledSelector,
   isNewHomeSectionEnabledSelector
 } from "../store/reducers/persistedPreferences";
-import { isNewPaymentSectionEnabledSelector } from "../store/reducers/backendStatus";
+import {
+  isNewPaymentSectionEnabledSelector,
+  isSettingsVisibleAndHideProfileSelector
+} from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { showBarcodeScanSection } from "../config";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -52,8 +56,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export const showBarcodeScanSection = false; // Currently disabled
-
 export const MainTabNavigator = () => {
   const navigation = useIONavigation();
   const insets = useSafeAreaInsets();
@@ -67,15 +69,8 @@ export const MainTabNavigator = () => {
     isNewHomeSectionEnabledSelector
   );
 
-  // This variable checks that both the new wallet section and
-  // the new document scanning section are included in the tab bar.
-  // if these two sections are visible then the profile will
-  // no more be displayed in the tab bar
-  // It will be possible to delete this check and all the code
-  // it carries when the two data it refers to are deleted
-  const isSettingsVisibleAndHideProfile = useMemo(
-    () => isNewWalletSectionEnabled && showBarcodeScanSection,
-    [isNewWalletSectionEnabled]
+  const isSettingsVisibleAndHideProfile = useIOSelector(
+    isSettingsVisibleAndHideProfileSelector
   );
 
   const tabBarHeight = 54;

@@ -23,6 +23,7 @@ import {
   fciEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
+  showBarcodeScanSection,
   uaDonationsEnabled
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
@@ -422,6 +423,20 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
       O.map(bs => bs.config.newPaymentSection?.enabled),
       O.getOrElse(() => false)
     )
+);
+
+// This selector checks that both the new wallet section and the
+// new document scan section are included in the tab bar.
+// In this case, the navigation to the profile section in the tab bar
+// is replaced with the 'settings' section accessed by clicking
+// on the icon in the headers of the top-level screens.
+// It will be possible to delete this control and all the code it carries
+// it carries when the two data elements it refers to are deleted
+export const isSettingsVisibleAndHideProfileSelector = createSelector(
+  isNewPaymentSectionEnabledSelector,
+  () => showBarcodeScanSection,
+  (isNewPaymentSectionEnabled, showBarcodeScan) =>
+    isNewPaymentSectionEnabled && showBarcodeScan
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
