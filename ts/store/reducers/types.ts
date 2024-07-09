@@ -27,7 +27,6 @@ import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
-import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
 import { StartupState } from "./startup";
 
@@ -52,7 +51,6 @@ export type GlobalState = Readonly<{
   debug: DebugState;
   search: SearchState;
   payments: PaymentsState;
-  userMetadata: UserMetadataState;
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;

@@ -164,12 +164,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction,
           secondAction: {
             icon: "coggle",
-            accessibilityLabel: isSettingsVisibleAndHideProfile
-              ? I18n.t("global.buttons.settings")
-              : I18n.t("global.buttons.edit"),
-            onPress: isSettingsVisibleAndHideProfile
-              ? navigateToSettingMainScreen
-              : navigateToProfilePrefercesScreen
+            accessibilityLabel: I18n.t("global.buttons.edit"),
+            onPress: navigateToProfilePrefercesScreen
           },
           thirdAction: {
             icon: "search",
@@ -252,7 +248,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     isNewWalletSectionEnabled,
     isSettingsVisibleAndHideProfile,
     navigateToProfilePrefercesScreen,
-    navigateToSettingMainScreen,
     navigation,
     searchMessageAction,
     settingsAction,

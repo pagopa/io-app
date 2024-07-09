@@ -69,7 +69,6 @@ import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
-import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
 import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
 
@@ -155,7 +154,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
-  userMetadata: userMetadataReducer,
   entities: persistReducer<EntitiesState, Action>(
     entitiesPersistConfig,
     entitiesReducer
