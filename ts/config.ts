@@ -36,9 +36,6 @@ const DEFAULT_FAST_LOGIN_MAX_RETRIES = 3;
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
-// Default number of workers to fetch service.
-const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
-
 // TODO: calculate the page size based on available screen space and item's height
 // https://pagopa.atlassian.net/browse/IA-474
 const DEFAULT_PAGE_SIZE = 12;
@@ -151,12 +148,6 @@ export const totMessageFetchWorkers = pipe(
   E.getOrElse(() => DEFAULT_TOT_MESSAGE_FETCH_WORKERS)
 );
 
-export const totServiceFetchWorkers = pipe(
-  parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10),
-  t.Integer.decode,
-  E.getOrElse(() => DEFAULT_TOT_SERVICE_FETCH_WORKERS)
-);
-
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
 
@@ -170,12 +161,6 @@ export const zendeskPrivacyUrl: string = pipe(
   Config.ZENDESK_PRIVACY_URL,
   t.string.decode,
   E.getOrElse(() => "https://www.pagopa.it/it/privacy-policy-assistenza/")
-);
-
-export const localServicesWebUrl: string = pipe(
-  Config.LOCAL_SERVICE_WEB_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it")
 );
 
 export const unsupportedDeviceMoreInfoUrl: string = pipe(
