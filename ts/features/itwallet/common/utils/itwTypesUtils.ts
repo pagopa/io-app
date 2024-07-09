@@ -35,6 +35,7 @@ export type RpEntityConfiguration =
  * Alias for the CredentialConfigurationSchema type.
  */
 export type CredentialConfigurationSchema =
+  // @ts-expect-error TODO: fix missing credentials_supported key
   Trust.CredentialIssuerEntityConfiguration["payload"]["metadata"]["openid_credential_issuer"]["credentials_supported"][number]["credential_definition"]["credentialSubject"];
 
 /**

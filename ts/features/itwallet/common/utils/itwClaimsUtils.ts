@@ -76,7 +76,7 @@ export const parseClaims = (
     const attributeName =
       typeof attribute.name === "string"
         ? attribute.name
-        : attribute.name[getClaimsFullLocale()] || key;
+        : attribute.name?.[getClaimsFullLocale()] || key;
 
     return { label: attributeName, value: attribute.value, id: key };
   });
