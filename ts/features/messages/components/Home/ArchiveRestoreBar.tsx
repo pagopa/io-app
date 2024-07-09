@@ -91,14 +91,7 @@ const ArchiveRestoreCTAs = ({ category }: ArchiveRestoreCTAsProps) => {
         <ButtonOutline
           label="Annulla"
           fullWidth
-          onPress={() =>
-            dispatch(
-              resetMessageArchivingAction({
-                reason: I18n.t("messages.operations.generic.cancelled"),
-                type: "warning"
-              })
-            )
-          }
+          onPress={() => dispatch(resetMessageArchivingAction(undefined))}
         />
       </View>
       <View style={styles.endButtonContainer}>
