@@ -2015,7 +2015,6 @@ messages:
       success: "Successfully archived!"
       failure: "Failed to archive"
     generic:
-      cancelled: "Annullato"
       failure: "Operation failed"
       success: "Operazione successful!"
     restore:
