@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
 import {
-  ButtonExtendedOutline,
+  ModuleSummaryItem,
   ModuleAttachment,
   ModuleCheckout,
   ModuleCredential,
@@ -103,9 +103,9 @@ export const DSModules = () => {
         weight={"Semibold"}
         style={{ marginBottom: 16 }}
       >
-        ButtonExtendedOutline
+        ModuleSummaryItem
       </H2>
-      {renderButtonExtendedOutline()}
+      {renderModuleSummaryItem()}
 
       <VSpacer size={40} />
 
@@ -282,33 +282,37 @@ const renderModuleCheckout = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCheckout, loading">
-      <ModuleCheckout isLoading ctaText="Loading" />
+      <ModuleCheckout isLoading />
     </DSComponentViewerBox>
   </>
 );
 
-const renderButtonExtendedOutline = () => (
-  <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
-    <View>
-      <ButtonExtendedOutline
+const renderModuleSummaryItem = () => (
+  <>
+    <DSComponentViewerBox name="ModuleSummaryItem, default variant">
+      <ModuleSummaryItem
         label={"Label name"}
         description={"This is a description of the element"}
-        onPress={() => {
-          alert("Action triggered");
-        }}
+        onPress={onButtonPress}
       />
-    </View>
-    <VSpacer size={16} />
-    <View>
-      <ButtonExtendedOutline
-        icon="chevronRightListItem"
-        label={"Label only"}
-        onPress={() => {
-          alert("Action triggered");
-        }}
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleSummaryItem, custom icon, label only">
+      <View>
+        <ModuleSummaryItem
+          icon="chevronRightListItem"
+          label={"Label only"}
+          onPress={onButtonPress}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleSummaryItem, stress test">
+      <ModuleSummaryItem
+        label={"A very looong loooooooong looooooooooooooong label"}
+        description={"This is a very looooooong description of the element"}
+        onPress={onButtonPress}
       />
-    </View>
-  </DSComponentViewerBox>
+    </DSComponentViewerBox>
+  </>
 );
 
 const mockIDPProviderItem = {
