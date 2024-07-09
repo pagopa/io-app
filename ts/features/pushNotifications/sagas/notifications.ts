@@ -124,7 +124,7 @@ export function* handlePendingMessageStateIfAllowedSaga(
       yield* call(navigateToMainNavigatorAction);
     }
 
-    // It the archiving/restoring of messages is not disable, make
+    // It the archiving/restoring of messages is not disabled, make
     // sure to cancel it, whatever status it may be in (since it
     // hides the bottom tab bar and we cannot trigger a navigation
     // flow that may later deliver the user back to a main tab bar
