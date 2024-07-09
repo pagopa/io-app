@@ -2024,7 +2024,7 @@ bonus:
         error:
           noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
       title:
-        deals: "Rabatte und Ermäßigungen"
+        deals: Opportunità
         description: "Beschreibung"
         services: "Dienste"
         contactInfo: "Adressen"
@@ -2036,6 +2036,7 @@ bonus:
         label: "Besuche die Website des Anbieters"
         landingPage: "Die Ermäßigung nutzen"
         discountUrl: "Nutze die Ermäßigung"
+        website: Vai al sito del partner
       categories:
         all: "Alle Anbieter"
         counting: "und weitere {{count}}"
