@@ -6,7 +6,6 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -21,8 +20,8 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { WalletRoutes } from "../navigation/routes";
-import { selectWalletCards } from "../store/selectors";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
+import { selectWalletCards } from "../store/selectors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -50,19 +49,17 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 
   return (
-    <WalletHomeScreenContainer>
+    <>
       <WalletCategoryFilterTabs />
-      <WalletPaymentsRedirectBanner />
-      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+      <WalletScrollView>
+        <WalletPaymentsRedirectBanner />
         <WalletCardsContainer />
-      </Animated.View>
-    </WalletHomeScreenContainer>
+      </WalletScrollView>
+    </>
   );
 };
 
-const WalletHomeScreenContainer = ({
-  children
-}: React.PropsWithChildren<any>) => {
+const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 

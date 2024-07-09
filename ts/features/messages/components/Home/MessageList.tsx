@@ -17,6 +17,7 @@ import {
   shouldShowRefreshControllOnListSelector
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
+import { ItwDiscoveryBannerForMessages } from "../../../itwallet/common/components/ItwDiscoveryBanner";
 import {
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
@@ -95,6 +96,9 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         }
         ListEmptyComponent={<EmptyList category={category} />}
         ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
+        ListHeaderComponent={
+          category === "INBOX" ? <ItwDiscoveryBannerForMessages /> : undefined
+        }
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (

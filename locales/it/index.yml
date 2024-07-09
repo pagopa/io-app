@@ -354,9 +354,9 @@ profile:
           title: Elimina il tuo profilo
           description: Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
           banner: Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
-          body: 
+          body:
             p1: Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
-            p2: 
+            p2:
               firstPart: "Eventuali bonus o sconti ottenuti tramite l'app IO "
               lastPart: non saranno più accessibili.
             p3: Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
@@ -3211,6 +3211,10 @@ features:
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
     discovery:
+      banner:
+        title: È arrivato IT Wallet
+        content: Attiva IT Wallet per aggiungere al Portafoglio di IO la versione  digitale dei tuoi documenti!
+        action: Inizia
       title: Attiva IT Wallet
       content: "###### Cos'è e come funziona? \n IT Wallet è la nuova funzionalità di IO che ti permette di aggiungere al Portafoglio la tua **Identità Digitale** e di portare sempre con te **la versione digitale dei documenti fisici** che già possiedi, come la Tessera Sanitaria e presto molti altri. \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
       tos: Per maggiori informazioni, leggi l’[informativa Privacy]() e i [Termini e Condizioni d’uso]()
