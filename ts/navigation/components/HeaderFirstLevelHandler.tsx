@@ -33,7 +33,7 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
     }
   },
   // TODO: delete this route when the showBarcodeScanSection
-  // and isNewPaymentSectionEnabledSelector FF will be deleted
+  // and isSettingsVisibleAndHideProfileSelector FF will be deleted
   [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
@@ -181,7 +181,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           }
         };
       // TODO: delete this route when the showBarcodeScanSection
-      // and isNewPaymentSectionEnabledSelector FF will be deleted
+      // and isSettingsVisibleAndHideProfileSelector FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
           title: I18n.t("profile.main.title"),

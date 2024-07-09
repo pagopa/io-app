@@ -431,7 +431,8 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
 // is replaced with the 'settings' section accessed by clicking
 // on the icon in the headers of the top-level screens.
 // It will be possible to delete this control and all the code it carries
-// it carries when the two data elements it refers to are deleted
+// it carries when isNewPaymentSectionEnabledSelector and
+// showBarcodeScanSection will be deleted
 export const isSettingsVisibleAndHideProfileSelector = createSelector(
   isNewPaymentSectionEnabledSelector,
   () => showBarcodeScanSection,
