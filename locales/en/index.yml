@@ -3850,7 +3850,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: We couldn't retrieve the receipt
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
