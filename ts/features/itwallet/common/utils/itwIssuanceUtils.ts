@@ -10,23 +10,31 @@ import {
   itWalletPidIssuanceRedirectUri,
   itwWalletProviderBaseUrl
 } from "../../../../config";
+import { type IdentificationMode } from "../../machine/eid/events";
+
+// TODO: read from env
+const SPID_HINT =
+  "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
+const CIE_HINT = "https://demo.spid.gov.it";
+
+const idpHintsMap: Record<IdentificationMode, string> = {
+  cieId: CIE_HINT,
+  ciePin: CIE_HINT,
+  spid: SPID_HINT
+};
 
 export async function getPid({
   walletInstanceAttestation,
-  idphint
+  identificationMode
 }: {
   walletInstanceAttestation: string;
-  idphint: string;
+  identificationMode: IdentificationMode;
 }) {
-  // Create credential crypto context
-  const credentialKeyTag = uuid();
-  await generate(credentialKeyTag);
-  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
-
-  // Create identification context
-  const authorizationContext: AuthorizationContext = {
-    authorize: openAuthenticationSession
-  };
+  // Create identification context only for SPID
+  const authorizationContext: AuthorizationContext | undefined =
+    identificationMode === "spid"
+      ? { authorize: openAuthenticationSession }
+      : undefined;
 
   // Start the issuance flow
   const startFlow: Credential.Issuance.StartFlow = () => ({
@@ -40,6 +48,11 @@ export async function getPid({
   const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
     issuerUrl
   );
+
+  // Create credential crypto context
+  const credentialKeyTag = uuid();
+  await generate(credentialKeyTag);
+  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 
   const wiaKeyTag = uuid();
   await generate(wiaKeyTag);
@@ -62,9 +75,9 @@ export async function getPid({
       issuerRequestUri,
       clientId,
       issuerConf,
-      authorizationContext,
-      idphint,
-      itWalletPidIssuanceRedirectUri
+      idpHintsMap[identificationMode],
+      itWalletPidIssuanceRedirectUri,
+      authorizationContext
     );
 
   const { accessToken, tokenRequestSignedDPop } =

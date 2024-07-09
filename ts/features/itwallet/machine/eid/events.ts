@@ -1,6 +1,6 @@
 import { LocalIdpsFallback } from "../../../../utils/idps";
 
-type IdentificationMode = "spid" | "ciePin" | "cieId";
+export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
 export type Start = {
   type: "start";

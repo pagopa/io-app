@@ -4,6 +4,10 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
+import {
+  type GetWalletAttestationActorParams,
+  type RequestEidActorParams
+} from "./actors";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -32,17 +36,15 @@ export const itwEidIssuanceMachine = setup({
   },
   actors: {
     registerWalletInstance: fromPromise<string>(notImplemented),
-    getWalletAttestation: fromPromise<
-      string,
-      { hardwareKeyTag: string | undefined }
-    >(notImplemented),
+    getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
+      notImplemented
+    ),
     showSpidIdentificationWebView: fromPromise<string, LocalIdpsFallback>(
       notImplemented
     ),
-    requestEid: fromPromise<
-      StoredCredential,
-      { userToken: string; walletInstanceAttestation: string }
-    >(notImplemented)
+    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+      notImplemented
+    )
   },
   guards: {}
 }).createMachine({
@@ -126,6 +128,11 @@ export const itwEidIssuanceMachine = setup({
           on: {
             "select-identification-mode": [
               {
+                actions: assign(({ event }) => ({
+                  identificationMode: event.mode
+                }))
+              },
+              {
                 guard: ({ event }) => event.mode === "spid",
                 target: "Spid"
               },
@@ -196,7 +203,8 @@ export const itwEidIssuanceMachine = setup({
             src: "requestEid",
             input: ({ context }) => ({
               userToken: context.userToken!,
-              walletInstanceAttestation: context.walletAttestation!
+              walletInstanceAttestation: context.walletAttestation!,
+              identificationMode: context.identificationMode!
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
