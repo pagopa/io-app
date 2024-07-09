@@ -18,9 +18,13 @@ const reducer = (
 ): FimsHistoryState => {
   switch (action.type) {
     case getType(fimsHistoryGet.request):
-      return {
-        consentsList: pot.toLoading(state.consentsList)
-      };
+      return action.payload.isFirstRequest
+        ? {
+            consentsList: pot.noneLoading
+          }
+        : {
+            consentsList: pot.toLoading(state.consentsList)
+          };
     case getType(fimsHistoryGet.success):
       const currentHistoryItems =
         pot.toUndefined(state.consentsList)?.items ?? [];
