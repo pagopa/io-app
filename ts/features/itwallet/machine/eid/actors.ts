@@ -52,6 +52,7 @@ export const createEidIssuanceActorsImplementation = () => ({
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
+      // @ts-expect-error unused variable
       const eidCredential = await issuanceUtils.getPid(input);
 
       // TODO: create stored credential

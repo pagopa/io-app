@@ -1,9 +1,8 @@
 import React from "react";
 import { Alert } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { SdJwt } from "@pagopa/io-react-native-wallet";
 import I18n from "../../../../i18n";
-import { CredentialType, mapAssuranceLevel } from "../utils/itwMocksUtils";
+import { CredentialType } from "../utils/itwMocksUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
 
 type Props = {
@@ -20,16 +19,18 @@ type Props = {
 export const ItwPidAssuranceLevel = ({
   credential: storedCredential
 }: Props) => {
-  const { credential, credentialType } = storedCredential;
+  const { credentialType } = storedCredential;
 
   if (credentialType !== CredentialType.PID) {
     return null;
   }
 
-  const { sdJwt } = SdJwt.decode(credential, SdJwt.SdJwt4VC);
+  const assuranceLevel = "3";
+  // TODO: fix missing verified_claims.verification.assurance_level
+  /* const { sdJwt } = SdJwt.decode(credential, SdJwt.SdJwt4VC);
   const assuranceLevel = mapAssuranceLevel(
     sdJwt.payload.verified_claims.verification.assurance_level
-  );
+  ); */
   return (
     <ListItemInfo
       label={I18n.t(
