@@ -8,7 +8,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { logosForService } from "../../../../utils/services";
+import { logosForService } from "../../common/utils";
 import { CTA, CTAS } from "../../../messages/types/MessageCTA";
 import {
   getServiceCTA,
@@ -39,7 +39,7 @@ import {
   serviceByIdSelector,
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
-} from "../store/reducers/servicesById";
+} from "../store/reducers";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
 
 export type ServiceDetailsScreenRouteParams = {

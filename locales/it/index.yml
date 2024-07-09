@@ -377,12 +377,25 @@ profile:
           body: Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
           cta: Chiudi
       exportData:
-        cta: Richiedi copia dei tuoi dati
+        cta: Richiedi una copia dei dati
         title: Accedi ai tuoi dati
+        subtitle: Puoi scaricare i dati principali del tuo profilo IO in qualsiasi momento.
         description: Ricevi una copia dei dati associati al tuo profilo IO
-        info:
-          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "I dati sono:"
+            item1: il tuo codice fiscale;
+            item2: l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;
+            item3: il testo dei Messaggi che hai ricevuto;
+            item4: le tue preferenze di notifica.
+          paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
+          paragraph2: 
+            part1: "Riceverai un "
+            part2: "messaggio su IO "
+            part3: in cui sono presenti un link e una password validi per 15 giorni. 
+          paragraph3: 
+            part1: Per maggiori informazioni consulta l’
+            link: Informativa privacy di IO.
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
@@ -2111,8 +2124,6 @@ send_email_messages:
     title: Invia un’anteprima via email
     subtitle: Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente.
 services:
-  accessibility:
-    edit: Modifica l'impostazione dei servizi
   optIn:
     preferences:
       completed:
@@ -2143,41 +2154,8 @@ services:
           title: "Se confermi, non riceverai alcun messaggio"
           body: "Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio."
   title: Servizi
-  subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: Contattarti in app
-  serviceNotEnabled: Il servizio non è attivo
-  pushNotifications: Inviarti notifiche push
-  messageReadStatus: Ricevere conferme di lettura
-  emailForwarding: Inviarti e-mail
-  tosAndPrivacy: Termini e Privacy
-  tosLink: Termini e condizioni d'uso
-  privacyLink: Informativa sulla privacy
-  otherAppsInfo: Puoi usare questo servizio anche
-  otherAppWeb: Online su
-  otherAppIos: App iOS
-  otherAppAndroid: App Android
-  contactsAndInfo: Contatti ed informazioni
-  visitWebsite: Visita il sito
-  askForAssistance: Richiedi assistenza
-  contactAddress: Indirizzo
-  contactPhone: Telefono
-  contactSupport: Assistenza
-  tab:
-    locals: Locali
-    national: Nazionali
-    all: Tutti
-  loading:
-    title: Sto caricando l'elenco dei servizi
-    subtitle: attendi qualche secondo...
-  enableAll: Usa configurazione rapida
-  disableAll: Usa configurazione manuale
-  updatingServiceMode: Attendi...
-  disableAllTitle: Vuoi davvero disattivare tutti i servizi?
-  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
-  close: Chiudi
-  emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
   new: Nuovo
   home:
     featured:
@@ -2231,23 +2209,6 @@ services:
       title: "Termini e Privacy"
       tosLink: "Termini e condizioni d'uso"
       privacyLink: "Informativa sulla privacy"
-serviceDetail:
-  fiscalCode: "C.F. Ente"
-  fiscalCodeAccessibility: "Codice fiscale Ente"
-  fiscalCodeAccessibilityCopy: "Copia codice fiscale Ente"
-  contacts:
-    title: "Questo servizio può:"
-  headerTitle: "Dettagli del Servizio"
-  contextualHelpContent: !include services/service_detail.md
-  onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
-  disableTitle: "Vuoi davvero disattivare il servizio?"
-  disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finché non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
-  lockedMailAlert: "L'inoltro dei messaggi via email è {{enabled}} globalmente:"
-  updatePreferences: Modifica le preferenze
-  goTo: Vai alle preferenze
-  enabled: abilitato
-  disabled: disabilitato
-  notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
   instructions:
     unlockCode: codice di sblocco
@@ -2677,7 +2638,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni e opportunità
+        deals: Opportunità
         description: Descrizione
         services: Servizi
         contactInfo: Contatti e informazioni
@@ -2689,7 +2650,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
-        website: Vai al sito dell'esercente
+        website: Vai al sito del partner
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -3887,7 +3848,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: Non siamo riusciti a caricare la ricevuta
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
