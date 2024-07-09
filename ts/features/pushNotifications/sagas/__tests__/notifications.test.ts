@@ -31,6 +31,8 @@ import { navigateToMainNavigatorAction } from "../../../../store/actions/navigat
 import { navigateToMessageRouterAction } from "../../../messages/store/actions/navigation";
 import { UIMessageId } from "../../../messages/types";
 import * as Analytics from "../../../messages/analytics";
+import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
+import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
 
 const installationId = "installationId";
 jest.mock("../../utils/index", () => ({
@@ -242,6 +244,8 @@ describe("handlePendingMessageStateIfAllowedSaga", () => {
       .next(false)
       .put(clearNotificationPendingMessage())
       .next()
+      .select(isArchivingDisabledSelector)
+      .next(true)
       .call(
         NavigationService.dispatchNavigationAction,
         dispatchNavigationActionParameter
@@ -267,6 +271,36 @@ describe("handlePendingMessageStateIfAllowedSaga", () => {
       .put(clearNotificationPendingMessage())
       .next()
       .call(navigateToMainNavigatorAction)
+      .next()
+      .select(isArchivingDisabledSelector)
+      .next(true)
+      .call(
+        NavigationService.dispatchNavigationAction,
+        dispatchNavigationActionParameter
+      )
+      .next()
+      .isDone();
+  });
+
+  it("make the app navigate to the message detail when the user press on a notification, resetting the message archiving/restoring if such is disabled", () => {
+    const dispatchNavigationActionParameter = navigateToMessageRouterAction({
+      messageId: mockedPendingMessageState.id as UIMessageId,
+      fromNotification: true
+    });
+
+    testSaga(handlePendingMessageStateIfAllowedSaga, false)
+      .next()
+      .select(pendingMessageStateSelector)
+      .next(mockedPendingMessageState)
+      .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
+      .next()
+      .select(isPaymentOngoingSelector)
+      .next(false)
+      .put(clearNotificationPendingMessage())
+      .next()
+      .select(isArchivingDisabledSelector)
+      .next(false)
+      .put(resetMessageArchivingAction(undefined))
       .next()
       .call(
         NavigationService.dispatchNavigationAction,
