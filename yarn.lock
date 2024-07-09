@@ -3272,10 +3272,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.39.4":
-  version "1.39.4"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.39.4.tgz#494b00b69f0d1330ae14ca99270bceb9b97a7298"
-  integrity sha512-yxTkgfIQSpUOXCC/FPmGyyaPOWU1H+BSTZAma2ClNkvl0t3biMiRMJZO3qicWd6pzqyzEqLqP0VNPrs/K7GFWQ==
+"@pagopa/io-app-design-system@1.39.5":
+  version "1.39.5"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.39.5.tgz#aa3955f384ba59d2f75a5809034e72cfcc8dafae"
+  integrity sha512-CNUvS/bQnvGo2HM8SKqWhr5O6C5gb6XYQG6GbuCNeN8Y0NuG10AS61W4xc335L+gFPh4GeuBP1WWN5Bltr5eFg==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"

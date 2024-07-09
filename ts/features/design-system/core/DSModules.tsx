@@ -264,11 +264,32 @@ const renderModulePaymentNotice = () => (
 
 const renderModuleCheckout = () => (
   <>
+    <DSComponentViewerBox name="ModuleCheckout, loading">
+      <ModuleCheckout isLoading />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCheckout, default">
       <ModuleCheckout
         paymentLogo="amex"
         title="Amex"
         subtitle="arien_c********@**hoo.it"
+        ctaText="Modifica"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, default, with image">
+      <ModuleCheckout
+        image={{
+          uri: "https://assets.cdn.platform.pagopa.it/apm/bancomatpay.png"
+        }}
+        title="Paga con Bancomat PAY"
+        ctaText="Modifica"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, no description">
+      <ModuleCheckout
+        paymentLogo="amex"
+        title="Amex"
         ctaText="Modifica"
         onPress={onButtonPress}
       />
@@ -281,8 +302,22 @@ const renderModuleCheckout = () => (
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleCheckout, loading">
-      <ModuleCheckout isLoading ctaText="Loading" />
+    <DSComponentViewerBox name="ModuleCheckout, no CTA, with image">
+      <ModuleCheckout
+        image={{
+          uri: "https://assets.cdn.platform.pagopa.it/apm/bancomatpay.png"
+        }}
+        title="3,50 $"
+        subtitle="Piú o meno"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, no CTA">
+      <ModuleCheckout
+        title="3,50 $"
+        subtitle="Piú o meno"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
   </>
 );
@@ -361,51 +396,51 @@ const renderModuleIDP = () => (
 const renderModuleCredential = () => (
   <>
     <DSComponentViewerBox name="ModuleCredential">
-      <View>
-        <ModuleCredential
-          icon="fingerprint"
-          label="Identità digitale"
-          onPress={onButtonPress}
-        />
-      </View>
+      <ModuleCredential
+        icon="fingerprint"
+        label="Identità digitale"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, with Badge">
-      <View>
-        <ModuleCredential
-          icon="fingerprint"
-          label="Identità digitale"
-          onPress={onButtonPress}
-          badge={{
-            text: "predefinita",
-            variant: "info"
-          }}
-        />
-      </View>
+      <ModuleCredential
+        icon="fingerprint"
+        label="Identità digitale"
+        onPress={onButtonPress}
+        badge={{
+          text: "predefinita",
+          variant: "info"
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, with long label">
-      <View>
-        <ModuleCredential
-          icon="fingerprint"
-          label="This is a very long long long label"
-          onPress={onButtonPress}
-          badge={{
-            text: "predefinita",
-            variant: "info"
-          }}
-        />
-      </View>
+      <ModuleCredential
+        icon="fingerprint"
+        label="This is a very long long long label"
+        onPress={onButtonPress}
+        badge={{
+          text: "predefinita",
+          variant: "info"
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, with image asset">
-      <View>
-        <ModuleCredential
-          image={CgnLogo}
-          label="Carta Giovani Nazionale"
-          badge={{
-            text: "già presente",
-            variant: "success"
-          }}
-        />
-      </View>
+      <ModuleCredential
+        image={CgnLogo}
+        label="Carta Giovani Nazionale"
+        badge={{
+          text: "già presente",
+          variant: "success"
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCredential, fetching">
+      <ModuleCredential
+        icon="fingerprint"
+        label="Identità digitale"
+        onPress={onButtonPress}
+        isFetching={true}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ModuleCredential, loading">
       <View>
