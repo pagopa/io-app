@@ -412,6 +412,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 color="bluegreyDark"
                                 defaultColor="bluegreyDark"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="title2"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -419,6 +420,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     "lineHeight": 34,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   Array [
                                     Object {
@@ -600,7 +602,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                         }
                                       }
                                       importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.3}
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         Array [
@@ -1383,6 +1385,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1390,6 +1393,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1423,6 +1427,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1430,6 +1435,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {

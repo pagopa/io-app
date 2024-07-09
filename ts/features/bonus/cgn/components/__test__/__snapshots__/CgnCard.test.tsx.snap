@@ -51,6 +51,7 @@ exports[`CgnCard should match the snapshot 1`] = `
         color="black"
         defaultColor="black"
         defaultWeight="Semibold"
+        dynamicTypeRamp="headline"
         font="TitilliumSansPro"
         fontStyle={
           Object {
@@ -58,6 +59,7 @@ exports[`CgnCard should match the snapshot 1`] = `
             "lineHeight": 25,
           }
         }
+        maxFontSizeMultiplier={1.25}
         style={
           Array [
             Object {
@@ -82,6 +84,7 @@ exports[`CgnCard should match the snapshot 1`] = `
       color="black"
       defaultColor="black"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -89,6 +92,7 @@ exports[`CgnCard should match the snapshot 1`] = `
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         Array [
           Object {
@@ -115,6 +119,7 @@ exports[`CgnCard should match the snapshot 1`] = `
       color="blueItalia-850"
       defaultColor="black"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -122,6 +127,7 @@ exports[`CgnCard should match the snapshot 1`] = `
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         Array [
           Object {

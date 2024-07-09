@@ -459,11 +459,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="0"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -476,23 +471,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -500,17 +498,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -519,6 +514,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -526,7 +522,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -554,61 +551,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -687,11 +677,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="1"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -704,23 +689,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -728,17 +716,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -747,6 +732,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -754,7 +740,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -782,61 +769,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -915,11 +895,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="2"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -932,23 +907,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -956,17 +934,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -975,6 +950,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -982,7 +958,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -1010,61 +987,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1143,11 +1113,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="3"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -1160,23 +1125,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -1184,17 +1152,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1203,6 +1168,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1210,7 +1176,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -1238,61 +1205,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1371,11 +1331,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="4"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -1388,23 +1343,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -1412,17 +1370,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1431,6 +1386,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1438,7 +1394,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -1466,61 +1423,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1599,11 +1549,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="5"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -1616,23 +1561,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -1640,17 +1588,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1659,6 +1604,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1666,7 +1612,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -1694,61 +1641,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -1827,11 +1767,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="6"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -1844,23 +1779,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -1868,17 +1806,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -1887,6 +1822,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1894,7 +1830,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -1922,61 +1859,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -2055,11 +1985,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="7"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -2072,23 +1997,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -2096,17 +2024,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -2115,6 +2040,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2122,7 +2048,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -2150,61 +2077,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -2283,11 +2203,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="8"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -2300,23 +2215,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -2324,17 +2242,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -2343,6 +2258,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2350,7 +2266,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -2378,61 +2295,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -2511,11 +2421,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   accessibilityHint="pdf"
                                   accessibilityLabel="9"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -2528,23 +2433,26 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -2552,17 +2460,14 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -2571,6 +2476,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2578,7 +2484,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -2606,61 +2513,54 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }
@@ -3677,11 +3577,6 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                   accessibilityHint="pdf"
                                   accessibilityLabel="0"
                                   accessibilityRole="button"
-                                  accessibilityState={
-                                    Object {
-                                      "disabled": false,
-                                    }
-                                  }
                                   accessible={true}
                                   collapsable={false}
                                   focusable={true}
@@ -3694,23 +3589,26 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       Array [
                                         Object {
                                           "alignItems": "center",
-                                          "backgroundColor": "#FFFFFF",
-                                          "borderColor": "#CCD4DC",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 8,
-                                          "borderStyle": "solid",
                                           "borderWidth": 1,
                                           "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                           "paddingHorizontal": 16,
                                           "paddingVertical": 16,
                                         },
+                                        Object {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
                                         Object {
                                           "transform": Array [
                                             Object {
@@ -3718,17 +3616,14 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             },
                                           ],
                                         },
-                                        Object {
-                                          "opacity": 1,
-                                        },
                                       ]
                                     }
                                   >
                                     <View
                                       style={
                                         Object {
-                                          "flex": 1,
-                                          "flexDirection": "column",
+                                          "alignItems": "flex-start",
+                                          "flexShrink": 1,
                                         }
                                       }
                                     >
@@ -3737,6 +3632,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                         color="blueIO-500"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3744,7 +3640,8 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             "lineHeight": 21,
                                           }
                                         }
-                                        numberOfLines={1}
+                                        maxFontSizeMultiplier={1.25}
+                                        numberOfLines={2}
                                         style={
                                           Array [
                                             Object {
@@ -3772,61 +3669,54 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       />
                                       <View
                                         style={
-                                          Object {
-                                            "width": 44,
-                                          }
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
                                         }
                                       >
-                                        <View
+                                        <Text
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "alignItems": "center",
-                                                "borderCurve": "continuous",
-                                                "borderRadius": 24,
-                                                "flexDirection": "row",
-                                                "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
                                               },
                                               Object {
-                                                "backgroundColor": "#F4F5F8",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
                                               },
                                             ]
                                           }
                                         >
-                                          <Text
-                                            ellipsizeMode="tail"
-                                            numberOfLines={1}
-                                            style={
-                                              Array [
-                                                Object {
-                                                  "alignSelf": "center",
-                                                  "flexShrink": 1,
-                                                  "fontSize": 12,
-                                                  "lineHeight": 16,
-                                                  "textTransform": "uppercase",
-                                                },
-                                                Object {
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                },
-                                                Object {
-                                                  "color": "#555C70",
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            PDF
-                                          </Text>
-                                        </View>
+                                          PDF
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
                                       style={
                                         Object {
-                                          "alignItems": "center",
                                           "marginLeft": 12,
                                         }
                                       }

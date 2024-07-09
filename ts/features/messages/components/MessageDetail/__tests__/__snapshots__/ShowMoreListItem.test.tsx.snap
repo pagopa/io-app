@@ -1070,6 +1070,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1077,6 +1078,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -1663,6 +1665,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1670,6 +1673,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -1754,6 +1758,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1761,6 +1766,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -1784,6 +1790,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1791,6 +1798,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -2445,6 +2453,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2452,6 +2461,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -2604,6 +2614,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2611,6 +2622,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -2634,6 +2646,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2641,6 +2654,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -3295,6 +3309,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3302,6 +3317,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -3386,6 +3402,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3393,6 +3410,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -3416,6 +3434,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3423,6 +3442,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -3583,6 +3603,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3590,6 +3611,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -3613,6 +3635,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -3620,6 +3643,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -4274,6 +4298,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4281,6 +4306,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -4433,6 +4459,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4440,6 +4467,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -4463,6 +4491,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4470,6 +4499,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -4698,6 +4728,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4705,6 +4736,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -4728,6 +4760,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -4735,6 +4768,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -5389,6 +5423,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5396,6 +5431,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -5480,6 +5516,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5487,6 +5524,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -5510,6 +5548,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5517,6 +5556,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -5646,6 +5686,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5653,6 +5694,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -5737,6 +5779,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5744,6 +5787,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -5767,6 +5811,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -5774,6 +5819,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -6002,6 +6048,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6009,6 +6056,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -6032,6 +6080,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6039,6 +6088,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -6168,6 +6218,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6175,6 +6226,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -6259,6 +6311,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6266,6 +6319,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -6289,6 +6343,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6296,6 +6351,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -6524,6 +6580,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6531,6 +6588,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -6554,6 +6612,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6561,6 +6620,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -6721,6 +6781,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6728,6 +6789,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -6751,6 +6813,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -6758,6 +6821,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -7412,6 +7476,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7419,6 +7484,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -7503,6 +7569,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7510,6 +7577,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -7533,6 +7601,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7540,6 +7609,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -7669,6 +7739,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7676,6 +7747,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           Array [
@@ -7760,6 +7832,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7767,6 +7840,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -7790,6 +7864,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -7797,6 +7872,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -8025,6 +8101,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -8032,6 +8109,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -8055,6 +8133,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         color="blue"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -8062,6 +8141,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [

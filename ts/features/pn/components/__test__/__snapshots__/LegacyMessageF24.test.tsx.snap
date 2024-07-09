@@ -381,6 +381,7 @@ exports[`MessageF24 component when there are multiple F24 should match the snaps
                             color="bluegreyDark"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -388,6 +389,7 @@ exports[`MessageF24 component when there are multiple F24 should match the snaps
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -903,6 +905,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                             color="bluegreyDark"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -910,6 +913,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1068,6 +1072,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                     color="bluegrey"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1075,6 +1080,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [

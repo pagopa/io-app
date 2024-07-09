@@ -664,6 +664,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                           color="bluegreyDark"
                           defaultColor="bluegreyDark"
                           defaultWeight="Semibold"
+                          dynamicTypeRamp="title2"
                           font="TitilliumSansPro"
                           fontStyle={
                             Object {
@@ -671,6 +672,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                               "lineHeight": 34,
                             }
                           }
+                          maxFontSizeMultiplier={1.25}
                           style={
                             Array [
                               Object {

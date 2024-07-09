@@ -235,6 +235,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   color="black"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="title1"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -242,6 +243,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       "lineHeight": 40,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     Array [
                                       Object {
@@ -280,6 +282,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   color="grey-700"
                                   defaultColor="bluegrey"
                                   defaultWeight="Regular"
+                                  dynamicTypeRamp="body"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -287,6 +290,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       "lineHeight": 24,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     Array [
                                       Object {
@@ -405,6 +409,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             color="black"
                                             defaultColor="black"
                                             defaultWeight="Semibold"
+                                            dynamicTypeRamp="headline"
                                             font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
@@ -412,6 +417,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "lineHeight": 25,
                                               }
                                             }
+                                            maxFontSizeMultiplier={1.25}
                                             style={
                                               Array [
                                                 Object {
@@ -601,6 +607,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             color="black"
                                             defaultColor="black"
                                             defaultWeight="Semibold"
+                                            dynamicTypeRamp="headline"
                                             font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
@@ -608,6 +615,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "lineHeight": 25,
                                               }
                                             }
+                                            maxFontSizeMultiplier={1.25}
                                             style={
                                               Array [
                                                 Object {
@@ -797,6 +805,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             color="black"
                                             defaultColor="black"
                                             defaultWeight="Semibold"
+                                            dynamicTypeRamp="headline"
                                             font="TitilliumSansPro"
                                             fontStyle={
                                               Object {
@@ -804,6 +813,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "lineHeight": 25,
                                               }
                                             }
+                                            maxFontSizeMultiplier={1.25}
                                             style={
                                               Array [
                                                 Object {

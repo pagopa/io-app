@@ -418,6 +418,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -425,6 +426,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -456,6 +458,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               color="grey-700"
                               defaultColor="blue"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -463,6 +466,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   "lineHeight": 21,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -518,6 +522,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   color="grey-700"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="footnote"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -525,6 +530,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       "lineHeight": 21,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     Array [
                                       Object {
@@ -548,6 +554,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   color="blueIO-500"
                                   defaultColor="blue"
                                   defaultWeight="Bold"
+                                  dynamicTypeRamp="footnote"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -555,6 +562,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       "lineHeight": 21,
                                     }
                                   }
+                                  maxFontSizeMultiplier={1.25}
                                   onPress={[Function]}
                                   style={
                                     Array [
@@ -656,6 +664,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               color="grey-850"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -663,6 +672,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -791,6 +801,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Semibold"
+                                      dynamicTypeRamp="headline"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -798,6 +809,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "lineHeight": 25,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       role="heading"
                                       style={
                                         Array [
@@ -825,11 +837,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               accessibilityHint="pdf"
                               accessibilityLabel="A First Attachment"
                               accessibilityRole="button"
-                              accessibilityState={
-                                Object {
-                                  "disabled": false,
-                                }
-                              }
                               accessible={true}
                               collapsable={false}
                               focusable={true}
@@ -842,23 +849,26 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
-                                accessibilityElementsHidden={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   Array [
                                     Object {
                                       "alignItems": "center",
-                                      "backgroundColor": "#FFFFFF",
-                                      "borderColor": "#CCD4DC",
+                                      "borderColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 8,
-                                      "borderStyle": "solid",
                                       "borderWidth": 1,
                                       "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                       "paddingHorizontal": 16,
                                       "paddingVertical": 16,
                                     },
+                                    Object {
+                                      "borderColor": "#E8EBF1",
+                                    },
+                                    false,
                                     Object {
                                       "transform": Array [
                                         Object {
@@ -866,17 +876,14 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ],
                                     },
-                                    Object {
-                                      "opacity": 1,
-                                    },
                                   ]
                                 }
                               >
                                 <View
                                   style={
                                     Object {
-                                      "flex": 1,
-                                      "flexDirection": "column",
+                                      "alignItems": "flex-start",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -885,6 +892,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     color="blueIO-500"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -892,7 +900,8 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "lineHeight": 21,
                                       }
                                     }
-                                    numberOfLines={1}
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={2}
                                     style={
                                       Array [
                                         Object {
@@ -920,61 +929,54 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   />
                                   <View
                                     style={
-                                      Object {
-                                        "width": 44,
-                                      }
+                                      Array [
+                                        Object {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 24,
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                          "paddingHorizontal": 8,
+                                          "paddingVertical": 4,
+                                        },
+                                        Object {
+                                          "backgroundColor": "#F4F5F8",
+                                        },
+                                      ]
                                     }
                                   >
-                                    <View
+                                    <Text
+                                      allowFontScaling={false}
+                                      ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={1}
                                       style={
                                         Array [
                                           Object {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
+                                            "alignSelf": "center",
+                                            "flexShrink": 1,
+                                            "fontSize": 12,
+                                            "lineHeight": 16,
+                                            "textTransform": "uppercase",
                                           },
                                           Object {
-                                            "backgroundColor": "#F4F5F8",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                          Object {
+                                            "color": "#555C70",
                                           },
                                         ]
                                       }
                                     >
-                                      <Text
-                                        ellipsizeMode="tail"
-                                        numberOfLines={1}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
-                                            },
-                                            Object {
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                            },
-                                            Object {
-                                              "color": "#555C70",
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        PDF
-                                      </Text>
-                                    </View>
+                                      PDF
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
                                   style={
                                     Object {
-                                      "alignItems": "center",
                                       "marginLeft": 12,
                                     }
                                   }
@@ -1053,11 +1055,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               accessibilityHint="pdf"
                               accessibilityLabel="A Second Attachment"
                               accessibilityRole="button"
-                              accessibilityState={
-                                Object {
-                                  "disabled": false,
-                                }
-                              }
                               accessible={true}
                               collapsable={false}
                               focusable={true}
@@ -1070,23 +1067,26 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
-                                accessibilityElementsHidden={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   Array [
                                     Object {
                                       "alignItems": "center",
-                                      "backgroundColor": "#FFFFFF",
-                                      "borderColor": "#CCD4DC",
+                                      "borderColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 8,
-                                      "borderStyle": "solid",
                                       "borderWidth": 1,
                                       "flexDirection": "row",
+                                      "justifyContent": "space-between",
                                       "paddingHorizontal": 16,
                                       "paddingVertical": 16,
                                     },
+                                    Object {
+                                      "borderColor": "#E8EBF1",
+                                    },
+                                    false,
                                     Object {
                                       "transform": Array [
                                         Object {
@@ -1094,17 +1094,14 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ],
                                     },
-                                    Object {
-                                      "opacity": 1,
-                                    },
                                   ]
                                 }
                               >
                                 <View
                                   style={
                                     Object {
-                                      "flex": 1,
-                                      "flexDirection": "column",
+                                      "alignItems": "flex-start",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -1113,6 +1110,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     color="blueIO-500"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1120,7 +1118,8 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "lineHeight": 21,
                                       }
                                     }
-                                    numberOfLines={1}
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={2}
                                     style={
                                       Array [
                                         Object {
@@ -1148,61 +1147,54 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   />
                                   <View
                                     style={
-                                      Object {
-                                        "width": 44,
-                                      }
+                                      Array [
+                                        Object {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 24,
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                          "paddingHorizontal": 8,
+                                          "paddingVertical": 4,
+                                        },
+                                        Object {
+                                          "backgroundColor": "#F4F5F8",
+                                        },
+                                      ]
                                     }
                                   >
-                                    <View
+                                    <Text
+                                      allowFontScaling={false}
+                                      ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={1}
                                       style={
                                         Array [
                                           Object {
-                                            "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 24,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
+                                            "alignSelf": "center",
+                                            "flexShrink": 1,
+                                            "fontSize": 12,
+                                            "lineHeight": 16,
+                                            "textTransform": "uppercase",
                                           },
                                           Object {
-                                            "backgroundColor": "#F4F5F8",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                          Object {
+                                            "color": "#555C70",
                                           },
                                         ]
                                       }
                                     >
-                                      <Text
-                                        ellipsizeMode="tail"
-                                        numberOfLines={1}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "alignSelf": "center",
-                                              "flexShrink": 1,
-                                              "fontSize": 12,
-                                              "lineHeight": 16,
-                                              "textTransform": "uppercase",
-                                            },
-                                            Object {
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                            },
-                                            Object {
-                                              "color": "#555C70",
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        PDF
-                                      </Text>
-                                    </View>
+                                      PDF
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
                                   style={
                                     Object {
-                                      "alignItems": "center",
                                       "marginLeft": 12,
                                     }
                                   }
@@ -1717,6 +1709,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1724,6 +1717,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 Array [
@@ -1876,6 +1870,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
+                                              dynamicTypeRamp="footnote"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1883,6 +1878,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 21,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               style={
                                                 Array [
                                                   Object {
@@ -1906,6 +1902,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1913,6 +1910,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 Array [
@@ -2042,6 +2040,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -2049,6 +2048,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 Array [
@@ -2201,6 +2201,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
+                                              dynamicTypeRamp="footnote"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -2208,6 +2209,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 21,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               style={
                                                 Array [
                                                   Object {
@@ -2231,6 +2233,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -2238,6 +2241,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 Array [
@@ -3090,6 +3094,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -3097,6 +3102,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -3130,6 +3136,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -3137,6 +3144,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {

@@ -454,6 +454,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                 color="blueIO-850"
                                 defaultColor="bluegreyDark"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="title3"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -462,6 +463,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                   }
                                 }
                                 lineBreakMode="head"
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={3}
                                 style={
                                   Array [
@@ -960,7 +962,9 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -999,6 +1003,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 color="hanPurple-850"
                                 defaultColor="bluegreyDark"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="title3"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -1007,6 +1012,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                   }
                                 }
                                 lineBreakMode="head"
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={3}
                                 style={
                                   Array [

@@ -512,6 +512,7 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                           color="bluegreyDark"
                           defaultColor="bluegreyDark"
                           defaultWeight="Semibold"
+                          dynamicTypeRamp="title2"
                           font="TitilliumSansPro"
                           fontStyle={
                             Object {
@@ -519,6 +520,7 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                               "lineHeight": 34,
                             }
                           }
+                          maxFontSizeMultiplier={1.25}
                           style={
                             Array [
                               Object {
@@ -1066,6 +1068,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                           color="bluegreyDark"
                           defaultColor="bluegreyDark"
                           defaultWeight="Semibold"
+                          dynamicTypeRamp="title2"
                           font="TitilliumSansPro"
                           fontStyle={
                             Object {
@@ -1073,6 +1076,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                               "lineHeight": 34,
                             }
                           }
+                          maxFontSizeMultiplier={1.25}
                           style={
                             Array [
                               Object {
@@ -1106,6 +1110,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                           color="grey-650"
                           defaultColor="blue"
                           defaultWeight="Bold"
+                          dynamicTypeRamp="footnote"
                           font="TitilliumSansPro"
                           fontStyle={
                             Object {
@@ -1113,6 +1118,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                               "lineHeight": 21,
                             }
                           }
+                          maxFontSizeMultiplier={1.25}
                           style={
                             Array [
                               Object {

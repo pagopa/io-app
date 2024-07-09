@@ -419,11 +419,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -434,6 +434,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -441,6 +442,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -893,11 +895,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -908,6 +910,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -915,6 +918,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1367,11 +1371,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -1382,6 +1386,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1389,6 +1394,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1841,11 +1847,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -1856,6 +1862,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1863,6 +1870,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2315,11 +2323,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -2330,6 +2338,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2337,6 +2346,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2789,11 +2799,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -2804,6 +2814,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2811,6 +2822,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -3263,11 +3275,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -3278,6 +3290,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -3285,6 +3298,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -3737,11 +3751,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -3752,6 +3766,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -3759,6 +3774,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -4211,11 +4227,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           style={
                             Array [
                               Object {
-                                "marginTop": -5,
+                                "marginTop": -10,
                               },
                               Object {
                                 "flex": 1,
-                                "marginBottom": -4,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -4226,6 +4242,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             color="warning-850"
                             defaultColor="black"
                             defaultWeight="Bold"
+                            dynamicTypeRamp="footnote"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -4233,6 +4250,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {

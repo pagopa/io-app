@@ -359,6 +359,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -366,6 +367,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -399,6 +401,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -406,6 +409,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -529,7 +533,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           }
                                         }
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.3}
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           Array [

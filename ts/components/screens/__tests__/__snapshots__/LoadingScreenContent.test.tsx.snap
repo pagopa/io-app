@@ -540,6 +540,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -547,6 +548,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1132,6 +1134,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1139,6 +1142,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1719,6 +1723,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1726,6 +1731,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -2308,6 +2314,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2315,6 +2322,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {

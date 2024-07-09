@@ -48,6 +48,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           color="blueItalia-850"
           defaultColor="black"
           defaultWeight="Semibold"
+          dynamicTypeRamp="headline"
           ellipsizeMode="tail"
           font="TitilliumSansPro"
           fontStyle={
@@ -56,6 +57,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
               "lineHeight": 25,
             }
           }
+          maxFontSizeMultiplier={1.25}
           numberOfLines={1}
           style={
             Array [
@@ -143,6 +145,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
         color="black"
         defaultColor="black"
         defaultWeight="Semibold"
+        dynamicTypeRamp="footnote"
         font="TitilliumSansPro"
         fontStyle={
           Object {
@@ -150,6 +153,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             "lineHeight": 21,
           }
         }
+        maxFontSizeMultiplier={1.25}
         style={
           Array [
             Object {
@@ -173,6 +177,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
         color="blueItalia-500"
         defaultColor="bluegreyDark"
         defaultWeight="Semibold"
+        dynamicTypeRamp="title2"
         font="TitilliumSansPro"
         fontStyle={
           Object {
@@ -180,6 +185,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             "lineHeight": 34,
           }
         }
+        maxFontSizeMultiplier={1.25}
         style={
           Array [
             Object {
@@ -204,6 +210,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
       color="blueItalia-850"
       defaultColor="black"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -211,6 +218,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         Array [
           Object {

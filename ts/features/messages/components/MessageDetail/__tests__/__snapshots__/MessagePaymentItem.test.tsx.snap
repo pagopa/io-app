@@ -330,108 +330,108 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                         <View
                           accessible={false}
                           style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#FFFFFF",
-                              "borderColor": "#E8EBF1",
-                              "borderCurve": "continuous",
-                              "borderRadius": 8,
-                              "borderWidth": 1,
-                              "flexDirection": "row",
-                              "justifyContent": "space-between",
-                              "paddingHorizontal": 16,
-                              "paddingVertical": 16,
-                            }
+                            Array [
+                              Object {
+                                "alignItems": "center",
+                                "borderColor": "#E8EBF1",
+                                "borderCurve": "continuous",
+                                "borderRadius": 8,
+                                "borderWidth": 1,
+                                "flexDirection": "row",
+                                "justifyContent": "space-between",
+                                "paddingHorizontal": 16,
+                                "paddingVertical": 16,
+                              },
+                              Object {
+                                "borderColor": "#E8EBF1",
+                                "opacity": 1,
+                              },
+                            ]
                           }
                         >
                           <View
                             style={
                               Object {
-                                "flex": 1,
+                                "alignItems": "center",
+                                "flexDirection": "row",
                               }
                             }
                           >
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "opacity": 0.5,
-                                }
-                              }
-                            >
+                            <View>
                               <View
-                                height={16}
-                                radius={8}
+                                collapsable={false}
                                 style={
                                   Object {
-                                    "backgroundColor": "#efefef",
-                                    "borderRadius": 8,
-                                    "height": 16,
-                                    "width": 179,
+                                    "opacity": 0.5,
                                   }
                                 }
-                                width={179}
-                              />
-                            </View>
-                            <View
-                              style={
-                                Object {
-                                  "height": 4,
-                                }
-                              }
-                            />
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "opacity": 0.5,
-                                }
-                              }
-                            >
+                              >
+                                <View
+                                  height={13}
+                                  radius={8}
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 8,
+                                      "height": 13,
+                                      "width": 121,
+                                    }
+                                  }
+                                  width={121}
+                                />
+                              </View>
                               <View
-                                height={13}
-                                radius={8}
                                 style={
                                   Object {
-                                    "backgroundColor": "#efefef",
-                                    "borderRadius": 8,
-                                    "height": 13,
-                                    "width": 121,
+                                    "height": 8,
                                   }
                                 }
-                                width={121}
                               />
+                              <View
+                                collapsable={false}
+                                style={
+                                  Object {
+                                    "opacity": 0.5,
+                                  }
+                                }
+                              >
+                                <View
+                                  height={16}
+                                  radius={8}
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#efefef",
+                                      "borderRadius": 8,
+                                      "height": 16,
+                                      "width": 179,
+                                    }
+                                  }
+                                  width={179}
+                                />
+                              </View>
                             </View>
                           </View>
                           <View
+                            collapsable={false}
                             style={
                               Object {
-                                "marginLeft": 12,
+                                "opacity": 0.5,
                               }
                             }
                           >
                             <View
-                              collapsable={false}
+                              height={24}
+                              radius={16}
                               style={
                                 Object {
-                                  "opacity": 0.5,
+                                  "backgroundColor": "#efefef",
+                                  "borderRadius": 16,
+                                  "height": 24,
+                                  "width": 62,
                                 }
                               }
-                            >
-                              <View
-                                height={16}
-                                radius={8}
-                                style={
-                                  Object {
-                                    "backgroundColor": "#efefef",
-                                    "borderRadius": 8,
-                                    "height": 16,
-                                    "width": 62,
-                                  }
-                                }
-                                width={62}
-                              />
-                            </View>
+                              width={62}
+                            />
                           </View>
                         </View>
                       </View>
@@ -796,7 +796,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -805,6 +804,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -828,9 +830,10 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -838,6 +841,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -846,7 +850,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -859,25 +863,27 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -905,6 +911,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -912,6 +919,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -1356,7 +1364,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -1365,6 +1372,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -1388,9 +1398,10 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -1398,6 +1409,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -1406,7 +1418,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1419,25 +1431,27 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1478,7 +1492,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [

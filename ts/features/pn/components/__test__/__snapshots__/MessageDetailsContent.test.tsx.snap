@@ -14,6 +14,7 @@ Array [
     color="grey-850"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       Object {
@@ -21,6 +22,7 @@ Array [
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       Array [
         Object {

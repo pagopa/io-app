@@ -84,6 +84,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Semibold"
+      dynamicTypeRamp="title2"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -91,6 +92,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
           "lineHeight": 34,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         Array [
           Object {
@@ -114,6 +116,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       color="grey-700"
       defaultColor="blue"
       defaultWeight="Bold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontSize="regular"
       fontStyle={
@@ -122,6 +125,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
           "lineHeight": 21,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         Array [
           Object {

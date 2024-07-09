@@ -518,65 +518,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -601,6 +542,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -608,6 +550,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -635,6 +578,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -643,6 +587,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -677,6 +622,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -684,6 +630,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -709,6 +656,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -717,6 +665,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -740,6 +689,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -747,6 +697,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -770,6 +721,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -778,6 +730,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -1549,65 +1502,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -1632,6 +1526,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1639,6 +1534,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -1666,6 +1562,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -1674,6 +1571,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -1708,6 +1606,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -1715,6 +1614,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -1740,6 +1640,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -1748,6 +1649,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -1771,6 +1673,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -1778,6 +1681,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -1801,6 +1705,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -1809,6 +1714,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -2756,65 +2662,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -2839,6 +2686,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2846,6 +2694,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -2873,6 +2722,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -2881,6 +2731,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -2915,6 +2766,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2922,6 +2774,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -2947,6 +2800,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -2955,6 +2809,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -2978,6 +2833,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -2985,6 +2841,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -3008,6 +2865,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -3016,6 +2874,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -3818,65 +3677,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -3901,6 +3701,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -3908,6 +3709,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -3935,6 +3737,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -3943,6 +3746,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -3977,6 +3781,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -3984,6 +3789,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -4009,6 +3815,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -4017,6 +3824,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -4040,6 +3848,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -4047,6 +3856,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -4070,6 +3880,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -4078,6 +3889,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -4935,65 +4747,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -5018,6 +4771,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -5025,6 +4779,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -5052,6 +4807,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -5060,6 +4816,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -5094,6 +4851,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -5101,6 +4859,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -5126,6 +4885,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -5134,6 +4894,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -5157,6 +4918,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -5164,6 +4926,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -5187,6 +4950,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -5195,6 +4959,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -5872,65 +5637,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -5955,6 +5661,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -5962,6 +5669,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -5989,6 +5697,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -5997,6 +5706,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -6031,6 +5741,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -6038,6 +5749,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -6063,6 +5775,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -6071,6 +5784,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -6094,6 +5808,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -6101,6 +5816,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -6124,6 +5840,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -6132,6 +5849,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -6743,65 +6461,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -6826,6 +6485,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -6833,6 +6493,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -6860,6 +6521,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -6868,6 +6530,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -6902,6 +6565,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -6909,6 +6573,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -6934,6 +6599,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -6942,6 +6608,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -6965,6 +6632,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -6972,6 +6640,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -6995,6 +6664,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -7003,6 +6673,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -7559,65 +7230,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           ]
                                         }
                                       />
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="100%"
-                                        bbWidth="100%"
-                                        focusable={false}
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": "100%",
-                                              "width": "100%",
-                                            },
-                                          ]
-                                        }
-                                        vbHeight={24}
-                                        vbWidth={24}
-                                      >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
-                                          <RNSVGPath
-                                            d="m7 12 4 4 7-7"
-                                            fill={null}
-                                            onLayout={[Function]}
-                                            propList={
-                                              Array [
-                                                "fill",
-                                                "stroke",
-                                                "strokeWidth",
-                                                "strokeDasharray",
-                                                "strokeLinecap",
-                                                "strokeLinejoin",
-                                              ]
-                                            }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
-                                            strokeDasharray={null}
-                                            strokeLinecap={1}
-                                            strokeLinejoin={1}
-                                            strokeWidth={1.5}
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>
@@ -7642,6 +7254,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="black"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -7649,6 +7262,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       Array [
@@ -7676,6 +7290,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="grey-700"
                                     defaultColor="blue"
                                     defaultWeight="Bold"
+                                    dynamicTypeRamp="footnote"
                                     font="TitilliumSansPro"
                                     fontSize="regular"
                                     fontStyle={
@@ -7684,6 +7299,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 21,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     style={
                                       Array [
                                         Object {
@@ -7718,6 +7334,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     color="bluegrey"
                                     defaultColor="bluegrey"
                                     defaultWeight="Regular"
+                                    dynamicTypeRamp="body"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -7725,6 +7342,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         "lineHeight": 24,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       Array [
@@ -7750,6 +7368,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -7758,6 +7377,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -7781,6 +7401,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="black"
                                       defaultWeight="Regular"
+                                      dynamicTypeRamp="caption1"
                                       font="TitilliumSansPro"
                                       fontStyle={
                                         Object {
@@ -7788,6 +7409,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "textTransform": "uppercase",
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {
@@ -7811,6 +7433,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                       color="grey-700"
                                       defaultColor="blue"
                                       defaultWeight="Bold"
+                                      dynamicTypeRamp="footnote"
                                       font="TitilliumSansPro"
                                       fontSize="regular"
                                       fontStyle={
@@ -7819,6 +7442,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 21,
                                         }
                                       }
+                                      maxFontSizeMultiplier={1.25}
                                       style={
                                         Array [
                                           Object {

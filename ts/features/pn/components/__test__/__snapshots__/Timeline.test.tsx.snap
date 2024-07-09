@@ -345,6 +345,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -352,6 +353,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -375,6 +377,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -382,6 +385,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -466,6 +470,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -473,6 +478,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -503,6 +509,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -510,6 +517,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -556,6 +564,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -563,6 +572,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -586,6 +596,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -593,6 +604,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -675,6 +687,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -682,6 +695,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -712,6 +726,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -719,6 +734,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -765,6 +781,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -772,6 +789,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -795,6 +813,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -802,6 +821,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -884,6 +904,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -891,6 +912,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -921,6 +943,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -928,6 +951,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -974,6 +998,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -981,6 +1006,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1004,6 +1030,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1011,6 +1038,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1093,6 +1121,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1100,6 +1129,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1130,6 +1160,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1137,6 +1168,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1183,6 +1215,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1190,6 +1223,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1213,6 +1247,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1220,6 +1255,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1302,6 +1338,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1309,6 +1346,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1339,6 +1377,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1346,6 +1385,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1392,6 +1432,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1399,6 +1440,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1422,6 +1464,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1429,6 +1472,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1511,6 +1555,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1518,6 +1563,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1548,6 +1594,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1555,6 +1602,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1601,6 +1649,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1608,6 +1657,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1631,6 +1681,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1638,6 +1689,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1720,6 +1772,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1727,6 +1780,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1757,6 +1811,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1764,6 +1819,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1810,6 +1866,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1817,6 +1874,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1840,6 +1898,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1847,6 +1906,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1929,6 +1989,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1936,6 +1997,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1966,6 +2028,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1973,6 +2036,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2019,6 +2083,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2026,6 +2091,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2049,6 +2115,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2056,6 +2123,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2138,6 +2206,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2145,6 +2214,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2175,6 +2245,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2182,6 +2253,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2228,6 +2300,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2235,6 +2308,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2258,6 +2332,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2265,6 +2340,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2347,6 +2423,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2354,6 +2431,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2384,6 +2462,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2391,6 +2470,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2437,6 +2517,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2444,6 +2525,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2467,6 +2549,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2474,6 +2557,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2556,6 +2640,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2563,6 +2648,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2593,6 +2679,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2600,6 +2687,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2646,6 +2734,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2653,6 +2742,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2676,6 +2766,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2683,6 +2774,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2767,6 +2859,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-700"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="headline"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2774,6 +2867,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "lineHeight": 25,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -2804,6 +2898,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             color="grey-450"
                             defaultColor="black"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="caption1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -2811,6 +2906,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 "textTransform": "uppercase",
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {

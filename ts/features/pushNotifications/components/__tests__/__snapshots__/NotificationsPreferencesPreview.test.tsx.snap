@@ -502,6 +502,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="headline"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -509,6 +510,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "lineHeight": 25,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -532,6 +534,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -539,6 +542,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1075,6 +1079,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="headline"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1082,6 +1087,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "lineHeight": 25,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1105,6 +1111,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1112,6 +1119,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1648,6 +1656,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="headline"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1655,6 +1664,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "lineHeight": 25,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1678,6 +1688,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -1685,6 +1696,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -2221,6 +2233,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="headline"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2228,6 +2241,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "lineHeight": 25,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -2251,6 +2265,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               color="black"
                               defaultColor="black"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2258,6 +2273,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {

@@ -235,6 +235,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
           color="bluegreyDark"
           defaultColor="bluegreyDark"
           defaultWeight="Semibold"
+          dynamicTypeRamp="title2"
           font="TitilliumSansPro"
           fontStyle={
             Object {
@@ -242,6 +243,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
               "lineHeight": 34,
             }
           }
+          maxFontSizeMultiplier={1.25}
           style={
             Array [
               Object {

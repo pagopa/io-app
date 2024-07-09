@@ -766,6 +766,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -773,6 +774,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -826,7 +828,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -835,6 +836,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -858,9 +862,10 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -868,6 +873,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -876,7 +882,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -889,25 +895,27 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -948,7 +956,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -1067,7 +1077,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -1076,6 +1085,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -1099,9 +1111,10 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -1109,6 +1122,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -1117,7 +1131,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1130,25 +1144,27 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1189,7 +1205,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -1308,7 +1326,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -1317,6 +1334,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -1340,9 +1360,10 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -1350,6 +1371,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -1358,7 +1380,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1371,25 +1393,27 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1430,7 +1454,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -1549,7 +1575,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -1558,6 +1583,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -1581,9 +1609,10 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -1591,6 +1620,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -1599,7 +1629,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1612,25 +1642,27 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1671,7 +1703,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -1790,7 +1824,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -1799,6 +1832,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -1822,9 +1858,10 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -1832,6 +1869,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -1840,7 +1878,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1853,25 +1891,27 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1912,7 +1952,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -2031,7 +2073,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -2040,6 +2081,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -2063,9 +2107,10 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -2073,6 +2118,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -2081,7 +2127,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -2094,25 +2140,27 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2153,7 +2201,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -2272,7 +2322,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -2281,6 +2330,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -2304,9 +2356,10 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -2314,6 +2367,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -2322,7 +2376,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -2335,25 +2389,27 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2394,7 +2450,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -2931,6 +2989,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -2938,6 +2997,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -2991,7 +3051,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -3000,6 +3059,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -3023,9 +3085,10 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -3033,6 +3096,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -3041,7 +3105,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3054,25 +3118,27 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3113,7 +3179,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -3232,7 +3300,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -3241,6 +3308,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -3264,9 +3334,10 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -3274,6 +3345,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -3282,7 +3354,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3295,25 +3367,27 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3354,7 +3428,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -3473,7 +3549,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -3482,6 +3557,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -3505,9 +3583,10 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -3515,6 +3594,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -3523,7 +3603,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3536,25 +3616,27 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3595,7 +3677,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -3714,7 +3798,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -3723,6 +3806,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -3746,9 +3832,10 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -3756,6 +3843,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -3764,7 +3852,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3777,25 +3865,27 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3836,7 +3926,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -3955,7 +4047,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -3964,6 +4055,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -3987,9 +4081,10 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -3997,6 +4092,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -4005,7 +4101,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -4018,25 +4114,27 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4077,7 +4175,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -4196,7 +4296,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -4205,6 +4304,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -4228,9 +4330,10 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -4238,6 +4341,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -4246,7 +4350,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -4259,25 +4363,27 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4318,7 +4424,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -4437,7 +4545,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -4446,6 +4553,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -4469,9 +4579,10 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -4479,6 +4590,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -4487,7 +4599,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -4500,25 +4612,27 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4559,7 +4673,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -5427,6 +5543,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -5434,6 +5551,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -5479,7 +5597,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -5488,6 +5605,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -5511,9 +5631,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -5521,6 +5642,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -5529,7 +5651,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -5542,25 +5664,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5588,6 +5712,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -5595,6 +5720,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -5707,7 +5833,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -5716,6 +5841,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -5739,9 +5867,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -5749,6 +5878,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -5757,7 +5887,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -5770,25 +5900,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5829,7 +5961,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -5947,7 +6081,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -5956,6 +6089,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -5979,9 +6115,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -5989,6 +6126,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -5997,7 +6135,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -6010,25 +6148,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -6069,7 +6209,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -6187,7 +6329,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -6196,6 +6337,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -6219,9 +6363,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -6229,6 +6374,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -6237,7 +6383,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -6250,25 +6396,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -6309,7 +6457,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -6427,7 +6577,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -6436,6 +6585,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -6459,9 +6611,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -6469,6 +6622,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -6477,7 +6631,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -6490,25 +6644,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -6549,7 +6705,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -7086,6 +7244,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -7093,6 +7252,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -7138,7 +7298,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -7147,6 +7306,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -7170,9 +7332,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -7180,6 +7343,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -7188,7 +7352,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -7201,25 +7365,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7247,6 +7413,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -7254,6 +7421,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -7366,7 +7534,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -7375,6 +7542,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -7398,9 +7568,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -7408,6 +7579,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -7416,7 +7588,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -7429,25 +7601,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7488,7 +7662,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -7606,7 +7782,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -7615,6 +7790,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -7638,9 +7816,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -7648,6 +7827,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -7656,7 +7836,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -7669,25 +7849,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7728,7 +7910,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -7846,7 +8030,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -7855,6 +8038,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -7878,9 +8064,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -7888,6 +8075,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -7896,7 +8084,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -7909,25 +8097,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7968,7 +8158,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -8086,7 +8278,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -8095,6 +8286,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -8118,9 +8312,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -8128,6 +8323,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -8136,7 +8332,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -8149,25 +8345,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -8208,7 +8406,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -8745,6 +8945,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -8752,6 +8953,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -8797,7 +8999,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -8806,6 +9007,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -8829,9 +9033,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -8839,6 +9044,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -8847,7 +9053,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -8860,25 +9066,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -8906,6 +9114,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -8913,6 +9122,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -9025,7 +9235,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -9034,6 +9243,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -9057,9 +9269,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -9067,6 +9280,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -9075,7 +9289,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -9088,25 +9302,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -9147,7 +9363,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -9265,7 +9483,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -9274,6 +9491,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -9297,9 +9517,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -9307,6 +9528,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -9315,7 +9537,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -9328,25 +9550,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -9387,7 +9611,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -9505,7 +9731,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -9514,6 +9739,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -9537,9 +9765,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -9547,6 +9776,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -9555,7 +9785,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -9568,25 +9798,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -9627,7 +9859,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -9745,7 +9979,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -9754,6 +9987,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -9777,9 +10013,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -9787,6 +10024,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -9795,7 +10033,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -9808,25 +10046,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -9867,7 +10107,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -10512,6 +10754,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -10519,6 +10762,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -10564,7 +10808,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -10573,6 +10816,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -10596,9 +10842,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -10606,6 +10853,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -10614,7 +10862,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -10627,25 +10875,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -10673,6 +10923,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -10680,6 +10931,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -10792,7 +11044,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -10801,6 +11052,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -10824,9 +11078,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -10834,6 +11089,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -10842,7 +11098,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -10855,25 +11111,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -10914,7 +11172,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -11032,7 +11292,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -11041,6 +11300,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -11064,9 +11326,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -11074,6 +11337,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -11082,7 +11346,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -11095,25 +11359,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -11154,7 +11420,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -11272,7 +11540,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -11281,6 +11548,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -11304,9 +11574,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -11314,6 +11585,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -11322,7 +11594,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -11335,25 +11607,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -11394,7 +11668,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -11512,7 +11788,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -11521,6 +11796,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -11544,9 +11822,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -11554,6 +11833,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -11562,7 +11842,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -11575,25 +11855,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -11634,7 +11916,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
                                   ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -12279,6 +12563,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -12286,6 +12571,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -12331,7 +12617,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -12340,6 +12625,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -12363,9 +12651,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -12373,6 +12662,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -12381,7 +12671,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -12394,25 +12684,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -12440,6 +12732,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -12447,6 +12740,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -12978,6 +13272,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -12985,6 +13280,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -13030,7 +13326,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               Array [
                                 Object {
                                   "alignItems": "center",
-                                  "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
@@ -13039,6 +13334,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   "justifyContent": "space-between",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
+                                },
+                                Object {
+                                  "borderColor": "#E8EBF1",
                                 },
                                 false,
                                 Object {
@@ -13062,9 +13360,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
+                                color="grey-700"
                                 defaultColor="blue"
                                 defaultWeight="Bold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -13072,6 +13371,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [
@@ -13080,7 +13380,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -13093,25 +13393,27 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               </Text>
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
+                                color="blueIO-500"
+                                defaultColor="black"
+                                defaultWeight="Semibold"
+                                dynamicTypeRamp="footnote"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "lineHeight": 21,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   Array [
                                     Object {
-                                      "fontSize": 14,
+                                      "fontSize": 16,
                                       "lineHeight": 21,
                                     },
                                     Object {
-                                      "color": "#475A6D",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -13139,6 +13441,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 color="blue"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -13146,6 +13449,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   Array [

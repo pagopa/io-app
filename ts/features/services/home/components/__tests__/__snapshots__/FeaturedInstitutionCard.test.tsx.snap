@@ -458,6 +458,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   color="hanPurple-850"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -466,6 +467,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                     }
                                   }
                                   lineBreakMode="head"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     Array [
@@ -964,6 +966,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   color="hanPurple-850"
                                   defaultColor="black"
                                   defaultWeight="Semibold"
+                                  dynamicTypeRamp="headline"
                                   font="TitilliumSansPro"
                                   fontStyle={
                                     Object {
@@ -972,6 +975,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                     }
                                   }
                                   lineBreakMode="head"
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     Array [

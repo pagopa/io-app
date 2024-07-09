@@ -22,6 +22,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Semibold"
+      dynamicTypeRamp="title2"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -29,6 +30,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
           "lineHeight": 34,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         Array [
           Object {
@@ -52,6 +54,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       color="bluegrey"
       defaultColor="bluegrey"
       defaultWeight="Regular"
+      dynamicTypeRamp="body"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -59,6 +62,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
           "lineHeight": 24,
         }
       }
+      maxFontSizeMultiplier={1.25}
       style={
         Array [
           Object {

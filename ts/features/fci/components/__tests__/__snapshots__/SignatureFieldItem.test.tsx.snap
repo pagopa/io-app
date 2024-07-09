@@ -91,6 +91,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               color="black"
               defaultColor="black"
               defaultWeight="Semibold"
+              dynamicTypeRamp="headline"
               font="TitilliumSansPro"
               fontStyle={
                 Object {
@@ -98,6 +99,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   "lineHeight": 25,
                 }
               }
+              maxFontSizeMultiplier={1.25}
               style={
                 Array [
                   Object {
@@ -223,6 +225,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       color="blue"
       defaultColor="blue"
       defaultWeight="Semibold"
+      dynamicTypeRamp="footnote"
       font="TitilliumSansPro"
       fontStyle={
         Object {
@@ -231,6 +234,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           "textDecorationLine": "underline",
         }
       }
+      maxFontSizeMultiplier={1.25}
       onPress={[MockFunction]}
       style={
         Array [

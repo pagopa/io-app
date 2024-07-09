@@ -434,11 +434,11 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                             style={
                               Array [
                                 Object {
-                                  "marginTop": -5,
+                                  "marginTop": -10,
                                 },
                                 Object {
                                   "flex": 1,
-                                  "marginBottom": -4,
+                                  "marginBottom": -6,
                                 },
                               ]
                             }
@@ -449,6 +449,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               color="warning-850"
                               defaultColor="black"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -456,6 +457,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {

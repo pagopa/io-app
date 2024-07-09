@@ -201,6 +201,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     color="bluegreyDark"
     defaultColor="bluegreyDark"
     defaultWeight="Semibold"
+    dynamicTypeRamp="title2"
     font="TitilliumSansPro"
     fontStyle={
       Object {
@@ -208,6 +209,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
         "lineHeight": 34,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       Array [
         Object {
@@ -242,6 +244,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     color="bluegrey"
     defaultColor="bluegrey"
     defaultWeight="Regular"
+    dynamicTypeRamp="body"
     font="TitilliumSansPro"
     fontStyle={
       Object {
@@ -249,6 +252,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
         "lineHeight": 24,
       }
     }
+    maxFontSizeMultiplier={1.25}
     style={
       Array [
         Object {

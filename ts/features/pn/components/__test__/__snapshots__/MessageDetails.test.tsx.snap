@@ -559,6 +559,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="bluegreyDark"
                               defaultColor="bluegreyDark"
                               defaultWeight="Semibold"
+                              dynamicTypeRamp="title2"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -566,6 +567,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   "lineHeight": 34,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -597,6 +599,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="grey-700"
                               defaultColor="blue"
                               defaultWeight="Bold"
+                              dynamicTypeRamp="footnote"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -604,6 +607,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   "lineHeight": 21,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -649,6 +653,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               color="grey-850"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -656,6 +661,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -1128,6 +1134,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1135,6 +1142,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 Array [
@@ -1287,6 +1295,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
+                                              dynamicTypeRamp="footnote"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1294,6 +1303,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 21,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               style={
                                                 Array [
                                                   Object {
@@ -1317,6 +1327,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1324,6 +1335,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 Array [
@@ -1453,6 +1465,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1460,6 +1473,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               role="heading"
                                               style={
                                                 Array [
@@ -1612,6 +1626,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="grey-700"
                                               defaultColor="blue"
                                               defaultWeight="Bold"
+                                              dynamicTypeRamp="footnote"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1619,6 +1634,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 21,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               style={
                                                 Array [
                                                   Object {
@@ -1642,6 +1658,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               color="blue"
                                               defaultColor="black"
                                               defaultWeight="Semibold"
+                                              dynamicTypeRamp="headline"
                                               font="TitilliumSansPro"
                                               fontStyle={
                                                 Object {
@@ -1649,6 +1666,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   "lineHeight": 25,
                                                 }
                                               }
+                                              maxFontSizeMultiplier={1.25}
                                               numberOfLines={2}
                                               style={
                                                 Array [

@@ -422,6 +422,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -429,6 +430,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -887,6 +889,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -894,6 +897,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -2014,6 +2018,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -2021,6 +2026,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [
@@ -2479,6 +2485,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                 color="grey-700"
                                 defaultColor="black"
                                 defaultWeight="Semibold"
+                                dynamicTypeRamp="headline"
                                 font="TitilliumSansPro"
                                 fontStyle={
                                   Object {
@@ -2486,6 +2493,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                     "lineHeight": 25,
                                   }
                                 }
+                                maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   Array [

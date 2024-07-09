@@ -544,6 +544,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         color="grey-700"
                                         defaultColor="bluegrey"
                                         defaultWeight="Regular"
+                                        dynamicTypeRamp="body"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -551,6 +552,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                             "lineHeight": 24,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -670,6 +672,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         color="grey-700"
                                         defaultColor="bluegrey"
                                         defaultWeight="Regular"
+                                        dynamicTypeRamp="body"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -677,6 +680,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                             "lineHeight": 24,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -709,6 +713,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         color="blue"
                                         defaultColor="blue"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontSize="regular"
                                         fontStyle={
@@ -718,6 +723,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                             "textDecorationLine": "underline",
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         onPress={[Function]}
                                         style={
                                           Array [
@@ -841,6 +847,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         color="grey-700"
                                         defaultColor="bluegrey"
                                         defaultWeight="Regular"
+                                        dynamicTypeRamp="body"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -848,6 +855,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                             "lineHeight": 24,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -880,6 +888,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         color="blue"
                                         defaultColor="blue"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontSize="regular"
                                         fontStyle={
@@ -889,6 +898,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                             "textDecorationLine": "underline",
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         onPress={[Function]}
                                         style={
                                           Array [
@@ -1009,6 +1019,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         color="grey-700"
                                         defaultColor="bluegrey"
                                         defaultWeight="Regular"
+                                        dynamicTypeRamp="body"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -1016,6 +1027,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                             "lineHeight": 24,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {

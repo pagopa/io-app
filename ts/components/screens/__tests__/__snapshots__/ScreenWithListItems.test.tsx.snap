@@ -345,6 +345,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="title1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -352,6 +353,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 "lineHeight": 40,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -382,6 +384,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -389,6 +392,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -452,6 +456,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     color="grey-700"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -459,6 +464,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     role="heading"
                                     style={
                                       Array [
@@ -522,6 +528,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -529,6 +536,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -552,6 +560,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         color="black"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -559,6 +568,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -630,6 +640,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -637,6 +648,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -660,6 +672,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                         color="black"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -667,6 +680,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -913,7 +927,7 @@ exports[`ScreenWithListItems Rendering renders correctly with default props 1`] 
                                     }
                                   }
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -1298,6 +1312,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="title1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1305,6 +1320,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                 "lineHeight": 40,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1543,7 +1559,7 @@ exports[`ScreenWithListItems Rendering renders correctly without optional props 
                                     }
                                   }
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
@@ -1928,6 +1944,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             color="black"
                             defaultColor="black"
                             defaultWeight="Semibold"
+                            dynamicTypeRamp="title1"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1935,6 +1952,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 "lineHeight": 40,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1965,6 +1983,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                             color="bluegrey"
                             defaultColor="bluegrey"
                             defaultWeight="Regular"
+                            dynamicTypeRamp="body"
                             font="TitilliumSansPro"
                             fontStyle={
                               Object {
@@ -1972,6 +1991,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                 "lineHeight": 24,
                               }
                             }
+                            maxFontSizeMultiplier={1.25}
                             style={
                               Array [
                                 Object {
@@ -1996,6 +2016,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2003,6 +2024,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -2029,6 +2051,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                               color="bluegrey"
                               defaultColor="bluegrey"
                               defaultWeight="Regular"
+                              dynamicTypeRamp="body"
                               font="TitilliumSansPro"
                               fontStyle={
                                 Object {
@@ -2036,6 +2059,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                   "lineHeight": 24,
                                 }
                               }
+                              maxFontSizeMultiplier={1.25}
                               style={
                                 Array [
                                   Object {
@@ -2103,6 +2127,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     color="grey-700"
                                     defaultColor="black"
                                     defaultWeight="Semibold"
+                                    dynamicTypeRamp="headline"
                                     font="TitilliumSansPro"
                                     fontStyle={
                                       Object {
@@ -2110,6 +2135,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         "lineHeight": 25,
                                       }
                                     }
+                                    maxFontSizeMultiplier={1.25}
                                     role="heading"
                                     style={
                                       Array [
@@ -2173,6 +2199,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2180,6 +2207,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -2203,6 +2231,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         color="black"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2210,6 +2239,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -2281,6 +2311,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         color="grey-700"
                                         defaultColor="blue"
                                         defaultWeight="Bold"
+                                        dynamicTypeRamp="footnote"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2288,6 +2319,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                             "lineHeight": 21,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         style={
                                           Array [
                                             Object {
@@ -2311,6 +2343,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                         color="black"
                                         defaultColor="black"
                                         defaultWeight="Semibold"
+                                        dynamicTypeRamp="headline"
                                         font="TitilliumSansPro"
                                         fontStyle={
                                           Object {
@@ -2318,6 +2351,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                             "lineHeight": 25,
                                           }
                                         }
+                                        maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           Array [
@@ -2564,7 +2598,7 @@ exports[`ScreenWithListItems Rendering renders subtitle as array correctly 1`] =
                                     }
                                   }
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
+                                  maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     Array [
