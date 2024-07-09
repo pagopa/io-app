@@ -39,11 +39,7 @@ import {
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
-  getUserMetadataDefaultDecoder,
-  GetUserMetadataT,
   GetUserProfileT,
-  getVisibleServicesDefaultDecoder,
-  GetVisibleServicesT,
   StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
   UpdateProfileT,
@@ -51,8 +47,6 @@ import {
   UpsertServicePreferencesT,
   upsertUserDataProcessingDefaultDecoder,
   UpsertUserDataProcessingT,
-  upsertUserMetadataDefaultDecoder,
-  UpsertUserMetadataT,
   upsertMessageStatusAttributesDefaultDecoder,
   UpsertMessageStatusAttributesT,
   getUserProfileDefaultDecoder,
@@ -181,14 +175,6 @@ export function BackendClient(
     response_decoder: upsertServicePreferencesDefaultDecoder()
   };
 
-  const getVisibleServicesT: GetVisibleServicesT = {
-    method: "get",
-    url: () => "/api/v1/services",
-    query: _ => ({}),
-    headers: tokenHeaderProducer,
-    response_decoder: getVisibleServicesDefaultDecoder()
-  };
-
   const getMessagesT: GetUserMessagesT = {
     method: "get",
     url: _ => "/api/v1/messages",
@@ -273,14 +259,6 @@ export function BackendClient(
     response_decoder: updateProfileDefaultDecoder()
   };
 
-  const getUserMetadataT: GetUserMetadataT = {
-    method: "get",
-    url: () => "/api/v1/user-metadata",
-    query: _ => ({}),
-    headers: tokenHeaderProducer,
-    response_decoder: getUserMetadataDefaultDecoder()
-  };
-
   const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
     method: "post",
     url: () => "/api/v1/email-validation-process",
@@ -288,15 +266,6 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     body: _ => JSON.stringify({}),
     response_decoder: startEmailValidationProcessDefaultDecoder()
-  };
-
-  const createOrUpdateUserMetadataT: UpsertUserMetadataT = {
-    method: "post",
-    url: () => "/api/v1/user-metadata",
-    query: _ => ({}),
-    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    body: p => JSON.stringify(p.body),
-    response_decoder: upsertUserMetadataDefaultDecoder()
   };
 
   const getUserDataProcessingT: GetUserDataProcessingT = {
@@ -385,9 +354,6 @@ export function BackendClient(
     upsertServicePreference: withBearerToken(
       createFetchRequestForApi(upsertServicePreferenceT, options)
     ),
-    getVisibleServices: withBearerToken(
-      createFetchRequestForApi(getVisibleServicesT, options)
-    ),
     getMessages: withBearerToken(
       createFetchRequestForApi(getMessagesT, options)
     ),
@@ -412,12 +378,6 @@ export function BackendClient(
     getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)
-    ),
-    getUserMetadata: withBearerToken(
-      createFetchRequestForApi(getUserMetadataT, options)
-    ),
-    createOrUpdateUserMetadata: withBearerToken(
-      createFetchRequestForApi(createOrUpdateUserMetadataT, options)
     ),
     createOrUpdateInstallation: withBearerToken(
       createFetchRequestForApi(createOrUpdateInstallationT, options)

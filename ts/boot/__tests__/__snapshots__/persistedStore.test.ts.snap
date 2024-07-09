@@ -43,68 +43,12 @@ Object {
   "calendarEvents": Object {
     "byMessageId": Object {},
   },
-  "messages": Object {
-    "allPaginated": Object {
-      "archive": Object {
-        "data": Object {
-          "kind": "PotNone",
-        },
-        "lastRequest": Object {
-          "_tag": "None",
-        },
-      },
-      "inbox": Object {
-        "data": Object {
-          "kind": "PotNone",
-        },
-        "lastRequest": Object {
-          "_tag": "None",
-        },
-      },
-      "migration": Object {
-        "_tag": "None",
-      },
-      "shownCategory": "INBOX",
-    },
-    "detailsById": Object {},
-    "downloads": Object {},
-    "messageGetStatus": Object {
-      "status": "idle",
-    },
-    "messagePrecondition": Object {
-      "content": Object {
-        "kind": "undefined",
-      },
-      "messageId": Object {
-        "_tag": "None",
-      },
-    },
-    "paginatedById": Object {},
-    "payments": Object {
-      "userSelectedPayments": Set {},
-    },
-    "thirdPartyById": Object {},
-  },
   "messagesStatus": Object {},
   "organizations": Object {
     "all": Array [],
     "nameByFiscalCode": Object {},
   },
   "paymentByRptId": Object {},
-  "services": Object {
-    "byId": Object {},
-    "byOrgFiscalCode": Object {},
-    "firstLoading": Object {
-      "isFirstServicesLoadingCompleted": false,
-    },
-    "readState": Object {},
-    "servicePreference": Object {
-      "kind": "PotNone",
-    },
-    "visible": Object {
-      "kind": "PotNone",
-    },
-  },
 }
 `;
 
@@ -176,12 +120,6 @@ Object {
 `;
 
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'profile' state 1`] = `
-Object {
-  "kind": "PotNone",
-}
-`;
-
-exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'userMetadata' state 1`] = `
 Object {
   "kind": "PotNone",
 }

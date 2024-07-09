@@ -1,4 +1,9 @@
 import React, { useCallback, useMemo } from "react";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { UIMessage } from "../../types";
 import I18n from "../../../../i18n";
 import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
@@ -7,26 +12,45 @@ import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { logoForService } from "../../../services/home/utils";
-import { useIOSelector } from "../../../../store/hooks";
+import {
+  scheduledPreconditionStatusAction,
+  toScheduledPayload
+} from "../../store/actions/preconditions";
 import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
+import { toggleScheduledMessageArchivingAction } from "../../store/actions/archiving";
+import { MessageListCategory } from "../../types/messageListCategory";
+import {
+  isMessageScheduledForArchivingSelector,
+  isArchivingInSchedulingModeSelector,
+  isArchivingDisabledSelector,
+  isArchivingInProcessingModeSelector
+} from "../../store/reducers/archiving";
 import { accessibilityLabelForMessageItem } from "./homeUtils";
 import { MessageListItem } from "./DS/MessageListItem";
 
 type WrappedMessageListItemProps = {
   index: number;
+  listCategory: MessageListCategory;
   message: UIMessage;
 };
 
 export const WrappedMessageListItem = ({
   index,
+  listCategory,
   message
 }: WrappedMessageListItemProps) => {
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const store = useIOStore();
+
   const serviceId = message.serviceId;
   const organizationFiscalCode = message.organizationFiscalCode;
 
   const isPaymentMessageWithPaidNotice = useIOSelector(state =>
     isPaymentMessageWithPaidNoticeSelector(state, message.category)
+  );
+  const isSelected = useIOSelector(state =>
+    isMessageScheduledForArchivingSelector(state, message.id)
   );
 
   const messageCategoryTag = message.category.tag;
@@ -62,19 +86,46 @@ export const WrappedMessageListItem = ({
     [message]
   );
 
-  const onPressCallback = useCallback(() => {
-    if (message.category.tag === SENDTagEnum.PN || message.hasPrecondition) {
-      // TODO preconditions IOCOM-840
-      return;
+  const toggleScheduledMessageArchivingCallback = useCallback(() => {
+    const state = store.getState();
+    if (!isArchivingInProcessingModeSelector(state)) {
+      dispatch(
+        toggleScheduledMessageArchivingAction({
+          messageId: message.id,
+          fromInboxToArchive: listCategory === "INBOX"
+        })
+      );
     }
-    navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-      screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
-      params: {
-        messageId: message.id,
-        fromNotification: false
+  }, [dispatch, listCategory, message, store]);
+
+  const onPressCallback = useCallback(() => {
+    const state = store.getState();
+    if (isArchivingInSchedulingModeSelector(state)) {
+      toggleScheduledMessageArchivingCallback();
+    } else if (isArchivingDisabledSelector(state)) {
+      if (message.hasPrecondition) {
+        dispatch(
+          scheduledPreconditionStatusAction(
+            toScheduledPayload(message.id, message.category.tag)
+          )
+        );
+      } else {
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+          params: {
+            messageId: message.id,
+            fromNotification: false
+          }
+        });
       }
-    });
-  }, [message, navigation]);
+    }
+  }, [
+    dispatch,
+    message,
+    navigation,
+    store,
+    toggleScheduledMessageArchivingCallback
+  ]);
 
   return (
     <MessageListItem
@@ -85,9 +136,10 @@ export const WrappedMessageListItem = ({
       formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}
-      onLongPress={() => undefined}
+      onLongPress={toggleScheduledMessageArchivingCallback}
       onPress={onPressCallback}
       organizationName={organizationName}
+      selected={isSelected}
       serviceLogos={serviceLogoUriSources}
       serviceName={serviceName}
       testID={`wrapped_message_list_item_${index}`}

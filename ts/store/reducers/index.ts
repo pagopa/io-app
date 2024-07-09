@@ -69,7 +69,6 @@ import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
-import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
 import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
 
@@ -155,7 +154,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
-  userMetadata: userMetadataReducer,
   entities: persistReducer<EntitiesState, Action>(
     entitiesPersistConfig,
     entitiesReducer
@@ -212,7 +210,6 @@ export function createRootReducer(
             crossSessions: state.crossSessions,
             // data should be kept across multiple sessions
             entities: {
-              services: state.entities.services,
               organizations: state.entities.organizations,
               messagesStatus: state.entities.messagesStatus,
               paymentByRptId: state.entities.paymentByRptId,

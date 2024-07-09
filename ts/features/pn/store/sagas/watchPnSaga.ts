@@ -16,7 +16,7 @@ import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
 } from "../../analytics";
-import { servicePreferenceSelector } from "../../../services/details/store/reducers/servicePreference";
+import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
@@ -62,7 +62,9 @@ function* handlePnActivation(
 }
 
 function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
-  const selectedServicePreferencePot = yield* select(servicePreferenceSelector);
+  const selectedServicePreferencePot = yield* select(
+    servicePreferencePotSelector
+  );
   const isServiceActive = pipe(
     selectedServicePreferencePot,
     pot.toOption,

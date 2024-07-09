@@ -11,7 +11,7 @@ import I18n from "../../../../i18n";
 import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers/servicesById";
+import { isLoadingServiceByIdSelector } from "../../../services/details/store/reducers";
 import {
   messagePagePotFromCategorySelector,
   shownMessageCategorySelector
@@ -22,6 +22,7 @@ import {
   isStrictNone,
   isStrictSomeError
 } from "../../../../utils/pot";
+import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
 
@@ -31,10 +32,18 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
   pipe(state, shownMessageCategorySelector, category =>
     pipe(
       state,
-      messagePagePotFromCategorySelector(category),
-      isStrictNone,
-      B.fold(constUndefined, () =>
-        initialReloadAllMessagesFromCategory(category)
+      isArchivingInProcessingModeSelector,
+      B.fold(
+        () =>
+          pipe(
+            state,
+            messagePagePotFromCategorySelector(category),
+            isStrictNone,
+            B.fold(constUndefined, () =>
+              initialReloadAllMessagesFromCategory(category)
+            )
+          ),
+        constUndefined
       )
     )
   );
@@ -82,6 +91,12 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   category: MessageListCategory,
   comparisonTimeInCaseOfError: Date
 ): ActionType<typeof loadNextPageMessages.request> | undefined => {
+  // No archiving/restoring running
+  const isProcessingArchiving = isArchivingInProcessingModeSelector(state);
+  if (isProcessingArchiving) {
+    return undefined;
+  }
+
   const allPaginated = state.entities.messages.allPaginated;
 
   // No running message loading
@@ -143,6 +158,12 @@ export const getReloadAllMessagesActionForRefreshIfAllowed = (
   category: MessageListCategory
 ): ActionType<typeof reloadAllMessages.request> | undefined => {
   const allPaginated = state.entities.messages.allPaginated;
+
+  // No archiving/restoring running
+  const isProcessingArchiving = isArchivingInProcessingModeSelector(state);
+  if (isProcessingArchiving) {
+    return undefined;
+  }
 
   // No running message loading
   const archiveMessagePagePot = allPaginated.archive.data;
