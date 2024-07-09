@@ -584,9 +584,6 @@ profile:
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
-userMetadata:
-  errors:
-    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
