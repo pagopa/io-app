@@ -159,7 +159,7 @@ export const getReloadAllMessagesActionForRefreshIfAllowed = (
     )
   );
 
-export const getLoadNextPreviousPageMessagesActionIfAllowed = (
+export const getLoadPreviousPageMessagesActionIfAllowed = (
   state: GlobalState
 ) =>
   pipe(state.entities.messages.allPaginated, allPaginated =>
@@ -177,7 +177,7 @@ export const getLoadNextPreviousPageMessagesActionIfAllowed = (
               shownMessageCollection.data,
               pot.toOption,
               O.chainNullableK(a => a.previous),
-              O.fold(constUndefined, previousPageCursor =>
+              O.fold(constUndefined, previousPageMessageId =>
                 pipe(
                   state,
                   isDoingAnAsyncOperationOnMessages,
@@ -185,7 +185,7 @@ export const getLoadNextPreviousPageMessagesActionIfAllowed = (
                     () =>
                       loadPreviousPageMessages.request({
                         pageSize: maximumItemsFromAPI,
-                        cursor: previousPageCursor,
+                        cursor: previousPageMessageId,
                         filter: {
                           getArchived: allPaginated.shownCategory === "ARCHIVE"
                         }

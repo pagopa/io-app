@@ -15,7 +15,7 @@ import SectionStatusComponent from "../../../../components/SectionStatus";
 import { MessageList } from "./MessageList";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
-  getLoadNextPreviousPageMessagesActionIfAllowed,
+  getLoadPreviousPageMessagesActionIfAllowed,
   getMessagesViewPagerInitialPageIndex,
   messageViewPageIndexToListCategory
 } from "./homeUtils";
@@ -48,7 +48,7 @@ export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
   const loadNewlyReceivedMessagesIfNeededCallback = useCallback(() => {
     const state = store.getState();
     const loadPreviousPageAction =
-      getLoadNextPreviousPageMessagesActionIfAllowed(state);
+      getLoadPreviousPageMessagesActionIfAllowed(state);
     if (loadPreviousPageAction) {
       dispatch(loadPreviousPageAction);
     }
