@@ -14,6 +14,7 @@ import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   isLoadingTrialStatusSelector,
+  isUpdatingTrialStatusSelector,
   trialStatusSelector
 } from "../../features/trialSystem/store/reducers";
 import { TrialId } from "../../../definitions/trial_systwem/TrialId";
@@ -41,7 +42,7 @@ const TrialSystemPlayground = () => {
   );
 
   const isTrialStatusUpdating = useIOSelector(
-    isLoadingTrialStatusSelector(TRIAL_ID)
+    isUpdatingTrialStatusSelector(TRIAL_ID)
   );
 
   useEffect(() => {
