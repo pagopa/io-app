@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
  * an item represents a bonus that the app can handle (relative feature flag enabled and handler set) and its
  * visibility is 'visible' or 'experimental'
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity
+
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();

@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Body } from "../../../../components/core/typography/Body";
