@@ -16,6 +16,7 @@ import {
   CameraPermissionStatus,
   Code,
   CodeType,
+  useCameraDevice,
   useCodeScanner
 } from "react-native-vision-camera";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
@@ -29,7 +30,6 @@ import {
 } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
-import { useWideAngleCameraDevice } from "./useWindeAngleCameraDevice";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -178,7 +178,9 @@ export const useIOBarcodeCameraScanner = ({
   );
 
   const prevDisabled = usePrevious(isDisabled);
-  const device = useWideAngleCameraDevice();
+  const device = useCameraDevice("back", {
+    physicalDevices: ["ultra-wide-angle-camera"]
+  });
 
   // Checks that the device has a torch
   const hasTorch = !!device?.hasTorch;
