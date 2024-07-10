@@ -376,12 +376,25 @@ profile:
           body: Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
           cta: Chiudi
       exportData:
-        cta: Richiedi copia dei tuoi dati
+        cta: Richiedi una copia dei dati
         title: Accedi ai tuoi dati
+        subtitle: Puoi scaricare i dati principali del tuo profilo IO in qualsiasi momento.
         description: Ricevi una copia dei dati associati al tuo profilo IO
-        info:
-          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "I dati sono:"
+            item1: il tuo codice fiscale;
+            item2: l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;
+            item3: il testo dei Messaggi che hai ricevuto;
+            item4: le tue preferenze di notifica.
+          paragraph1: Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
+          paragraph2: 
+            part1: "Riceverai un "
+            part2: "messaggio su IO "
+            part3: in cui sono presenti un link e una password validi per 15 giorni. 
+          paragraph3: 
+            part1: Per maggiori informazioni consulta l’
+            link: Informativa privacy di IO.
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
@@ -571,9 +584,6 @@ profile:
           content: "Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.\nQueste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando."
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
-userMetadata:
-  errors:
-    upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -2004,6 +2014,9 @@ messages:
     archive:
       success: "Archiviazione riuscita!"
       failure: "L’archiviazione non è andata a buon fine"
+    generic:
+      failure: "L'operazione non è andata a buon fine"
+      success: "Operazione riuscita!"
     restore:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
@@ -2624,7 +2637,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni e opportunità
+        deals: Opportunità
         description: Descrizione
         services: Servizi
         contactInfo: Contatti e informazioni
@@ -2636,7 +2649,7 @@ bonus:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’opportunità
         discountUrl: Vai all'opportunità
-        website: Vai al sito dell'esercente
+        website: Vai al sito del partner
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -3834,7 +3847,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: Non siamo riusciti a caricare la ricevuta
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende

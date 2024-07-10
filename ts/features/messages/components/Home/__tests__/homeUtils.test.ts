@@ -32,6 +32,7 @@ import {
   isStrictSome,
   isStrictSomeError
 } from "../../../../../utils/pot";
+import { INITIAL_STATE } from "../../../store/reducers/archiving";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -49,7 +50,8 @@ const createGlobalState = (
             data: inboxData
           },
           shownCategory
-        }
+        },
+        archiving: INITIAL_STATE
       }
     }
   } as GlobalState);
@@ -686,7 +688,8 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                               ? selectedCategoryLastRequestValue
                               : O.none
                         }
-                      }
+                      },
+                      archiving: INITIAL_STATE
                     }
                   }
                 } as GlobalState;
@@ -763,7 +766,8 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
                   inbox: {
                     data: inboxPot
                   }
-                }
+                },
+                archiving: INITIAL_STATE
               }
             }
           } as GlobalState;

@@ -32,7 +32,7 @@ type Props = Readonly<{
   title: string;
   payments: PaymentsHistoryState;
   navigateToPaymentHistoryDetail: (payment: PaymentHistory) => void;
-  ListEmptyComponent?: React.ReactNode;
+  ListEmptyComponent?: React.JSX.Element;
 }>;
 
 const styles = StyleSheet.create({

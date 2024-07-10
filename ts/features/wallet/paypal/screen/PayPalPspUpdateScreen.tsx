@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start"
-  },
-  pspListItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 0,
-    paddingRight: 0,
-    flex: 1
   }
+  // pspListItem: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   paddingLeft: 0,
+  //   paddingRight: 0,
+  //   flex: 1
+  // }
 });
 
 // an header over the psp list with 2 columns
@@ -103,7 +103,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
   return (
     <PressableListItemBase
       testID={`pspItemTestID_${psp.id}`}
-      style={styles.pspListItem}
+      // style={styles.pspListItem}
       accessibilityRole={"button"}
       onPress={props.onPress}
     >
