@@ -10,7 +10,7 @@ import {
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 import { searchMessagesEnabled } from "../../store/actions/search";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
@@ -20,6 +20,11 @@ import {
   isSettingsVisibleAndHideProfileSelector
 } from "../../store/reducers/backendStatus";
 import * as analytics from "../../features/services/common/analytics";
+import {
+  isArchivingInProcessingModeSelector,
+  isArchivingInSchedulingModeSelector
+} from "../../features/messages/store/reducers/archiving";
+import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -77,6 +82,7 @@ type Props = {
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const store = useIOStore();
 
   const isNewWalletSectionEnabled = useIOSelector(
     isNewPaymentSectionEnabledSelector
@@ -105,17 +111,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       onPress: navigateToSettingMainScreen
     }),
     [navigateToSettingMainScreen]
-  );
-
-  const searchMessageAction: ActionProp = useMemo(
-    () => ({
-      icon: "search",
-      accessibilityLabel: I18n.t("global.accessibility.search"),
-      onPress: () => {
-        dispatch(searchMessagesEnabled(true));
-      }
-    }),
-    [dispatch]
   );
 
   const requestParams = useMemo(
@@ -155,6 +150,35 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   );
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
+  const messageSearchCallback = useCallback(() => {
+    const state = store.getState();
+    // If the system is busy archiving or restoring messages, do not start a search
+    const isProcessingArchiveQueue = isArchivingInProcessingModeSelector(state);
+    if (isProcessingArchiveQueue) {
+      return;
+    }
+    // If the user was choosing which messages to archive/restore, disable it
+    // before starting the search, since the bottom tab bar is hidden and the
+    // search may trigger a navigation flow that leads back to another main
+    // screen tab details with no such tab bar shown
+    const isSchedulingArchiving = isArchivingInSchedulingModeSelector(state);
+    if (isSchedulingArchiving) {
+      // Auto-reset does not provide feedback to the user
+      dispatch(resetMessageArchivingAction(undefined));
+    }
+
+    dispatch(searchMessagesEnabled(true));
+  }, [dispatch, store]);
+
+  const searchMessageAction: ActionProp = useMemo(
+    () => ({
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: messageSearchCallback
+    }),
+    [messageSearchCallback]
+  );
+
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
@@ -245,13 +269,13 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   }, [
     currentRouteName,
     helpAction,
+    navigateToProfilePrefercesScreen,
     isNewWalletSectionEnabled,
     isSettingsVisibleAndHideProfile,
-    navigateToProfilePrefercesScreen,
-    navigation,
-    searchMessageAction,
     settingsAction,
-    walletAction
+    walletAction,
+    searchMessageAction,
+    navigation
   ]);
 
   return (

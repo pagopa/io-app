@@ -2016,6 +2016,9 @@ messages:
     archive:
       success: "Successfully archived!"
       failure: "Failed to archive"
+    generic:
+      failure: "Operation failed"
+      success: "Operazione successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"

@@ -103,7 +103,13 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
               />
             );
           } else {
-            return <WrappedMessageListItem index={index} message={item} />;
+            return (
+              <WrappedMessageListItem
+                index={index}
+                listCategory={category}
+                message={item}
+              />
+            );
           }
         }}
         ListFooterComponent={<Footer category={category} />}
