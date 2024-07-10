@@ -113,17 +113,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [navigateToSettingMainScreen]
   );
 
-  const searchMessageAction: ActionProp = useMemo(
-    () => ({
-      icon: "search",
-      accessibilityLabel: I18n.t("global.accessibility.search"),
-      onPress: () => {
-        dispatch(searchMessagesEnabled(true));
-      }
-    }),
-    [dispatch]
-  );
-
   const requestParams = useMemo(
     () =>
       pipe(
@@ -180,6 +169,15 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
     dispatch(searchMessagesEnabled(true));
   }, [dispatch, store]);
+
+  const searchMessageAction: ActionProp = useMemo(
+    () => ({
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: messageSearchCallback
+    }),
+    [messageSearchCallback]
+  );
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
@@ -260,32 +258,24 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             ? {
                 type: "threeActions",
                 secondAction: settingsAction,
-                thirdAction: {
-                  icon: "search",
-                  accessibilityLabel: I18n.t("global.accessibility.search"),
-                  onPress: messageSearchCallback
-                }
+                thirdAction: searchMessageAction
               }
             : {
                 type: "twoActions",
-                secondAction: {
-                  icon: "search",
-                  accessibilityLabel: I18n.t("global.accessibility.search"),
-                  onPress: messageSearchCallback
-                }
+                secondAction: searchMessageAction
               })
         };
     }
   }, [
     currentRouteName,
     helpAction,
+    navigateToProfilePrefercesScreen,
     isNewWalletSectionEnabled,
     isSettingsVisibleAndHideProfile,
-    navigateToProfilePrefercesScreen,
-    navigation,
     settingsAction,
     walletAction,
-    messageSearchCallback
+    searchMessageAction,
+    navigation
   ]);
 
   return (
