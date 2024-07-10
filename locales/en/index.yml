@@ -376,12 +376,25 @@ profile:
           body: "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE."
           cta: Close
       exportData:
-        cta: Request a copy of your data
+        cta: Ask for a copy of the data
         title: Access your data
+        subtitle: You can download your IO profile data at any time.
         description: Receive a copy of the data associated with your IO profile
-        info:
-          title: You can download your IO profile information at any time.
-          body: !include profile/profile_download_data.md
+        detail:
+          bulletList:
+            title: "Your data are:"
+            item1: your tax code;
+            item2: your email address and, if applicable, confirmation of its validation;
+            item3: the text of the Messages you received;
+            item4: your notification preferences.
+          paragraph1: The information will be downloaded in YAML format, a standard format for exchanging data between different applications.
+          paragraph2: 
+            part1: "You will get "
+            part2: "a message on IO "
+            part3: with a link and password that lasts 15 days. 
+          paragraph3: 
+            part1: For more information see the.
+            link:  IO Privacy Policy.
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
@@ -571,9 +584,6 @@ profile:
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
-userMetadata:
-  errors:
-    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
@@ -2004,6 +2014,9 @@ messages:
     archive:
       success: "Successfully archived!"
       failure: "Failed to archive"
+    generic:
+      failure: "Operation failed"
+      success: "Operazione successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
@@ -2624,7 +2637,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Deals and opportunities
+        deals: Opportunities
         description: Description
         services: Services
         contactInfo: Addresses
@@ -2633,10 +2646,10 @@ bonus:
         discountCode: Discount code
         conditions: Conditions
       cta:
-        label: Navigate to operator website
+        label: Go to partner's website
         landingPage: Get the benefit
         discountUrl: Go to the benefit
-        website: Go to the website
+        website: Go to partner's website
       categories:
         all: All the operators
         counting: and other {{count}}
@@ -3834,7 +3847,7 @@ bonusCard:
 transaction:
   details:
     error:
-      title: É stato riscontrato un errore
+      title: We couldn't retrieve the receipt
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende

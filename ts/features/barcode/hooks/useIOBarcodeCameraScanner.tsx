@@ -154,10 +154,7 @@ export const retrieveNextBarcode = (
     ),
     O.of,
     O.map(
-      barcodes =>
-        barcodes[BarcodeFormat.QR_CODE] ||
-        barcodes[BarcodeFormat.DATA_MATRIX] ||
-        null
+      b => b[BarcodeFormat.QR_CODE] || b[BarcodeFormat.DATA_MATRIX] || null
     ),
     O.chain(O.fromNullable)
   );
@@ -271,9 +268,9 @@ export const useIOBarcodeCameraScanner = ({
    * Handles the scanned barcodes and calls the callbacks for the results
    */
   const handleScannedBarcodes = React.useCallback(
-    (barcodes: Array<Barcode>) =>
+    (codes: Array<Barcode>) =>
       pipe(
-        retrieveNextBarcode(barcodes),
+        retrieveNextBarcode(codes),
         O.map(detectedBarcode => {
           // After a scan (even if not successful) the decoding is disabled for a while
           // to avoid multiple scans of the same barcode

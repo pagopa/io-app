@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
-import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
@@ -29,54 +28,54 @@ export const LegacyAttachmentPreviewScreen = ({
   // This ref is needed otherwise the auto back on the useEffect will fire multiple
   // times, since its dependencies change during the back navigation
   const autoBackOnErrorHandled = useRef(false);
-  const maybePnMessageAttachment = useIOSelector(state =>
+  const pnMessageAttachmentOrUndefined = useIOSelector(state =>
     pnMessageAttachmentSelector(state)(messageId)(attachmentId)
   );
 
   useEffect(() => {
     // This condition happens only if this screen is shown without having
     // first retrieved the third party message (so it should never happen)
-    if (!autoBackOnErrorHandled.current && O.isNone(maybePnMessageAttachment)) {
+    if (!autoBackOnErrorHandled.current && !pnMessageAttachmentOrUndefined) {
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
       navigation.goBack();
     }
-  }, [maybePnMessageAttachment, navigation]);
+  }, [pnMessageAttachmentOrUndefined, navigation]);
 
-  return O.isSome(maybePnMessageAttachment) ? (
+  return pnMessageAttachmentOrUndefined ? (
     <LegacyMessageAttachmentPreview
       messageId={messageId}
       enableDownloadAttachment={false}
-      attachment={maybePnMessageAttachment.value}
+      attachment={pnMessageAttachmentOrUndefined}
       onOpen={() =>
-        trackPNAttachmentOpen(maybePnMessageAttachment.value.category)
+        trackPNAttachmentOpen(pnMessageAttachmentOrUndefined.category)
       }
       onShare={() =>
         pipe(
           isIos,
           B.fold(
             () =>
-              trackPNAttachmentShare(maybePnMessageAttachment.value.category),
+              trackPNAttachmentShare(pnMessageAttachmentOrUndefined.category),
             () =>
               trackPNAttachmentSaveShare(
-                maybePnMessageAttachment.value.category
+                pnMessageAttachmentOrUndefined.category
               )
           )
         )
       }
       onDownload={() =>
-        trackPNAttachmentSave(maybePnMessageAttachment.value.category)
+        trackPNAttachmentSave(pnMessageAttachmentOrUndefined.category)
       }
       onLoadComplete={() =>
         trackPNAttachmentOpeningSuccess(
           "displayer",
-          maybePnMessageAttachment.value.category
+          pnMessageAttachmentOrUndefined.category
         )
       }
       onPDFError={() =>
         trackPNAttachmentOpeningSuccess(
           "error",
-          maybePnMessageAttachment.value.category
+          pnMessageAttachmentOrUndefined.category
         )
       }
     />

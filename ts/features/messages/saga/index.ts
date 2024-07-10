@@ -28,6 +28,7 @@ import {
   getLegacyMessagePrecondition,
   retrievingDataPreconditionStatusAction
 } from "../store/actions/preconditions";
+import { startProcessingMessageArchivingAction } from "../store/actions/archiving";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
@@ -39,7 +40,10 @@ import { handleLoadPreviousPageMessages } from "./handleLoadPreviousPageMessages
 import { handleReloadAllMessages } from "./handleReloadAllMessages";
 import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
-import { handleUpsertMessageStatusAttribues } from "./handleUpsertMessageStatusAttribues";
+import {
+  handleMessageArchivingRestoring,
+  raceUpsertMessageStatusAttributes
+} from "./handleUpsertMessageStatusAttributes";
 import { handleMigrateToPagination } from "./handleMigrateToPagination";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
@@ -99,10 +103,16 @@ export function* watchMessagesSaga(
     backendClient.getThirdPartyMessage
   );
 
+  // Be aware that this saga must use the takeEvery
+  // due to compatibility with the old messages home
   yield* takeEvery(
     upsertMessageStatusAttributes.request,
-    handleUpsertMessageStatusAttribues,
+    raceUpsertMessageStatusAttributes,
     backendClient.upsertMessageStatusAttributes
+  );
+  yield* takeLatest(
+    startProcessingMessageArchivingAction,
+    handleMessageArchivingRestoring
   );
 
   yield* fork(watchLoadMessageData);
