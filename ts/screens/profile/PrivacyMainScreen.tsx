@@ -281,6 +281,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         testID: "profile-delete"
       }
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, handleUserDataRequestAlert, isRequestProcessing, navigation]
   );
 

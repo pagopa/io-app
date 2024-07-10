@@ -112,7 +112,7 @@ describe("LegacyMessageAttachments", () => {
           {
             attachments: [mockPdfAttachment],
             messageId: messageId_1,
-            openPreview: mockOpenPreview()
+            openPreview: mockOpenPreview
           },
           {
             [messageId_1]: {

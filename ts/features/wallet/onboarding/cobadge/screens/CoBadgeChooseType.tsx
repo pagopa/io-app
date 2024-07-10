@@ -65,7 +65,6 @@ type IAddCardPath = Readonly<{
 const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
   <PressableListItemBase
     onPress={cardPathItem.item.onPress}
-    first={cardPathItem.index === 0}
     testID={`${cardPathItem.item.path}Item`}
   >
     <View style={styles.flexColumn}>
