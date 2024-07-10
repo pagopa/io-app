@@ -159,7 +159,7 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          selectedPsp: action.payload,
+          selectedPsp: action.payload.pspBusinessName,
           selectedPspFlag: getPspFlagType(
             action.payload,
             state.analyticsData?.pspList
@@ -209,12 +209,14 @@ const updatePaymentHistory = (
 
   if (newAttempt) {
     return {
+      analyticsData: state.analyticsData,
       ongoingPayment: updatedOngoingPaymentHistory,
       archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory)
     };
   }
 
   return {
+    analyticsData: state.analyticsData,
     ongoingPayment: updatedOngoingPaymentHistory,
     archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory]
   };
