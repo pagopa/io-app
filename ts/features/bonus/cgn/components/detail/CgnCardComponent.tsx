@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 import WebView from "react-native-webview";
-import { View, ImageBackground, StyleSheet } from "react-native";
+import { View, ImageBackground, StyleSheet, Platform } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   Avatar,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     height: 205,
-    top: 120
+    top: Platform.select({ ios: 120, android: 75 })
   },
   informationContainer: {
     width: widthPercentageToDP(90),
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
     height: 215,
     width: widthPercentageToDP(95),
-    maxWidth: 360,
+    maxWidth: Platform.select({ ios: 360, android: 377 }),
     zIndex: 1
   },
   alignCenter: {

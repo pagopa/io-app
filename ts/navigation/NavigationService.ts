@@ -20,7 +20,6 @@ export const setMainNavigatorReady = () => {
 };
 
 export const setNavigationReady = () => {
-  // eslint-disable-next-line functional/immutable-data
   isNavigationReady = true;
 };
 
