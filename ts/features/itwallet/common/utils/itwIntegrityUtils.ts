@@ -44,7 +44,7 @@ const getHardwareSignatureWithAuthData = (
     },
     android: async () => {
       const signature = await sign(clientData, hardwareKeyTag);
-      const clientDataHash = sha(clientData).update("sha256").digest("hex");
+      const clientDataHash = sha("sha256").update(clientData).digest("hex");
       const authenticatorData = await requestIntegrityToken(clientDataHash);
       return { signature, authenticatorData };
     },
