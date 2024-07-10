@@ -1,9 +1,9 @@
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
+  [ITW_ROUTES.ONBOARDING]: undefined;
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
-  [ITW_ROUTES.ONBOARDING]: undefined;
   // IDENTIFICATION
   [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: undefined;
   [ITW_ROUTES.IDENTIFICATION.NFC_INSTRUCTIONS]: undefined;
