@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { fireEvent, render } from "@testing-library/react-native";
 import React, { PropsWithChildren } from "react";
 import { Text } from "react-native";

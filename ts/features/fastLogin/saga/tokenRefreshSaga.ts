@@ -106,7 +106,6 @@ type RequestStateType = {
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function* doRefreshTokenSaga(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
@@ -120,7 +119,6 @@ function* doRefreshTokenSaga(
   }
   const nonceClient = createNonceClient(apiUrlPrefix);
 
-  // eslint-disable-next-line functional/no-let
   const requestState: RequestStateType = {
     counter: 0,
     status: "in-progress",
