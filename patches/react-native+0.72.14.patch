@@ -1,85 +1,34 @@
+diff --git a/node_modules/react-native/.DS_Store b/node_modules/react-native/.DS_Store
+new file mode 100644
+index 0000000..b1221b4
+Binary files /dev/null and b/node_modules/react-native/.DS_Store differ
 diff --git a/node_modules/react-native/Libraries/.DS_Store b/node_modules/react-native/Libraries/.DS_Store
 new file mode 100644
-index 0000000..e69de29
-diff --git a/node_modules/react-native/Libraries/Blob/FileReader.js b/node_modules/react-native/Libraries/Blob/FileReader.js
-index c0b7fea..e1b961d 100644
---- a/node_modules/react-native/Libraries/Blob/FileReader.js
-+++ b/node_modules/react-native/Libraries/Blob/FileReader.js
-@@ -9,6 +9,7 @@
-  */
- 
- const Blob = require('./Blob');
-+const { toByteArray } = require('base64-js');
- const EventTarget = require('event-target-shim');
- 
- import NativeFileReaderModule from './NativeFileReaderModule';
-@@ -43,8 +44,8 @@ class FileReader extends (EventTarget(...READER_EVENTS): any) {
-   DONE: number = DONE;
- 
-   _readyState: ReadyState;
--  _error: ?Error;
--  _result: ?ReaderResult;
-+  _error: ? Error;
-+  _result: ? ReaderResult;
-   _aborted: boolean = false;
- 
-   constructor() {
-@@ -60,21 +61,48 @@ class FileReader extends (EventTarget(...READER_EVENTS): any) {
- 
-   _setReadyState(newState: ReadyState) {
-     this._readyState = newState;
--    this.dispatchEvent({type: 'readystatechange'});
-+    this.dispatchEvent({ type: 'readystatechange' });
-     if (newState === DONE) {
-       if (this._aborted) {
--        this.dispatchEvent({type: 'abort'});
-+        this.dispatchEvent({ type: 'abort' });
-       } else if (this._error) {
--        this.dispatchEvent({type: 'error'});
-+        this.dispatchEvent({ type: 'error' });
-       } else {
--        this.dispatchEvent({type: 'load'});
-+        this.dispatchEvent({ type: 'load' });
-       }
--      this.dispatchEvent({type: 'loadend'});
-+      this.dispatchEvent({ type: 'loadend' });
-     }
-   }
- 
--  readAsArrayBuffer() {
--    throw new Error('FileReader.readAsArrayBuffer is not implemented');
-+  readAsArrayBuffer(blob: ?Blob) {
-+    this._aborted = false;
+index 0000000..a1f9425
+Binary files /dev/null and b/node_modules/react-native/Libraries/.DS_Store differ
+diff --git a/node_modules/react-native/Libraries/ReactNative/UIManager.d.ts b/node_modules/react-native/Libraries/ReactNative/UIManager.d.ts
+index 1f0b346..12603ec 100644
+--- a/node_modules/react-native/Libraries/ReactNative/UIManager.d.ts
++++ b/node_modules/react-native/Libraries/ReactNative/UIManager.d.ts
+@@ -151,6 +151,10 @@ export interface UIManagerStatic {
+     commandID: number | string,
+     commandArgs?: Array<any>,
+   ) => void;
 +
-+    if (blob == null) {
-+      throw new TypeError(
-+        "Failed to execute 'readAsArrayBuffer' on 'FileReader': parameter 1 is not of type 'Blob'",
-+      );
-+    }
-+
-+    NativeFileReaderModule.readAsDataURL(blob.data).then(
-+      (text: string) => {
-+        if (this._aborted) {
-+          return;
-+        }
-+
-+        const base64 = text.split(',')[1];
-+        const typedArray = toByteArray(base64);
-+
-+        this._result = typedArray.buffer;
-+        this._setReadyState(DONE);
-+      },
-+      error => {
-+        if (this._aborted) {
-+          return;
-+        }
-+        this._error = error;
-+        this._setReadyState(DONE);
-+      },
-+    )
-   }
++  //Added missing accesibility definition
++  sendAccessibilityEvent(reactTag: number | null, eventType: number): void;
++  AccessibilityEventTypes: { typeViewFocused : number; }
+ }
  
-   readAsDataURL(blob: ?Blob) {
+ export const UIManager: UIManagerStatic;
+diff --git a/node_modules/react-native/React/.DS_Store b/node_modules/react-native/React/.DS_Store
+new file mode 100644
+index 0000000..a7392ec
+Binary files /dev/null and b/node_modules/react-native/React/.DS_Store differ
+diff --git a/node_modules/react-native/React/AccessibilityResources/.DS_Store b/node_modules/react-native/React/AccessibilityResources/.DS_Store
+new file mode 100644
+index 0000000..e6a50bd
+Binary files /dev/null and b/node_modules/react-native/React/AccessibilityResources/.DS_Store differ
 diff --git a/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings b/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings
 new file mode 100644
 index 0000000..b0bc264
@@ -113,53 +62,12 @@ index 0000000..b0bc264
 +"collapsed"="compresso";
 +"mixed"="misto";
 \ No newline at end of file
-diff --git a/node_modules/react-native/index.js b/node_modules/react-native/index.js
-index d59ba34..d0554fd 100644
---- a/node_modules/react-native/index.js
-+++ b/node_modules/react-native/index.js
-@@ -435,32 +435,16 @@ module.exports = {
-   },
-   // Deprecated Prop Types
-   get ColorPropType(): $FlowFixMe {
--    invariant(
--      false,
--      'ColorPropType has been removed from React Native. Migrate to ' +
--        "ColorPropType exported from 'deprecated-react-native-prop-types'.",
--    );
-+    return require("deprecated-react-native-prop-types").ColorPropType;
-   },
-   get EdgeInsetsPropType(): $FlowFixMe {
--    invariant(
--      false,
--      'EdgeInsetsPropType has been removed from React Native. Migrate to ' +
--        "EdgeInsetsPropType exported from 'deprecated-react-native-prop-types'.",
--    );
-+    return require("deprecated-react-native-prop-types").EdgeInsetsPropType;
-   },
-   get PointPropType(): $FlowFixMe {
--    invariant(
--      false,
--      'PointPropType has been removed from React Native. Migrate to ' +
--        "PointPropType exported from 'deprecated-react-native-prop-types'.",
--    );
-+    return require("deprecated-react-native-prop-types").PointPropType;
-   },
-   get ViewPropTypes(): $FlowFixMe {
--    invariant(
--      false,
--      'ViewPropTypes has been removed from React Native. Migrate to ' +
--        "ViewPropTypes exported from 'deprecated-react-native-prop-types'.",
--    );
-+    return require("deprecated-react-native-prop-types").ViewPropTypes;
-   },
- };
- 
 diff --git a/node_modules/react-native/scripts/react-native-xcode.back.sh b/node_modules/react-native/scripts/react-native-xcode.back.sh
 new file mode 100755
-index 0000000..927ec76
+index 0000000..e6fc8d1
 --- /dev/null
 +++ b/node_modules/react-native/scripts/react-native-xcode.back.sh
-@@ -0,0 +1,182 @@
+@@ -0,0 +1,192 @@
 +#!/bin/bash
 +# Copyright (c) Meta Platforms, Inc. and affiliates.
 +#
@@ -175,7 +83,7 @@ index 0000000..927ec76
 +DEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH
 +
 +# Enables iOS devices to get the IP address of the machine running Metro
-+if [[ "$CONFIGURATION" = *Debug* && ! "$PLATFORM_NAME" == *simulator ]]; then
++if [[ ! "$SKIP_BUNDLING_METRO_IP" && "$CONFIGURATION" = *Debug* && ! "$PLATFORM_NAME" == *simulator ]]; then
 +  for num in 0 1 2 3 4 5 6 7 8; do
 +    IP=$(ipconfig getifaddr en${num})
 +    if [ ! -z "$IP" ]; then
@@ -220,9 +128,8 @@ index 0000000..927ec76
 +
 +# Path to react-native folder inside node_modules
 +REACT_NATIVE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-+# The project should be located next to where react-native is installed
-+# in node_modules.
-+PROJECT_ROOT=${PROJECT_ROOT:-"$REACT_NATIVE_DIR/../.."}
++# Most projects have their project root, one level up from their Xcode project dir (the "ios" directory)
++PROJECT_ROOT=${PROJECT_ROOT:-"$PROJECT_DIR/.."}
 +
 +cd "$PROJECT_ROOT" || exit
 +
@@ -240,13 +147,24 @@ index 0000000..927ec76
 +# shellcheck source=/dev/null
 +source "$REACT_NATIVE_DIR/scripts/node-binary.sh"
 +
++# If hermes-engine is in the Podfile.lock, it means that Hermes is a dependency of the project
++# and it is enabled. If not, it means that hermes is disabled.
++HERMES_ENABLED=$(grep hermes-engine $PODS_PODFILE_DIR_PATH/Podfile.lock)
++
++# If hermes-engine is not in the Podfile.lock, it means that the app is not using Hermes.
++# Setting USE_HERMES is no the only way to set whether the app can use hermes or not: users
++# can also modify manually the Podfile.
++if [[ -z "$HERMES_ENABLED" ]]; then
++  USE_HERMES=false
++fi
++
 +HERMES_ENGINE_PATH="$PODS_ROOT/hermes-engine"
 +[ -z "$HERMES_CLI_PATH" ] && HERMES_CLI_PATH="$HERMES_ENGINE_PATH/destroot/bin/hermesc"
 +
 +# Hermes is enabled in new projects by default, so we cannot assume that USE_HERMES=1 is set as an envvar.
 +# If hermes-engine is found in Pods, we can assume Hermes has not been disabled.
 +# If hermesc is not available and USE_HERMES is either unset or true, show error.
-+if [[  -f "$HERMES_ENGINE_PATH" && ! -f "$HERMES_CLI_PATH" ]]; then
++if [[  ! -z "$HERMES_ENABLED" && -f "$HERMES_ENGINE_PATH" && ! -f "$HERMES_CLI_PATH" ]]; then
 +  echo "error: Hermes is enabled but the hermesc binary could not be found at ${HERMES_CLI_PATH}." \
 +       "Perhaps you need to run 'bundle exec pod install' or otherwise " \
 +       "point the HERMES_CLI_PATH variable to your custom location." >&2
@@ -328,7 +246,7 @@ index 0000000..927ec76
 +  if [[ $EMIT_SOURCEMAP == true ]]; then
 +    EXTRA_COMPILER_ARGS="$EXTRA_COMPILER_ARGS -output-source-map"
 +  fi
-+  "$HERMES_CLI_PATH" -emit-binary $EXTRA_COMPILER_ARGS -out "$DEST/main.jsbundle" "$BUNDLE_FILE"
++  "$HERMES_CLI_PATH" -emit-binary -max-diagnostic-width=80 $EXTRA_COMPILER_ARGS -out "$DEST/main.jsbundle" "$BUNDLE_FILE"
 +  if [[ $EMIT_SOURCEMAP == true ]]; then
 +    HBC_SOURCEMAP_FILE="$DEST/main.jsbundle.map"
 +    "$NODE_BINARY" "$COMPOSE_SOURCEMAP_PATH" "$PACKAGER_SOURCEMAP_FILE" "$HBC_SOURCEMAP_FILE" -o "$SOURCEMAP_FILE"
@@ -343,10 +261,10 @@ index 0000000..927ec76
 +  exit 2
 +fi
 diff --git a/node_modules/react-native/scripts/react-native-xcode.sh b/node_modules/react-native/scripts/react-native-xcode.sh
-index 927ec76..477fc27 100755
+index e6fc8d1..15ae060 100755
 --- a/node_modules/react-native/scripts/react-native-xcode.sh
 +++ b/node_modules/react-native/scripts/react-native-xcode.sh
-@@ -149,6 +149,7 @@ fi
+@@ -159,6 +159,7 @@ fi
    --dev $DEV \
    --reset-cache \
    --bundle-output "$BUNDLE_FILE" \
@@ -354,3 +272,7 @@ index 927ec76..477fc27 100755
    --assets-dest "$DEST" \
    $EXTRA_ARGS \
    $EXTRA_PACKAGER_ARGS
+diff --git a/node_modules/react-native/types/.DS_Store b/node_modules/react-native/types/.DS_Store
+new file mode 100644
+index 0000000..b6e1b29
+Binary files /dev/null and b/node_modules/react-native/types/.DS_Store differ

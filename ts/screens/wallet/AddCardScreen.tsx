@@ -35,7 +35,6 @@ import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { CreditCard } from "../../types/pagopa";
-import { ComponentProps } from "../../types/react";
 import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
@@ -95,7 +94,7 @@ const usePrimaryButtonPropsFromState = (
   onNavigate: (card: CreditCard) => void,
   isHolderValid: boolean,
   isExpirationDateValid?: boolean
-): ComponentProps<typeof FooterWithButtons>["primary"] => {
+): React.ComponentProps<typeof FooterWithButtons>["primary"] => {
   const { isCardNumberValid, isCvvValid } = useLuhnValidation(
     pipe(
       state.pan,

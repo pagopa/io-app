@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
   }
 });
 
-type OwnProps = {
+type OwnProps = React.PropsWithChildren<{
   title: string;
-};
+}>;
 
-export const DesignSystemSection: React.FunctionComponent<OwnProps> = props => (
+export const DesignSystemSection = (props: OwnProps) => (
   <View style={styles.content}>
     <H1 style={styles.title}>{props.title}</H1>
     {props.children}
