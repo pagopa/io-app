@@ -65,7 +65,7 @@ const ScreenHeader = ({
   rightComponent
 }: ScreenHeader) => {
   /* The following function doesn't seem very elegant,
-  but I inherited this logic. Considering that this 
+  but I inherited this logic. Considering that this
   component may be replaced soon and that it affects
   a lot of pages, I give up on refactoring it. */
   const getIcon = () => {

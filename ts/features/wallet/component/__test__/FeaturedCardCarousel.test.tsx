@@ -15,10 +15,11 @@ import FeaturedCardCarousel from "../card/FeaturedCardCarousel";
 jest.mock("react-native-share", () => jest.fn());
 describe("FeaturedCardCarousel", () => {
   it("CGN should be not displayed (FF off, CGN not enrolled)", () => {
-    jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
-      () => new Map<number, boolean>([[ID_CGN_TYPE, false]])
-    );
+    jest
+      .spyOn(bonus, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        () => new Map<number, boolean>([[ID_CGN_TYPE, false]])
+      );
     jest
       .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => false);
@@ -47,10 +48,11 @@ describe("FeaturedCardCarousel", () => {
   });
 
   it("CGN should be not displayed (FF on, CGN enrolled)", () => {
-    jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
-      () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
-    );
+    jest
+      .spyOn(bonus, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
+      );
     jest
       .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => true);
@@ -79,10 +81,11 @@ describe("FeaturedCardCarousel", () => {
   });
 
   it("CGN should be not displayed (FF on, CGN undefined)", () => {
-    jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
-      () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
-    );
+    jest
+      .spyOn(bonus, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
+      );
     jest
       .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => undefined);
@@ -111,10 +114,11 @@ describe("FeaturedCardCarousel", () => {
   });
 
   it("CGN should be not displayed (FF on, CGN not enrolled, bonus visibility hidden)", () => {
-    jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
-      () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
-    );
+    jest
+      .spyOn(bonus, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
+      );
     jest
       .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => false);
