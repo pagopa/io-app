@@ -13,7 +13,7 @@ import {
   CgnWalletCardProps
 } from "../../bonus/cgn/components/CgnWalletCard";
 
-// Used to group the cards in the wallet.
+// Used to group the cards in the wallet. **DO NOT CHANGE THE ITEMS ORDER**
 export const walletCardCategories = ["itw", "cgn", "bonus", "payment"] as const;
 export type WalletCardCategory = (typeof walletCardCategories)[number];
 

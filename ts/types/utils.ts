@@ -109,3 +109,5 @@ export function computedProp<K extends PropertyKey, V>(
  * provided by `typed-redux-saga`.
  */
 export type ReduxSagaEffect = Effect;
+
+export type AllOrNothing<T> = T | { [key in keyof T]?: undefined };

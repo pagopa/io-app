@@ -1,12 +1,12 @@
 import {
   GradientScrollView,
   IOStyles,
-  IOToast
+  IOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -18,11 +18,10 @@ import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { WalletRoutes } from "../navigation/routes";
-import { selectWalletCards } from "../store/selectors";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
+import { selectWalletCards } from "../store/selectors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -51,11 +50,9 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   return (
     <WalletHomeScreenContainer>
-      <WalletCategoryFilterTabs />
+      <VSpacer size={16} />
       <WalletPaymentsRedirectBanner />
-      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
-        <WalletCardsContainer />
-      </Animated.View>
+      <WalletCardsContainer />
     </WalletHomeScreenContainer>
   );
 };

@@ -28,15 +28,43 @@ const groupPlaceholdersByCategory = (placeholders: WalletPlaceholders) =>
     {} as { [category in WalletCardCategory]: ReadonlyArray<string> }
   );
 
-const selectWalletFeature = (state: GlobalState) => state.features.wallet;
+export const isWalletPaymentsRedirectBannerVisibleSelector = (
+  state: GlobalState
+) => state.features.wallet.preferences.shouldShowPaymentsRedirectBanner;
 
-export const isWalletPaymentsRedirectBannerVisibleSelector = createSelector(
-  selectWalletFeature,
-  wallet => wallet.preferences.shouldShowPaymentsRedirectBanner
-);
+const selectWalletFeature = (state: GlobalState) => state.features.wallet;
 
 export const selectWalletCards = createSelector(selectWalletFeature, wallet =>
   Object.values(wallet.cards)
+);
+
+/**
+ * Gets the cards sorted by their category order, specified in the {@see walletCardCategories} array
+ */
+export const selectSortedWalletCards = createSelector(
+  selectWalletCards,
+  cards =>
+    [...cards].sort(
+      (a, b) =>
+        walletCardCategories.indexOf(a.category) -
+        walletCardCategories.indexOf(b.category)
+    )
+);
+
+/**
+ * Only gets cards which are part of the IT Wallet
+ */
+export const selectWalletItwCards = createSelector(
+  selectSortedWalletCards,
+  cards => cards.filter(({ category }) => category === "itw")
+);
+
+/**
+ * Only gets cards which are not part of the IT Wallet
+ */
+export const selectWalletOtherCards = createSelector(
+  selectSortedWalletCards,
+  cards => cards.filter(({ category }) => category !== "itw")
 );
 
 export const selectWalletCardsByCategory = createSelector(
@@ -50,54 +78,22 @@ export const getWalletCardsCategorySelector = (category: WalletCardCategory) =>
     cardsByCategory => cardsByCategory[category]
   );
 
-export const selectWalletCategoryFilter = createSelector(
-  selectWalletFeature,
-  wallet => wallet.preferences.categoryFilter
-);
-
-const selectFilteredWalletCards = createSelector(
-  selectWalletCards,
-  selectWalletCategoryFilter,
-  (cards, categoryFilter) =>
-    cards.filter(card =>
-      categoryFilter ? card.category === categoryFilter : true
-    )
-);
-
-export const selectWalletCardsByCategoryWithFilter = createSelector(
-  selectFilteredWalletCards,
-  groupCardsByCategory
-);
-
 export const selectWalletPlaceholders = createSelector(
   selectWalletFeature,
   wallet => wallet.placeholders.items
 );
 
-export const selectIsWalletCardsLoading = createSelector(
-  selectWalletFeature,
-  wallet => wallet.placeholders.isLoading
-);
-
-const selectFilteredWalletPlaceholders = createSelector(
-  selectWalletPlaceholders,
-  selectWalletCategoryFilter,
-  (placeholders, categoryFilter) =>
-    Object.fromEntries(
-      Object.entries(placeholders).filter(([_, category]) =>
-        categoryFilter ? category === categoryFilter : true
-      )
-    )
-);
+export const selectIsWalletCardsLoading = (state: GlobalState) =>
+  state.features.wallet.placeholders.isLoading;
 
 export const selectWalletPlaceholdersByCategory = createSelector(
-  selectFilteredWalletPlaceholders,
+  selectWalletPlaceholders,
   groupPlaceholdersByCategory
 );
 
 // Returns the categories of cards in the wallet, including placeholders
 export const selectWalletCategoriesIncludingPlaceholders = createSelector(
-  selectWalletCardsByCategoryWithFilter,
+  selectWalletCardsByCategory,
   selectWalletPlaceholdersByCategory,
   (cardsByCategory, placeholdersByCategory) =>
     pipe(
