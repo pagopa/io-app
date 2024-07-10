@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";

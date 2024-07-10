@@ -30,7 +30,7 @@ platform :android do
     gradle(
       task: "assemble",
       build_type: "Debug",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
@@ -42,7 +42,7 @@ platform :android do
     gradle(
       task: "bundle",
       build_type: "Release",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
