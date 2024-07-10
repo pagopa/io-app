@@ -11,7 +11,8 @@ module.exports = {
   },
   setupFiles: [
     "./jestSetup.js",
-    "./node_modules/react-native-gesture-handler/jestSetup.js"
+    "./node_modules/react-native-gesture-handler/jestSetup.js",
+    "./node_modules/@shopify/react-native-skia/jestSetup.js"
   ],
   setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   collectCoverage: true
